@@ -17,6 +17,7 @@
 
 // Views
 #import "JCFormattedPhoneNumberLabel.h"
+#import "JCContactCollectionViewCell.h"
 
 // Objects
 #import "JCAddressBook.h"
@@ -139,17 +140,47 @@
     // Given
     self.vc.formattedPhoneNumberLabel.dialString = nil;
     UIButton *button = [[UIButton alloc] init];
-    button.tag = 5;
+    button.tag = 1;
+    NSString *jrn = @"jrn:line::jive:01471162-f384-24f5-9351-000100420001:014a5955-b837-e8d0-ab9a-000100620001";
+    Line *line = [Line MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
+    OCMStub([self.vc.authenticationManager line]).andReturn(line);
+    
+    NSString *expectedName = @"Joe User";
+    NSString *expectedNumber = @"Mobile: (512) 111-1111";
     
     // When
     [self.vc numPadPressed:button];
     
     // Then
     NSString *dialString = self.vc.formattedPhoneNumberLabel.dialString;
-    XCTAssertTrue([dialString isEqualToString:@"5"]);
-    
+    XCTAssertTrue([dialString isEqualToString:@"1"]);
     NSInteger count = [self.vc collectionView:self.vc.collectionView numberOfItemsInSection:1];
+    XCTAssertTrue(count == 17, @"incorrect count of the number of objects to be shown");
+    
+    button.tag = 2;
+    [self.vc numPadPressed:button];
+    
+    dialString = self.vc.formattedPhoneNumberLabel.dialString;
+    XCTAssertTrue([dialString isEqualToString:@"12"]);
+    count = [self.vc collectionView:self.vc.collectionView numberOfItemsInSection:1];
     XCTAssertTrue(count == 14, @"incorrect count of the number of objects to be shown");
+    
+    button.tag = 1;
+    [self.vc numPadPressed:button];
+    
+    dialString = self.vc.formattedPhoneNumberLabel.dialString;
+    XCTAssertTrue([dialString isEqualToString:@"121"]);
+    count = [self.vc collectionView:self.vc.collectionView numberOfItemsInSection:1];
+    XCTAssertTrue(count == 1, @"incorrect count of the number of objects to be shown");
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    UICollectionViewCell *collectionViewCell = [self.vc collectionView:self.vc.collectionView cellForItemAtIndexPath:indexPath];
+    
+    XCTAssertTrue([collectionViewCell isKindOfClass:[JCContactCollectionViewCell class]], @"incorrect contact cell class returned");
+    NSString *name = ((JCContactCollectionViewCell *)collectionViewCell).name.text;
+    NSString *number = ((JCContactCollectionViewCell *)collectionViewCell).number.text;
+    XCTAssert([expectedName isEqualToString:name], @"does not match expected name");
+    XCTAssert([expectedNumber isEqualToString:number], @"does not match expected number");
 }
 
 -(void)test_numPad_longKeyPress

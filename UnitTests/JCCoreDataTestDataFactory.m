@@ -62,7 +62,7 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
     
     NSArray *contactsData = [pbxData arrayForKey:@"contacts"];
     for (NSDictionary *contactData in contactsData) {
-        [self processLineData:contactData forPbx:pbx];
+        [self processContactData:contactData forPbx:pbx];
     }
     
     NSArray *didsData = [pbxData arrayForKey:@"dids"];
@@ -75,6 +75,7 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
 {
     Line *line = [Line MR_createInContext:pbx.managedObjectContext];
     line.pbx = pbx;
+    line.pbxId = pbx.pbxId;
     
     line.name       = [lineData stringValueForKey:@"name"];
     line.jrn        = [lineData stringValueForKey:@"jrn"];
@@ -98,6 +99,7 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
 {
     Contact *contact = [Contact MR_createInContext:pbx.managedObjectContext];
     contact.pbx = pbx;
+    contact.pbxId = pbx.pbxId;
     
     contact.name       = [contactData stringValueForKey:@"name"];
     contact.jrn        = [contactData stringValueForKey:@"jrn"];

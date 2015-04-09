@@ -26,6 +26,15 @@ NSString *kContacktFavoriteAttribute = @"favorite";
     return [self boolValueFromPrimitiveValueForKey:kContacktFavoriteAttribute];
 }
 
+#pragma mark - Relationships
+
+@dynamic lineEvents;
+@dynamic conversations;
+@dynamic pbx;
+@dynamic groups;
+
+#pragma mark - Transient -
+
 -(NSString *)detailText
 {
     NSString * detailText = super.detailText;
@@ -40,11 +49,6 @@ NSString *kContacktFavoriteAttribute = @"favorite";
     }
     return detailText;
 }
-
-@dynamic lineEvents;
-@dynamic conversations;
-@dynamic pbx;
-@dynamic groups;
 
 @end
 
