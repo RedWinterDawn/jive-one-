@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JCFormattedPhoneNumberLabel.h"
+#import "JCPersonDataSource.h"
 
 @interface JCDialerViewController : UIViewController <JCFormattedPhoneNumberLabelDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -28,5 +29,7 @@
 -(IBAction)clear:(id)sender;
 
 -(NSString *)characterFromNumPadTag:(NSInteger)tag;
+
+-(id <JCPersonDataSource>)objectAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

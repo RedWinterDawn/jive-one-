@@ -223,6 +223,7 @@
 		5DC5181E1AD3094E007CEA71 /* JCPbxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5181D1AD3094E007CEA71 /* JCPbxTests.m */; };
 		5DC518201AD3096F007CEA71 /* JCLineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5181F1AD3096F007CEA71 /* JCLineTests.m */; };
 		5DC518221AD30993007CEA71 /* JCContactsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC518211AD30993007CEA71 /* JCContactsTests.m */; };
+		5DC518241AD30E46007CEA71 /* JCJiveContactTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC518231AD30E46007CEA71 /* JCJiveContactTests.m */; };
 		5DDDA5451A4A856800E31AA3 /* JCPresenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5441A4A856800E31AA3 /* JCPresenceManager.m */; };
 		5DDDA5481A4B08AD00E31AA3 /* JCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5471A4B08AD00E31AA3 /* JCSocket.m */; };
 		5DDDA54B1A4B238300E31AA3 /* JCLinePresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA54A1A4B238300E31AA3 /* JCLinePresence.m */; };
@@ -643,6 +644,7 @@
 		5DC5181D1AD3094E007CEA71 /* JCPbxTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPbxTests.m; sourceTree = "<group>"; };
 		5DC5181F1AD3096F007CEA71 /* JCLineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLineTests.m; sourceTree = "<group>"; };
 		5DC518211AD30993007CEA71 /* JCContactsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsTests.m; sourceTree = "<group>"; };
+		5DC518231AD30E46007CEA71 /* JCJiveContactTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCJiveContactTests.m; sourceTree = "<group>"; };
 		5DDDA5431A4A856800E31AA3 /* JCPresenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceManager.h; sourceTree = "<group>"; };
 		5DDDA5441A4A856800E31AA3 /* JCPresenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceManager.m; sourceTree = "<group>"; };
 		5DDDA5461A4B08AD00E31AA3 /* JCSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocket.h; sourceTree = "<group>"; };
@@ -1436,6 +1438,7 @@
 				5DC5181D1AD3094E007CEA71 /* JCPbxTests.m */,
 				5DC5181F1AD3096F007CEA71 /* JCLineTests.m */,
 				5DC518211AD30993007CEA71 /* JCContactsTests.m */,
+				5DC518231AD30E46007CEA71 /* JCJiveContactTests.m */,
 				B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */,
 				5D0BACAF1AD4406300EFEF86 /* JCAppSettingsTests.m */,
 			);
@@ -2115,6 +2118,7 @@
 				5D2D74311ACFB48500B98BDF /* JCAddressBookTests.m in Sources */,
 				B70EAB3D1AD32B1E00305F43 /* JCDidTests.m in Sources */,
 				5DC518221AD30993007CEA71 /* JCContactsTests.m in Sources */,
+				5DC518241AD30E46007CEA71 /* JCJiveContactTests.m in Sources */,
 				5D2D74361ACFB48500B98BDF /* JCMainStoryboardBaseTestCase.m in Sources */,
 				5D0BACB01AD4406300EFEF86 /* JCAppSettingsTests.m in Sources */,
 				5D0BACA61AD4393F00EFEF86 /* NSData+AdditionsTests.m in Sources */,

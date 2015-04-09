@@ -14,6 +14,8 @@
 @dynamic jrn;
 @dynamic pbxId;
 
+#pragma mark - Transient Properties -
+
 -(NSString *)detailText
 {
     return self.extension;

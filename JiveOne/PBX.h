@@ -20,6 +20,7 @@
 @property (nonatomic, retain) NSString * jrn;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * domain;
+@property (nonatomic, retain) NSString * pbxId;
 @property (nonatomic, getter=isV5) BOOL v5;
 
 // Relationships
@@ -34,7 +35,6 @@
 @property (nonatomic, readonly) BOOL sendSMSMessages;
 
 @property (nonatomic, readonly) NSString * displayName;
-@property (nonatomic, readonly) NSString * pbxId;
 
 @end
 
