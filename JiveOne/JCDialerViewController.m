@@ -216,7 +216,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     }
     
     Line *line = self.authenticationManager.line;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@ AND jrn != %@ AND extension CONTAINS %@", line.pbx.pbxId, line.jrn, keyword];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@ AND jrn != %@ AND (extension CONTAINS %@ OR t9 BEGINSWITH %@)", line.pbx.pbxId, line.jrn, keyword, keyword];
     NSArray *contacts = [JiveContact MR_findAllWithPredicate:predicate inContext:self.context];
     [_contacts addObjectsFromArray:contacts];
     [self.collectionView reloadData];
