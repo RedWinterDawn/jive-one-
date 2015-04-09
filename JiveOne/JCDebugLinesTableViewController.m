@@ -29,7 +29,7 @@
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCDebugLineTableViewController class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        ((JCDebugLineTableViewController *)viewController).line = [self objectAtIndexPath:indexPath];
+        ((JCDebugLineTableViewController *)viewController).line = (Line *)[self objectAtIndexPath:indexPath];
     }
 }
 
