@@ -882,16 +882,8 @@
 				5D490E421A89751F004B62C0 /* JCNavigationController.m */,
 				5D35479319FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.h */,
 				5D35479419FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m */,
-				5D1175881A9E856300D2B03A /* JCRecentEventsTableViewController.h */,
-				5D1175891A9E856300D2B03A /* JCRecentEventsTableViewController.m */,
 				5D36B7A919F8674E0024A0E7 /* JCFetchedResultsTableViewController.h */,
 				5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */,
-				F8B62E4219D9F1E400AF98D3 /* JCDialerViewController.h */,
-				F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */,
-				5DDE651019F0C29900B90B55 /* Call History */,
-				277F093E18FECEB800EEF0E3 /* Settings */,
-				5DB0BFC81A00AB29006737D7 /* JCRecentLineEventsTableViewController.h */,
-				5DB0BFC91A00AB29006737D7 /* JCRecentLineEventsTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1363,9 +1355,9 @@
 			isa = PBXGroup;
 			children = (
 				277F093F18FECECA00EEF0E3 /* Login */,
-				277F093D18FECEA800EEF0E3 /* Voicemail */,
+				277F093E18FECEB800EEF0E3 /* Settings */,
+				5DA30DC61AD6DA08008856DC /* Recent Events */,
 				277F093B18FECE5E00EEF0E3 /* Contacts */,
-				5D53298E1AD4ED6700C6AAC6 /* Chat */,
 				5DDE651219F0C49A00B90B55 /* Phone */,
 			);
 			name = Modules;
@@ -1374,12 +1366,12 @@
 		5D53298C1AD4BA0B00C6AAC6 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				5D62436D1A65B7DF001DF88E /* JCManager.h */,
+				5D62436E1A65B7DF001DF88E /* JCManager.m */,
 				2751590F18AD174F00FD8D3F /* JCAuthenticationManager.h */,
 				2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */,
 				5DA566471A20543500286BA5 /* JCAuthenticationManagerError.h */,
 				5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */,
-				5D62436D1A65B7DF001DF88E /* JCManager.h */,
-				5D62436E1A65B7DF001DF88E /* JCManager.m */,
 				5DF4C9991AB8B6CB00BA4F8C /* JCSocketManager.h */,
 				5DF4C99A1AB8B6CB00BA4F8C /* JCSocketManager.m */,
 				5DC1D8821ABB0CDB00326AF3 /* JCSocketLogger.h */,
@@ -1552,22 +1544,70 @@
 			name = Authentication;
 			sourceTree = "<group>";
 		};
-		5DDE651019F0C29900B90B55 /* Call History */ = {
+		5DA30DC61AD6DA08008856DC /* Recent Events */ = {
+			isa = PBXGroup;
+			children = (
+				5DA30DC81AD6DAA3008856DC /* Controllers */,
+				5DA30DCA1AD7063F008856DC /* Modules */,
+			);
+			name = "Recent Events";
+			sourceTree = "<group>";
+		};
+		5DA30DC81AD6DAA3008856DC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5DB0BFC81A00AB29006737D7 /* JCRecentLineEventsTableViewController.h */,
+				5DB0BFC91A00AB29006737D7 /* JCRecentLineEventsTableViewController.m */,
+				5D1175881A9E856300D2B03A /* JCRecentEventsTableViewController.h */,
+				5D1175891A9E856300D2B03A /* JCRecentEventsTableViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		5DA30DCA1AD7063F008856DC /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				5DA30DCB1AD7066F008856DC /* Call History */,
+				277F093D18FECEA800EEF0E3 /* Voicemail */,
+				5D53298E1AD4ED6700C6AAC6 /* Chat */,
+			);
+			name = Modules;
+			sourceTree = "<group>";
+		};
+		5DA30DCB1AD7066F008856DC /* Call History */ = {
+			isa = PBXGroup;
+			children = (
+				5DA30DCD1AD7069B008856DC /* Views */,
+				5DA30DCC1AD7068D008856DC /* Controllers */,
+			);
+			name = "Call History";
+			sourceTree = "<group>";
+		};
+		5DA30DCC1AD7068D008856DC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				F85DAD0719EF07D30075AAA2 /* JCCallHistoryViewController.h */,
 				F85DAD0819EF07D30075AAA2 /* JCCallHistoryViewController.m */,
 				F8C9A7E719EC5F4C0049A715 /* JCCallHistoryTableViewController.h */,
 				F8C9A7E819EC5F4C0049A715 /* JCCallHistoryTableViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		5DA30DCD1AD7069B008856DC /* Views */ = {
+			isa = PBXGroup;
+			children = (
 				F8C9A7EA19EC691C0049A715 /* JCCallHistoryCell.h */,
 				F8C9A7EB19EC691C0049A715 /* JCCallHistoryCell.m */,
 			);
-			name = "Call History";
+			name = Views;
 			sourceTree = "<group>";
 		};
 		5DDE651119F0C2E100B90B55 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F8B62E4219D9F1E400AF98D3 /* JCDialerViewController.h */,
+				F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */,
 				278E858419EC6B6E0087649D /* VideoViewController.h */,
 				278E858519EC6B6E0087649D /* VideoViewController.mm */,
 				5DA5A1AD19DAF91400968F7D /* JCCallerViewController.h */,
