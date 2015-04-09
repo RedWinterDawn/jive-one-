@@ -9,27 +9,9 @@
 #import "JCAddressBookEntity.h"
 #import "NSString+Additions.h"
 
-@interface JCAddressBookEntity ()
-
-@property (nonatomic, readonly) NSLocale *locale;
-
-@end
-
 @implementation JCAddressBookEntity
 
 #pragma mark - Getters -
-
--(NSLocale *)locale
-{
-    // Makes the startup of this singleton thread safe.
-    static NSLocale *locale = nil;
-    static dispatch_once_t pred;        // Lock
-    dispatch_once(&pred, ^{             // This code is called at most once per app
-        NSString *localization = [NSBundle mainBundle].preferredLocalizations.firstObject;
-        locale = [[NSLocale alloc] initWithLocaleIdentifier:localization];
-    });
-    return locale;
-}
 
 -(NSString *)titleText
 {
@@ -38,7 +20,7 @@
 
 -(NSString *)detailText
 {
-    return self.name.dialableString.formattedPhoneNumber;
+    return self.number.dialableString.formattedPhoneNumber;
 }
 
 @synthesize name = _name;
@@ -53,7 +35,7 @@
 {
     NSString *firstName = self.firstName;
     if (firstName.length > 0) {
-        return [[firstName substringToIndex:1] uppercaseStringWithLocale:self.locale];
+        return [[firstName substringToIndex:1] uppercaseStringWithLocale:firstName.locale];
     }
     return nil;
 }
@@ -62,7 +44,7 @@
 {
     NSString *middleName = self.middleName;
     if (middleName.length > 0) {
-        return [[middleName substringToIndex:1] uppercaseStringWithLocale:self.locale];
+        return [[middleName substringToIndex:1] uppercaseStringWithLocale:middleName.locale];
     }
     return nil;
 }
@@ -71,7 +53,7 @@
 {
     NSString *lastName = self.lastName;
     if (lastName.length > 0) {
-        return [[lastName substringToIndex:1] uppercaseStringWithLocale:self.locale];
+        return [[lastName substringToIndex:1] uppercaseStringWithLocale:lastName.locale];
     }
     return nil;
 }
@@ -93,9 +75,7 @@
 
 -(BOOL)containsKeyword:(NSString *)keyword
 {
-    NSLocale *locale = self.locale;
-    NSString *localizedKeyword = [keyword lowercaseStringWithLocale:locale];
-    
+    NSString *localizedKeyword = [keyword lowercaseStringWithLocale:keyword.locale];
     if (localizedKeyword.isNumeric) {
         NSString *string = self.number.numericStringValue;
         if ([string rangeOfString:localizedKeyword].location != NSNotFound) {
@@ -106,7 +86,8 @@
         }
     }
     
-    NSString *fullName = [self.name lowercaseStringWithLocale:locale];
+    NSString *name = self.name;
+    NSString *fullName = [name lowercaseStringWithLocale:name.locale];
     if ([fullName respondsToSelector:@selector(containsString:)]) {
         if ([fullName containsString:localizedKeyword]) {
             return YES;
@@ -135,7 +116,7 @@
 
 -(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color{
     
-    return [self.number formattedPhoneNumberWithKeyword:keyword font:font color:color];
+    return [self.number formattedPhoneNumberWithNumericKeyword:keyword font:font color:color];
 }
 
 @end
