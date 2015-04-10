@@ -89,16 +89,27 @@ typedef enum : NSInteger {
 @property(nonatomic, strong) JCPhoneManager *phoneManager;
 
 // Dials a number. The sender is enabled and disabled while call is being initiated.
-- (void)dialNumber:(NSString *)phoneNumber
-         usingLine:(Line *)line
+- (void)dialPerson:(id<JCPersonDataSource>)person
+              line:(Line *)line
             sender:(id)sender;
 
 // Dials a number with a completion block indicating a successfull dial or error, and the specific
 // error. Underlying error presents a hud or alert. The sender is enabled and disabled while call is
 // being initiated.
-- (void)dialNumber:(NSString *)phoneNumber
+- (void)dialPerson:(id<JCPersonDataSource>)person
          usingLine:(Line *)line
             sender:(id)sender
         completion:(CompletionHandler)completion;
+
+
+- (void)dialNumber:(NSString *)phoneNumber
+         usingLine:(Line *)line
+            sender:(id)sender __deprecated;
+
+
+- (void)dialNumber:(NSString *)phoneNumber
+         usingLine:(Line *)line
+            sender:(id)sender
+        completion:(CompletionHandler)completion  __deprecated;
 
 @end

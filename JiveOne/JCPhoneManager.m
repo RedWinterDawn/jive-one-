@@ -29,6 +29,7 @@
 #import "JCConferenceCallCard.h"
 #import "Line.h"
 #import "Contact.h"
+#import "JCUnknownNumber.h"
 
 // View Controllers
 #import "JCCallerViewController.h"
@@ -216,6 +217,15 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     [self connectAndDial:dialString usingLine:line type:dialType completion:completion];
 }
 
+-(void)dialPerson:(id<JCPersonDataSource>)person usingLine:(Line *)line sender:(id)sender completion:(CompletionHandler)completion
+{
+    NSString *dialString = person.number;
+    if ([self isEmergencyNumber:dialString] && [UIDevice currentDevice].canMakeCall) {
+        [self dialEmergencyNumber:dialString usingLine:line type:dialType completion:completion];
+        return;
+    }
+}
+
 -(void)connectAndDial:(NSString *)dialString usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
     if (self.sipManager.line != line && line != nil) {
@@ -286,22 +296,22 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]]];
 }
 
--(void)dial:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
+-(void)dial:(id<JCPersonDataSource>)person type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
     if (dialType == JCPhoneManagerBlindTransfer) {
-        [self blindTransferToNumber:dialNumber completion:completion];
+        [self blindTransferToPerson:person completion:completion];
     } else if (dialType == JCPhoneManagerWarmTransfer) {
-        [self warmTransferToNumber:dialNumber completion:completion];
+        [self warmTransferToPerson:person completion:completion];
     } else {
-        [self simpleDialNumber:dialNumber completion:completion];
+        [self simpleDialPerson:person completion:completion];
     }
 }
 
--(void)blindTransferToNumber:(NSString *)number completion:(CompletionHandler)completion
+-(void)blindTransferToPerson:(id<JCPersonDataSource>)person completion:(CompletionHandler)completion
 {
     [UIApplication showStatus:@"Transfering..."];
     __autoreleasing NSError *error;
-    BOOL success = [self.sipManager startBlindTransferToNumber:number error:&error];
+    BOOL success = [self.sipManager startBlindTransferToNumber:person.number error:&error];
     if (completion) {
         if (!success) {
             [UIApplication hideStatus];
@@ -312,20 +322,20 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     }
 }
 
--(void)warmTransferToNumber:(NSString *)number completion:(CompletionHandler)completion
+-(void)warmTransferToPerson:(id<JCPersonDataSource>)person completion:(CompletionHandler)completion
 {
     _warmTransferNumber = number;
     __autoreleasing NSError *error;
-    BOOL success = [self.sipManager startWarmTransferToNumber:number error:&error];
+    BOOL success = [self.sipManager startWarmTransferToNumber:person.number error:&error];
     if (completion) {
         completion(success, error);
     }
 }
 
--(void)simpleDialNumber:(NSString *)number completion:(CompletionHandler)completion
+-(void)simpleDialPerson:(id<JCPersonDataSource>)person completion:(CompletionHandler)completion
 {
     __autoreleasing NSError *error;
-    BOOL success = [self.sipManager makeCall:number videoCall:NO error:&error];
+    BOOL success = [self.sipManager makeCall:person.number videoCall:NO error:&error];
     if (completion) {
         completion(success, error);
     }
@@ -987,33 +997,47 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     return phoneManager;
 }
 
-- (void)dialNumber:(NSString *)phoneNumber usingLine:(Line *)line sender:(id)sender
+- (void)dialPerson:(id<JCPersonDataSource>)person line:(Line *)line sender:(id)sender
 {
-    [self dialNumber:phoneNumber usingLine:line sender:sender completion:NULL];
+    [self dialPerson:person usingLine:line sender:sender completion:NULL];
 }
 
-- (void)dialNumber:(NSString *)phoneNumber usingLine:(Line *)line sender:(id)sender completion:(CompletionHandler)completion
+- (void)dialPerson:(id<JCPersonDataSource>)person usingLine:(Line *)line sender:(id)sender completion:(CompletionHandler)completion
 {
     if([sender isKindOfClass:[UIButton class]]) {
         ((UIButton *)sender).enabled = FALSE;
     } else if ([sender isKindOfClass:[UITableView class]]) {
         ((UITableView *)sender).userInteractionEnabled = FALSE;
     }
-        
-    [self.phoneManager dialNumber:phoneNumber
-                     usingLine:line
-                          type:JCPhoneManagerSingleDial
-                    completion:^(BOOL success, NSError *error) {
-                        if (completion) {
-                            completion(success, error);
-                        }
-                        
-                        if([sender isKindOfClass:[UIButton class]]) {
-                            ((UIButton *)sender).enabled = TRUE;
-                        } else if ([sender isKindOfClass:[UITableView class]]) {
-                            ((UITableView *)sender).userInteractionEnabled = TRUE;
-                        }
-                    }];
+    
+    [self.phoneManager dialNumber:person.number
+                        usingLine:line
+                             type:JCPhoneManagerSingleDial
+                       completion:^(BOOL success, NSError *error) {
+                           if (completion) {
+                               completion(success, error);
+                           }
+                           
+                           if([sender isKindOfClass:[UIButton class]]) {
+                               ((UIButton *)sender).enabled = TRUE;
+                           } else if ([sender isKindOfClass:[UITableView class]]) {
+                               ((UITableView *)sender).userInteractionEnabled = TRUE;
+                           }
+                       }];
+}
+
+- (void)dialNumber:(NSString *)phoneNumber usingLine:(Line *)line sender:(id)sender
+{
+    JCUnknownNumber *person = [[JCUnknownNumber alloc] init];
+    person.number = phoneNumber;
+    [self dialPerson:person line:line sender:sender];
+}
+
+- (void)dialNumber:(NSString *)phoneNumber usingLine:(Line *)line sender:(id)sender completion:(CompletionHandler)completion
+{
+    JCUnknownNumber *person = [[JCUnknownNumber alloc] init];
+    person.number = phoneNumber;
+    [self dialPerson:person usingLine:line sender:sender completion:completion];
 }
 
 @end
