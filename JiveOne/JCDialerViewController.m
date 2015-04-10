@@ -303,10 +303,13 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     id <JCPersonDataSource> personNumber = [self objectAtIndexPath:indexPath];
     JCContactCollectionViewCell *cell = (JCContactCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
+    UIColor *color = [UIColor darkTextColor];
+    UIFont *font = [UIFont systemFontOfSize:16];
+    
     NSString *keyword = self.formattedPhoneNumberLabel.dialString;
     cell.name.attributedText = [personNumber titleTextWithKeyword:keyword
-                                                             font:cell.name.font
-                                                            color:cell.name.textColor];
+                                                             font:font
+                                                            color:color];
     
     cell.number.attributedText = [personNumber detailTextWithKeyword:keyword
                                                                 font:cell.number.font
