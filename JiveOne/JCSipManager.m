@@ -1150,13 +1150,13 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         // Initial State of a call
         case JCCallInitiated:
         {
-            lineSession.active = TRUE;
-            lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
-            lineSession.sessionState = state;
-            
             if (!self.isActive) {
                 [_audioManager engageAudioSession];
             }
+            
+            lineSession.active = TRUE;
+            lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
+            lineSession.sessionState = state;
             
             // Notify
             [OutgoingCall addOutgoingCallWithLineSession:lineSession line:_line];
@@ -1206,6 +1206,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         {
             lineSession.updatable = YES;
             lineSession.sessionState = state;
+            
+            // Stop Ringing
+            [_audioManager stop];
             
             [self startNetworkQualityIndicatorForLineSession:lineSession];
             break;
