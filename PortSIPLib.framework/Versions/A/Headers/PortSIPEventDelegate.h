@@ -6,8 +6,13 @@
  
  PortSIP SDK Callback events Delegate description.
  */
-
+#include <TargetConditionals.h>
+#if TARGET_OS_IPHONE
+#import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
+#endif
+
+
 
 @protocol PortSIPEventDelegate <NSObject>
 @required
@@ -530,12 +535,6 @@
  */
 - (void)onReceivedRTPPacket:(long)sessionId isAudio:(BOOL)isAudio RTPPacket:(unsigned char *)RTPPacket packetSize:(int)packetSize;
 
-/** @} */ // end of group31
-
-/** @defgroup group32 Audio and video stream callback events
- * @{
- */
-
 /*!
  *  If called setRTPCallback function to enabled the RTP callback, this event will be triggered once sending a RTP packet.
  *
@@ -546,6 +545,12 @@
   @note Don't call any SDK API functions in this event directly. If you want to call the API functions or other code which will spend long time, you should post a message to another thread and execute SDK API functions or other code in another thread.
  */
 - (void)onSendingRTPPacket:(long)sessionId isAudio:(BOOL)isAudio RTPPacket:(unsigned char *)RTPPacket packetSize:(int)packetSize;
+
+/** @} */ // end of group31
+
+/** @defgroup group32 Audio and video stream callback events
+* @{
+*/
 
 /*!
  *  This event will be triggered once received the audio packets if called enableAudioStreamCallback function.
@@ -580,7 +585,7 @@
                     height:(int)height
                       data:(unsigned char *)data
                 dataLength:(int)dataLength;
-/** @} */ // end of group31
+/** @} */ // end of group32
 /** @} */ // end of groupDelegate
 @end
 

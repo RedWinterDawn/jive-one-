@@ -42,7 +42,7 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 {
     [super viewDidAppear:animated];
     if (_dialString) {
-        [self dialNumber:_dialString sender:nil completion:^(BOOL success, NSError *error) {
+        [self dialNumber:_dialString usingLine:[JCAuthenticationManager sharedInstance].line sender:nil completion:^(BOOL success, NSError *error) {
             _dialString = nil;
         }];
     }

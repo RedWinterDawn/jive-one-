@@ -1,0 +1,39 @@
+
+/* Class = "IBUIViewController"; title = "Transfer"; ObjectID = "0Yw-OW-isY"; */
+"0Yw-OW-isY.title" = "Transfer";
+
+/* Class = "IBUILabel"; text = "Speaker"; ObjectID = "4S2-H7-xRN"; */
+"4S2-H7-xRN.text" = "Lautsprecher";
+
+/* Class = "IBUILabel"; text = "Add Call"; ObjectID = "7gw-EZ-yNz"; */
+"7gw-EZ-yNz.text" = "Add Call";
+
+/* Class = "IBUILabel"; text = "Swap Calls"; ObjectID = "Bcm-TB-mqA"; */
+"Bcm-TB-mqA.text" = "Swap Calls";
+
+/* Class = "IBUILabel"; text = "Finish Transfer"; ObjectID = "Q2z-kh-jIP"; */
+"Q2z-kh-jIP.text" = "Finish Transfer";
+
+/* Class = "IBUILabel"; text = "Merge Calls"; ObjectID = "UVV-07-6qc"; */
+"UVV-07-6qc.text" = "Merge Calls";
+
+/* Class = "IBUILabel"; text = "TRANSFERRED TO"; ObjectID = "X2r-4X-bhX"; */
+"X2r-4X-bhX.text" = "TRANSFERRED TO";
+
+/* Class = "IBUILabel"; text = "Keypad"; ObjectID = "Zoo-r0-Qec"; */
+"Zoo-r0-Qec.text" = "Ziffernblock";
+
+/* Class = "IBUILabel"; text = "Mute"; ObjectID = "lmW-vI-lq5"; */
+"lmW-vI-lq5.text" = "Stumm";
+
+/* Class = "IBUILabel"; text = "Warm Transfer"; ObjectID = "mv1-cF-rXS"; */
+"mv1-cF-rXS.text" = "Warm Transfer";
+
+/* Class = "IBUILabel"; text = "Transfer"; ObjectID = "tWV-rw-XMj"; */
+"tWV-rw-XMj.text" = "Transfer";
+
+/* Class = "IBUIViewController"; title = "Transfer"; ObjectID = "trw-eH-oa2"; */
+"trw-eH-oa2.title" = "Transfer";
+
+/* Class = "IBUILabel"; text = "Cancel"; ObjectID = "yvk-BE-zep"; */
+"yvk-BE-zep.text" = "Abbrechen";

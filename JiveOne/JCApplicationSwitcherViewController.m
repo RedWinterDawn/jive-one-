@@ -290,6 +290,8 @@
     CGRect activityFrame = _activityViewController.view.frame;
     activityFrame.origin.y = menuFrame.origin.y + menuFrame.size.height;
     
+    [_selectedViewController viewWillDisappear:animated];
+    
     [UIView animateWithDuration:(animated ? 0.3 : 0)
                           delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
@@ -301,6 +303,8 @@
                      }
                      completion:^(BOOL finished) {
                          _showingMenu = true;
+                         
+                         [_selectedViewController viewDidDisappear:animated];
                      }];
 }
 
@@ -309,6 +313,8 @@
     [self.view layoutIfNeeded];
     CGRect menuFrame = _menuNavigationController.view.frame;
     menuFrame.origin.y = -menuFrame.size.height - [UIApplication sharedApplication].statusBarFrame.size.height;
+    
+    [_selectedViewController viewWillAppear:animated];
     
     CGRect activityFrame = _activityViewController.view.frame;
     activityFrame.origin.y = 2 * (menuFrame.origin.y + menuFrame.size.height + activityFrame.size.height);
@@ -322,6 +328,7 @@
                      }
                      completion:^(BOOL finished) {
                          _showingMenu = false;
+                         [_selectedViewController viewDidAppear:animated];
                      }];
 }
 

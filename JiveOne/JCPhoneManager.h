@@ -13,23 +13,18 @@
 #import "JCCallCard.h"
 #import "Line.h"
 #import "JCManager.h"
+#import "JCPhoneAudioManager.h"
+
+extern NSString *const kJCPhoneManagerRegisteringNotification;
+extern NSString *const kJCPhoneManagerRegisteredNotification;
+extern NSString *const kJCPhoneManagerUnregisteredNotification;
+extern NSString *const kJCPhoneManagerRegistrationFailureNotification;
 
 typedef enum : NSUInteger {
     JCPhoneManagerSingleDial = 0,
     JCPhoneManagerBlindTransfer,
     JCPhoneManagerWarmTransfer,
 } JCPhoneManagerDialType;
-
-typedef enum : NSUInteger {
-    JCPhoneManagerOutputUnknown = 0,
-    JCPhoneManagerOutputLineOut,
-    JCPhoneManagerOutputHeadphones,
-    JCPhoneManagerOutputBluetooth,
-    JCPhoneManagerOutputReceiver,
-    JCPhoneManagerOutputSpeaker,
-    JCPhoneManagerOutputHDMI,
-    JCPhoneManagerOutputAirPlay
-} JCPhoneManagerOutputType;
 
 typedef enum : NSInteger {
     JCPhoneManagerUnknownNetwork    = AFNetworkReachabilityStatusUnknown,
@@ -41,16 +36,20 @@ typedef enum : NSInteger {
 @interface JCPhoneManager : JCManager
 
 @property (nonatomic, strong) NSMutableArray *calls;
+@property (nonatomic, strong) NSString *storyboardName;
 
 @property (nonatomic, readonly) Line *line;
-@property (nonatomic, readonly) JCPhoneManagerOutputType outputType;
 @property (nonatomic, readonly) JCPhoneManagerNetworkType networkType;
 
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
-@property (nonatomic, readonly, getter=isConnected) BOOL connected;
-@property (nonatomic, readonly, getter=isConnecting) BOOL connecting;
+@property (nonatomic, readonly, getter=isRegistering) BOOL registering;
+@property (nonatomic, readonly, getter=isRegistered) BOOL registered;
+@property (nonatomic, readonly, getter=isActiveCall) BOOL activeCall;
 @property (nonatomic, readonly, getter=isConferenceCall) BOOL conferenceCall;
-@property (nonatomic, readonly) BOOL isMuted;
+@property (nonatomic, readonly, getter=isMuted) BOOL muted;
+
+@property (nonatomic, readonly) JCPhoneAudioManagerInputType inputType;
+@property (nonatomic, readonly) JCPhoneAudioManagerOutputType outputType;
 
 @end
 
@@ -69,7 +68,10 @@ typedef enum : NSInteger {
 // Attempts to dial a passed string following the dial type directive. When the dial operation was completed, we are
 // notified. If the dial action resulted in the creation of a dial card, an kJCCallCardManagerAddedCallNotification is
 // broadcasted through the notification center.
-+ (void)dialNumber:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion;
++ (void)dialNumber:(NSString *)dialNumber
+         usingLine:(Line *)line
+              type:(JCPhoneManagerDialType)dialType
+        completion:(CompletionHandler)completion;
 
 // Call actions
 + (void)mergeCalls:(CompletionHandler)completion;
@@ -86,7 +88,17 @@ typedef enum : NSInteger {
 
 @interface UIViewController (PhoneManager)
 
-- (void)dialNumber:(NSString *)phoneNumber sender:(id)sender;
-- (void)dialNumber:(NSString *)phoneNumber sender:(id)sender completion:(CompletionHandler)completion;
+// Dials a number. The sender is enabled and disabled while call is being initiated.
+- (void)dialNumber:(NSString *)phoneNumber
+         usingLine:(Line *)line
+            sender:(id)sender;
+
+// Dials a number with a completion block indicating a successfull dial or error, and the specific
+// error. Underlying error presents a hud or alert. The sender is enabled and disabled while call is
+// being initiated.
+- (void)dialNumber:(NSString *)phoneNumber
+         usingLine:(Line *)line
+            sender:(id)sender
+        completion:(CompletionHandler)completion;
 
 @end

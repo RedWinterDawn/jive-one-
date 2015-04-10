@@ -28,11 +28,12 @@
 {
     [super viewDidDisappear:animated];
     
-    NSArray *missedCalls = [MissedCall MR_findByAttribute:@"read" withValue:@NO inContext:self.managedObjectContext];
-    for (MissedCall *missedCall in missedCalls) {
-        missedCall.read = YES;
-    }
-    [self.managedObjectContext MR_saveOnlySelfAndWait];
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        NSArray *missedCalls = [MissedCall MR_findByAttribute:@"read" withValue:@NO inContext:localContext];
+        for (MissedCall *missedCall in missedCalls) {
+            missedCall.read = YES;
+        }
+    }];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -79,7 +80,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Call *call = (Call *)[self objectAtIndexPath:indexPath];
-    [self dialNumber:call.number sender:tableView];
+    [self dialNumber:call.number usingLine:[JCAuthenticationManager sharedInstance].line sender:tableView];
 }
 
 @end

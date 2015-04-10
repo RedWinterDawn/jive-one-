@@ -16,6 +16,8 @@
 #define JC_SIP_REGISTER_SERVER_IS_EMPTY                 -5004
 #define JC_SIP_REGISTER_PASSWORD_IS_EMPTY               -5005
 #define JC_SIP_REGISTER_CALLER_ID_IS_EMPTY              -5006
+#define JC_SIP_ALREADY_REGISTERING                      -5007
+#define JC_SIP_REGISTRATION_TIMEOUT                     -5008
 
 #define JC_SIP_CALL_NO_IDLE_LINE                        -5100
 #define JC_SIP_CALL_NO_ACTIVE_LINE                      -5101
