@@ -148,16 +148,10 @@
                   Identifier = "JCBaseTestCase">
                </Test>
                <Test
-                  Identifier = "JCDialerViewControllerTests/test_numPad_longKeyPress">
-               </Test>
-               <Test
                   Identifier = "JCMainStoryboardBaseTestCase">
                </Test>
                <Test
                   Identifier = "JCPhoneManagerBaseTestCase">
-               </Test>
-               <Test
-                  Identifier = "JCTransferViewControllerTests/test_numPad_longKeyPress">
                </Test>
             </SkippedTests>
          </TestableReference>
