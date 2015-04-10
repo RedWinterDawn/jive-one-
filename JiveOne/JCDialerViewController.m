@@ -103,7 +103,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-        [self appendString:[self characterFromNumPadTag:(int)button.tag]];
+        [self appendString:[[self class] characterFromNumPadTag:(int)button.tag]];
         [JCPhoneManager numberPadPressedWithInteger:button.tag];
     }
 }
@@ -210,27 +210,33 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         return;
     }
     
-    _contacts = [self.sharedAddressBook fetchNumbersWithKeyword:keyword sortedByKey:NSStringFromSelector(@selector(name)) ascending:YES].mutableCopy;
-    if (!_contacts) {
-        _contacts = [NSMutableArray array];
+    @autoreleasepool {
+        _contacts = [self.sharedAddressBook fetchNumbersWithKeyword:keyword sortedByKey:NSStringFromSelector(@selector(name)) ascending:YES].mutableCopy;
+        if (!_contacts) {
+            _contacts = [NSMutableArray array];
+        }
+
+        Line *line = self.authenticationManager.line;
+        static NSString *predicateString = @"pbxId = %@ AND jrn != %@ AND (extension CONTAINS %@ OR t9 BEGINSWITH %@)";
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString, line.pbx.pbxId, line.jrn, keyword, keyword];
+        NSArray *contacts = [JiveContact MR_findAllWithPredicate:predicate inContext:self.context];
+        [_contacts addObjectsFromArray:contacts];
     }
-    
-    Line *line = self.authenticationManager.line;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@ AND jrn != %@ AND extension CONTAINS %@", line.pbx.pbxId, line.jrn, keyword];
-    NSArray *contacts = [JiveContact MR_findAllWithPredicate:predicate inContext:self.context];
-    [_contacts addObjectsFromArray:contacts];
     [self.collectionView reloadData];
 }
 
 -(void)updateRegistrationStatus
 {
-    NSString *prompt = NSLocalizedString(@"Unregistered", nil);
     JCPhoneManager *phoneManager = self.phoneManager;
+    JCAppSettings *appSettings = self.appSettings;
+    AFNetworkReachabilityManager *reachabilityManager = self.networkingReachabilityManager;
+    
+    NSString *prompt = NSLocalizedString(@"Unregistered", nil);
     if (phoneManager.isRegistered) {
         self.callButton.selected = false;
         prompt = phoneManager.line.extension;
     }
-    else if (self.appSettings.wifiOnly && self.networkingReachabilityManager.isReachableViaWWAN){
+    else if (appSettings.wifiOnly && reachabilityManager.isReachableViaWWAN){
         prompt = NSLocalizedString(@"Disabled", nil);
     }
     else if (phoneManager.isRegistering) {
@@ -239,11 +245,10 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     else {
         self.callButton.selected = true;
     }
-    
     self.registrationStatusLabel.text = prompt;
 }
 
--(NSString *)characterFromNumPadTag:(NSInteger)tag
++(NSString *)characterFromNumPadTag:(NSInteger)tag
 {
     switch (tag) {
         case 10:
@@ -255,6 +260,14 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     }
 }
 
+-(id <JCPersonDataSource>)objectAtIndexPath:(NSIndexPath *)indexPath{
+    return [_contacts objectAtIndex:indexPath.row];
+}
+
+#pragma mark - Delegate Handlers -
+
+#pragma mark JCFormattedPhoneNumberLabelDelegate
+
 -(void)didUpdateDialString:(NSString *)dialString
 {
     __unsafe_unretained JCDialerViewController *weakSelf = self;
@@ -263,25 +276,17 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
                          animations:^{
                              weakSelf.backspaceButton.alpha = 0;
                          }
-                         completion:^(BOOL finished) {
-     
-                         }];
+                         completion:NULL];
     } else {
         [UIView animateWithDuration:0.3
                          animations:^{
                              weakSelf.backspaceButton.alpha = 1;
                          }
-                         completion:^(BOOL finished) {
-     
-                         }];
+                         completion:NULL];
     }
 }
 
--(id <JCPersonDataSource>)objectAtIndexPath:(NSIndexPath *)indexPath{
-    return [_contacts objectAtIndex:indexPath.row];
-}
-
-#pragma mark - Delegate Handlers -
+#pragma mark UICollectionViewDataSource
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -298,12 +303,21 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     id <JCPersonDataSource> personNumber = [self objectAtIndexPath:indexPath];
     JCContactCollectionViewCell *cell = (JCContactCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
-    cell.name.text = personNumber.name;
-    cell.number.attributedText = [personNumber detailTextWithKeyword:self.formattedPhoneNumberLabel.dialString
+    UIColor *color = [UIColor darkTextColor];
+    UIFont *font = [UIFont systemFontOfSize:16];
+    
+    NSString *keyword = self.formattedPhoneNumberLabel.dialString;
+    cell.name.attributedText = [personNumber titleTextWithKeyword:keyword
+                                                             font:font
+                                                            color:color];
+    
+    cell.number.attributedText = [personNumber detailTextWithKeyword:keyword
                                                                 font:cell.number.font
                                                                color:cell.number.textColor];
     return cell;
 }
+
+#pragma mark UICollectionViewDelegate
                                   
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
