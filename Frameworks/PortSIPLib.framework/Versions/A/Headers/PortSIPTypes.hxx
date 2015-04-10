@@ -153,6 +153,40 @@ typedef enum
 	DTMF_INFO	 = 1	///<	send DTMF tone with SIP INFO.
 }DTMF_METHOD;
 
+/// type of Echo Control
+typedef enum
+{
+	EC_NONE = 0,			// Disable AEC
+	EC_DEFAULT = 1,			// Platform default AEC
+	EC_CONFERENCE = 2,		// Desktop platform(windows,MAC) Conferencing default (aggressive AEC)
+	EC_AEC = 3,				// Desktop platform(windows,MAC) Acoustic Echo Cancellation(desktop Platform default)
+	EC_AECM_1 = 4,			// Mobile platform(iOS,Android) most earpiece use
+	EC_AECM_2 = 5,			// Mobile platform(iOS,Android) Loud earpiece or quiet speakerphone use
+	EC_AECM_3 = 6,			// Mobile platform(iOS,Android) most speakerphone use (Mobile Platform default)
+	EC_AECM_4 = 7,			// Mobile platform(iOS,Android) Loud speakerphone
+}EC_MODES;
+
+/// type of Automatic Gain Control
+typedef enum                   
+{
+	AGC_NONE = 0,			// Disable AGC
+	AGC_DEFAULT,            // platform default
+	AGC_ADAPTIVE_ANALOG,	// Desktop platform(windows,MAC) adaptive mode for use when analog volume control exists
+	AGC_ADAPTIVE_DIGITAL,	// scaling takes place in the digital domain (e.g. for conference servers and embedded devices)
+	AGC_FIXED_DIGITAL		// can be used on embedded devices where the capture signal level is predictable
+}AGC_MODES;
+
+/// type of Noise Suppression
+typedef enum    
+{
+	NS_NONE = 0,				// Disable NS
+	NS_DEFAULT,					// platform default
+	NS_Conference,				// conferencing default
+	NS_LOW_SUPPRESSION,			// lowest suppression
+	NS_MODERATE_SUPPRESSION,
+	NS_HIGH_SUPPRESSION,
+	NS_VERY_HIGH_SUPPRESSION,   // highest suppression
+}NS_MODES;
 
 // Audio and video callback function prototype, for Visual C++ only
 typedef int  (* fnAudioRawCallback)(void * obj, 
