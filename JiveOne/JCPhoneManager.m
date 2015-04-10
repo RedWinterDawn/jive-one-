@@ -339,7 +339,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 {
     [UIApplication showStatus:@"Transfering..."];
     __autoreleasing NSError *error;
-    BOOL success = [self.sipManager startBlindTransferToNumber:number.dialableNumber error:&error];
+    BOOL success = [self.sipManager startBlindTransferToNumber:number error:&error];
     if (completion) {
         if (!success) {
             [UIApplication hideStatus];
@@ -354,7 +354,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 {
     _warmTransferNumber = number.dialableNumber;
     __autoreleasing NSError *error;
-    BOOL success = [self.sipManager startWarmTransferToNumber:number.dialableNumber error:&error];
+    BOOL success = [self.sipManager startWarmTransferToNumber:number error:&error];
     if (completion) {
         completion(success, error);
     }
@@ -363,7 +363,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 -(void)simpleDialNumber:(id<JCPhoneNumberDataSource>)number completion:(CompletionHandler)completion
 {
     __autoreleasing NSError *error;
-    BOOL success = [self.sipManager makeCall:number.dialableNumber videoCall:NO error:&error];
+    BOOL success = [self.sipManager makeCall:number videoCall:NO error:&error];
     if (completion) {
         completion(success, error);
     }

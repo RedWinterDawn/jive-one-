@@ -14,7 +14,32 @@
 
 @synthesize number = _number;
 
-#pragma mark - Protocol Getters -
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ %@: %@", self.name, self.type, self.number];
+}
+
+#pragma mark - Super Overrides -
+
+-(NSString *)detailText
+{
+    return [NSString stringWithFormat:@"%@: %@", self.type, self.number];
+}
+
+-(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color{
+    
+    NSAttributedString *attributedString = [super detailTextWithKeyword:keyword font:font color:color];
+    NSMutableAttributedString *attributedNumberText = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
+    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                           font, NSFontAttributeName,
+                           color, NSForegroundColorAttributeName, nil];
+    
+    NSAttributedString *typeString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", self.type] attributes:attrs];
+    [attributedNumberText insertAttributedString:typeString atIndex:0];
+    return attributedNumberText;
+}
+
+#pragma mark - JCPersonDataSource Protocol Getters -
 
 //  Since we maintain a pointer to the parent person, we just forward all properties relating to the
 //  person from the parent person.
@@ -29,6 +54,11 @@
     return self.person.firstName;
 }
 
+-(NSString *)middleName
+{
+    return self.person.middleName;
+}
+
 -(NSString *)lastName
 {
     return self.person.lastName;
@@ -39,9 +69,19 @@
     return self.person.firstInitial;
 }
 
+-(NSString *)middleInitial
+{
+    return self.person.middleInitial;
+}
+
 -(NSString *)lastInitial
 {
     return self.person.lastInitial;
+}
+
+-(NSString *)initials
+{
+    return self.person.initials;
 }
 
 -(NSString *)lastNameFirstName
@@ -52,29 +92,6 @@
 -(NSString *)firstNameFirstName
 {
     return self.person.firstNameFirstName;
-}
-
--(NSString *)detailText
-{
-    return [NSString stringWithFormat:@"%@: %@", self.type, self.number];
-}
-
--(NSString *)description
-{
-    return [NSString stringWithFormat:@"%@ %@: %@", self.name, self.type, self.number];
-}
-
--(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color{
-    
-    NSAttributedString *attributedString = [super detailTextWithKeyword:keyword font:font color:color];
-    NSMutableAttributedString *attributedNumberText = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
-    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                           font, NSFontAttributeName,
-                           color, NSForegroundColorAttributeName, nil];
-    
-    NSAttributedString *typeString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", self.type] attributes:attrs];
-    [attributedNumberText insertAttributedString:typeString atIndex:0];
-    return attributedNumberText;
 }
 
 @end

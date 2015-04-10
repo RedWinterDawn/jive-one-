@@ -391,7 +391,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark - Line Session Public Methods -
 
-- (BOOL)makeCall:(NSString *)dialString videoCall:(BOOL)videoCall error:(NSError *__autoreleasing *)error
+- (BOOL)makeCall:(id<JCPhoneNumberDataSource>)number videoCall:(BOOL)videoCall error:(NSError *__autoreleasing *)error
 {
 	// Check to see if we can make a call. We can make a call if we have an idle line session. If we
     // do not have one, exit with error.
@@ -414,7 +414,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     // Intitiate the call. If we fail, set error and return. Errors from this method are negative
     // numbers, and positive numbers are success and thier session id.
-    NSInteger result = [_mPortSIPSDK call:dialString sendSdp:TRUE videoCall:videoCall];
+    NSInteger result = [_mPortSIPSDK call:number.dialableNumber sendSdp:TRUE videoCall:videoCall];
     if(result <= 0) {
         if (error != NULL) {
             *error = [JCSipHandlerError errorWithCode:result reason:@"Unable to create call"];
@@ -423,16 +423,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return NO;
     }
     
-    NSString *callerId = dialString;
-    Contact *contact = [Contact contactForExtension:dialString pbx:_line.pbx];
-    if (contact) {
-        callerId = contact.extension;
-    }
-    
     // Configure the line session.
     lineSession.sessionId = result;
-    [lineSession setCallTitle:callerId];
-    [lineSession setCallDetail:dialString];
+    lineSession.number = number;
     
     [self setSessionState:JCCallInitiated forSession:lineSession event:@"Initiating Call" error:nil];
     return YES;
@@ -768,7 +761,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //  6) LOCAL: A refers B to C.
 //
 
-- (BOOL)startBlindTransferToNumber:(NSString *)number error:(NSError *__autoreleasing *)error
+- (BOOL)startBlindTransferToNumber:(id<JCPhoneNumberDataSource>)number error:(NSError *__autoreleasing *)error
 {
     // Find the active line. It is the one we will be refering to the number passed.
 	JCLineSession *b = [self findActiveLine];
@@ -787,7 +780,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     // Tell PortSip to refer the session id to the passed number. If sucessful, the PortSip
     // deleagate method will inform us if the transfer was successful or a failure.
     b.transfer = TRUE;
-	NSInteger errorCode = [_mPortSIPSDK refer:b.sessionId referTo:number];
+	NSInteger errorCode = [_mPortSIPSDK refer:b.sessionId referTo:number.dialableNumber];
     if (errorCode) {
         if (error != NULL) {
             *error = [JCSipHandlerError errorWithCode:errorCode];
@@ -830,7 +823,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
  * Set the currently active line session (B) to have the refer to number on it before we initiate 
  * the other call (C). We will look for this call when we go to finish the transfer, and hand it off.
  */
--(BOOL)startWarmTransferToNumber:(NSString *)number error:(NSError *__autoreleasing *)error
+-(BOOL)startWarmTransferToNumber:(id<JCPhoneNumberDataSource>)number error:(NSError *__autoreleasing *)error
 {
     JCLineSession *b = [self findActiveLine];
     b.transfer = TRUE;
@@ -1155,7 +1148,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             }
             
             lineSession.active = TRUE;
-            lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
+            lineSession.number = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
             
             // Notify
@@ -1169,7 +1162,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         case JCCallIncoming:
         {
             lineSession.incoming = TRUE;
-            lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
+            lineSession.number = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
             
             if (!self.isActive) {

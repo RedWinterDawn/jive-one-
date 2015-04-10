@@ -7,10 +7,10 @@
 //
 
 #import "JCLineSession.h"
+#import "JCPhoneNumberDataSource.h"
 
 #define LINE_BASE 0
 #define MAX_LINES 2
-
 
 NSString *const kJCLineSessionStateKey = @"sessionState";
 NSString *const kJCLineSessionHoldKey = @"hold";
@@ -44,10 +44,10 @@ NSString *const kJCLineSessionHoldKey = @"hold";
         copy.transfer           = self.isTransfer;
         copy.refer              = self.isRefer;
         copy.mExistEarlyMedia   = self.mExistEarlyMedia;
+        copy.number             = self.number;
     }
     return copy;
 }
-
 
 - (NSString *)description
 {
@@ -70,6 +70,23 @@ NSString *const kJCLineSessionHoldKey = @"hold";
 
 #pragma mark - Public Methods -
 
+- (NSString *)callTitle
+{
+    if (_callTitle) {
+        return _callTitle;
+    }
+    return self.number.titleText;
+}
+
+- (NSString *)callDetail
+{
+    if (_callDetail) {
+        return _callDetail;
+    }
+    return self.number.detailText;
+}
+
+
 //- (void) setReferCall:(BOOL)referCall originalCallSessionId:(long)originalCallSessionId
 //{
 //    _mIsReferCall = referCall;
@@ -85,7 +102,7 @@ NSString *const kJCLineSessionHoldKey = @"hold";
     _referedSessionId       = INVALID_SESSION_ID;
     _callTitle              = nil;
     _callDetail             = nil;
-    _contact                = nil;
+    _number                 = nil;
     _hold                   = FALSE;
     _updatable              = FALSE;
     _active                 = FALSE;

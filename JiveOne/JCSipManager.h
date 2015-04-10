@@ -67,7 +67,7 @@
 - (void)stopKeepAwake;
 
 // Calls a party from its number.
-- (BOOL)makeCall:(NSString *)number videoCall:(BOOL)videoCall error:(NSError *__autoreleasing *)error;
+- (BOOL)makeCall:(id<JCPhoneNumberDataSource>)number videoCall:(BOOL)videoCall error:(NSError *__autoreleasing *)error;
 
 // Call Actions
 - (BOOL)answerSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;         // Answer line session
@@ -87,15 +87,15 @@
 - (BOOL)endConferenceCallForLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error;
 
 // Methods to effect a calls state or audio.
-- (void)pressNumpadButton:(char )dtmf;
+- (void)pressNumpadButton:(char)dtmf;
 - (void)muteCall:(BOOL)mute;
 - (void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled;
 
 // Starts a blind transfer. Success and failure reported through the delegate responses.
-- (BOOL)startBlindTransferToNumber:(NSString *)number error:(NSError *__autoreleasing *)error;
+- (BOOL)startBlindTransferToNumber:(id<JCPhoneNumberDataSource>)number error:(NSError *__autoreleasing *)error;
 
 // Starts a warm transfer, connecting to 2nd party taging first party as going to be transferred.
-- (BOOL)startWarmTransferToNumber:(NSString *)number error:(NSError *__autoreleasing *)error;
+- (BOOL)startWarmTransferToNumber:(id<JCPhoneNumberDataSource>)number error:(NSError *__autoreleasing *)error;
 
 // Finishes a warm transfer, anctually perfoming the transfer.
 - (BOOL)finishWarmTransfer:(NSError *__autoreleasing *)error;

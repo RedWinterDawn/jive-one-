@@ -9,6 +9,7 @@
 #import "Call.h"
 #import "Contact.h"
 #import "Line.h"
+#import "JCPhoneNumberDataSource.h"
 
 NSString *const kCallEntityName = @"Call";
 
@@ -29,8 +30,9 @@ NSString *const kCallEntityName = @"Call";
         call.read = read;
         call.line = localLine;
         
-        if (session.contact) {
-            call.contact = (Contact *)[localContext objectWithID:session.contact.objectID];
+        id <JCPhoneNumberDataSource> number = session.number;
+        if (number && [number isKindOfClass:[Contact class]]) {
+            call.contact = (Contact *)[localContext objectWithID:((Contact *)number).objectID];
         }
     } completion:^(BOOL success, NSError *error) {
         if (error) {
