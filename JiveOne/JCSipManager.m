@@ -1265,11 +1265,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 -(void)audioSessionInteruptionDidBegin:(JCPhoneAudioManager *)manager
 {
-    
     // When we get a call that is being interuped, we place it on hold.
     JCLineSession *lineSession = [self findActiveLine];
-    [_mPortSIPSDK enableAudioStreamCallback:lineSession.sessionId enable:FALSE callbackMode:AUDIOSTREAM_LOCAL_PER_CHANNEL];
-    
     __autoreleasing NSError *error;
     [self holdLineSession:lineSession error:&error];
 }
