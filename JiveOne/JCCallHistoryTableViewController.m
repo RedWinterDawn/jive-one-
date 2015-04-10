@@ -80,7 +80,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Call *call = (Call *)[self objectAtIndexPath:indexPath];
-    [self dialNumber:call.number usingLine:[JCAuthenticationManager sharedInstance].line sender:tableView];
+    [self dialNumber:call
+           usingLine:self.authenticationManager.line
+              sender:tableView];
 }
 
 @end

@@ -24,13 +24,7 @@
 #import "Line.h"
 #import "OutgoingCall.h"
 #import "JCAddressBookTestDataFactory.h"
-
-
-@interface JCPhoneManager ()
-
--(void)dialNumber:(NSString *)dialString usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion;
-
-@end
+#import "JCUnknownNumber.h"
 
 @interface JCAddressBook ()
 
@@ -221,7 +215,7 @@
     // When
     [self.vc initiateCall:self.vc.callButton];
     
-    OCMVerify([self.vc.phoneManager dialNumber:dialString usingLine:line type:JCPhoneManagerSingleDial completion:OCMOCK_ANY]);
+    OCMVerify([self.vc.phoneManager dialNumber:OCMOCK_ANY usingLine:line type:JCPhoneManagerSingleDial completion:OCMOCK_ANY]);
 }
 
 -(void)test_dial_withoutPhoneNumber

@@ -18,6 +18,7 @@
 #import "JiveContact.h"
 #import "NSString+Additions.h"
 #import "PBX.h"
+#import "JCUnknownNumber.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -83,7 +84,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     
     JCPhoneManager *phoneManager = self.phoneManager;
     if (phoneManager.line && !phoneManager.isRegistered && !phoneManager.isRegistering) {
-        [JCPhoneManager connectToLine:phoneManager.line];
+        [phoneManager connectToLine:phoneManager.line];
     }
 }
 
@@ -104,7 +105,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     {
         UIButton *button = (UIButton *)sender;
         [self appendString:[[self class] characterFromNumPadTag:(int)button.tag]];
-        [JCPhoneManager numberPadPressedWithInteger:button.tag];
+        [self.phoneManager numberPadPressedWithInteger:button.tag];
     }
 }
 
@@ -142,7 +143,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         return;
     }
     
-    [self dialNumber:string
+    [self dialNumber:[JCUnknownNumber unknownNumberWithNumber:string]
            usingLine:authenticationManager.line
               sender:sender
           completion:^(BOOL success, NSError *error) {
@@ -300,7 +301,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id <JCPersonDataSource> personNumber = [self objectAtIndexPath:indexPath];
+    id <JCPhoneNumberDataSource> personNumber = [self objectAtIndexPath:indexPath];
     JCContactCollectionViewCell *cell = (JCContactCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
     UIColor *color = [UIColor darkTextColor];
@@ -321,10 +322,9 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
                                   
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id <JCPersonDataSource> personNumber = [self objectAtIndexPath:indexPath];
-    NSString *number = personNumber.number;
-    self.formattedPhoneNumberLabel.dialString = number;
-    [self dialNumber:number.dialableString
+    id <JCPhoneNumberDataSource> personNumber = [self objectAtIndexPath:indexPath];
+    self.formattedPhoneNumberLabel.dialString = personNumber.dialableNumber;
+    [self dialNumber:personNumber
            usingLine:self.authenticationManager.line
               sender:collectionView
           completion:^(BOOL success, NSError *error) {

@@ -122,7 +122,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         JCAppSettings *settings = self.appSettings;
         settings.wifiOnly = !settings.isWifiOnly;
         switchBtn.on = settings.isWifiOnly;
-        [JCPhoneManager connectToLine:self.authenticationManager.line];
+        [self.phoneManager connectToLine:self.authenticationManager.line];
     }
 }
 

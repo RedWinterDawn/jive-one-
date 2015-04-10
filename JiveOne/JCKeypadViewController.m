@@ -15,7 +15,7 @@
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-        self.outputLabel.text =  [NSString stringWithFormat:@"%@%@", self.outputLabel.text, [self characterFromNumPadTag:(int)button.tag]];
+        self.outputLabel.text =  [NSString stringWithFormat:@"%@%@", self.outputLabel.text, [[self class] characterFromNumPadTag:(int)button.tag]];
         if (_delegate && [_delegate respondsToSelector:@selector(keypadViewController:didTypeNumber:)])
             [_delegate keypadViewController:self didTypeNumber:button.tag];
     }

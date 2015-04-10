@@ -14,6 +14,7 @@
 #import "JCAppSettings.h"
 #import "Line.h"
 #import "LineConfiguration.h"
+#import "JCUnknownNumber.h"
 
 @interface JCPhoneManager (Private)
 
@@ -125,13 +126,14 @@
     // Given
     Line *line = [Line MR_createInContext:self.context];
     NSString *number = @"5555555555";
+    JCUnknownNumber *unknownNumber = [JCUnknownNumber unknownNumberWithNumber:number];
     JCPhoneManagerDialType type = JCPhoneManagerSingleDial;
     JCSipManager *sipManagerMock = self.sipHandlerMock;
     
     OCMStub([sipManagerMock line]).andReturn(line);
     OCMStub([sipManagerMock isRegistered]).andReturn(true);
     
-    [self.phoneManager dialNumber:number usingLine:line type:type completion:NULL];
+    [self.phoneManager dialNumber:unknownNumber usingLine:line type:type completion:NULL];
     
     OCMVerify([sipManagerMock makeCall:number videoCall:NO error:[OCMArg anyObjectRef]]);
 }

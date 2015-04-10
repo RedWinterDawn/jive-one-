@@ -185,18 +185,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id object = [self objectAtIndexPath:indexPath];
+    Line *line = self.authenticationManager.line;
 	if ([object isKindOfClass:[ContactGroup class]]) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(contactsTableViewController:didSelectContactGroup:)]) {
             [self.delegate contactsTableViewController:self didSelectContactGroup:(ContactGroup *)object];
         }
-    }    
-	else if ([object isKindOfClass:[Contact class]]) {
-        Contact *contact = (Contact *)object;
-        [self dialNumber:contact.extension usingLine:[JCAuthenticationManager sharedInstance].line sender:tableView];
     }
-    else if ([object isKindOfClass:[Line class]] && object != [JCAuthenticationManager sharedInstance].line) {
-        Line *line = (Line *)object;
-        [self dialNumber:line.extension usingLine:[JCAuthenticationManager sharedInstance].line sender:tableView];
+    else if ([object isKindOfClass:[Person class]] && object != line) {
+        [self dialNumber:(Person *)object
+               usingLine:line
+                  sender:tableView];
     }
 }
 

@@ -8,13 +8,15 @@
 
 #import "JCVoiceNonVisualViewController.h"
 #import "JCPhoneManager.h"
+#import "JCVoicemailNumber.h"
 
 @implementation JCVoiceNonVisualViewController
 
 -(IBAction)callVoicemail:(id)sender
 {
-    [self dialNumber:@"*99"
-           usingLine:[JCAuthenticationManager sharedInstance].line
+    Line *line = self.authenticationManager.line;
+    [self dialNumber:[JCVoicemailNumber new]
+           usingLine:line
               sender:sender];
 }
 

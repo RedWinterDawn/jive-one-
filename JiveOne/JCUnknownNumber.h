@@ -6,13 +6,10 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "JCPersonDataSource.h"
+#import "JCPhoneNumber.h"
 
-@interface JCUnknownNumber :  NSObject <JCPersonDataSource>
+@interface JCUnknownNumber : JCPhoneNumber
 
 +(instancetype) unknownNumberWithNumber:(NSString *)number;
-
-@property (nonatomic, strong) NSString *number;
 
 @end

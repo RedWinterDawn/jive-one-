@@ -6,9 +6,12 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCAddressBookEntity.h"
+@import AddressBook;
 
-@interface JCAddressBookPerson : JCAddressBookEntity
+#import "JCPhoneNumber.h"
+#import "JCPersonDataSource.h"
+
+@interface JCAddressBookPerson : JCPhoneNumber <JCPersonDataSource>
 
 -(instancetype)initWithABRecordRef:(ABRecordRef)recordRef;
 

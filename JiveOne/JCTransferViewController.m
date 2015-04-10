@@ -7,6 +7,7 @@
 //
 
 #import "JCTransferViewController.h"
+#import "JCUnknownNumber.h"
 
 @implementation JCTransferViewController
 
@@ -21,14 +22,17 @@
 -(IBAction)initiateCall:(id)sender
 {
     if (_delegate && [_delegate respondsToSelector:@selector(transferViewController:shouldDialNumber:)])
-        [_delegate transferViewController:self shouldDialNumber:self.formattedPhoneNumberLabel.dialString];
+    {
+        NSString *dialString = self.formattedPhoneNumberLabel.dialString;
+        JCUnknownNumber *unknownNumber = [JCUnknownNumber unknownNumberWithNumber:dialString];
+        [_delegate transferViewController:self shouldDialNumber:unknownNumber];
+    }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id <JCPersonDataSource> personNumber = [self objectAtIndexPath:indexPath];
-    NSString *number = personNumber.number.dialableString;
-    self.formattedPhoneNumberLabel.dialString = number;
+    id <JCPhoneNumberDataSource> number = [self objectAtIndexPath:indexPath];
+    self.formattedPhoneNumberLabel.dialString = number.dialableNumber;
     if (_delegate && [_delegate respondsToSelector:@selector(transferViewController:shouldDialNumber:)])
         [_delegate transferViewController:self shouldDialNumber:number];
 }

@@ -13,6 +13,7 @@
 #import "JCContactsTableViewController.h"
 #import "JCPhoneManager.h"
 #import "ContactGroup.h"
+#import "JCUnknownNumber.h"
 
 NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"ContactGroupViewController";
 
@@ -42,9 +43,12 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 {
     [super viewDidAppear:animated];
     if (_dialString) {
-        [self dialNumber:_dialString usingLine:[JCAuthenticationManager sharedInstance].line sender:nil completion:^(BOOL success, NSError *error) {
-            _dialString = nil;
-        }];
+        [self dialNumber:[JCUnknownNumber unknownNumberWithNumber:_dialString]
+               usingLine:self.authenticationManager.line
+                  sender:nil
+              completion:^(BOOL success, NSError *error) {
+                  _dialString = nil;
+              }];
     }
 }
 

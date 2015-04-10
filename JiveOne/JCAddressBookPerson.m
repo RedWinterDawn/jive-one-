@@ -84,6 +84,46 @@
     return [self getRecordValueForPropertyId:kABPersonCompositeNameFormatLastNameFirst];
 }
 
+-(NSString *)firstInitial
+{
+    NSString *firstName = self.firstName;
+    if (firstName.length > 0) {
+        return [[firstName substringToIndex:1] uppercaseStringWithLocale:firstName.locale];
+    }
+    return nil;
+}
+
+-(NSString *)middleInitial
+{
+    NSString *middleName = self.middleName;
+    if (middleName.length > 0) {
+        return [[middleName substringToIndex:1] uppercaseStringWithLocale:middleName.locale];
+    }
+    return nil;
+}
+
+-(NSString *)lastInitial
+{
+    NSString *lastName = self.lastName;
+    if (lastName.length > 0) {
+        return [[lastName substringToIndex:1] uppercaseStringWithLocale:lastName.locale];
+    }
+    return nil;
+}
+
+-(NSString *)initials
+{
+    NSString *middleInitial = self.middleInitial;
+    NSString *firstInitial = self.firstInitial;
+    NSString *lastInitial = self.lastInitial;
+    if (firstInitial && middleInitial && lastInitial) {
+        return [NSString stringWithFormat:@"%@%@%@", firstInitial, middleInitial, lastInitial];
+    } else if (firstInitial && lastInitial) {
+        return [NSString stringWithFormat:@"%@%@", firstInitial, lastInitial];
+    }
+    return lastInitial;
+}
+
 -(NSString *)number
 {
     JCAddressBookNumber *firstNumber = self.phoneNumbers.firstObject;

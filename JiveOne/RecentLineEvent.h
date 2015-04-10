@@ -10,9 +10,11 @@
 #import <CoreData/CoreData.h>
 #import "RecentEvent.h"
 
+#import "JCPhoneNumberDataSource.h"
+
 @class Contact, Line;
 
-@interface RecentLineEvent : RecentEvent
+@interface RecentLineEvent : RecentEvent <JCPhoneNumberDataSource>
 
 // Represents the phone number the event came from.
 @property (nonatomic, retain) NSString *number;

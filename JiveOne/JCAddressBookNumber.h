@@ -6,11 +6,12 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCAddressBookEntity.h"
+#import "JCPhoneNumber.h"
+#import "JCPersonDataSource.h"
 
 @class JCAddressBookPerson;
 
-@interface JCAddressBookNumber : JCAddressBookEntity
+@interface JCAddressBookNumber : JCPhoneNumber <JCPersonDataSource>
 
 // raw string as per the value stored in the ABAddressBook.
 @property (nonatomic, strong) NSString *number;

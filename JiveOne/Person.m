@@ -61,6 +61,11 @@ NSString *const kPersonT9AttributeKey = @"t9";
     return number.formattedPhoneNumber;
 }
 
+-(NSString *)dialableNumber
+{
+    return self.number.dialableString;
+}
+
 #pragma mark - Transient Protocol Methods -
 
 -(NSString *)middleName

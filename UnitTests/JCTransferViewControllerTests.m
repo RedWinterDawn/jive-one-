@@ -175,9 +175,9 @@
     }];
 }
 
--(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
+-(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(id<JCPhoneNumberDataSource>)number
 {
-    XCTAssertTrue([dialString isEqualToString:@"1234"], @"dial string does not match");
+    XCTAssertTrue([number.dialableNumber isEqualToString:@"1234"], @"dial string does not match");
     XCTAssertTrue((controller = self.vc), @"controllers do not match");
     if ([_expectation.description isEqualToString:@"dial"]) {
         [_expectation fulfill];
