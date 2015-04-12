@@ -10,6 +10,7 @@
 #import "Contact.h"
 #import "Line.h"
 #import "JCPhoneNumberDataSource.h"
+#import "LocalContact.h"
 
 NSString *const kCallEntityName = @"Call";
 
@@ -24,16 +25,23 @@ NSString *const kCallEntityName = @"Call";
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         Line *localLine = (Line *)[localContext objectWithID:line.objectID];
         Call *call = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:localContext];
-        call.date = [NSDate date];
-        call.name = session.callTitle;
-        call.number = session.callDetail;
-        call.read = read;
-        call.line = localLine;
+        call.date   = [NSDate date];
+        call.name   = session.number.name;
+        call.number = session.number.dialableNumber;
+        call.read   = read;
+        call.line   = localLine;
         
         id <JCPhoneNumberDataSource> number = session.number;
         if (number && [number isKindOfClass:[Contact class]]) {
             call.contact = (Contact *)[localContext objectWithID:((Contact *)number).objectID];
         }
+        else if(number && [number isKindOfClass:[LocalContact class]]) {
+            call.localContact = (LocalContact *)[localContext objectWithID:((LocalContact *)number).objectID];
+        } else {
+            //TODO: We need to find a local contact or jive contact while we are saving.
+        }
+        
+        
     } completion:^(BOOL success, NSError *error) {
         if (error) {
             NSLog(@"%@ Call Event Insert Error:%@", entityName, [error description]);

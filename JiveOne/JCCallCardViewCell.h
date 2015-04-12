@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
 #import "JCCallCard.h"
-#import "JCFormattedPhoneNumberLabel.h"
 
 #define CALL_CARD_BORDER_WIDTH 0.5f
 #define CALL_CARD_BORDER_COLOR [UIColor colorWithWhite:1 alpha:0.6]
@@ -22,8 +22,8 @@
 @property (nonatomic, strong) JCCallCard *callCard;
 
 // Subviews
-@property (nonatomic, weak) IBOutlet UILabel *callerIdLabel;
-@property (nonatomic, weak) IBOutlet JCFormattedPhoneNumberLabel *dialedNumberLabel;
+@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
+@property (nonatomic, weak) IBOutlet UILabel *numberLabel;
 @property (nonatomic, weak) IBOutlet UIButton *endCallButton;
 @property (nonatomic, weak) IBOutlet UIButton *answerCallButton;
 

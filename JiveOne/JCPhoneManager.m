@@ -607,7 +607,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
         if (localNotif){
-            localNotif.alertBody =[NSString  stringWithFormat:@"Call from %@ :%@", lineSession.callTitle, lineSession.callDetail];
+            localNotif.alertBody =[NSString  stringWithFormat:@"Call from %@ :%@", lineSession.number.titleText, lineSession.number.detailText];
             localNotif.soundName = UILocalNotificationDefaultSoundName;
             localNotif.applicationIconBadgeNumber = 1;
             [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
@@ -758,7 +758,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     }
     
     [self dismissCallViewControllerAnimated:NO];
-    if (transferLine.callTitle && receivingLine.callTitle) {
+    if (transferLine.number && receivingLine.number) {
         [self presentTransferSuccessWithSession:transferLine receivingSession:receivingLine];
     }
 }

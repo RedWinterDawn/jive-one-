@@ -10,6 +10,16 @@
 
 @implementation JCPhoneNumber
 
+-(instancetype)initWithName:(NSString *)name number:(NSNumber *)number
+{
+    self = [super init];
+    if (self) {
+        _name   = [name copy];
+        _number = [number copy];
+    }
+    return self;
+}
+
 @synthesize name = _name;
 @synthesize number = _number;
 

@@ -10,4 +10,6 @@
 
 @interface JCPhoneNumber : NSObject <JCPhoneNumberDataSource>
 
+-(instancetype)initWithName:(NSString *)name number:(NSNumber *)number;
+
 @end

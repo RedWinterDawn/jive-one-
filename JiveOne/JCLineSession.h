@@ -42,8 +42,6 @@ typedef enum {
 @interface JCLineSession : NSObject <NSCopying>
 
 @property (nonatomic, strong) id<JCPhoneNumberDataSource> number;
-@property (nonatomic, strong) NSString *callTitle;
-@property (nonatomic, strong) NSString *callDetail;
 
 // State
 @property (nonatomic) JCLineSessionState sessionState;

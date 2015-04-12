@@ -13,6 +13,7 @@
 #import "JCAppSettings.h"
 #import "JCSipHandlerError.h"
 #import "JCSipNetworkQualityRequestOperation.h"
+#import "JCPhoneNumber.h"
 
 #ifdef __APPLE__
 #include "TargetConditionals.h"
@@ -848,7 +849,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return NO;
     }
     
-    NSInteger errorCode = [_mPortSIPSDK attendedRefer:c.sessionId replaceSessionId:b.sessionId referTo:c.callDetail];
+    NSInteger errorCode = [_mPortSIPSDK attendedRefer:c.sessionId replaceSessionId:b.sessionId referTo:c.number.name];
     if (errorCode) {
         if(error != NULL) {
             *error = [JCSipHandlerError errorWithCode:errorCode];
@@ -1148,7 +1149,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             }
             
             lineSession.active = TRUE;
-            lineSession.number = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
             
             // Notify
@@ -1162,7 +1162,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         case JCCallIncoming:
         {
             lineSession.incoming = TRUE;
-            lineSession.number = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
             
             if (!self.isActive) {
@@ -1320,8 +1319,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     // Setup the line session.
     lineSession.sessionId = sessionId;      // Attach a session id to the line session.
     lineSession.video = existsVideo;    // Flag if video call.
-	[lineSession setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];                      // Get Call Title
-	[lineSession setCallDetail:[self formatCallDetail:[NSString stringWithUTF8String:caller]]];        // Get Call Detail.
+    lineSession.number = [[JCPhoneNumber alloc] initWithName:[NSString stringWithUTF8String:callerDisplayName]
+                                                      number:[self formatCallDetail:[NSString stringWithUTF8String:caller]]];
+    
     [self setSessionState:JCCallIncoming forSession:lineSession event:@"onInviteIncoming" error:nil];  // Set the session state.
 };
 

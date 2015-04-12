@@ -32,8 +32,6 @@ NSString *const kJCLineSessionHoldKey = @"hold";
     if (copy) {
         copy.sessionId          = self.sessionId;
         copy.referedSessionId   = self.referedSessionId;
-        copy.callTitle          = self.callTitle;
-        copy.callDetail         = self.callDetail;
         copy.active             = self.isActive;
         copy.hold               = self.isHolding;
         copy.updatable          = self.isUpdatable;
@@ -70,22 +68,6 @@ NSString *const kJCLineSessionHoldKey = @"hold";
 
 #pragma mark - Public Methods -
 
-- (NSString *)callTitle
-{
-    if (_callTitle) {
-        return _callTitle;
-    }
-    return self.number.titleText;
-}
-
-- (NSString *)callDetail
-{
-    if (_callDetail) {
-        return _callDetail;
-    }
-    return self.number.detailText;
-}
-
 
 //- (void) setReferCall:(BOOL)referCall originalCallSessionId:(long)originalCallSessionId
 //{
@@ -100,8 +82,6 @@ NSString *const kJCLineSessionHoldKey = @"hold";
 {
     _sessionId              = INVALID_SESSION_ID;
     _referedSessionId       = INVALID_SESSION_ID;
-    _callTitle              = nil;
-    _callDetail             = nil;
     _number                 = nil;
     _hold                   = FALSE;
     _updatable              = FALSE;
@@ -131,36 +111,39 @@ NSString *const kJCLineSessionCallCanceled  = @"Call Canceled: %lu";
 
 -(NSString *)stringForState:(JCLineSessionState)state
 {
+    NSString *name = self.number.name;
+    NSString *number = self.number.dialableNumber;
+    
     switch (state) {
         case JCNoCall:
             return kJCLineSessionNoCallState;
             
         case JCCallInitiated:
-            return [NSString stringWithFormat:kJCLineSessionCall, @"Initiated", (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionCall, @"Initiated", (long)_sessionId, name, number];
          
         case JCCallIncoming:
             return [NSString stringWithFormat:kJCLineSessionIncomingCall, (long)_sessionId];
             
         case JCCallTrying:
-            return [NSString stringWithFormat:kJCLineSessionCall, @"Trying", (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionCall, @"Trying", (long)_sessionId, name, number];
             
         case JCCallProgress:
-            return [NSString stringWithFormat:kJCLineSessionCall, @"Progress", (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionCall, @"Progress", (long)_sessionId, name, number];
             
         case JCCallRinging:
-            return [NSString stringWithFormat:kJCLineSessionCall, @"Ringing",  (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionCall, @"Ringing",  (long)_sessionId, name, number];
             
         case JCCallAnswerInitiated:
-            return [NSString stringWithFormat:kJCLineSessionCall, @"Answering", (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionCall, @"Answering", (long)_sessionId, name, number];
         
         case JCCallAnswered:
-            return [NSString stringWithFormat:kJCLineSessionCall, @"Answered", (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionCall, @"Answered", (long)_sessionId, name, number];
             
         case JCCallConnected:
-            return [NSString stringWithFormat:kJCLineSessionCall, @"Connected", (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionCall, @"Connected", (long)_sessionId, name, number];
             
         case JCCallConference:
-            return [NSString stringWithFormat:kJCLineSessionCall, @"Conference", (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionCall, @"Conference", (long)_sessionId, name, number];
             
         case JCCallFailed:
             return [NSString stringWithFormat:kJCLineSessionCallFailed, (long)_sessionId];
@@ -173,22 +156,22 @@ NSString *const kJCLineSessionCallCanceled  = @"Call Canceled: %lu";
             return [NSString stringWithFormat:@"Incoming Transfer: %lu", (long)_sessionId];
             
         case JCTransferAccepted:
-            return [NSString stringWithFormat:kJCLineSessionTransfer, @"Accepted", (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionTransfer, @"Accepted", (long)_sessionId, name, number];
             
         case JCTransferRejected:
-            return [NSString stringWithFormat:kJCLineSessionTransfer, @"Rejected", (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionTransfer, @"Rejected", (long)_sessionId, name, number];
             
         case JCTransferTrying:
-            return [NSString stringWithFormat:kJCLineSessionTransfer, @"Trying", (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionTransfer, @"Trying", (long)_sessionId, name, number];
             
         case JCTransferRinging:
-            return [NSString stringWithFormat:kJCLineSessionTransfer, @"Ringing", (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionTransfer, @"Ringing", (long)_sessionId, name, number];
             
         case JCTransferSuccess:
-            return [NSString stringWithFormat:kJCLineSessionTransfer, @"Success", (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionTransfer, @"Success", (long)_sessionId, name, number];
             
         case JCTransferFailed:
-            return [NSString stringWithFormat:kJCLineSessionTransfer, @"Failed", (long)_sessionId, _callTitle, _callDetail];
+            return [NSString stringWithFormat:kJCLineSessionTransfer, @"Failed", (long)_sessionId, name, number];
             
         default:
             return kJCLineSessionUnknownState;
