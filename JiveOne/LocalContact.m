@@ -27,5 +27,6 @@ static NSString *LocalContactNameAttributeKey   = @"name";
 @dynamic number;
 @dynamic personId;
 @dynamic smsMessages;
+@dynamic lineEvents;
 
 @end

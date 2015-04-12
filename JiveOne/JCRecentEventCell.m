@@ -55,8 +55,8 @@
     self.date.text = recentEvent.formattedModifiedShortDate;
     if ([recentEvent isKindOfClass:[RecentLineEvent class]]) {
         RecentLineEvent *lineEvent = (RecentLineEvent *)recentEvent;
-        self.name.text = lineEvent.displayName;
-        self.number.text = [NSString stringWithFormat:@"%@ %@ %@", lineEvent.displayNumber, NSLocalizedString(@"on", @"on"), lineEvent.line.pbx.name];
+        self.name.text = lineEvent.titleText;
+        self.number.text = [NSString stringWithFormat:@"%@ %@ %@", lineEvent.detailText, NSLocalizedString(@"on", @"on"), lineEvent.line.pbx.name];
     }
     
     

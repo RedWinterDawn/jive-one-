@@ -14,35 +14,80 @@
 
 @dynamic name;
 @dynamic number;
-@dynamic extension;
-
-#pragma mark - Transient Properties -
-
--(NSString *)displayName
-{
-    if (self.contact) {
-        return self.contact.name;
-    }
-    
-    NSString *name = [self.name stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-    if ([name isEqualToString:@"*99"]) {
-        return NSLocalizedString(@"Voicemail", nil);
-    }
-    
-    return name;
-}
-
--(NSString *)displayNumber
-{
-    if (self.contact) {
-        return self.contact.extension;
-    }
-    return [NSString stringWithFormat:@"%li", (long)self.number];
-}
 
 #pragma mark - Relationships -
 
 @dynamic contact;
 @dynamic line;
+@dynamic localContact;
+
+#pragma mark - Transient Properties -
+
+-(NSString *)titleText
+{
+    return self.name;
+}
+
+-(NSString *)detailText
+{
+    return self.number.formattedPhoneNumber;
+}
+
+-(NSString *)t9
+{
+    return self.name.t9;
+}
+
+-(NSString *)dialableNumber
+{
+    return self.number.dialableString;
+}
+
+-(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    return [self.name formattedStringWithT9Keyword:keyword font:font color:color];
+}
+
+-(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    return [self.number formattedPhoneNumberWithNumericKeyword:keyword font:font color:color];
+}
+
+-(BOOL)containsKeyword:(NSString *)keyword
+{
+    NSString *localizedKeyword = [keyword lowercaseStringWithLocale:keyword.locale];
+    
+    if (localizedKeyword.isNumeric) {
+        NSString *string = self.number.numericStringValue;
+        if ([string rangeOfString:localizedKeyword].location != NSNotFound) {
+            return YES;
+        }
+        if ([self containsT9Keyword:keyword]) {
+            return YES;
+        }
+    }
+    
+    NSString *name = self.name;
+    NSString *fullName = [name lowercaseStringWithLocale:name.locale];
+    if ([fullName respondsToSelector:@selector(containsString:)]) {
+        if ([fullName containsString:localizedKeyword]) {
+            return YES;
+        }
+    }
+    else if ([fullName rangeOfString:localizedKeyword].location != NSNotFound) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+-(BOOL)containsT9Keyword:(NSString *)keyword
+{
+    NSString *t9 = self.t9;
+    if ([t9 hasPrefix:keyword]) {
+        return YES;
+    }
+    return NO;
+}
 
 @end

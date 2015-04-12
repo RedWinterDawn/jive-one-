@@ -159,7 +159,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     int errorCode = [_mPortSIPSDK initialize:TRANSPORT_UDP
                                     loglevel:LOG_LEVEL
                                      logPath:nil
-                                     maxLine:_numberOfLines
+                                     maxLine:(int)_numberOfLines
                                        agent:kSipHandlerServerAgentname
                             audioDeviceLayer:IS_SIMULATOR
                             videoDeviceLayer:IS_SIMULATOR];

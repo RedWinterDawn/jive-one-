@@ -12,25 +12,19 @@
 
 #import "JCPhoneNumberDataSource.h"
 
-@class Contact, Line;
+@class Contact, Line, LocalContact;
 
 @interface RecentLineEvent : RecentEvent <JCPhoneNumberDataSource>
 
-// Represents the phone number the event came from.
-@property (nonatomic, retain) NSString *number;
-
-// Represents the extension the event came from.
-@property (nonatomic, retain) NSString *extension;
-
 // Represent the name of the event, typically the Caller ID, or name of person creating the event.
-@property (nonatomic, retain) NSString *name;
+@property (nonatomic, readwrite, strong) NSString *name;
 
-// Transient Properties.
-@property (nonatomic, readonly) NSString *displayName;
-@property (nonatomic, readonly) NSString *displayNumber;
+// Represents the phone number the event came from.
+@property (nonatomic, readwrite, strong) NSString *number;
 
 // Relationships
-@property (nonatomic, retain) Contact *contact;
-@property (nonatomic, retain) Line *line;
+@property (nonatomic, strong) Contact *contact;
+@property (nonatomic, strong) Line *line;
+@property (nonatomic, strong) LocalContact *localContact;
 
 @end

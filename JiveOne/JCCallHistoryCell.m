@@ -14,7 +14,7 @@
 {
     [super layoutSubviews];
     
-    self.number.text = self.call.extension;
+    self.number.text = self.call.number;
     
     self.icon.image = self.call.icon;
 }

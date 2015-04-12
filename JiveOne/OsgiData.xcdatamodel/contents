@@ -54,6 +54,7 @@
     <entity name="LocalContact" representedClassName="LocalContact" parentEntity="Person" syncable="YES">
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="personId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="lineEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecentLineEvent" inverseName="localContact" inverseEntity="RecentLineEvent" syncable="YES"/>
         <relationship name="smsMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SMSMessage" inverseName="localContact" inverseEntity="SMSMessage" syncable="YES"/>
     </entity>
     <entity name="Message" representedClassName="Message" isAbstract="YES" parentEntity="RecentEvent" syncable="YES">
@@ -85,11 +86,11 @@
         <attribute name="read" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
     </entity>
     <entity name="RecentLineEvent" representedClassName="RecentLineEvent" parentEntity="RecentEvent" syncable="YES">
-        <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="lineEvents" inverseEntity="Contact" syncable="YES"/>
         <relationship name="line" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Line" inverseName="events" inverseEntity="Line" syncable="YES"/>
+        <relationship name="localContact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocalContact" inverseName="lineEvents" inverseEntity="LocalContact" syncable="YES"/>
     </entity>
     <entity name="SMSMessage" representedClassName="SMSMessage" parentEntity="Message" syncable="YES">
         <attribute name="inbound" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -122,14 +123,14 @@
         <element name="JiveContact" positionX="-405" positionY="72" width="128" height="90"/>
         <element name="Line" positionX="-317" positionY="-360" width="128" height="135"/>
         <element name="LineConfiguration" positionX="-65" positionY="-243" width="128" height="135"/>
-        <element name="LocalContact" positionX="-65" positionY="342" width="128" height="90"/>
+        <element name="LocalContact" positionX="-9" positionY="342" width="128" height="103"/>
         <element name="Message" positionX="529" positionY="162" width="128" height="73"/>
         <element name="MissedCall" positionX="709" positionY="-360" width="128" height="45"/>
         <element name="OutgoingCall" positionX="711" positionY="-432" width="128" height="45"/>
         <element name="PBX" positionX="-821" positionY="270" width="128" height="178"/>
         <element name="Person" positionX="-180" positionY="216" width="128" height="105"/>
         <element name="RecentEvent" positionX="466" positionY="27" width="128" height="88"/>
-        <element name="RecentLineEvent" positionX="412" positionY="-165" width="128" height="120"/>
+        <element name="RecentLineEvent" positionX="412" positionY="-160" width="128" height="118"/>
         <element name="SMSMessage" positionX="592" positionY="342" width="128" height="90"/>
         <element name="User" positionX="-1062" positionY="162" width="128" height="90"/>
         <element name="Voicemail" positionX="711" positionY="-189" width="128" height="180"/>

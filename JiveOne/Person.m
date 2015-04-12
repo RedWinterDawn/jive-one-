@@ -116,6 +116,16 @@ NSString *const kPersonT9AttributeKey = @"t9";
     return nil;
 }
 
+-(NSString *)firstNameFirstName
+{
+    return self.name;
+}
+
+-(NSString *)lastNameFirstName
+{
+    return [NSString stringWithFormat:@"%@, %@", self.lastName, self.firstName];
+}
+
 #pragma mark - Methods -
 
 -(BOOL)containsKeyword:(NSString *)keyword

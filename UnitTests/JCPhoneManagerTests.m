@@ -135,7 +135,7 @@
     
     [self.phoneManager dialNumber:unknownNumber usingLine:line type:type completion:NULL];
     
-    OCMVerify([sipManagerMock makeCall:number videoCall:NO error:[OCMArg anyObjectRef]]);
+    OCMVerify([sipManagerMock makeCall:unknownNumber videoCall:NO error:[OCMArg anyObjectRef]]);
 }
 
 // TODO Write test cases for the rest of the dial string scenarios.
