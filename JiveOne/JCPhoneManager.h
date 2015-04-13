@@ -90,14 +90,6 @@ typedef enum : NSInteger {
 
 @property(nonatomic, strong) JCPhoneManager *phoneManager;
 
-// Dials a given number, first looking up a number string to find if there is a phone number object
-// available to represent the phone number from our jive and local contacts. If it is unable to find
-// a number, an unknown number object is provided. Then it dials the number.
-- (void)dialNumber:(NSString *)number
-         usingLine:(Line *)line
-              type:(JCPhoneManagerDialType)dialType
-        completion:(CompletionHandler)completion;
-
 // Dials a number. The sender is enabled and disabled while call is being initiated.
 - (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number
               usingLine:(Line *)line
@@ -110,7 +102,5 @@ typedef enum : NSInteger {
               usingLine:(Line *)line
                  sender:(id)sender
              completion:(CompletionHandler)completion;
-
--(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number;
 
 @end

@@ -143,14 +143,16 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         return;
     }
     
-    [self dialNumber:string
-           usingLine:line
-                type:JCPhoneManagerSingleDial
-          completion:^(BOOL success, NSError *error) {
-              if (success){
-                  [self clear:sender];
-              }
-          }];
+    // Fetch the phone number.
+    id<JCPhoneNumberDataSource> phoneNumber = [self.phoneBook phoneNumberForNumber:string forLine:line];
+    [self dialPhoneNumber:phoneNumber
+                usingLine:line
+                   sender:sender
+               completion:^(BOOL success, NSError *error) {
+                   if (success){
+                       [self clear:sender];
+                   }
+               }];
 }
 
 -(IBAction)backspace:(id)sender

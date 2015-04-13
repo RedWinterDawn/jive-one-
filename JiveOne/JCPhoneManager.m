@@ -22,19 +22,13 @@
 #import "JCSipManager.h"
 #import "LineConfiguration+V4Client.h"
 #import "JCAppSettings.h"
-#import "JCAddressBook.h"
 
 // Objects
+#import "JCPhoneBook.h"
 #import "JCCallCard.h"
 #import "JCLineSession.h"
 #import "JCConferenceCallCard.h"
 #import "Line.h"
-#import "Contact.h"
-#import "JCUnknownNumber.h"
-#import "JCPhoneNumberDataSource.h"
-#import "JiveContact.h"
-#import "LocalContact.h"
-#import "JCPhoneBook.h"
 
 // View Controllers
 #import "JCCallerViewController.h"
@@ -913,13 +907,6 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     return phoneManager;
 }
 
-- (void)dialNumber:(NSString *)number usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
-{
-    JCPhoneManager *phoneManager = self.phoneManager;
-    JCPhoneNumber *phoneNumber = [phoneManager phoneNumberForNumber:number name:nil];
-    [phoneManager dialPhoneNumber:phoneNumber usingLine:line type:dialType completion:completion];
-}
-
 - (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number usingLine:(Line *)line sender:(id)sender
 {
     [self dialPhoneNumber:number usingLine:line sender:sender completion:NULL];
@@ -947,11 +934,6 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
                                ((UITableView *)sender).userInteractionEnabled = TRUE;
                            }
                        }];
-}
-
--(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number
-{
-    return [self.phoneManager phoneNumberForNumber:number name:nil];
 }
 
 @end

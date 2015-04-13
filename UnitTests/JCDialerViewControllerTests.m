@@ -20,17 +20,10 @@
 #import "JCContactCollectionViewCell.h"
 
 // Objects
-#import "JCAddressBook.h"
 #import "Line.h"
 #import "OutgoingCall.h"
 #import "JCPhoneBookTestDataFactory.h"
 #import "JCUnknownNumber.h"
-
-@interface JCAddressBook ()
-
-- (instancetype)initWithPeople:(NSSet *)people numbers:(NSSet *)numbers;
-
-@end
 
 @interface JCDialerViewController (Private)
 

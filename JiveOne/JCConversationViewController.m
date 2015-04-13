@@ -16,7 +16,6 @@
 #import "JCUnknownNumber.h"
 #import "LocalContact.h"
 #import "SMSMessage+V5Client.h"
-#import "JCAddressBook.h"
 #import "JCAddressBookNumber.h"
 #import "PBX.h"
 #import "Line.h"

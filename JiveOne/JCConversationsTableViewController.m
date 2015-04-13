@@ -15,7 +15,6 @@
 #import "JCConversationTableViewCell.h"
 #import "SMSMessage+V5Client.h"
 #import "LocalContact.h"
-#import "JCAddressBook.h"
 
 #import "Line.h"
 #import "PBX.h"

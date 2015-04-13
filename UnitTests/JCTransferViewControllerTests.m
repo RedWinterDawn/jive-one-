@@ -19,7 +19,6 @@
 #import "JCFormattedPhoneNumberLabel.h"
 
 // Objects
-#import "JCAddressBook.h"
 #import "Line.h"
 #import "OutgoingCall.h"
 #import "JCPhoneBookTestDataFactory.h"
@@ -29,12 +28,6 @@
 @property (nonatomic, strong) JCAuthenticationManager *authenticationManager;
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkingReachabilityManager;
 @property (nonatomic, strong) NSManagedObjectContext *context;
-
-@end
-
-@interface JCAddressBook ()
-
-- (instancetype)initWithPeople:(NSSet *)people numbers:(NSSet *)numbers;
 
 @end
 
