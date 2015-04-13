@@ -15,7 +15,7 @@
 -(IBAction)callVoicemail:(id)sender
 {
     Line *line = self.authenticationManager.line;
-    [self dialNumber:[JCVoicemailNumber new]
+    [self dialPhoneNumber:[JCVoicemailNumber new]
            usingLine:line
               sender:sender];
 }

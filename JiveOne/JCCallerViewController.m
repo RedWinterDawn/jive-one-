@@ -464,7 +464,7 @@ CGFloat *_callOptionsWidth;
 
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(id<JCPhoneNumberDataSource>)number
 {
-    [self.phoneManager dialNumber:number
+    [self.phoneManager dialPhoneNumber:number
                         usingLine:self.authenticationManager.line
                              type:controller.transferCallType
                        completion:^(BOOL success, NSError *error) {

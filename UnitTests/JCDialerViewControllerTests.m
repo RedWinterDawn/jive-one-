@@ -215,7 +215,7 @@
     // When
     [self.vc initiateCall:self.vc.callButton];
     
-    OCMVerify([self.vc.phoneManager dialNumber:OCMOCK_ANY usingLine:line type:JCPhoneManagerSingleDial completion:OCMOCK_ANY]);
+    OCMVerify([self.vc.phoneManager dialPhoneNumber:OCMOCK_ANY usingLine:line type:JCPhoneManagerSingleDial completion:OCMOCK_ANY]);
 }
 
 -(void)test_dial_withoutPhoneNumber
@@ -236,7 +236,7 @@
     
     // We should not dial if there is no number.
     id phoneManagerMock = self.vc.phoneManager;
-    [[[phoneManagerMock stub] andDo:^(NSInvocation *invocation) { XCTFail(@"Should not have called this method!"); }] dialNumber:OCMOCK_ANY usingLine:OCMOCK_ANY type:JCPhoneManagerSingleDial completion:OCMOCK_ANY];
+    [[[phoneManagerMock stub] andDo:^(NSInvocation *invocation) { XCTFail(@"Should not have called this method!"); }] dialPhoneNumber:OCMOCK_ANY usingLine:OCMOCK_ANY type:JCPhoneManagerSingleDial completion:OCMOCK_ANY];
     
     // When
     [self.vc initiateCall:self.vc.callButton];

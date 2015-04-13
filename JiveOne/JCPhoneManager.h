@@ -64,10 +64,10 @@ typedef enum : NSInteger {
 
 - (JCPhoneManagerNetworkType)networkType;
 
-// Attempts to dial a passed string following the dial type directive. When the dial operation was completed, we are
-// notified. If the dial action resulted in the creation of a dial card, an kJCCallCardManagerAddedCallNotification is
-// broadcasted through the notification center.
-- (void)dialNumber:(id<JCPhoneNumberDataSource>)number
+// Attempts to dial a passed string following the dial type directive. When the dial operation was
+// completed, we are notified. If the dial action resulted in the creation of a dial card, an
+// kJCCallCardManagerAddedCallNotification is broadcasted through the notification center.
+- (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number
          usingLine:(Line *)line
               type:(JCPhoneManagerDialType)dialType
         completion:(CompletionHandler)completion;
@@ -89,17 +89,24 @@ typedef enum : NSInteger {
 
 @property(nonatomic, strong) JCPhoneManager *phoneManager;
 
-// Dials a number. The sender is enabled and disabled while call is being initiated.
-- (void)dialNumber:(id<JCPhoneNumberDataSource>)number
+// Dials a given number, first looking up a number string to find if there is a phone number object
+// available to represent the phone number from our jive and local contacts. If it is unable to find
+// a number, an unknown number object is provided. Then it dials the number.
+- (void)dialNumber:(NSString *)number
          usingLine:(Line *)line
-            sender:(id)sender;
+              type:(JCPhoneManagerDialType)dialType
+        completion:(CompletionHandler)completion;
+
+// Dials a number. The sender is enabled and disabled while call is being initiated.
+- (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number
+              usingLine:(Line *)line
+                 sender:(id)sender;
 
 // Dials a number with a completion block indicating a successfull dial or error, and the specific
 // error. Underlying error presents a hud or alert. The sender is enabled and disabled while call is
 // being initiated.
-- (void)dialNumber:(id<JCPhoneNumberDataSource>)number
-         usingLine:(Line *)line
-            sender:(id)sender
-        completion:(CompletionHandler)completion;
-
+- (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number
+              usingLine:(Line *)line
+                 sender:(id)sender
+             completion:(CompletionHandler)completion;
 @end

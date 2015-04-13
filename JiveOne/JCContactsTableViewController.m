@@ -192,7 +192,7 @@
         }
     }
     else if ([object isKindOfClass:[Person class]] && object != line) {
-        [self dialNumber:(Person *)object
+        [self dialPhoneNumber:(Person *)object
                usingLine:line
                   sender:tableView];
     }

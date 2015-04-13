@@ -43,7 +43,7 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 {
     [super viewDidAppear:animated];
     if (_dialString) {
-        [self dialNumber:[JCUnknownNumber unknownNumberWithNumber:_dialString]
+        [self dialPhoneNumber:[JCUnknownNumber unknownNumberWithNumber:_dialString]
                usingLine:self.authenticationManager.line
                   sender:nil
               completion:^(BOOL success, NSError *error) {

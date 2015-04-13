@@ -11,6 +11,7 @@
 #import "Line.h"
 #import "JCLineSession.h"
 #import "JCPhoneAudioManager.h"
+#import "JCPhoneNumber.h"
 
 @class JCSipManager;
 
@@ -39,6 +40,9 @@
 // Transfer Call
 -(void)sipHandler:(JCSipManager *)sipHandler didTransferCalls:(NSSet *)lineSessions;
 -(void)sipHandler:(JCSipManager *)sipHandler didFailTransferWithError:(NSError *)error;
+
+// Requests a phone number for a given string and name.
+-(JCPhoneNumber *)phoneNumberForNumber:(NSString *)string name:(NSString *)name;
 
 @end
 

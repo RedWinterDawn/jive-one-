@@ -28,7 +28,7 @@
 
 -(void)connectToLine:(Line *)line completion:(CompletionHandler)completion;
 
--(void)dialNumber:(NSString *)dialString usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion;
+-(void)dialPhoneNumber:(NSString *)dialString usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion;
 
 @end
 
@@ -133,7 +133,7 @@
     OCMStub([sipManagerMock line]).andReturn(line);
     OCMStub([sipManagerMock isRegistered]).andReturn(true);
     
-    [self.phoneManager dialNumber:unknownNumber usingLine:line type:type completion:NULL];
+    [self.phoneManager dialPhoneNumber:unknownNumber usingLine:line type:type completion:NULL];
     
     OCMVerify([sipManagerMock makeCall:unknownNumber videoCall:NO error:[OCMArg anyObjectRef]]);
 }

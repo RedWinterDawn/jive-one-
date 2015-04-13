@@ -143,9 +143,9 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         return;
     }
     
-    [self dialNumber:[JCUnknownNumber unknownNumberWithNumber:string]
+    [self dialNumber:string
            usingLine:authenticationManager.line
-              sender:sender
+                type:JCPhoneManagerSingleDial
           completion:^(BOOL success, NSError *error) {
               if (success){
                   self.formattedPhoneNumberLabel.dialString = nil;
@@ -324,7 +324,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     id <JCPhoneNumberDataSource> personNumber = [self objectAtIndexPath:indexPath];
     self.formattedPhoneNumberLabel.dialString = personNumber.dialableNumber;
-    [self dialNumber:personNumber
+    [self dialPhoneNumber:personNumber
            usingLine:self.authenticationManager.line
               sender:collectionView
           completion:^(BOOL success, NSError *error) {

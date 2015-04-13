@@ -22,6 +22,7 @@
 #import "JCSipManager.h"
 #import "LineConfiguration+V4Client.h"
 #import "JCAppSettings.h"
+#import "JCAddressBook.h"
 
 // Objects
 #import "JCCallCard.h"
@@ -31,6 +32,8 @@
 #import "Contact.h"
 #import "JCUnknownNumber.h"
 #import "JCPhoneNumberDataSource.h"
+#import "JiveContact.h"
+#import "LocalContact.h"
 
 // View Controllers
 #import "JCCallerViewController.h"
@@ -60,6 +63,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 @property (nonatomic, strong) JCSipManager *sipManager;
 @property (nonatomic, strong) UIStoryboard *storyboard;
 @property (nonatomic, strong) JCAppSettings *appSettings;
+@property (nonatomic, strong) JCAddressBook *addressBook;
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
 
 @end
@@ -242,7 +246,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
  *  immediately, otherwise tries to register, then dial. If we are uable to connect, we call 
  *  completion handler with success being false.
  */
--(void)dialNumber:(id<JCPhoneNumberDataSource>)number usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
+-(void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
     NSString *dialString = number.dialableNumber;
     if ([self isEmergencyNumber:dialString] && [UIDevice currentDevice].canMakeCall) {
@@ -769,6 +773,33 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     [_callViewController reload];
 }
 
+-(JCPhoneNumber *)phoneNumberForNumber:(NSString *)number name:(NSString *)name
+{
+    if (!number) {
+        return nil;
+    }
+    
+    Line *line = self.sipManager.line;
+    NSArray *contacts = nil;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ AND jrn != %@ AND extension = %@", line.pbx, line.jrn, number];
+    if (!contacts) {
+        contacts = [JiveContact MR_findAllWithPredicate:predicate];
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    return [JCUnknownNumber unknownNumberWithNumber:number];
+}
+
 #pragma mark - Getters -
 
 -(UIStoryboard *)storyboard
@@ -993,12 +1024,19 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     return phoneManager;
 }
 
-- (void)dialNumber:(id<JCPhoneNumberDataSource>)number usingLine:(Line *)line sender:(id)sender
+- (void)dialNumber:(NSString *)number usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
-    [self dialNumber:number usingLine:line sender:sender completion:NULL];
+    JCPhoneManager *phoneManager = self.phoneManager;
+    JCPhoneNumber *phoneNumber = [phoneManager phoneNumberForNumber:number name:nil];
+    [phoneManager dialPhoneNumber:phoneNumber usingLine:line type:dialType completion:completion];
 }
 
-- (void)dialNumber:(id<JCPhoneNumberDataSource>)number usingLine:(Line *)line sender:(id)sender completion:(CompletionHandler)completion
+- (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number usingLine:(Line *)line sender:(id)sender
+{
+    [self dialPhoneNumber:number usingLine:line sender:sender completion:NULL];
+}
+
+- (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number usingLine:(Line *)line sender:(id)sender completion:(CompletionHandler)completion
 {
     if([sender isKindOfClass:[UIButton class]]) {
         ((UIButton *)sender).enabled = FALSE;
@@ -1006,7 +1044,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
         ((UITableView *)sender).userInteractionEnabled = FALSE;
     }
     
-    [self.phoneManager dialNumber:number
+    [self.phoneManager dialPhoneNumber:number
                         usingLine:line
                              type:JCPhoneManagerSingleDial
                        completion:^(BOOL success, NSError *error) {
@@ -1021,5 +1059,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
                            }
                        }];
 }
+
+
 
 @end
