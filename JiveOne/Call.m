@@ -41,7 +41,6 @@ NSString *const kCallEntityName = @"Call";
             //TODO: We need to find a local contact or jive contact while we are saving.
         }
         
-        
     } completion:^(BOOL success, NSError *error) {
         if (error) {
             NSLog(@"%@ Call Event Insert Error:%@", entityName, [error description]);

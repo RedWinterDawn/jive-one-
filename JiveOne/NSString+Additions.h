@@ -23,8 +23,8 @@
 
 @interface NSString (IsNumeric)
 
-@property (nonatomic, readonly) bool isNumeric;
-@property (nonatomic, readonly) bool isAlphanumeric;
+@property (nonatomic, readonly) BOOL isNumeric;
+@property (nonatomic, readonly) BOOL isAlphanumeric;
 @property (nonatomic, readonly) NSString *numericStringValue;
 
 @end

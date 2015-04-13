@@ -26,7 +26,6 @@
 
 #import "JCLineSession.h"
 #import "JCCallCard.h"
-#import "JCUnknownNumber.h"
 
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3
@@ -62,8 +61,6 @@ CGFloat *_callOptionsWidth;
         _callOptionTransitionAnimationDuration = CALL_OPTIONS_ANIMATION_DURATION;
         _transferAnimationDuration             = TRANSFER_ANIMATION_DURATION;
         _keyboardAnimationDuration             = KEYBOARD_ANIMATION_DURATION;
-        
-        
         
         self.warmTransfer.enabled   = false;
         self.blindTransfer.enabled    = false;

@@ -9,6 +9,10 @@
 #import "JCPhoneNumberDataSource.h"
 
 @interface JCPhoneNumber : NSObject <JCPhoneNumberDataSource>
+{
+    NSString *_name;
+    NSString *_number;
+}
 
 -(instancetype)initWithName:(NSString *)name number:(NSNumber *)number;
 

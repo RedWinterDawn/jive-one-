@@ -12,7 +12,7 @@
 
 @implementation JCAddressBookNumber
 
-@synthesize number = _number;
+@synthesize number;
 
 -(NSString *)description
 {

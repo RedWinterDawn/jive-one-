@@ -135,24 +135,43 @@
     NSMutableArray *phoneNumbers = [NSMutableArray array];
     ABMultiValueRef phones = ABRecordCopyValue(_person, kABPersonPhoneProperty);
     for (CFIndex i=0; i < ABMultiValueGetCount(phones); i++) {
-        CFStringRef phoneNumberRef = ABMultiValueCopyValueAtIndex(phones, i);
-        CFStringRef locLabel = ABMultiValueCopyLabelAtIndex(phones, i);
-        
-        JCAddressBookNumber *number = [JCAddressBookNumber new];
-        number.person = self;
-        if (phoneNumberRef) {
-            number.number = (__bridge NSString *)phoneNumberRef;
-            CFRelease(phoneNumberRef);
-        }
-        
-        if (locLabel) {
-            number.type = (__bridge NSString *)ABAddressBookCopyLocalizedLabel(locLabel);
-            CFRelease(locLabel);
-        }
-        
-        [phoneNumbers addObject:number];
+        JCAddressBookNumber *phoneNumber = [self addressBookInMultValueRef:phones atIndex:i];
+        [phoneNumbers addObject:phoneNumber];
     }
     return  phoneNumbers;
+}
+
+-(JCAddressBookNumber *)addressBookNumberForIdentifier:(ABMultiValueIdentifier)identifier
+{
+    JCAddressBookNumber *phoneNumber = nil;
+    ABMultiValueRef phones = ABRecordCopyValue(_person, kABPersonPhoneProperty);
+    if (phones && ABMultiValueGetCount(phones) > 0)
+    {
+        CFIndex index = 0;
+        if (identifier != kABMultiValueInvalidIdentifier) {
+            index = ABMultiValueGetIndexForIdentifier(phones, identifier);
+        }
+        phoneNumber = [self addressBookInMultValueRef:phones atIndex:index];
+        CFRelease(phones);
+    }
+    return phoneNumber;
+}
+
+-(JCAddressBookNumber *)addressBookInMultValueRef:(ABMultiValueRef)phones atIndex:(CFIndex)index
+{
+    CFStringRef phoneNumberRef = ABMultiValueCopyValueAtIndex(phones, index);
+    CFStringRef locLabel = ABMultiValueCopyLabelAtIndex(phones, index);
+    JCAddressBookNumber *phoneNumber = [JCAddressBookNumber new];
+    phoneNumber.person = self;
+    if (phoneNumberRef) {
+        phoneNumber.number = (__bridge NSString *)phoneNumberRef;
+        CFRelease(phoneNumberRef);
+    }
+    if (locLabel) {
+        phoneNumber.type = (__bridge NSString *)ABAddressBookCopyLocalizedLabel(locLabel);
+        CFRelease(locLabel);
+    }
+    return phoneNumber;
 }
 
 -(BOOL)hasNumber:(NSString *)string

@@ -109,4 +109,7 @@ typedef enum : NSInteger {
               usingLine:(Line *)line
                  sender:(id)sender
              completion:(CompletionHandler)completion;
+
+-(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number;
+
 @end

@@ -17,8 +17,8 @@
 
 @implementation JCUnknownNumber
 
-@synthesize name = _name;
-@synthesize number = _number;
+@synthesize name;
+@synthesize number;
 
 +(instancetype)unknownNumberWithNumber:(NSString *)number
 {
@@ -28,14 +28,14 @@
     return unknownNumber;
 }
 
--(NSString *)dialableNumber
-{
-    return self.number.dialableString;
-}
-
--(NSString *)detailText
-{
-    return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Send SMS to", nil), self.name];
-}
+//-(NSString *)dialableNumber
+//{
+//    return self.number.dialableString;
+//}
+//
+//-(NSString *)detailText
+//{
+//    return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Send SMS to", nil), self.name];
+//}
 
 @end

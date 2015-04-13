@@ -34,6 +34,7 @@
 #import "JCPhoneNumberDataSource.h"
 #import "JiveContact.h"
 #import "LocalContact.h"
+#import "JCPhoneBook.h"
 
 // View Controllers
 #import "JCCallerViewController.h"
@@ -63,7 +64,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 @property (nonatomic, strong) JCSipManager *sipManager;
 @property (nonatomic, strong) UIStoryboard *storyboard;
 @property (nonatomic, strong) JCAppSettings *appSettings;
-@property (nonatomic, strong) JCAddressBook *addressBook;
+@property (nonatomic, strong) JCPhoneBook *phoneBook;
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
 
 @end
@@ -77,16 +78,21 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     
     return [self initWithSipManager:sipManager
                         appSettings:[JCAppSettings sharedSettings]
+                          phoneBook:[[JCPhoneBook alloc] init]
                 reachabilityManager:[AFNetworkReachabilityManager sharedManager]];
 }
 
--(instancetype)initWithSipManager:(JCSipManager *)sipManager appSettings:(JCAppSettings *)appSettings reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager
+-(instancetype)initWithSipManager:(JCSipManager *)sipManager
+                      appSettings:(JCAppSettings *)appSettings
+                        phoneBook:(JCPhoneBook *)phoneBook
+              reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager
 {
     self = [super init];
     if (self) {
         _storyboardName = DEFAULT_PHONE_MANAGER_STORYBOARD_NAME;
         _sipManager = sipManager;
         _appSettings = appSettings;
+        _phoneBook = phoneBook;
         _networkReachabilityManager = reachabilityManager;
     }
     return self;
@@ -773,31 +779,9 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     [_callViewController reload];
 }
 
--(JCPhoneNumber *)phoneNumberForNumber:(NSString *)number name:(NSString *)name
+-(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number name:(NSString *)name
 {
-    if (!number) {
-        return nil;
-    }
-    
-    Line *line = self.sipManager.line;
-    NSArray *contacts = nil;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ AND jrn != %@ AND extension = %@", line.pbx, line.jrn, number];
-    if (!contacts) {
-        contacts = [JiveContact MR_findAllWithPredicate:predicate];
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    return [JCUnknownNumber unknownNumberWithNumber:number];
+    return [self.phoneBook phoneNumberForName:name number:number forLine:self.sipManager.line];
 }
 
 #pragma mark - Getters -
@@ -889,15 +873,12 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     if (self.externalCallDisconnected)
     {
         NSLog(@"deregistering did become active, and processing call");
-        
         if (self.externalCallCompletionHandler != NULL) {
             self.externalCallCompletionHandler(self.externalCallConnected);
         }
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
     }
 }
-
-
 
 #pragma mark AVAudioSession
 
@@ -911,98 +892,6 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     if (_callViewController) {
         _callViewController.speakerBtn.selected = (outputType == JCPhoneAudioManagerOutputSpeaker);
     }
-}
-
-#pragma mark - Static Methods -
-
-
-
-//+ (void)dialNumber:(NSString *)dialNumber usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
-//{
-//    [[JCPhoneManager sharedManager] dialNumber:dialNumber
-//                                     usingLine:line
-//                                          type:dialType
-//                                    completion:^(BOOL success, NSError *error) {
-//                                        if (error) {
-//                                            [UIApplication showError:error];
-//                                        }
-//                                        completion(success, error);
-//                                    }];
-//}
-
-//+ (void)mergeCalls:(CompletionHandler)completion
-//{
-//    [[JCPhoneManager sharedManager] mergeCalls:^(BOOL success, NSError *error) {
-//        if (error) {
-//            [UIApplication showError:error];
-//        }
-//        completion(success, error);
-//    }];
-//}
-//
-//+ (void)splitCalls:(CompletionHandler)completion
-//{
-//    [[JCPhoneManager sharedManager] splitCalls:^(BOOL success, NSError *error) {
-//        if (error) {
-//            [UIApplication showError:error];
-//        }
-//        completion(success, error);
-//    }];
-//}
-//
-//+ (void)swapCalls:(CompletionHandler)completion
-//{
-//    [[JCPhoneManager sharedManager] swapCalls:^(BOOL success, NSError *error) {
-//        if (error) {
-//            [UIApplication showError:error];
-//        }
-//        completion(success, error);
-//    }];
-//}
-//
-//+ (void)muteCall:(BOOL)mute
-//{
-//    [[JCPhoneManager sharedManager] muteCall:mute];
-//}
-//
-//+ (void)finishWarmTransfer:(CompletionHandler)completion
-//{
-//    [[JCPhoneManager sharedManager] finishWarmTransfer:^(BOOL success, NSError *error) {
-//        if (error) {
-//            [UIApplication showError:error];
-//        }
-//        completion(success, error);
-//    }];
-//}
-
-+ (void)disconnect
-{
-    [[JCPhoneManager sharedManager] disconnect];
-}
-
-+ (void)startKeepAlive
-{
-    [[JCPhoneManager sharedManager] startKeepAlive];
-}
-
-+ (void)stopKeepAlive
-{
-    [[JCPhoneManager sharedManager] stopKeepAlive];
-}
-
-+(JCPhoneManagerNetworkType)networkType
-{
-    return [JCPhoneManager sharedManager].networkType;
-}
-
-+ (void)numberPadPressedWithInteger:(NSInteger)numberPad
-{
-    [[JCPhoneManager sharedManager] numberPadPressedWithInteger:numberPad];
-}
-
-+ (void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled
-{
-    [[JCPhoneManager sharedManager] setLoudSpeakerEnabled:loudSpeakerEnabled];
 }
 
 @end
@@ -1060,6 +949,9 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
                        }];
 }
 
-
+-(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number
+{
+    return [self.phoneManager phoneNumberForNumber:number name:nil];
+}
 
 @end

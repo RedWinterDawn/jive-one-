@@ -15,6 +15,7 @@
 #import "Line.h"
 #import "LineConfiguration.h"
 #import "JCUnknownNumber.h"
+#import "JCPhoneBook.h"
 
 @interface JCPhoneManager (Private)
 
@@ -24,6 +25,7 @@
 
 -(instancetype)initWithSipManager:(JCSipManager *)sipManager
                       appSettings:(JCAppSettings *)appSettings
+                        phoneBook:(JCPhoneBook *)phoneBook
               reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager;
 
 -(void)connectToLine:(Line *)line completion:(CompletionHandler)completion;
@@ -38,6 +40,7 @@
 @property (nonatomic, strong) JCPhoneManager *phoneManager;
 @property (nonatomic, strong) id appSettingsMock;
 @property (nonatomic, strong) id reachabilityManagerMock;
+@property (nonatomic, strong) JCPhoneBook *phoneBook;
 
 @end
 
@@ -52,9 +55,12 @@
     self.appSettingsMock = OCMClassMock([JCAppSettings class]);
     self.reachabilityManagerMock = OCMClassMock([AFNetworkReachabilityManager class]);
     
+    self.phoneBook = [[JCPhoneBook alloc] init];
+    
     // instance and verify that sip handler is the mock sip handler.
     self.phoneManager = [[JCPhoneManager alloc] initWithSipManager:self.sipHandlerMock
                                                        appSettings:self.appSettingsMock
+                                                         phoneBook:self.phoneBook
                                                reachabilityManager:self.reachabilityManagerMock];
     
     XCTAssertNotNil(self.phoneManager, @"Phone Manager should not be nil");
