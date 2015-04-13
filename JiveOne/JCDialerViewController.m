@@ -149,6 +149,8 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
           completion:^(BOOL success, NSError *error) {
               if (success){
                   self.formattedPhoneNumberLabel.dialString = nil;
+                  _contacts = nil;
+                  [self.collectionView reloadData];
               }
           }];
 }
