@@ -94,6 +94,7 @@
     XCTAssertNotNil(self.vc.view, @"View should not be nil");
     XCTAssertNotNil(self.vc.collectionView, @"Collection view should not be nil");
     XCTAssertNotNil(self.vc.formattedPhoneNumberLabel, @"Formatted Phone Number Label should not be nil");
+    XCTAssertEqual(self.vc.formattedPhoneNumberLabel.delegate, self.vc, @"The Formatted Phone Number delegate should equal the vc");
     XCTAssertNotNil(self.vc.collectionView.dataSource, @"Collection view should have a dataSource");
     XCTAssertEqual(self.vc.collectionView.dataSource, self.vc, @"The Collection view dataSorce should equal the view");
     XCTAssertNotNil(self.vc.collectionView.delegate, @"Collection view should have a delegate");

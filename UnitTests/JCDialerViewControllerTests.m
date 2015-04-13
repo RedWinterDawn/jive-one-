@@ -44,6 +44,8 @@
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkingReachabilityManager;
 @property (nonatomic, strong) NSManagedObjectContext *context;
 
++(NSString *)characterFromNumPadTag:(NSInteger)tag;
+
 @end
 
 @interface JCDialerViewControllerTests : JCMainStoryboardBaseTestCase
@@ -102,8 +104,9 @@
     XCTAssertNotNil(self.vc.collectionView.dataSource, @"Collection view should have a dataSource");
     XCTAssertEqual(self.vc.collectionView.dataSource, self.vc, @"The Collection view dataSorce should equal the view");
     XCTAssertNotNil(self.vc.collectionView.delegate, @"Collection view should have a delegate");
-    XCTAssertEqual(self.vc.collectionView.delegate, self.vc, @"The Collection view delegate should equal the view");
+    XCTAssertEqual(self.vc.collectionView.delegate, self.vc, @"The Collection view delegate should equal the vc");
     XCTAssertNotNil(self.vc.formattedPhoneNumberLabel, @"Formatted Phone Number Label should not be nil");
+    XCTAssertEqual(self.vc.formattedPhoneNumberLabel.delegate, self.vc, @"The Formatted Phone Number delegate should equal the vc");
     XCTAssertNotNil(self.vc.registrationStatusLabel, @"Registration Status Label should not be nil");
     XCTAssertNotNil(self.vc.callButton, @"Call Button should not be nil");
     XCTAssertNotNil(self.vc.backspaceButton, @"Backspace Button should not be nil");
@@ -259,6 +262,61 @@
 -(void)test_clear_press
 {
     
+}
+
+-(void)test_characterFromNumPadTag
+{
+    NSInteger value = 0;
+    NSString *result = [JCDialerViewController characterFromNumPadTag:value];
+    XCTAssertTrue([result isEqualToString:@"0"], @"result does not match expected");
+    
+    value = 0;
+    result = [JCDialerViewController characterFromNumPadTag:value];
+    XCTAssertTrue([result isEqualToString:@"0"], @"result does not match expected");
+    
+    value = 1;
+    result = [JCDialerViewController characterFromNumPadTag:value];
+    XCTAssertTrue([result isEqualToString:@"1"], @"result does not match expected");
+    
+    value = 2;
+    result = [JCDialerViewController characterFromNumPadTag:value];
+    XCTAssertTrue([result isEqualToString:@"2"], @"result does not match expected");
+    
+    value = 3;
+    result = [JCDialerViewController characterFromNumPadTag:value];
+    XCTAssertTrue([result isEqualToString:@"3"], @"result does not match expected");
+    
+    value = 4;
+    result = [JCDialerViewController characterFromNumPadTag:value];
+    XCTAssertTrue([result isEqualToString:@"4"], @"result does not match expected");
+    
+    value = 5;
+    result = [JCDialerViewController characterFromNumPadTag:value];
+    XCTAssertTrue([result isEqualToString:@"5"], @"result does not match expected");
+    
+    value = 6;
+    result = [JCDialerViewController characterFromNumPadTag:value];
+    XCTAssertTrue([result isEqualToString:@"6"], @"result does not match expected");
+    
+    value = 7;
+    result = [JCDialerViewController characterFromNumPadTag:value];
+    XCTAssertTrue([result isEqualToString:@"7"], @"result does not match expected");
+    
+    value = 8;
+    result = [JCDialerViewController characterFromNumPadTag:value];
+    XCTAssertTrue([result isEqualToString:@"8"], @"result does not match expected");
+    
+    value = 9;
+    result = [JCDialerViewController characterFromNumPadTag:value];
+    XCTAssertTrue([result isEqualToString:@"9"], @"result does not match expected");
+    
+    value = 10;
+    result = [JCDialerViewController characterFromNumPadTag:value];
+    XCTAssertTrue([result isEqualToString:@"*"], @"result does not match expected");
+    
+    value = 11;
+    result = [JCDialerViewController characterFromNumPadTag:value];
+    XCTAssertTrue([result isEqualToString:@"#"], @"result does not match expected");
 }
 
 @end

@@ -77,6 +77,7 @@
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="t9" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="RecentEvent" representedClassName="RecentEvent" isAbstract="YES" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
@@ -126,7 +127,7 @@
         <element name="MissedCall" positionX="709" positionY="-360" width="128" height="45"/>
         <element name="OutgoingCall" positionX="711" positionY="-432" width="128" height="45"/>
         <element name="PBX" positionX="-821" positionY="270" width="128" height="178"/>
-        <element name="Person" positionX="-180" positionY="216" width="128" height="90"/>
+        <element name="Person" positionX="-180" positionY="216" width="128" height="105"/>
         <element name="RecentEvent" positionX="466" positionY="27" width="128" height="88"/>
         <element name="RecentLineEvent" positionX="412" positionY="-165" width="128" height="120"/>
         <element name="SMSMessage" positionX="592" positionY="342" width="128" height="90"/>

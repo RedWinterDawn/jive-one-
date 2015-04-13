@@ -6,12 +6,9 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "JCPersonDataSource.h"
+#import "JCAddressBookEntity.h"
 
-@import AddressBook;
-
-@interface JCAddressBookPerson : NSObject <JCPersonDataSource>
+@interface JCAddressBookPerson : JCAddressBookEntity
 
 -(instancetype)initWithABRecordRef:(ABRecordRef)recordRef;
 
@@ -19,11 +16,10 @@
 @property (nonatomic, readonly) NSInteger recordId;
 @property (nonatomic, readonly) NSString *personId;
 @property (nonatomic, readonly) NSString *personHash;
+@property (nonatomic, readonly) NSString *t9;
 
 @property (nonatomic, readonly) NSArray *phoneNumbers;
 
 -(BOOL)hasNumber:(NSString *)string;
-
--(BOOL)containsKeyword:(NSString *)keyword;
 
 @end

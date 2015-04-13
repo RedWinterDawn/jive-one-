@@ -24,6 +24,7 @@
 @interface NSString (IsNumeric)
 
 @property (nonatomic, readonly) bool isNumeric;
+@property (nonatomic, readonly) bool isAlphanumeric;
 @property (nonatomic, readonly) NSString *numericStringValue;
 
 @end
@@ -31,13 +32,20 @@
 
 @interface NSString (PhoneNumbers)
 
+@property (nonatomic, readonly) NSString *t9;
 @property (nonatomic, readonly) NSString *dialableString;
 @property (nonatomic, readonly) NSString *formattedPhoneNumber;
 
-- (NSMutableAttributedString *)formattedPhoneNumberWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color;
+- (NSMutableAttributedString *)formattedPhoneNumberWithNumericKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color;
+- (NSMutableAttributedString *)formattedStringWithT9Keyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color;
 
 @end
 
+@interface NSString (Localization)
+
+@property (nonatomic, readonly) NSLocale *locale;
+
+@end
 
 @interface UIFont (Bold)
 
