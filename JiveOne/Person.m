@@ -75,9 +75,9 @@ NSString *const kPersonT9AttributeKey = @"t9";
         return [[firstName substringToIndex:1] uppercaseStringWithLocale:firstName.locale];
     }
     
-    NSString *lastName = self.lastName;
-    if (lastName.length > 0) {
-        return [[lastName substringToIndex:1] uppercaseStringWithLocale:lastName.locale];
+    NSString *name = self.name;
+    if (name.length > 0) {
+        return [[name substringToIndex:1] uppercaseStringWithLocale:name.locale];
     }
     return nil;
 }
@@ -92,6 +92,11 @@ NSString *const kPersonT9AttributeKey = @"t9";
     NSString *lastName = self.lastName;
     if (lastName.length > 0) {
         return [[lastName substringToIndex:1] uppercaseStringWithLocale:lastName.locale];
+    }
+    
+    NSString *name = self.name;
+    if (name.length > 0) {
+        return [[name substringToIndex:1] uppercaseStringWithLocale:name.locale];
     }
     return nil;
 }
