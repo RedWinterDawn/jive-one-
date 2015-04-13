@@ -8,8 +8,6 @@
 
 @import AddressBook;
 
-#import <objc/runtime.h>
-
 #import "JCAddressBook.h"
 #import "JCAddressBookNumber.h"
 
@@ -446,26 +444,6 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
 
 @end
 
-@implementation JCAddressBook (Singleton)
-
-+ (instancetype)sharedAddressBook
-{
-    static JCAddressBook *singleton = nil;
-    static dispatch_once_t pred;        // Lock
-    dispatch_once(&pred, ^{             // This code is called at most once per app
-        singleton = [[JCAddressBook alloc] init];
-    });
-    
-    return singleton;
-}
-
-+ (id)copyWithZone:(NSZone *)zone
-{
-    return self;
-}
-
-@end
-
 @implementation JCAddressBook (FormattedNames)
 
 - (void)formattedNamesForNumbers:(NSSet *)numbers
@@ -512,25 +490,6 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
             completion(name, error);
         }
     }];
-}
-
-@end
-
-@implementation UIViewController (JCAddressBook)
-
-- (void)setSharedAddressBook:(JCAddressBook *)sharedAddressBook {
-    objc_setAssociatedObject(self, @selector(sharedAddressBook), sharedAddressBook, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
--(JCAddressBook *)sharedAddressBook
-{
-    JCAddressBook *sharedAddressBook = objc_getAssociatedObject(self, @selector(sharedAddressBook));
-    if (!sharedAddressBook)
-    {
-        sharedAddressBook = [JCAddressBook sharedAddressBook];
-        objc_setAssociatedObject(self, @selector(sharedAddressBook), sharedAddressBook, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return sharedAddressBook;
 }
 
 @end

@@ -78,7 +78,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     
     return [self initWithSipManager:sipManager
                         appSettings:[JCAppSettings sharedSettings]
-                          phoneBook:[[JCPhoneBook alloc] init]
+                          phoneBook:[JCPhoneBook sharedPhoneBook]
                 reachabilityManager:[AFNetworkReachabilityManager sharedManager]];
 }
 

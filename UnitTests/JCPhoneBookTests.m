@@ -8,7 +8,7 @@
 
 #import "JCBaseTestCase.h"
 #import "JCPhoneBook.h"
-#import "JCAddressBookTestDataFactory.h"
+#import "JCPhoneBookTestDataFactory.h"
 
 @interface JCPhoneBookTests : JCBaseTestCase
 
@@ -16,22 +16,11 @@
 
 @end
 
-@interface JCAddressBook ()
-
-- (instancetype)initWithPeople:(NSArray *)people numbers:(NSArray *)numbers;
-
-@end
-
 @implementation JCPhoneBookTests
 
 - (void)setUp {
     [super setUp];
-    
-    NSDictionary *addressBookData = [JCAddressBookTestDataFactory loadTestAddessBookData];
-    NSMutableArray *people  = [addressBookData objectForKey:kJCAddressBookPeople];
-    NSMutableArray *numbers = [addressBookData objectForKey:kJCAddressBookNumbers];
-    JCAddressBook *addressBook = [[JCAddressBook alloc] initWithPeople:people numbers:numbers];
-    self.phoneBook = [[JCPhoneBook alloc] initWithAddressBook:addressBook];
+    self.phoneBook = [JCPhoneBookTestDataFactory loadTestPhoneBook];
 }
 
 - (void)tearDown {

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import "JCAddressBook.h"
-#import "JCAddressBookTestDataFactory.h"
+#import "JCPhoneBookTestDataFactory.h"
 
 @interface JCAddressBook ()
 
@@ -27,21 +27,7 @@
 
 - (void)setUp {
     [super setUp];
-    
-    NSDictionary *addressBookData = [JCAddressBookTestDataFactory loadTestAddessBookData];
-    XCTAssertNotNil(addressBookData, @"addressBookData should not be null");
-    XCTAssertTrue(addressBookData.allKeys.count == 2, @"Invalid addressBookData results");
-    
-    NSMutableArray *people  = [addressBookData objectForKey:kJCAddressBookPeople];
-    XCTAssertNotNil(people, @"people should not be null");
-    XCTAssertTrue(people.count == 7, @"people should not be null");
-    
-    NSMutableArray *numbers = [addressBookData objectForKey:kJCAddressBookNumbers];
-    XCTAssertNotNil(numbers, @"numbers should not be null");
-    XCTAssertTrue(numbers.count == 14, @"numbers should not be null");
-    
-    JCAddressBook *addressBook = [[JCAddressBook alloc] initWithPeople:people numbers:numbers];
-    self.addressBook = addressBook;
+    self.addressBook = [JCPhoneBookTestDataFactory loadTestAddressBook];
 }
 
 - (void)tearDown {

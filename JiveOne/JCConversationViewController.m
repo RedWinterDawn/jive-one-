@@ -20,6 +20,7 @@
 #import "JCAddressBookNumber.h"
 #import "PBX.h"
 #import "Line.h"
+#import "JCPhoneBook.h"
 
 // Views
 #import "JCMessagesCollectionViewCell.h"
@@ -147,9 +148,9 @@
         if (name) {
             self.title = name;
         } else {
-            [self.sharedAddressBook formattedNameForNumber:person.number completion:^(NSString *name, NSError *error) {
-                self.title = name;
-            }];
+            
+            id<JCPhoneNumberDataSource> phoneNumber = [self.phoneBook phoneNumberForNumber:person.number forLine:nil];
+            self.title = phoneNumber.titleText;
         }
     } else {
         self.title = person.name;

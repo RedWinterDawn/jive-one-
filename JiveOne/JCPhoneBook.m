@@ -7,6 +7,7 @@
 //
 
 #import "JCPhoneBook.h"
+#import <objc/runtime.h>
 
 #import "JCUnknownNumber.h"
 #import "JCMultiPersonPhoneNumber.h"
@@ -32,7 +33,7 @@
 
 -(instancetype)init
 {
-    return [self initWithAddressBook:[JCAddressBook sharedAddressBook]];
+    return [self initWithAddressBook:[JCAddressBook new]];
 }
 
 -(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number forLine:(Line *)line;
@@ -56,7 +57,6 @@
         return contact;
     }
     
-    
     // TODO: search for the local contact record.....possibly combine with local address book.
     
     // Search the phones local address book.
@@ -76,6 +76,62 @@
     }
     
     return [JCUnknownNumber unknownNumberWithNumber:number];
+}
+
+-(NSArray *)phoneNumbersWithKeyword:(NSString *)keyword forLine:(Line *)line sortedByKey:sortedByKey ascending:(BOOL)ascending
+{
+    NSMutableArray *phoneNumbers = [NSMutableArray array];
+    
+    @autoreleasepool {
+        NSArray *localPhoneNumbers = [_addressBook fetchNumbersWithKeyword:keyword sortedByKey:sortedByKey ascending:ascending].mutableCopy;
+        [phoneNumbers addObjectsFromArray:localPhoneNumbers];
+        
+        static NSString *predicateString = @"pbxId = %@ AND jrn != %@ AND (extension CONTAINS %@ OR t9 BEGINSWITH %@)";
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString, line.pbx.pbxId, line.jrn, keyword, keyword];
+        NSArray *contacts = [JiveContact MR_findAllWithPredicate:predicate];
+        [phoneNumbers addObjectsFromArray:contacts];
+    }
+    
+    [phoneNumbers sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:sortedByKey ascending:ascending]]];
+    return phoneNumbers;
+}
+
+@end
+
+@implementation JCPhoneBook (Singleton)
+
++ (instancetype)sharedPhoneBook
+{
+    static JCPhoneBook *singleton = nil;
+    static dispatch_once_t pred;        // Lock
+    dispatch_once(&pred, ^{             // This code is called at most once per app
+        singleton = [JCPhoneBook new];
+    });
+    return singleton;
+}
+
++ (id)copyWithZone:(NSZone *)zone
+{
+    return self;
+}
+
+@end
+
+@implementation UIViewController (JCPhoneBook)
+
+- (void)setPhoneBook:(JCPhoneBook *)phoneBook {
+    objc_setAssociatedObject(self, @selector(phoneBook), phoneBook, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+-(JCPhoneBook *)phoneBook
+{
+    JCPhoneBook *phoneBook = objc_getAssociatedObject(self, @selector(phoneBook));
+    if (!phoneBook)
+    {
+        phoneBook = [JCPhoneBook sharedPhoneBook];
+        objc_setAssociatedObject(self, @selector(phoneBook), phoneBook, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return phoneBook;
 }
 
 @end

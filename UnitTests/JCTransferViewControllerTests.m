@@ -22,7 +22,7 @@
 #import "JCAddressBook.h"
 #import "Line.h"
 #import "OutgoingCall.h"
-#import "JCAddressBookTestDataFactory.h"
+#import "JCPhoneBookTestDataFactory.h"
 
 @interface JCTransferViewController ()
 
@@ -63,13 +63,9 @@
     vc.appSettings = appSettings;
     XCTAssertEqual(appSettings, vc.appSettings, @"App Settings is not the mock app settings");
     
-    // Load Test Address Book Data
-    NSDictionary *addressBookData = [JCAddressBookTestDataFactory loadTestAddessBookData];
-    NSMutableSet *people  = [addressBookData objectForKey:kJCAddressBookPeople];
-    NSMutableSet *numbers = [addressBookData objectForKey:kJCAddressBookNumbers];
-    JCAddressBook *addressBook = [[JCAddressBook alloc] initWithPeople:people numbers:numbers];
-    vc.sharedAddressBook = addressBook;
-    XCTAssertEqual(addressBook, vc.sharedAddressBook, @"Address Book is not the mock address book");
+    JCPhoneBook *phoneBook = [JCPhoneBookTestDataFactory loadTestPhoneBook];
+    vc.phoneBook = phoneBook;
+    XCTAssertEqual(phoneBook, vc.phoneBook, @"Phone Book is not the mock address book");
     
     id networkReachabilityManager = OCMClassMock([AFNetworkReachabilityManager class]);
     vc.networkingReachabilityManager = networkReachabilityManager;

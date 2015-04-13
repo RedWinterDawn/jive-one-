@@ -22,7 +22,9 @@
 {
     if (_delegate && [_delegate respondsToSelector:@selector(transferViewController:shouldDialNumber:)]){
         NSString *dialString = self.formattedPhoneNumberLabel.dialString;
-        id <JCPhoneNumberDataSource> phoneNumber = [self phoneNumberForNumber:dialString];
+        JCPhoneBook *phoneBook = self.phoneBook;
+        Line *line = self.authenticationManager.line;
+        id <JCPhoneNumberDataSource> phoneNumber = [phoneBook phoneNumberForNumber:dialString forLine:line];
         [_delegate transferViewController:self shouldDialNumber:phoneNumber];
     }
 }

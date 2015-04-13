@@ -17,6 +17,7 @@
 #import "JCAppSettings.h"
 #import "JCPhoneAudioManager.h"
 #import "JCPhoneNumberDataSource.h"
+#import "JCPhoneBook.h"
 
 @class Line;
 
