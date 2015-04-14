@@ -41,15 +41,27 @@ NSString *kJCErrorGerneralDomain = @"JiveGeneralErrorDomain";
 
 +(instancetype)errorWithDomain:(NSString *)domain code:(NSInteger)code reason:(NSString *)reason underlyingError:(NSError *)error
 {
+    NSMutableDictionary *userInfo = nil;
+    NSString *description = [self descriptionFromCode:code];
+    if (!description && reason) {
+        description = reason;
+    }
+    
+    if (description) {
+        userInfo = [NSMutableDictionary new];
+        [userInfo setObject:NSLocalizedString(description, nil) forKey:NSLocalizedDescriptionKey];
+    }
+    
     NSString *shortReason = [self failureReasonFromCode:code];
     if (!shortReason) {
         shortReason = reason;
     }
     
-    NSMutableDictionary *userInfo;
-    if (reason) {
-        userInfo = [@{NSLocalizedDescriptionKey: NSLocalizedString(reason, nil),
-                      NSLocalizedFailureReasonErrorKey: NSLocalizedString(shortReason, nil)} mutableCopy];
+    if (shortReason) {
+        if (!userInfo) {
+            userInfo = [NSMutableDictionary new];
+        }
+        [userInfo setObject:NSLocalizedString(shortReason, nil) forKey:NSLocalizedFailureReasonErrorKey];
     }
     
     if (error) {
@@ -66,6 +78,11 @@ NSString *kJCErrorGerneralDomain = @"JiveGeneralErrorDomain";
 
 
 +(NSString *)failureReasonFromCode:(NSInteger)integer
+{
+    return nil;
+}
+
++(NSString *)descriptionFromCode:(NSInteger)integer
 {
     return nil;
 }

@@ -16,7 +16,6 @@
 
 #import "JCPhoneManager.h"
 #import "JCPhoneManagerError.h"
-#import "JCSipHandlerError.h"
 
 // Managers
 #import "JCSipManager.h"
@@ -115,6 +114,10 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
                                   }
                           cancelButtonTitle:@"Restart Application"
                           otherButtonTitles:nil];
+            }
+
+			else if (error.code == JC_SIP_REGISTRATION_FAILURE) {
+                [JCAlertView alertWithTitle:@"Registration Failure" error:error];
             }
             
             // If we get a no network error, show an alert.
