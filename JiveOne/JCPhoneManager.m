@@ -100,8 +100,19 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 
 - (void)connectToLine:(Line *)line
 {
+    [self connectToLine:line completion:NULL];
+}
+
+/**
+ *  Registers the phone manager to a particualar line.
+ *
+ *  If we are already connecting, we limit them so that they can not make multiple concurrent
+ *  reconnect events at the same time.
+ */
+-(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
+{
     [UIApplication showStatus:@"Selecting Line..."];
-    [self connectToLine:line completion:^(BOOL success, NSError *error) {
+    self.completion = ^(BOOL success, NSError *error) {
         if (error){
             
             // If we get a registration timeout, we have ecountered a fatal error and need to
@@ -115,8 +126,8 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
                           cancelButtonTitle:@"Restart Application"
                           otherButtonTitles:nil];
             }
-
-			else if (error.code == JC_SIP_REGISTRATION_FAILURE) {
+            
+            else if (error.code == JC_SIP_REGISTRATION_FAILURE) {
                 [JCAlertView alertWithTitle:@"Registration Failure" error:error];
             }
             
@@ -133,18 +144,11 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
                 NSLog(@"%@", [error description]);
             }
         }
-    }];
-}
-
-/**
- *  Registers the phone manager to a particualar line.
- *
- *  If we are already connecting, we limit them so that they can not make multiple concurrent
- *  reconnect events at the same time.
- */
--(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
-{
-    self.completion = completion;
+        
+        if (completion) {
+            completion(success, error);
+        }
+    };
     
     // Retrive the current network status. Check if the status is Cellular data, and do not connect
     // if we are configured to be wifi only.
