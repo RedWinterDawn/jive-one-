@@ -16,7 +16,6 @@
 
 #import "JCPhoneManager.h"
 #import "JCPhoneManagerError.h"
-#import "JCSipHandlerError.h"
 
 // Managers
 #import "JCSipManager.h"

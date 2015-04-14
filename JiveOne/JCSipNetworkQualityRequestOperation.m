@@ -7,7 +7,6 @@
 //
 
 #import "JCSipNetworkQualityRequestOperation.h"
-#import "JCSipHandlerError.h"
 
 #define CURRENT_BUFFER_SIZE_THRESHOLD 200
 #define CURRENT_PACKET_LOSS_RATE_THRESHOLD 1000
@@ -35,9 +34,7 @@
                                currentPreemptiveRate:&_currentPremptiveRate
                                currentAccelerateRate:&_currentAccelerateRate];
     if (errorCode) {
-        _error = [JCSipHandlerError errorWithCode:errorCode];
-    } else {
-        NSLog(@"currentBufferSize: %i currentPackeLossRate: %i", _currentBufferSize, _currentPacketLossRate);
+        _error = [NSError errorWithDomain:@"SipNetworkQualityRequestError" code:errorCode userInfo:nil];
     }
 }
 

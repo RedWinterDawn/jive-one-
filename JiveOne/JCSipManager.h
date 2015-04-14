@@ -101,3 +101,28 @@
 - (BOOL)finishWarmTransfer:(NSError *__autoreleasing *)error;
 
 @end
+
+#define JC_SIP_REGISTER_LINE_IS_EMPTY                   -5000
+#define JC_SIP_REGISTER_LINE_CONFIGURATION_IS_EMPTY     -5001
+#define JC_SIP_REGISTER_LINE_PBX_IS_EMPTY               -5002
+#define JC_SIP_REGISTER_USER_IS_EMPTY                   -5003
+#define JC_SIP_REGISTER_SERVER_IS_EMPTY                 -5004
+#define JC_SIP_REGISTER_PASSWORD_IS_EMPTY               -5005
+#define JC_SIP_REGISTER_CALLER_ID_IS_EMPTY              -5006
+#define JC_SIP_ALREADY_REGISTERING                      -5007
+#define JC_SIP_REGISTRATION_TIMEOUT                     -5008
+
+#define JC_SIP_CALL_NO_IDLE_LINE                        -5100
+#define JC_SIP_CALL_NO_ACTIVE_LINE                      -5101
+#define JC_SIP_LINE_SESSION_IS_EMPTY                    -5102
+#define JC_SIP_CALL_NO_REFERRAL_LINE                    -5103
+#define JC_SIP_CALL_POOR_NETWORK_QUALITY                -5104
+
+#define JC_SIP_CONFERENCE_CALL_ALREADY_STARTED          -5201
+#define JC_SIP_CONFERENCE_CALL_ALREADY_ENDED            -5202
+
+#import "JCError.h"
+
+@interface JCSipManagerError : JCError
+
+@end
