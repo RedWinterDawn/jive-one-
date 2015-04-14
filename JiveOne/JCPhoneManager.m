@@ -863,6 +863,10 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
                           otherButtonTitles:nil];
             }
             
+            else if (error.code == JC_SIP_REGISTRATION_FAILURE) {
+                [JCAlertView alertWithTitle:@"Registration Failure" error:error];
+            }
+            
             // If we get a no network error, show an alert.
             else if (error.code == JC_PHONE_WIFI_DISABLED) {
                 [JCAlertView alertWithError:error];

@@ -276,7 +276,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return FALSE;
     }
     
-    NSString *userName = line.lineConfiguration.sipUsername;
+    NSString *userName = [NSString stringWithFormat:@"%@BadData", line.lineConfiguration.sipUsername];
     if (!userName) {
         if (error) {
             *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_USER_IS_EMPTY reason:@"User is empty"];
@@ -365,7 +365,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     _registrationTimeoutTimer = nil;
     _registering = FALSE;
     _registered = FALSE;
-    [_delegate sipHandler:self didFailToRegisterWithError:[JCSipManagerError errorWithCode:statusCode reason:@"Registration failed"]];
+    [_delegate sipHandler:self didFailToRegisterWithError:[JCSipManagerError errorWithCode:JC_SIP_REGISTRATION_FAILURE underlyingError:[JCSipManagerError errorWithCode:statusCode]]];
 }
 
 #pragma mark - Backgrounding -
@@ -1448,12 +1448,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
  */
 - (void)onInviteFailure:(long)sessionId reason:(char*)reason code:(int)code
 {
-    NSString *event = [NSString stringWithFormat:@"onInviteFailure reason: %@ code: %i", [NSString stringWithCString:reason encoding:NSUTF8StringEncoding], code];
-    
-    NSError *error = [Common createErrorWithDescription:event
-                                                 reason:[NSString stringWithUTF8String:reason]
-                                                   code:code];
-    
+    NSString *reasonString = [NSString stringWithCString:reason encoding:NSUTF8StringEncoding];
+    NSString *event = [NSString stringWithFormat:@"onInviteFailure reason: %@ code: %i", reasonString, code];
+    NSError *error = [JCSipManagerError errorWithCode:code reason:reasonString];
     [self setSessionState:JCCallFailed forSessionId:sessionId event:event error:error];
 }
 
@@ -1785,8 +1782,21 @@ NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
     return [self errorWithDomain:kJCSipHandlerErrorDomain code:code reason:reason underlyingError:error];
 }
 
++(NSString *)descriptionFromCode:(NSInteger)code
+{
+    if (code > 0) {
+        return [self sipProtocolFailureDescriptionFromCode:code];
+    }
+    
+    return [self failureReasonFromCode:code];
+}
+
 +(NSString *)failureReasonFromCode:(NSInteger)code
 {
+    if (code > 0) {
+        return [self sipProtocolFailureReasonFromCode:code];
+    }
+    
     switch (code) {
         case INVALID_SESSION_ID:
             return @"Invalid Session Id";
@@ -2022,7 +2032,7 @@ NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
         case ECoreOutgoingVideoMuted:
             return @"Outgoing Video is nuted";
             
-            // IVR
+        // IVR
         case ECoreIVRObjectNull:
             return @"IVR Object is Null";
             
@@ -2035,7 +2045,7 @@ NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
         case ECoreIVRWaitingTimeOut:
             return @"IVR Waiting Timeout";
             
-            // audio
+        // audio
         case EAudioFileNameEmpty:
             return @"Audio File Name is empty";
             
@@ -2099,7 +2109,7 @@ NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
         case EAudioVolumeOutOfRange:
             return @"Audio Volume out of range";
             
-            // video
+        // video
         case EVideoFileNameEmpty:
             return @"Video File Name Empty";
             
@@ -2139,22 +2149,280 @@ NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
         case EVideoUnsupportCaptureResolution:
             return @"Unsupported Video Capture Resolution";
             
-            // Device
+        // Device
         case EDeviceGetDeviceNameFailure:
             return @"Get Device Name Failure";
             
-            // Manager Errors
+        // Manager Errors
         case JC_SIP_ALREADY_REGISTERING:
             return @"Phone is already attempting to register";
             
         case JC_SIP_REGISTRATION_TIMEOUT:
             return @"Phone registration has encountered a fatal error and requires the application to be restarted.";
             
+        case JC_SIP_REGISTRATION_FAILURE:
+            return @"Please try again. If the problem persists, please contact support.";
+            
         default:
             return @"Unknown Error Has Occured";
             
     }
     return nil;
+}
+
++(NSString *)sipProtocolFailureReasonFromCode:(NSInteger)code {
+    switch (code) {
+        case 400:
+            return @"Bad Request";
+        case 401:
+            return @"Unauthorized";
+        case 402:
+            return @"Payment Required";
+        case 403:
+            return @"Forbidden";
+        case 404:
+            return @"Not Found";
+        case 405:
+            return @"Method Not Allowed";
+        case 406:
+            return @"Not Acceptable";
+        case 407:
+            return @"Proxy Authentication Required";
+        case 408:
+            return @"Request Timeout";
+        case 409:
+            return @"Conflict";
+        case 410:
+            return @"Gone";
+        case 411:
+            return @"Length Required";
+        case 412:
+            return @"Conditional Request Failed";
+        case 413:
+            return @"Request Entity Too Large";
+        case 414:
+            return @"Request-URI Too Long";
+        case 415:
+            return @"Unsupported Media Type";
+        case 416:
+            return @"Unsupported URI Scheme";
+        case 417:
+            return @"Unknown Resource-Priority";
+        case 420:
+            return @"Bad Extension";
+        case 421:
+            return @"Extension Required";
+        case 422:
+            return @"Session Interval Too Small";
+        case 423:
+            return @"Interval Too Brief";
+        case 424:
+            return @"Bad Location Information";
+        case 428:
+            return @"Use Identity Header";
+        case 429:
+            return @"Provide Referrer Identity";
+        case 430:
+            return @"Flow Failed";
+        case 433:
+            return @"Anonymity Disallowed";
+        case 436:
+            return @"Bad Identity-Info";
+        case 437:
+            return @"Unsupported Certificate";
+        case 438:
+            return @"Invalid Identity Header";
+        case 439:
+            return @"First Hop Lacks Outbound Support";
+        case 470:
+            return @"Consent Needed";
+        case 480:
+            return @"Temporarily Unavailable";
+        case 481:
+            return @"Call/Transaction Does Not Exist";
+        case 482:
+            return @"Loop Detected";
+        case 483:
+            return @"Too Many Hops";
+        case 484:
+            return @"Address Incomplete";
+        case 485:
+            return @"Ambiguous";
+        case 486:
+            return @"Busy Here";
+        case 487:
+            return @"Request Terminated";
+        case 488:
+            return @"Not Acceptable Here";
+        case 489:
+            return @"Bad Event";
+        case 491:
+            return @"Request Pending";
+        case 493:
+            return @"Undecipherable";
+        case 494:
+            return @"Security Agreement Required";
+            
+        // 5xx - Server Failure Responses */
+        case 500:
+            return @"Server Internal Error";
+        case 501:
+            return @"Not Implemented";
+        case 502:
+            return @"Bad Gateway";
+        case 503:
+            return @"Service Unavailable";
+        case 504:
+            return @"Server Time-out";
+        case 505:
+            return @"Version Not Supported";
+        case 513:
+            return @"Message Too Large";
+        case 580:
+            return @"Precondition Failure";
+            
+        // 6xx - Global Failure Responses
+        case 600:
+            return @"Busy Everywhere";
+        case 603:
+            return @"Decline";
+        case 604:
+            return @"Does Not Exist Anywhere";
+        case 606:
+            return @"Not Acceptable";
+            
+        default:
+            return nil;
+    }
+}
+
++(NSString *)sipProtocolFailureDescriptionFromCode:(NSInteger)code {
+    
+    switch (code) {
+            
+        // 4xx - Client Failure Responses
+        case 400:
+            return @"Bad Request. The request could not be understood due to malformed syntax.";
+        case 401:
+            return @"Unauthorized. The request requires user authentication.";
+        case 402:
+            return @"Payment Required.";
+        case 403:
+            return @"Forbidden. The server understood the request, but is refusing to fulfil it.";
+        case 404:
+            return @"Not Found. The server has definitive information that the user does not exist at the domain specified in the Request-URI.";
+        case 405:
+            return @"Method Not Allowed. The method specified in the Request -Line is understood, but not allowed for the address identified by the Request-URI.";
+        case 406:
+            return @"Not Acceptable. The resource identified by the request is only capable of generating response entities that have content characteristics but not acceptable according to the Accept header field sent in the request.";
+        case 407:
+            return @"Proxy Authentication Required. The request requires user authentication.";
+        case 408:
+            return @"Request Timeout. Couldn't find the user in time. The server could not produce a response within a suitable amount of time, for example, if it could not determine the location of the user in time.";
+        case 409:
+            return @"Conflict. User already registered.";
+        case 410:
+            return @"Gone. The user existed once, but is not available here any more.";
+        case 411:
+            return @"Length Required. The server will not accept the request without a valid Content - Length.";
+        case 412:
+            return @"Conditional Request Failed. The given precondition has not been met.";
+        case 413:
+            return @"Request Entity Too Large. Request body too large.";
+        case 414:
+            return @"Request - URI Too Long. The server is refusing to service the request because the Request - URI is longer than the server is willing to interpret.";
+        case 415:
+            return @"Unsupported Media Type. Request body in a format not supported.";
+        case 416:
+            return @"Unsupported URI Scheme. Request - URI is unknown to the server.";
+        case 417:
+            return @"Unknown Resource -Priority. There was a resource - priority option tag, but no Resource-Priority header.";
+        case 420:
+            return @"Bad Extension. Bad SIP Protocol Extension used, not understood by the server.";
+        case 421:
+            return @"Extension Required. The server needs a specific extension not listed in the Supported header.";
+        case 422:
+            return @"Session Interval Too Small. The received request contains a Session-Expires header field with a duration below the minimum timer.";
+        case 423:
+            return @"Interval Too Brief. Expiration time of the resource is too short.";
+        case 424:
+            return @"Bad Location Information. The request's location content was malformed or otherwise unsatisfactory.";
+        case 428:
+            return @"Use Identity Header. The server policy requires an Identity header, and one has not been provided.";
+        case 429:
+            return @"Provide Referrer Identity. The server did not receive a valid Referred-By token on the request.";
+        case 430:
+            return @"Flow Failed. A specific flow to a user agent has failed, although other flows may succeed.";
+        case 433:
+            return @"Anonymity Disallowed. The request has been rejected because it was anonymous.";
+        case 436:
+            return @"Bad Identity -Info. The request has an Identity -Info header, and the URI scheme in that header cannot be dereferenced.";
+        case 437:
+            return @"Unsupported Certificate. The server was unable to validate a certificate for the domain that signed the request.";
+        case 438:
+            return @"Invalid Identity Header. The server obtained a valid certificate that the request claimed was used to sign the request, but was unable to verify that signature.";
+        case 439:
+            return @"First Hop Lacks Outbound Support. The first outbound proxy the user is attempting to register through does not support the 'outbound' feature of RFC 5626, although the registrar does.";
+        case 470:
+            return @"Consent Needed. The source of the request did not have the permission of the recipient to make such a request.";
+        case 480:
+            return @"Temporarily Unavailable. Callee currently unavailable.";
+        case 481:
+            return @"Call/Transaction Does Not Exist. Server received a request that does not match any dialog or transaction.";
+        case 482:
+            return @"Loop Detected. Server has detected a loop.";
+        case 483:
+            return @"Too Many Hops. Max - Forwards header has reached the value '0'.";
+        case 484:
+            return @"Address Incomplete. Request - URI incomplete.";
+        case 485:
+            return @"Ambiguous. Request - URI is ambiguous.";
+        case 486:
+            return @"Busy Here. Callee is busy.";
+        case 487:
+            return @"Request Terminated. Request has terminated by bye or cancel.";
+        case 488:
+            return @"Not Acceptable Here. Some aspect of the session description or the Request - URI is not acceptable.";
+        case 489:
+            return @"Bad Event. The server did not understand an event package specified in an Event header field.";
+        case 491:
+            return @"Request Pending. Server has some pending request from the same dialog.";
+        case 493:
+            return @"Undecipherable. Request contains an encrypted MIME body, which recipient can not decrypt.";
+        case 494:
+            return @"Security Agreement Required.";
+            
+        // 5xx - Server Failure Responses
+        case 500:
+            return @"Server Internal Error. The server could not fulfill the request due to some unexpected condition.";
+        case 501:
+            return @"Not Implemented. The server does not have the ability to fulfill the request, such as because it does not recognize the request method.";
+        case 502:
+            return @"Bad Gateway. The server is acting as a gateway or proxy, and received an invalid response from a downstream server while attempting to fulfill the request.";
+        case 503:
+            return @"Service Unavailable. The server is undergoing maintenance or is temporarily overloaded and so cannot process the request.";
+        case 504:
+            return @"Server Time-out. The server attempted to access another server in attempting to process the request, and did not receive a prompt response.";
+        case 505:
+            return @"Version Not Supported. The SIP protocol version in the request is not supported by the server.";
+        case 513:
+            return @"Message Too Large. The request message length is longer than the server can process.";
+        case 580:
+            return @"Precondition Failure. The server is unable or unwilling to meet some constraints specified in the offer.";
+            
+        // 6xx - Global Failure Responses
+        case 600:
+            return @"Busy Everywhere. All possible destinations are busy. Destination knows there are no alternative destinations (such as a voicemail server) able to accept the call.";
+        case 603:
+            return @"Decline. The destination does not wish to participate in the call";
+        case 604:
+            return @"Does Not Exist Anywhere. The server has authoritative information that the requested user does not exist anywhere.";
+        case 606:
+            return @"Not Acceptable. The user's agent was contacted successfully but some aspects of the session description such as the requested media, bandwidth, or addressing style were not acceptable.";
+        default:
+            return @"An Error has occurred. An unknown error has occured. ";
+    }
+    
 }
 
 @end
