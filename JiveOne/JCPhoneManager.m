@@ -100,7 +100,44 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
  */
 -(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
 {
-    self.completion = completion;
+    [UIApplication showStatus:@"Selecting Line..."];
+    self.completion = ^(BOOL success, NSError *error) {
+        if (error){
+            
+            // If we get a registration timeout, we have ecountered a fatal error and need to
+            // restart the application. We exit the app by raising an exception, whic will be
+            // by our analytics.
+            if(error.code == JC_SIP_REGISTRATION_TIMEOUT) {
+                [JCAlertView alertWithError:error
+                                  dismissed:^(NSInteger buttonIndex) {
+                                      [NSException raise:@"RegistrationTimoutException" format:@"The registration attempt timed out."];
+                                  }
+                          cancelButtonTitle:@"Restart Application"
+                          otherButtonTitles:nil];
+            }
+            
+            else if (error.code == JC_SIP_REGISTRATION_FAILURE) {
+                [JCAlertView alertWithTitle:@"Registration Failure" error:error];
+            }
+            
+            // If we get a no network error, show an alert.
+            else if (error.code == JC_PHONE_WIFI_DISABLED) {
+                [JCAlertView alertWithError:error];
+            }
+            
+            // any other alert, we show an error description, except for alreay registering.
+            else if (error.code != JC_SIP_ALREADY_REGISTERING) {
+                [UIApplication showError:error];
+            }
+            else {
+                NSLog(@"%@", [error description]);
+            }
+        }
+        
+        if (completion) {
+            completion(success, error);
+        }
+    };
     
     // Retrive the current network status. Check if the status is Cellular data, and do not connect
     // if we are configured to be wifi only.
@@ -847,40 +884,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 
 + (void)connectToLine:(Line *)line
 {
-    [UIApplication showStatus:@"Selecting Line..."];
-    [[JCPhoneManager sharedManager] connectToLine:line completion:^(BOOL success, NSError *error) {
-        if (error){
-            
-            // If we get a registration timeout, we have ecountered a fatal error and need to
-            // restart the application. We exit the app by raising an exception, whic will be
-            // by our analytics.
-            if(error.code == JC_SIP_REGISTRATION_TIMEOUT) {
-                [JCAlertView alertWithError:error
-                                  dismissed:^(NSInteger buttonIndex) {
-                                      [NSException raise:@"RegistrationTimoutException" format:@"The registration attempt timed out."];
-                                  }
-                          cancelButtonTitle:@"Restart Application"
-                          otherButtonTitles:nil];
-            }
-            
-            else if (error.code == JC_SIP_REGISTRATION_FAILURE) {
-                [JCAlertView alertWithTitle:@"Registration Failure" error:error];
-            }
-            
-            // If we get a no network error, show an alert.
-            else if (error.code == JC_PHONE_WIFI_DISABLED) {
-                [JCAlertView alertWithError:error];
-            }
-            
-            // any other alert, we show an error description, except for alreay registering.
-            else if (error.code != JC_SIP_ALREADY_REGISTERING) {
-                [UIApplication showError:error];
-            }
-            else {
-                NSLog(@"%@", [error description]);
-            }
-        }
-    }];
+    [[JCPhoneManager sharedManager] connectToLine:line completion:NULL];
 }
 
 + (void)dialNumber:(NSString *)dialNumber usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
