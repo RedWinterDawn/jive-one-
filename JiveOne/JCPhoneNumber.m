@@ -68,12 +68,7 @@
     
     NSString *name = self.name;
     NSString *fullName = [name lowercaseStringWithLocale:name.locale];
-    if ([fullName respondsToSelector:@selector(containsString:)]) {
-        if ([fullName containsString:localizedKeyword]) {
-            return YES;
-        }
-    }
-    else if ([fullName rangeOfString:localizedKeyword].location != NSNotFound) {
+    if (fullName && [fullName rangeOfString:localizedKeyword].location != NSNotFound) {
         return YES;
     }
     
@@ -83,6 +78,10 @@
 -(BOOL)containsT9Keyword:(NSString *)keyword
 {
     NSString *t9 = self.t9;
+    if (!t9) {
+        return NO;
+    }
+    
     if ([t9 hasPrefix:keyword]) {
         return YES;
     }
