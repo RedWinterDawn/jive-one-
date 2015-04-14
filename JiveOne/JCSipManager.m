@@ -276,7 +276,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return FALSE;
     }
     
-    NSString *userName = [NSString stringWithFormat:@"%@BadData", line.lineConfiguration.sipUsername];
+    NSString *userName = line.lineConfiguration.sipUsername;
     if (!userName) {
         if (error) {
             *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_USER_IS_EMPTY reason:@"User is empty"];
@@ -886,7 +886,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSString *sender   = [NSString stringWithUTF8String:from];
     NSLog(@"sender: %@ receiver: %@", sender, receiver);
     
-    
     JCLineSession *a = [self findSession:sessionId];
     JCLineSession *c = [self findIdleLine];
     if (!a || !c) {
@@ -1258,7 +1257,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return;
     }
     
-    [self setSessionState:state forSession:[self findSession:sessionId] event:event error:error];
+    [self setSessionState:state forSession:lineSession event:event error:error];
 }
 
 #pragma mark - Delegate Handlers -
