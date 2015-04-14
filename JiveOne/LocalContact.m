@@ -48,8 +48,6 @@ static NSString *LocalContactPersonIdAttributeKey = @"personId";
 +(LocalContact *)localContactForAddressBookNumber:(JCAddressBookNumber *)addressBookNumber context:(NSManagedObjectContext *)context
 {
     JCAddressBookPerson *person = addressBookNumber.person;
-    return [self localContactForAddressBookPerson:person context:context];
-    
     NSNumber *recordId = [NSNumber numberWithInteger:person.recordId];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"personHash = %@ AND personId = %@ AND number CONTAINS[cd] %@", person.personHash, recordId, addressBookNumber.dialableNumber];
     
@@ -83,6 +81,7 @@ static NSString *LocalContactPersonIdAttributeKey = @"personId";
     localContact.firstName  = person.firstName;
     localContact.lastName   = person.lastName;
     localContact.number     = addressBookNumber.dialableNumber;
+    return localContact;
 }
 
 @end
