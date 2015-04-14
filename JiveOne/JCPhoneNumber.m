@@ -40,7 +40,7 @@
 
 -(NSString *)t9
 {
-    return self.number.t9;
+    return self.name.t9;
 }
 
 -(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color

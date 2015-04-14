@@ -31,12 +31,12 @@ NSString *const kMultiPersonPhoneNumberFormattingThreePlusPeople = @"%@,...+%li"
             }
             
             // Data Validation. Only phone number data source objects with the same phone number can be added to the phone numbers.
-            _number = [object.number copy];
+            self.number = [object.number copy];
             
             NSString *name;
             NSUInteger count = phoneNumbers.count;
             for (id<JCPhoneNumberDataSource> phoneNumber in phoneNumbers) {
-                if (![phoneNumber.number isEqualToString:_number]) {
+                if (![phoneNumber.number isEqualToString:self.number]) {
                     [NSException exceptionWithName:NSInvalidArgumentException reason:@"object does not conform to the JCPhoneNumberDataSource Protocol" userInfo:nil];
                 }
                 
@@ -68,7 +68,7 @@ NSString *const kMultiPersonPhoneNumberFormattingThreePlusPeople = @"%@,...+%li"
                     name = phoneNumber.name;
                 }
             }
-            _name = name;
+            self.name = name;
             _phoneNumbers = phoneNumbers;
         }
     }

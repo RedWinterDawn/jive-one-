@@ -13,8 +13,6 @@
 
 @implementation JCAddressBookNumber
 
-@synthesize number;
-
 -(NSString *)description
 {
     return [NSString stringWithFormat:@"%@ %@: %@", self.name, self.type, self.number];

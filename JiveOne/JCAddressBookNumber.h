@@ -13,9 +13,6 @@
 
 @interface JCAddressBookNumber : JCPhoneNumber <JCPersonDataSource>
 
-// raw string as per the value stored in the ABAddressBook.
-@property (nonatomic, strong) NSString *number;
-
 // describes what type of number we are. obtained from the ABAddressBook.
 @property (nonatomic, strong) NSString *type;
 
