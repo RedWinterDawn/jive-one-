@@ -53,7 +53,7 @@
     </entity>
     <entity name="LocalContact" representedClassName="LocalContact" parentEntity="Person" syncable="YES">
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="personHash" optional="YES" syncable="YES"/>
+        <attribute name="personHash" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="personId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="lineEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecentLineEvent" inverseName="localContacts" inverseEntity="RecentLineEvent" syncable="YES"/>
         <relationship name="smsMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SMSMessage" inverseName="localContact" inverseEntity="SMSMessage" syncable="YES"/>
