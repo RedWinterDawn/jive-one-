@@ -25,6 +25,15 @@
 // Relationships
 @property (nonatomic, strong) Contact *contact;
 @property (nonatomic, strong) Line *line;
-@property (nonatomic, strong) LocalContact *localContact;
+@property (nonatomic, strong) NSSet *localContacts;
+
+@end
+
+@interface RecentLineEvent (CoreDataGeneratedAccessors)
+
+- (void)addLocalContactsObject:(LocalContact *)value;
+- (void)removeLocalContactsObject:(LocalContact *)value;
+- (void)addLocalContacts:(NSSet *)values;
+- (void)removeLocalContacts:(NSSet *)values;
 
 @end

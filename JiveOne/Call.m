@@ -11,6 +11,7 @@
 #import "Line.h"
 #import "JCPhoneNumberDataSource.h"
 #import "LocalContact.h"
+#import "JCMultiPersonPhoneNumber.h"
 
 NSString *const kCallEntityName = @"Call";
 
@@ -36,8 +37,29 @@ NSString *const kCallEntityName = @"Call";
             call.contact = (Contact *)[localContext objectWithID:((Contact *)number).objectID];
         }
         else if(number && [number isKindOfClass:[LocalContact class]]) {
-            call.localContact = (LocalContact *)[localContext objectWithID:((LocalContact *)number).objectID];
+            [call addLocalContactsObject:(LocalContact *)[localContext objectWithID:((LocalContact *)number).objectID]];
         } else {
+//            if ([number isKindOfClass:[JCMultiPersonPhoneNumber class]]) {
+//                NSArray *phoneNumbers = ((JCMultiPersonPhoneNumber *)number).phoneNumbers;
+//                for ( in phoneNumbers) {
+//                    <#statements#>
+//                }
+//                
+//                
+//            }
+//            
+//            
+//            
+//            
+//            if ([number isKindOfClass:[JCPhoneNumber class]]) {
+//                
+//              
+//                
+//                [LocalContact localContactForAddressBookNumber:number context:localContext]
+//                
+//                
+//            }
+            
             //TODO: We need to find a local contact or jive contact while we are saving.
         }
         

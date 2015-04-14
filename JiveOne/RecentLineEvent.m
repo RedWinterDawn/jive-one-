@@ -19,7 +19,7 @@
 
 @dynamic contact;
 @dynamic line;
-@dynamic localContact;
+@dynamic localContacts;
 
 #pragma mark - Transient Properties -
 

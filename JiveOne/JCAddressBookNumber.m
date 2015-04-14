@@ -9,6 +9,7 @@
 #import "JCAddressBookNumber.h"
 #import "JCAddressBookPerson.h"
 #import "NSString+Additions.h"
+#import "LocalContact.h"
 
 @implementation JCAddressBookNumber
 
@@ -37,6 +38,24 @@
     NSAttributedString *typeString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", self.type] attributes:attrs];
     [attributedNumberText insertAttributedString:typeString atIndex:0];
     return attributedNumberText;
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if (![object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
+        return false;
+    }
+    
+    // Check to see if object is local contact, and compare to see if the are equivalient.
+    if ([object isKindOfClass:[LocalContact class]]) {
+        LocalContact *localContact = (LocalContact *)object;
+        NSInteger personId = localContact.personId;
+        if (self.person.personId.integerValue == personId && [localContact.name.MD5Hash isEqualToString:self.person.personHash]) {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 #pragma mark - JCPersonDataSource Protocol Getters -

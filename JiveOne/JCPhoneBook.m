@@ -12,6 +12,8 @@
 #import "JCUnknownNumber.h"
 #import "JCMultiPersonPhoneNumber.h"
 #import "PBX.h"
+#import "LocalContact.h"
+#import "JiveContact.h"
 
 @interface JCPhoneBook ()
 {
@@ -57,21 +59,35 @@
         return contact;
     }
     
-    // TODO: search for the local contact record.....possibly combine with local address book.
-    
-    // Search the phones local address book.
     if (name) {
         predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@ OR number CONTAINS[cd] = %@", name, number];
     } else {
         predicate = [NSPredicate predicateWithFormat:@"number CONTAINS[cd] %@", number];
     }
-    NSArray *array = [_addressBook fetchNumbersWithPredicate:predicate sortedByKey:@"name" ascending:YES];
-    if (array.count > 0) {
-        if (array.count > 1) {
-            return [[JCMultiPersonPhoneNumber alloc] initWithPhoneNumbers:array];
+    
+    // Get phone numbers from the address book.
+    NSMutableArray *phoneNumbers = [_addressBook fetchNumbersWithPredicate:predicate sortedByKey:@"name" ascending:YES].mutableCopy;
+    
+    // Search the local contacts history stored in core data, to see if it tis a local contact which
+    // we already know, and have a history with, so we can link it to that history.
+    NSArray *localHistory = [LocalContact MR_findAllWithPredicate:predicate];
+    if (localHistory) {
+        for (LocalContact *localContact in localHistory) {
+            if ([phoneNumbers containsObject:localContact]) {
+                NSInteger index = [phoneNumbers indexOfObject:localContact];
+                JCAddressBookNumber *number = [phoneNumbers objectAtIndex:index];
+                localContact.addressBookPerson = number.person;
+                [phoneNumbers replaceObjectAtIndex:index withObject:localContact];
+            }
+        }
+    }
+    
+    if (phoneNumbers.count > 0) {
+        if (phoneNumbers.count > 1) {
+            return [[JCMultiPersonPhoneNumber alloc] initWithPhoneNumbers:phoneNumbers];
         }
         else {
-            return array.firstObject;
+            return phoneNumbers.firstObject;
         }
     }
     

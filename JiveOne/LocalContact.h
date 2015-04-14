@@ -7,6 +7,8 @@
 //
 
 #import "Person.h"
+#import "JCAddressBookPerson.h"
+#import "JCAddressBookNumber.h"
 
 @class SMSMessage;
 @class RecentLineEvent;
@@ -15,11 +17,14 @@
 
 // Attributes
 @property (nonatomic, readwrite, retain) NSString * number;
-@property (nonatomic, retain) NSNumber * personId;
+@property (nonatomic, strong) NSString *personHash;
+@property (nonatomic) NSInteger personId;
 
 // Relationships
 @property (nonatomic, retain) NSSet *smsMessages;
 @property (nonatomic, retain) NSSet *lineEvents;
+
+@property (nonatomic, strong) JCAddressBookPerson *addressBookPerson;
 
 @end
 
@@ -34,5 +39,11 @@
 - (void)removeRecentLineEventsObject:(RecentLineEvent *)value;
 - (void)addRecentLineEvents:(NSSet *)values;
 - (void)removeRecentLineEvents:(NSSet *)values;
+
+@end
+
+@interface LocalContact (JCAddressBook)
+
++(LocalContact *)localContactForAddressBookNumber:(JCAddressBookNumber *)addressBookNumber context:(NSManagedObjectContext *)context;
 
 @end
