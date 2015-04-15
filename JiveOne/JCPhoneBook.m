@@ -38,6 +38,8 @@
     return [self initWithAddressBook:[JCAddressBook new]];
 }
 
+#pragma mark - Public Methods -
+
 -(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number forLine:(Line *)line;
 {
     return [self phoneNumberForName:nil number:number forLine:line];
@@ -77,6 +79,8 @@
         }
     }
     
+    // if we have results determine if we need to return a multi phone number object or a single
+    // phone number object.
     if (phoneNumbers.count > 0) {
         if (phoneNumbers.count > 1) {
             return [[JCMultiPersonPhoneNumber alloc] initWithPhoneNumbers:phoneNumbers];
@@ -85,8 +89,34 @@
             return phoneNumbers.firstObject;
         }
     }
+    
+    // If we did not get a phone number object, we have a unknown number. If we have the name, we
+    // can return a named number, otherwise we return an unknown number.
+    if (name) {
+        return [[JCPhoneNumber alloc] initWithName:name number:number];
+    }
     return [JCUnknownNumber unknownNumberWithNumber:number];
 }
+
+-(NSArray *)phoneNumbersWithKeyword:(NSString *)keyword forLine:(Line *)line sortedByKey:sortedByKey ascending:(BOOL)ascending
+{
+    NSMutableArray *phoneNumbers = [NSMutableArray array];
+    
+    @autoreleasepool {
+        NSArray *localPhoneNumbers = [_addressBook fetchNumbersWithKeyword:keyword sortedByKey:sortedByKey ascending:ascending].mutableCopy;
+        [phoneNumbers addObjectsFromArray:localPhoneNumbers];
+        
+        static NSString *predicateString = @"pbxId = %@ AND jrn != %@ AND (extension CONTAINS %@ OR t9 BEGINSWITH %@)";
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString, line.pbx.pbxId, line.jrn, keyword, keyword];
+        NSArray *contacts = [JiveContact MR_findAllWithPredicate:predicate];
+        [phoneNumbers addObjectsFromArray:contacts];
+    }
+    
+    [phoneNumbers sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:sortedByKey ascending:ascending]]];
+    return phoneNumbers;
+}
+
+#pragma mark - Private -
 
 -(NSArray *)phoneNumbersForName:(NSString *)name number:(NSString *)number
 {
@@ -119,27 +149,10 @@
     
     NSArray *predicates = @[[NSPredicate predicateWithFormat:predicateString, numberKey, number.numericStringValue],
                             [NSPredicate predicateWithFormat:predicateString, nameKey, name]];
-        
+    
     return [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
 }
 
--(NSArray *)phoneNumbersWithKeyword:(NSString *)keyword forLine:(Line *)line sortedByKey:sortedByKey ascending:(BOOL)ascending
-{
-    NSMutableArray *phoneNumbers = [NSMutableArray array];
-    
-    @autoreleasepool {
-        NSArray *localPhoneNumbers = [_addressBook fetchNumbersWithKeyword:keyword sortedByKey:sortedByKey ascending:ascending].mutableCopy;
-        [phoneNumbers addObjectsFromArray:localPhoneNumbers];
-        
-        static NSString *predicateString = @"pbxId = %@ AND jrn != %@ AND (extension CONTAINS %@ OR t9 BEGINSWITH %@)";
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString, line.pbx.pbxId, line.jrn, keyword, keyword];
-        NSArray *contacts = [JiveContact MR_findAllWithPredicate:predicate];
-        [phoneNumbers addObjectsFromArray:contacts];
-    }
-    
-    [phoneNumbers sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:sortedByKey ascending:ascending]]];
-    return phoneNumbers;
-}
 
 @end
 

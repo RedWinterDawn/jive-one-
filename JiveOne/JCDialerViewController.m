@@ -205,14 +205,25 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         return;
     }
     
-    JCPhoneBook *phoneBook = self.phoneBook;
     Line *line = self.authenticationManager.line;
-    
-    _phoneNumbers = [phoneBook phoneNumbersWithKeyword:keyword
-                                               forLine:line
-                                           sortedByKey:NSStringFromSelector(@selector(name))
-                                             ascending:YES];
-    [self.collectionView reloadData];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        Line *localLine = (Line *)[localContext objectWithID:line.objectID];
+        NSArray *localPhoneNumbers = [self.phoneBook phoneNumbersWithKeyword:keyword forLine:localLine sortedByKey:NSStringFromSelector(@selector(name)) ascending:YES];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSMutableArray *phoneNumbers = [NSMutableArray arrayWithCapacity:localPhoneNumbers.count];
+            for (id<JCPhoneNumberDataSource> localPhoneNumber in localPhoneNumbers) {
+                if ([localPhoneNumber isKindOfClass:[NSManagedObject class]]) {
+                    NSManagedObject *object = (NSManagedObject *)localPhoneNumber;
+                    [phoneNumbers addObject:[line.managedObjectContext objectWithID:object.objectID]];
+                } else {
+                    [phoneNumbers addObject:localPhoneNumber];
+                }
+            }
+            _phoneNumbers = phoneNumbers;
+            [self.collectionView reloadData];
+        });
+    });
 }
 
 -(void)updateRegistrationStatus

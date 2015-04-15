@@ -10,7 +10,7 @@
 
 @implementation JCPhoneNumber
 
--(instancetype)initWithName:(NSString *)name number:(NSNumber *)number
+-(instancetype)initWithName:(NSString *)name number:(NSString *)number
 {
     self = [super init];
     if (self) {

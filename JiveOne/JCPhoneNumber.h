@@ -13,6 +13,6 @@
 @property (nonatomic, strong) NSString *number;
 @property (nonatomic, strong) NSString *name;
 
--(instancetype)initWithName:(NSString *)name number:(NSNumber *)number;
+-(instancetype)initWithName:(NSString *)name number:(NSString *)number;
 
 @end
