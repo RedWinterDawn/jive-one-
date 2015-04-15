@@ -1,6 +1,8 @@
 //
-//  SipHandler.h
+//  SipManager.h
 //  JiveOne
+//
+//  The SipManager server as a wrapper to the port sip SDK and manages JCLineSession objects.
 //
 //  Created by Eduardo Gueiros on 9/30/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
@@ -8,50 +10,19 @@
 
 @import Foundation;
 
-#import "Line.h"
+#import "JCSipManagerProvisioningDataSource.h"
+#import "JCPhoneNumberDataSource.h"
 #import "JCLineSession.h"
 #import "JCPhoneAudioManager.h"
-#import "JCPhoneNumber.h"
+#import "JCError.h"
 
-@class JCSipManager;
-
-@protocol SipHandlerDelegate <JCPhoneAudioManagerDelegate>
-
-// Registration
--(void)sipHandlerDidRegister:(JCSipManager *)sipHandler;
--(void)sipHandlerDidUnregister:(JCSipManager *)sipHandler;
--(void)sipHandler:(JCSipManager *)sipHandler didFailToRegisterWithError:(NSError *)error;
-
-// Intercom line session for Auto Answer feature.
--(void)sipHandler:(JCSipManager *)sipHandler receivedIntercomLineSession:(JCLineSession *)lineSession;
-
-// Call Creation Events
--(void)sipHandler:(JCSipManager *)sipHandler didAddLineSession:(JCLineSession *)lineSession;
--(void)sipHandler:(JCSipManager *)sipHandler didAnswerLineSession:(JCLineSession *)lineSession;
--(void)sipHandler:(JCSipManager *)sipHandler willRemoveLineSession:(JCLineSession *)lineSession;
-
-// Conference Calls
--(void)sipHandler:(JCSipManager *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions;
--(void)sipHandler:(JCSipManager *)sipHandler didEndConferenceCallForLineSessions:(NSSet *)lineSessions;
-
-// Line Session Status
--(void)sipHandler:(JCSipManager *)sipHandler didUpdateStatusForLineSessions:(NSSet *)lineSessions;
-
-// Transfer Call
--(void)sipHandler:(JCSipManager *)sipHandler didTransferCalls:(NSSet *)lineSessions;
--(void)sipHandler:(JCSipManager *)sipHandler didFailTransferWithError:(NSError *)error;
-
-// Requests a phone number for a given string and name.
--(JCPhoneNumber *)phoneNumberForNumber:(NSString *)string name:(NSString *)name;
-
-@end
+@protocol JCSipManagerDelegate;
 
 @interface JCSipManager : NSObject
 
-@property (nonatomic, weak) id <SipHandlerDelegate> delegate;
-
+@property (nonatomic, weak) id <JCSipManagerDelegate> delegate;
+@property (nonatomic, readonly) id <JCSipManagerProvisioningDataSource> provisioning;
 @property (nonatomic, readonly) JCPhoneAudioManager *audioManager;
-@property (nonatomic, readonly) Line *line;
 
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;         // If PortSipSDK has been initialized.
 @property (nonatomic, readonly, getter=isRegistering) BOOL registering;         // True while we are registering.
@@ -60,10 +31,12 @@
 @property (nonatomic, readonly, getter=isConferenceCall) BOOL conferenceCall;   // True if active call is a conference call.
 @property (nonatomic, readonly, getter=isMuted) BOOL mute;                      // True if the audio session has been placed on mute.
 
--(instancetype)initWithNumberOfLines:(NSUInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
+-(instancetype)initWithNumberOfLines:(NSUInteger)lines
+                            delegate:(id<JCSipManagerDelegate>)delegate
+                               error:(NSError *__autoreleasing *)error;
 
 // Methods to handle registration.
-- (void)registerToLine:(Line *)line;
+- (void)registerToProvisioning:(id <JCSipManagerProvisioningDataSource>)line;
 - (void)unregister;
 
 // Backgrounding
@@ -106,6 +79,37 @@
 
 @end
 
+@protocol JCSipManagerDelegate <JCPhoneAudioManagerDelegate>
+
+// Registration
+-(void)sipHandlerDidRegister:(JCSipManager *)sipHandler;
+-(void)sipHandlerDidUnregister:(JCSipManager *)sipHandler;
+-(void)sipHandler:(JCSipManager *)sipHandler didFailToRegisterWithError:(NSError *)error;
+
+// Intercom line session for Auto Answer feature.
+-(void)sipHandler:(JCSipManager *)sipHandler receivedIntercomLineSession:(JCLineSession *)lineSession;
+
+// Call Creation Events
+-(void)sipHandler:(JCSipManager *)sipHandler didAddLineSession:(JCLineSession *)lineSession;
+-(void)sipHandler:(JCSipManager *)sipHandler didAnswerLineSession:(JCLineSession *)lineSession;
+-(void)sipHandler:(JCSipManager *)sipHandler willRemoveLineSession:(JCLineSession *)lineSession;
+
+// Conference Calls
+-(void)sipHandler:(JCSipManager *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions;
+-(void)sipHandler:(JCSipManager *)sipHandler didEndConferenceCallForLineSessions:(NSSet *)lineSessions;
+
+// Line Session Status
+-(void)sipHandler:(JCSipManager *)sipHandler didUpdateStatusForLineSessions:(NSSet *)lineSessions;
+
+// Transfer Call
+-(void)sipHandler:(JCSipManager *)sipHandler didTransferCalls:(NSSet *)lineSessions;
+-(void)sipHandler:(JCSipManager *)sipHandler didFailTransferWithError:(NSError *)error;
+
+// Requests a phone number for a given string and name.
+-(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)string name:(NSString *)name;
+
+@end
+
 #define JC_SIP_REGISTER_LINE_IS_EMPTY                   -5000
 #define JC_SIP_REGISTER_LINE_CONFIGURATION_IS_EMPTY     -5001
 #define JC_SIP_REGISTER_LINE_PBX_IS_EMPTY               -5002
@@ -126,7 +130,7 @@
 #define JC_SIP_CONFERENCE_CALL_ALREADY_STARTED          -5201
 #define JC_SIP_CONFERENCE_CALL_ALREADY_ENDED            -5202
 
-#import "JCError.h"
+
 
 @interface JCSipManagerError : JCError
 

@@ -7,12 +7,13 @@
 //
 
 #import "JiveContact.h"
+#import "JCSipManagerProvisioningDataSource.h"
 
 @class RecentEvent;
 @class LineConfiguration;
 @class PBX;
 
-@interface Line : JiveContact
+@interface Line : JiveContact <JCSipManagerProvisioningDataSource>
 
 // Attributes
 @property (nonatomic, retain) NSString * mailboxJrn;

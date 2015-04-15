@@ -120,7 +120,7 @@
     [self.phoneManager connectToLine:line completion:NULL];
     
     // Then
-    OCMVerify([self.sipHandlerMock registerToLine:line]);
+    OCMVerify([self.sipHandlerMock registerToProvisioning:line]);
 }
 
 // TODO Write test cases for the rest of the connect to line scenarios.
@@ -136,7 +136,7 @@
     JCPhoneManagerDialType type = JCPhoneManagerSingleDial;
     JCSipManager *sipManagerMock = self.sipHandlerMock;
     
-    OCMStub([sipManagerMock line]).andReturn(line);
+    OCMStub([sipManagerMock provisioning]).andReturn(line);
     OCMStub([sipManagerMock isRegistered]).andReturn(true);
     
     [self.phoneManager dialPhoneNumber:unknownNumber usingLine:line type:type completion:NULL];

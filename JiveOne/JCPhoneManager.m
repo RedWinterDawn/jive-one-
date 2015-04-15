@@ -27,7 +27,12 @@
 #import "JCCallCard.h"
 #import "JCLineSession.h"
 #import "JCConferenceCallCard.h"
+
+// Managed Objects
 #import "Line.h"
+#import "MissedCall.h"
+#import "OutgoingCall.h"
+#import "IncomingCall.h"
 
 // View Controllers
 #import "JCCallerViewController.h"
@@ -41,7 +46,7 @@ NSString *const kJCPhoneManagerRegisteredNotification               = @"phoneMan
 NSString *const kJCPhoneManagerUnregisteredNotification             = @"phoneManagerUnregistered";
 NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneManagerRegistrationFailed";
 
-@interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate, JCPhoneAudioManagerDelegate>
+@interface JCPhoneManager ()<JCSipManagerDelegate, JCCallCardDelegate, JCPhoneAudioManagerDelegate>
 {
     JCPhoneAudioManager *_audioManager;
     JCCallerViewController *_callViewController;
@@ -191,7 +196,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegisteringNotification object:self];
     [UIApplication showStatus:@"Registering..."];
-    [self.sipManager registerToLine:line];
+    [self.sipManager registerToProvisioning:line];
 }
 
 -(void)disconnect
@@ -266,7 +271,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 
 -(void)connectAndDial:(id<JCPhoneNumberDataSource>)number usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
-    if (self.sipManager.line != line && line != nil) {
+    if (self.sipManager.provisioning != line && line != nil) {
         [self disconnect];
     }
     
@@ -607,12 +612,11 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     }];
 }
 
--(void)sipHandler:(JCSipManager *)sipHandler didAddLineSession:(JCLineSession *)lineSession
+-(void)sipHandler:(JCSipManager *)sipManager didAddLineSession:(JCLineSession *)lineSession
 {
-    
-//    __autoreleasing NSError *error;
-//    [self.audioManager engagePhoneAudio:&error];
-    
+    if (!lineSession.isIncoming) {
+        [OutgoingCall addOutgoingCallWithLineSession:lineSession line:(Line *)sipManager.provisioning];
+    }
     
     // If we are backgrounded, push out a local notification
     if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
@@ -644,8 +648,10 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     }
 }
 
--(void)sipHandler:(JCSipManager *)sipHandler didAnswerLineSession:(JCLineSession *)lineSession
+-(void)sipHandler:(JCSipManager *)sipManager didAnswerLineSession:(JCLineSession *)lineSession
 {
+    [IncomingCall addIncommingCallWithLineSession:lineSession line:(Line *)sipManager.provisioning];
+    
     JCCallCard *callCard = [self callCardForLineSession:lineSession];
     callCard.started = [NSDate date];
     if (_callViewController) {
@@ -655,6 +661,11 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 
 -(void)sipHandler:(JCSipManager *)sipHandler willRemoveLineSession:(JCLineSession *)session
 {
+    // if it was an incoming call, and we missed it, we record it.
+    if (session.isIncoming) {
+        [MissedCall addMissedCallWithLineSession:session line:(Line *)sipHandler.provisioning];
+    }
+    
     // Check to see if the line session happens to be a conference call. if it is, we need to end
     // the conference call. This will end the conference call, and it will be removed because it
     // will have been marked as inactive.
@@ -686,6 +697,11 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     if ((state == UIApplicationStateBackground || state == UIApplicationStateInactive) && count == 0) {
         [self.sipManager startKeepAwake];
     }
+}
+
+-(void)sipHandler:(JCSipManager *)sipHandler didMissLineSession:(JCLineSession *)lineSession
+{
+    
 }
 
 -(void)sipHandler:(JCSipManager *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions
@@ -782,7 +798,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 
 -(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number name:(NSString *)name
 {
-    return [self.phoneBook phoneNumberForName:name number:number forLine:self.sipManager.line];
+    return [self.phoneBook phoneNumberForName:name number:number forLine:(Line *)self.sipManager.provisioning];
 }
 
 #pragma mark - Getters -
@@ -804,7 +820,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 
 -(Line *)line
 {
-    return self.sipManager.line;
+    return (Line *)self.sipManager.provisioning;
 }
 
 -(BOOL)isInitialized

@@ -645,6 +645,7 @@
 		5DBF6F421ADC4FC9004B53F5 /* JCPhoneBookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneBookTests.m; sourceTree = "<group>"; };
 		5DBF6F441ADEF477004B53F5 /* JCAddressBookEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAddressBookEntity.h; sourceTree = "<group>"; };
 		5DBF6F451ADEF477004B53F5 /* JCAddressBookEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookEntity.m; sourceTree = "<group>"; };
+		5DBF6F471ADF0E1F004B53F5 /* JCSipManagerProvisioningDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSipManagerProvisioningDataSource.h; sourceTree = "<group>"; };
 		5DC1D87F1AB8D7D000326AF3 /* JCApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCApiClient.h; sourceTree = "<group>"; };
 		5DC1D8801AB8D7D000326AF3 /* JCApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCApiClient.m; sourceTree = "<group>"; };
 		5DC1D8821ABB0CDB00326AF3 /* JCSocketLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocketLogger.h; sourceTree = "<group>"; };
@@ -1193,6 +1194,7 @@
 				5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */,
 				5D9A5E201A24E30A00E8274C /* JCPhoneAudioManager.h */,
 				5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */,
+				5DBF6F471ADF0E1F004B53F5 /* JCSipManagerProvisioningDataSource.h */,
 				279A4E2A19DA91E100E8AB7B /* JCSipManager.h */,
 				279A4E2B19DA91E100E8AB7B /* JCSipManager.m */,
 			);
