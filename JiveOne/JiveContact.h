@@ -8,6 +8,8 @@
 
 #import "Person.h"
 
+@class Line;
+
 @interface JiveContact : Person
 
 @property (nonatomic, retain) NSString * extension;
@@ -15,5 +17,12 @@
 
 // Transient
 @property (nonatomic, retain) NSString * pbxId;
+
+@end
+
+@interface JiveContact (Search)
+
++(JiveContact *)jiveContactWithExtension:(NSString *)number
+                                 forLine:(Line *)line;
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "JiveContact.h"
+#import "Line.h"
+#import "PBX.h"
 
 @implementation JiveContact
 
@@ -37,6 +39,18 @@
     NSAttributedString *typeString = [[NSAttributedString alloc] initWithString:@"ext: " attributes:attrs];
     [attributedNumberText insertAttributedString:typeString atIndex:0];
     return attributedNumberText;
+}
+
+@end
+
+
+@implementation JiveContact (Search)
+
++(JiveContact *)jiveContactWithExtension:(NSString *)number forLine:(Line *)line;
+{
+    static NSString *format = @"pbxId = %@ AND jrn != %@ AND extension = %@";
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:format, line.pbx.pbxId, line.jrn, number];
+    return [JiveContact MR_findFirstWithPredicate:predicate inContext:line.managedObjectContext];
 }
 
 @end
