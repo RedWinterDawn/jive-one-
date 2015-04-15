@@ -51,7 +51,7 @@ NSString *const kJCAddressBookTestDataFactoryDataFile = @"TestExternalContactLis
     for (NSDictionary *entry in contactList)
     {
         ABRecordRef record = [self recordForEntry:entry];
-        JCAddressBookPerson *person = [[JCAddressBookPerson alloc] initWithABRecordRef:record];
+        JCAddressBookPerson *person = [JCAddressBookPerson addressBookPersonWithABRecordRef:record];
         [numbers addObjectsFromArray:person.phoneNumbers];
         [people addObject:person];
     }

@@ -137,7 +137,7 @@ NSString *const kJCAddressBookFailedToLoadNotification = @"AddressBookFailedToLo
                     continue;
                 }
                 
-                JCAddressBookPerson *person = [[JCAddressBookPerson alloc] initWithABRecordRef:record];
+                JCAddressBookPerson *person = [JCAddressBookPerson addressBookPersonWithABRecordRef:record];
                 [people addObject:person];
                 [numbers addObjectsFromArray:person.phoneNumbers];
             }
@@ -161,9 +161,10 @@ NSString *const kJCAddressBookFailedToLoadNotification = @"AddressBookFailedToLo
 {
     [self getPermission:^(BOOL success, ABAddressBookRef addressBook, NSError *error) {
         if (success) {
-            ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook,recordId);
             if (completion) {
-                completion([[JCAddressBookPerson alloc] initWithABRecordRef:person], nil);
+                ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook,recordId);
+                JCAddressBookPerson *addressBookPerson = [JCAddressBookPerson addressBookPersonWithABRecordRef:person];
+                completion(addressBookPerson, nil);
             }
         }
         else {
@@ -437,7 +438,8 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
     NSMutableArray *addressBook = [NSMutableArray arrayWithCapacity:arrayOfPeople.count];
     for(NSUInteger index = 0; index < arrayOfPeople.count; index++){
         ABRecordRef currentPerson = (__bridge ABRecordRef)[arrayOfPeople objectAtIndex:index];
-        [addressBook addObject:[[JCAddressBookPerson alloc] initWithABRecordRef:currentPerson]];
+        JCAddressBookPerson *person = [JCAddressBookPerson addressBookPersonWithABRecordRef:currentPerson];
+        [addressBook addObject:person];
     }
     [addressBook sortUsingDescriptors:sortDesciptors];
     return addressBook;
@@ -461,9 +463,9 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
             for (NSString *numberString in numbers) {
                 NSMutableArray *peopleGroup = [NSMutableArray new];
                 for (JCAddressBookPerson *person in people) {
-                    if ([person hasNumber:numberString]) {
-                        [peopleGroup addObject:person];
-                    }
+//                    if ([person hasNumber:numberString]) {
+//                        [peopleGroup addObject:person];
+//                    }
                 }
                 
                 if (peopleGroup.count > 0) {

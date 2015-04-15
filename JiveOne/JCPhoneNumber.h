@@ -10,9 +10,11 @@
 
 @interface JCPhoneNumber : NSObject <JCPhoneNumberDataSource>
 
-@property (nonatomic, strong) NSString *number;
-@property (nonatomic, strong) NSString *name;
++(instancetype)phoneNumberWithName:(NSString *)name number:(NSString *)number;
 
 -(instancetype)initWithName:(NSString *)name number:(NSString *)number;
+
+@property (nonatomic, strong) NSString *number;
+@property (nonatomic, strong) NSString *name;
 
 @end

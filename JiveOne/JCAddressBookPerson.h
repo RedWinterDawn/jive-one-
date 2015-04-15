@@ -8,23 +8,15 @@
 
 @import AddressBook;
 
-#import "JCPhoneNumber.h"
-#import "JCPersonDataSource.h"
+#import "JCAddressBookEntity.h"
 #import "JCAddressBookNumber.h"
 
-@interface JCAddressBookPerson : JCPhoneNumber <JCPersonDataSource>
+@interface JCAddressBookPerson : JCAddressBookEntity
 
--(instancetype)initWithABRecordRef:(ABRecordRef)recordRef;
-
-// Identifers
-@property (nonatomic, readonly) NSInteger recordId;
-@property (nonatomic, readonly) NSString *personId;
-@property (nonatomic, readonly) NSString *personHash;
++ (instancetype)addressBookPersonWithABRecordRef:(ABRecordRef)recordRef;
 
 @property (nonatomic, readonly) NSArray *phoneNumbers;
 
--(JCAddressBookNumber *)addressBookNumberForIdentifier:(ABMultiValueIdentifier)identifier;
-
--(BOOL)hasNumber:(NSString *)string;
+-(JCAddressBookNumber *)addressBookNumberForIdentifier:(NSInteger)identifier;
 
 @end

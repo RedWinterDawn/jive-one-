@@ -24,7 +24,7 @@
 @property (nonatomic, retain) NSSet *smsMessages;
 @property (nonatomic, retain) NSSet *lineEvents;
 
-@property (nonatomic, strong) JCAddressBookPerson *addressBookPerson;
+@property (nonatomic, strong) JCAddressBookNumber *phoneNumber;
 
 @end
 

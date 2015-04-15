@@ -28,7 +28,17 @@
 // Search for a specific phone number and name in our Jive and Local Contacts phone books.
 -(id<JCPhoneNumberDataSource>)phoneNumberForName:(NSString *)name number:(NSString *)number forLine:(Line *)line;
 
--(NSArray *)phoneNumbersWithKeyword:(NSString *)keyword forLine:(Line *)line sortedByKey:sortedByKey ascending:(BOOL)ascending;
+
+-(void)phoneNumbersWithKeyword:(NSString *)keyword
+                       forLine:(Line *)line
+                   sortedByKey:sortedByKey
+                     ascending:(BOOL)ascending
+                    completion:(void (^)(NSArray *phoneNumbers))completion;
+
+-(NSArray *)phoneNumbersWithKeyword:(NSString *)keyword
+                            forLine:(Line *)line
+                        sortedByKey:sortedByKey
+                          ascending:(BOOL)ascending;
 
 @end
 

@@ -15,14 +15,18 @@
 #import "LocalContact.h"
 #import "JiveContact.h"
 
-@interface JCPhoneBook ()
-{
+@interface JCPhoneBook () {
     JCAddressBook *_addressBook;
 }
 
 @end
 
 @implementation JCPhoneBook
+
+-(instancetype)init
+{
+    return [self initWithAddressBook:[JCAddressBook new]];
+}
 
 -(instancetype)initWithAddressBook:(JCAddressBook *)addressBook
 {
@@ -31,11 +35,6 @@
         _addressBook = addressBook;
     }
     return self;
-}
-
--(instancetype)init
-{
-    return [self initWithAddressBook:[JCAddressBook new]];
 }
 
 #pragma mark - Public Methods -
@@ -72,7 +71,7 @@
         if ([phoneNumbers containsObject:localContact]) {
             NSInteger index = [phoneNumbers indexOfObject:localContact];
             JCAddressBookNumber *number = [phoneNumbers objectAtIndex:index];
-            localContact.addressBookPerson = number.person;
+            localContact.phoneNumber = number;
             [phoneNumbers replaceObjectAtIndex:index withObject:localContact];
         } else {
             [phoneNumbers addObject:localContact];
@@ -83,7 +82,7 @@
     // phone number object.
     if (phoneNumbers.count > 0) {
         if (phoneNumbers.count > 1) {
-            return [[JCMultiPersonPhoneNumber alloc] initWithPhoneNumbers:phoneNumbers];
+            return [JCMultiPersonPhoneNumber multiPersonPhoneNumberWithPhoneNumbers:phoneNumbers];
         }
         else {
             return phoneNumbers.firstObject;
@@ -96,6 +95,34 @@
         return [[JCPhoneNumber alloc] initWithName:name number:number];
     }
     return [JCUnknownNumber unknownNumberWithNumber:number];
+}
+
+-(void)phoneNumbersWithKeyword:(NSString *)keyword forLine:(Line *)line sortedByKey:sortedByKey ascending:(BOOL)ascending completion:(void (^)(NSArray *phoneNumbers))completion
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        Line *localLine = (Line *)[localContext objectWithID:line.objectID];
+        NSArray *localPhoneNumbers = [self phoneNumbersWithKeyword:keyword forLine:localLine sortedByKey:NSStringFromSelector(@selector(name)) ascending:YES];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSMutableArray *phoneNumbers = [NSMutableArray arrayWithCapacity:localPhoneNumbers.count];
+            for (id<JCPhoneNumberDataSource> localPhoneNumber in localPhoneNumbers) {
+                if ([localPhoneNumber isKindOfClass:[NSManagedObject class]]) {
+                    NSManagedObject *localObject = (NSManagedObject *)localPhoneNumber;
+                    NSManagedObject *object = [line.managedObjectContext objectWithID:localObject.objectID];
+                    if ([object isKindOfClass:[LocalContact class]]) {
+                        ((LocalContact *)object).phoneNumber = ((LocalContact *)localObject).phoneNumber;
+                    }
+                    [phoneNumbers addObject:object];
+                } else {
+                    [phoneNumbers addObject:localPhoneNumber];
+                }
+            }
+            
+            if (completion) {
+                completion(phoneNumbers);
+            }
+        });
+    });
 }
 
 -(NSArray *)phoneNumbersWithKeyword:(NSString *)keyword forLine:(Line *)line sortedByKey:sortedByKey ascending:(BOOL)ascending

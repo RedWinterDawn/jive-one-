@@ -6,12 +6,50 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
+@import AddressBook;
+
 #import "JCAddressBookNumber.h"
-#import "JCAddressBookPerson.h"
 #import "NSString+Additions.h"
 #import "LocalContact.h"
 
 @implementation JCAddressBookNumber
+
++ (NSArray *)addressBookNumbersForRecordRef:(ABRecordRef)recordRef
+{
+    NSMutableArray *phoneNumbers = [NSMutableArray array];
+    ABMultiValueRef phones = ABRecordCopyValue(recordRef, kABPersonPhoneProperty);
+    for (CFIndex i=0; i < ABMultiValueGetCount(phones); i++) {
+        JCAddressBookNumber *phoneNumber = [self addressBookNumberFromMultValueRef:phones atIndex:i record:recordRef];
+        [phoneNumbers addObject:phoneNumber];
+    }
+    return  phoneNumbers;
+}
+
++ (JCAddressBookNumber *)addressBookNumberForRecordRef:(ABRecordRef)recordRef withIdentifier:(ABMultiValueIdentifier)identifier;
+{
+    JCAddressBookNumber *phoneNumber = nil;
+    ABMultiValueRef phones = ABRecordCopyValue(recordRef, kABPersonPhoneProperty);
+    if (phones && ABMultiValueGetCount(phones) > 0)
+    {
+        CFIndex index = 0;
+        if (identifier != kABMultiValueInvalidIdentifier) {
+            index = ABMultiValueGetIndexForIdentifier(phones, identifier);
+        }
+        phoneNumber = [self addressBookNumberFromMultValueRef:phones atIndex:index record:recordRef];
+        CFRelease(phones);
+    }
+    return phoneNumber;
+}
+
+-(instancetype)initWithNumber:(NSString *)number type:(NSString *)type identifier:(NSInteger)identifier record:(ABRecordRef)record
+{
+    self = [super initWithNumber:number record:record];
+    if (self) {
+        _type = type;
+        _identifer = identifier;
+    }
+    return self;
+}
 
 -(NSString *)description
 {
@@ -22,7 +60,7 @@
 
 -(NSString *)detailText
 {
-    return [NSString stringWithFormat:@"%@: %@", self.type, self.number];
+    return [NSString stringWithFormat:@"%@: %@", self.type, self.number.formattedPhoneNumber];
 }
 
 -(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color{
@@ -48,7 +86,7 @@
     if ([object isKindOfClass:[LocalContact class]]) {
         LocalContact *localContact = (LocalContact *)object;
         NSInteger personId = localContact.personId;
-        if (self.person.personId.integerValue == personId && [localContact.name.MD5Hash isEqualToString:self.person.personHash]) {
+        if (self.recordId == personId && [localContact.personHash isEqualToString:self.personHash]) {
             return true;
         }
     }
@@ -56,59 +94,24 @@
     return false;
 }
 
-#pragma mark - JCPersonDataSource Protocol Getters -
+#pragma mark - Private -
 
-//  Since we maintain a pointer to the parent person, we just forward all properties relating to the
-//  person from the parent person.
-
--(NSString *)name
++ (JCAddressBookNumber *)addressBookNumberFromMultValueRef:(ABMultiValueRef)phones atIndex:(CFIndex)index record:(ABRecordRef)record
 {
-    return self.person.name;
-}
-
--(NSString *)firstName
-{
-    return self.person.firstName;
-}
-
--(NSString *)middleName
-{
-    return self.person.middleName;
-}
-
--(NSString *)lastName
-{
-    return self.person.lastName;
-}
-
--(NSString *)firstInitial
-{
-    return self.person.firstInitial;
-}
-
--(NSString *)middleInitial
-{
-    return self.person.middleInitial;
-}
-
--(NSString *)lastInitial
-{
-    return self.person.lastInitial;
-}
-
--(NSString *)initials
-{
-    return self.person.initials;
-}
-
--(NSString *)lastNameFirstName
-{
-    return self.person.lastNameFirstName;
-}
-
--(NSString *)firstNameFirstName
-{
-    return self.person.firstNameFirstName;
+    NSInteger identifer = ABMultiValueGetIdentifierAtIndex(phones, index);
+    CFStringRef phoneNumberRef = ABMultiValueCopyValueAtIndex(phones, index);
+    CFStringRef locLabel = ABMultiValueCopyLabelAtIndex(phones, index);
+    NSString *type, *number;
+    
+    if (phoneNumberRef) {
+        number = (__bridge NSString *)phoneNumberRef;
+        CFRelease(phoneNumberRef);
+    }
+    if (locLabel) {
+        type = (__bridge NSString *)ABAddressBookCopyLocalizedLabel(locLabel);
+        CFRelease(locLabel);
+    }
+    return [[JCAddressBookNumber alloc] initWithNumber:number type:type identifier:identifer record:record];
 }
 
 @end

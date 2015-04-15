@@ -6,17 +6,15 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCPhoneNumber.h"
-#import "JCPersonDataSource.h"
+#import "JCAddressBookEntity.h"
 
-@class JCAddressBookPerson;
+@interface JCAddressBookNumber : JCAddressBookEntity
 
-@interface JCAddressBookNumber : JCPhoneNumber <JCPersonDataSource>
++ (NSArray *)addressBookNumbersForRecordRef:(ABRecordRef)recordRef;
+
+@property (nonatomic, readonly) NSInteger identifer;
 
 // describes what type of number we are. obtained from the ABAddressBook.
-@property (nonatomic, strong) NSString *type;
-
-// pointer to parent person. We are a one-to-many child of a person.
-@property (nonatomic, weak) JCAddressBookPerson *person;
+@property (nonatomic, readonly) NSString *type;
 
 @end

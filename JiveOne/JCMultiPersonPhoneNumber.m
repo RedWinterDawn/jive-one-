@@ -9,68 +9,70 @@
 #import "JCMultiPersonPhoneNumber.h"
 #import "JCPersonDataSource.h"
 
-@interface JCMultiPersonPhoneNumber ()
-
-@end
-
-@implementation JCMultiPersonPhoneNumber
-
 NSString *const kMultiPersonPhoneNumberFormattingTwoPeople = @"%@, %@";
 NSString *const kMultiPersonPhoneNumberFormattingThreePlusPeople = @"%@,...+%li";
 
--(instancetype)initWithPhoneNumbers:(NSArray *)phoneNumbers
+@implementation JCMultiPersonPhoneNumber
+
++(instancetype)multiPersonPhoneNumberWithPhoneNumbers:(NSArray *)phoneNumbers
 {
-    self = [super init];
-    if (self)
+    NSString *name, *number;
+    if (phoneNumbers.count > 0)
     {
-        if (phoneNumbers.count > 0)
-        {
-            id<JCPhoneNumberDataSource> object = phoneNumbers.firstObject;
-            if (![object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
-                [NSException exceptionWithName:NSInvalidArgumentException reason:@"object does not conform to the JCPhoneNumberDataSource Protocol" userInfo:nil];
-            }
-            
-            // Data Validation. Only phone number data source objects with the same phone number can be added to the phone numbers.
-            self.number = [object.number copy];
-            
-            NSString *name;
-            NSUInteger count = phoneNumbers.count;
-            for (id<JCPhoneNumberDataSource> phoneNumber in phoneNumbers) {
-                if (![phoneNumber.number isEqualToString:self.number]) {
-                    [NSException exceptionWithName:NSInvalidArgumentException reason:@"object does not conform to the JCPhoneNumberDataSource Protocol" userInfo:nil];
-                }
-                
-                NSString *firstPhoneNumberName;
-                if ([phoneNumber conformsToProtocol:@protocol(JCPersonDataSource) ]) {
-                    id<JCPersonDataSource> person = (id<JCPersonDataSource>)phoneNumber;
-                    firstPhoneNumberName = person.firstName;
-                } else {
-                    firstPhoneNumberName = phoneNumber.name;
-                }
-                
-                if (count > 1)
-                {
-                    if (count == 2)
-                    {
-                        id<JCPhoneNumberDataSource> otherNumber = phoneNumbers.lastObject;
-                        NSString *lastPhoneNumberName;
-                        if ([otherNumber conformsToProtocol:@protocol(JCPersonDataSource) ]) {
-                            id<JCPersonDataSource> person = (id<JCPersonDataSource>)otherNumber;
-                            lastPhoneNumberName = person.firstName;
-                        } else {
-                            lastPhoneNumberName = otherNumber.name;
-                        }
-                        name = [NSString stringWithFormat:kMultiPersonPhoneNumberFormattingTwoPeople, firstPhoneNumberName, lastPhoneNumberName];
-                    } else {
-                        [NSString stringWithFormat:kMultiPersonPhoneNumberFormattingThreePlusPeople, firstPhoneNumberName, (long)count-1];
-                    }
-                } else {
-                    name = phoneNumber.name;
-                }
-            }
-            self.name = name;
-            _phoneNumbers = phoneNumbers;
+        id<JCPhoneNumberDataSource> firstPhoneNumber = phoneNumbers.firstObject;
+        if (![firstPhoneNumber conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
+            [NSException exceptionWithName:NSInvalidArgumentException reason:@"object does not conform to the JCPhoneNumberDataSource Protocol" userInfo:nil];
         }
+        
+        number = [firstPhoneNumber.number.dialableString copy];
+        [self validatePhoneNumbersArray:phoneNumbers number:number];
+        name = [self nameForNumbers:phoneNumbers];
+    }
+    return [[JCMultiPersonPhoneNumber alloc] initWithName:name number:number phoneNumbers:phoneNumbers];
+}
+
+#pragma mark - Private -
+
++(NSString *)nameFromPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    if ([phoneNumber conformsToProtocol:@protocol(JCPersonDataSource) ]) {
+        return ((id<JCPersonDataSource>)phoneNumber).firstName;
+    }
+    return phoneNumber.name;
+}
+
++(void)validatePhoneNumbersArray:(NSArray *)phoneNumbers number:(NSString *)number
+{
+    for (id<JCPhoneNumberDataSource> phoneNumber in phoneNumbers) {
+        if (![phoneNumber conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
+            [NSException exceptionWithName:NSInvalidArgumentException reason:@"object does not conform to the JCPhoneNumberDataSource Protocol" userInfo:nil];
+        }
+        
+        if (![phoneNumber.number.dialableString isEqualToString:number]) {
+            [NSException exceptionWithName:NSInvalidArgumentException reason:@"object does not contain a matching phone number" userInfo:nil];
+        }
+    }
+}
+
++(NSString *)nameForNumbers:(NSArray *)phoneNumbers
+{
+    NSString *firstName = [self nameFromPhoneNumber:phoneNumbers.firstObject];
+    NSUInteger count = phoneNumbers.count;
+    if (count == 1) {
+        return firstName;
+    }
+    if (count == 2) {
+        NSString *lastName = [self nameFromPhoneNumber:phoneNumbers.lastObject];
+        return [NSString stringWithFormat:kMultiPersonPhoneNumberFormattingTwoPeople, firstName, lastName];
+    }
+    return [NSString stringWithFormat:kMultiPersonPhoneNumberFormattingThreePlusPeople, firstName, (long)count-1];
+}
+
+-(instancetype)initWithName:(NSString *)name number:(NSString *)number phoneNumbers:(NSArray *)phoneNumbers
+{
+    self = [super initWithName:name number:number];
+    if (self) {
+        _phoneNumbers = phoneNumbers;
     }
     return self;
 }

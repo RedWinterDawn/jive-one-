@@ -98,7 +98,7 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 
 - (void)didSelectPerson:(ABRecordRef)personRef identifier:(ABMultiValueIdentifier)identifier
 {
-    JCAddressBookPerson *person = [[JCAddressBookPerson alloc] initWithABRecordRef:personRef];
+    JCAddressBookPerson *person = [JCAddressBookPerson addressBookPersonWithABRecordRef:personRef];
     JCAddressBookNumber *phoneNumber = [person addressBookNumberForIdentifier:identifier];
     _phoneNumber = phoneNumber;
 }

@@ -39,33 +39,36 @@ static NSString *LocalContactPersonIdAttributeKey = @"personId";
 @dynamic smsMessages;
 @dynamic lineEvents;
 
-@synthesize addressBookPerson;
+@synthesize phoneNumber;
 
 @end
 
 @implementation LocalContact (JCAddressBook)
 
-+(LocalContact *)localContactForAddressBookNumber:(JCAddressBookNumber *)addressBookNumber context:(NSManagedObjectContext *)context
++(LocalContact *)localContactForAddressBookNumber:(JCAddressBookNumber *)phoneNumber context:(NSManagedObjectContext *)context
 {
-    JCAddressBookPerson *person = addressBookNumber.person;
-    NSNumber *recordId = [NSNumber numberWithInteger:person.recordId];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"personHash = %@ AND personId = %@ AND number CONTAINS[cd] %@", person.personHash, recordId, addressBookNumber.dialableNumber];
+    NSNumber *recordId = [NSNumber numberWithInteger:phoneNumber.recordId];
+    NSString *hash = phoneNumber.personHash;
+    NSString *dialableNumber = phoneNumber.dialableNumber;
+    
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"personHash = %@ AND personId = %@ AND number CONTAINS[cd] %@", hash, recordId, dialableNumber];
     
     // Check for the easy find.
     LocalContact *localContact = [LocalContact MR_findFirstWithPredicate:predicate inContext:context];
     if (localContact) {
-        localContact.addressBookPerson = person;
+        localContact.phoneNumber = phoneNumber;
         return localContact;
     }
     
     // If we did not find one, check to see if we have one with the same hash of the object, and try
     // to link to that. The hash is based off the name, so we should be able to link to that if its
     // id has changed in core data. if we find one, update the record id.
-    predicate = [NSPredicate predicateWithFormat:@"personHash = %@ AND number CONTAINS[cd] %@", person.personHash, addressBookNumber.dialableNumber];
+    predicate = [NSPredicate predicateWithFormat:@"personHash = %@ AND number CONTAINS[cd] %@", hash, dialableNumber];
     localContact = [LocalContact MR_findFirstWithPredicate:predicate inContext:context];
     if (localContact) {
-        localContact.addressBookPerson = person;
-        localContact.personId = person.recordId;
+        localContact.phoneNumber = phoneNumber;
+        localContact.personId = phoneNumber.recordId;
         return localContact;
     }
     
@@ -75,12 +78,12 @@ static NSString *LocalContactPersonIdAttributeKey = @"personId";
     // local contact to link it too.
     
     localContact = [LocalContact MR_createInContext:context];
-    localContact.personId   = person.recordId;
-    localContact.personHash = person.personHash;
-    localContact.name       = person.name;
-    localContact.firstName  = person.firstName;
-    localContact.lastName   = person.lastName;
-    localContact.number     = addressBookNumber.dialableNumber;
+    localContact.personId   = phoneNumber.recordId;
+    localContact.personHash = hash;
+    localContact.name       = phoneNumber.name;
+    localContact.firstName  = phoneNumber.firstName;
+    localContact.lastName   = phoneNumber.lastName;
+    localContact.number     = phoneNumber.dialableNumber;
     return localContact;
 }
 

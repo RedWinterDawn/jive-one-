@@ -13,15 +13,10 @@ NSString *const kJCVoicemailNumberString = @"*99";
 
 @implementation JCVoicemailNumber
 
--(NSString *)name
+-(instancetype)init
 {
-    return NSLocalizedString(kJCVoicemailNumberNameString, nil);
+    NSString *name = NSLocalizedString(kJCVoicemailNumberNameString, nil);
+    return [super initWithName:name number:kJCVoicemailNumberString];
 }
-
--(NSString *)number
-{
-    return kJCVoicemailNumberString;
-}
-
 
 @end
