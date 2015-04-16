@@ -8,7 +8,9 @@
 
 @import Foundation;
 
-@interface JCConversationGroup : NSObject
+#import "JCPhoneNumberDataSource.h"
+
+@interface JCConversationGroup : NSObject <JCPhoneNumberDataSource>
 
 -(instancetype)initWithConversationGroupId:(NSString *)conversationGroupId context:(NSManagedObjectContext *)context;
 

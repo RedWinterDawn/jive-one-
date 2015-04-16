@@ -7,6 +7,7 @@
 //
 
 #import "JCPhoneNumber.h"
+#import "JCPhoneNumberDataSourceUtils.h"
 
 @implementation JCPhoneNumber
 
@@ -19,8 +20,14 @@
 {
     self = [super init];
     if (self) {
-        _name   = [name copy];
+        if (!number) {
+            return nil;
+        }
         _number = [number copy];
+        
+        if (name) {
+            _name = [name copy];
+        }
     }
     return self;
 }
@@ -35,62 +42,56 @@
 
 -(NSString *)detailText
 {
-    return self.number.formattedPhoneNumber;
+    return self.formattedNumber;
 }
 
 -(NSString *)dialableNumber
 {
-    return self.number.dialableString;
+    return [JCPhoneNumberDataSourceUtils dialableStringForPhoneNumber:self];
+}
+
+-(NSString *)formattedNumber
+{
+    return [JCPhoneNumberDataSourceUtils formattedPhoneNumberForPhoneNumber:self];
 }
 
 -(NSString *)t9
 {
-    return self.name.t9;
+    return [JCPhoneNumberDataSourceUtils t9StringForPhoneNumber:self];
 }
 
 -(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
 {
-    return [self.name formattedStringWithT9Keyword:keyword font:font color:color];
+    return [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword
+                                                         font:font
+                                                        color:color
+                                                  phoneNumber:self];
 }
 
 -(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
 {
-    return [self.number formattedPhoneNumberWithNumericKeyword:keyword font:font color:color];
+    return [JCPhoneNumberDataSourceUtils detailTextWithKeyword:keyword
+                                                          font:font
+                                                         color:color
+                                                   phoneNumber:self];
 }
 
 -(BOOL)containsKeyword:(NSString *)keyword
 {
-    NSString *localizedKeyword = [keyword lowercaseStringWithLocale:keyword.locale];
-    if (localizedKeyword.isNumeric) {
-        NSString *string = self.number.numericStringValue;
-        if ([string rangeOfString:localizedKeyword].location != NSNotFound) {
-            return YES;
-        }
-        if ([self containsT9Keyword:keyword]) {
-            return YES;
-        }
-    }
-    
-    NSString *name = self.name;
-    NSString *fullName = [name lowercaseStringWithLocale:name.locale];
-    if (fullName && [fullName rangeOfString:localizedKeyword].location != NSNotFound) {
-        return YES;
-    }
-    
-    return NO;
+    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+                                     containsKeyword:keyword];
 }
 
 -(BOOL)containsT9Keyword:(NSString *)keyword
 {
-    NSString *t9 = self.t9;
-    if (!t9) {
-        return NO;
-    }
-    
-    if ([t9 hasPrefix:keyword]) {
-        return YES;
-    }
-    return NO;
+    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+                                   containsT9Keyword:keyword];
+}
+
+-(BOOL)isEqual:(id)object
+{
+    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+                                             isEqual:object];
 }
 
 @end

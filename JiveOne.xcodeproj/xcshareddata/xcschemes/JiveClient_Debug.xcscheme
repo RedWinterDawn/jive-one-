@@ -148,6 +148,9 @@
                   Identifier = "JCBaseTestCase">
                </Test>
                <Test
+                  Identifier = "JCDialerViewControllerTests/test_numPad_keyPress">
+               </Test>
+               <Test
                   Identifier = "JCMainStoryboardBaseTestCase">
                </Test>
                <Test

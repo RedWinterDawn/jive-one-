@@ -39,7 +39,7 @@
     if ([object isKindOfClass:[Line class]])
     {
         Line *line = (Line *)object;
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ on %@", line.extension, line.pbx.name];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ on %@", line.number, line.pbx.name];
         if ([line isEqual:[JCAuthenticationManager sharedInstance].line]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }

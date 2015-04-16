@@ -27,6 +27,8 @@
     self = [super initWithName:name number:number];
     if (self) {
         _record       = record;
+        CFRetain(record);
+        
         _recordId     = ABRecordGetRecordID(record);
         _personHash   = name.MD5Hash;
         

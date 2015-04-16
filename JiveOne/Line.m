@@ -47,10 +47,10 @@ NSString *const kLineActiveAttribute = @"active";
     if (self.pbx) {
         NSString *name = self.pbx.name;
         if (name && !name.isEmpty) {
-            detailText = [NSString stringWithFormat:@"%@ on %@", self.extension, name];
+            detailText = [NSString stringWithFormat:@"%@ on %@", self.number, name];
         }
         else {
-            detailText = [NSString stringWithFormat:@"%@", self.extension];
+            detailText = [NSString stringWithFormat:@"%@", self.number];
         }
     }
     return detailText;

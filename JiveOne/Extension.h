@@ -6,23 +6,20 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "Person.h"
+#import "JCPersonManagedObject.h"
 
 @class Line;
 
-@interface JiveContact : Person
+@interface Extension : JCPersonManagedObject
 
-@property (nonatomic, retain) NSString * extension;
 @property (nonatomic, retain) NSString * jrn;
-
-// Transient
 @property (nonatomic, retain) NSString * pbxId;
 
 @end
 
-@interface JiveContact (Search)
+@interface Extension (Search)
 
-+(JiveContact *)jiveContactWithExtension:(NSString *)number
++(Extension *)jiveContactWithExtension:(NSString *)number
                                  forLine:(Line *)line;
 
 @end

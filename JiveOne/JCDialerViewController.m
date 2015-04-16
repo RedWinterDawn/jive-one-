@@ -226,7 +226,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     NSString *prompt = NSLocalizedString(@"Unregistered", nil);
     if (phoneManager.isRegistered) {
         self.callButton.selected = false;
-        prompt = phoneManager.line.extension;
+        prompt = phoneManager.line.number;
     }
     else if (appSettings.wifiOnly && reachabilityManager.isReachableViaWWAN){
         prompt = NSLocalizedString(@"Disabled", nil);

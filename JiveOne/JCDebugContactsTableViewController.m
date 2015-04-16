@@ -43,8 +43,8 @@
 
 -(void)configureCell:(UITableViewCell *)cell withObject:(Contact *)contact
 {
-    cell.textLabel.text = contact.name;
-    cell.detailTextLabel.text = contact.extension;
+    cell.textLabel.text         = contact.titleText;
+    cell.detailTextLabel.text   = contact.detailText;
 }
 
 @end

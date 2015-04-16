@@ -79,7 +79,7 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
     
     line.name       = [lineData stringValueForKey:@"name"];
     line.jrn        = [lineData stringValueForKey:@"jrn"];
-    line.extension  = [lineData stringValueForKey:@"extension"];
+    line.number     = [lineData stringValueForKey:@"extension"];
     line.active     = [lineData boolValueForKey:@"active"];
     line.mailboxJrn = [lineData stringValueForKey:@"mailboxJrn"];
     line.mailboxUrl = [lineData stringValueForKey:@"mailboxUrl"];
@@ -103,7 +103,7 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
     
     contact.name       = [contactData stringValueForKey:@"name"];
     contact.jrn        = [contactData stringValueForKey:@"jrn"];
-    contact.extension  = [contactData stringValueForKey:@"extension"];
+    contact.number     = [contactData stringValueForKey:@"extension"];
     contact.favorite   = [contactData boolValueForKey:@"favorite"];
     contact.jiveUserId = [contactData stringValueForKey:@"jiveUserId"];
 }

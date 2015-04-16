@@ -41,7 +41,7 @@
 
 -(NSString *)titleForLine:(Line *)line
 {
-    return [NSString stringWithFormat:@"%@ on %@", line.extension, line.pbx.name];
+    return [NSString stringWithFormat:@"%@ on %@", line.number, line.pbx.name];
 }
 
 -(NSString *)titleForRow:(NSInteger)row

@@ -33,23 +33,6 @@ NSString *kContacktFavoriteAttribute = @"favorite";
 @dynamic pbx;
 @dynamic groups;
 
-#pragma mark - Transient -
-
--(NSString *)detailText
-{
-    NSString * detailText = super.detailText;
-    if (self.pbx) {
-        NSString *name = self.pbx.name;
-        if (name && !name.isEmpty) {
-            detailText = [NSString stringWithFormat:@"%@ on %@", self.extension, name];
-        }
-        else {
-            detailText = [NSString stringWithFormat:@"%@", self.extension];
-        }
-    }
-    return detailText;
-}
-
 @end
 
 @implementation Contact (Search)

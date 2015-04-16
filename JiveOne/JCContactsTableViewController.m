@@ -16,7 +16,7 @@
 #import "PBX.h"
 #import "User.h"
 #import "ContactGroup.h"
-#import "JiveContact.h"
+#import "Extension.h"
 
 #import "JCPhoneManager.h"
 
@@ -137,7 +137,7 @@
                 predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, contactGroupPredicate]];
                 _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
             } else {
-                _fetchRequest = [JiveContact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+                _fetchRequest = [Extension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
                 _fetchRequest.includesSubentities = TRUE;
             }
         }
@@ -195,10 +195,10 @@
             [self.delegate contactsTableViewController:self didSelectContactGroup:(ContactGroup *)object];
         }
     }
-    else if ([object isKindOfClass:[Person class]] && object != line) {
-        [self dialPhoneNumber:(Person *)object
-               usingLine:line
-                  sender:tableView];
+    else if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)] && object != line) {
+        [self dialPhoneNumber:(id<JCPhoneNumberDataSource>)object
+                    usingLine:line
+                       sender:tableView];
     }
 }
 

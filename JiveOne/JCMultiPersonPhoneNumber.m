@@ -24,7 +24,7 @@ NSString *const kMultiPersonPhoneNumberFormattingThreePlusPeople = @"%@,...+%li"
             [NSException exceptionWithName:NSInvalidArgumentException reason:@"object does not conform to the JCPhoneNumberDataSource Protocol" userInfo:nil];
         }
         
-        number = [firstPhoneNumber.number.dialableString copy];
+        number = firstPhoneNumber.dialableNumber;
         [self validatePhoneNumbersArray:phoneNumbers number:number];
         name = [self nameForNumbers:phoneNumbers];
     }
@@ -48,7 +48,7 @@ NSString *const kMultiPersonPhoneNumberFormattingThreePlusPeople = @"%@,...+%li"
             [NSException exceptionWithName:NSInvalidArgumentException reason:@"object does not conform to the JCPhoneNumberDataSource Protocol" userInfo:nil];
         }
         
-        if (![phoneNumber.number.dialableString isEqualToString:number]) {
+        if (![phoneNumber.dialableNumber isEqualToString:number]) {
             [NSException exceptionWithName:NSInvalidArgumentException reason:@"object does not contain a matching phone number" userInfo:nil];
         }
     }

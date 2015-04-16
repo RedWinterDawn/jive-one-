@@ -60,28 +60,11 @@
 
 -(NSString *)detailText
 {
-    return [NSString stringWithFormat:@"%@: %@", self.type, self.number.formattedPhoneNumber];
-}
-
--(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color{
-    
-    NSAttributedString *attributedString = [super detailTextWithKeyword:keyword font:font color:color];
-    NSMutableAttributedString *attributedNumberText = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
-    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                           font, NSFontAttributeName,
-                           color, NSForegroundColorAttributeName, nil];
-    
-    NSAttributedString *typeString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", self.type] attributes:attrs];
-    [attributedNumberText insertAttributedString:typeString atIndex:0];
-    return attributedNumberText;
+    return [NSString stringWithFormat:@"%@: %@", self.type, super.detailText];
 }
 
 - (BOOL)isEqual:(id)object
 {
-    if (![object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
-        return false;
-    }
-    
     // Check to see if object is local contact, and compare to see if the are equivalient.
     if ([object isKindOfClass:[LocalContact class]]) {
         LocalContact *localContact = (LocalContact *)object;
@@ -90,8 +73,7 @@
             return true;
         }
     }
-    
-    return false;
+    return [super isEqual:object];
 }
 
 #pragma mark - Private -

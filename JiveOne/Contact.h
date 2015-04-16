@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JiveContact.h"
+#import "Extension.h"
 
 @class PBX;
 @class ContactGroup;
 @class RecentLineEvent;
 @class Conversation;
 
-@interface Contact : JiveContact
+@interface Contact : Extension
 
 // Attributes
 @property (nonatomic, retain) NSString *jiveUserId;
@@ -48,6 +48,6 @@
 
 @interface Contact (Search)
 
-+ (Contact *)contactForExtension:(NSString *)extension pbx:(PBX *)pbx;
++ (Contact *)contactForExtension:(NSString *)extension pbx:(PBX *)pbx __deprecated;
 
 @end

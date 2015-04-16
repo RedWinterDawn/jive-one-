@@ -13,7 +13,7 @@
 #import "JCMultiPersonPhoneNumber.h"
 #import "PBX.h"
 #import "LocalContact.h"
-#import "JiveContact.h"
+#import "Extension.h"
 
 @interface JCPhoneBook () {
     JCAddressBook *_addressBook;
@@ -55,7 +55,7 @@
     // line, and jive contacts represent a line rather than an person entity, line's name
     // representing the caller id is unique to the number, we only search on the basis of the number.
     // if we have found it, we do not need to search the rest of the phone book.
-    JiveContact *jiveContact = [JiveContact jiveContactWithExtension:number forLine:line];
+    Extension *jiveContact = [Extension jiveContactWithExtension:number forLine:line];
     if (jiveContact) {
         return jiveContact;
     }
@@ -135,7 +135,7 @@
         
         static NSString *predicateString = @"pbxId = %@ AND jrn != %@ AND (extension CONTAINS %@ OR t9 BEGINSWITH %@)";
         NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString, line.pbx.pbxId, line.jrn, keyword, keyword];
-        NSArray *contacts = [JiveContact MR_findAllWithPredicate:predicate];
+        NSArray *contacts = [Extension MR_findAllWithPredicate:predicate];
         [phoneNumbers addObjectsFromArray:contacts];
     }
     

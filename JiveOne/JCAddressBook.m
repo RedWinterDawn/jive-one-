@@ -485,9 +485,9 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
 {
     [self fetchPeopleWithNumber:number completion:^(NSArray *people, NSError *error) {
         NSString *name = [self nameForPeople:people];
-        if (!name) {
-            name = number.formattedPhoneNumber;
-        }
+//        if (!name) {
+//            name = number.formattedPhoneNumber;
+//        }
         
         if (completion) {
             completion(name, error);

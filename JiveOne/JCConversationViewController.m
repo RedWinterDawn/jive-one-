@@ -95,7 +95,7 @@
              [dids sortUsingDescriptors:@[sortDescriptor]];
             NSMutableArray *titles = [NSMutableArray array];
             for (DID *did in dids) {
-                [titles addObject:did.number.formattedPhoneNumber];
+                [titles addObject:did.titleText];
             }
             
             JCActionSheet *didOptions = [[JCActionSheet alloc] initWithTitle:@"Which number would you like to send from"

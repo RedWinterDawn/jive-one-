@@ -36,6 +36,7 @@
 @property (nonatomic, readonly) NSString *name;
 @property (nonatomic, readonly) NSString *number;
 @property (nonatomic, readonly) NSString *dialableNumber;
+@property (nonatomic, readonly) NSString *formattedNumber;
 @property (nonatomic, readonly) NSString *t9;
 
 @end

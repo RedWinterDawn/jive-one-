@@ -13,6 +13,7 @@
 #import "LocalContact.h"
 #import "Common.h"
 #import "DID.h"
+#import "JCPhoneNumberDataSourceUtils.h"
 
 @implementation JCConversationGroup
 
@@ -77,6 +78,68 @@
     NSMutableString *output = [NSMutableString stringWithString:self.conversationGroupId];
     [output appendFormat:@" %@", self.date];
     return output;
+}
+
+#pragma mark - JCPhoneNumberDataSource -
+
+#pragma mark - JCPhoneNumberDataSource Protocol -
+
+
+-(NSString *)number
+{
+    return self.conversationGroupId;
+}
+
+-(NSString *)titleText
+{
+    NSString *name = self.name;
+    if (name) {
+        return name;
+    }
+    return [JCPhoneNumberDataSourceUtils formattedPhoneNumberForPhoneNumber:self];
+}
+
+-(NSString *)detailText
+{
+    return self.lastMessage;
+}
+
+-(NSString *)dialableNumber
+{
+    return [JCPhoneNumberDataSourceUtils dialableStringForPhoneNumber:self];
+}
+
+-(NSString *)t9
+{
+    return [JCPhoneNumberDataSourceUtils t9StringForPhoneNumber:self];
+}
+
+-(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    return [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword
+                                                         font:font
+                                                        color:color
+                                                  phoneNumber:self];
+}
+
+-(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    return [JCPhoneNumberDataSourceUtils detailTextWithKeyword:keyword
+                                                          font:font
+                                                         color:color
+                                                   phoneNumber:self];
+}
+
+-(BOOL)containsKeyword:(NSString *)keyword
+{
+    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+                                     containsKeyword:keyword];
+}
+
+-(BOOL)containsT9Keyword:(NSString *)keyword
+{
+    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+                                   containsT9Keyword:keyword];
 }
 
 @end

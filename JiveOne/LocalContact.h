@@ -6,17 +6,16 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "Person.h"
+#import "JCPersonManagedObject.h"
 #import "JCAddressBookPerson.h"
 #import "JCAddressBookNumber.h"
 
 @class SMSMessage;
 @class RecentLineEvent;
 
-@interface LocalContact : Person
+@interface LocalContact : JCPersonManagedObject
 
 // Attributes
-@property (nonatomic, readwrite, retain) NSString * number;
 @property (nonatomic, strong) NSString *personHash;
 @property (nonatomic) NSInteger personId;
 

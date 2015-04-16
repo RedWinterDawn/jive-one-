@@ -53,7 +53,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
 {
     NSDictionary *parameters = @{kJCLineConfigurationRequestUsernameKey:line.pbx.user.jiveUserId,
                                  kJCLineConfigurationRequestPbxIdKey:line.pbx.pbxId,
-                                 kJCLineConfigurationRequestExtensionKey: line.extension};
+                                 kJCLineConfigurationRequestExtensionKey: line.number};
     
     [self downloadLineConfigurationForLine:line
                                    retries:3
@@ -169,7 +169,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     // line, find the line that the line configuration does match for the same PBX, and update and
     // attach the line configuration to that line.
     NSString *extension = [LineConfiguration extensionFromLineConfigurationData:data];
-    if (![extension isEqualToString:line.extension]) {
+    if (![extension isEqualToString:line.number]) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and extension = %@", line.pbx, extension];
         line = [Line MR_findFirstWithPredicate:predicate inContext:line.managedObjectContext];
         if (!line) {
