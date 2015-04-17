@@ -147,8 +147,9 @@
         if (name) {
             self.title = name;
         } else {
-            
-            id<JCPhoneNumberDataSource> phoneNumber = [self.phoneBook phoneNumberForNumber:person.number forLine:nil];
+            JCPhoneBook *phoneBook = self.phoneBook;
+            PBX *pbx = self.authenticationManager.pbx;
+            id<JCPhoneNumberDataSource> phoneNumber = [phoneBook phoneNumberForNumber:person.number forPbx:pbx excludingLine:nil];
             self.title = phoneNumber.titleText;
         }
     } else {

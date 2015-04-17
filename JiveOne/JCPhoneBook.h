@@ -23,10 +23,10 @@
 @property (nonatomic, readonly) JCAddressBook *addressBook;
 
 // Search for a specific phone number in our Jive and Local Contacts Phone books.
--(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number forLine:(Line *)line;
+-(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number forPbx:(PBX *)pbx excludingLine:(Line *)line;
 
 // Search for a specific phone number and name in our Jive and Local Contacts phone books.
--(id<JCPhoneNumberDataSource>)phoneNumberForName:(NSString *)name number:(NSString *)number forLine:(Line *)line;
+-(id<JCPhoneNumberDataSource>)phoneNumberForName:(NSString *)name number:(NSString *)number forPbx:(PBX *)pbx excludingLine:(Line *)line;
 
 
 -(void)phoneNumbersWithKeyword:(NSString *)keyword

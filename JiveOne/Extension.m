@@ -32,4 +32,11 @@
     return [Extension MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
 }
 
++(Extension *)extensionForNumber:(NSString *)number onPbx:(PBX *)pbx
+{
+    static NSString *format = @"pbxId = %@ AND number = %@";
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:format, pbx.pbxId, number];
+    return [Extension MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
+}
+
 @end

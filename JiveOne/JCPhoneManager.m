@@ -798,7 +798,8 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 
 -(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number name:(NSString *)name
 {
-    return [self.phoneBook phoneNumberForName:name number:number forLine:(Line *)self.sipManager.provisioning];
+    Line *line = (Line *)self.sipManager.provisioning;
+    return [self.phoneBook phoneNumberForName:name number:number forPbx:line.pbx excludingLine:line];
 }
 
 #pragma mark - Getters -

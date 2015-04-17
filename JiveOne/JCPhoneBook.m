@@ -39,12 +39,12 @@
 
 #pragma mark - Public Methods -
 
--(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number forLine:(Line *)line;
+-(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number forPbx:(PBX *)pbx excludingLine:(Line *)line;
 {
-    return [self phoneNumberForName:nil number:number forLine:line];
+    return [self phoneNumberForName:nil number:number forPbx:pbx excludingLine:line];
 }
 
--(id<JCPhoneNumberDataSource>)phoneNumberForName:(NSString *)name number:(NSString *)number forLine:(Line *)line;
+-(id<JCPhoneNumberDataSource>)phoneNumberForName:(NSString *)name number:(NSString *)number forPbx:(PBX *)pbx excludingLine:(Line *)line;
 {
     // We must at least have a number. If we do not have a number, we return nil.
     if (!number) {
@@ -55,9 +55,14 @@
     // line, and jive contacts represent a line rather than an person entity, line's name
     // representing the caller id is unique to the number, we only search on the basis of the number.
     // if we have found it, we do not need to search the rest of the phone book.
-    Extension *jiveContact = [Extension extensionForNumber:number onPbx:line.pbx excludingLine:line];
-    if (jiveContact) {
-        return jiveContact;
+    Extension *extension = nil;
+    if (line) {
+        extension = [Extension extensionForNumber:number onPbx:pbx excludingLine:line];
+    } else {
+        extension = [Extension extensionForNumber:number onPbx:pbx];
+    }
+    if (extension) {
+        return extension;
     }
     
     // Get phone numbers from the address book for the given name and number. Since its possible to

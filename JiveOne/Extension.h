@@ -21,4 +21,7 @@
 
 +(Extension *)extensionForNumber:(NSString *)number onPbx:(PBX *)pbx excludingLine:(Line *)line;
 
++(Extension *)extensionForNumber:(NSString *)number onPbx:(PBX *)pbx;
+
+
 @end
