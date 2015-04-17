@@ -55,7 +55,7 @@
     // line, and jive contacts represent a line rather than an person entity, line's name
     // representing the caller id is unique to the number, we only search on the basis of the number.
     // if we have found it, we do not need to search the rest of the phone book.
-    Extension *jiveContact = [Extension jiveContactWithExtension:number forLine:line];
+    Extension *jiveContact = [Extension extensionForNumber:number onPbx:line.pbx excludingLine:line];
     if (jiveContact) {
         return jiveContact;
     }
@@ -133,7 +133,7 @@
         NSArray *localPhoneNumbers = [_addressBook fetchNumbersWithKeyword:keyword sortedByKey:sortedByKey ascending:ascending].mutableCopy;
         [phoneNumbers addObjectsFromArray:localPhoneNumbers];
         
-        static NSString *predicateString = @"pbxId = %@ AND jrn != %@ AND (extension CONTAINS %@ OR t9 BEGINSWITH %@)";
+        static NSString *predicateString = @"pbxId = %@ AND jrn != %@ AND (number CONTAINS %@ OR t9 BEGINSWITH %@)";
         NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString, line.pbx.pbxId, line.jrn, keyword, keyword];
         NSArray *contacts = [Extension MR_findAllWithPredicate:predicate];
         [phoneNumbers addObjectsFromArray:contacts];

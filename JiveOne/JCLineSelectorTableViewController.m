@@ -24,7 +24,7 @@
         {
             NSManagedObjectContext *context = self.managedObjectContext;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx.user = %@", user];
-            NSFetchRequest *fetchRequest = [Line MR_requestAllSortedBy:@"extension" ascending:YES withPredicate:predicate inContext:context];
+            NSFetchRequest *fetchRequest = [Line MR_requestAllSortedBy:@"number" ascending:YES withPredicate:predicate inContext:context];
             super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                  managedObjectContext:context
                                                                                    sectionNameKeyPath:nil

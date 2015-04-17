@@ -246,7 +246,7 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
     }
     
     predicate = [NSPredicate predicateWithFormat:@"pbx.user = %@", _user];
-    _line = [Line MR_findFirstWithPredicate:predicate sortedBy:@"extension" ascending:YES];
+    _line = [Line MR_findFirstWithPredicate:predicate sortedBy:@"number" ascending:YES];
     return _line;
 }
 

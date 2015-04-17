@@ -168,12 +168,12 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     // If the extension for our line configuration does not match the extentsion from the requested
     // line, find the line that the line configuration does match for the same PBX, and update and
     // attach the line configuration to that line.
-    NSString *extension = [LineConfiguration extensionFromLineConfigurationData:data];
-    if (![extension isEqualToString:line.number]) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and extension = %@", line.pbx, extension];
+    NSString *number = [LineConfiguration extensionFromLineConfigurationData:data];
+    if (![number isEqualToString:line.number]) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and number = %@", line.pbx, number];
         line = [Line MR_findFirstWithPredicate:predicate inContext:line.managedObjectContext];
         if (!line) {
-            NSLog(@"Did not find other line for extension %@", extension);
+            NSLog(@"Did not find other line for extension %@", number);
             return;
         }
     }

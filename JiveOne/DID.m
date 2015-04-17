@@ -128,10 +128,4 @@ NSString *const kDIDReceiveSMSAttribute     = @"receiveSMS";
                                    containsT9Keyword:keyword];
 }
 
--(BOOL)isEqual:(id)object
-{
-    return [JCPhoneNumberDataSourceUtils phoneNumber:self
-                                             isEqual:object];
-}
-
 @end

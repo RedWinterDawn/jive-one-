@@ -35,10 +35,10 @@
         <attribute name="firstName" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="jrn" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="number" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="pbxId" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="t9" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="pbxId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
     <entity name="IncomingCall" representedClassName="IncomingCall" parentEntity="Call" syncable="YES"/>
     <entity name="Line" representedClassName="Line" parentEntity="Extension" syncable="YES">

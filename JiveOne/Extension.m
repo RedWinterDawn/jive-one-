@@ -25,11 +25,11 @@
 
 @implementation Extension (Search)
 
-+(Extension *)jiveContactWithExtension:(NSString *)number forLine:(Line *)line;
++(Extension *)extensionForNumber:(NSString *)number onPbx:(PBX *)pbx excludingLine:(Line *)line
 {
-    static NSString *format = @"pbxId = %@ AND jrn != %@ AND extension = %@";
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:format, line.pbx.pbxId, line.jrn, number];
-    return [Extension MR_findFirstWithPredicate:predicate inContext:line.managedObjectContext];
+    static NSString *format = @"pbxId = %@ AND jrn != %@ AND number = %@";
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:format, pbx.pbxId, line.jrn, number];
+    return [Extension MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
 }
 
 @end

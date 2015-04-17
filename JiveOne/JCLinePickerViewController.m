@@ -29,7 +29,7 @@
     User *user = authenticationManger.user;
     Line *line = authenticationManger.line;
     
-    self.lines = [Line MR_findByAttribute:@"pbx.user" withValue:user andOrderBy:@"extension" ascending:YES];
+    self.lines = [Line MR_findByAttribute:@"pbx.user" withValue:user andOrderBy:@"number" ascending:YES];
     [self.selectBtn setTitle:[self titleForLine:line] forState:UIControlStateNormal];
     
     // Select the line that is currently selected by the authentication manager.

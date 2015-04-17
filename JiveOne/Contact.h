@@ -45,9 +45,3 @@
 - (void)removeGroups:(NSSet *)values;
 
 @end
-
-@interface Contact (Search)
-
-+ (Contact *)contactForExtension:(NSString *)extension pbx:(PBX *)pbx __deprecated;
-
-@end

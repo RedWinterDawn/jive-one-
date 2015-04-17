@@ -108,7 +108,7 @@
         Line *line = self.authenticationManager.line;
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@", line.pbx.pbxId];
         if (_searchText && ![_searchText isEqualToString:@""]) {
-            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (extension contains[cd] %@)", _searchText, _searchText];
+            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (number contains[cd] %@)", _searchText, _searchText];
             predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
         }
         

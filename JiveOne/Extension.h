@@ -8,7 +8,7 @@
 
 #import "JCPersonManagedObject.h"
 
-@class Line;
+@class Line, PBX;
 
 @interface Extension : JCPersonManagedObject
 
@@ -19,7 +19,6 @@
 
 @interface Extension (Search)
 
-+(Extension *)jiveContactWithExtension:(NSString *)number
-                                 forLine:(Line *)line;
++(Extension *)extensionForNumber:(NSString *)number onPbx:(PBX *)pbx excludingLine:(Line *)line;
 
 @end
