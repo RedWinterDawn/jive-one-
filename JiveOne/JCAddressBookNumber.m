@@ -7,61 +7,17 @@
 //
 
 #import "JCAddressBookNumber.h"
+#import "JCAddressBookPerson.h"
 #import "NSString+Additions.h"
-
-@interface JCAddressBookNumber ()
-
-@property (nonatomic, readonly) NSLocale *locale;
-
-@end
 
 @implementation JCAddressBookNumber
 
--(BOOL)containsKeyword:(NSString *)keyword
-{
-    NSLocale *locale = self.locale;
-    NSString *localizedKeyword = [keyword lowercaseStringWithLocale:locale];
-    
-    if (localizedKeyword.isNumeric) {
-        NSString *string = self.number.numericStringValue;
-        if ([string respondsToSelector:@selector(containsString:)]) {
-            if ([string containsString:localizedKeyword]) {
-                return YES;
-            }
-        }
-        else if ([string rangeOfString:localizedKeyword].location != NSNotFound) {
-            return YES;
-        }
-        
-        //TODO : T9 Match with the name.
-    }
-    
-    NSString *fullName = [self.person.name lowercaseStringWithLocale:locale];
-    if ([fullName respondsToSelector:@selector(containsString:)]) {
-        if ([fullName containsString:localizedKeyword]) {
-            return YES;
-        }
-    }
-    else if ([fullName rangeOfString:localizedKeyword].location != NSNotFound) {
-        return YES;
-    }
-    
-    return NO;
-}
-
 @synthesize number = _number;
 
--(NSLocale *)locale
-{
-    // Makes the startup of this singleton thread safe.
-    static NSLocale *locale = nil;
-    static dispatch_once_t pred;        // Lock
-    dispatch_once(&pred, ^{             // This code is called at most once per app
-        NSString *localization = [NSBundle mainBundle].preferredLocalizations.firstObject;
-        locale = [[NSLocale alloc] initWithLocaleIdentifier:localization];
-    });
-    return locale;
-}
+#pragma mark - Protocol Getters -
+
+//  Since we maintain a pointer to the parent person, we just forward all properties relating to the
+//  person from the parent person.
 
 -(NSString *)name
 {
@@ -103,9 +59,15 @@
     return [NSString stringWithFormat:@"%@: %@", self.type, self.number];
 }
 
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ %@: %@", self.name, self.type, self.number];
+}
+
 -(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color{
     
-    NSMutableAttributedString *attributedNumberText = [self.number formattedPhoneNumberWithKeyword:keyword font:font color:color];
+    NSAttributedString *attributedString = [super detailTextWithKeyword:keyword font:font color:color];
+    NSMutableAttributedString *attributedNumberText = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
     NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                            font, NSFontAttributeName,
                            color, NSForegroundColorAttributeName, nil];
@@ -113,11 +75,6 @@
     NSAttributedString *typeString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", self.type] attributes:attrs];
     [attributedNumberText insertAttributedString:typeString atIndex:0];
     return attributedNumberText;
-}
-
--(NSString *)description
-{
-    return [NSString stringWithFormat:@"%@ %@: %@", self.name, self.type, self.number];
 }
 
 @end

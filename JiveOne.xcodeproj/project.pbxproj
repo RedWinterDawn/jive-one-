@@ -198,6 +198,8 @@
 		5D9A5E221A24E30A00E8274C /* JCPhoneAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */; };
 		5D9F72101AC34F8000B9D0F8 /* JCAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */; };
 		5D9F72A91AC5BDD700B9D0F8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F1F305191C18D700AEAFD7 /* CoreData.framework */; };
+		5DA30DC51AD625D8008856DC /* NSString+AdditionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA30DC41AD625D8008856DC /* NSString+AdditionsTests.m */; };
+		5DA30DD21AD712CD008856DC /* JCAddressBookEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA30DD11AD712CD008856DC /* JCAddressBookEntity.m */; };
 		5DA566441A1D454D00286BA5 /* JCSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */; };
 		5DA566491A20543500286BA5 /* JCAuthenticationManagerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */; };
 		5DA5A1AF19DAF91400968F7D /* JCCallerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */; };
@@ -594,6 +596,9 @@
 		5D9F720C1AC34F8000B9D0F8 /* JCAuthClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthClient.h; sourceTree = "<group>"; };
 		5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthClient.m; sourceTree = "<group>"; };
 		5D9F720F1AC34F8000B9D0F8 /* JCAuthClientError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthClientError.m; sourceTree = "<group>"; };
+		5DA30DC41AD625D8008856DC /* NSString+AdditionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AdditionsTests.m"; sourceTree = "<group>"; };
+		5DA30DD01AD712CD008856DC /* JCAddressBookEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAddressBookEntity.h; sourceTree = "<group>"; };
+		5DA30DD11AD712CD008856DC /* JCAddressBookEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookEntity.m; sourceTree = "<group>"; };
 		5DA566421A1D454D00286BA5 /* JCSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSettingsTableViewController.h; sourceTree = "<group>"; };
 		5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSettingsTableViewController.m; sourceTree = "<group>"; };
 		5DA566461A1EEEFF00286BA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
@@ -1146,6 +1151,7 @@
 			children = (
 				5D0BACA31AD438F800EFEF86 /* NSDictionary+AdditionsTests.m */,
 				5D0BACA51AD4393F00EFEF86 /* NSData+AdditionsTests.m */,
+				5DA30DC41AD625D8008856DC /* NSString+AdditionsTests.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1426,6 +1432,8 @@
 				5DDDA54A1A4B238300E31AA3 /* JCLinePresence.m */,
 				5D490E581A8AEF7E004B62C0 /* JCAddressBook.h */,
 				5D490E591A8AEF7E004B62C0 /* JCAddressBook.m */,
+				5DA30DD01AD712CD008856DC /* JCAddressBookEntity.h */,
+				5DA30DD11AD712CD008856DC /* JCAddressBookEntity.m */,
 				5D490E5C1A8AF364004B62C0 /* JCAddressBookPerson.h */,
 				5D490E5D1A8AF364004B62C0 /* JCAddressBookPerson.m */,
 				5D490E771A958A5A004B62C0 /* JCAddressBookNumber.h */,
@@ -1946,6 +1954,7 @@
 				5D490E641A8D29BD004B62C0 /* JiveContact.m in Sources */,
 				5D7DD3691A7B004B00B9FF4D /* Conversation.m in Sources */,
 				5D7DD36A1A7B004B00B9FF4D /* JCCustomCell.m in Sources */,
+				5DA30DD21AD712CD008856DC /* JCAddressBookEntity.m in Sources */,
 				5D241FDB1A38346A008B498A /* JCDebugLinesTableViewController.m in Sources */,
 				5D36B7AB19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m in Sources */,
 				5D87FF341A7FF576001B8BB2 /* JCConversationViewController.m in Sources */,
@@ -2129,6 +2138,7 @@
 				5D0BACAE1AD43E9B00EFEF86 /* JCSettingsTableViewControllerTests.m in Sources */,
 				5D0BACAA1AD43B0F00EFEF86 /* JCPresenceManagerTests.m in Sources */,
 				5D2D74381ACFB48500B98BDF /* JCPhoneManagerTests.m in Sources */,
+				5DA30DC51AD625D8008856DC /* NSString+AdditionsTests.m in Sources */,
 				5DC5181E1AD3094E007CEA71 /* JCPbxTests.m in Sources */,
 				5D2D74301ACFB48500B98BDF /* JCAddressBookTestDataFactory.m in Sources */,
 				B70EAB3F1AD3302000305F43 /* JCAuthenticationManagerTests.m in Sources */,

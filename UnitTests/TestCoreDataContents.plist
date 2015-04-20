@@ -151,7 +151,7 @@
 						<key>name</key>
 						<string>John Smith</string>
 						<key>jrn</key>
-						<string>jrn:line::jive:01471162-f384-24f5-9351-000100420001:014a5955-b837-e8d0-ab9a-000100620002</string>
+						<string>jrn:line::jive:01471162-f384-24f5-9351-000100420002:014a5955-b837-e8d0-ab9a-000100620002</string>
 						<key>extension</key>
 						<string>1001</string>
 						<key>favorite</key>
@@ -163,7 +163,7 @@
 						<key>name</key>
 						<string>Jane Doe</string>
 						<key>jrn</key>
-						<string>jrn:line::jive:01471162-f384-24f5-9351-000100420001:014a5955-b837-e8d0-ab9a-000100620003</string>
+						<string>jrn:line::jive:01471162-f384-24f5-9351-000100420002:014a5955-b837-e8d0-ab9a-000100620003</string>
 						<key>extension</key>
 						<string>1001</string>
 						<key>favorite</key>
@@ -175,7 +175,7 @@
 						<key>name</key>
 						<string>Trisha Galloway</string>
 						<key>jrn</key>
-						<string>jrn:line::jive:01471162-f384-24f5-9351-000100420001:014a5955-b837-e8d0-ab9a-000100620004</string>
+						<string>jrn:line::jive:01471162-f384-24f5-9351-000100420002:014a5955-b837-e8d0-ab9a-000100620004</string>
 						<key>extension</key>
 						<string>1001</string>
 						<key>favorite</key>
