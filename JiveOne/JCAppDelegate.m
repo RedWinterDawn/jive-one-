@@ -457,7 +457,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
-    [authenticationManager checkAuthenticationStatus];
+    //[authenticationManager checkAuthenticationStatus];
     
     [self handlePush:launchOptions];
     
