@@ -1150,13 +1150,13 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         // Initial State of a call
         case JCCallInitiated:
         {
-            lineSession.active = TRUE;
-            lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
-            lineSession.sessionState = state;
-            
             if (!self.isActive) {
                 [_audioManager engageAudioSession];
             }
+            
+            lineSession.active = TRUE;
+            lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
+            lineSession.sessionState = state;
             
             // Notify
             [OutgoingCall addOutgoingCallWithLineSession:lineSession line:_line];
@@ -1206,6 +1206,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         {
             lineSession.updatable = YES;
             lineSession.sessionState = state;
+            
+            // Stop Ringing
+            [_audioManager stop];
             
             [self startNetworkQualityIndicatorForLineSession:lineSession];
             break;
@@ -1265,18 +1268,23 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 -(void)audioSessionInteruptionDidBegin:(JCPhoneAudioManager *)manager
 {
-    
     // When we get a call that is being interuped, we place it on hold.
     JCLineSession *lineSession = [self findActiveLine];
-    [_mPortSIPSDK enableAudioStreamCallback:lineSession.sessionId enable:FALSE callbackMode:AUDIOSTREAM_LOCAL_PER_CHANNEL];
-    
     __autoreleasing NSError *error;
     [self holdLineSession:lineSession error:&error];
+    
+    [_operationQueue cancelAllOperations];
+    [UIApplication hideStatus];
 }
 
 -(void)audioSessionInteruptionDidEnd:(JCPhoneAudioManager *)manager
 {
-//    [_audioManager engageAudioSession];
+    NSSet *activeLineSessions = [self findAllActiveLines];
+    for (JCLineSession *lineSession in activeLineSessions) {
+        [self startNetworkQualityIndicatorForLineSession:lineSession];
+    }
+    
+    //    [_audioManager engageAudioSession];
 //    
 //    NSSet *activeLines = [self findAllActiveLines];
 //    for (JCLineSession *lineSession in activeLines) {

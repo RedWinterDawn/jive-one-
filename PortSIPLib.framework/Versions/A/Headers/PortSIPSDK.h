@@ -63,7 +63,8 @@ PortSIP SDK functions class description.
  *  @param displayName        The display name of user, you can set it as your like, such as "James Kend". It's optional.
  *  @param authName           Authorization user name (usually equals the username).
  *  @param password           The password of user, it's optional.
- *  @param localIP            The local computer IP address to bind (for example: 192.168.1.108), it will be using for send and receive SIP message and RTP packet. If pass this IP as the IPv6 format then the SDK using IPv6.
+ *  @param localIP            The local computer IP address to bind (for example: 192.168.1.108), it will be using for send and receive SIP message and RTP packet. If pass this IP as the IPv6 format then the SDK using IPv6.<br>
+ *                            If you want the SDK choose correct network interface(IP) automatically, please pass the "0.0.0.0"(for IPv4) or "::"(for IPv6).
  *  @param localSIPPort       The SIP message transport listener port(for example: 5060).
  *  @param userDomain         User domain; this parameter is optional that allow pass a empty string if you are not use domain.
  *  @param sipServer          SIP proxy server IP or domain(for example: xx.xxx.xx.x or sip.xxx.com).
@@ -430,7 +431,7 @@ outboundServerPort:(int)outboundServerPort;
  *  @param subMimeType The sub mime type of SIP message.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
- *@Remarks
+ *@remarks
  * Default, the PortSIP VoIP SDK support these media types(mime types) that in the below incoming SIP messages:
  * @code
  "message/sipfrag" in NOTIFY message.
@@ -1313,9 +1314,9 @@ outboundServerPort:(int)outboundServerPort;
 /*!
  *  @brief Enable/disable AEC (Acoustic Echo Cancellation).
  *
- *  @param state state Set to true to enable AEC, false to disable.
+ *  @param state AEC type, default is EC_NONE.
  */
-- (void)enableAEC:(BOOL)state;
+- (void)enableAEC:(EC_MODES)state;
 
 /*!
  *  @brief Enable/disable Comfort Noise Generator(CNG).
@@ -1327,16 +1328,16 @@ outboundServerPort:(int)outboundServerPort;
 /*!
  *  @brief Enable/disable Automatic Gain Control(AGC).
  *
- *  @param state Set to true to enable AGC, false to disable.
+ *  @param state AGC type, default is AGC_NONE.
  */
-- (void)enableAGC:(BOOL)state;
+- (void)enableAGC:(AGC_MODES)state;
 
 /*!
  *  @brief Enable/disable Audio Noise Suppression(ANS).
  *
- *  @param state Set to true to enable ANS, false to disable.
+ *  @param state NS type, default is NS_NONE.
  */
-- (void)enableANS:(BOOL)state;
+- (void)enableANS:(NS_MODES)state;
 
 /** @} */ // end of group16
 
