@@ -1230,11 +1230,19 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     JCLineSession *lineSession = [self findActiveLine];
     __autoreleasing NSError *error;
     [self holdLineSession:lineSession error:&error];
+    
+    [_operationQueue cancelAllOperations];
+    [UIApplication hideStatus];
 }
 
 -(void)audioSessionInteruptionDidEnd:(JCPhoneAudioManager *)manager
 {
-//    [_audioManager engageAudioSession];
+    NSSet *activeLineSessions = [self findAllActiveLines];
+    for (JCLineSession *lineSession in activeLineSessions) {
+        [self startNetworkQualityIndicatorForLineSession:lineSession];
+    }
+    
+    //    [_audioManager engageAudioSession];
 //    
 //    NSSet *activeLines = [self findAllActiveLines];
 //    for (JCLineSession *lineSession in activeLines) {
