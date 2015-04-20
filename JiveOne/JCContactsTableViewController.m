@@ -38,7 +38,7 @@
     [super viewDidLoad];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:[JCAuthenticationManager sharedInstance]];
+    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:self.authenticationManager];
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
@@ -93,16 +93,20 @@
         if (_filterType == JCContactFilterGrouped) {
             sectionKeyPath = nil;
         }
-        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:sectionKeyPath cacheName:nil];
+        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest
+                                                                             managedObjectContext:self.managedObjectContext
+                                                                               sectionNameKeyPath:sectionKeyPath
+                                                                                        cacheName:nil];
     }
     return _fetchedResultsController;
 }
 
 - (NSFetchRequest *)fetchRequest
 {
-    if (!_fetchRequest) {
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@", [JCAuthenticationManager sharedInstance].line.pbx.pbxId];
+    if (!_fetchRequest)
+    {
+        Line *line = self.authenticationManager.line;
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@", line.pbx.pbxId];
         if (_searchText && ![_searchText isEqualToString:@""]) {
             NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (extension contains[cd] %@)", _searchText, _searchText];
             predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
@@ -119,7 +123,7 @@
             _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
         }
         else if (_filterType == JCContactFilterGrouped) {
-            NSPredicate *predicate =[NSPredicate predicateWithFormat:@"contacts.pbx.jrn CONTAINS[cd] %@", [JCAuthenticationManager sharedInstance].line.pbx.jrn];
+            NSPredicate *predicate =[NSPredicate predicateWithFormat:@"contacts.pbx.jrn CONTAINS[cd] %@", line.pbx.jrn];
             if (_searchText && ![_searchText isEqualToString:@""]) {
                 NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", _searchText];
                 predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
