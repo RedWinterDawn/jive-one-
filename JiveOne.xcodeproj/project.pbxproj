@@ -1312,6 +1312,7 @@
 				5D2D741F1ACFB48500B98BDF /* JCPhoneBookTestDataFactory.m */,
 				5DC518181AD2E746007CEA71 /* JCCoreDataTestDataFactory.h */,
 				5DC518191AD2E746007CEA71 /* JCCoreDataTestDataFactory.m */,
+				5DC5181B1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m */,
 			);
 			name = Factories;
 			sourceTree = "<group>";
@@ -1345,7 +1346,6 @@
 			children = (
 				5DBF6F421ADC4FC9004B53F5 /* JCPhoneBookTests.m */,
 				5D2D74201ACFB48500B98BDF /* JCAddressBookTests.m */,
-				5DC5181B1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m */,
 				5DC5181D1AD3094E007CEA71 /* JCPbxTests.m */,
 				5DC5181F1AD3096F007CEA71 /* JCLineTests.m */,
 				5DC518211AD30993007CEA71 /* JCContactsTests.m */,

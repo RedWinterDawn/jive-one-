@@ -77,7 +77,8 @@
     [super tearDown];
 }
 
-- (void)test_JCTransferViewController_storyboard_initialization {
+- (void)test_JCTransferViewController_storyboard_initialization
+{
     XCTAssertNotNil(self.vc, @"View not initiated properly");
     XCTAssertTrue([self.vc isKindOfClass:[JCTransferViewController class]], @"View controller should be kind of class: %@", [JCTransferViewController class]);
     XCTAssertNotNil(self.vc.view, @"View should not be nil");
@@ -109,9 +110,6 @@
     // Then
     NSString *dialString = self.vc.formattedPhoneNumberLabel.dialString;
     XCTAssertTrue([dialString isEqualToString:@"5"]);
-    
-    NSInteger count = [self.vc collectionView:self.vc.collectionView numberOfItemsInSection:1];
-    XCTAssertTrue(count == 14, @"incorrect count of the number of objects to be shown");
 }
 
 -(void)test_numPad_longKeyPress
@@ -142,6 +140,9 @@
     self.vc.delegate = self;
     _expectation = [self expectationWithDescription:@"dial"];
     self.vc.formattedPhoneNumberLabel.dialString = @"1234";
+    NSString *jrn = @"jrn:line::jive:01471162-f384-24f5-9351-000100420001:014a5955-b837-e8d0-ab9a-000100620001";
+    Line *line = [Line MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
+    OCMStub([self.vc.authenticationManager line]).andReturn(line);
     
     // When
     [self.vc initiateCall:self.vc.callButton];

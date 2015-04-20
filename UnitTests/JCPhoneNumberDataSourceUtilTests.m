@@ -18,16 +18,6 @@
 
 @implementation JCPhoneNumberDataSourceUtilTests
 
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
-
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-
 -(void)test_dialableNumber
 {
     // Given
@@ -56,7 +46,76 @@
     XCTAssertTrue([result isEqualToString:expectedResult], @"t9 did not match expected result");
 }
 
--(void)test_attributedFormattedPhoneNumberString_nonNumericKeyword
+#pragma mark Title Text with keyword
+
+-(void)test_titleTextWithKeyword_keywordNonNumeric
+{
+    // Given
+    NSString *name = @"Robert Barclay";
+    NSString *number = @"555-525-5355";
+    JCPhoneNumber *phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
+    UIFont *font = [UIFont systemFontOfSize:12];
+    UIColor *color = [UIColor blackColor];
+    NSString *keyword = @"Hi"; // non numeric string
+    
+    // When
+    NSAttributedString *result = [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
+    
+    // Then
+    NSDictionary *attrs = @{NSFontAttributeName: font, NSForegroundColorAttributeName: color};
+    NSMutableAttributedString *expectedAttributedString = [[NSMutableAttributedString alloc] initWithString:name attributes:attrs];
+    
+    XCTAssertTrue([expectedAttributedString isEqualToAttributedString:result], @"Strings should be equal");
+}
+
+-(void)test_titleTextWithKeyword_keywordBeginningOfWord
+{
+    // Given
+    NSString *name = @"Robert Barclay";
+    NSString *number = @"555-525-5355";
+    JCPhoneNumber *phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
+    UIFont *font = [UIFont systemFontOfSize:12];
+    UIColor *color = [UIColor blackColor];
+    NSString *keyword = @"762"; // T9 for rob
+    
+    // When
+    NSAttributedString *result = [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
+    
+    // Then
+    NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName:color };
+    NSDictionary *boldAttrs = @{ NSFontAttributeName: [UIFont boldFontForFont:font], NSForegroundColorAttributeName: color };
+    NSMutableAttributedString *expectedAttributedString = [[NSMutableAttributedString alloc] initWithString:name attributes:attrs];
+    [expectedAttributedString beginEditing];
+    [expectedAttributedString setAttributes:boldAttrs range:NSMakeRange(0, 3)];
+    [expectedAttributedString endEditing];
+    
+    XCTAssertTrue([expectedAttributedString isEqualToAttributedString:result], @"Strings should be equal");
+}
+
+-(void)test_titleTextWithKeyword_keywordMiddleOfWord
+{
+    // Given
+    NSString *name = @"Barclay Robert";
+    NSString *number = @"555-525-5355";
+    JCPhoneNumber *phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
+    UIFont *font = [UIFont systemFontOfSize:12];
+    UIColor *color = [UIColor blackColor];
+    NSString *keyword = @"762"; // T9 for rob
+    
+    // When
+    NSAttributedString *result = [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
+    
+    // Then
+    NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName:color };
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:name attributes:attrs];
+    
+    XCTAssertTrue([attributedString isEqualToAttributedString:result], @"Strings should be equal");
+}
+
+
+#pragma mark Detail Text with Keyword
+
+-(void)test_detailTextWithKeyword_nonNumericKeyword
 {
     // Given
     NSString *number = @"555-525-5355";
@@ -76,7 +135,7 @@
     XCTAssertTrue([expectedAttributedString isEqualToAttributedString:result], @"Strings should be equal");
 }
 
--(void)test_attributedFormattedPhoneNumberString_numericKeyword
+-(void)test_detailTextWithKeyword_numericKeyword
 {
     // Given
     NSString *number = @"555-525-5355";
@@ -101,69 +160,5 @@
     XCTAssertTrue([expectedAttributedString isEqualToAttributedString:result], @"Strings should be equal");
 }
 
--(void)test_attributedStringFromT9_keywordNonNumeric
-{
-    // Given
-    NSString *name = @"Robert Barclay";
-    NSString *number = @"555-525-5355";
-    JCPhoneNumber *phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
-    UIFont *font = [UIFont systemFontOfSize:12];
-    UIColor *color = [UIColor blackColor];
-    NSString *keyword = @"Hi"; // non numeric string
-
-    // When
-    NSAttributedString *result = [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
-
-    // Then
-    NSDictionary *attrs = @{NSFontAttributeName: font, NSForegroundColorAttributeName: color};
-    NSMutableAttributedString *expectedAttributedString = [[NSMutableAttributedString alloc] initWithString:name attributes:attrs];
-
-    XCTAssertTrue([expectedAttributedString isEqualToAttributedString:result], @"Strings should be equal");
-}
-
-
--(void)test_attributedStringFromT9_keywordBeginningOfWord
-{
-    // Given
-    NSString *name = @"Robert Barclay";
-    NSString *number = @"555-525-5355";
-    JCPhoneNumber *phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
-    UIFont *font = [UIFont systemFontOfSize:12];
-    UIColor *color = [UIColor blackColor];
-    NSString *keyword = @"762"; // T9 for rob
-
-    // When
-    NSAttributedString *result = [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
-
-    // Then
-    NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName:color };
-    NSDictionary *boldAttrs = @{ NSFontAttributeName: [UIFont boldFontForFont:font], NSForegroundColorAttributeName: color };
-    NSMutableAttributedString *expectedAttributedString = [[NSMutableAttributedString alloc] initWithString:name attributes:attrs];
-    [expectedAttributedString beginEditing];
-    [expectedAttributedString setAttributes:boldAttrs range:NSMakeRange(0, 3)];
-    [expectedAttributedString endEditing];
-
-    XCTAssertTrue([expectedAttributedString isEqualToAttributedString:result], @"Strings should be equal");
-}
-
--(void)test_attributedStringFromT9_keywordMiddleOfWord
-{
-    // Given
-    NSString *name = @"Barclay Robert";
-    NSString *number = @"555-525-5355";
-    JCPhoneNumber *phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
-    UIFont *font = [UIFont systemFontOfSize:12];
-    UIColor *color = [UIColor blackColor];
-    NSString *keyword = @"762"; // T9 for rob
-
-    // When
-    NSAttributedString *result = [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
-
-    // Then
-    NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName:color };
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:name attributes:attrs];
-
-    XCTAssertTrue([attributedString isEqualToAttributedString:result], @"Strings should be equal");
-}
 
 @end

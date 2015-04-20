@@ -24,13 +24,13 @@
 
 +(NSString *)formattedPhoneNumberForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber;
 
-+(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword
-                                        font:(UIFont *)font
-                                       color:(UIColor *)color
-                                 phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber;
-
 +(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword
                                        font:(UIFont *)font
                                       color:(UIColor *)color
                                 phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber;
+
++(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword
+                                        font:(UIFont *)font
+                                       color:(UIColor *)color
+                                 phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber;
 @end
