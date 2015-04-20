@@ -23,7 +23,6 @@
 		275F4A5C18AD0FBC00D2F069 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 275F4A5A18AD0FBC00D2F069 /* InfoPlist.strings */; };
 		275F4A5E18AD0FBC00D2F069 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F4A5D18AD0FBC00D2F069 /* main.m */; };
 		275F4A6218AD0FBC00D2F069 /* JCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F4A6118AD0FBC00D2F069 /* JCAppDelegate.m */; };
-		275F4A6818AD0FBC00D2F069 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 275F4A6618AD0FBC00D2F069 /* Main_iPad.storyboard */; };
 		275F4A7018AD0FBC00D2F069 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 275F4A6F18AD0FBC00D2F069 /* Images.xcassets */; };
 		2762151E1912AA2500CFBCC8 /* NSDictionary+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2762151D1912AA2500CFBCC8 /* NSDictionary+QueryString.m */; };
 		276215211912AA7400CFBCC8 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 276215201912AA7400CFBCC8 /* NSString+URLEncoding.m */; };
@@ -93,6 +92,7 @@
 		5D241FE41A38BAD5008B498A /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FE31A38BAD5008B498A /* Contact.m */; };
 		5D241FE71A38BE5A008B498A /* JCContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FE61A38BE5A008B498A /* JCContactCell.m */; };
 		5D241FEA1A38C4CE008B498A /* JCLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FE91A38C4CE008B498A /* JCLineCell.m */; };
+		5D25F8201AE5895E00981DB6 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8221AE5895E00981DB6 /* Main_iPad.storyboard */; };
 		5D2B2C081A30D8AE00938D76 /* JCVisualEffectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */; };
 		5D2B2C091A30D8AE00938D76 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C071A30D8AE00938D76 /* FXBlurView.m */; };
 		5D2D73CC1ACF97AE00B98BDF /* de.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73C51ACF97AE00B98BDF /* de.xliff */; };
@@ -318,7 +318,6 @@
 		275F4A5F18AD0FBC00D2F069 /* JiveOne-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JiveOne-Prefix.pch"; sourceTree = "<group>"; };
 		275F4A6018AD0FBC00D2F069 /* JCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCAppDelegate.h; sourceTree = "<group>"; };
 		275F4A6118AD0FBC00D2F069 /* JCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCAppDelegate.m; sourceTree = "<group>"; };
-		275F4A6718AD0FBC00D2F069 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		275F4A6F18AD0FBC00D2F069 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2762151C1912AA2500CFBCC8 /* NSDictionary+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+QueryString.h"; sourceTree = "<group>"; };
 		2762151D1912AA2500CFBCC8 /* NSDictionary+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+QueryString.m"; sourceTree = "<group>"; };
@@ -368,7 +367,6 @@
 		5D0199BE1A1BBBF400F4CF13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CurrentCallViewCell.xib; sourceTree = "<group>"; };
 		5D0199C31A1BBC0500F4CF13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/IncomingCallViewCell.xib; sourceTree = "<group>"; };
 		5D0199C81A1BBC1500F4CF13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ConferenceCallViewCell.xib; sourceTree = "<group>"; };
-		5D0199CD1A1BBC5E00F4CF13 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		5D0199ED1A1BF4BC00F4CF13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D0199EF1A1BF4C100F4CF13 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		5D0199F01A1BF4C200F4CF13 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -446,6 +444,7 @@
 		5D241FE61A38BE5A008B498A /* JCContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactCell.m; sourceTree = "<group>"; };
 		5D241FE81A38C4CE008B498A /* JCLineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLineCell.h; sourceTree = "<group>"; };
 		5D241FE91A38C4CE008B498A /* JCLineCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLineCell.m; sourceTree = "<group>"; };
+		5D25F8211AE5895E00981DB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		5D2B2C041A30D8AE00938D76 /* JCVisualEffectsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVisualEffectsView.h; sourceTree = "<group>"; };
 		5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVisualEffectsView.m; sourceTree = "<group>"; };
 		5D2B2C061A30D8AE00938D76 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
@@ -705,12 +704,10 @@
 		F266162518B42AA0000B770A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		F817802B1A1BCCA2009A5F40 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		F817802C1A1BCCA2009A5F40 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
-		F817802D1A1BCCA2009A5F40 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Main_iPad.strings"; sourceTree = "<group>"; };
 		F817802E1A1BCCA2009A5F40 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/CurrentCallViewCell.strings"; sourceTree = "<group>"; };
 		F817802F1A1BCCA2009A5F40 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/IncomingCallViewCell.strings"; sourceTree = "<group>"; };
 		F81780301A1BCCA2009A5F40 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/ConferenceCallViewCell.strings"; sourceTree = "<group>"; };
 		F81780391A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
-		F817803A1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Main_iPad.strings"; sourceTree = "<group>"; };
 		F817803B1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/CurrentCallViewCell.strings"; sourceTree = "<group>"; };
 		F817803C1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/IncomingCallViewCell.strings"; sourceTree = "<group>"; };
 		F817803D1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/ConferenceCallViewCell.strings"; sourceTree = "<group>"; };
@@ -721,30 +718,25 @@
 		F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTransferConfirmationViewController.m; sourceTree = "<group>"; };
 		F84FAF771A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F84FAF781A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
-		F84FAF791A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		F84FAF7A1A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF7B1A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF7C1A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF7E1A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
-		F84FAF7F1A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		F84FAF801A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF811A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF821A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF831A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F84FAF851A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
-		F84FAF861A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		F84FAF871A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF881A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF891A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF8A1A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F84FAF8C1A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
-		F84FAF8D1A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		F84FAF8E1A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF8F1A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF901A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF911A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F84FAF9A1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
-		F84FAF9B1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		F84FAF9C1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF9D1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF9E1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
@@ -1039,9 +1031,9 @@
 				2751590318AD113C00FD8D3F /* Controllers */,
 				5D53298B1AD4B95C00C6AAC6 /* Modules */,
 				5D0199BA1A1BBBAC00F4CF13 /* Main_iPhone.storyboard */,
-				275F4A6618AD0FBC00D2F069 /* Main_iPad.storyboard */,
 				275F4A6F18AD0FBC00D2F069 /* Images.xcassets */,
 				275F4A5818AD0FBC00D2F069 /* Supporting Files */,
+				5D25F8221AE5895E00981DB6 /* Main_iPad.storyboard */,
 			);
 			path = JiveOne;
 			sourceTree = "<group>";
@@ -1819,6 +1811,7 @@
 				5D55236C1A7AB7B400CA8A6D /* calling.mp3 in Resources */,
 				5D0199EC1A1BF4BC00F4CF13 /* Localizable.strings in Resources */,
 				5D0199C21A1BBC0500F4CF13 /* IncomingCallViewCell.xib in Resources */,
+				5D25F8201AE5895E00981DB6 /* Main_iPad.storyboard in Resources */,
 				5D2D73D01ACF97AE00B98BDF /* fr.xliff in Resources */,
 				5D2D73CF1ACF97AE00B98BDF /* es.xliff in Resources */,
 				F202433D18B2CF4A006DB2EF /* README.md in Resources */,
@@ -1826,7 +1819,6 @@
 				5D8198ED1AC1D7520057FDDA /* Debug.storyboard in Resources */,
 				5D2D73CD1ACF97AE00B98BDF /* en-GB.xliff in Resources */,
 				5D2D73D21ACF97AE00B98BDF /* pt.xliff in Resources */,
-				275F4A6818AD0FBC00D2F069 /* Main_iPad.storyboard in Resources */,
 				5D2D73D11ACF97AE00B98BDF /* it.xliff in Resources */,
 				271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */,
 				5D2D73CC1ACF97AE00B98BDF /* de.xliff in Resources */,
@@ -2195,22 +2187,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		275F4A6618AD0FBC00D2F069 /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				275F4A6718AD0FBC00D2F069 /* Base */,
-				5D0199CD1A1BBC5E00F4CF13 /* en */,
-				F817802D1A1BCCA2009A5F40 /* en-GB */,
-				F817803A1A1BCF0F009A5F40 /* es-MX */,
-				F84FAF791A1BEC61003BC143 /* fr */,
-				F84FAF7F1A1BF064003BC143 /* de */,
-				F84FAF861A1BF0ED003BC143 /* pt */,
-				F84FAF8D1A1BF1A2003BC143 /* es */,
-				F84FAF9B1A1BF36F003BC143 /* it */,
-			);
-			name = Main_iPad.storyboard;
-			sourceTree = "<group>";
-		};
 		5D0199BA1A1BBBAC00F4CF13 /* Main_iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2301,6 +2277,14 @@
 				5D1175A21AA0D84E00D2B03A /* it */,
 			);
 			name = PhoneManager.storyboard;
+			sourceTree = "<group>";
+		};
+		5D25F8221AE5895E00981DB6 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5D25F8211AE5895E00981DB6 /* Base */,
+			);
+			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
