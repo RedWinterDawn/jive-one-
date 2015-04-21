@@ -98,6 +98,7 @@
 		5D25F8411AE6872E00981DB6 /* JCAppMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8401AE6872E00981DB6 /* JCAppMenuViewController.m */; };
 		5D25F8441AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8431AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m */; };
 		5D25F8461AE6AE2F00981DB6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8451AE6AE2F00981DB6 /* Settings.storyboard */; };
+		5D25F8481AE6D95800981DB6 /* Phone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8471AE6D95800981DB6 /* Phone.storyboard */; };
 		5D2B2C081A30D8AE00938D76 /* JCVisualEffectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */; };
 		5D2B2C091A30D8AE00938D76 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C071A30D8AE00938D76 /* FXBlurView.m */; };
 		5D2D73CC1ACF97AE00B98BDF /* de.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73C51ACF97AE00B98BDF /* de.xliff */; };
@@ -459,6 +460,7 @@
 		5D25F8421AE6A81F00981DB6 /* JCStoryboardLoaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStoryboardLoaderViewController.h; sourceTree = "<group>"; };
 		5D25F8431AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStoryboardLoaderViewController.m; sourceTree = "<group>"; };
 		5D25F8451AE6AE2F00981DB6 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		5D25F8471AE6D95800981DB6 /* Phone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Phone.storyboard; sourceTree = "<group>"; };
 		5D2B2C041A30D8AE00938D76 /* JCVisualEffectsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVisualEffectsView.h; sourceTree = "<group>"; };
 		5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVisualEffectsView.m; sourceTree = "<group>"; };
 		5D2B2C061A30D8AE00938D76 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
@@ -1671,6 +1673,7 @@
 		5DDE651219F0C49A00B90B55 /* Phone */ = {
 			isa = PBXGroup;
 			children = (
+				5D25F8471AE6D95800981DB6 /* Phone.storyboard */,
 				5D1175921AA0D82600D2B03A /* PhoneManager.storyboard */,
 				5D0199C41A1BBC0500F4CF13 /* IncomingCallViewCell.xib */,
 				5D0199BF1A1BBBF400F4CF13 /* CurrentCallViewCell.xib */,
@@ -1856,6 +1859,7 @@
 				5D2D73CF1ACF97AE00B98BDF /* es.xliff in Resources */,
 				F202433D18B2CF4A006DB2EF /* README.md in Resources */,
 				5D0199B81A1BBBAC00F4CF13 /* Main_iPhone.storyboard in Resources */,
+				5D25F8481AE6D95800981DB6 /* Phone.storyboard in Resources */,
 				5D8198ED1AC1D7520057FDDA /* Debug.storyboard in Resources */,
 				5D2D73CD1ACF97AE00B98BDF /* en-GB.xliff in Resources */,
 				5D2D73D21ACF97AE00B98BDF /* pt.xliff in Resources */,

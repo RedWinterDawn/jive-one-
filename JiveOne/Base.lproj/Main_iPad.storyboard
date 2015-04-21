@@ -6,49 +6,26 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Phone-->
-        <scene sceneID="VXk-Gh-Djm">
+        <!--Storyboard Loader View Controller-->
+        <scene sceneID="kxC-co-Mqb">
             <objects>
-                <tableViewController id="15m-Df-klu" customClass="JCTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="0jt-DM-OfR">
-                        <rect key="frame" x="0.0" y="64" width="600" height="556"/>
+                <viewController id="Drm-io-gDF" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DRk-my-moF"/>
+                        <viewControllerLayoutGuide type="bottom" id="e2b-lu-dyG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="h5U-xz-UuN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="9cH-p5-qec">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9cH-p5-qec" id="xwb-Ez-3Ie">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="15m-Df-klu" id="Fqz-d1-P5n"/>
-                            <outlet property="delegate" destination="15m-Df-klu" id="SD9-j7-kcZ"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Phone" id="dU8-nc-Ha1"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="AnW-Sv-dn6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                    </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Phone"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3oo-pP-1LC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2756" y="-1210"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="lg6-IG-cLs">
-            <objects>
-                <navigationController id="gJm-Ym-2aK" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="2fl-Ik-Oye">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.6470588235294118" green="0.80784313725490198" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="15m-Df-klu" kind="relationship" relationship="rootViewController" id="AVU-Th-5aj"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sm7-uZ-VLE" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1951" y="-1210"/>
+            <point key="canvasLocation" x="1951" y="-1188"/>
         </scene>
         <!--My Jive-->
         <scene sceneID="SiX-z1-ut9">
@@ -79,7 +56,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="gJm-Ym-2aK" kind="showDetail" id="itK-Wf-v6c"/>
+                                            <segue destination="Drm-io-gDF" kind="showDetail" id="rER-Yg-Mxz"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="afB-jY-KOH" style="IBUITableViewCellStyleDefault" id="E5b-Qx-7Bq" customClass="JCTableViewCell">
@@ -222,7 +199,7 @@
                 <splitViewController id="rkO-3x-CVb" customClass="JCSplitViewController" sceneMemberID="viewController">
                     <connections>
                         <segue destination="0xH-aP-rUx" kind="relationship" relationship="masterViewController" id="xcv-eQ-waL"/>
-                        <segue destination="gJm-Ym-2aK" kind="relationship" relationship="detailViewController" id="wmh-jJ-AXR"/>
+                        <segue destination="Drm-io-gDF" kind="relationship" relationship="detailViewController" id="PRr-Pr-J8s"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gaI-CJ-nhb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -390,7 +367,7 @@
                                     <outlet property="icon" destination="4Ou-vr-Jou" id="NaM-wJ-Udu"/>
                                     <outlet property="name" destination="P9B-5h-Y99" id="uid-4F-JZK"/>
                                     <outlet property="number" destination="cih-dr-Rgb" id="93d-iv-QFP"/>
-                                    <segue destination="gJm-Ym-2aK" kind="showDetail" id="Kbg-KZ-yNp"/>
+                                    <segue destination="Drm-io-gDF" kind="showDetail" id="sd0-Wp-fmg"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VoicemailCell" rowHeight="61" id="s8r-o2-ghe" customClass="JCVoicemailCell">
@@ -469,7 +446,7 @@
                                     <outlet property="duration" destination="rLL-vy-8cs" id="F8w-Gv-eOQ"/>
                                     <outlet property="name" destination="Efb-Rw-Jvr" id="Sra-kK-leg"/>
                                     <outlet property="number" destination="c77-32-Ths" id="dLk-Cb-PMt"/>
-                                    <segue destination="gJm-Ym-2aK" kind="showDetail" id="yhD-kv-Gn5"/>
+                                    <segue destination="Drm-io-gDF" kind="showDetail" id="YXY-xe-KJe"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="60" id="JCd-PC-EvL" customClass="JCConversationTableViewCell">
@@ -561,8 +538,8 @@
         <image name="nav-voicemail-black" width="33" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="itK-Wf-v6c"/>
-        <segue reference="IDt-Z0-q45"/>
+        <segue reference="sd0-Wp-fmg"/>
+        <segue reference="uIY-i0-4oi"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>
