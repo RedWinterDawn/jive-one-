@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *extensionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *appLabel;
 @property (weak, nonatomic) IBOutlet UILabel *buildLabel;
+@property (weak, nonatomic) IBOutlet UILabel *installationIdentifier;
+@property (weak, nonatomic) IBOutlet UILabel *uuid;
 @property (weak, nonatomic) IBOutlet UISwitch *wifiOnly;
 @property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
 @property (weak, nonatomic) IBOutlet UITableViewCell *enablePreasenceCell;

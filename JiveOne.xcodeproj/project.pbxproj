@@ -95,6 +95,9 @@
 		5D25F8201AE5895E00981DB6 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8221AE5895E00981DB6 /* Main_iPad.storyboard */; };
 		5D25F82E1AE5A7DA00981DB6 /* JCSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F82D1AE5A7DA00981DB6 /* JCSplitViewController.m */; };
 		5D25F8311AE5ABB500981DB6 /* JCTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8301AE5ABB500981DB6 /* JCTableViewController.m */; };
+		5D25F8411AE6872E00981DB6 /* JCAppMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8401AE6872E00981DB6 /* JCAppMenuViewController.m */; };
+		5D25F8441AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8431AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m */; };
+		5D25F8461AE6AE2F00981DB6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8451AE6AE2F00981DB6 /* Settings.storyboard */; };
 		5D2B2C081A30D8AE00938D76 /* JCVisualEffectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */; };
 		5D2B2C091A30D8AE00938D76 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C071A30D8AE00938D76 /* FXBlurView.m */; };
 		5D2D73CC1ACF97AE00B98BDF /* de.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73C51ACF97AE00B98BDF /* de.xliff */; };
@@ -451,6 +454,11 @@
 		5D25F82D1AE5A7DA00981DB6 /* JCSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSplitViewController.m; sourceTree = "<group>"; };
 		5D25F82F1AE5ABB500981DB6 /* JCTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTableViewController.h; sourceTree = "<group>"; };
 		5D25F8301AE5ABB500981DB6 /* JCTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTableViewController.m; sourceTree = "<group>"; };
+		5D25F83F1AE6872E00981DB6 /* JCAppMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppMenuViewController.h; sourceTree = "<group>"; };
+		5D25F8401AE6872E00981DB6 /* JCAppMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppMenuViewController.m; sourceTree = "<group>"; };
+		5D25F8421AE6A81F00981DB6 /* JCStoryboardLoaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStoryboardLoaderViewController.h; sourceTree = "<group>"; };
+		5D25F8431AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStoryboardLoaderViewController.m; sourceTree = "<group>"; };
+		5D25F8451AE6AE2F00981DB6 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		5D2B2C041A30D8AE00938D76 /* JCVisualEffectsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVisualEffectsView.h; sourceTree = "<group>"; };
 		5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVisualEffectsView.m; sourceTree = "<group>"; };
 		5D2B2C061A30D8AE00938D76 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
@@ -885,14 +893,14 @@
 			children = (
 				5D490E411A89751F004B62C0 /* JCNavigationController.h */,
 				5D490E421A89751F004B62C0 /* JCNavigationController.m */,
-				5D35479319FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.h */,
-				5D35479419FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m */,
+				5D25F8321AE5B91B00981DB6 /* iPhone */,
 				5D36B7A919F8674E0024A0E7 /* JCFetchedResultsTableViewController.h */,
 				5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */,
-				5D25F82C1AE5A7DA00981DB6 /* JCSplitViewController.h */,
-				5D25F82D1AE5A7DA00981DB6 /* JCSplitViewController.m */,
+				5D25F8331AE5B92D00981DB6 /* iPad */,
 				5D25F82F1AE5ABB500981DB6 /* JCTableViewController.h */,
 				5D25F8301AE5ABB500981DB6 /* JCTableViewController.m */,
+				5D25F8421AE6A81F00981DB6 /* JCStoryboardLoaderViewController.h */,
+				5D25F8431AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1041,9 +1049,9 @@
 				2751590318AD113C00FD8D3F /* Controllers */,
 				5D53298B1AD4B95C00C6AAC6 /* Modules */,
 				5D0199BA1A1BBBAC00F4CF13 /* Main_iPhone.storyboard */,
+				5D25F8221AE5895E00981DB6 /* Main_iPad.storyboard */,
 				275F4A6F18AD0FBC00D2F069 /* Images.xcassets */,
 				275F4A5818AD0FBC00D2F069 /* Supporting Files */,
-				5D25F8221AE5895E00981DB6 /* Main_iPad.storyboard */,
 			);
 			path = JiveOne;
 			sourceTree = "<group>";
@@ -1090,6 +1098,7 @@
 		277F093E18FECEB800EEF0E3 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				5D25F8451AE6AE2F00981DB6 /* Settings.storyboard */,
 				5D241FD51A38313F008B498A /* Debug */,
 				5DA566421A1D454D00286BA5 /* JCSettingsTableViewController.h */,
 				5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */,
@@ -1234,6 +1243,26 @@
 				5D8198F21AC1F2160057FDDA /* JCDebugDIDTableViewController.m */,
 			);
 			name = Debug;
+			sourceTree = "<group>";
+		};
+		5D25F8321AE5B91B00981DB6 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				5D35479319FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.h */,
+				5D35479419FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m */,
+			);
+			name = iPhone;
+			sourceTree = "<group>";
+		};
+		5D25F8331AE5B92D00981DB6 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				5D25F82C1AE5A7DA00981DB6 /* JCSplitViewController.h */,
+				5D25F82D1AE5A7DA00981DB6 /* JCSplitViewController.m */,
+				5D25F83F1AE6872E00981DB6 /* JCAppMenuViewController.h */,
+				5D25F8401AE6872E00981DB6 /* JCAppMenuViewController.m */,
+			);
+			name = iPad;
 			sourceTree = "<group>";
 		};
 		5D2D73C31ACF97AE00B98BDF /* Translations */ = {
@@ -1820,6 +1849,7 @@
 			files = (
 				5D55236C1A7AB7B400CA8A6D /* calling.mp3 in Resources */,
 				5D0199EC1A1BF4BC00F4CF13 /* Localizable.strings in Resources */,
+				5D25F8461AE6AE2F00981DB6 /* Settings.storyboard in Resources */,
 				5D0199C21A1BBC0500F4CF13 /* IncomingCallViewCell.xib in Resources */,
 				5D25F8201AE5895E00981DB6 /* Main_iPad.storyboard in Resources */,
 				5D2D73D01ACF97AE00B98BDF /* fr.xliff in Resources */,
@@ -1947,11 +1977,13 @@
 				5D490E761A93BCA5004B62C0 /* JCProgressHUD.m in Sources */,
 				5D7DD3681A7B004B00B9FF4D /* SMSMessage.m in Sources */,
 				5D490E641A8D29BD004B62C0 /* JiveContact.m in Sources */,
+				5D25F8411AE6872E00981DB6 /* JCAppMenuViewController.m in Sources */,
 				5D7DD3691A7B004B00B9FF4D /* Conversation.m in Sources */,
 				5D7DD36A1A7B004B00B9FF4D /* JCCustomCell.m in Sources */,
 				5DA30DD21AD712CD008856DC /* JCAddressBookEntity.m in Sources */,
 				5D241FDB1A38346A008B498A /* JCDebugLinesTableViewController.m in Sources */,
 				5D36B7AB19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m in Sources */,
+				5D25F8441AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m in Sources */,
 				5D87FF341A7FF576001B8BB2 /* JCConversationViewController.m in Sources */,
 				F8A2BC0B19DB5B3C00251310 /* JCCallOptionsView.m in Sources */,
 				5D490E671A8D4C01004B62C0 /* DID.m in Sources */,

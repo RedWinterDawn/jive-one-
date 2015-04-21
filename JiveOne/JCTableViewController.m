@@ -14,8 +14,8 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-    self.navigationItem.leftItemsSupplementBackButton = TRUE;
+    //self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+    //self.navigationItem.leftItemsSupplementBackButton = TRUE;
 }
 
 @end

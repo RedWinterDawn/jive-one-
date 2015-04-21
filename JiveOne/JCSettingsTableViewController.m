@@ -34,6 +34,10 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     self.appLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     self.buildLabel.text = [NSString stringWithFormat:@"%@ (%@)", [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
     
+    UIDevice *device = [UIDevice currentDevice];
+    self.installationIdentifier.text = device.installationIdentifier;
+    self.uuid.text = [device userUniqueIdentiferForUser:self.authenticationManager.jiveUserId];
+    
     JCAppSettings *settings = self.appSettings;
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
