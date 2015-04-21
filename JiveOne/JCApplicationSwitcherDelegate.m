@@ -11,7 +11,7 @@
 
 // View Controllers
 #import "JCApplicationSwitcherViewController.h"
-#import "JCCallHistoryViewController.h"
+#import "JCCallHistoryViewController_iPhone.h"
 #import "JCVoicemailViewController.h"
 #import "JCConversationsTableViewController.h"
 
@@ -161,8 +161,8 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 {
     if ([viewController isKindOfClass:[UINavigationController class]]) {
         viewController = ((UINavigationController *)viewController).topViewController;
-        if ([viewController isKindOfClass:[JCCallHistoryViewController class]]) {
-            JCCallHistoryViewController *callHistoryViewController = (JCCallHistoryViewController *)viewController;
+        if ([viewController isKindOfClass:[JCCallHistoryViewController_iPhone class]]) {
+            JCCallHistoryViewController_iPhone *callHistoryViewController = (JCCallHistoryViewController_iPhone *)viewController;
             JCCallHistoryTableViewController *callHistoryTableViewController = callHistoryViewController.callHistoryTableViewController;
             NSIndexPath *indexPath = [callHistoryTableViewController indexPathOfObject:recentEvent];
             
