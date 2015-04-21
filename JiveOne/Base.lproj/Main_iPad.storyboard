@@ -220,7 +220,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="ZZG-pe-W1B" kind="showDetail" id="5qw-we-DBV"/>
+                                            <segue destination="wxB-AX-6Kz" kind="showDetail" id="38B-Jh-z8u"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ct1-IW-Jz7" customClass="JCTableViewCell">
@@ -383,50 +383,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gaI-CJ-nhb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-379" y="150"/>
-        </scene>
-        <!--Contacts-->
-        <scene sceneID="aYz-6E-nDu">
-            <objects>
-                <tableViewController id="HNs-yS-3QB" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vmK-sY-1cp">
-                        <rect key="frame" x="0.0" y="64" width="600" height="556"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ChG-nZ-fWW">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ChG-nZ-fWW" id="oXE-AP-NnS">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="HNs-yS-3QB" id="HkG-4f-D8e"/>
-                            <outlet property="delegate" destination="HNs-yS-3QB" id="x6L-BH-zsW"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Contacts" id="hPY-67-qBZ"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vtf-G5-NBl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2756" y="300"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ewb-DC-zKV">
-            <objects>
-                <navigationController id="ZZG-pe-W1B" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="F0m-vz-BlO">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.32549019607843138" green="0.25098039215686274" blue="0.64313725490196072" alpha="1" colorSpace="calibratedRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="HNs-yS-3QB" kind="relationship" relationship="rootViewController" id="GoQ-SU-loc"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="y39-6K-fw9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1951" y="306"/>
         </scene>
         <!--Messages-->
         <scene sceneID="fPG-wU-LHd">
@@ -710,6 +666,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vEB-T6-FCt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1951" y="1056"/>
+        </scene>
+        <!--Storyboard Loader View Controller-->
+        <scene sceneID="NXJ-Q0-HdF">
+            <objects>
+                <viewController id="wxB-AX-6Kz" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Wbl-Lg-g37"/>
+                        <viewControllerLayoutGuide type="bottom" id="Dy7-0B-GvE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Nbg-qy-sKp">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Contacts"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nf4-eR-r0Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1950" y="300"/>
         </scene>
     </scenes>
     <resources>
