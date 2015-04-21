@@ -101,6 +101,7 @@
 		5D25F8481AE6D95800981DB6 /* Phone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8471AE6D95800981DB6 /* Phone.storyboard */; };
 		5D25F84B1AE6E3E500981DB6 /* JCCallHistoryTableViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F84A1AE6E3E500981DB6 /* JCCallHistoryTableViewController_iPad.m */; };
 		5D25F84F1AE6F37500981DB6 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F84E1AE6F37500981DB6 /* Login.storyboard */; };
+		5D25F8511AE70E4D00981DB6 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8501AE70E4D00981DB6 /* Chat.storyboard */; };
 		5D2B2C081A30D8AE00938D76 /* JCVisualEffectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */; };
 		5D2B2C091A30D8AE00938D76 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C071A30D8AE00938D76 /* FXBlurView.m */; };
 		5D2D73CC1ACF97AE00B98BDF /* de.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73C51ACF97AE00B98BDF /* de.xliff */; };
@@ -467,6 +468,7 @@
 		5D25F8491AE6E3E500981DB6 /* JCCallHistoryTableViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallHistoryTableViewController_iPad.h; sourceTree = "<group>"; };
 		5D25F84A1AE6E3E500981DB6 /* JCCallHistoryTableViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallHistoryTableViewController_iPad.m; sourceTree = "<group>"; };
 		5D25F84E1AE6F37500981DB6 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		5D25F8501AE70E4D00981DB6 /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
 		5D2B2C041A30D8AE00938D76 /* JCVisualEffectsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVisualEffectsView.h; sourceTree = "<group>"; };
 		5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVisualEffectsView.m; sourceTree = "<group>"; };
 		5D2B2C061A30D8AE00938D76 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
@@ -1507,6 +1509,7 @@
 		5D53298E1AD4ED6700C6AAC6 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				5D25F8501AE70E4D00981DB6 /* Chat.storyboard */,
 				5D87FCD21AB2822700AE1CA5 /* JCConversationViewController.xib */,
 				5D5329911AD4EE1000C6AAC6 /* Models */,
 				5D53298F1AD4EDC200C6AAC6 /* Views */,
@@ -1895,6 +1898,7 @@
 				5D2D73D11ACF97AE00B98BDF /* it.xliff in Resources */,
 				271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */,
 				5D2D73CC1ACF97AE00B98BDF /* de.xliff in Resources */,
+				5D25F8511AE70E4D00981DB6 /* Chat.storyboard in Resources */,
 				5D2D73CE1ACF97AE00B98BDF /* es-MX.xliff in Resources */,
 				9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */,
 				5D1175901AA0D82600D2B03A /* PhoneManager.storyboard in Resources */,

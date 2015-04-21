@@ -197,7 +197,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="0cP-2K-MJ2" kind="showDetail" id="IDt-Z0-q45"/>
+                                            <segue destination="TGY-rE-dxT" kind="showDetail" id="A4u-Kc-AqH"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="i6m-tg-cnR" customClass="JCTableViewCell">
@@ -481,49 +481,26 @@
             </objects>
             <point key="canvasLocation" x="-379" y="150"/>
         </scene>
-        <!--Messages-->
-        <scene sceneID="fPG-wU-LHd">
+        <!--Storyboard Loader View Controller-->
+        <scene sceneID="riW-RK-wbf">
             <objects>
-                <tableViewController id="Qpa-6r-se6" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="yVI-TI-yfM">
-                        <rect key="frame" x="0.0" y="64" width="600" height="556"/>
+                <viewController id="TGY-rE-dxT" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hKr-ua-zXV"/>
+                        <viewControllerLayoutGuide type="bottom" id="VTz-J0-jLf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iZh-R4-knL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="HcE-kd-vwt">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HcE-kd-vwt" id="MDJ-ib-qVh">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Qpa-6r-se6" id="8ZW-mI-rXA"/>
-                            <outlet property="delegate" destination="Qpa-6r-se6" id="fS1-PR-uhB"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Messages" id="ukZ-3d-JCJ"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MTg-eQ-jJv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                    </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Chat"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ioX-7Y-JcH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2756" y="-438"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="n8u-KD-NaW">
-            <objects>
-                <navigationController id="0cP-2K-MJ2" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="q1O-gK-Mln">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.0" green="0.46666666666666667" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Qpa-6r-se6" kind="relationship" relationship="rootViewController" id="uSh-Ee-7Eb"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CY2-lf-L7e" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1951" y="-438"/>
+            <point key="canvasLocation" x="1951" y="-454"/>
         </scene>
         <!--Recent Events Table View Controller-->
         <scene sceneID="6kd-xg-VGT">
@@ -744,7 +721,7 @@
                                     <outlet property="date" destination="TBm-gd-ohV" id="Goz-1E-Av0"/>
                                     <outlet property="detail" destination="ttc-Pa-ekv" id="0ph-I1-wIN"/>
                                     <outlet property="name" destination="YC5-vQ-Pj8" id="efZ-Rn-Sgb"/>
-                                    <segue destination="0cP-2K-MJ2" kind="showDetail" id="uIY-i0-4oi"/>
+                                    <segue destination="TGY-rE-dxT" kind="showDetail" id="M1H-WK-bHT"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -777,7 +754,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vEB-T6-FCt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1951" y="1056"/>
+            <point key="canvasLocation" x="1951" y="1008"/>
         </scene>
         <!--Storyboard Loader View Controller-->
         <scene sceneID="NXJ-Q0-HdF">
@@ -798,7 +775,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nf4-eR-r0Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1950" y="300"/>
+            <point key="canvasLocation" x="1950" y="252"/>
         </scene>
     </scenes>
     <resources>
@@ -814,7 +791,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="sd0-Wp-fmg"/>
-        <segue reference="uIY-i0-4oi"/>
+        <segue reference="M1H-WK-bHT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>
