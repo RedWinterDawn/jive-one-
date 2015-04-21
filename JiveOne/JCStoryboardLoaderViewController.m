@@ -39,7 +39,13 @@
         if (!storyboard) {
             return nil;
         }
-        _embeddedViewController = [storyboard instantiateInitialViewController];
+        
+        NSString *viewControllerIdentifier = self.viewControllerIdentifier;
+        if (viewControllerIdentifier) {
+            _embeddedViewController = [storyboard instantiateViewControllerWithIdentifier:viewControllerIdentifier];
+        } else {
+            _embeddedViewController = [storyboard instantiateInitialViewController];
+        }
     }
     return _embeddedViewController;
 }

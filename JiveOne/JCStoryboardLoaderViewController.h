@@ -11,6 +11,7 @@
 @interface JCStoryboardLoaderViewController : UIViewController
 
 @property (nonatomic, strong) NSString *storyboardIdentifier;
+@property (nonatomic, strong) NSString *viewControllerIdentifier;
 @property (nonatomic, readonly) UIViewController *embeddedViewController;
 
 @end

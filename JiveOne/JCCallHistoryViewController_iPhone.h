@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JCCallHistoryTableViewController.h"
 
-@interface JCCallHistoryViewController : UIViewController
+@interface JCCallHistoryViewController_iPhone : UIViewController
 
 @property (nonatomic, readonly) JCCallHistoryTableViewController *callHistoryTableViewController;
 

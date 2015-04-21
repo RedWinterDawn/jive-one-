@@ -610,7 +610,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="PQg-ib-1Ce">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="PQg-ib-1Ce">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PQg-ib-1Ce" id="JQM-gj-dol">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -665,7 +665,7 @@
         <!--Terms And Conditons View Controller-->
         <scene sceneID="MIZ-Oj-d2q">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="Nxb-0A-qlG" customClass="JCTermsAndConditonsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EULA" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Nxb-0A-qlG" customClass="JCTermsAndConditonsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JPP-s1-FE3"/>
                         <viewControllerLayoutGuide type="bottom" id="anv-le-dY9"/>

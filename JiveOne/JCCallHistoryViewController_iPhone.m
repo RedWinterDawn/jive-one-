@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCallHistoryViewController.h"
+#import "JCCallHistoryViewController_iPhone.h"
 #import "MissedCall.h"
 
-@implementation JCCallHistoryViewController
+@implementation JCCallHistoryViewController_iPhone
 
 -(IBAction)toggleFilterState:(id)sender
 {
