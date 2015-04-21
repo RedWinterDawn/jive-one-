@@ -3284,9 +3284,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ZYx-zc-gsM"/>
-        <segue reference="Uqi-bD-GAX"/>
+        <segue reference="wJG-Wy-RNi"/>
         <segue reference="NV4-rr-lnW"/>
+        <segue reference="xxt-tb-rPs"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>
