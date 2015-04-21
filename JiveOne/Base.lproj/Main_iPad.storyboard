@@ -33,7 +33,7 @@
             <objects>
                 <tableViewController clearsSelectionOnViewWillAppear="NO" id="9Qs-X9-Kt2" customClass="JCAppMenuViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="x2A-Ac-405">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="304"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="240"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -402,17 +402,20 @@
                         <viewControllerLayoutGuide type="bottom" id="iQU-dB-uo4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="tsu-3X-cZE">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hBT-9x-Yuu">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="304"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hBT-9x-Yuu">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="Blw-sA-EjG"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="9Qs-X9-Kt2" kind="embed" id="oFj-y9-Lij"/>
                                 </connections>
                             </containerView>
-                            <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="73h-bJ-Enj">
-                                <rect key="frame" x="0.0" y="312" width="600" height="288"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="73h-bJ-Enj">
+                                <rect key="frame" x="0.0" y="248" width="600" height="288"/>
                                 <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="0.0" y="312" width="400" height="288"/>
                                 </variation>
@@ -422,15 +425,22 @@
                             </containerView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="hBT-9x-Yuu" firstAttribute="top" secondItem="tsu-3X-cZE" secondAttribute="top" id="5sY-bV-e1H"/>
                             <constraint firstAttribute="trailing" secondItem="73h-bJ-Enj" secondAttribute="trailing" id="Co1-Qv-9rx"/>
-                            <constraint firstItem="hBT-9x-Yuu" firstAttribute="leading" secondItem="tsu-3X-cZE" secondAttribute="leading" id="Cph-ML-KaL"/>
-                            <constraint firstAttribute="trailing" secondItem="hBT-9x-Yuu" secondAttribute="trailing" id="SmV-4S-8pp"/>
                             <constraint firstItem="iQU-dB-uo4" firstAttribute="top" secondItem="73h-bJ-Enj" secondAttribute="bottom" id="Uxx-k3-JiR"/>
+                            <constraint firstItem="73h-bJ-Enj" firstAttribute="top" secondItem="hBT-9x-Yuu" secondAttribute="bottom" constant="8" id="Yd7-07-Pz0"/>
+                            <constraint firstAttribute="trailing" secondItem="hBT-9x-Yuu" secondAttribute="trailing" id="dC6-pE-wtp"/>
+                            <constraint firstItem="hBT-9x-Yuu" firstAttribute="leading" secondItem="tsu-3X-cZE" secondAttribute="leading" id="hWE-br-X3A"/>
                             <constraint firstItem="73h-bJ-Enj" firstAttribute="leading" secondItem="tsu-3X-cZE" secondAttribute="leading" id="imj-MS-PVv"/>
                             <constraint firstItem="73h-bJ-Enj" firstAttribute="top" secondItem="hBT-9x-Yuu" secondAttribute="bottom" constant="8" id="nK5-tH-bfK"/>
+                            <constraint firstItem="hBT-9x-Yuu" firstAttribute="top" secondItem="i05-8G-yLx" secondAttribute="bottom" id="zVc-Qo-bJJ"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="nK5-tH-bfK"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="My Jive" id="CYZ-qM-fMy"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hrQ-Nb-v0G" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -442,10 +452,10 @@
             <objects>
                 <navigationController id="0xH-aP-rUx" sceneMemberID="viewController">
                     <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="trn-on-nMu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="trn-on-nMu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </textAttributes>
@@ -803,8 +813,8 @@
         <image name="settings_white" width="25" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IDt-Z0-q45"/>
         <segue reference="rER-Yg-Mxz"/>
+        <segue reference="IDt-Z0-q45"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>
