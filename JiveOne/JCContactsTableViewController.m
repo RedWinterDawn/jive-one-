@@ -19,6 +19,7 @@
 #import "Extension.h"
 
 #import "JCPhoneManager.h"
+#import "JCContactDetailTableViewController.h"
 
 @interface JCContactsTableViewController()
 {
@@ -75,6 +76,24 @@
     return nil;
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UIViewController *viewController = segue.destinationViewController;
+    if ([viewController isKindOfClass:[UINavigationController class]]) {
+        viewController = ((UINavigationController *)viewController).topViewController;
+    }
+    
+    if ([viewController isKindOfClass:[JCContactDetailTableViewController class]]) {
+        if ([sender isKindOfClass:[UITableViewCell class]]) {
+            UITableViewCell *cell = (UITableViewCell *)sender;
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            JCPersonManagedObject *person = (JCPersonManagedObject *)[self objectAtIndexPath:indexPath];
+            JCContactDetailTableViewController *detailViewController = (JCContactDetailTableViewController *)viewController;
+            detailViewController.person = person;
+        }
+    }
+}
+
 #pragma mark - Setters -
 
 -(void)setFilterType:(JCContactFilter)filterType
@@ -106,7 +125,7 @@
     if (!_fetchRequest)
     {
         Line *line = self.authenticationManager.line;
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@", line.pbx.pbxId];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@", line.pbxId];
         if (_searchText && ![_searchText isEqualToString:@""]) {
             NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (number contains[cd] %@)", _searchText, _searchText];
             predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
@@ -196,9 +215,11 @@
         }
     }
     else if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)] && object != line) {
-        [self dialPhoneNumber:(id<JCPhoneNumberDataSource>)object
-                    usingLine:line
-                       sender:tableView];
+        if ( UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad ) {
+            [self dialPhoneNumber:(id<JCPhoneNumberDataSource>)object
+                        usingLine:line
+                           sender:tableView];
+        }
     }
 }
 
