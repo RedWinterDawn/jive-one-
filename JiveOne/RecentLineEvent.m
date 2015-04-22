@@ -32,12 +32,17 @@
 
 -(NSString *)detailText
 {
-    return [JCPhoneNumberDataSourceUtils formattedPhoneNumberForPhoneNumber:self];
+    return self.formattedNumber;
 }
 
 -(NSString *)dialableNumber
 {
     return [JCPhoneNumberDataSourceUtils dialableStringForPhoneNumber:self];
+}
+
+-(NSString *)formattedNumber
+{
+    return [JCPhoneNumberDataSourceUtils formattedPhoneNumberForPhoneNumber:self];
 }
 
 -(NSString *)t9
@@ -71,12 +76,6 @@
 {
     return [JCPhoneNumberDataSourceUtils phoneNumber:self
                                    containsT9Keyword:keyword];
-}
-
--(BOOL)isEqual:(id)object
-{
-    return [JCPhoneNumberDataSourceUtils phoneNumber:self
-                                             isEqual:object];
 }
 
 @end

@@ -138,8 +138,10 @@ NSString *const kJCAddressBookFailedToLoadNotification = @"AddressBookFailedToLo
                 }
                 
                 JCAddressBookPerson *person = [JCAddressBookPerson addressBookPersonWithABRecordRef:record];
-                [people addObject:person];
-                [numbers addObjectsFromArray:person.phoneNumbers];
+                if (person) {
+                    [people addObject:person];
+                    [numbers addObjectsFromArray:person.phoneNumbers];
+                }
             }
         }
     }

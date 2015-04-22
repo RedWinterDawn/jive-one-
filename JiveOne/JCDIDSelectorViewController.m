@@ -43,7 +43,7 @@
         DID *did = (DID *)object;
         if (did.sendSMS || did.receiveSMS) {
             
-        cell.textLabel.text = [NSString stringWithFormat:@"%@", did.number].formattedPhoneNumber;
+        cell.textLabel.text = did.formattedNumber;
         if ([did isEqual:[JCAuthenticationManager sharedInstance].did]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
