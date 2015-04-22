@@ -257,7 +257,25 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
 
 -(DID *)did
 {
-    return self.pbx.dids.allObjects.firstObject;
+    if (_did) {
+        return _did;
+    }
+    
+    PBX *pbx = self.pbx;
+    if (!pbx) {
+        return nil;
+    }
+    
+    // If we do not yet have a line, look for a line for our user that is marked as active.
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and userDefault = %@", pbx, @YES];
+    _did = [DID MR_findFirstWithPredicate:predicate];
+    if (_did) {
+        return _did;
+    }
+    
+    predicate = [NSPredicate predicateWithFormat:@"pbx = %@", pbx];
+    _did = [DID MR_findFirstWithPredicate:predicate sortedBy:@"number" ascending:YES];
+    return _did;
 }
 
 #pragma mark - Private -
@@ -326,16 +344,17 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
 @end
 
 static JCAuthenticationManager *authenticationManager = nil;
-static dispatch_once_t authenticationManagerOnceToken;
 
 @implementation JCAuthenticationManager (Singleton)
 
 + (instancetype)sharedInstance
 {
-    dispatch_once(&authenticationManagerOnceToken, ^{
-        authenticationManager = [[JCAuthenticationManager alloc] init];
+    static JCAuthenticationManager *singleton = nil;
+    static dispatch_once_t pred;
+    dispatch_once(&pred, ^{
+        singleton = [[JCAuthenticationManager alloc] init];
     });
-    return authenticationManager;
+    return singleton;
 }
 
 @end

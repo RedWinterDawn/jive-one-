@@ -30,6 +30,9 @@
 
 // Transient (Readonly)
 @property (nonatomic, readonly) BOOL smsEnabled;
+@property (nonatomic, readonly) BOOL receiveSMSMessages;
+@property (nonatomic, readonly) BOOL sendSMSMessages;
+
 @property (nonatomic, readonly) NSString * displayName;
 @property (nonatomic, readonly) NSString * pbxId;
 

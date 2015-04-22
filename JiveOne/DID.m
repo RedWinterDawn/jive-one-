@@ -13,6 +13,7 @@
 #define DID_INDEX_OF_DID_ID_IN_JRN 6
 //"jrn:pbx::jive:0127d974-f9f3-0704-2dee-000100420001:did:014885d6-1526-8b77-a111-000100420002",
 
+NSString *const kDIDUserDefaultAttribute       = @"userDefault";
 NSString *const kDIDMakeCallAttribute       = @"makeCall";
 NSString *const kDIDReceiveCallAttribute    = @"receiveCall";
 NSString *const kDIDSendSMSAttribute        = @"sendSMS";
@@ -25,6 +26,10 @@ NSString *const kDIDReceiveSMSAttribute     = @"receiveSMS";
 @dynamic smsMessages;
 
 #pragma mark - Setters -
+-(void)setUserDefault:(BOOL)userDefault
+{
+    [self setPrimitiveValueFromBoolValue:userDefault forKey:kDIDUserDefaultAttribute];
+}
 
 -(void)setMakeCall:(BOOL)makeCall
 {
@@ -47,6 +52,12 @@ NSString *const kDIDReceiveSMSAttribute     = @"receiveSMS";
 }
 
 #pragma mark - Getters -
+
+-(BOOL)isUserDefault
+{
+    return [self boolValueFromPrimitiveValueForKey:kDIDUserDefaultAttribute];
+}
+
 
 -(BOOL)canMakeCall
 {

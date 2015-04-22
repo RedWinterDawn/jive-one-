@@ -60,4 +60,25 @@ NSString *const kPBXV5AttributeKey = @"v5";
     return NO;
 }
 
+-(BOOL)receiveSMSMessages
+{
+    NSSet *dids = self.dids;
+    for (DID *did in dids) {
+        if (did.canReceiveSMS) {
+            return YES;
+        }
+    }
+    return NO;
+}
+-(BOOL)sendSMSMessages
+{
+    NSSet *dids = self.dids;
+    for (DID *did in dids) {
+        if (did.canSendSMS) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 @end
