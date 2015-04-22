@@ -511,7 +511,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" selectionStyle="none" indentationWidth="10" reuseIdentifier="HistoryCell" rowHeight="70" id="r31-aM-m4F" customClass="JCCallHistoryCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" selectionStyle="none" indentationWidth="10" reuseIdentifier="HistoryCell" rowHeight="60" id="r31-aM-m4F" customClass="JCCallHistoryCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" contentMode="center" tableViewCell="r31-aM-m4F" id="7o6-zA-gwO">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -593,7 +593,7 @@
                                     <segue destination="Drm-io-gDF" kind="showDetail" id="sd0-Wp-fmg"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VoicemailCell" rowHeight="70" id="s8r-o2-ghe" customClass="JCVoicemailCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VoicemailCell" rowHeight="60" id="s8r-o2-ghe" customClass="JCVoicemailCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" multipleTouchEnabled="YES" contentMode="center" tableViewCell="s8r-o2-ghe" id="rSg-T8-CWp">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -672,7 +672,7 @@
                                     <segue destination="Drm-io-gDF" kind="showDetail" id="YXY-xe-KJe"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="70" id="JCd-PC-EvL" customClass="JCConversationTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="60" id="JCd-PC-EvL" customClass="JCConversationTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JCd-PC-EvL" id="Tdi-9R-7ee">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -799,7 +799,7 @@
         <image name="settings_white" width="25" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kmu-gD-Rdf"/>
+        <segue reference="sd0-Wp-fmg"/>
         <segue reference="M1H-WK-bHT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
