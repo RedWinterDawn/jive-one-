@@ -20,6 +20,7 @@
 @property (nonatomic, getter=canReceiveCall) BOOL receiveCall;
 @property (nonatomic, getter=canSendSMS) BOOL sendSMS;
 @property (nonatomic, getter=canReceiveSMS) BOOL receiveSMS;
+@property (nonatomic, getter=isUserDefault) BOOL userDefault;
 
 // Transient
 @property (nonatomic, readonly) NSString * didId;
