@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="kqz-q2-BEs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="kqz-q2-BEs">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--Conversation View Controller-->
@@ -20,11 +20,13 @@
             <objects>
                 <splitViewController id="kqz-q2-BEs" customClass="JCSplitViewController" sceneMemberID="viewController">
                     <connections>
+                        <outlet property="delegate" destination="Paz-or-Ksp" id="pgf-Eq-rXm"/>
                         <segue destination="qME-YT-ZZ2" kind="relationship" relationship="masterViewController" id="je0-pz-1jr"/>
                         <segue destination="zOB-gc-we6" kind="relationship" relationship="detailViewController" id="kRy-fO-Lvs"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DwN-Zj-auR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="Paz-or-Ksp" customClass="JCModuleSplitViewControllerDelegate"/>
             </objects>
             <point key="canvasLocation" x="-1646" y="-684"/>
         </scene>

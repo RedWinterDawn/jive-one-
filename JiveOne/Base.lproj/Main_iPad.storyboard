@@ -468,18 +468,13 @@
             </objects>
             <point key="canvasLocation" x="-1021" y="1088"/>
         </scene>
-        <!--Split View Controller-->
+        <!--App Menu Split View Controller-->
         <scene sceneID="Y6E-Qm-ioJ">
             <objects>
-                <splitViewController id="rkO-3x-CVb" customClass="JCSplitViewController" sceneMemberID="viewController">
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="maximumPrimaryColumnWidth">
-                            <integer key="value" value="240"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
+                <splitViewController id="rkO-3x-CVb" customClass="JCAppMenuSplitViewController" sceneMemberID="viewController">
                     <connections>
                         <segue destination="0xH-aP-rUx" kind="relationship" relationship="masterViewController" id="xcv-eQ-waL"/>
-                        <segue destination="Drm-io-gDF" kind="relationship" relationship="detailViewController" id="PRr-Pr-J8s"/>
+                        <segue destination="Drm-io-gDF" kind="relationship" relationship="detailViewController" id="kmu-gD-Rdf"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gaI-CJ-nhb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -804,7 +799,7 @@
         <image name="settings_white" width="25" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PRr-Pr-J8s"/>
+        <segue reference="kmu-gD-Rdf"/>
         <segue reference="M1H-WK-bHT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

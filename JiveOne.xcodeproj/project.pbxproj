@@ -155,6 +155,9 @@
 		5D35479819FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479719FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m */; };
 		5D35479B19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */; };
 		5D36B7AB19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */; };
+		5D3F1ADD1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1ADC1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m */; };
+		5D3F1AE01AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1ADF1AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.m */; };
+		5D3F1AE41AE7FEE200C59A63 /* JCAppMenuSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1AE31AE7FEE200C59A63 /* JCAppMenuSplitViewController.m */; };
 		5D490E431A89751F004B62C0 /* JCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E421A89751F004B62C0 /* JCNavigationController.m */; };
 		5D490E461A89774C004B62C0 /* JCMessageParticipantTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E451A89774C004B62C0 /* JCMessageParticipantTableViewController.m */; };
 		5D490E571A8AD0A1004B62C0 /* JCUnknownNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E561A8AD0A1004B62C0 /* JCUnknownNumber.m */; };
@@ -518,6 +521,12 @@
 		5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMenuBarButtonItem.m; sourceTree = "<group>"; };
 		5D36B7A919F8674E0024A0E7 /* JCFetchedResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCFetchedResultsTableViewController.h; sourceTree = "<group>"; };
 		5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCFetchedResultsTableViewController.m; sourceTree = "<group>"; };
+		5D3F1ADB1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppMenuSplitViewControllerDelegate.h; sourceTree = "<group>"; };
+		5D3F1ADC1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppMenuSplitViewControllerDelegate.m; sourceTree = "<group>"; };
+		5D3F1ADE1AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCModuleSplitViewControllerDelegate.h; sourceTree = "<group>"; };
+		5D3F1ADF1AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCModuleSplitViewControllerDelegate.m; sourceTree = "<group>"; };
+		5D3F1AE21AE7FEE200C59A63 /* JCAppMenuSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppMenuSplitViewController.h; sourceTree = "<group>"; };
+		5D3F1AE31AE7FEE200C59A63 /* JCAppMenuSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppMenuSplitViewController.m; sourceTree = "<group>"; };
 		5D490E411A89751F004B62C0 /* JCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNavigationController.h; sourceTree = "<group>"; };
 		5D490E421A89751F004B62C0 /* JCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNavigationController.m; sourceTree = "<group>"; };
 		5D490E441A89774C004B62C0 /* JCMessageParticipantTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessageParticipantTableViewController.h; sourceTree = "<group>"; };
@@ -1272,6 +1281,8 @@
 			children = (
 				5D25F82C1AE5A7DA00981DB6 /* JCSplitViewController.h */,
 				5D25F82D1AE5A7DA00981DB6 /* JCSplitViewController.m */,
+				5D3F1AE21AE7FEE200C59A63 /* JCAppMenuSplitViewController.h */,
+				5D3F1AE31AE7FEE200C59A63 /* JCAppMenuSplitViewController.m */,
 				5D25F83F1AE6872E00981DB6 /* JCAppMenuViewController.h */,
 				5D25F8401AE6872E00981DB6 /* JCAppMenuViewController.m */,
 			);
@@ -1422,6 +1433,17 @@
 			name = PhoneManager;
 			sourceTree = "<group>";
 		};
+		5D3F1AE11AE7FEA400C59A63 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				5D3F1ADB1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.h */,
+				5D3F1ADC1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m */,
+				5D3F1ADE1AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.h */,
+				5D3F1ADF1AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.m */,
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
 		5D53298B1AD4B95C00C6AAC6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -1502,6 +1524,7 @@
 				5D1FD5C21A48B05E007EF8B6 /* JCKeychain.h */,
 				5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */,
 				2751591518AD2FF700FD8D3F /* Core Data */,
+				5D3F1AE11AE7FEA400C59A63 /* iPad */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2016,6 +2039,7 @@
 				5D490E641A8D29BD004B62C0 /* JiveContact.m in Sources */,
 				5D25F8411AE6872E00981DB6 /* JCAppMenuViewController.m in Sources */,
 				5D7DD3691A7B004B00B9FF4D /* Conversation.m in Sources */,
+				5D3F1AE41AE7FEE200C59A63 /* JCAppMenuSplitViewController.m in Sources */,
 				5D7DD36A1A7B004B00B9FF4D /* JCCustomCell.m in Sources */,
 				5DA30DD21AD712CD008856DC /* JCAddressBookEntity.m in Sources */,
 				5D241FDB1A38346A008B498A /* JCDebugLinesTableViewController.m in Sources */,
@@ -2070,6 +2094,7 @@
 				274493CE18D13538002744CB /* Common.m in Sources */,
 				919DD2A11922E3570039205E /* JCPopoverView.m in Sources */,
 				5D62437B1A687CD0001DF88E /* JCPhoneManagerError.m in Sources */,
+				5D3F1ADD1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m in Sources */,
 				5D0275131A3F836A0077A37B /* JCStringEncryptionTransformer.m in Sources */,
 				5D241FE11A38B4EB008B498A /* Person.m in Sources */,
 				5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */,
@@ -2147,6 +2172,7 @@
 				5D490E431A89751F004B62C0 /* JCNavigationController.m in Sources */,
 				2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */,
 				5D629BB019D9CE4500F5744E /* JCVoiceNonVisualViewController.m in Sources */,
+				5D3F1AE01AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.m in Sources */,
 				5D25F82E1AE5A7DA00981DB6 /* JCSplitViewController.m in Sources */,
 				5DDDA54B1A4B238300E31AA3 /* JCLinePresence.m in Sources */,
 				27997574195A12C5001425CC /* PBX+V5Client.m in Sources */,

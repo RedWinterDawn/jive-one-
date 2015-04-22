@@ -17,14 +17,18 @@
 
 @implementation JCStoryboardLoaderViewController
 
-- (void)viewDidLoad {
+-(void)viewDidLoad
+{
     [super viewDidLoad];
     
     UIViewController *embeddedViewController = self.embeddedViewController;
-    embeddedViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [embeddedViewController.view setTranslatesAutoresizingMaskIntoConstraints:YES];
-    [self addChildViewController:embeddedViewController];
-    [self.view addSubview:embeddedViewController.view];
+    
+        embeddedViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [embeddedViewController.view setTranslatesAutoresizingMaskIntoConstraints:YES];
+        embeddedViewController.view.frame = self.view.bounds;
+        [self addChildViewController:embeddedViewController];
+        [self.view addSubview:embeddedViewController.view];
+    
 }
 
 -(UIViewController *)embeddedViewController
