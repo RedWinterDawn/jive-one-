@@ -12,37 +12,10 @@
 @import Foundation;
 @import UIKit;
 
-@protocol JCPersonDataSource <NSObject>
+#import "JCPhoneNumberDataSource.h"
 
-// What text should be shown to display as a title to represent the person.
-@property (nonatomic, readonly) NSString *titleText;
+@protocol JCPersonDataSource <JCPhoneNumberDataSource>
 
-// Returns an attributed string, bolding keywords in the title.
--(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword
-                                       font:(UIFont *)font
-                                      color:(UIColor *)color;
-
-// What test should bes shown as detail text to represent a person
-@property (nonatomic, readonly) NSString *detailText;
-
-// Returns an attributed string, bolding keywords in the detail text.
--(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword
-                                        font:(UIFont *)font
-                                       color:(UIColor *)color;
-
-// Method to return true if the persons name, number contains a given keyword or its t9 equivalent.
--(BOOL)containsKeyword:(NSString *)keyword;
-
-// Method to return true if the persons name contains a t9 equivalent of the name
--(BOOL)containsT9Keyword:(NSString *)keyword;
-
-// Required Name Composites
-@property (nonatomic, readonly) NSString *name;
-@property (nonatomic, readonly) NSString *number;
-@property (nonatomic, readonly) NSString *t9;
-
-// Optional Additional Name Composites
-@optional
 @property (nonatomic, readonly) NSString *firstNameFirstName;
 @property (nonatomic, readonly) NSString *lastNameFirstName;
 

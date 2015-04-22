@@ -75,9 +75,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     
     JCAuthenticationManager *authenticationManager = self.authenticationManager;
     self.userNameLabel.text     = authenticationManager.line.pbx.user.jiveUserId;
-    self.extensionLabel.text    = authenticationManager.line.extension;
-    self.smsUserDefaultNumber.text = authenticationManager.did.number.formattedPhoneNumber;
-    
+    self.extensionLabel.text    = authenticationManager.line.number;
+    self.smsUserDefaultNumber.text = authenticationManager.did.number;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -108,7 +107,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         NSString *uuid              = [currentDevice userUniqueIdentiferForUser:authenticationManager.jiveUserId];
         NSString * pbx              = authenticationManager.line.pbx.displayName;
         NSString *user              = authenticationManager.line.pbx.user.jiveUserId;
-        NSString *line              = authenticationManager.line.extension;
+        NSString *line              = authenticationManager.line.number;
         
         NSString *bodyTemplate = [NSString stringWithFormat:kJCSettingsTableViewControllerFeebackMessage, model, systemVersion, appVersion, country, uuid, pbx, user, line];
         [mailViewController setMessageBody:bodyTemplate isHTML:YES]; 
@@ -128,7 +127,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         JCAppSettings *settings = self.appSettings;
         settings.wifiOnly = !settings.isWifiOnly;
         switchBtn.on = settings.isWifiOnly;
-        [JCPhoneManager connectToLine:self.authenticationManager.line];
+        [self.phoneManager connectToLine:self.authenticationManager.line];
     }
 }
 

@@ -23,11 +23,16 @@
 #import "JCAppSettings.h"
 
 // Objects
+#import "JCPhoneBook.h"
 #import "JCCallCard.h"
 #import "JCLineSession.h"
 #import "JCConferenceCallCard.h"
+
+// Managed Objects
 #import "Line.h"
-#import "Contact.h"
+#import "MissedCall.h"
+#import "OutgoingCall.h"
+#import "IncomingCall.h"
 
 // View Controllers
 #import "JCCallerViewController.h"
@@ -41,7 +46,7 @@ NSString *const kJCPhoneManagerRegisteredNotification               = @"phoneMan
 NSString *const kJCPhoneManagerUnregisteredNotification             = @"phoneManagerUnregistered";
 NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneManagerRegistrationFailed";
 
-@interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate, JCPhoneAudioManagerDelegate>
+@interface JCPhoneManager ()<JCSipManagerDelegate, JCCallCardDelegate, JCPhoneAudioManagerDelegate>
 {
     JCPhoneAudioManager *_audioManager;
     JCCallerViewController *_callViewController;
@@ -57,6 +62,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 @property (nonatomic, strong) JCSipManager *sipManager;
 @property (nonatomic, strong) UIStoryboard *storyboard;
 @property (nonatomic, strong) JCAppSettings *appSettings;
+@property (nonatomic, strong) JCPhoneBook *phoneBook;
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
 
 @end
@@ -70,16 +76,21 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     
     return [self initWithSipManager:sipManager
                         appSettings:[JCAppSettings sharedSettings]
+                          phoneBook:[JCPhoneBook sharedPhoneBook]
                 reachabilityManager:[AFNetworkReachabilityManager sharedManager]];
 }
 
--(instancetype)initWithSipManager:(JCSipManager *)sipManager appSettings:(JCAppSettings *)appSettings reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager
+-(instancetype)initWithSipManager:(JCSipManager *)sipManager
+                      appSettings:(JCAppSettings *)appSettings
+                        phoneBook:(JCPhoneBook *)phoneBook
+              reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager
 {
     self = [super init];
     if (self) {
         _storyboardName = DEFAULT_PHONE_MANAGER_STORYBOARD_NAME;
         _sipManager = sipManager;
         _appSettings = appSettings;
+        _phoneBook = phoneBook;
         _networkReachabilityManager = reachabilityManager;
     }
     return self;
@@ -91,6 +102,11 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 }
 
 #pragma mark - Connection -
+
+- (void)connectToLine:(Line *)line
+{
+    [self connectToLine:line completion:NULL];
+}
 
 /**
  *  Registers the phone manager to a particualar line.
@@ -180,7 +196,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegisteringNotification object:self];
     [UIApplication showStatus:@"Registering..."];
-    [self.sipManager registerToLine:line];
+    [self.sipManager registerToProvisioning:line];
 }
 
 -(void)disconnect
@@ -242,31 +258,32 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
  *  immediately, otherwise tries to register, then dial. If we are uable to connect, we call 
  *  completion handler with success being false.
  */
--(void)dialNumber:(NSString *)dialString usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
+-(void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
+    NSString *dialString = number.dialableNumber;
     if ([self isEmergencyNumber:dialString] && [UIDevice currentDevice].canMakeCall) {
-        [self dialEmergencyNumber:dialString usingLine:line type:dialType completion:completion];
+        [self dialEmergencyNumber:number usingLine:line type:dialType completion:completion];
         return;
     }
     
-    [self connectAndDial:dialString usingLine:line type:dialType completion:completion];
+    [self connectAndDial:number usingLine:line type:dialType completion:completion];
 }
 
--(void)connectAndDial:(NSString *)dialString usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
+-(void)connectAndDial:(id<JCPhoneNumberDataSource>)number usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
-    if (self.sipManager.line != line && line != nil) {
+    if (self.sipManager.provisioning != line && line != nil) {
         [self disconnect];
     }
     
     if (_sipManager.registered) {
-        [self dial:dialString type:dialType completion:completion];
+        [self dial:number type:dialType completion:completion];
         return;
     }
     
     [self connectToLine:line
              completion:^(BOOL success, NSError *error) {
                  if (success){
-                     [self dial:dialString type:dialType completion:completion];
+                     [self dial:number type:dialType completion:completion];
                      return;
                  }
                  
@@ -281,8 +298,9 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     return [dialString isEqualToString:kJCPhoneManager911String];
 }
 
--(void)dialEmergencyNumber:(NSString *)emergencyNumber usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
+-(void)dialEmergencyNumber:(id<JCPhoneNumberDataSource>)number usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
+    NSString *emergencyNumber = number.dialableNumber;
     #ifdef DEBUG
     emergencyNumber = kJCPhoneManager611String;
     #endif
@@ -297,7 +315,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
             completion(false, nil);
         }
         else{
-            [weakSelf connectAndDial:emergencyNumber usingLine:line type:dialType completion:completion];
+            [weakSelf connectAndDial:number usingLine:line type:dialType completion:completion];
         }
     };
     
@@ -322,18 +340,18 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]]];
 }
 
--(void)dial:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
+-(void)dial:(id<JCPhoneNumberDataSource>)number type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
     if (dialType == JCPhoneManagerBlindTransfer) {
-        [self blindTransferToNumber:dialNumber completion:completion];
+        [self blindTransferToNumber:number completion:completion];
     } else if (dialType == JCPhoneManagerWarmTransfer) {
-        [self warmTransferToNumber:dialNumber completion:completion];
+        [self warmTransferToNumber:number completion:completion];
     } else {
-        [self simpleDialNumber:dialNumber completion:completion];
+        [self simpleDialNumber:number completion:completion];
     }
 }
 
--(void)blindTransferToNumber:(NSString *)number completion:(CompletionHandler)completion
+-(void)blindTransferToNumber:(id<JCPhoneNumberDataSource>)number completion:(CompletionHandler)completion
 {
     [UIApplication showStatus:@"Transfering..."];
     __autoreleasing NSError *error;
@@ -348,9 +366,9 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     }
 }
 
--(void)warmTransferToNumber:(NSString *)number completion:(CompletionHandler)completion
+-(void)warmTransferToNumber:(id<JCPhoneNumberDataSource>)number completion:(CompletionHandler)completion
 {
-    _warmTransferNumber = number;
+    _warmTransferNumber = number.dialableNumber;
     __autoreleasing NSError *error;
     BOOL success = [self.sipManager startWarmTransferToNumber:number error:&error];
     if (completion) {
@@ -358,7 +376,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     }
 }
 
--(void)simpleDialNumber:(NSString *)number completion:(CompletionHandler)completion
+-(void)simpleDialNumber:(id<JCPhoneNumberDataSource>)number completion:(CompletionHandler)completion
 {
     __autoreleasing NSError *error;
     BOOL success = [self.sipManager makeCall:number videoCall:NO error:&error];
@@ -594,18 +612,17 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     }];
 }
 
--(void)sipHandler:(JCSipManager *)sipHandler didAddLineSession:(JCLineSession *)lineSession
+-(void)sipHandler:(JCSipManager *)sipManager didAddLineSession:(JCLineSession *)lineSession
 {
-    
-//    __autoreleasing NSError *error;
-//    [self.audioManager engagePhoneAudio:&error];
-    
+    if (!lineSession.isIncoming) {
+        [OutgoingCall addOutgoingCallWithLineSession:lineSession line:(Line *)sipManager.provisioning];
+    }
     
     // If we are backgrounded, push out a local notification
     if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
         if (localNotif){
-            localNotif.alertBody =[NSString  stringWithFormat:@"Call from %@ :%@", lineSession.callTitle, lineSession.callDetail];
+            localNotif.alertBody =[NSString  stringWithFormat:@"Call from %@ :%@", lineSession.number.titleText, lineSession.number.detailText];
             localNotif.soundName = UILocalNotificationDefaultSoundName;
             localNotif.applicationIconBadgeNumber = 1;
             [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
@@ -631,8 +648,10 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     }
 }
 
--(void)sipHandler:(JCSipManager *)sipHandler didAnswerLineSession:(JCLineSession *)lineSession
+-(void)sipHandler:(JCSipManager *)sipManager didAnswerLineSession:(JCLineSession *)lineSession
 {
+    [IncomingCall addIncommingCallWithLineSession:lineSession line:(Line *)sipManager.provisioning];
+    
     JCCallCard *callCard = [self callCardForLineSession:lineSession];
     callCard.started = [NSDate date];
     if (_callViewController) {
@@ -642,6 +661,11 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 
 -(void)sipHandler:(JCSipManager *)sipHandler willRemoveLineSession:(JCLineSession *)session
 {
+    // if it was an incoming call, and we missed it, we record it.
+    if (session.isIncoming) {
+        [MissedCall addMissedCallWithLineSession:session line:(Line *)sipHandler.provisioning];
+    }
+    
     // Check to see if the line session happens to be a conference call. if it is, we need to end
     // the conference call. This will end the conference call, and it will be removed because it
     // will have been marked as inactive.
@@ -673,6 +697,11 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     if ((state == UIApplicationStateBackground || state == UIApplicationStateInactive) && count == 0) {
         [self.sipManager startKeepAwake];
     }
+}
+
+-(void)sipHandler:(JCSipManager *)sipHandler didMissLineSession:(JCLineSession *)lineSession
+{
+    
 }
 
 -(void)sipHandler:(JCSipManager *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions
@@ -756,7 +785,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     }
     
     [self dismissCallViewControllerAnimated:NO];
-    if (transferLine.callTitle && receivingLine.callTitle) {
+    if (transferLine.number && receivingLine.number) {
         [self presentTransferSuccessWithSession:transferLine receivingSession:receivingLine];
     }
 }
@@ -765,6 +794,12 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 {
     [_callViewController showError:error];
     [_callViewController reload];
+}
+
+-(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number name:(NSString *)name
+{
+    Line *line = (Line *)self.sipManager.provisioning;
+    return [self.phoneBook phoneNumberForName:name number:number forPbx:line.pbx excludingLine:line];
 }
 
 #pragma mark - Getters -
@@ -786,7 +821,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 
 -(Line *)line
 {
-    return self.sipManager.line;
+    return (Line *)self.sipManager.provisioning;
 }
 
 -(BOOL)isInitialized
@@ -856,15 +891,12 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     if (self.externalCallDisconnected)
     {
         NSLog(@"deregistering did become active, and processing call");
-        
         if (self.externalCallCompletionHandler != NULL) {
             self.externalCallCompletionHandler(self.externalCallConnected);
         }
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
     }
 }
-
-
 
 #pragma mark AVAudioSession
 
@@ -878,101 +910,6 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     if (_callViewController) {
         _callViewController.speakerBtn.selected = (outputType == JCPhoneAudioManagerOutputSpeaker);
     }
-}
-
-#pragma mark - Static Methods -
-
-+ (void)connectToLine:(Line *)line
-{
-    [[JCPhoneManager sharedManager] connectToLine:line completion:NULL];
-}
-
-+ (void)dialNumber:(NSString *)dialNumber usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
-{
-    [[JCPhoneManager sharedManager] dialNumber:dialNumber
-                                     usingLine:line
-                                          type:dialType
-                                    completion:^(BOOL success, NSError *error) {
-                                        if (error) {
-                                            [UIApplication showError:error];
-                                        }
-                                        completion(success, error);
-                                    }];
-}
-
-+ (void)mergeCalls:(CompletionHandler)completion
-{
-    [[JCPhoneManager sharedManager] mergeCalls:^(BOOL success, NSError *error) {
-        if (error) {
-            [UIApplication showError:error];
-        }
-        completion(success, error);
-    }];
-}
-
-+ (void)splitCalls:(CompletionHandler)completion
-{
-    [[JCPhoneManager sharedManager] splitCalls:^(BOOL success, NSError *error) {
-        if (error) {
-            [UIApplication showError:error];
-        }
-        completion(success, error);
-    }];
-}
-
-+ (void)swapCalls:(CompletionHandler)completion
-{
-    [[JCPhoneManager sharedManager] swapCalls:^(BOOL success, NSError *error) {
-        if (error) {
-            [UIApplication showError:error];
-        }
-        completion(success, error);
-    }];
-}
-
-+ (void)muteCall:(BOOL)mute
-{
-    [[JCPhoneManager sharedManager] muteCall:mute];
-}
-
-+ (void)finishWarmTransfer:(CompletionHandler)completion
-{
-    [[JCPhoneManager sharedManager] finishWarmTransfer:^(BOOL success, NSError *error) {
-        if (error) {
-            [UIApplication showError:error];
-        }
-        completion(success, error);
-    }];
-}
-
-+ (void)disconnect
-{
-    [[JCPhoneManager sharedManager] disconnect];
-}
-
-+ (void)startKeepAlive
-{
-    [[JCPhoneManager sharedManager] startKeepAlive];
-}
-
-+ (void)stopKeepAlive
-{
-    [[JCPhoneManager sharedManager] stopKeepAlive];
-}
-
-+(JCPhoneManagerNetworkType)networkType
-{
-    return [JCPhoneManager sharedManager].networkType;
-}
-
-+ (void)numberPadPressedWithInteger:(NSInteger)numberPad
-{
-    [[JCPhoneManager sharedManager] numberPadPressedWithInteger:numberPad];
-}
-
-+ (void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled
-{
-    [[JCPhoneManager sharedManager] setLoudSpeakerEnabled:loudSpeakerEnabled];
 }
 
 @end
@@ -994,33 +931,33 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     return phoneManager;
 }
 
-- (void)dialNumber:(NSString *)phoneNumber usingLine:(Line *)line sender:(id)sender
+- (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number usingLine:(Line *)line sender:(id)sender
 {
-    [self dialNumber:phoneNumber usingLine:line sender:sender completion:NULL];
+    [self dialPhoneNumber:number usingLine:line sender:sender completion:NULL];
 }
 
-- (void)dialNumber:(NSString *)phoneNumber usingLine:(Line *)line sender:(id)sender completion:(CompletionHandler)completion
+- (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number usingLine:(Line *)line sender:(id)sender completion:(CompletionHandler)completion
 {
     if([sender isKindOfClass:[UIButton class]]) {
         ((UIButton *)sender).enabled = FALSE;
     } else if ([sender isKindOfClass:[UITableView class]]) {
         ((UITableView *)sender).userInteractionEnabled = FALSE;
     }
-        
-    [self.phoneManager dialNumber:phoneNumber
-                     usingLine:line
-                          type:JCPhoneManagerSingleDial
-                    completion:^(BOOL success, NSError *error) {
-                        if (completion) {
-                            completion(success, error);
-                        }
-                        
-                        if([sender isKindOfClass:[UIButton class]]) {
-                            ((UIButton *)sender).enabled = TRUE;
-                        } else if ([sender isKindOfClass:[UITableView class]]) {
-                            ((UITableView *)sender).userInteractionEnabled = TRUE;
-                        }
-                    }];
+    
+    [self.phoneManager dialPhoneNumber:number
+                        usingLine:line
+                             type:JCPhoneManagerSingleDial
+                       completion:^(BOOL success, NSError *error) {
+                           if (completion) {
+                               completion(success, error);
+                           }
+                           
+                           if([sender isKindOfClass:[UIButton class]]) {
+                               ((UIButton *)sender).enabled = TRUE;
+                           } else if ([sender isKindOfClass:[UITableView class]]) {
+                               ((UITableView *)sender).userInteractionEnabled = TRUE;
+                           }
+                       }];
 }
 
 @end

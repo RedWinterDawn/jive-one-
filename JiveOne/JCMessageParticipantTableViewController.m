@@ -7,10 +7,8 @@
 //
 
 #import "JCMessageParticipantTableViewController.h"
-
-#import "JCAddressBook.h"
+#import "JCPhoneBook.h"
 #import "JCUnknownNumber.h"
-#import "JCAddressBookNumber.h"
 
 @interface JCMessageParticipantTableViewController ()
 
@@ -138,8 +136,8 @@
         [results addObject:[JCUnknownNumber unknownNumberWithNumber:searchText]];
     }
     
-    NSArray *people = [self.sharedAddressBook fetchNumbersWithKeyword:searchText sortedByKey:@"name" ascending:YES];
-    [results addObjectsFromArray:people];
+    NSArray *phoneNumbers = [self.phoneBook phoneNumbersWithKeyword:searchText forLine:nil sortedByKey:@"name" ascending:YES];
+    [results addObjectsFromArray:phoneNumbers];
     self.tableData = results;
 }
 

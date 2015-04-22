@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
@@ -69,7 +70,7 @@
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="26.5"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(801) 238-9090" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijK-Po-99E" customClass="JCFormattedPhoneNumberLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijK-Po-99E" userLabel="Number Label" customClass="JCFormattedPhoneNumberLabel">
                                         <rect key="frame" x="15" y="52" width="275" height="21"/>
                                         <accessibility key="accessibilityConfiguration" hint="" label="Callers Number"/>
                                         <constraints>
@@ -188,10 +189,8 @@
             <size key="customSize" width="300" height="396"/>
             <connections>
                 <outlet property="actionView" destination="yUi-Hn-q9R" id="7mo-Bp-q50"/>
-                <outlet property="callerIdLabel" destination="H4z-0p-bTI" id="cVv-c3-SfY"/>
                 <outlet property="cardInfoView" destination="QCr-7s-whc" id="vpM-ma-3G0"/>
                 <outlet property="cardInfoViewTopConstraint" destination="dbk-zW-vD4" id="y1L-Kc-i1L"/>
-                <outlet property="dialedNumberLabel" destination="ijK-Po-99E" id="WRF-R9-Yvr"/>
                 <outlet property="elapsedTimeLabel" destination="zQp-R0-cci" id="76e-Ro-RyV"/>
                 <outlet property="endCallButton" destination="fMI-EZ-LsX" id="bJx-6G-LoH"/>
                 <outlet property="endCallButtonWidthConstraint" destination="gtd-cR-yRD" id="hAk-6a-mff"/>
@@ -200,6 +199,8 @@
                 <outlet property="holdView" destination="rkJ-cf-ec6" id="wXT-c7-vN4"/>
                 <outlet property="holdViewTopConstraint" destination="EeP-7w-6AA" id="hPv-b0-ovz"/>
                 <outlet property="infoView" destination="8Zm-YG-q5c" id="lux-DC-zSX"/>
+                <outlet property="nameLabel" destination="H4z-0p-bTI" id="iMg-Wi-hKo"/>
+                <outlet property="numberLabel" destination="ijK-Po-99E" id="o2d-h3-ZiL"/>
             </connections>
             <point key="canvasLocation" x="136" y="154"/>
         </collectionViewCell>

@@ -8,10 +8,9 @@
 
 @import AddressBook;
 
-#import <objc/runtime.h>
-
 #import "JCAddressBook.h"
 #import "JCAddressBookNumber.h"
+#import "LocalContact.h"
 
 NSString *const kJCAddressBookPeople    = @"JCAddressBookPeople";
 NSString *const kJCAddressBookNumbers   = @"JCAddressBookNumbers";
@@ -138,7 +137,7 @@ NSString *const kJCAddressBookFailedToLoadNotification = @"AddressBookFailedToLo
                     continue;
                 }
                 
-                JCAddressBookPerson *person = [[JCAddressBookPerson alloc] initWithABRecordRef:record];
+                JCAddressBookPerson *person = [JCAddressBookPerson addressBookPersonWithABRecordRef:record];
                 [people addObject:person];
                 [numbers addObjectsFromArray:person.phoneNumbers];
             }
@@ -162,9 +161,10 @@ NSString *const kJCAddressBookFailedToLoadNotification = @"AddressBookFailedToLo
 {
     [self getPermission:^(BOOL success, ABAddressBookRef addressBook, NSError *error) {
         if (success) {
-            ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook,recordId);
             if (completion) {
-                completion([[JCAddressBookPerson alloc] initWithABRecordRef:person], nil);
+                ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook,recordId);
+                JCAddressBookPerson *addressBookPerson = [JCAddressBookPerson addressBookPersonWithABRecordRef:person];
+                completion(addressBookPerson, nil);
             }
         }
         else {
@@ -438,30 +438,11 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
     NSMutableArray *addressBook = [NSMutableArray arrayWithCapacity:arrayOfPeople.count];
     for(NSUInteger index = 0; index < arrayOfPeople.count; index++){
         ABRecordRef currentPerson = (__bridge ABRecordRef)[arrayOfPeople objectAtIndex:index];
-        [addressBook addObject:[[JCAddressBookPerson alloc] initWithABRecordRef:currentPerson]];
+        JCAddressBookPerson *person = [JCAddressBookPerson addressBookPersonWithABRecordRef:currentPerson];
+        [addressBook addObject:person];
     }
     [addressBook sortUsingDescriptors:sortDesciptors];
     return addressBook;
-}
-
-@end
-
-@implementation JCAddressBook (Singleton)
-
-+ (instancetype)sharedAddressBook
-{
-    static JCAddressBook *singleton = nil;
-    static dispatch_once_t pred;        // Lock
-    dispatch_once(&pred, ^{             // This code is called at most once per app
-        singleton = [[JCAddressBook alloc] init];
-    });
-    
-    return singleton;
-}
-
-+ (id)copyWithZone:(NSZone *)zone
-{
-    return self;
 }
 
 @end
@@ -482,9 +463,9 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
             for (NSString *numberString in numbers) {
                 NSMutableArray *peopleGroup = [NSMutableArray new];
                 for (JCAddressBookPerson *person in people) {
-                    if ([person hasNumber:numberString]) {
-                        [peopleGroup addObject:person];
-                    }
+//                    if ([person hasNumber:numberString]) {
+//                        [peopleGroup addObject:person];
+//                    }
                 }
                 
                 if (peopleGroup.count > 0) {
@@ -504,33 +485,14 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
 {
     [self fetchPeopleWithNumber:number completion:^(NSArray *people, NSError *error) {
         NSString *name = [self nameForPeople:people];
-        if (!name) {
-            name = number.formattedPhoneNumber;
-        }
+//        if (!name) {
+//            name = number.formattedPhoneNumber;
+//        }
         
         if (completion) {
             completion(name, error);
         }
     }];
-}
-
-@end
-
-@implementation UIViewController (JCAddressBook)
-
-- (void)setSharedAddressBook:(JCAddressBook *)sharedAddressBook {
-    objc_setAssociatedObject(self, @selector(sharedAddressBook), sharedAddressBook, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
--(JCAddressBook *)sharedAddressBook
-{
-    JCAddressBook *sharedAddressBook = objc_getAssociatedObject(self, @selector(sharedAddressBook));
-    if (!sharedAddressBook)
-    {
-        sharedAddressBook = [JCAddressBook sharedAddressBook];
-        objc_setAssociatedObject(self, @selector(sharedAddressBook), sharedAddressBook, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return sharedAddressBook;
 }
 
 @end

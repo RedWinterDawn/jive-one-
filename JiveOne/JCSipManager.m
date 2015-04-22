@@ -1,5 +1,5 @@
 //
-//  SipHandler.m
+//  SipManager.m
 //  JiveOne
 //
 //  The Sip Handler server as a wrapper to the port sip SDK and manages Line Session objects.
@@ -9,30 +9,14 @@
 //
 
 #import "JCSipManager.h"
-#import "Common.h"
-#import "JCAppSettings.h"
 #import "JCSipNetworkQualityRequestOperation.h"
-
-#ifdef __APPLE__
-#include "TargetConditionals.h"
-#endif
 
 // Libraries
 #import <PortSIPLib/PortSIPSDK.h>
-#import <AVFoundation/AVFoundation.h>
 
 // Managers
 #import "JCBadgeManager.h"          // Sip directly reports voicemail count for v4 clients to badge manager
 #import "JCPhoneAudioManager.h"     // Sip directly interacts with the audio session.
-
-// Managed Objects
-#import "IncomingCall.h"
-#import "MissedCall.h"
-#import "OutgoingCall.h"
-#import "LineConfiguration.h"
-#import "Line.h"
-#import "PBX.h"
-#import "Contact.h"
 
 // View Controllers
 #import "VideoViewController.h"
@@ -67,10 +51,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 @interface JCSipManager() <PortSIPEventDelegate, JCPhoneAudioManagerDelegate>
 {
     PortSIPSDK *_mPortSIPSDK;
-    CompletionHandler _transferCompletionHandler;
-	VideoViewController *_videoController;
+    VideoViewController *_videoController;
     NSOperationQueue *_operationQueue;
-	bool autoAnswer;
+	BOOL _autoAnswer;
     
     NSTimer *_registrationTimeoutTimer;
     NSTimeInterval _registrationTimeoutInterval;
@@ -86,7 +69,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @implementation JCSipManager
 
--(instancetype)initWithNumberOfLines:(NSUInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
+-(instancetype)initWithNumberOfLines:(NSUInteger)lines delegate:(id<JCSipManagerDelegate>)delegate error:(NSError *__autoreleasing *)error;
 {
     self = [super init];
     if (self) {
@@ -115,10 +98,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark - Registration -
 
--(void)registerToLine:(Line *)line
+-(void)registerToProvisioning:(id<JCSipManagerProvisioningDataSource>)provisioning
 {
     __autoreleasing NSError *error;
-    BOOL registered = [self registerToLine:line error:&error];
+    BOOL registered = [self registerToProvisioning:provisioning error:&error];
     if (!registered) {
         [_delegate sipHandler:self didFailToRegisterWithError:error];
     }
@@ -158,7 +141,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     int errorCode = [_mPortSIPSDK initialize:TRANSPORT_UDP
                                     loglevel:LOG_LEVEL
                                      logPath:nil
-                                     maxLine:_numberOfLines
+                                     maxLine:(int)_numberOfLines
                                        agent:kSipHandlerServerAgentname
                             audioDeviceLayer:IS_SIMULATOR
                             videoDeviceLayer:IS_SIMULATOR];
@@ -224,7 +207,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return TRUE;
 }
 
--(BOOL)registerToLine:(Line *)line error:(NSError *__autoreleasing *)error;
+-(BOOL)registerToProvisioning:(id<JCSipManagerProvisioningDataSource>)provisioning error:(NSError *__autoreleasing *)error;
 {
     // Check if we are already registering.
     if (_registering) {
@@ -246,7 +229,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
     
     // If we are registered to a line, we need to unregister from that line, and reconnect.
-    if (_registered || _line != line) {
+    if (_registered || _provisioning != provisioning) {
         [self unregister];
     }
     
@@ -255,28 +238,21 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return FALSE;
     }
     
-    if (!line) {
+    if (!provisioning) {
         if (error) {
             *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_LINE_IS_EMPTY reason:@"Line is empty"];
         }
         return FALSE;
     }
     
-    if (!line.lineConfiguration) {
+    if (!provisioning.isProvisioned) {
         if (error) {
             *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_LINE_CONFIGURATION_IS_EMPTY reason:@"Line Configuration is empty"];
         }
         return FALSE;
     }
     
-    if (!line.pbx) {
-        if (error) {
-            *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_LINE_PBX_IS_EMPTY reason:@"Line PBX is empty"];
-        }
-        return FALSE;
-    }
-    
-    NSString *userName = line.lineConfiguration.sipUsername;
+    NSString *userName = provisioning.username;
     if (!userName) {
         if (error) {
             *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_USER_IS_EMPTY reason:@"User is empty"];
@@ -284,7 +260,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return FALSE;
     }
     
-    NSString *server = line.pbx.isV5 ? line.lineConfiguration.outboundProxy : line.lineConfiguration.registrationHost;
+    NSString *server = provisioning.server;
     if (!server) {
         if (error) {
             *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_SERVER_IS_EMPTY reason:@"Server is empty"];
@@ -292,7 +268,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return FALSE;
     }
     
-    NSString *password = line.lineConfiguration.sipPassword;
+    NSString *password = provisioning.password;
     if (!password) {
         if (error) {
             *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_PASSWORD_IS_EMPTY reason:@"Password is empty"];
@@ -301,7 +277,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
     
     int errorCode = [_mPortSIPSDK setUser:userName
-                              displayName:line.lineConfiguration.display
+                              displayName:provisioning.displayName
                                  authName:userName
                                  password:password
                                   localIP:@"0.0.0.0"                      // Auto select IP address
@@ -311,7 +287,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                             SIPServerPort:OUTBOUND_SIP_SERVER_PORT
                                STUNServer:@""
                            STUNServerPort:0
-                           outboundServer:line.lineConfiguration.outboundProxy
+                           outboundServer:provisioning.outboundProxy
                        outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
     
     if(errorCode) {
@@ -321,7 +297,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return FALSE;
     }
     
-    _line = line;
+    _provisioning = provisioning;
     errorCode = [_mPortSIPSDK registerServer:3600 retryTimes:9];
     if(errorCode) {
         if (error) {
@@ -383,14 +359,14 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         [_mPortSIPSDK stopKeepAwake];
     }
     
-    if (!self.isActive && !_registered && _line) {
-        [self registerToLine:_line];
+    if (!self.isActive && !_registered && _provisioning) {
+        [self registerToProvisioning:_provisioning];
     }
 }
 
 #pragma mark - Line Session Public Methods -
 
-- (BOOL)makeCall:(NSString *)dialString videoCall:(BOOL)videoCall error:(NSError *__autoreleasing *)error
+- (BOOL)makeCall:(id<JCPhoneNumberDataSource>)number videoCall:(BOOL)videoCall error:(NSError *__autoreleasing *)error
 {
 	// Check to see if we can make a call. We can make a call if we have an idle line session. If we
     // do not have one, exit with error.
@@ -413,7 +389,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     // Intitiate the call. If we fail, set error and return. Errors from this method are negative
     // numbers, and positive numbers are success and thier session id.
-    NSInteger result = [_mPortSIPSDK call:dialString sendSdp:TRUE videoCall:videoCall];
+    NSInteger result = [_mPortSIPSDK call:number.dialableNumber sendSdp:TRUE videoCall:videoCall];
     if(result <= 0) {
         if (error != NULL) {
             *error = [JCSipManagerError errorWithCode:result reason:@"Unable to create call"];
@@ -422,16 +398,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return NO;
     }
     
-    NSString *callerId = dialString;
-    Contact *contact = [Contact contactForExtension:dialString pbx:_line.pbx];
-    if (contact) {
-        callerId = contact.extension;
-    }
-    
     // Configure the line session.
     lineSession.sessionId = result;
-    [lineSession setCallTitle:callerId];
-    [lineSession setCallDetail:dialString];
+    lineSession.number = number;
     
     [self setSessionState:JCCallInitiated forSession:lineSession event:@"Initiating Call" error:nil];
     return YES;
@@ -767,7 +736,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //  6) LOCAL: A refers B to C.
 //
 
-- (BOOL)startBlindTransferToNumber:(NSString *)number error:(NSError *__autoreleasing *)error
+- (BOOL)startBlindTransferToNumber:(id<JCPhoneNumberDataSource>)number error:(NSError *__autoreleasing *)error
 {
     // Find the active line. It is the one we will be refering to the number passed.
 	JCLineSession *b = [self findActiveLine];
@@ -786,7 +755,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     // Tell PortSip to refer the session id to the passed number. If sucessful, the PortSip
     // deleagate method will inform us if the transfer was successful or a failure.
     b.transfer = TRUE;
-	NSInteger errorCode = [_mPortSIPSDK refer:b.sessionId referTo:number];
+	NSInteger errorCode = [_mPortSIPSDK refer:b.sessionId referTo:number.dialableNumber];
     if (errorCode) {
         if (error != NULL) {
             *error = [JCSipManagerError errorWithCode:errorCode];
@@ -829,7 +798,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
  * Set the currently active line session (B) to have the refer to number on it before we initiate 
  * the other call (C). We will look for this call when we go to finish the transfer, and hand it off.
  */
--(BOOL)startWarmTransferToNumber:(NSString *)number error:(NSError *__autoreleasing *)error
+-(BOOL)startWarmTransferToNumber:(id<JCPhoneNumberDataSource>)number error:(NSError *__autoreleasing *)error
 {
     JCLineSession *b = [self findActiveLine];
     b.transfer = TRUE;
@@ -854,7 +823,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return NO;
     }
     
-    NSInteger errorCode = [_mPortSIPSDK attendedRefer:c.sessionId replaceSessionId:b.sessionId referTo:c.callDetail];
+    NSInteger errorCode = [_mPortSIPSDK attendedRefer:c.sessionId replaceSessionId:b.sessionId referTo:c.number.name];
     if (errorCode) {
         if(error != NULL) {
             *error = [JCSipManagerError errorWithCode:errorCode];
@@ -1124,11 +1093,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.sessionState = state;
             
             [_audioManager stop];
-            
-            // Notify
-            if (lineSession.isIncoming){
-                [MissedCall addMissedCallWithLineSession:lineSession line:_line];
-            }
             [_delegate sipHandler:self willRemoveLineSession:lineSession];
             
             NSLog(@"%@", [self.lineSessions description]);
@@ -1138,7 +1102,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             if (_reregisterAfterActiveCallEnds && !self.isActive) {
                 _reregisterAfterActiveCallEnds = false;
                 [self unregister];
-                [self registerToLine:_line];
+                [self registerToProvisioning:_provisioning];
             }
             
             break;
@@ -1153,11 +1117,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             }
             
             lineSession.active = TRUE;
-            lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
             
             // Notify
-            [OutgoingCall addOutgoingCallWithLineSession:lineSession line:_line];
             [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
             break;
         }
@@ -1167,7 +1129,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         case JCCallIncoming:
         {
             lineSession.incoming = TRUE;
-            lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
             
             if (!self.isActive) {
@@ -1179,8 +1140,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
             // Notify
             [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
-            if (autoAnswer) {
-                autoAnswer = false;
+            if (_autoAnswer) {
+                _autoAnswer = false;
                 [_delegate sipHandler:self receivedIntercomLineSession:lineSession];
             }
             break;
@@ -1195,7 +1156,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             [_audioManager stop];
             
             // Notify
-            [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
             [_delegate sipHandler:self didAnswerLineSession:lineSession];
             
             break;
@@ -1330,11 +1290,12 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		return;
 	}
 	
-    // Setup the line session.
-    lineSession.sessionId = sessionId;      // Attach a session id to the line session.
+    lineSession.sessionId = sessionId;  // Attach a session id to the line session.
     lineSession.video = existsVideo;    // Flag if video call.
-	[lineSession setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];                      // Get Call Title
-	[lineSession setCallDetail:[self formatCallDetail:[NSString stringWithUTF8String:caller]]];        // Get Call Detail.
+    
+    NSString *name = [NSString stringWithUTF8String:callerDisplayName];
+    NSString *number = [self formatCallDetail:[NSString stringWithUTF8String:caller]];
+    lineSession.number = [self.delegate phoneNumberForNumber:number name:name];
     [self setSessionState:JCCallIncoming forSession:lineSession event:@"onInviteIncoming" error:nil];  // Set the session state.
 };
 
@@ -1523,10 +1484,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         [sipMessage rangeOfString:kSipHandlerAutoAnswerModeAutoHeader].location != NSNotFound ||
 		[sipMessage rangeOfString:kSipHandlerAutoAnswerInfoIntercomHeader].location != NSNotFound ||
 		[sipMessage rangeOfString:kSipHandlerAutoAnswerAfterIntervalHeader].location != NSNotFound) {
-		autoAnswer = true;
+		_autoAnswer = true;
 	}
 	else {
-		autoAnswer = false;
+		_autoAnswer = false;
 	}
 }
 
@@ -1544,9 +1505,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			  newMessageCount:(int)newMessageCount
 			  oldMessageCount:(int)oldMessageCount
 {
-    if (!_line.pbx.isV5) {
+    if (!_provisioning.isV5) {
         [JCBadgeManager setVoicemails:newMessageCount];
-    }    
+    }   
 }
 
 - (void)onWaitingFaxMessage:(char*)messageAccount

@@ -22,8 +22,8 @@
 
 @property (nonatomic, readonly) BOOL canMakeCall;
 @property (nonatomic, readonly) BOOL carrierAllowsVOIP;
-@property (nonatomic, readonly) BOOL defaultCarrier;
-@property (nonatomic, readonly) BOOL carrierIsoCountryCode;
+@property (nonatomic, readonly) NSString *defaultCarrier;
+@property (nonatomic, readonly) NSString *carrierIsoCountryCode;
 
 
 @end

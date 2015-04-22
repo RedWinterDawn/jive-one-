@@ -10,25 +10,30 @@
 #import <CoreData/CoreData.h>
 #import "RecentEvent.h"
 
-@class Contact, Line;
+#import "JCPhoneNumberDataSource.h"
 
-@interface RecentLineEvent : RecentEvent
+@class Contact, Line, LocalContact;
 
-// Represents the phone number the event came from.
-@property (nonatomic, retain) NSString *number;
-
-// Represents the extension the event came from.
-@property (nonatomic, retain) NSString *extension;
+@interface RecentLineEvent : RecentEvent <JCPhoneNumberDataSource>
 
 // Represent the name of the event, typically the Caller ID, or name of person creating the event.
-@property (nonatomic, retain) NSString *name;
+@property (nonatomic, readwrite, strong) NSString *name;
 
-// Transient Properties.
-@property (nonatomic, readonly) NSString *displayName;
-@property (nonatomic, readonly) NSString *displayNumber;
+// Represents the phone number the event came from.
+@property (nonatomic, readwrite, strong) NSString *number;
 
 // Relationships
-@property (nonatomic, retain) Contact *contact;
-@property (nonatomic, retain) Line *line;
+@property (nonatomic, strong) Contact *contact;
+@property (nonatomic, strong) Line *line;
+@property (nonatomic, strong) NSSet *localContacts;
+
+@end
+
+@interface RecentLineEvent (CoreDataGeneratedAccessors)
+
+- (void)addLocalContactsObject:(LocalContact *)value;
+- (void)removeLocalContactsObject:(LocalContact *)value;
+- (void)addLocalContacts:(NSSet *)values;
+- (void)removeLocalContacts:(NSSet *)values;
 
 @end

@@ -14,6 +14,8 @@
 #import "JCAppSettings.h"
 #import "Line.h"
 #import "LineConfiguration.h"
+#import "JCUnknownNumber.h"
+#import "JCPhoneBook.h"
 
 @interface JCPhoneManager (Private)
 
@@ -23,11 +25,12 @@
 
 -(instancetype)initWithSipManager:(JCSipManager *)sipManager
                       appSettings:(JCAppSettings *)appSettings
+                        phoneBook:(JCPhoneBook *)phoneBook
               reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager;
 
 -(void)connectToLine:(Line *)line completion:(CompletionHandler)completion;
 
--(void)dialNumber:(NSString *)dialString usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion;
+-(void)dialPhoneNumber:(NSString *)dialString usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion;
 
 @end
 
@@ -37,6 +40,7 @@
 @property (nonatomic, strong) JCPhoneManager *phoneManager;
 @property (nonatomic, strong) id appSettingsMock;
 @property (nonatomic, strong) id reachabilityManagerMock;
+@property (nonatomic, strong) JCPhoneBook *phoneBook;
 
 @end
 
@@ -51,9 +55,12 @@
     self.appSettingsMock = OCMClassMock([JCAppSettings class]);
     self.reachabilityManagerMock = OCMClassMock([AFNetworkReachabilityManager class]);
     
+    self.phoneBook = [[JCPhoneBook alloc] init];
+    
     // instance and verify that sip handler is the mock sip handler.
     self.phoneManager = [[JCPhoneManager alloc] initWithSipManager:self.sipHandlerMock
                                                        appSettings:self.appSettingsMock
+                                                         phoneBook:self.phoneBook
                                                reachabilityManager:self.reachabilityManagerMock];
     
     XCTAssertNotNil(self.phoneManager, @"Phone Manager should not be nil");
@@ -113,7 +120,7 @@
     [self.phoneManager connectToLine:line completion:NULL];
     
     // Then
-    OCMVerify([self.sipHandlerMock registerToLine:line]);
+    OCMVerify([self.sipHandlerMock registerToProvisioning:line]);
 }
 
 // TODO Write test cases for the rest of the connect to line scenarios.
@@ -125,15 +132,16 @@
     // Given
     Line *line = [Line MR_createInContext:self.context];
     NSString *number = @"5555555555";
+    JCUnknownNumber *unknownNumber = [JCUnknownNumber unknownNumberWithNumber:number];
     JCPhoneManagerDialType type = JCPhoneManagerSingleDial;
     JCSipManager *sipManagerMock = self.sipHandlerMock;
     
-    OCMStub([sipManagerMock line]).andReturn(line);
+    OCMStub([sipManagerMock provisioning]).andReturn(line);
     OCMStub([sipManagerMock isRegistered]).andReturn(true);
     
-    [self.phoneManager dialNumber:number usingLine:line type:type completion:NULL];
+    [self.phoneManager dialPhoneNumber:unknownNumber usingLine:line type:type completion:NULL];
     
-    OCMVerify([sipManagerMock makeCall:number videoCall:NO error:[OCMArg anyObjectRef]]);
+    OCMVerify([sipManagerMock makeCall:unknownNumber videoCall:NO error:[OCMArg anyObjectRef]]);
 }
 
 // TODO Write test cases for the rest of the dial string scenarios.

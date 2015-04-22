@@ -23,12 +23,8 @@
 {
     [super layoutSubviews];
     
-    self.callerIdLabel.text     = _callCard.callerId;
-    NSString *dialNumber        = _callCard.dialNumber;
-    if (dialNumber.isNumeric)
-        self.dialedNumberLabel.dialString = dialNumber;
-    else
-        self.dialedNumberLabel.text = dialNumber;
+    self.nameLabel.text     = _callCard.callerId;
+    self.numberLabel.text   = _callCard.dialNumber;
 }
 
 #pragma mark - Setters -

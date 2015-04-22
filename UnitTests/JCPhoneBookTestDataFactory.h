@@ -9,9 +9,15 @@
 @import AddressBook;
 @import Foundation;
 
-@interface JCAddressBookTestDataFactory : NSObject
+#import "JCPhoneBook.h"
 
-+ (NSDictionary *) loadTestAddessBookData;
+@interface JCPhoneBookTestDataFactory : NSObject
+
++ (JCPhoneBook *)loadTestPhoneBook;
+
++ (JCAddressBook *)loadTestAddressBook;
+
++ (NSDictionary *)loadTestAddessBookData;
 
 + (ABRecordRef)recordForEntry:(NSDictionary *)entry;
 

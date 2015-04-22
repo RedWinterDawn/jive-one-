@@ -141,7 +141,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
                     completion:completion];
 }
 
-+ (void)downloadMessagesForDID:(DID *)did toPerson:(id<JCPersonDataSource>)person completion:(JCV5ApiClientCompletionHandler)completion
++ (void)downloadMessagesForDID:(DID *)did toPerson:(id<JCPhoneNumberDataSource>)person completion:(JCV5ApiClientCompletionHandler)completion
 {
     if (!did) {
         if (completion) {

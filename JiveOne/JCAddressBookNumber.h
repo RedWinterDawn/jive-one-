@@ -8,17 +8,13 @@
 
 #import "JCAddressBookEntity.h"
 
-@class JCAddressBookPerson;
-
 @interface JCAddressBookNumber : JCAddressBookEntity
 
-// raw string as per the value stored in the ABAddressBook.
-@property (nonatomic, strong) NSString *number;
++ (NSArray *)addressBookNumbersForRecordRef:(ABRecordRef)recordRef;
+
+@property (nonatomic, readonly) NSInteger identifer;
 
 // describes what type of number we are. obtained from the ABAddressBook.
-@property (nonatomic, strong) NSString *type;
-
-// pointer to parent person. We are a one-to-many child of a person.
-@property (nonatomic, weak) JCAddressBookPerson *person;
+@property (nonatomic, readonly) NSString *type;
 
 @end

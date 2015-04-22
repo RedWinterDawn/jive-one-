@@ -16,10 +16,10 @@
 #import "JCUnknownNumber.h"
 #import "LocalContact.h"
 #import "SMSMessage+V5Client.h"
-#import "JCAddressBook.h"
 #import "JCAddressBookNumber.h"
 #import "PBX.h"
 #import "Line.h"
+#import "JCPhoneBook.h"
 
 // Views
 #import "JCMessagesCollectionViewCell.h"
@@ -97,7 +97,7 @@
              [dids sortUsingDescriptors:@[sortDescriptor]];
             NSMutableArray *titles = [NSMutableArray array];
             for (DID *did in dids) {
-                [titles addObject:did.number.formattedPhoneNumber];
+                [titles addObject:did.titleText];
             }
             
             JCActionSheet *didOptions = [[JCActionSheet alloc] initWithTitle:@"Which number would you like to send from"
@@ -169,9 +169,10 @@
         if (name) {
             self.title = name;
         } else {
-            [self.sharedAddressBook formattedNameForNumber:person.number completion:^(NSString *name, NSError *error) {
-                self.title = name;
-            }];
+            JCPhoneBook *phoneBook = self.phoneBook;
+            PBX *pbx = self.authenticationManager.pbx;
+            id<JCPhoneNumberDataSource> phoneNumber = [phoneBook phoneNumberForNumber:person.number forPbx:pbx excludingLine:nil];
+            self.title = phoneNumber.titleText;
         }
     } else {
         self.title = person.name;
