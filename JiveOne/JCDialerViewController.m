@@ -226,7 +226,13 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     NSString *prompt = NSLocalizedString(@"Unregistered", nil);
     if (phoneManager.isRegistered) {
         self.callButton.selected = false;
-        prompt = phoneManager.line.number;
+        if (self.registrationStatusLabel) {
+            prompt = phoneManager.line.number;
+        }
+        else {
+            Line *line = phoneManager.line;
+            prompt = line.displayName;
+        }
     }
     else if (appSettings.wifiOnly && reachabilityManager.isReachableViaWWAN){
         prompt = NSLocalizedString(@"Disabled", nil);
@@ -237,7 +243,12 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     else {
         self.callButton.selected = true;
     }
-    self.registrationStatusLabel.text = prompt;
+    
+    if (self.registrationStatusLabel) {
+        self.registrationStatusLabel.text = prompt;
+    } else {
+        self.title = prompt;
+    }
 }
 
 +(NSString *)characterFromNumPadTag:(NSInteger)tag

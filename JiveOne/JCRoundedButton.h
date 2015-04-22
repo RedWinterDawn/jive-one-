@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface JCRoundedButton : UIButton
 {
@@ -14,5 +14,10 @@
 }
 
 @property (nonatomic, strong) UIColor *selectedBackgroundColor;
+
+// Configurable Properties.
+@property (nonatomic) CGFloat cornerRadius;
+@property (nonatomic) CGFloat borderWidth;
+@property (nonatomic) UIColor *borderColor;
 
 @end
