@@ -40,7 +40,9 @@
 }
 
 -(void)dealloc {
-    CFRelease(_record);
+    if (_record) {
+        CFRelease(_record);
+    }
 }
 
 #pragma mark - Getters -
