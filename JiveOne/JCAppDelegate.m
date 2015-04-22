@@ -21,6 +21,7 @@
 #import "JCPhoneManager.h"
 #import "JCPresenceManager.h"
 #import "JCVoicemailManager.h"
+#import "JCSMSMessageManager.h"
 
 #import "JCBadgeManager.h"
 #import "JCApplicationSwitcherDelegate.h"
@@ -242,6 +243,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 {
     [JCPresenceManager subscribeToPbx:line.pbx];
 	[JCVoicemailManager subscribeToLine:line];
+    [JCSMSMessageManager subscribeToPbx:line.pbx];
 }
 
 #pragma mark - Notification Handlers -
