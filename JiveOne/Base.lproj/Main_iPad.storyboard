@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rkO-3x-CVb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rkO-3x-CVb">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -472,6 +472,11 @@
         <scene sceneID="Y6E-Qm-ioJ">
             <objects>
                 <splitViewController id="rkO-3x-CVb" customClass="JCSplitViewController" sceneMemberID="viewController">
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="maximumPrimaryColumnWidth">
+                            <integer key="value" value="240"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="0xH-aP-rUx" kind="relationship" relationship="masterViewController" id="xcv-eQ-waL"/>
                         <segue destination="Drm-io-gDF" kind="relationship" relationship="detailViewController" id="PRr-Pr-J8s"/>
@@ -799,7 +804,7 @@
         <image name="settings_white" width="25" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sd0-Wp-fmg"/>
+        <segue reference="PRr-Pr-J8s"/>
         <segue reference="M1H-WK-bHT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
