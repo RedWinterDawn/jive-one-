@@ -16,7 +16,7 @@
 #import "PBX.h"
 #import "User.h"
 #import "ContactGroup.h"
-#import "JiveContact.h"
+#import "Extension.h"
 
 #import "JCPhoneManager.h"
 
@@ -108,7 +108,7 @@
         Line *line = self.authenticationManager.line;
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@", line.pbx.pbxId];
         if (_searchText && ![_searchText isEqualToString:@""]) {
-            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (extension contains[cd] %@)", _searchText, _searchText];
+            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (number contains[cd] %@)", _searchText, _searchText];
             predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
         }
         
@@ -137,7 +137,7 @@
                 predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, contactGroupPredicate]];
                 _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
             } else {
-                _fetchRequest = [JiveContact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+                _fetchRequest = [Extension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
                 _fetchRequest.includesSubentities = TRUE;
             }
         }
@@ -189,18 +189,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id object = [self objectAtIndexPath:indexPath];
+    Line *line = self.authenticationManager.line;
 	if ([object isKindOfClass:[ContactGroup class]]) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(contactsTableViewController:didSelectContactGroup:)]) {
             [self.delegate contactsTableViewController:self didSelectContactGroup:(ContactGroup *)object];
         }
-    }    
-	else if ([object isKindOfClass:[Contact class]]) {
-        Contact *contact = (Contact *)object;
-        [self dialNumber:contact.extension usingLine:[JCAuthenticationManager sharedInstance].line sender:tableView];
     }
-    else if ([object isKindOfClass:[Line class]] && object != [JCAuthenticationManager sharedInstance].line) {
-        Line *line = (Line *)object;
-        [self dialNumber:line.extension usingLine:[JCAuthenticationManager sharedInstance].line sender:tableView];
+    else if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)] && object != line) {
+        [self dialPhoneNumber:(id<JCPhoneNumberDataSource>)object
+                    usingLine:line
+                       sender:tableView];
     }
 }
 

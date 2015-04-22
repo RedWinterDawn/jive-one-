@@ -2,7 +2,11 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
+<<<<<<< HEAD
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+=======
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+>>>>>>> develop
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -26,7 +30,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wpr-n7-w9W" userLabel="CallInfo">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="86"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5rL-pd-NyF" customClass="JCFormattedPhoneNumberLabel">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5rL-pd-NyF">
                                 <rect key="frame" x="15" y="65" width="285" height="21"/>
                                 <accessibility key="accessibilityConfiguration" hint="" label="Callers Number"/>
                                 <constraints>
@@ -41,7 +45,7 @@
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="11"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Nagme" lineBreakMode="tailTruncation" baselineAdjustment="none" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FT8-wZ-Uc2">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Name" lineBreakMode="tailTruncation" baselineAdjustment="none" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FT8-wZ-Uc2">
                                 <rect key="frame" x="15" y="29" width="285" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="7By-Qy-Lcc"/>
@@ -128,9 +132,9 @@
             <size key="customSize" width="302" height="557"/>
             <connections>
                 <outlet property="answerCallButton" destination="NP4-wW-qRx" id="WnM-n0-HJz"/>
-                <outlet property="callerIdLabel" destination="FT8-wZ-Uc2" id="Dyj-ef-fDy"/>
-                <outlet property="dialedNumberLabel" destination="5rL-pd-NyF" id="Phr-zl-uFS"/>
                 <outlet property="endCallButton" destination="6AT-cr-W7i" id="dKi-jB-di3"/>
+                <outlet property="nameLabel" destination="FT8-wZ-Uc2" id="9Li-jM-ybb"/>
+                <outlet property="numberLabel" destination="5rL-pd-NyF" id="IMa-zI-4Xf"/>
             </connections>
             <point key="canvasLocation" x="207" y="469.5"/>
         </collectionViewCell>

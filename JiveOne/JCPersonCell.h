@@ -7,11 +7,11 @@
 //
 
 #import "JCPresenceCell.h"
-#import "Person.h"
+#import "JCPersonDataSource.h"
 
 @interface JCPersonCell : JCPresenceCell
 
-@property (nonatomic) Person *person;
+@property (nonatomic) id<JCPersonDataSource> person;
 
 @end
 

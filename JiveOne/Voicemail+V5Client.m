@@ -341,7 +341,11 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
     voicemail.url_changeStatus  = [data stringValueForKey:kVoicemailResponseSelfChangeStatusKey];
     voicemail.mailboxUrl        = [data stringValueForKey:kVoicemailResponseSelfMailboxKey];
     voicemail.unixTimestamp     = [data integerValueForKey:kVoicemailResponseTimestampKey];
-    voicemail.contact           = [Contact contactForExtension:voicemail.number pbx:line.pbx];
+    Extension *extension = [Extension extensionForNumber:voicemail.number onPbx:line.pbx excludingLine:line];
+    if ([extension isKindOfClass:[Contact class]]) {
+        voicemail.contact = (Contact *)extension;
+    }
+    
     if (!voicemail.data) {
         [voicemail downloadVoicemailAudio:NULL];
     }

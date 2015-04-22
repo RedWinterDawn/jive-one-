@@ -6,20 +6,19 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+#import "JCPhoneNumberManagedObject.h"
 
 @class PBX, SMSMessage;
 
-@interface DID : NSManagedObject
+@interface DID : JCPhoneNumberManagedObject
 
 // Attributes
 @property (nonatomic, retain) NSString * jrn;
-@property (nonatomic, retain) NSString * number;
 @property (nonatomic, getter=canMakeCall) BOOL makeCall;
 @property (nonatomic, getter=canReceiveCall) BOOL receiveCall;
 @property (nonatomic, getter=canSendSMS) BOOL sendSMS;
 @property (nonatomic, getter=canReceiveSMS) BOOL receiveSMS;
+@property (nonatomic, getter=isUserDefault) BOOL userDefault;
 
 // Transient
 @property (nonatomic, readonly) NSString * didId;

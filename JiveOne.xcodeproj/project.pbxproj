@@ -88,7 +88,7 @@
 		5D241FD81A38315F008B498A /* JCDebugTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FD71A38315F008B498A /* JCDebugTableViewController.m */; };
 		5D241FDB1A38346A008B498A /* JCDebugLinesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FDA1A38346A008B498A /* JCDebugLinesTableViewController.m */; };
 		5D241FDE1A383837008B498A /* JCDebugLineTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FDD1A383837008B498A /* JCDebugLineTableViewController.m */; };
-		5D241FE11A38B4EB008B498A /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FE01A38B4EB008B498A /* Person.m */; };
+		5D241FE11A38B4EB008B498A /* JCPersonManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FE01A38B4EB008B498A /* JCPersonManagedObject.m */; };
 		5D241FE41A38BAD5008B498A /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FE31A38BAD5008B498A /* Contact.m */; };
 		5D241FE71A38BE5A008B498A /* JCContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FE61A38BE5A008B498A /* JCContactCell.m */; };
 		5D241FEA1A38C4CE008B498A /* JCLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FE91A38C4CE008B498A /* JCLineCell.m */; };
@@ -102,6 +102,9 @@
 		5D25F84B1AE6E3E500981DB6 /* JCCallHistoryTableViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F84A1AE6E3E500981DB6 /* JCCallHistoryTableViewController_iPad.m */; };
 		5D25F84F1AE6F37500981DB6 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F84E1AE6F37500981DB6 /* Login.storyboard */; };
 		5D25F8511AE70E4D00981DB6 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8501AE70E4D00981DB6 /* Chat.storyboard */; };
+		5D25F8181AE014D700981DB6 /* JCPhoneNumberDataSourceUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8171AE014D700981DB6 /* JCPhoneNumberDataSourceUtils.m */; };
+		5D25F81A1AE02E1600981DB6 /* JCPhoneNumberDataSourceUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8191AE02E1600981DB6 /* JCPhoneNumberDataSourceUtilTests.m */; };
+		5D25F81D1AE0381600981DB6 /* JCPhoneNumberManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F81C1AE0381600981DB6 /* JCPhoneNumberManagedObject.m */; };
 		5D2B2C081A30D8AE00938D76 /* JCVisualEffectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */; };
 		5D2B2C091A30D8AE00938D76 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C071A30D8AE00938D76 /* FXBlurView.m */; };
 		5D2D73CC1ACF97AE00B98BDF /* de.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73C51ACF97AE00B98BDF /* de.xliff */; };
@@ -111,7 +114,7 @@
 		5D2D73D01ACF97AE00B98BDF /* fr.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73C91ACF97AE00B98BDF /* fr.xliff */; };
 		5D2D73D11ACF97AE00B98BDF /* it.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73CA1ACF97AE00B98BDF /* it.xliff */; };
 		5D2D73D21ACF97AE00B98BDF /* pt.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73CB1ACF97AE00B98BDF /* pt.xliff */; };
-		5D2D74301ACFB48500B98BDF /* JCAddressBookTestDataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D741F1ACFB48500B98BDF /* JCAddressBookTestDataFactory.m */; };
+		5D2D74301ACFB48500B98BDF /* JCPhoneBookTestDataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D741F1ACFB48500B98BDF /* JCPhoneBookTestDataFactory.m */; };
 		5D2D74311ACFB48500B98BDF /* JCAddressBookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D74201ACFB48500B98BDF /* JCAddressBookTests.m */; };
 		5D2D74341ACFB48500B98BDF /* JCBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D74251ACFB48500B98BDF /* JCBaseTestCase.m */; };
 		5D2D74351ACFB48500B98BDF /* JCDialerViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D74261ACFB48500B98BDF /* JCDialerViewControllerTests.m */; };
@@ -139,8 +142,8 @@
 		5D2D74631ACFC3C400B98BDF /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FD01A37F511008B498A /* User.m */; };
 		5D2D74641ACFC3EC00B98BDF /* Line.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F64D5B19772CCF00F772AA /* Line.m */; };
 		5D2D74651ACFC40100B98BDF /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBABCD31A283DA500B09783 /* NSString+Additions.m */; };
-		5D2D74661ACFC47500B98BDF /* JiveContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E631A8D29BD004B62C0 /* JiveContact.m */; };
-		5D2D74671ACFC47A00B98BDF /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FE01A38B4EB008B498A /* Person.m */; };
+		5D2D74661ACFC47500B98BDF /* Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E631A8D29BD004B62C0 /* Extension.m */; };
+		5D2D74671ACFC47A00B98BDF /* JCPersonManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FE01A38B4EB008B498A /* JCPersonManagedObject.m */; };
 		5D2D74681ACFC49C00B98BDF /* JCKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */; };
 		5D2D74691ACFC4CB00B98BDF /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493CD18D13538002744CB /* Common.m */; };
 		5D2D746A1ACFC4D300B98BDF /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
@@ -164,7 +167,7 @@
 		5D490E5A1A8AEF7E004B62C0 /* JCAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E591A8AEF7E004B62C0 /* JCAddressBook.m */; };
 		5D490E5E1A8AF364004B62C0 /* JCAddressBookPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E5D1A8AF364004B62C0 /* JCAddressBookPerson.m */; };
 		5D490E611A8D1FF1004B62C0 /* RecentLineEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E601A8D1FF1004B62C0 /* RecentLineEvent.m */; };
-		5D490E641A8D29BD004B62C0 /* JiveContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E631A8D29BD004B62C0 /* JiveContact.m */; };
+		5D490E641A8D29BD004B62C0 /* Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E631A8D29BD004B62C0 /* Extension.m */; };
 		5D490E671A8D4C01004B62C0 /* DID.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E661A8D4C01004B62C0 /* DID.m */; };
 		5D490E6A1A8D4DB4004B62C0 /* LocalContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E691A8D4DB4004B62C0 /* LocalContact.m */; };
 		5D490E6D1A8D7624004B62C0 /* JCConversationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E6C1A8D7624004B62C0 /* JCConversationsTableViewController.m */; };
@@ -177,7 +180,6 @@
 		5D5525BF1AC5DC730037F703 /* JCV4ApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5525BE1AC5DC730037F703 /* JCV4ApiClient.m */; };
 		5D62436F1A65B7DF001DF88E /* JCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D62436E1A65B7DF001DF88E /* JCManager.m */; };
 		5D6243721A65C58F001DF88E /* JCDebugPhoneManagerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6243711A65C58F001DF88E /* JCDebugPhoneManagerTableViewController.m */; };
-		5D6243751A678B1D001DF88E /* JCSipHandlerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6243741A678B1D001DF88E /* JCSipHandlerError.m */; };
 		5D6243781A678B6F001DF88E /* JCError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6243771A678B6F001DF88E /* JCError.m */; };
 		5D62437B1A687CD0001DF88E /* JCPhoneManagerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D62437A1A687CD0001DF88E /* JCPhoneManagerError.m */; };
 		5D629BAD19D9C41900F5744E /* JCVoicemailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAC19D9C41900F5744E /* JCVoicemailViewController.m */; };
@@ -211,7 +213,8 @@
 		5D9F72101AC34F8000B9D0F8 /* JCAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */; };
 		5D9F72A91AC5BDD700B9D0F8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F1F305191C18D700AEAFD7 /* CoreData.framework */; };
 		5DA30DC51AD625D8008856DC /* NSString+AdditionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA30DC41AD625D8008856DC /* NSString+AdditionsTests.m */; };
-		5DA30DD21AD712CD008856DC /* JCAddressBookEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA30DD11AD712CD008856DC /* JCAddressBookEntity.m */; };
+		5DA30DD51AD78EA0008856DC /* JCVoicemailNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA30DD41AD78EA0008856DC /* JCVoicemailNumber.m */; };
+		5DA30DD81AD791D3008856DC /* JCPhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA30DD71AD791D3008856DC /* JCPhoneNumber.m */; };
 		5DA566441A1D454D00286BA5 /* JCSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */; };
 		5DA566491A20543500286BA5 /* JCAuthenticationManagerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */; };
 		5DA5A1AF19DAF91400968F7D /* JCCallerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */; };
@@ -227,6 +230,12 @@
 		5DBBDCC619DD9A4100A4DB96 /* JCPhoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */; };
 		5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */; };
 		5DBCB93919FE9300001C7157 /* JCConferenceCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBCB93819FE9300001C7157 /* JCConferenceCallCard.m */; };
+		5DBF6F3B1ADC2788004B53F5 /* JCMultiPersonPhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBF6F3A1ADC2788004B53F5 /* JCMultiPersonPhoneNumber.m */; };
+		5DBF6F3E1ADC3ADB004B53F5 /* JCPhoneBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBF6F3D1ADC3ADB004B53F5 /* JCPhoneBook.m */; };
+		5DBF6F431ADC4FC9004B53F5 /* JCPhoneBookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBF6F421ADC4FC9004B53F5 /* JCPhoneBookTests.m */; };
+		5DBF6F461ADEF477004B53F5 /* JCAddressBookEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBF6F451ADEF477004B53F5 /* JCAddressBookEntity.m */; };
+		5DBF6F491ADF225A004B53F5 /* JCPhoneNumberTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBF6F481ADF225A004B53F5 /* JCPhoneNumberTests.m */; };
+		5DBF6F4B1ADFEFB0004B53F5 /* JCPersonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBF6F4A1ADFEFB0004B53F5 /* JCPersonTests.m */; };
 		5DC1D8811AB8D7D000326AF3 /* JCApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1D8801AB8D7D000326AF3 /* JCApiClient.m */; };
 		5DC1D8841ABB0CDB00326AF3 /* JCSocketLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1D8831ABB0CDB00326AF3 /* JCSocketLogger.m */; };
 		5DC518151AD2E24B007CEA71 /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D85A9711ACF847A00991A97 /* JCStyleKit.m */; };
@@ -251,12 +260,15 @@
 		919DD2A11922E3570039205E /* JCPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD2A01922E3570039205E /* JCPopoverView.m */; };
 		91DDB1991935008A00550F10 /* JCSpeakerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB1981935008A00550F10 /* JCSpeakerButton.m */; };
 		91DDB19D193500B500550F10 /* JCDeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB19C193500B500550F10 /* JCDeleteButton.m */; };
+		B70EAB3B1AD3197600305F43 /* JCSettingsTableViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3A1AD3197600305F43 /* JCSettingsTableViewControllerTests.m */; };
 		B70EAB3D1AD32B1E00305F43 /* JCDidTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */; };
 		B70EAB3F1AD3302000305F43 /* JCAuthenticationManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */; };
 		B73690D41AE6F7BC0025071C /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B73690D31AE6F7BC0025071C /* Contacts.storyboard */; };
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
 		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
+		B7C516211ACC6064008731AF /* JCSMSMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C516201ACC6064008731AF /* JCSMSMessageManager.m */; };
 		B7DFAA371AC0CDA50033ACFB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */; };
+		B7FCA5AA1AD2E74E0034C5EC /* JCDIDSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */; };
 		DD3BD9F418DCB1740080318E /* Voicemail+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */; };
 		DDCE1E8718F3561D003A6615 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */; };
 		DDCE1E8918F35623003A6615 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8818F35623003A6615 /* CFNetwork.framework */; };
@@ -449,8 +461,8 @@
 		5D241FDA1A38346A008B498A /* JCDebugLinesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDebugLinesTableViewController.m; sourceTree = "<group>"; };
 		5D241FDC1A383837008B498A /* JCDebugLineTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDebugLineTableViewController.h; sourceTree = "<group>"; };
 		5D241FDD1A383837008B498A /* JCDebugLineTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDebugLineTableViewController.m; sourceTree = "<group>"; };
-		5D241FDF1A38B4EB008B498A /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
-		5D241FE01A38B4EB008B498A /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		5D241FDF1A38B4EB008B498A /* JCPersonManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPersonManagedObject.h; sourceTree = "<group>"; };
+		5D241FE01A38B4EB008B498A /* JCPersonManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPersonManagedObject.m; sourceTree = "<group>"; };
 		5D241FE21A38BAD5008B498A /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
 		5D241FE31A38BAD5008B498A /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
 		5D241FE51A38BE5A008B498A /* JCContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactCell.h; sourceTree = "<group>"; };
@@ -472,6 +484,11 @@
 		5D25F84A1AE6E3E500981DB6 /* JCCallHistoryTableViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallHistoryTableViewController_iPad.m; sourceTree = "<group>"; };
 		5D25F84E1AE6F37500981DB6 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		5D25F8501AE70E4D00981DB6 /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
+		5D25F8161AE014D700981DB6 /* JCPhoneNumberDataSourceUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneNumberDataSourceUtils.h; sourceTree = "<group>"; };
+		5D25F8171AE014D700981DB6 /* JCPhoneNumberDataSourceUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneNumberDataSourceUtils.m; sourceTree = "<group>"; };
+		5D25F8191AE02E1600981DB6 /* JCPhoneNumberDataSourceUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneNumberDataSourceUtilTests.m; sourceTree = "<group>"; };
+		5D25F81B1AE0381600981DB6 /* JCPhoneNumberManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneNumberManagedObject.h; sourceTree = "<group>"; };
+		5D25F81C1AE0381600981DB6 /* JCPhoneNumberManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneNumberManagedObject.m; sourceTree = "<group>"; };
 		5D2B2C041A30D8AE00938D76 /* JCVisualEffectsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVisualEffectsView.h; sourceTree = "<group>"; };
 		5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVisualEffectsView.m; sourceTree = "<group>"; };
 		5D2B2C061A30D8AE00938D76 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
@@ -484,8 +501,8 @@
 		5D2D73CA1ACF97AE00B98BDF /* it.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = it.xliff; sourceTree = "<group>"; };
 		5D2D73CB1ACF97AE00B98BDF /* pt.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = pt.xliff; sourceTree = "<group>"; };
 		5D2D74121ACFA84700B98BDF /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D2D741E1ACFB48500B98BDF /* JCAddressBookTestDataFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAddressBookTestDataFactory.h; sourceTree = "<group>"; };
-		5D2D741F1ACFB48500B98BDF /* JCAddressBookTestDataFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookTestDataFactory.m; sourceTree = "<group>"; };
+		5D2D741E1ACFB48500B98BDF /* JCPhoneBookTestDataFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneBookTestDataFactory.h; sourceTree = "<group>"; };
+		5D2D741F1ACFB48500B98BDF /* JCPhoneBookTestDataFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneBookTestDataFactory.m; sourceTree = "<group>"; };
 		5D2D74201ACFB48500B98BDF /* JCAddressBookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookTests.m; sourceTree = "<group>"; };
 		5D2D74241ACFB48500B98BDF /* JCBaseTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBaseTestCase.h; sourceTree = "<group>"; };
 		5D2D74251ACFB48500B98BDF /* JCBaseTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBaseTestCase.m; sourceTree = "<group>"; };
@@ -540,8 +557,8 @@
 		5D490E5D1A8AF364004B62C0 /* JCAddressBookPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookPerson.m; sourceTree = "<group>"; };
 		5D490E5F1A8D1FF1004B62C0 /* RecentLineEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentLineEvent.h; sourceTree = "<group>"; };
 		5D490E601A8D1FF1004B62C0 /* RecentLineEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentLineEvent.m; sourceTree = "<group>"; };
-		5D490E621A8D29BD004B62C0 /* JiveContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JiveContact.h; sourceTree = "<group>"; };
-		5D490E631A8D29BD004B62C0 /* JiveContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JiveContact.m; sourceTree = "<group>"; };
+		5D490E621A8D29BD004B62C0 /* Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Extension.h; sourceTree = "<group>"; };
+		5D490E631A8D29BD004B62C0 /* Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Extension.m; sourceTree = "<group>"; };
 		5D490E651A8D4C01004B62C0 /* DID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DID.h; sourceTree = "<group>"; };
 		5D490E661A8D4C01004B62C0 /* DID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DID.m; sourceTree = "<group>"; };
 		5D490E681A8D4DB4004B62C0 /* LocalContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalContact.h; sourceTree = "<group>"; };
@@ -573,8 +590,6 @@
 		5D62436E1A65B7DF001DF88E /* JCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCManager.m; sourceTree = "<group>"; };
 		5D6243701A65C58F001DF88E /* JCDebugPhoneManagerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDebugPhoneManagerTableViewController.h; sourceTree = "<group>"; };
 		5D6243711A65C58F001DF88E /* JCDebugPhoneManagerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDebugPhoneManagerTableViewController.m; sourceTree = "<group>"; };
-		5D6243731A678B1D001DF88E /* JCSipHandlerError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSipHandlerError.h; sourceTree = "<group>"; };
-		5D6243741A678B1D001DF88E /* JCSipHandlerError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSipHandlerError.m; sourceTree = "<group>"; };
 		5D6243761A678B6F001DF88E /* JCError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCError.h; sourceTree = "<group>"; };
 		5D6243771A678B6F001DF88E /* JCError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCError.m; sourceTree = "<group>"; };
 		5D6243791A687CD0001DF88E /* JCPhoneManagerError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneManagerError.h; sourceTree = "<group>"; };
@@ -627,8 +642,11 @@
 		5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthClient.m; sourceTree = "<group>"; };
 		5D9F720F1AC34F8000B9D0F8 /* JCAuthClientError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthClientError.m; sourceTree = "<group>"; };
 		5DA30DC41AD625D8008856DC /* NSString+AdditionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AdditionsTests.m"; sourceTree = "<group>"; };
-		5DA30DD01AD712CD008856DC /* JCAddressBookEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAddressBookEntity.h; sourceTree = "<group>"; };
-		5DA30DD11AD712CD008856DC /* JCAddressBookEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookEntity.m; sourceTree = "<group>"; };
+		5DA30DD31AD78EA0008856DC /* JCVoicemailNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoicemailNumber.h; sourceTree = "<group>"; };
+		5DA30DD41AD78EA0008856DC /* JCVoicemailNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailNumber.m; sourceTree = "<group>"; };
+		5DA30DD61AD791D3008856DC /* JCPhoneNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneNumber.h; sourceTree = "<group>"; };
+		5DA30DD71AD791D3008856DC /* JCPhoneNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneNumber.m; sourceTree = "<group>"; };
+		5DA30DD91AD81F54008856DC /* JCPhoneNumberDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCPhoneNumberDataSource.h; sourceTree = "<group>"; };
 		5DA566421A1D454D00286BA5 /* JCSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSettingsTableViewController.h; sourceTree = "<group>"; };
 		5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSettingsTableViewController.m; sourceTree = "<group>"; };
 		5DA566461A1EEEFF00286BA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
@@ -665,6 +683,16 @@
 		5DBD9F1F1A1D00A300F967B6 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DBD9F201A1D00A400F967B6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DBD9F211A1D00A500F967B6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5DBF6F391ADC2788004B53F5 /* JCMultiPersonPhoneNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMultiPersonPhoneNumber.h; sourceTree = "<group>"; };
+		5DBF6F3A1ADC2788004B53F5 /* JCMultiPersonPhoneNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMultiPersonPhoneNumber.m; sourceTree = "<group>"; };
+		5DBF6F3C1ADC3ADA004B53F5 /* JCPhoneBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneBook.h; sourceTree = "<group>"; };
+		5DBF6F3D1ADC3ADB004B53F5 /* JCPhoneBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneBook.m; sourceTree = "<group>"; };
+		5DBF6F421ADC4FC9004B53F5 /* JCPhoneBookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneBookTests.m; sourceTree = "<group>"; };
+		5DBF6F441ADEF477004B53F5 /* JCAddressBookEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAddressBookEntity.h; sourceTree = "<group>"; };
+		5DBF6F451ADEF477004B53F5 /* JCAddressBookEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookEntity.m; sourceTree = "<group>"; };
+		5DBF6F471ADF0E1F004B53F5 /* JCSipManagerProvisioningDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSipManagerProvisioningDataSource.h; sourceTree = "<group>"; };
+		5DBF6F481ADF225A004B53F5 /* JCPhoneNumberTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneNumberTests.m; sourceTree = "<group>"; };
+		5DBF6F4A1ADFEFB0004B53F5 /* JCPersonTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPersonTests.m; sourceTree = "<group>"; };
 		5DC1D87F1AB8D7D000326AF3 /* JCApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCApiClient.h; sourceTree = "<group>"; };
 		5DC1D8801AB8D7D000326AF3 /* JCApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCApiClient.m; sourceTree = "<group>"; };
 		5DC1D8821ABB0CDB00326AF3 /* JCSocketLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocketLogger.h; sourceTree = "<group>"; };
@@ -713,6 +741,7 @@
 		91F6DFB4192A7080001C54FB /* Enterprise.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Enterprise.xcconfig; sourceTree = "<group>"; };
 		9DF65736235F25242FAE4BE0 /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		AD312703033AFDB89B1D2CBE /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B70EAB3A1AD3197600305F43 /* JCSettingsTableViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSettingsTableViewControllerTests.m; sourceTree = "<group>"; };
 		B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDidTests.m; sourceTree = "<group>"; };
 		B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationManagerTests.m; sourceTree = "<group>"; };
 		B73690D31AE6F7BC0025071C /* Contacts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Contacts.storyboard; sourceTree = "<group>"; };
@@ -720,7 +749,11 @@
 		B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesMenuCell.m; sourceTree = "<group>"; };
 		B7AEDD561ABA08670063033E /* JCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionSheet.h; sourceTree = "<group>"; };
 		B7AEDD571ABA08670063033E /* JCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionSheet.m; sourceTree = "<group>"; };
+		B7C5161F1ACC6064008731AF /* JCSMSMessageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSMSMessageManager.h; sourceTree = "<group>"; };
+		B7C516201ACC6064008731AF /* JCSMSMessageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSMSMessageManager.m; sourceTree = "<group>"; };
 		B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		B7FCA5A81AD2E74E0034C5EC /* JCDIDSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDIDSelectorViewController.h; sourceTree = "<group>"; };
+		B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDIDSelectorViewController.m; sourceTree = "<group>"; };
 		DD3BD9F218DCB1740080318E /* Voicemail+V5Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Voicemail+V5Client.h"; sourceTree = "<group>"; };
 		DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Voicemail+V5Client.m"; sourceTree = "<group>"; };
 		DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -956,10 +989,8 @@
 				27F64D5819772CCE00F772AA /* PBX.m */,
 				27EB18C019DF194E00C1503B /* LineConfiguration.h */,
 				27EB18C119DF194E00C1503B /* LineConfiguration.m */,
-				5D241FDF1A38B4EB008B498A /* Person.h */,
-				5D241FE01A38B4EB008B498A /* Person.m */,
-				5D490E621A8D29BD004B62C0 /* JiveContact.h */,
-				5D490E631A8D29BD004B62C0 /* JiveContact.m */,
+				5D490E621A8D29BD004B62C0 /* Extension.h */,
+				5D490E631A8D29BD004B62C0 /* Extension.m */,
 				5D241FE21A38BAD5008B498A /* Contact.h */,
 				5D241FE31A38BAD5008B498A /* Contact.m */,
 				270559A3196DD11700A7AF35 /* ContactGroup.h */,
@@ -1112,6 +1143,8 @@
 			children = (
 				5D5329921AD4EF3900C6AAC6 /* Controllers */,
 				5D5329931AD4EF7B00C6AAC6 /* Views */,
+				5DA30DD31AD78EA0008856DC /* JCVoicemailNumber.h */,
+				5DA30DD41AD78EA0008856DC /* JCVoicemailNumber.m */,
 			);
 			name = Voicemail;
 			sourceTree = "<group>";
@@ -1127,6 +1160,8 @@
 				27D2C1F6196F030C005285FF /* JCLineSelectorTableViewController.m */,
 				5D97A7FD1A828B4700A4434D /* JCIntercomTableViewController.h */,
 				5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */,
+				B7FCA5A81AD2E74E0034C5EC /* JCDIDSelectorViewController.h */,
+				B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1212,6 +1247,7 @@
 				5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */,
 				5D9A5E201A24E30A00E8274C /* JCPhoneAudioManager.h */,
 				5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */,
+				5DBF6F471ADF0E1F004B53F5 /* JCSipManagerProvisioningDataSource.h */,
 				279A4E2A19DA91E100E8AB7B /* JCSipManager.h */,
 				279A4E2B19DA91E100E8AB7B /* JCSipManager.m */,
 			);
@@ -1223,8 +1259,6 @@
 			children = (
 				5D6243791A687CD0001DF88E /* JCPhoneManagerError.h */,
 				5D62437A1A687CD0001DF88E /* JCPhoneManagerError.m */,
-				5D6243731A678B1D001DF88E /* JCSipHandlerError.h */,
-				5D6243741A678B1D001DF88E /* JCSipHandlerError.m */,
 				5DBBDCC719DDA0A300A4DB96 /* JCCallCard.h */,
 				5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */,
 				5DBCB93719FE9300001C7157 /* JCConferenceCallCard.h */,
@@ -1357,10 +1391,11 @@
 		5D2D743E1ACFBC4400B98BDF /* Factories */ = {
 			isa = PBXGroup;
 			children = (
-				5D2D741E1ACFB48500B98BDF /* JCAddressBookTestDataFactory.h */,
-				5D2D741F1ACFB48500B98BDF /* JCAddressBookTestDataFactory.m */,
+				5D2D741E1ACFB48500B98BDF /* JCPhoneBookTestDataFactory.h */,
+				5D2D741F1ACFB48500B98BDF /* JCPhoneBookTestDataFactory.m */,
 				5DC518181AD2E746007CEA71 /* JCCoreDataTestDataFactory.h */,
 				5DC518191AD2E746007CEA71 /* JCCoreDataTestDataFactory.m */,
+				5DC5181B1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m */,
 			);
 			name = Factories;
 			sourceTree = "<group>";
@@ -1392,14 +1427,17 @@
 		5D2D74411ACFBD4C00B98BDF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				5DBF6F421ADC4FC9004B53F5 /* JCPhoneBookTests.m */,
 				5D2D74201ACFB48500B98BDF /* JCAddressBookTests.m */,
-				5DC5181B1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m */,
 				5DC5181D1AD3094E007CEA71 /* JCPbxTests.m */,
 				5DC5181F1AD3096F007CEA71 /* JCLineTests.m */,
 				5DC518211AD30993007CEA71 /* JCContactsTests.m */,
 				5DC518231AD30E46007CEA71 /* JCJiveContactTests.m */,
 				B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */,
 				5D0BACAF1AD4406300EFEF86 /* JCAppSettingsTests.m */,
+				5DBF6F481ADF225A004B53F5 /* JCPhoneNumberTests.m */,
+				5DBF6F4A1ADFEFB0004B53F5 /* JCPersonTests.m */,
+				5D25F8191AE02E1600981DB6 /* JCPhoneNumberDataSourceUtilTests.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1500,27 +1538,19 @@
 				5D241FC71A36339D008B498A /* JCAppSettings.m */,
 				5D85A9701ACF847A00991A97 /* JCStyleKit.h */,
 				5D85A9711ACF847A00991A97 /* JCStyleKit.m */,
-				5D490E5B1A8AEFB5004B62C0 /* JCPersonDataSource.h */,
+				5DBF6F3F1ADC4A13004B53F5 /* Phone Book */,
 				5D6243761A678B6F001DF88E /* JCError.h */,
 				5D6243771A678B6F001DF88E /* JCError.m */,
 				5D87FCCA1AA9656F00AE1CA5 /* JCBadges.h */,
 				5D87FCCB1AA9656F00AE1CA5 /* JCBadges.m */,
 				5DDDA5491A4B238300E31AA3 /* JCLinePresence.h */,
 				5DDDA54A1A4B238300E31AA3 /* JCLinePresence.m */,
-				5D490E581A8AEF7E004B62C0 /* JCAddressBook.h */,
-				5D490E591A8AEF7E004B62C0 /* JCAddressBook.m */,
-				5DA30DD01AD712CD008856DC /* JCAddressBookEntity.h */,
-				5DA30DD11AD712CD008856DC /* JCAddressBookEntity.m */,
-				5D490E5C1A8AF364004B62C0 /* JCAddressBookPerson.h */,
-				5D490E5D1A8AF364004B62C0 /* JCAddressBookPerson.m */,
-				5D490E771A958A5A004B62C0 /* JCAddressBookNumber.h */,
-				5D490E781A958A5A004B62C0 /* JCAddressBookNumber.m */,
-				5D112DD81A4094340097223C /* JCAuthenticationKeychain.h */,
-				5D112DD91A4094340097223C /* JCAuthenticationKeychain.m */,
 				5D02750B1A3F81060077A37B /* JCEncryptionTransformer.h */,
 				5D02750C1A3F81060077A37B /* JCEncryptionTransformer.m */,
 				5D0275111A3F836A0077A37B /* JCStringEncryptionTransformer.h */,
 				5D0275121A3F836A0077A37B /* JCStringEncryptionTransformer.m */,
+				5D112DD81A4094340097223C /* JCAuthenticationKeychain.h */,
+				5D112DD91A4094340097223C /* JCAuthenticationKeychain.m */,
 				5D1FD5C21A48B05E007EF8B6 /* JCKeychain.h */,
 				5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */,
 				2751591518AD2FF700FD8D3F /* Core Data */,
@@ -1570,8 +1600,6 @@
 				5D1175831A9BEFB200D2B03A /* JCConversationGroupsResultsController.m */,
 				5D1175851A9BEFD500D2B03A /* JCConversationGroup.h */,
 				5D1175861A9BEFD500D2B03A /* JCConversationGroup.m */,
-				5D490E551A8AD0A1004B62C0 /* JCUnknownNumber.h */,
-				5D490E561A8AD0A1004B62C0 /* JCUnknownNumber.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1698,6 +1726,53 @@
 				F8C9A7EB19EC691C0049A715 /* JCCallHistoryCell.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		5DBF6F3F1ADC4A13004B53F5 /* Phone Book */ = {
+			isa = PBXGroup;
+			children = (
+				5DBF6F3C1ADC3ADA004B53F5 /* JCPhoneBook.h */,
+				5DBF6F3D1ADC3ADB004B53F5 /* JCPhoneBook.m */,
+				5D490E581A8AEF7E004B62C0 /* JCAddressBook.h */,
+				5D490E591A8AEF7E004B62C0 /* JCAddressBook.m */,
+				5D25F8161AE014D700981DB6 /* JCPhoneNumberDataSourceUtils.h */,
+				5D25F8171AE014D700981DB6 /* JCPhoneNumberDataSourceUtils.m */,
+				5DBF6F401ADC4A34004B53F5 /* Protocols */,
+				5DBF6F411ADC4A7C004B53F5 /* Entities */,
+			);
+			name = "Phone Book";
+			sourceTree = "<group>";
+		};
+		5DBF6F401ADC4A34004B53F5 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5D490E5B1A8AEFB5004B62C0 /* JCPersonDataSource.h */,
+				5DA30DD91AD81F54008856DC /* JCPhoneNumberDataSource.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		5DBF6F411ADC4A7C004B53F5 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				5DA30DD61AD791D3008856DC /* JCPhoneNumber.h */,
+				5DA30DD71AD791D3008856DC /* JCPhoneNumber.m */,
+				5D25F81B1AE0381600981DB6 /* JCPhoneNumberManagedObject.h */,
+				5D25F81C1AE0381600981DB6 /* JCPhoneNumberManagedObject.m */,
+				5D241FDF1A38B4EB008B498A /* JCPersonManagedObject.h */,
+				5D241FE01A38B4EB008B498A /* JCPersonManagedObject.m */,
+				5DBF6F441ADEF477004B53F5 /* JCAddressBookEntity.h */,
+				5DBF6F451ADEF477004B53F5 /* JCAddressBookEntity.m */,
+				5D490E5C1A8AF364004B62C0 /* JCAddressBookPerson.h */,
+				5D490E5D1A8AF364004B62C0 /* JCAddressBookPerson.m */,
+				5D490E771A958A5A004B62C0 /* JCAddressBookNumber.h */,
+				5D490E781A958A5A004B62C0 /* JCAddressBookNumber.m */,
+				5D490E551A8AD0A1004B62C0 /* JCUnknownNumber.h */,
+				5D490E561A8AD0A1004B62C0 /* JCUnknownNumber.m */,
+				5DBF6F391ADC2788004B53F5 /* JCMultiPersonPhoneNumber.h */,
+				5DBF6F3A1ADC2788004B53F5 /* JCMultiPersonPhoneNumber.m */,
+			);
+			name = Entities;
 			sourceTree = "<group>";
 		};
 		5DDE651119F0C2E100B90B55 /* Controllers */ = {
@@ -2036,12 +2111,11 @@
 				5D7DD3671A7B004B00B9FF4D /* Message.m in Sources */,
 				5D490E761A93BCA5004B62C0 /* JCProgressHUD.m in Sources */,
 				5D7DD3681A7B004B00B9FF4D /* SMSMessage.m in Sources */,
-				5D490E641A8D29BD004B62C0 /* JiveContact.m in Sources */,
 				5D25F8411AE6872E00981DB6 /* JCAppMenuViewController.m in Sources */,
+				5D490E641A8D29BD004B62C0 /* Extension.m in Sources */,
 				5D7DD3691A7B004B00B9FF4D /* Conversation.m in Sources */,
 				5D3F1AE41AE7FEE200C59A63 /* JCAppMenuSplitViewController.m in Sources */,
 				5D7DD36A1A7B004B00B9FF4D /* JCCustomCell.m in Sources */,
-				5DA30DD21AD712CD008856DC /* JCAddressBookEntity.m in Sources */,
 				5D241FDB1A38346A008B498A /* JCDebugLinesTableViewController.m in Sources */,
 				5D36B7AB19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m in Sources */,
 				5D25F8441AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m in Sources */,
@@ -2057,6 +2131,7 @@
 				F8C9A7D419E884D20049A715 /* OutgoingCall.m in Sources */,
 				5DB0BFC419FFF97A006737D7 /* JCDrawing.m in Sources */,
 				5D241FE41A38BAD5008B498A /* Contact.m in Sources */,
+				5DBF6F461ADEF477004B53F5 /* JCAddressBookEntity.m in Sources */,
 				5D629BAD19D9C41900F5744E /* JCVoicemailViewController.m in Sources */,
 				5D1175841A9BEFB200D2B03A /* JCConversationGroupsResultsController.m in Sources */,
 				5D2B2C081A30D8AE00938D76 /* JCVisualEffectsView.m in Sources */,
@@ -2072,6 +2147,7 @@
 				F8C9A7E519EC36340049A715 /* RecentEvent.m in Sources */,
 				5D895EAF1A0AB7270015368D /* JCPhoneMenuCell.m in Sources */,
 				5D6243721A65C58F001DF88E /* JCDebugPhoneManagerTableViewController.m in Sources */,
+				5DA30DD51AD78EA0008856DC /* JCVoicemailNumber.m in Sources */,
 				B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */,
 				F8C9A7DA19E884D30049A715 /* IncomingCall.m in Sources */,
 				5D11566F1A6DB486006217D6 /* JCConferenceCallCardViewCell.m in Sources */,
@@ -2088,6 +2164,7 @@
 				5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */,
 				5D8A35761AB76120009BD5E6 /* JCVoicemailManager.m in Sources */,
 				275F4A5E18AD0FBC00D2F069 /* main.m in Sources */,
+				5DBF6F3E1ADC3ADB004B53F5 /* JCPhoneBook.m in Sources */,
 				5D9F72101AC34F8000B9D0F8 /* JCAuthClient.m in Sources */,
 				5D241FDE1A383837008B498A /* JCDebugLineTableViewController.m in Sources */,
 				27F64D6219772D6A00F772AA /* Voicemail.m in Sources */,
@@ -2096,8 +2173,9 @@
 				5D62437B1A687CD0001DF88E /* JCPhoneManagerError.m in Sources */,
 				5D3F1ADD1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m in Sources */,
 				5D0275131A3F836A0077A37B /* JCStringEncryptionTransformer.m in Sources */,
-				5D241FE11A38B4EB008B498A /* Person.m in Sources */,
+				5D241FE11A38B4EB008B498A /* JCPersonManagedObject.m in Sources */,
 				5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */,
+				B7FCA5AA1AD2E74E0034C5EC /* JCDIDSelectorViewController.m in Sources */,
 				919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */,
 				5DBBDCC619DD9A4100A4DB96 /* JCPhoneManager.m in Sources */,
 				272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
@@ -2119,7 +2197,6 @@
 				5D11758A1A9E856300D2B03A /* JCRecentEventsTableViewController.m in Sources */,
 				5DDDA5481A4B08AD00E31AA3 /* JCSocket.m in Sources */,
 				F81EA8B21A926D2600081C81 /* (null) in Sources */,
-				5D6243751A678B1D001DF88E /* JCSipHandlerError.m in Sources */,
 				5D2EDB8A1A3CEC060031F7AD /* JCDebugUserTableViewController.m in Sources */,
 				5D7339A71A03F2E700339DC6 /* NSManagedObject+Additions.m in Sources */,
 				27D2C1F7196F030C005285FF /* JCLineSelectorTableViewController.m in Sources */,
@@ -2129,6 +2206,7 @@
 				5D6243781A678B6F001DF88E /* JCError.m in Sources */,
 				27EA1DFD1900A83D0075CAEE /* JCVoicemailTableViewController.m in Sources */,
 				27F64D5C19772CCF00F772AA /* Line.m in Sources */,
+				B7C516211ACC6064008731AF /* JCSMSMessageManager.m in Sources */,
 				5DB0BFC119FFF3FE006737D7 /* JCTableViewCell.m in Sources */,
 				5D490E5E1A8AF364004B62C0 /* JCAddressBookPerson.m in Sources */,
 				5D8198F01AC1F0FC0057FDDA /* JCDebugDIDsTableViewController.m in Sources */,
@@ -2141,6 +2219,7 @@
 				F8BC82C319E44A2E00340BA1 /* JCKeypadOverlayView.m in Sources */,
 				275F4A6218AD0FBC00D2F069 /* JCAppDelegate.m in Sources */,
 				5D03649119DC5A450090CC21 /* JCTransferViewController.m in Sources */,
+				5DBF6F3B1ADC2788004B53F5 /* JCMultiPersonPhoneNumber.m in Sources */,
 				5D490E461A89774C004B62C0 /* JCMessageParticipantTableViewController.m in Sources */,
 				F8910FD21A71EC590040B8C7 /* LoggerClient.m in Sources */,
 				2788F14A190EB1260099348D /* NSNull+IntValue.m in Sources */,
@@ -2159,6 +2238,7 @@
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				F8C9A7EC19EC691C0049A715 /* JCCallHistoryCell.m in Sources */,
 				5D241FEA1A38C4CE008B498A /* JCLineCell.m in Sources */,
+				5D25F81D1AE0381600981DB6 /* JCPhoneNumberManagedObject.m in Sources */,
 				5D1BBE5B19EDC9EF006526B2 /* JCMergeButton.m in Sources */,
 				5D9A5E221A24E30A00E8274C /* JCPhoneAudioManager.m in Sources */,
 				9145E31F191D842500840D66 /* JCVersion.m in Sources */,
@@ -2182,11 +2262,13 @@
 				5D895EB51A0B230F0015368D /* JCPresenceCell.m in Sources */,
 				5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */,
 				273CC25E1900B23B005A2857 /* JCVoicemailPlaybackCell.m in Sources */,
+				5DA30DD81AD791D3008856DC /* JCPhoneNumber.m in Sources */,
 				5D1FAC6519DF376B00899915 /* JCKeypadViewController.m in Sources */,
 				9154947819366C54003DCED4 /* JCPlayPauseButton.m in Sources */,
 				5D490E611A8D1FF1004B62C0 /* RecentLineEvent.m in Sources */,
 				5D11758D1AA0321B00D2B03A /* JCPushNoAnimationSegue.m in Sources */,
 				5DB0BFCD1A00BAB3006737D7 /* JCVoicemailCell.m in Sources */,
+				5D25F8181AE014D700981DB6 /* JCPhoneNumberDataSourceUtils.m in Sources */,
 				5DF4C99B1AB8B6CB00BA4F8C /* JCSocketManager.m in Sources */,
 				5D241FD11A37F511008B498A /* User.m in Sources */,
 				5D2EDB811A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.m in Sources */,
@@ -2214,6 +2296,7 @@
 				5D0BACAC1AD43B6500EFEF86 /* JCVoicemailManagerTests.m in Sources */,
 				5D2D74351ACFB48500B98BDF /* JCDialerViewControllerTests.m in Sources */,
 				5D0BACA41AD438F800EFEF86 /* NSDictionary+AdditionsTests.m in Sources */,
+				5DBF6F431ADC4FC9004B53F5 /* JCPhoneBookTests.m in Sources */,
 				5D2D75511AD08DBA00B98BDF /* OsgiData.xcdatamodel in Sources */,
 				5D2D74341ACFB48500B98BDF /* JCBaseTestCase.m in Sources */,
 				5D2D74371ACFB48500B98BDF /* JCPhoneManagerBaseTestCase.m in Sources */,
@@ -2225,14 +2308,17 @@
 				5D2D74361ACFB48500B98BDF /* JCMainStoryboardBaseTestCase.m in Sources */,
 				5D0BACB01AD4406300EFEF86 /* JCAppSettingsTests.m in Sources */,
 				5D0BACA61AD4393F00EFEF86 /* NSData+AdditionsTests.m in Sources */,
+				5D25F81A1AE02E1600981DB6 /* JCPhoneNumberDataSourceUtilTests.m in Sources */,
 				5DC518201AD3096F007CEA71 /* JCLineTests.m in Sources */,
+				5DBF6F4B1ADFEFB0004B53F5 /* JCPersonTests.m in Sources */,
 				5D0BACA81AD439B100EFEF86 /* JCBadgeManagerTests.m in Sources */,
 				5D0BACAE1AD43E9B00EFEF86 /* JCSettingsTableViewControllerTests.m in Sources */,
 				5D0BACAA1AD43B0F00EFEF86 /* JCPresenceManagerTests.m in Sources */,
 				5D2D74381ACFB48500B98BDF /* JCPhoneManagerTests.m in Sources */,
 				5DA30DC51AD625D8008856DC /* NSString+AdditionsTests.m in Sources */,
 				5DC5181E1AD3094E007CEA71 /* JCPbxTests.m in Sources */,
-				5D2D74301ACFB48500B98BDF /* JCAddressBookTestDataFactory.m in Sources */,
+				5DBF6F491ADF225A004B53F5 /* JCPhoneNumberTests.m in Sources */,
+				5D2D74301ACFB48500B98BDF /* JCPhoneBookTestDataFactory.m in Sources */,
 				B70EAB3F1AD3302000305F43 /* JCAuthenticationManagerTests.m in Sources */,
 				5D2D74391ACFB48500B98BDF /* JCTransferViewControllerTests.m in Sources */,
 			);
@@ -2251,7 +2337,7 @@
 				5D2D74611ACFC34100B98BDF /* PBX.m in Sources */,
 				5D2D74581ACFBE8500B98BDF /* (null) in Sources */,
 				5D2D74561ACFBE6100B98BDF /* (null) in Sources */,
-				5D2D74671ACFC47A00B98BDF /* Person.m in Sources */,
+				5D2D74671ACFC47A00B98BDF /* JCPersonManagedObject.m in Sources */,
 				5D2D74691ACFC4CB00B98BDF /* Common.m in Sources */,
 				5D2D74681ACFC49C00B98BDF /* JCKeychain.m in Sources */,
 				5D2D745F1ACFC31E00B98BDF /* JCAuthenticationManagerError.m in Sources */,
@@ -2264,7 +2350,7 @@
 				5D2D74521ACFBDEF00B98BDF /* JCAuthClientTests.m in Sources */,
 				5D2D74571ACFBE7C00B98BDF /* JCV5ApiClient.m in Sources */,
 				5D2D745E1ACFC30700B98BDF /* JCError.m in Sources */,
-				5D2D74661ACFC47500B98BDF /* JiveContact.m in Sources */,
+				5D2D74661ACFC47500B98BDF /* Extension.m in Sources */,
 				5D2D74651ACFC40100B98BDF /* NSString+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

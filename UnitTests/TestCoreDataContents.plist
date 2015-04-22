@@ -87,9 +87,9 @@
 				<array>
 					<dict>
 						<key>jrn</key>
-						<string></string>
+						<string>jrn:pbx::jive:01471162-f384-24f5-9351-000100420001:did:014885d6-1526-8b77-a111-000100420001</string>
 						<key>number</key>
-						<string></string>
+						<string>+18011212121</string>
 						<key>makeCall</key>
 						<false/>
 						<key>receiveCall</key>
@@ -173,7 +173,7 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>Trisha Galloway</string>
+						<string></string>
 						<key>jrn</key>
 						<string>jrn:line::jive:01471162-f384-24f5-9351-000100420002:014a5955-b837-e8d0-ab9a-000100620004</string>
 						<key>extension</key>
@@ -184,6 +184,8 @@
 						<string>jsmith</string>
 					</dict>
 				</array>
+				<key>dids</key>
+				<array/>
 			</dict>
 		</array>
 	</dict>
@@ -192,8 +194,133 @@
 		<string>testUser3</string>
 		<key>pbxs</key>
 		<array>
-			<dict/>
-			<dict/>
+			<dict>
+				<key>name</key>
+				<string>Test User3 PBX</string>
+				<key>jrn</key>
+				<string>jrn:pbx::jive:01471162-f384-24f5-9351-000100420003:pbx~default</string>
+				<key>v5</key>
+				<true/>
+				<key>lines</key>
+				<array/>
+				<key>contacts</key>
+				<array/>
+				<key>dids</key>
+				<array>
+					<dict>
+						<key>jrn</key>
+						<string>jrn:pbx::jive:01471162-f384-24f5-9351-000100420003:did:014885d6-1526-8b77-a111-000100420031</string>
+						<key>number</key>
+						<string>+18012221111</string>
+						<key>makeCall</key>
+						<false/>
+						<key>reciveCall</key>
+						<false/>
+						<key>sendSMS</key>
+						<true/>
+						<key>reciveSMS</key>
+						<true/>
+						<key>userDefault</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>jrn</key>
+						<string>jrn:pbx::jive:01471162-f384-24f5-9351-000100420003:did:014885d6-1526-8b77-a111-000100420031</string>
+						<key>number</key>
+						<string>+18012223333</string>
+					</dict>
+				</array>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string></string>
+				<key>jrn</key>
+				<string>jrn:pbx::jive:01471162-f384-24f5-9351-000100420004:pbx~default</string>
+				<key>v5</key>
+				<string></string>
+				<key>lines</key>
+				<string></string>
+				<key>contacts</key>
+				<string></string>
+				<key>dids</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>jiveId</key>
+		<string>testUser4</string>
+		<key>pbxs</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>Test User4 PBX</string>
+				<key>jrn</key>
+				<string>jrn:pbx::jive:01471162-f384-24f5-9351-000100420005:pbx~default</string>
+				<key>v5</key>
+				<true/>
+				<key>lines</key>
+				<array/>
+				<key>contacts</key>
+				<array/>
+				<key>dids</key>
+				<array>
+					<dict>
+						<key>jrn</key>
+						<string>jrn:pbx::jive:01471162-f384-24f5-9351-000100420005:did:014885d6-1526-8b77-a111-000100420051</string>
+						<key>number</key>
+						<string>+18012223333</string>
+						<key>makeCall</key>
+						<false/>
+						<key>receiveCall</key>
+						<false/>
+						<key>sendSMS</key>
+						<false/>
+						<key>receiveSMS</key>
+						<false/>
+						<key>userDefault</key>
+						<false/>
+					</dict>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>jiveId</key>
+		<string>testUser5</string>
+		<key>pbxs</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>Test User5 PBX</string>
+				<key>jrn</key>
+				<string>jrn:pbx::jive:01471162-f384-24f5-9351-000100420055:pbx~default</string>
+				<key>v5</key>
+				<true/>
+				<key>lines</key>
+				<array/>
+				<key>contacts</key>
+				<array/>
+				<key>dids</key>
+				<array>
+					<dict>
+						<key>jrn</key>
+						<string>jrn:pbx::jive:01471162-f384-24f5-9351-000100420055:did:014885d6-1526-8b77-a111-000100420551</string>
+						<key>number</key>
+						<string>+18012225555</string>
+						<key>makeCall</key>
+						<false/>
+						<key>receiveCall</key>
+						<false/>
+						<key>sendSMS</key>
+						<true/>
+						<key>receiveSMS</key>
+						<true/>
+						<key>userDefault</key>
+						<true/>
+					</dict>
+				</array>
+			</dict>
 		</array>
 	</dict>
 </array>

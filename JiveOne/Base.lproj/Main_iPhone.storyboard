@@ -604,7 +604,7 @@
         <!--Settings-->
         <scene sceneID="vyP-7i-pmD">
             <objects>
-                <tableViewController id="BBd-7J-jmI" customClass="JCSettingsTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="JCSettingsTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BBd-7J-jmI" customClass="JCSettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="fK9-fT-LNd" userLabel="SettingsApplicationTableView">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -781,6 +781,34 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="SMS" id="Unq-Lf-mp0" userLabel="SMS">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="SMSDefaultNumberCell" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="sVq-3X-jAZ" detailTextLabel="fjG-Go-HCN" style="IBUITableViewCellStyleSubtitle" id="EVV-ga-5fF" userLabel="SMSDefaultNumberCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="Default DID Cell" tableViewCell="EVV-ga-5fF" id="STu-k4-0FD">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Default Did for sending SMS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sVq-3X-jAZ">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fjG-Go-HCN">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="lMa-gl-P4s" kind="push" id="RgC-9U-m8K"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="General" id="oRl-vc-sb2" userLabel="EULATVSection">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="r0i-CD-OoY" detailTextLabel="UjK-HA-EeS" style="IBUITableViewCellStyleValue1" id="EVj-cT-0WA" userLabel="AppLabelCellRow">
@@ -841,9 +869,11 @@
                     <connections>
                         <outlet property="appLabel" destination="r0i-CD-OoY" id="kFO-U9-cCh"/>
                         <outlet property="buildLabel" destination="UjK-HA-EeS" id="jwm-RA-hC8"/>
+                        <outlet property="defaultDIDCell" destination="EVV-ga-5fF" id="rqv-zJ-QpX"/>
                         <outlet property="enablePreasenceCell" destination="wFh-qN-Em8" id="SGe-wX-6br"/>
                         <outlet property="extensionLabel" destination="SCG-SS-mwf" id="ote-dI-OWx"/>
                         <outlet property="presenceEnabled" destination="sG2-aY-SNJ" id="ZrR-bE-fbJ"/>
+                        <outlet property="smsUserDefaultNumber" destination="fjG-Go-HCN" id="MO2-r7-m5v"/>
                         <outlet property="userNameLabel" destination="Ha4-sQ-nx4" id="T5D-Dz-uVO"/>
                         <outlet property="wifiOnly" destination="MGe-0z-lyW" id="jbZ-I2-fC7"/>
                     </connections>
@@ -864,7 +894,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="695" y="2411"/>
+            <point key="canvasLocation" x="695" y="2408"/>
         </scene>
         <!--Messages-->
         <scene sceneID="RM6-57-2r2">
@@ -1149,7 +1179,44 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7CT-HS-qG7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1476" y="2032"/>
+            <point key="canvasLocation" x="1467" y="1586"/>
+        </scene>
+        <!--Default DID-->
+        <scene sceneID="cnu-bI-ToW">
+            <objects>
+                <tableViewController id="lMa-gl-P4s" customClass="JCDIDSelectorViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="QNf-Nm-rl2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="1lB-kO-xKd" style="IBUITableViewCellStyleDefault" id="67W-YT-IHq">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="67W-YT-IHq" id="Ote-Zl-w0L">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1lB-kO-xKd">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="lMa-gl-P4s" id="rFF-vv-pzH"/>
+                            <outlet property="delegate" destination="lMa-gl-P4s" id="IEe-KW-NHM"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Default DID" id="RaO-p9-fJI">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="ZKc-4d-xKF"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="12v-c5-ZxC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1467" y="2205"/>
         </scene>
         <!--Contacts Table View Controller-->
         <scene sceneID="842-84-rzD">

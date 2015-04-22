@@ -120,7 +120,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     
     Contact *contact = [Contact contactForJrn:jrn pbx:pbx];
     contact.name        = [data stringValueForKey:kContactResponseNameKey];
-    contact.extension   = [data stringValueForKey:kContactResponseExtensionKey];
+    contact.number      = [data stringValueForKey:kContactResponseExtensionKey];
     contact.jiveUserId  = jiveUserId;
     
     id object = [data objectForKey:kContactResponseGroupKey];

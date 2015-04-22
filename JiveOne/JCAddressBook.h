@@ -74,13 +74,6 @@ extern NSString *const kJCAddressBookFailedToLoadNotification;
 
 @end
 
-@interface JCAddressBook (Singleton)
-
-+(instancetype)sharedAddressBook;
-
-@end
-
-
 @interface JCAddressBook (FormattedNames)
 
 - (void)formattedNamesForNumbers:(NSSet *)numbers
@@ -90,11 +83,5 @@ extern NSString *const kJCAddressBookFailedToLoadNotification;
 
 - (void)formattedNameForNumber:(NSString *)number
                     completion:(void (^)(NSString *name, NSError *error))completion __deprecated;
-
-@end
-
-@interface UIViewController (JCAddressBook)
-
-@property(nonatomic, strong) JCAddressBook *sharedAddressBook;
 
 @end

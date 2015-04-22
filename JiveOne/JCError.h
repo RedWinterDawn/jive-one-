@@ -22,5 +22,6 @@
 +(instancetype)errorWithCode:(NSInteger)code userInfo:(NSDictionary *)userInfo;
 
 +(NSString *)failureReasonFromCode:(NSInteger)integer;
++(NSString *)descriptionFromCode:(NSInteger)integer;
 
 @end

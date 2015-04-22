@@ -13,13 +13,16 @@
 #import "JCContactsTableViewController.h"
 #import "JCPhoneManager.h"
 #import "ContactGroup.h"
+#import "JCUnknownNumber.h"
+#import "JCAddressBookNumber.h"
+#import "JCAddressBookPerson.h"
 
 NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"ContactGroupViewController";
 
 @interface JCContactsViewController () <ABPeoplePickerNavigationControllerDelegate, JCContactsTableViewControllerDelegate>
 {
     JCContactsTableViewController *_contactsTableViewController;
-    NSString *_dialString;
+    JCAddressBookNumber *_phoneNumber;
 }
 
 @end
@@ -41,10 +44,13 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if (_dialString) {
-        [self dialNumber:_dialString usingLine:[JCAuthenticationManager sharedInstance].line sender:nil completion:^(BOOL success, NSError *error) {
-            _dialString = nil;
-        }];
+    if (_phoneNumber) {
+        [self dialPhoneNumber:_phoneNumber
+                    usingLine:self.authenticationManager.line
+                       sender:nil
+                   completion:^(BOOL success, NSError *error) {
+                       _phoneNumber = nil;
+                   }];
     }
 }
 
@@ -90,31 +96,11 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
     [self presentViewController:picker animated:YES completion:nil];
 }
 
-- (void)didSelectPerson:(ABRecordRef)person identifier:(ABMultiValueIdentifier)identifier
+- (void)didSelectPerson:(ABRecordRef)personRef identifier:(ABMultiValueIdentifier)identifier
 {
-    NSString *phoneNumber = nil;
-    ABMultiValueRef phones = ABRecordCopyValue(person, kABPersonPhoneProperty);
-    if (phones)
-    {
-        if (ABMultiValueGetCount(phones) > 0)
-        {
-            CFIndex index = 0;
-            if (identifier != kABMultiValueInvalidIdentifier)
-            {
-                index = ABMultiValueGetIndexForIdentifier(phones, identifier);
-            }
-            phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phones, index));
-
-            NSString *strippedString = [[phoneNumber componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"1234567890*"] invertedSet]]componentsJoinedByString:@""];
-            phoneNumber = strippedString;
-
-            NSLog(@"phoneNumber: %@", phoneNumber);
-        }
-        CFRelease(phones);
-    }
-    
-    _dialString = phoneNumber;
-    NSLog(@"%@", _dialString);
+    JCAddressBookPerson *person = [JCAddressBookPerson addressBookPersonWithABRecordRef:personRef];
+    JCAddressBookNumber *phoneNumber = [person addressBookNumberForIdentifier:identifier];
+    _phoneNumber = phoneNumber;
 }
 
 -(IBAction)toggleFilterState:(id)sender

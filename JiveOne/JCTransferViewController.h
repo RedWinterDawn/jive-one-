@@ -13,7 +13,7 @@
 
 @protocol JCTransferViewControllerDelegate <NSObject>
 
--(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString;
+-(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(id<JCPhoneNumberDataSource>)number;
 -(void)shouldCancelTransferViewController:(JCTransferViewController *)controller;
 
 @end

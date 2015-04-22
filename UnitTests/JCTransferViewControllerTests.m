@@ -19,22 +19,15 @@
 #import "JCFormattedPhoneNumberLabel.h"
 
 // Objects
-#import "JCAddressBook.h"
 #import "Line.h"
 #import "OutgoingCall.h"
-#import "JCAddressBookTestDataFactory.h"
+#import "JCPhoneBookTestDataFactory.h"
 
 @interface JCTransferViewController ()
 
 @property (nonatomic, strong) JCAuthenticationManager *authenticationManager;
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkingReachabilityManager;
 @property (nonatomic, strong) NSManagedObjectContext *context;
-
-@end
-
-@interface JCAddressBook ()
-
-- (instancetype)initWithPeople:(NSSet *)people numbers:(NSSet *)numbers;
 
 @end
 
@@ -63,13 +56,9 @@
     vc.appSettings = appSettings;
     XCTAssertEqual(appSettings, vc.appSettings, @"App Settings is not the mock app settings");
     
-    // Load Test Address Book Data
-    NSDictionary *addressBookData = [JCAddressBookTestDataFactory loadTestAddessBookData];
-    NSMutableSet *people  = [addressBookData objectForKey:kJCAddressBookPeople];
-    NSMutableSet *numbers = [addressBookData objectForKey:kJCAddressBookNumbers];
-    JCAddressBook *addressBook = [[JCAddressBook alloc] initWithPeople:people numbers:numbers];
-    vc.sharedAddressBook = addressBook;
-    XCTAssertEqual(addressBook, vc.sharedAddressBook, @"Address Book is not the mock address book");
+    JCPhoneBook *phoneBook = [JCPhoneBookTestDataFactory loadTestPhoneBook];
+    vc.phoneBook = phoneBook;
+    XCTAssertEqual(phoneBook, vc.phoneBook, @"Phone Book is not the mock address book");
     
     id networkReachabilityManager = OCMClassMock([AFNetworkReachabilityManager class]);
     vc.networkingReachabilityManager = networkReachabilityManager;
@@ -88,7 +77,8 @@
     [super tearDown];
 }
 
-- (void)test_JCTransferViewController_storyboard_initialization {
+- (void)test_JCTransferViewController_storyboard_initialization
+{
     XCTAssertNotNil(self.vc, @"View not initiated properly");
     XCTAssertTrue([self.vc isKindOfClass:[JCTransferViewController class]], @"View controller should be kind of class: %@", [JCTransferViewController class]);
     XCTAssertNotNil(self.vc.view, @"View should not be nil");
@@ -120,9 +110,6 @@
     // Then
     NSString *dialString = self.vc.formattedPhoneNumberLabel.dialString;
     XCTAssertTrue([dialString isEqualToString:@"5"]);
-    
-    NSInteger count = [self.vc collectionView:self.vc.collectionView numberOfItemsInSection:1];
-    XCTAssertTrue(count == 14, @"incorrect count of the number of objects to be shown");
 }
 
 -(void)test_numPad_longKeyPress
@@ -153,6 +140,9 @@
     self.vc.delegate = self;
     _expectation = [self expectationWithDescription:@"dial"];
     self.vc.formattedPhoneNumberLabel.dialString = @"1234";
+    NSString *jrn = @"jrn:line::jive:01471162-f384-24f5-9351-000100420001:014a5955-b837-e8d0-ab9a-000100620001";
+    Line *line = [Line MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
+    OCMStub([self.vc.authenticationManager line]).andReturn(line);
     
     // When
     [self.vc initiateCall:self.vc.callButton];
@@ -175,9 +165,9 @@
     }];
 }
 
--(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
+-(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(id<JCPhoneNumberDataSource>)number
 {
-    XCTAssertTrue([dialString isEqualToString:@"1234"], @"dial string does not match");
+    XCTAssertTrue([number.dialableNumber isEqualToString:@"1234"], @"dial string does not match");
     XCTAssertTrue((controller = self.vc), @"controllers do not match");
     if ([_expectation.description isEqualToString:@"dial"]) {
         [_expectation fulfill];

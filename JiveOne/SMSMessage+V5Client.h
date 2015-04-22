@@ -8,7 +8,7 @@
 
 #import "SMSMessage.h"
 #import "DID.h"
-#import "JCPersonDataSource.h"
+#import "JCPhoneNumberDataSource.h"
 
 extern NSString *const kSMSMessagesDidUpdateNotification;
 
@@ -36,7 +36,7 @@ extern NSString *const kSMSMessagesDidUpdateNotification;
 #pragma mark - Send -
 
 // Sends a sent request. If successfully sent, creates a message from the send success response.
-+(void)sendMessage:(NSString *)message toPerson:(id<JCPersonDataSource>)person fromDid:(DID *)did completion:(CompletionHandler)completion;
++(void)sendMessage:(NSString *)message toPerson:(id<JCPhoneNumberDataSource>)person fromDid:(DID *)did completion:(CompletionHandler)completion;
 
 #pragma mark - Receive -
 
@@ -57,6 +57,6 @@ extern NSString *const kSMSMessagesDidUpdateNotification;
 #pragma mark Conversation
 
 // Downloads all messages for a conversation thread between a DID and a number.
-+(void)downloadMessagesForDID:(DID *)did toPerson:(id<JCPersonDataSource>)person completion:(CompletionHandler)completion;
++(void)downloadMessagesForDID:(DID *)did toPerson:(id<JCPhoneNumberDataSource>)person completion:(CompletionHandler)completion;
 
 @end

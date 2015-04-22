@@ -81,12 +81,8 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
         JCConversationGroup *group = (JCConversationGroup *)object;
         JCConversationTableViewCell *conversationCell = (JCConversationTableViewCell *)cell;
         
-        NSString *name = group.name;
-        if (!name) {
-            name = group.conversationGroupId.formattedPhoneNumber;
-        }
-        conversationCell.name.text    = name;
-        conversationCell.detail.text  = group.lastMessage;
+        conversationCell.name.text    = group.titleText;
+        conversationCell.detail.text  = group.detailText;
         conversationCell.date.text    = group.formattedModifiedShortDate;
         conversationCell.read         = group.isRead;
     }

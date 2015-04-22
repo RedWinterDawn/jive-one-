@@ -15,7 +15,6 @@
 #import "JCConversationTableViewCell.h"
 #import "SMSMessage+V5Client.h"
 #import "LocalContact.h"
-#import "JCAddressBook.h"
 
 #import "Line.h"
 #import "PBX.h"
@@ -83,12 +82,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 {
     if ([object isKindOfClass:[JCConversationGroup class]]) {
         JCConversationGroup *group = (JCConversationGroup *)object;
-        
-        NSString *name = group.name;
-        if (!name) {
-            name = group.conversationGroupId.formattedPhoneNumber;
-        }
-        cell.name.text   = name;
+        cell.name.text   = group.titleText;
         cell.detail.text = group.lastMessage;
         cell.date.text   = group.formattedModifiedShortDate;
         cell.read = group.isRead;

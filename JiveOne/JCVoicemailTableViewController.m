@@ -125,7 +125,7 @@
 		[self stopProgressTimerForVoicemail];
 	}
 	
-	Voicemail *voicemail = [self objectAtIndexPath:indexPath];
+	Voicemail *voicemail = (Voicemail *)[self objectAtIndexPath:indexPath];
     [voicemail markForDeletion:NULL];
 }
 

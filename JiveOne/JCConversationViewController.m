@@ -16,10 +16,10 @@
 #import "JCUnknownNumber.h"
 #import "LocalContact.h"
 #import "SMSMessage+V5Client.h"
-#import "JCAddressBook.h"
 #import "JCAddressBookNumber.h"
 #import "PBX.h"
 #import "Line.h"
+#import "JCPhoneBook.h"
 
 // Views
 #import "JCMessagesCollectionViewCell.h"
@@ -28,6 +28,8 @@
 // Controllers
 #import "JCMessageParticipantTableViewController.h"
 #import "JCNavigationController.h"
+
+#import "NSString+Additions.h"
 
 #define MESSAGES_PARTICIPANT_VIEW_CONTROLLER @"MessageParticipantsViewController"
 
@@ -95,7 +97,7 @@
              [dids sortUsingDescriptors:@[sortDescriptor]];
             NSMutableArray *titles = [NSMutableArray array];
             for (DID *did in dids) {
-                [titles addObject:did.number.formattedPhoneNumber];
+                [titles addObject:did.titleText];
             }
             
             JCActionSheet *didOptions = [[JCActionSheet alloc] initWithTitle:@"Which number would you like to send from"
@@ -112,6 +114,7 @@
     } else {
         [self sendMessageWithSelectedDID:text toPerson:person fromDid:[JCAuthenticationManager sharedInstance].did];
     }
+       
 }
 
 -(void)sendMessageWithSelectedDID:(NSString *)text toPerson:(id<JCPersonDataSource>)person fromDid:(DID *)did {
@@ -124,12 +127,31 @@
             [self showError:error];
         }
     }];
+    UIAlertView *makeUserDefualt = [[UIAlertView alloc] initWithTitle:@"Set as default" message:@"Set this DID as default for all sms messages" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+    [makeUserDefualt addButtonWithTitle:@"Yes"];
+    [makeUserDefualt addButtonWithTitle:@"No"];
+    [makeUserDefualt show];
     
 }
 
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"you selected the : %ld button", (long)buttonIndex);
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        
+        [JCAuthenticationManager sharedInstance].did = self.did;
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            DID *currentDID = (DID *)[localContext objectWithID:self.did.objectID];
+            NSArray *numbers = [DID MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];
+            for (DID *item in numbers) {
+                if (currentDID == item){
+                    item.userDefault = TRUE;
+                }
+                else{
+                    item.userDefault = FALSE;
+                }
+            }
+        }];
 
+    }
 }
 
 #pragma mark - Setters -
@@ -147,9 +169,10 @@
         if (name) {
             self.title = name;
         } else {
-            [self.sharedAddressBook formattedNameForNumber:person.number completion:^(NSString *name, NSError *error) {
-                self.title = name;
-            }];
+            JCPhoneBook *phoneBook = self.phoneBook;
+            PBX *pbx = self.authenticationManager.pbx;
+            id<JCPhoneNumberDataSource> phoneNumber = [phoneBook phoneNumberForNumber:person.number forPbx:pbx excludingLine:nil];
+            self.title = phoneNumber.titleText;
         }
     } else {
         self.title = person.name;

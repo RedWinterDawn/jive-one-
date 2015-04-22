@@ -6,16 +6,13 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 #import "JCPersonDataSource.h"
+#import "JCPhoneNumberManagedObject.h"
 
-@interface Person : NSManagedObject <JCPersonDataSource>
+@interface JCPersonManagedObject : JCPhoneNumberManagedObject <JCPersonDataSource>
 
 // Attributes
-@property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *firstName;
 @property (nonatomic, retain) NSString *lastName;
-@property (nonatomic, retain) NSString *t9;
 
 @end

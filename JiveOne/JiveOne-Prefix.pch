@@ -6,6 +6,10 @@
 
 #import <Availability.h>
 
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#endif
+
 #ifndef __IPHONE_5_0
 #warning "This project uses features only available in iOS SDK 5.0 and later."
 #endif

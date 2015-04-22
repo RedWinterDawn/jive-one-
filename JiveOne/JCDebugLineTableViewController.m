@@ -24,7 +24,7 @@
     self.firstName.text  = line.firstName;
     self.lastName.text   = line.lastName;
     self.t9.text         = line.t9;
-    self.extension.text  = line.extension;
+    self.extension.text  = line.number;
     self.jrn.text        = line.jrn;
     self.pbxId.text      = line.pbxId;
     self.lineId.text     = line.lineId;

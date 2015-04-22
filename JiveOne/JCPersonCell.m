@@ -8,7 +8,7 @@
 
 #import "JCPersonCell.h"
 
-#import "JiveContact.h"
+#import "Extension.h"
 
 @implementation JCPersonCell
 
@@ -16,24 +16,18 @@
 {
     [super layoutSubviews];
     
-    Person *person = self.person;
-    self.textLabel.text = person.name;
-    
-    if ([person isKindOfClass:[JiveContact class]]) {
-        JiveContact *jiveContact = (JiveContact *)person;
-        self.detailTextLabel.text = jiveContact.detailText;
-    }
-    
-    
+    id <JCPersonDataSource> person = self.person;
+    self.textLabel.text = person.titleText;
+    self.detailTextLabel.text = person.detailText;
 }
 
 #pragma mark - Setters -
 
-- (void)setPerson:(Person *)person
+- (void)setPerson:(id<JCPersonDataSource>)person
 {
     _person = person;
-    if ([person isKindOfClass:[JiveContact class]]) {
-        JiveContact *jiveContact = (JiveContact *)person;
+    if ([person isKindOfClass:[Extension class]]) {
+        Extension *jiveContact = (Extension *)person;
         self.identifier = jiveContact.jrn;
     }
 }

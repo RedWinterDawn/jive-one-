@@ -2,33 +2,62 @@
 //  JCAddressBookEntity.m
 //  JiveOne
 //
-//  Created by Robert Barclay on 4/9/15.
+//  Created by Robert Barclay on 4/15/15.
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
 #import "JCAddressBookEntity.h"
-#import "NSString+Additions.h"
+
+@interface JCAddressBookEntity ()
+{
+    ABRecordRef _record;
+    
+    NSString *_firstName;
+    NSString *_middleName;
+    NSString *_lastName;
+}
+
+@end
 
 @implementation JCAddressBookEntity
 
+- (instancetype)initWithNumber:(NSString *)number record:(ABRecordRef)record
+{
+    NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(record);
+    self = [super initWithName:name number:number];
+    if (self) {
+        _record       = record;
+        CFRetain(record);
+        
+        _recordId     = ABRecordGetRecordID(record);
+        _personHash   = name.MD5Hash;
+        
+        _firstName    = [self getRecordValueForPropertyId:kABPersonFirstNameProperty];
+        _middleName   = [self getRecordValueForPropertyId:kABPersonMiddleNameProperty];
+        _lastName     = [self getRecordValueForPropertyId:kABPersonLastNameProperty];
+    }
+    return self;
+}
+
+-(void)dealloc {
+    CFRelease(_record);
+}
+
 #pragma mark - Getters -
+#pragma mark JCPersonDataSource
 
--(NSString *)titleText
+@synthesize firstName = _firstName;
+@synthesize middleName = _middleName;
+@synthesize lastName = _lastName;
+
+-(NSString *)firstNameFirstName
 {
-    return self.name;
+    return [self getRecordValueForPropertyId:kABPersonCompositeNameFormatFirstNameFirst];
 }
 
--(NSString *)detailText
+-(NSString *)lastNameFirstName
 {
-    return self.number.dialableString.formattedPhoneNumber;
-}
-
-@synthesize name = _name;
-@synthesize number = _number;
-
--(NSString *)t9
-{
-    return self.name.t9;
+    return [self getRecordValueForPropertyId:kABPersonCompositeNameFormatLastNameFirst];
 }
 
 -(NSString *)firstInitial
@@ -71,52 +100,50 @@
     return lastInitial;
 }
 
-#pragma mark - Methods -
+#pragma mark - Private -
 
--(BOOL)containsKeyword:(NSString *)keyword
+- (NSString *)getRecordValueForPropertyId:(ABPropertyID)propertyId
 {
-    NSString *localizedKeyword = [keyword lowercaseStringWithLocale:keyword.locale];
-    if (localizedKeyword.isNumeric) {
-        NSString *string = self.number.numericStringValue;
-        if ([string rangeOfString:localizedKeyword].location != NSNotFound) {
-            return YES;
-        }
-        if ([self containsT9Keyword:keyword]) {
-            return YES;
-        }
+    CFStringRef value = ABRecordCopyValue(_record, propertyId);
+    if (value) {
+        NSString *string = [NSString stringWithString:(__bridge NSString *)(value)];
+        CFRelease(value);
+        return string;
     }
-    
-    NSString *name = self.name;
-    NSString *fullName = [name lowercaseStringWithLocale:name.locale];
-    if ([fullName respondsToSelector:@selector(containsString:)]) {
-        if ([fullName containsString:localizedKeyword]) {
-            return YES;
-        }
-    }
-    else if ([fullName rangeOfString:localizedKeyword].location != NSNotFound) {
-        return YES;
-    }
-    
-    return NO;
+    return nil;
 }
 
--(BOOL)containsT9Keyword:(NSString *)keyword
+- (NSNumber *)copyRecordValueAsNumber:(ABRecordRef)ref propertyId:(ABPropertyID)propertyId
 {
-    NSString *t9 = self.t9;
-    if ([t9 hasPrefix:keyword]) {
-        return YES;
+    CFNumberRef value = ABRecordCopyValue(ref, propertyId);
+    if (value) {
+        NSNumber *number = ((__bridge NSNumber *)value).copy;
+        CFRelease(value);
+        return number;
     }
-    return NO;
+    return nil;
 }
 
--(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+- (NSString *) copyMultiValueLabelAtIndex:(ABMultiValueRef)phones index:(CFIndex)index
 {
-    return [self.name formattedStringWithT9Keyword:keyword font:font color:color];
+    CFStringRef value = ABMultiValueCopyLabelAtIndex(phones, index);
+    if (value) {
+        NSString *string = [NSString stringWithString:(__bridge NSString *)(value)];
+        CFRelease(value);
+        return string;
+    }
+    return nil;
 }
 
--(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color{
-    
-    return [self.number formattedPhoneNumberWithNumericKeyword:keyword font:font color:color];
+- (NSString *) copyMultiValueValueAtIndex:(ABMultiValueRef)phones index:(CFIndex)index
+{
+    CFStringRef value = ABMultiValueCopyValueAtIndex(phones, index);
+    if (value) {
+        NSString *string = [NSString stringWithString:(__bridge NSString *)(value)];
+        CFRelease(value);
+        return string;
+    }
+    return nil;
 }
 
 @end

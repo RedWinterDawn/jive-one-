@@ -8,10 +8,12 @@
 
 #import "DID.h"
 #import "NSManagedObject+Additions.h"
+#import "JCPhoneNumberDataSourceUtils.h"
 
 #define DID_INDEX_OF_DID_ID_IN_JRN 6
 //"jrn:pbx::jive:0127d974-f9f3-0704-2dee-000100420001:did:014885d6-1526-8b77-a111-000100420002",
 
+NSString *const kDIDUserDefaultAttribute       = @"userDefault";
 NSString *const kDIDMakeCallAttribute       = @"makeCall";
 NSString *const kDIDReceiveCallAttribute    = @"receiveCall";
 NSString *const kDIDSendSMSAttribute        = @"sendSMS";
@@ -19,12 +21,15 @@ NSString *const kDIDReceiveSMSAttribute     = @"receiveSMS";
 
 @implementation DID
 
-@dynamic number;
 @dynamic jrn;
 @dynamic pbx;
 @dynamic smsMessages;
 
 #pragma mark - Setters -
+-(void)setUserDefault:(BOOL)userDefault
+{
+    [self setPrimitiveValueFromBoolValue:userDefault forKey:kDIDUserDefaultAttribute];
+}
 
 -(void)setMakeCall:(BOOL)makeCall
 {
@@ -47,6 +52,12 @@ NSString *const kDIDReceiveSMSAttribute     = @"receiveSMS";
 }
 
 #pragma mark - Getters -
+
+-(BOOL)isUserDefault
+{
+    return [self boolValueFromPrimitiveValueForKey:kDIDUserDefaultAttribute];
+}
+
 
 -(BOOL)canMakeCall
 {
@@ -71,6 +82,61 @@ NSString *const kDIDReceiveSMSAttribute     = @"receiveSMS";
 -(NSString *)didId
 {
     return [[self class] identifierFromJrn:self.jrn index:DID_INDEX_OF_DID_ID_IN_JRN];
+}
+
+#pragma mark - JCPhoneNumberDataSource Protocol -
+
+-(NSString *)name
+{
+    return self.number;
+}
+
+-(NSString *)titleText
+{
+    return [JCPhoneNumberDataSourceUtils formattedPhoneNumberForPhoneNumber:self];
+}
+
+-(NSString *)detailText
+{
+    return [JCPhoneNumberDataSourceUtils formattedPhoneNumberForPhoneNumber:self];
+}
+
+-(NSString *)dialableNumber
+{
+    return [JCPhoneNumberDataSourceUtils dialableStringForPhoneNumber:self];
+}
+
+-(NSString *)t9
+{
+    return [JCPhoneNumberDataSourceUtils t9StringForPhoneNumber:self];
+}
+
+-(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    return [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword
+                                                         font:font
+                                                        color:color
+                                                  phoneNumber:self];
+}
+
+-(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    return [JCPhoneNumberDataSourceUtils detailTextWithKeyword:keyword
+                                                          font:font
+                                                         color:color
+                                                   phoneNumber:self];
+}
+
+-(BOOL)containsKeyword:(NSString *)keyword
+{
+    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+                                     containsKeyword:keyword];
+}
+
+-(BOOL)containsT9Keyword:(NSString *)keyword
+{
+    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+                                   containsT9Keyword:keyword];
 }
 
 @end

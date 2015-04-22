@@ -21,6 +21,7 @@
 #import "JCPhoneManager.h"
 #import "JCPresenceManager.h"
 #import "JCVoicemailManager.h"
+#import "JCSMSMessageManager.h"
 
 #import "JCBadgeManager.h"
 #import "JCApplicationSwitcherDelegate.h"
@@ -246,7 +247,8 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     }
     
     // Register the Phone.
-    [JCPhoneManager connectToLine:line];
+    JCPhoneManager *phoneManager = [JCPhoneManager sharedManager];
+    [phoneManager connectToLine:line];
 }
 
 -(void)resubscribeToLineEvents:(Line *)line
@@ -274,6 +276,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 {
     [JCPresenceManager subscribeToPbx:line.pbx];
 	[JCVoicemailManager subscribeToLine:line];
+    [JCSMSMessageManager subscribeToPbx:line.pbx];
 }
 
 #pragma mark - Notification Handlers -
@@ -308,7 +311,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     
     // Check to see if we have a previous network state that was different from our current network
     // state. If they are the same, we have no reason to change the state change, so we exit out.
-    JCPhoneManagerNetworkType currentNetworkType = [JCPhoneManager networkType];
+    JCPhoneManagerNetworkType currentNetworkType = [[JCPhoneManager sharedManager] networkType];
     if (currentNetworkType == status) {
         return;
     }
@@ -319,25 +322,25 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     // rather the recovery when we reconnect.
     if (status == AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"No Network Connection");
-        [JCPhoneManager connectToLine:line];
+        [[JCPhoneManager sharedManager] connectToLine:line];
     }
     
     // Transition from Cellular data to wifi.
     else if (currentNetworkType ==  JCPhoneManagerCellularNetwork && status == AFNetworkReachabilityStatusReachableViaWiFi) {
         NSLog(@"Transitioning to Wifi from Cellular Data Connection");
-        [JCPhoneManager connectToLine:line];
+        [[JCPhoneManager sharedManager] connectToLine:line];
     }
     
     // Transition from wifi to cellular data.
     else if (currentNetworkType == JCPhoneManagerWifiNetwork && status == AFNetworkReachabilityStatusReachableViaWWAN) {
         NSLog(@"Transitioning to Cellular Data from Wifi Connection");
-        [JCPhoneManager connectToLine:line];
+        [[JCPhoneManager sharedManager] connectToLine:line];
     }
     
     // Transition from no connection to having a connection.
     else if(currentNetworkType == JCPhoneManagerNoNetwork && status != AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"Transitioning from no network connectivity to connected.");
-        [JCPhoneManager connectToLine:line];
+        [[JCPhoneManager sharedManager] connectToLine:line];
     }
     
     // Handle socket to reconnect. Since we reuse the socket, we do not need to subscribe, but just
@@ -401,7 +404,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 -(void)userDidLogout:(NSNotification *)notification
 {
     [JCSocket unsubscribeToSocketEvents:NULL];          // Disconnect the socket and purge socket session.
-    [JCPhoneManager disconnect];                        // Disconnect the phone manager
+    [[JCPhoneManager sharedManager] disconnect];                        // Disconnect the phone manager
     [JCApiClient cancelAllOperations];                     // Kill any pending client network operations.
     [JCBadgeManager reset];                             // Resets the Badge Manager.
     [self presentLoginViewController:YES];              // Present the login view.
@@ -516,7 +519,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 {
     LOG_Info();
     [JCSocket restart];                 // in case the socket stopped, we restart it.
-    [JCPhoneManager startKeepAlive];
+    [[JCPhoneManager sharedManager] startKeepAlive];
 }
 
 /**
@@ -527,7 +530,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 {
     LOG_Info();
     [JCSocket restart]; // In case the socket stopped, we restart it.
-    [JCPhoneManager stopKeepAlive];
+    [[JCPhoneManager sharedManager] stopKeepAlive];
 }
 
 /**
@@ -617,8 +620,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(didId)) withValue:didId inContext:context];
     if (did) {
         
-        JCUnknownNumber *unknownNumber = [JCUnknownNumber new];
-        unknownNumber.number = fromNumber;
+        JCUnknownNumber *unknownNumber = [JCUnknownNumber unknownNumberWithNumber:fromNumber];
         [SMSMessage downloadMessagesForDID:did toPerson:unknownNumber completion:^(BOOL success, NSError *error) {
             if (success) {
                 if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {

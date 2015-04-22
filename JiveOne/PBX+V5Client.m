@@ -212,8 +212,8 @@ NSString *const kPBXInfoResponseNumberReceiveSMSKey                 = @"receiveS
     }
     
     Line *line = [self lineForJrn:jrn pbx:pbx];
-    line.name        = [data stringValueForKey:kPBXInfoResponseExtensionNameKey];
-    line.extension   = [data stringValueForKey:kPBXInfoResponseExtensionNumberKey];
+    line.name     = [data stringValueForKey:kPBXInfoResponseExtensionNameKey];
+    line.number   = [data stringValueForKey:kPBXInfoResponseExtensionNumberKey];
     
     NSDictionary *mailbox = [data dictionaryForKey:kPBXInfoResponseExtensionMailboxKey];
     if (mailbox) {

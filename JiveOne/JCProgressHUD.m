@@ -53,8 +53,14 @@ static NSInteger JCProgressHUDDuration;
         message = [error localizedFailureReason];
     }
     
-    NSInteger underlyingErrorCode = [self underlyingErrorCodeForError:error];
-    message = [NSString stringWithFormat:@"%@ (%li)", message, (long)underlyingErrorCode];
+    NSError *underlyingError = [self underlyingErrorForError:error];
+    NSString *underlyingFailureReason = [underlyingError localizedFailureReason];
+    if(underlyingFailureReason) {
+        message = [NSString stringWithFormat:@"%@(%li: %@)", NSLocalizedString(message, nil), (long)underlyingError.code, underlyingFailureReason];
+    }
+    else {
+        message = [NSString stringWithFormat:@"%@(%li)", NSLocalizedString(message, nil), (long)underlyingError.code];
+    }
     [JCProgressHUD showErrorWithStatus:message];
 }
 
@@ -96,6 +102,15 @@ static NSInteger JCProgressHUDDuration;
         return [self underlyingErrorCodeForError:underlyingError];
     }
     return error.code;
+}
+
+-(NSError *)underlyingErrorForError:(NSError *)error
+{
+    NSError *underlyingError = [error.userInfo objectForKey:NSUnderlyingErrorKey];
+    if (underlyingError) {
+        return [self underlyingErrorForError:underlyingError];
+    }
+    return error;
 }
 
 @end

@@ -7,13 +7,14 @@
 //
 
 #import "JCConversationGroupsResultsController.h"
-#import "JCAddressBook.h"
+#import "JCPhoneBook.h"
 #import "Message.h"
 #import "SMSMessage.h"
 #import "LocalContact.h"
 
 #import "JCConversationGroup.h"
 #import "SMSMessage+V5Client.h"
+
 
 @interface JCConversationGroupsResultsController ()
 {
@@ -262,7 +263,7 @@
     }
     
     // get names for numbers.
-    [[JCAddressBook sharedAddressBook] formattedNamesForNumbers:numbers
+    [[JCPhoneBook sharedPhoneBook].addressBook formattedNamesForNumbers:numbers
                                       begin:^{
                                           
                                       }

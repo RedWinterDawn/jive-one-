@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "JCPhoneNumberDataSource.h"
+
 #define INVALID_SESSION_ID -1
 
 @class Contact;
@@ -39,9 +41,7 @@ typedef enum {
 
 @interface JCLineSession : NSObject <NSCopying>
 
-@property (nonatomic, strong) Contact *contact;
-@property (nonatomic, strong) NSString *callTitle;
-@property (nonatomic, strong) NSString *callDetail;
+@property (nonatomic, strong) id<JCPhoneNumberDataSource> number;
 
 // State
 @property (nonatomic) JCLineSessionState sessionState;
