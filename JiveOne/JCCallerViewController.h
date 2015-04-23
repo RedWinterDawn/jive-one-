@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet JCCallOptionsView *callOptionsView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *callOptionsViewOriginYConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *callCardCollectionViewOriginYConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *muteBtn;
 @property (weak, nonatomic) IBOutlet UIButton *speakerBtn;
 @property (weak, nonatomic) IBOutlet UILabel *mergeLabel;

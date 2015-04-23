@@ -9,7 +9,18 @@
 #import "JCAppMenuViewController.h"
 #import "JCStoryboardLoaderViewController.h"
 
+#import "JCPhoneManager.h"
+
 @implementation JCAppMenuViewController
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        
+    }
+    return self;
+}
 
 #pragma mark - Navigation
 

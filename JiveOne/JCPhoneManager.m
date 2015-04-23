@@ -46,6 +46,9 @@ NSString *const kJCPhoneManagerRegisteredNotification               = @"phoneMan
 NSString *const kJCPhoneManagerUnregisteredNotification             = @"phoneManagerUnregistered";
 NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneManagerRegistrationFailed";
 
+NSString *const kJCPhoneManagerShowCallsNotification                = @"phoneManagerShowCalls";
+NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneManagerHideCalls";
+
 @interface JCPhoneManager ()<JCSipManagerDelegate, JCCallCardDelegate, JCPhoneAudioManagerDelegate>
 {
     JCPhoneAudioManager *_audioManager;
@@ -537,14 +540,36 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     [self.sipManager pressNumpadButton:numberPadNumber];
 }
 
+-(JCCallerViewController *)createCallerViewController
+{
+    static NSString *callerViewControllerIdentifier = @"CallerViewController";
+    JCCallerViewController *callerViewController = [self.storyboard instantiateViewControllerWithIdentifier:callerViewControllerIdentifier];
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        callerViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        callerViewController.callCardCollectionViewOriginYConstraint.constant = 10;
+        [callerViewController.view setNeedsUpdateConstraints];
+        [callerViewController.view updateConstraintsIfNeeded];
+    }
+    return callerViewController;
+}
+
 -(void)presentCallViewController
 {
     if (_transferConfirmationViewController) {
         [self dismissCallViewControllerAnimated:NO];
     }
     
-    _callViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
+    _callViewController = [self createCallerViewController];
     _callViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    // If we are an iPad, we are showing it modally, centered on the screen, with 10 px border. We
+    // adjust the top margin, and set it to auto size and update constaints before we present it.
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+        _callViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    }
+    
+    // Present it modal. on the iPhone it will be full screen and on the iPad, it will be centered.
     UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     [rootViewController presentViewController:_callViewController animated:YES completion:NULL];
 }
@@ -640,9 +665,17 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     [calls sortUsingDescriptors:@[sortDescriptor]];
     self.calls = calls;
     
-    if(!_callViewController)
-    {
-        [self presentCallViewController];
+    if(!_callViewController) {
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+            if (lineSession.isIncoming) {
+                [self presentCallViewController];
+            } else {
+                _callViewController = [self createCallerViewController];
+                [self postNotificationNamed:kJCPhoneManagerShowCallsNotification];
+            }
+        } else {
+            [self presentCallViewController];
+        }
     } else {
         [_callViewController reload];
     }
@@ -654,8 +687,16 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     
     JCCallCard *callCard = [self callCardForLineSession:lineSession];
     callCard.started = [NSDate date];
+    
     if (_callViewController) {
-        [_callViewController reload];
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+            [_callViewController dismissViewControllerAnimated:YES completion:^{
+                _callViewController = [self createCallerViewController];
+                [self postNotificationNamed:kJCPhoneManagerShowCallsNotification];
+            }];
+        } else {
+            [_callViewController reload];
+        }
     }
 }
 
@@ -686,7 +727,12 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     NSInteger count = self.calls.count;
     if (_callViewController) {
         if (count == 0) {
-            [self dismissCallViewControllerAnimated:YES];
+            if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+                [self postNotificationNamed:kJCPhoneManagerHideCallsNotification];
+                _callViewController = nil;
+            } else  {
+                [self dismissCallViewControllerAnimated:YES];
+            }
         } else {
             [_callViewController reload];
         }

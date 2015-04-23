@@ -10,4 +10,6 @@
 
 @interface JCSplitViewController : UISplitViewController
 
+@property (weak, nonatomic) UISplitViewController *parentSplitController;
+
 @end

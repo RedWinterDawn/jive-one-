@@ -23,6 +23,9 @@
     return UIStatusBarStyleLightContent;
 }
 
-
+-(UISplitViewController *)parentSplitController
+{
+    return self.splitViewController;
+}
 
 @end
