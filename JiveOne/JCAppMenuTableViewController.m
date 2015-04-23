@@ -10,26 +10,24 @@
 #import "JCStoryboardLoaderViewController.h"
 
 #import "JCPhoneManager.h"
+#import "PBX.h"
 
 @implementation JCAppMenuTableViewController
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        
-    }
-    return self;
-}
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self cell:self.messageCell setHidden:YES];
-    [self reloadDataAnimated:NO];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:self.authenticationManager];
+    
+    
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 #pragma mark - Navigation
 
@@ -50,6 +48,15 @@
         UIColor *barColor = navigationController.navigationBar.barTintColor;
         self.navigationController.navigationBar.barTintColor = barColor;
     }
+}
+
+-(void)lineChanged:(NSNotification *)notification
+{
+    [self cell:self.messageCell setHidden:!self.authenticationManager.pbx.smsEnabled];
+    [self reloadDataAnimated:NO];
+    
+    CGSize size = self.tableView.contentSize;
+    [_delegate appMenuTableViewController:self willChangeToSize:size];
 }
 
 @end
