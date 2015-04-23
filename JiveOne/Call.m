@@ -23,16 +23,17 @@ NSString *const kCallEntityName = @"Call";
 
 +(void)addCallEntity:(NSString *)entityName line:(Line *)line lineSession:(JCLineSession *)session read:(BOOL)read
 {
+    id <JCPhoneNumberDataSource> number = session.number;
+    
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         Line *localLine = (Line *)[localContext objectWithID:line.objectID];
         Call *call = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:localContext];
         call.date   = [NSDate date];
-        call.name   = session.number.name;
-        call.number = session.number.dialableNumber;
+        call.name   = number.name;
+        call.number = number.dialableNumber;
         call.read   = read;
         call.line   = localLine;
         
-        id <JCPhoneNumberDataSource> number = session.number;
         if (number && [number isKindOfClass:[Contact class]]) {
             call.contact = (Contact *)[localContext objectWithID:((Contact *)number).objectID];
         }
