@@ -728,8 +728,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     if (_callViewController) {
         if (count == 0) {
             if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-                [self postNotificationNamed:kJCPhoneManagerHideCallsNotification];
-                _callViewController = nil;
+                if (session.isIncoming) {
+                    [self dismissCallViewControllerAnimated:YES];
+                } else {
+                    [self postNotificationNamed:kJCPhoneManagerHideCallsNotification];
+                    _callViewController = nil;
+                }
             } else  {
                 [self dismissCallViewControllerAnimated:YES];
             }
@@ -743,11 +747,6 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     if ((state == UIApplicationStateBackground || state == UIApplicationStateInactive) && count == 0) {
         [self.sipManager startKeepAwake];
     }
-}
-
--(void)sipHandler:(JCSipManager *)sipHandler didMissLineSession:(JCLineSession *)lineSession
-{
-    
 }
 
 -(void)sipHandler:(JCSipManager *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions
