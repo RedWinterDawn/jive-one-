@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rkO-3x-CVb">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -31,7 +30,7 @@
         <!--My Jive-->
         <scene sceneID="SiX-z1-ut9">
             <objects>
-                <tableViewController clearsSelectionOnViewWillAppear="NO" id="9Qs-X9-Kt2" customClass="JCAppMenuViewController" sceneMemberID="viewController">
+                <tableViewController clearsSelectionOnViewWillAppear="NO" id="9Qs-X9-Kt2" customClass="JCAppMenuTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="x2A-Ac-405">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="240"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -388,6 +387,12 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="My Jive" id="gNr-PU-cQt"/>
+                    <connections>
+                        <outlet property="contactsCell" destination="i6m-tg-cnR" id="iPK-xO-HVW"/>
+                        <outlet property="messageCell" destination="E5b-Qx-7Bq" id="A38-pg-Ypi"/>
+                        <outlet property="phoneCell" destination="7s6-jg-6Tz" id="Lia-9B-HVE"/>
+                        <outlet property="settingsViewCell" destination="ct1-IW-Jz7" id="Zai-Mh-fjb"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pJX-g9-z8C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -799,8 +804,8 @@
         <image name="settings_white" width="25" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sd0-Wp-fmg"/>
-        <segue reference="M1H-WK-bHT"/>
+        <segue reference="rER-Yg-Mxz"/>
+        <segue reference="A4u-Kc-AqH"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

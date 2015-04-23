@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCAppMenuViewController.h"
+#import "JCAppMenuTableViewController.h"
 #import "JCStoryboardLoaderViewController.h"
 
 #import "JCPhoneManager.h"
 
-@implementation JCAppMenuViewController
+@implementation JCAppMenuTableViewController
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
@@ -21,6 +21,15 @@
     }
     return self;
 }
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self cell:self.messageCell setHidden:YES];
+    [self reloadDataAnimated:NO];
+}
+
 
 #pragma mark - Navigation
 
@@ -40,9 +49,6 @@
         UINavigationController *navigationController = (UINavigationController *)viewController;
         UIColor *barColor = navigationController.navigationBar.barTintColor;
         self.navigationController.navigationBar.barTintColor = barColor;
-//        self.splitViewController.view.backgroundColor = barColor;
-//        viewController.splitViewController.view.backgroundColor = barColor;
-//        viewController.navigationController.view.backgroundColor = barColor;
     }
 }
 

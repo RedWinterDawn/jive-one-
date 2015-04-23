@@ -98,7 +98,7 @@
 		5D25F8201AE5895E00981DB6 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8221AE5895E00981DB6 /* Main_iPad.storyboard */; };
 		5D25F82E1AE5A7DA00981DB6 /* JCSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F82D1AE5A7DA00981DB6 /* JCSplitViewController.m */; };
 		5D25F8311AE5ABB500981DB6 /* JCTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8301AE5ABB500981DB6 /* JCTableViewController.m */; };
-		5D25F8411AE6872E00981DB6 /* JCAppMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8401AE6872E00981DB6 /* JCAppMenuViewController.m */; };
+		5D25F8411AE6872E00981DB6 /* JCAppMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8401AE6872E00981DB6 /* JCAppMenuTableViewController.m */; };
 		5D25F8441AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8431AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m */; };
 		5D25F8461AE6AE2F00981DB6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8451AE6AE2F00981DB6 /* Settings.storyboard */; };
 		5D25F8481AE6D95800981DB6 /* Phone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8471AE6D95800981DB6 /* Phone.storyboard */; };
@@ -478,8 +478,8 @@
 		5D25F82D1AE5A7DA00981DB6 /* JCSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSplitViewController.m; sourceTree = "<group>"; };
 		5D25F82F1AE5ABB500981DB6 /* JCTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTableViewController.h; sourceTree = "<group>"; };
 		5D25F8301AE5ABB500981DB6 /* JCTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTableViewController.m; sourceTree = "<group>"; };
-		5D25F83F1AE6872E00981DB6 /* JCAppMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppMenuViewController.h; sourceTree = "<group>"; };
-		5D25F8401AE6872E00981DB6 /* JCAppMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppMenuViewController.m; sourceTree = "<group>"; };
+		5D25F83F1AE6872E00981DB6 /* JCAppMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppMenuTableViewController.h; sourceTree = "<group>"; };
+		5D25F8401AE6872E00981DB6 /* JCAppMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppMenuTableViewController.m; sourceTree = "<group>"; };
 		5D25F8421AE6A81F00981DB6 /* JCStoryboardLoaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStoryboardLoaderViewController.h; sourceTree = "<group>"; };
 		5D25F8431AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStoryboardLoaderViewController.m; sourceTree = "<group>"; };
 		5D25F8451AE6AE2F00981DB6 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
@@ -1317,8 +1317,8 @@
 				5D25F82D1AE5A7DA00981DB6 /* JCSplitViewController.m */,
 				5D3F1AE21AE7FEE200C59A63 /* JCAppMenuSplitViewController.h */,
 				5D3F1AE31AE7FEE200C59A63 /* JCAppMenuSplitViewController.m */,
-				5D25F83F1AE6872E00981DB6 /* JCAppMenuViewController.h */,
-				5D25F8401AE6872E00981DB6 /* JCAppMenuViewController.m */,
+				5D25F83F1AE6872E00981DB6 /* JCAppMenuTableViewController.h */,
+				5D25F8401AE6872E00981DB6 /* JCAppMenuTableViewController.m */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -2115,7 +2115,7 @@
 				5D7DD3671A7B004B00B9FF4D /* Message.m in Sources */,
 				5D490E761A93BCA5004B62C0 /* JCProgressHUD.m in Sources */,
 				5D7DD3681A7B004B00B9FF4D /* SMSMessage.m in Sources */,
-				5D25F8411AE6872E00981DB6 /* JCAppMenuViewController.m in Sources */,
+				5D25F8411AE6872E00981DB6 /* JCAppMenuTableViewController.m in Sources */,
 				5D490E641A8D29BD004B62C0 /* Extension.m in Sources */,
 				5D7DD3691A7B004B00B9FF4D /* Conversation.m in Sources */,
 				5D3F1AE41AE7FEE200C59A63 /* JCAppMenuSplitViewController.m in Sources */,
