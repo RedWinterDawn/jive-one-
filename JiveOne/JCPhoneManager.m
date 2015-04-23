@@ -844,7 +844,11 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 -(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number name:(NSString *)name
 {
     Line *line = (Line *)self.sipManager.provisioning;
-    return [self.phoneBook phoneNumberForName:name number:number forPbx:line.pbx excludingLine:line];
+    id<JCPhoneNumberDataSource> phoneNumber = [self.phoneBook phoneNumberForName:name number:number forPbx:line.pbx excludingLine:line];
+    if (!phoneNumber) {
+        phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
+    }
+    return phoneNumber;
 }
 
 #pragma mark - Getters -
