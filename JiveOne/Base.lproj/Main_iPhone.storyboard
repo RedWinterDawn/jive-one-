@@ -284,8 +284,8 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rwC-Sz-c4P" id="lfj-VK-5vJ">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="3:03 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zmu-2B-dTw">
-                                            <rect key="frame" x="228" y="8" width="84" height="13"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3:03 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zmu-2B-dTw">
+                                            <rect key="frame" x="257" y="8" width="55" height="13"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="13" id="GAA-to-HJf"/>
                                                 <constraint firstAttribute="width" constant="55" id="JDQ-7e-6w7"/>
@@ -294,8 +294,8 @@
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Contact Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAo-Ua-oC3">
-                                            <rect key="frame" x="8" y="8" width="218" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAo-Ua-oC3">
+                                            <rect key="frame" x="8" y="8" width="241" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="c9Y-mW-dz7"/>
                                             </constraints>
@@ -905,7 +905,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="60" id="D2t-fp-QtY" customClass="JCConversationTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="ConversationCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="60" id="D2t-fp-QtY" customClass="JCConversationTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D2t-fp-QtY" id="W9i-Ew-j3S">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -1760,8 +1760,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u9R-oi-zj0" userLabel="LineSelectorSubView" customClass="JCRoundedView">
                                 <rect key="frame" x="20" y="189" width="280" height="126"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="Select a line extension to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ALp-8Y-kom">
-                                        <rect key="frame" x="0.0" y="20" width="300" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Select a line extension to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ALp-8Y-kom">
+                                        <rect key="frame" x="0.0" y="20" width="280" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="GsS-7T-d1E"/>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="70" id="kjV-D4-9VE"/>
@@ -1770,14 +1770,14 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="down_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="qx4-PQ-K1f">
-                                        <rect key="frame" x="250" y="61" width="40" height="40"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="qx4-PQ-K1f">
+                                        <rect key="frame" x="240" y="61" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="qx4-PQ-K1f" secondAttribute="height" multiplier="1:1" id="Al6-Mt-NNs"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gRx-8z-M5N">
-                                        <rect key="frame" x="10" y="61" width="280" height="40"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gRx-8z-M5N">
+                                        <rect key="frame" x="10" y="61" width="240" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="40" id="MUQ-q6-7oy"/>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="60" id="z0u-xv-TbL"/>
@@ -1798,8 +1798,8 @@
                                     <constraint firstItem="ALp-8Y-kom" firstAttribute="leading" secondItem="u9R-oi-zj0" secondAttribute="leading" id="JD1-AF-LNv"/>
                                     <constraint firstAttribute="height" constant="126" id="KJ0-Kl-bmI"/>
                                     <constraint firstItem="ALp-8Y-kom" firstAttribute="top" secondItem="u9R-oi-zj0" secondAttribute="top" constant="20" id="Meg-gh-k1f"/>
-                                    <constraint firstAttribute="trailing" secondItem="qx4-PQ-K1f" secondAttribute="trailing" constant="10" id="T14-rW-M9g"/>
-                                    <constraint firstAttribute="trailing" secondItem="gRx-8z-M5N" secondAttribute="trailing" constant="10" id="dGc-HX-WS6"/>
+                                    <constraint firstAttribute="trailing" secondItem="qx4-PQ-K1f" secondAttribute="trailing" id="T14-rW-M9g"/>
+                                    <constraint firstAttribute="trailing" secondItem="gRx-8z-M5N" secondAttribute="trailing" constant="30" id="dGc-HX-WS6"/>
                                     <constraint firstItem="gRx-8z-M5N" firstAttribute="top" secondItem="ALp-8Y-kom" secondAttribute="bottom" constant="20" id="dWO-Iy-Ijs"/>
                                     <constraint firstItem="qx4-PQ-K1f" firstAttribute="height" secondItem="gRx-8z-M5N" secondAttribute="height" id="eRs-ep-d1r"/>
                                     <constraint firstAttribute="centerX" secondItem="ALp-8Y-kom" secondAttribute="centerX" id="f92-zk-tAZ"/>
@@ -1850,8 +1850,8 @@
                                             <constraint firstAttribute="trailing" secondItem="ZhL-2w-2Q2" secondAttribute="trailing" constant="16" id="wzV-1I-tB6"/>
                                         </constraints>
                                     </view>
-                                    <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GHJ-Ok-PFS">
-                                        <rect key="frame" x="0.0" y="55" width="320" height="180"/>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GHJ-Ok-PFS">
+                                        <rect key="frame" x="0.0" y="45" width="320" height="180"/>
                                         <connections>
                                             <outlet property="dataSource" destination="e8o-Sx-Cyb" id="9QB-yb-zhv"/>
                                             <outlet property="delegate" destination="e8o-Sx-Cyb" id="ceb-Gq-db9"/>
