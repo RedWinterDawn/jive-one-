@@ -109,7 +109,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Drm-io-gDF" kind="showDetail" id="rER-Yg-Mxz"/>
+                                            <segue destination="Drm-io-gDF" kind="showDetail" identifier="Phone" id="rER-Yg-Mxz"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="E5b-Qx-7Bq" customClass="JCTableViewCell">
@@ -197,7 +197,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="TGY-rE-dxT" kind="showDetail" id="A4u-Kc-AqH"/>
+                                            <segue destination="TGY-rE-dxT" kind="showDetail" identifier="Messages" id="A4u-Kc-AqH"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="i6m-tg-cnR" customClass="JCTableViewCell">
@@ -375,7 +375,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="VCr-Pz-QrK" kind="showDetail" id="wN0-Qz-hmx"/>
+                                            <segue destination="VCr-Pz-QrK" kind="showDetail" identifier="Settings" id="wN0-Qz-hmx"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
