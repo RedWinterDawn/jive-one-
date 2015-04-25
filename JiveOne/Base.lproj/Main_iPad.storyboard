@@ -289,7 +289,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="wxB-AX-6Kz" kind="showDetail" id="38B-Jh-z8u"/>
+                                            <segue destination="wxB-AX-6Kz" kind="showDetail" identifier="Contacts" id="38B-Jh-z8u"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ct1-IW-Jz7" customClass="JCTableViewCell">
