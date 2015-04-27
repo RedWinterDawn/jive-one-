@@ -228,6 +228,7 @@
 		5DB0BFCA1A00AB29006737D7 /* JCRecentLineEventsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFC91A00AB29006737D7 /* JCRecentLineEventsTableViewController.m */; };
 		5DB0BFCD1A00BAB3006737D7 /* JCVoicemailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFCC1A00BAB3006737D7 /* JCVoicemailCell.m */; };
 		5DB0BFD01A013982006737D7 /* JCRecentEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFCF1A013982006737D7 /* JCRecentEventCell.m */; };
+		5DB10EF81AEE9E9D001CC686 /* UIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB10EF71AEE9E9D001CC686 /* UIViewController+Additions.m */; };
 		5DBABCD41A283DA500B09783 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBABCD31A283DA500B09783 /* NSString+Additions.m */; };
 		5DBBDCC319DCB29100A4DB96 /* JCCallCardCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC219DCB29100A4DB96 /* JCCallCardCollectionViewController.m */; };
 		5DBBDCC619DD9A4100A4DB96 /* JCPhoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */; };
@@ -674,6 +675,8 @@
 		5DB0BFCC1A00BAB3006737D7 /* JCVoicemailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailCell.m; sourceTree = "<group>"; };
 		5DB0BFCE1A013982006737D7 /* JCRecentEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRecentEventCell.h; sourceTree = "<group>"; };
 		5DB0BFCF1A013982006737D7 /* JCRecentEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRecentEventCell.m; sourceTree = "<group>"; };
+		5DB10EF61AEE9E9D001CC686 /* UIViewController+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Additions.h"; sourceTree = "<group>"; };
+		5DB10EF71AEE9E9D001CC686 /* UIViewController+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Additions.m"; sourceTree = "<group>"; };
 		5DBABCD21A283DA500B09783 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
 		5DBABCD31A283DA500B09783 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
 		5DBBDCC119DCB29100A4DB96 /* JCCallCardCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallCardCollectionViewController.h; sourceTree = "<group>"; };
@@ -1206,6 +1209,8 @@
 				5DBABCD31A283DA500B09783 /* NSString+Additions.m */,
 				5D02750E1A3F81FF0077A37B /* NSData+AESAddition.h */,
 				5D02750F1A3F81FF0077A37B /* NSData+AESAddition.m */,
+				5DB10EF61AEE9E9D001CC686 /* UIViewController+Additions.h */,
+				5DB10EF71AEE9E9D001CC686 /* UIViewController+Additions.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1789,8 +1794,6 @@
 			children = (
 				F8B62E4219D9F1E400AF98D3 /* JCDialerViewController.h */,
 				F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */,
-				278E858419EC6B6E0087649D /* VideoViewController.h */,
-				278E858519EC6B6E0087649D /* VideoViewController.mm */,
 				5DA5A1AD19DAF91400968F7D /* JCCallerViewController.h */,
 				5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */,
 				5DBBDCC119DCB29100A4DB96 /* JCCallCardCollectionViewController.h */,
@@ -1803,6 +1806,8 @@
 				5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */,
 				F84A087719DF38C8003476E6 /* JCTransferConfirmationViewController.h */,
 				F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */,
+				278E858419EC6B6E0087649D /* VideoViewController.h */,
+				278E858519EC6B6E0087649D /* VideoViewController.mm */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2170,6 +2175,7 @@
 				5D7339AA1A03FF9700339DC6 /* JCBadgeManager.m in Sources */,
 				5D0275101A3F81FF0077A37B /* NSData+AESAddition.m in Sources */,
 				5D34446519F02F1C00315230 /* JCCurrentCallCardViewCell.m in Sources */,
+				5DB10EF81AEE9E9D001CC686 /* UIViewController+Additions.m in Sources */,
 				5D112DDA1A4094340097223C /* JCAuthenticationKeychain.m in Sources */,
 				5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */,
 				5D8A35761AB76120009BD5E6 /* JCVoicemailManager.m in Sources */,
