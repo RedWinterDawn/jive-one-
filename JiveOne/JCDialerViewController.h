@@ -6,7 +6,8 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
 #import "JCFormattedPhoneNumberLabel.h"
 #import "JCPhoneNumberDataSource.h"
 
@@ -22,15 +23,12 @@
 
 -(IBAction)numPadPressed:(id)sender;
 -(IBAction)numPadLogPress:(id)sender;
-
 -(IBAction)initiateCall:(id)sender;
-
 -(IBAction)backspace:(id)sender;
 -(IBAction)clear:(id)sender;
 
 -(id <JCPhoneNumberDataSource>)objectAtIndexPath:(NSIndexPath *)indexPath;
 
 +(NSString *)characterFromNumPadTag:(NSInteger)tag;
-
 
 @end

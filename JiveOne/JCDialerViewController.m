@@ -8,8 +8,6 @@
 
 #import "JCDialerViewController.h"
 
-#import "JCCallerViewController.h"
-
 // Managers
 #import "JCPhoneManager.h"
 #import "JCAppSettings.h"
@@ -23,6 +21,9 @@
 // Managed Objects
 #import "OutgoingCall.h"
 #import "LocalContact.h"
+
+// Controllers
+#import "JCCallerViewController.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -54,8 +55,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegisteringNotification object:phoneManager];
     [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegistrationFailureNotification object:phoneManager];
     
-    
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+    if (self.isTablet) {
         [center addObserver:self selector:@selector(onActiveCall) name:kJCPhoneManagerShowCallsNotification object:phoneManager];
         [center addObserver:self selector:@selector(onInactiveCall) name:kJCPhoneManagerHideCallsNotification object:phoneManager];
         if (phoneManager.isActiveCall) {
