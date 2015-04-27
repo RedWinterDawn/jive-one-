@@ -170,7 +170,7 @@
     NSPredicate *predicate = [self predicateForName:name
                                             nameKey:NSStringFromSelector(@selector(name))
                                              number:number
-                                          numberKey:NSStringFromSelector(@selector(number))];
+                                          numberKey:NSStringFromSelector(@selector(dialableNumber))];
     
     // Search the local contacts history stored in core data, to see if it tis a local contact which
     // we already know, and have a history with, so we can link it to that history.
@@ -180,11 +180,13 @@
 -(NSPredicate *)predicateForName:(NSString *)name nameKey:(NSString *)nameKey number:(NSString *)number numberKey:(NSString *)numberKey
 {
     static NSString *predicateString = @"%K CONTAINS[cd] %@";
+    static NSString *predicateNumberString = @"%K = %@";
+    
     if (!name) {
-        return [NSPredicate predicateWithFormat:predicateString, numberKey, number.numericStringValue];
+        return [NSPredicate predicateWithFormat:predicateNumberString, numberKey, number];
     }
     
-    NSArray *predicates = @[[NSPredicate predicateWithFormat:predicateString, numberKey, number.numericStringValue],
+    NSArray *predicates = @[[NSPredicate predicateWithFormat:predicateNumberString, numberKey, number],
                             [NSPredicate predicateWithFormat:predicateString, nameKey, name]];
     
     return [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
