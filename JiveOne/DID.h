@@ -8,7 +8,7 @@
 
 #import "JCPhoneNumberManagedObject.h"
 
-@class PBX, SMSMessage;
+@class PBX, SMSMessage, BlockedContact;
 
 @interface DID : JCPhoneNumberManagedObject
 
@@ -26,6 +26,8 @@
 // Relationships
 @property (nonatomic, retain) PBX *pbx;
 @property (nonatomic, retain) NSSet *smsMessages;
+@property (nonatomic, retain) NSSet *blockedContacts;
+
 @end
 
 @interface DID (CoreDataGeneratedAccessors)
@@ -34,5 +36,10 @@
 - (void)removeSmsMessagesObject:(SMSMessage *)value;
 - (void)addSmsMessages:(NSSet *)values;
 - (void)removeSmsMessages:(NSSet *)values;
+
+- (void)addBlockedContactsObject:(BlockedContact *)value;
+- (void)removeBlockedContactsObject:(BlockedContact *)value;
+- (void)addBlockedContacts:(NSSet *)values;
+- (void)removeBlockedContacts:(NSSet *)values;
 
 @end

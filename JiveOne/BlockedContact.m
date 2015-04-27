@@ -10,7 +10,6 @@
 #import "DID.h"
 #import "LocalContact.h"
 
-
 @implementation BlockedContact
 
 @dynamic did;
