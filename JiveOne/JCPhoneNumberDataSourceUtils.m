@@ -115,6 +115,7 @@
     if (!name){
         return nil;
     }
+    
     NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName: color };
     NSMutableAttributedString *attributedStringText = [[NSMutableAttributedString alloc] initWithString:name attributes:attrs];
     if (!keyword || !keyword.isNumeric) {
