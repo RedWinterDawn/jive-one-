@@ -43,6 +43,13 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     self.presenceEnabled.on = settings.presenceEnabled;
     [self cell:self.enablePreasenceCell setHidden:!self.authenticationManager.line.pbx.isV5];
     [self cell:self.defaultDIDCell setHidden:!self.authenticationManager.pbx.smsEnabled];
+    
+    #ifndef DEBUG
+    if (self.debugCell) {
+        [self cell:self.debugCell setHidden:YES];
+    }
+    #endif
+    
     [self reloadDataAnimated:NO];
 }
 
