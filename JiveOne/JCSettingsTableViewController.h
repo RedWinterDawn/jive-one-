@@ -16,18 +16,17 @@
 @property (weak, nonatomic) IBOutlet UILabel *buildLabel;
 @property (weak, nonatomic) IBOutlet UILabel *installationIdentifier;
 @property (weak, nonatomic) IBOutlet UILabel *uuid;
-@property (weak, nonatomic) IBOutlet UISwitch *wifiOnly;
-@property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
-@property (weak, nonatomic) IBOutlet UITableViewCell *enablePreasenceCell;
 @property (weak, nonatomic) IBOutlet UILabel *smsUserDefaultNumber;
 @property (weak, nonatomic) IBOutlet UITableViewCell *defaultDIDCell;
-
+@property (weak, nonatomic) IBOutlet UITableViewCell *enablePreasenceCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *debugCell;
+@property (weak, nonatomic) IBOutlet UISwitch *wifiOnly;
+@property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
 
 -(IBAction)leaveFeedback:(id)sender;
 -(IBAction)logout:(id)sender;
 -(IBAction)toggleWifiOnly:(id)sender;
 -(IBAction)togglePresenceEnabled:(id)sender;
 -(IBAction)showDebug:(id)sender;
-
 
 @end
