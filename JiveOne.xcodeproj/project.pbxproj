@@ -214,6 +214,7 @@
 		5DB0BFCA1A00AB29006737D7 /* JCRecentLineEventsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFC91A00AB29006737D7 /* JCRecentLineEventsTableViewController.m */; };
 		5DB0BFCD1A00BAB3006737D7 /* JCVoicemailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFCC1A00BAB3006737D7 /* JCVoicemailCell.m */; };
 		5DB0BFD01A013982006737D7 /* JCRecentEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFCF1A013982006737D7 /* JCRecentEventCell.m */; };
+		5DB81B571AEED13400D707DF /* BlockedContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB81B561AEED13400D707DF /* BlockedContact.m */; };
 		5DBABCD41A283DA500B09783 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBABCD31A283DA500B09783 /* NSString+Additions.m */; };
 		5DBBDCC319DCB29100A4DB96 /* JCCallCardCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC219DCB29100A4DB96 /* JCCallCardCollectionViewController.m */; };
 		5DBBDCC619DD9A4100A4DB96 /* JCPhoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */; };
@@ -636,6 +637,8 @@
 		5DB0BFCC1A00BAB3006737D7 /* JCVoicemailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailCell.m; sourceTree = "<group>"; };
 		5DB0BFCE1A013982006737D7 /* JCRecentEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRecentEventCell.h; sourceTree = "<group>"; };
 		5DB0BFCF1A013982006737D7 /* JCRecentEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRecentEventCell.m; sourceTree = "<group>"; };
+		5DB81B551AEED13400D707DF /* BlockedContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockedContact.h; sourceTree = "<group>"; };
+		5DB81B561AEED13400D707DF /* BlockedContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockedContact.m; sourceTree = "<group>"; };
 		5DBABCD21A283DA500B09783 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
 		5DBABCD31A283DA500B09783 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
 		5DBBDCC119DCB29100A4DB96 /* JCCallCardCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallCardCollectionViewController.h; sourceTree = "<group>"; };
@@ -988,6 +991,8 @@
 				5D490E691A8D4DB4004B62C0 /* LocalContact.m */,
 				5D241FD21A382241008B498A /* User+Custom.h */,
 				5D241FD31A382241008B498A /* User+Custom.m */,
+				5DB81B551AEED13400D707DF /* BlockedContact.h */,
+				5DB81B561AEED13400D707DF /* BlockedContact.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -2015,6 +2020,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D8198F31AC1F2160057FDDA /* JCDebugDIDTableViewController.m in Sources */,
+				5DB81B571AEED13400D707DF /* BlockedContact.m in Sources */,
 				5D7DD3671A7B004B00B9FF4D /* Message.m in Sources */,
 				5D490E761A93BCA5004B62C0 /* JCProgressHUD.m in Sources */,
 				5D7DD3681A7B004B00B9FF4D /* SMSMessage.m in Sources */,
