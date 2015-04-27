@@ -59,7 +59,6 @@ NSString *const kDIDReceiveSMSAttribute     = @"receiveSMS";
     return [self boolValueFromPrimitiveValueForKey:kDIDUserDefaultAttribute];
 }
 
-
 -(BOOL)canMakeCall
 {
     return [self boolValueFromPrimitiveValueForKey:kDIDMakeCallAttribute];
