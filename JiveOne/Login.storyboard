@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="maa-ca-aIe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="maa-ca-aIe">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -166,7 +166,7 @@
                 <customObject id="Jqw-5s-VBD" customClass="JCStyleKit"/>
                 <tapGestureRecognizer id="PIs-tj-uIC">
                     <connections>
-                        <segue destination="6WK-JS-FzR" kind="modal" identifier="TCSegue" modalPresentationStyle="formSheet" modalTransitionStyle="coverVertical" id="J9I-ob-4rs"/>
+                        <segue destination="6WK-JS-FzR" kind="presentation" identifier="TCSegue" id="J9I-ob-4rs"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -287,8 +287,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nDH-nW-qcu" userLabel="LineSelectorSubView" customClass="JCRoundedView">
                                 <rect key="frame" x="100" y="205" width="400" height="126"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="Select a line extension to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rsq-9f-ILa">
-                                        <rect key="frame" x="0.0" y="20" width="300" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Select a line extension to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rsq-9f-ILa">
+                                        <rect key="frame" x="0.0" y="20" width="400" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="70" id="1kN-tq-GrJ"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="6nz-De-aLE"/>
@@ -297,14 +297,14 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="down_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="1bf-bk-Quc">
-                                        <rect key="frame" x="250" y="61" width="40" height="40"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="1bf-bk-Quc">
+                                        <rect key="frame" x="350" y="61" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="1bf-bk-Quc" secondAttribute="height" multiplier="1:1" id="33N-Y9-Pdx"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6C-sT-Bui">
-                                        <rect key="frame" x="10" y="61" width="280" height="40"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6C-sT-Bui">
+                                        <rect key="frame" x="10" y="61" width="380" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="40" id="M1n-de-W9t"/>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="60" id="d4o-vL-hcn"/>
@@ -377,8 +377,8 @@
                                             <constraint firstAttribute="height" constant="40" id="qC7-v1-4F3"/>
                                         </constraints>
                                     </view>
-                                    <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RvS-1Y-EcC">
-                                        <rect key="frame" x="0.0" y="55" width="600" height="180"/>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RvS-1Y-EcC">
+                                        <rect key="frame" x="0.0" y="45" width="600" height="180"/>
                                         <connections>
                                             <outlet property="dataSource" destination="Ahq-xt-Awq" id="1ol-CS-tbh"/>
                                             <outlet property="delegate" destination="Ahq-xt-Awq" id="mn1-ux-k8u"/>
