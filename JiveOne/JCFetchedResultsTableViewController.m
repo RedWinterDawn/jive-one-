@@ -7,7 +7,7 @@
 //
 
 #import "JCFetchedResultsTableViewController.h"
-#import <MagicalRecord/MagicalRecord.h>
+#import <MagicalRecord/CoreData+MagicalRecord.h>
 #import "JCTableViewCell.h"
 
 @interface JCFetchedResultsTableViewController ()
@@ -169,12 +169,9 @@
     if ([object isKindOfClass:[NSManagedObject class]])
     {
         NSManagedObject *managedObject = (NSManagedObject *)object;
-        [managedObject.managedObjectContext deleteObject:object];
-        
-        // Save the context.
-        __autoreleasing NSError *error = nil;
-        if (![managedObject.managedObjectContext save:&error])
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            [localContext deleteObject:[localContext objectWithID:managedObject.objectID]];
+        }];
     }
 }
 
@@ -188,7 +185,6 @@
     [self configureCell:cell withObject:object];
     return cell;
 }
-
 
 #pragma mark - Delegate Handlers -
 
