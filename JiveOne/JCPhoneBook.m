@@ -170,7 +170,7 @@
     NSPredicate *predicate = [self predicateForName:name
                                             nameKey:NSStringFromSelector(@selector(name))
                                              number:number
-                                          numberKey:NSStringFromSelector(@selector(dialableNumber))];
+                                          numberKey:NSStringFromSelector(@selector(number))];
     
     // Search the local contacts history stored in core data, to see if it tis a local contact which
     // we already know, and have a history with, so we can link it to that history.
