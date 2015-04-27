@@ -19,9 +19,11 @@
 #import "User.h"
 #import "Line.h"
 
-NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please describe any issues you are experiencing :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@  <br> ";
+NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedback :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@ <br> Domain : %@  <br> Carrier : %@ <br> Connection Type : %@ <br> ";
 
 @interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate>
+
+@property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
 
 @end
 
@@ -86,6 +88,14 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     }
 }
 
+-(AFNetworkReachabilityManager *)networkReachabilityManager
+{
+    if (!_networkReachabilityManager) {
+        _networkReachabilityManager = [AFNetworkReachabilityManager sharedManager];
+    }
+    return _networkReachabilityManager;
+}
+
 #pragma mark - IBActions -
 
 -(IBAction)leaveFeedback:(id)sender
@@ -98,6 +108,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         
         //get device specs
         JCAuthenticationManager *authenticationManager = self.authenticationManager;
+       
         NSBundle *bundle            = [NSBundle mainBundle];
         UIDevice *currentDevice     = [UIDevice currentDevice];
         NSString *model             = [currentDevice platformType];
@@ -108,10 +119,33 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         NSString * pbx              = authenticationManager.line.pbx.displayName;
         NSString *user              = authenticationManager.line.pbx.user.jiveUserId;
         NSString *line              = authenticationManager.line.number;
+        NSString *domain        = authenticationManager.line.pbx.domain;
+        NSString *carrier          = [currentDevice defaultCarrier];
         
-        NSString *bodyTemplate = [NSString stringWithFormat:kJCSettingsTableViewControllerFeebackMessage, model, systemVersion, appVersion, country, uuid, pbx, user, line];
+        NSString *currentConection =  [self networkType];
+        
+        NSString *bodyTemplate = [NSString stringWithFormat:kJCSettingsTableViewControllerFeebackMessage, model, systemVersion, appVersion, country, uuid, pbx, user, line, domain, carrier, currentConection];
         [mailViewController setMessageBody:bodyTemplate isHTML:YES]; 
         [self presentViewController:mailViewController animated:YES completion:nil];
+    }
+}
+
+-(NSString *)networkType
+{
+    AFNetworkReachabilityStatus status = self.networkReachabilityManager.networkReachabilityStatus;
+    switch (status) {
+        case -1:
+            return (@"Unreachable");
+            break;
+        case 1:
+            return (@"WAN");
+            break;
+        case 2:
+            return (@"Wifi");
+            break;
+        default:
+            return (@"Network Unobtainable");
+            break;
     }
 }
 

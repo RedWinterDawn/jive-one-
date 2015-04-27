@@ -112,6 +112,10 @@
 +(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
     NSString *name = phoneNumber.name;
+    if (!name){
+        return nil;
+    }
+    
     NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName: color };
     NSMutableAttributedString *attributedStringText = [[NSMutableAttributedString alloc] initWithString:name attributes:attrs];
     if (!keyword || !keyword.isNumeric) {

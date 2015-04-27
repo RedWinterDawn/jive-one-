@@ -109,17 +109,15 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 -(void)unregister
 {
-    if(_registered)
-    {
-        __autoreleasing NSError *error;
-        for (JCLineSession *lineSession in _lineSessions) {
-            [self hangUpSession:lineSession error:&error];
-        }
-        [_mPortSIPSDK unRegisterServer];
-        [_mPortSIPSDK unInitialize];
-        _registered = FALSE;
-        [_delegate sipHandlerDidUnregister:self];
+    __autoreleasing NSError *error;
+    for (JCLineSession *lineSession in _lineSessions) {
+        [self hangUpSession:lineSession error:&error];
     }
+    
+    [_mPortSIPSDK unRegisterServer];
+    [_mPortSIPSDK unInitialize];
+    _registered = FALSE;
+    [_delegate sipHandlerDidUnregister:self];
 }
 
 #pragma mark Private

@@ -14,6 +14,7 @@
 #import "PBX.h"
 #import "LocalContact.h"
 #import "Extension.h"
+#import "JCVoicemailNumber.h"
 
 @interface JCPhoneBook () {
     JCAddressBook *_addressBook;
@@ -49,6 +50,10 @@
     // We must at least have a number. If we do not have a number, we return nil.
     if (!number) {
         return nil;
+    }
+    
+    if ([number isEqual:@"*99"]) {
+        return [JCVoicemailNumber new];
     }
     
     // Check if the number is the extension for a jive contact. Since extensions are unique to a
@@ -175,11 +180,13 @@
 -(NSPredicate *)predicateForName:(NSString *)name nameKey:(NSString *)nameKey number:(NSString *)number numberKey:(NSString *)numberKey
 {
     static NSString *predicateString = @"%K CONTAINS[cd] %@";
+    static NSString *predicateNumberString = @"%K = %@";
+    
     if (!name) {
-        return [NSPredicate predicateWithFormat:predicateString, numberKey, number.numericStringValue];
+        return [NSPredicate predicateWithFormat:predicateNumberString, numberKey, number];
     }
     
-    NSArray *predicates = @[[NSPredicate predicateWithFormat:predicateString, numberKey, number.numericStringValue],
+    NSArray *predicates = @[[NSPredicate predicateWithFormat:predicateNumberString, numberKey, number],
                             [NSPredicate predicateWithFormat:predicateString, nameKey, name]];
     
     return [NSCompoundPredicate orPredicateWithSubpredicates:predicates];

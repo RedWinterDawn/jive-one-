@@ -253,6 +253,7 @@
 		B70EAB3D1AD32B1E00305F43 /* JCDidTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */; };
 		B70EAB3F1AD3302000305F43 /* JCAuthenticationManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */; };
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
+		B7874FCF1AEEAD4D0065345B /* CarrierBundleUtilities.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B7874FCE1AEEAD4D0065345B /* CarrierBundleUtilities.dylib */; };
 		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
 		B7DFAA371AC0CDA50033ACFB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */; };
 		B7FCA5AA1AD2E74E0034C5EC /* JCDIDSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */; };
@@ -716,6 +717,7 @@
 		B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationManagerTests.m; sourceTree = "<group>"; };
 		B75899741A9FEA320025D5AD /* JCMessagesMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagesMenuCell.h; sourceTree = "<group>"; };
 		B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesMenuCell.m; sourceTree = "<group>"; };
+		B7874FCE1AEEAD4D0065345B /* CarrierBundleUtilities.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = CarrierBundleUtilities.dylib; path = usr/lib/CarrierBundleUtilities.dylib; sourceTree = SDKROOT; };
 		B7AEDD561ABA08670063033E /* JCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionSheet.h; sourceTree = "<group>"; };
 		B7AEDD571ABA08670063033E /* JCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionSheet.m; sourceTree = "<group>"; };
 		B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
