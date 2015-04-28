@@ -18,7 +18,6 @@
 		2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */; };
 		2751591718AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */; };
 		275F4A5218AD0FBC00D2F069 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5118AD0FBC00D2F069 /* Foundation.framework */; };
-		275F4A5418AD0FBC00D2F069 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
 		275F4A5618AD0FBC00D2F069 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5518AD0FBC00D2F069 /* UIKit.framework */; };
 		275F4A5C18AD0FBC00D2F069 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 275F4A5A18AD0FBC00D2F069 /* InfoPlist.strings */; };
 		275F4A5E18AD0FBC00D2F069 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F4A5D18AD0FBC00D2F069 /* main.m */; };
@@ -252,7 +251,8 @@
 		B70EAB3D1AD32B1E00305F43 /* JCDidTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */; };
 		B70EAB3F1AD3302000305F43 /* JCAuthenticationManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */; };
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
-		B7874FCF1AEEAD4D0065345B /* CarrierBundleUtilities.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B7874FCE1AEEAD4D0065345B /* CarrierBundleUtilities.dylib */; };
+		B79F55551AEF1DF900E4768F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
+		B79F55561AEF1DF900E4768F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
 		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
 		B7DFAA371AC0CDA50033ACFB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */; };
 		B7FCA5AA1AD2E74E0034C5EC /* JCDIDSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */; };
@@ -264,7 +264,6 @@
 		DDCE1E8F18F35640003A6615 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8E18F35640003A6615 /* MobileCoreServices.framework */; };
 		DDCE1E9118F35647003A6615 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9018F35647003A6615 /* QuartzCore.framework */; };
 		DDCE1E9318F3564D003A6615 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9218F3564D003A6615 /* Security.framework */; };
-		DDCE1E9718F3565F003A6615 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
 		E07B10CC59774F931461E708 /* libPods-UnitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C6FA8CC15E9F91383398F8 /* libPods-UnitTests.a */; };
 		F202433D18B2CF4A006DB2EF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F202433C18B2CF4A006DB2EF /* README.md */; };
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
@@ -714,7 +713,6 @@
 		B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationManagerTests.m; sourceTree = "<group>"; };
 		B75899741A9FEA320025D5AD /* JCMessagesMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagesMenuCell.h; sourceTree = "<group>"; };
 		B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesMenuCell.m; sourceTree = "<group>"; };
-		B7874FCE1AEEAD4D0065345B /* CarrierBundleUtilities.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = CarrierBundleUtilities.dylib; path = usr/lib/CarrierBundleUtilities.dylib; sourceTree = SDKROOT; };
 		B7AEDD561ABA08670063033E /* JCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionSheet.h; sourceTree = "<group>"; };
 		B7AEDD571ABA08670063033E /* JCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionSheet.m; sourceTree = "<group>"; };
 		B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -821,15 +819,14 @@
 				5D85A9841ACF933300991A97 /* PortSIPLib.framework in Frameworks */,
 				F8EFE15E1A96C29600B429FD /* Social.framework in Frameworks */,
 				DDCE1E9318F3564D003A6615 /* Security.framework in Frameworks */,
-				DDCE1E9718F3565F003A6615 /* SystemConfiguration.framework in Frameworks */,
+				B79F55551AEF1DF900E4768F /* SystemConfiguration.framework in Frameworks */,
 				F8EFE1581A96B55600B429FD /* StoreKit.framework in Frameworks */,
 				5D85A9821ACF933300991A97 /* Crashlytics.framework in Frameworks */,
-				DDCE1E9718F3565F003A6615 /* SystemConfiguration.framework in Frameworks */,
 				DDCE1E9118F35647003A6615 /* QuartzCore.framework in Frameworks */,
 				5D85A9831ACF933300991A97 /* Parse.framework in Frameworks */,
 				279A4E0A19DA86FC00E8AB7B /* CoreVideo.framework in Frameworks */,
 				B7DFAA371AC0CDA50033ACFB /* CoreMedia.framework in Frameworks */,
-				275F4A5418AD0FBC00D2F069 /* CoreGraphics.framework in Frameworks */,
+				B79F55561AEF1DF900E4768F /* CoreGraphics.framework in Frameworks */,
 				9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */,
 				279A4E1219DA87DA00E8AB7B /* libstdc++.dylib in Frameworks */,
 				279A4E0E19DA873200E8AB7B /* OpenGLES.framework in Frameworks */,
@@ -840,7 +837,6 @@
 				2741EB8118FC4C0200F2FE64 /* CoreTelephony.framework in Frameworks */,
 				DDCE1E8F18F35640003A6615 /* MobileCoreServices.framework in Frameworks */,
 				275F4A5218AD0FBC00D2F069 /* Foundation.framework in Frameworks */,
-				275F4A5418AD0FBC00D2F069 /* CoreGraphics.framework in Frameworks */,
 				DDCE1E8918F35623003A6615 /* CFNetwork.framework in Frameworks */,
 				27CE639C191C1D1700E85FD5 /* libsqlite3.dylib in Frameworks */,
 				DDCE1E8D18F35637003A6615 /* libz.dylib in Frameworks */,
@@ -1836,7 +1832,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = JC;
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Jive Communications, Inc";
 				TargetAttributes = {
 					275F4A4D18AD0FBC00D2F069 = {
@@ -2517,7 +2513,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos8.1;
+				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "JiveOne/JiveOne-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2561,7 +2557,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos8.1;
+				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "JiveOne/JiveOne-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -2798,7 +2794,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos8.1;
+				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "JiveOne/JiveOne-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
