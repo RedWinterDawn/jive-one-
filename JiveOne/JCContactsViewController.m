@@ -103,6 +103,30 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
     _phoneNumber = phoneNumber;
 }
 
+-(IBAction)toggleFilterState:(id)sender
+{
+    if ([sender isKindOfClass:[UISegmentedControl class]])
+    {
+        UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
+        switch (segmentedControl.selectedSegmentIndex) {
+            case 1:
+            {
+                _contactsTableViewController.filterType = JCContactFilterGrouped;
+                break;
+            }
+            case 2:
+            {
+                [self showPeoplePickerController];
+                break;
+            }
+            default:
+                _contactsTableViewController.filterType = JCContactFilterAll;
+                break;
+        }
+    }
+}
+
+
 #pragma mark - Delegate Handlers -
 
 #pragma mark UITabBarDelegate

@@ -117,13 +117,8 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
 -(void)setCallCard:(JCCallCard *)callCard
 {
-    if (_callCard && _callCard != callCard) {
-        [self removeObservers];
-    }
-    
     [super setCallCard:callCard];
     [self updateState:NO];
-    
     if (_callCard.lineSession) {
         [_callCard.lineSession addObserver:self forKeyPath:kJCLineSessionStateKey options:0 context:NULL];
         [_callCard.lineSession addObserver:self forKeyPath:kJCLineSessionHoldKey options:0 context:NULL];

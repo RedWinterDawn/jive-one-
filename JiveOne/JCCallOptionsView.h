@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 typedef enum : NSUInteger {
     JCCallOptionViewSingleCallState = 0,
@@ -19,7 +19,6 @@ typedef enum : NSUInteger {
 
 @property (nonatomic) JCCallOptionViewState state;
 @property (nonatomic) CGFloat annimationDuration;
-
 
 @property (nonatomic, weak) IBOutlet UIButton *mergeButtonState;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *transferBtnHorizontalContstraint;

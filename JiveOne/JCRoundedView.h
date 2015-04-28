@@ -16,6 +16,7 @@
 #define DEFAULT_ROUNDED_VIEW_BORDER_WIDTH 0
 #define DEFAULT_ROUNDED_VIEW_BORDER_COLOR [UIColor clearColor]
 
+
 @interface JCRoundedView : UIView
 
 // Configurable Properties.

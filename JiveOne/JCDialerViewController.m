@@ -22,6 +22,9 @@
 #import "OutgoingCall.h"
 #import "LocalContact.h"
 
+// Controllers
+#import "JCCallerViewController.h"
+
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
 @interface JCDialerViewController ()
@@ -51,6 +54,15 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerUnregisteredNotification object:phoneManager];
     [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegisteringNotification object:phoneManager];
     [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegistrationFailureNotification object:phoneManager];
+    
+    if (self.isTablet) {
+        [center addObserver:self selector:@selector(onActiveCall) name:kJCPhoneManagerShowCallsNotification object:phoneManager];
+        [center addObserver:self selector:@selector(onInactiveCall) name:kJCPhoneManagerHideCallsNotification object:phoneManager];
+        if (phoneManager.isActiveCall) {
+            [self onActiveCall];
+        }
+    }
+    
     [self updateRegistrationStatus];
     
     JCAddressBook *addressBook = self.phoneBook.addressBook;
@@ -226,7 +238,13 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     NSString *prompt = NSLocalizedString(@"Unregistered", nil);
     if (phoneManager.isRegistered) {
         self.callButton.selected = false;
-        prompt = phoneManager.line.number;
+        if (self.registrationStatusLabel) {
+            prompt = phoneManager.line.number;
+        }
+        else {
+            Line *line = phoneManager.line;
+            prompt = line.displayName;
+        }
     }
     else if (appSettings.wifiOnly && reachabilityManager.isReachableViaWWAN){
         prompt = NSLocalizedString(@"Disabled", nil);
@@ -237,7 +255,42 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     else {
         self.callButton.selected = true;
     }
-    self.registrationStatusLabel.text = prompt;
+    
+    if (self.registrationStatusLabel) {
+        self.registrationStatusLabel.text = prompt;
+    } else {
+        self.title = prompt;
+    }
+}
+
+-(void)onActiveCall
+{
+    JCCallerViewController *callViewController = self.phoneManager.callViewController;
+    if (!callViewController) {
+        return;
+    }
+    
+    // If we are the top view controller, we need to push the call view controller onto the view
+    // controller stack.
+    UINavigationController *navigationController = self.navigationController;
+    if (navigationController.topViewController == self) {
+        callViewController.navigationItem.hidesBackButton = TRUE;
+        [navigationController pushViewController:callViewController animated:NO];
+        
+    }
+}
+
+-(void)onInactiveCall
+{
+    JCCallerViewController *callViewController = self.phoneManager.callViewController;
+    if (!callViewController) {
+        return;
+    }
+    
+    UINavigationController *navigationController = self.navigationController;
+    if (navigationController.topViewController != self) {
+        [navigationController popToRootViewControllerAnimated:NO];
+    }
 }
 
 +(NSString *)characterFromNumPadTag:(NSInteger)tag
