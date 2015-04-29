@@ -8,24 +8,24 @@
 
 @import Foundation;
 
-@class JCConversationGroupsResultsController;
+#import "JCPhoneNumberDataSource.h"
+#import "JCConversationGroupObject.h"
 
 @protocol JCConversationGroupsResultsControllerDelegate;
 
-
 @interface JCConversationGroupsResultsController : NSObject
 
-- (id)initWithFetchRequest:(NSFetchRequest *)fetchRequest pbx:(PBX *)pbx managedObjectContext: (NSManagedObjectContext *)context;
-- (BOOL)performFetch:(NSError **)error;
+- (instancetype)initWithFetchRequest:(NSFetchRequest *)fetchRequest pbx:(PBX *)pbx managedObjectContext:(NSManagedObjectContext *)context;
+
+@property (nonatomic, weak) id <JCConversationGroupsResultsControllerDelegate> delegate;
 
 @property (nonatomic, readonly) NSFetchRequest *fetchRequest;
 @property (nonatomic, readonly) NSManagedObjectContext *manageObjectContext;
 @property (nonatomic, readonly) NSArray *fetchedObjects;
-@property (nonatomic, weak) id <JCConversationGroupsResultsControllerDelegate> delegate;
 
-- (id)objectAtIndexPath:(NSIndexPath *)indexPath;
-
--(NSIndexPath *)indexPathForObject:(id)object;
+- (BOOL)performFetch:(NSError **)error;
+- (id<JCConversationGroupObject>)objectAtIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)indexPathForObject:(id<JCConversationGroupObject>)object;
 
 @end
 
@@ -34,7 +34,7 @@
 typedef NS_ENUM(NSUInteger, JCConversationGroupsResultsChangeType) {
     JCConversationGroupsResultsChangeInsert = NSFetchedResultsChangeInsert,
     JCConversationGroupsResultsChangeDelete = NSFetchedResultsChangeDelete,
-    JCConversationGroupsResultsChangeMove = NSFetchedResultsChangeMove,
+    JCConversationGroupsResultsChangeMove   = NSFetchedResultsChangeMove,
     JCConversationGroupsResultsChangeUpdate = NSFetchedResultsChangeUpdate
 };
 

@@ -20,7 +20,6 @@
 #import "PBX.h"
 
 #import "JCConversationGroupsResultsController.h"
-#import "JCConversationGroup.h"
 
 NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
@@ -51,24 +50,25 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     }
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath {
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<JCConversationGroupObject>)object atIndexPath:(NSIndexPath *)indexPath {
     JCConversationTableViewCell *cell = (JCConversationTableViewCell *)[tableView dequeueReusableCellWithIdentifier:kJCConversationsTableViewController];
     [self configureCell:cell withObject:object];
     return cell;
 }
 
--(id<NSObject>)objectAtIndexPath:(NSIndexPath *)indexPath {
+-(id<JCConversationGroupObject>)objectAtIndexPath:(NSIndexPath *)indexPath {
     return [self.conversationGroupsResultsController objectAtIndexPath:indexPath];
 }
 
-- (NSIndexPath *)indexPathOfObject:(id<NSObject>)object
+- (NSIndexPath *)indexPathOfObject:(id<JCConversationGroupObject>)object
 {
     return [self.conversationGroupsResultsController indexPathForObject:object];
 }
 
 -(void)configureCell:(JCConversationTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    [self configureCell:cell withObject:[self objectAtIndexPath:indexPath]];
+    id<JCConversationGroupObject> object = [self objectAtIndexPath:indexPath];
+    [self configureCell:cell withObject:object];
     if([cell isKindOfClass:[JCTableViewCell class]])
     {
         JCTableViewCell *tableCell = (JCTableViewCell *)cell;
@@ -78,15 +78,12 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     }
 }
 
--(void)configureCell:(JCConversationTableViewCell *)cell withObject:(id<NSObject>)object
+-(void)configureCell:(JCConversationTableViewCell *)cell withObject:(id<JCConversationGroupObject>)object
 {
-    if ([object isKindOfClass:[JCConversationGroup class]]) {
-        JCConversationGroup *group = (JCConversationGroup *)object;
-        cell.name.text   = group.titleText;
-        cell.detail.text = group.lastMessage;
-        cell.date.text   = group.formattedModifiedShortDate;
-        cell.read = group.isRead;
-    }
+    cell.name.text   = object.titleText;
+    cell.detail.text = object.detailText;
+    cell.date.text   = object.formattedModifiedShortDate;
+    cell.read        = object.isRead;
 }
 
 - (IBAction)refreshTable:(id)sender {
@@ -117,7 +114,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
         UIViewController *viewController = segue.destinationViewController;
         if ([viewController isKindOfClass:[JCConversationViewController class]]) {
             JCConversationViewController *messagesViewController = (JCConversationViewController *)viewController;
-            JCConversationGroup *conversationGroup = (JCConversationGroup *)[self objectAtIndexPath:[self.tableView indexPathForCell:sender]];
+            id<JCConversationGroupObject> conversationGroup = (id<JCConversationGroupObject>)[self objectAtIndexPath:[self.tableView indexPathForCell:sender]];
             messagesViewController.messageGroupId = conversationGroup.conversationGroupId;
         }
     }

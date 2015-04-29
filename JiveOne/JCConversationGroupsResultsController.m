@@ -12,13 +12,14 @@
 #import "SMSMessage.h"
 #import "LocalContact.h"
 
-#import "JCConversationGroup.h"
 #import "SMSMessage+V5Client.h"
-
+#import "JCUnknownNumber.h"
+#import "JCSMSConversationGroup.h"
 
 @interface JCConversationGroupsResultsController ()
 {
     NSMutableArray *_fetchedObjects;
+    JCPhoneBook *_phoneBook;
     PBX *_pbx;
     BOOL _loaded;
     BOOL _doingBatchUpdate;
@@ -30,24 +31,26 @@
 
 -(instancetype)initWithFetchRequest:(NSFetchRequest *)fetchRequest pbx:(PBX *)pbx managedObjectContext:(NSManagedObjectContext *)context
 {
+    return [self initWithFetchRequest:fetchRequest pbx:pbx managedObjectContext:context phoneBook:[JCPhoneBook sharedPhoneBook]];
+}
+
+-(instancetype)initWithFetchRequest:(NSFetchRequest *)fetchRequest pbx:(PBX *)pbx managedObjectContext:(NSManagedObjectContext *)context phoneBook:(JCPhoneBook *)phoneBook;
+{
     self = [super init];
-    if (self) {
+    if (self)
+    {
+        _phoneBook = phoneBook;
+        _pbx = pbx;
         _fetchRequest = fetchRequest;
+        _manageObjectContext = context;
         
         // Ensure we are expecting a dictionary result type for the core data fetch request.
         fetchRequest.resultType             = NSDictionaryResultType;
         fetchRequest.propertiesToGroupBy    = @[NSStringFromSelector(@selector(messageGroupId))];
         fetchRequest.propertiesToFetch      = @[NSStringFromSelector(@selector(messageGroupId))];
         
-        _pbx = pbx;
-        
-        _manageObjectContext = context;
-        
         // Observe for notification changes for SMS updates.
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(reload)
-                                                     name:kSMSMessagesDidUpdateNotification
-                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:kSMSMessagesDidUpdateNotification object:nil];
     }
     return self;
 }
@@ -57,6 +60,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+/**
+ * Fetches a list of conversation group id's from the conversations. Take the array and build a 
+ * conversation group from the conversation id. sort the array using the sort descriptors of the 
+ * fetch request.
+ */
 -(BOOL)performFetch:(NSError *__autoreleasing *)error
 {
     if (!_fetchRequest) {
@@ -64,24 +72,17 @@
     }
     
     @autoreleasepool {
-        // Fetch a list of conversation group ids.
         NSArray *conversationGroupIds = [_manageObjectContext executeFetchRequest:_fetchRequest error:error];
-        
-        // Fetch the Core Data Results for the conversations in the fetched results view controller,
-        // and build them into an array of conversation group objects.
-        NSArray *conversationGroups = [self conversationGroupsForConversationIds:conversationGroupIds];
-        
-        // Match address book contacts with conversation groups. If we have permission to the
-        // address book, this method will be synchrounous. If we do not it will be asynchronous, and
-        // treated as a table update.
-        [self fetchAddressBookNamesForConversationsGroups:conversationGroups];
+        NSArray *conversationGroups = [self conversationGroupsForConversationIds:conversationGroupIds pbx:_pbx context:_manageObjectContext];
         _fetchedObjects = [conversationGroups sortedArrayUsingDescriptors:_fetchRequest.sortDescriptors].mutableCopy;
     }
-    
     return (_fetchedObjects != nil);
 }
 
--(id)objectAtIndexPath:(NSIndexPath *)indexPath
+/**
+ * Returns the object at the given index path from the fetch results object.
+ */
+-(id<JCConversationGroupObject>)objectAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_fetchedObjects && _fetchedObjects.count > indexPath.row) {
         return [_fetchedObjects objectAtIndex:indexPath.row];
@@ -89,8 +90,16 @@
     return nil;
 }
 
--(NSIndexPath *)indexPathForObject:(id)object
+/**
+ * Returns an indexPath for a given object in the fetched results.
+ */
+-(NSIndexPath *)indexPathForObject:(id<JCConversationGroupObject>)object
 {
+    if (![object conformsToProtocol:@protocol(JCConversationGroupObject)]) {
+        return nil;
+    }
+    
+    
     if ([_fetchedObjects containsObject:object]) {
         return [NSIndexPath indexPathForRow:[_fetchedObjects indexOfObject:object] inSection:0];
     }
@@ -113,14 +122,14 @@
             return;
         }
         
-        NSArray *conversationGroups = [self conversationGroupsForConversationIds:conversationGroupIds];
+        NSArray *conversationGroups = [self conversationGroupsForConversationIds:conversationGroupIds pbx:_pbx context:_manageObjectContext];
         NSMutableArray *inserted = [NSMutableArray array];
         NSMutableArray *moved = [NSMutableArray array];
         
         // Loop through the results, and see if they are insertions or updates.
         for (int index = 0; index < conversationGroups.count; index++)
         {
-            JCConversationGroup *conversationGroup = [conversationGroups objectAtIndex:index];
+            id<JCConversationGroupObject> conversationGroup = [conversationGroups objectAtIndex:index];
             NSUInteger objectIndex = [_fetchedObjects indexOfObject:conversationGroup];
             BOOL containsObject = (objectIndex != NSNotFound);
             
@@ -142,8 +151,6 @@
             // conversation group. We do transfer the name, since otherwise we ould have
             else
             {
-                JCConversationGroup *oldConversationGroup = [_fetchedObjects objectAtIndex:objectIndex];
-                conversationGroup.name = oldConversationGroup.name;
                 [_fetchedObjects replaceObjectAtIndex:objectIndex withObject:conversationGroup];
                 
                 // We get the index path of the object in the old fetched object (determined using
@@ -187,9 +194,6 @@
         
         // If we did any changes, notify of content change.
         [self didChangeContent];
-        
-        // Attach address book contact info for inserted conversation groups.
-        [self fetchAddressBookNamesForConversationsGroups:_fetchedObjects];
     }
 }
 
@@ -229,73 +233,38 @@
     _doingBatchUpdate = FALSE;
 }
 
--(NSArray *)conversationGroupsForConversationIds:(NSArray *)conversationIds
+-(NSArray *)conversationGroupsForConversationIds:(NSArray *)conversationIds pbx:(PBX *)pbx context:(NSManagedObjectContext *)context
 {
     NSMutableArray *conversationGroups = [NSMutableArray arrayWithCapacity:conversationIds.count];
     @autoreleasepool {
         for (id object in conversationIds) {
             if ([object isKindOfClass:[NSDictionary class]]) {
                 NSString *conversationGroupId = [((NSDictionary *)object) stringValueForKey:NSStringFromSelector(@selector(messageGroupId))];
-                JCConversationGroup *conversationGroup = [[JCConversationGroup alloc] initWithConversationGroupId:conversationGroupId context:_manageObjectContext];
-                if (conversationGroup.pbx == _pbx) {
-                    [conversationGroups addObject:conversationGroup];
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", conversationGroupId];
+                Message *message = [Message MR_findFirstWithPredicate:predicate sortedBy:NSStringFromSelector(@selector(date)) ascending:NO inContext:context];
+                if (!message) {
+                    continue;
+                }
+                
+                // If the message is from the 
+                if ([message isKindOfClass:[SMSMessage class]]) {
+                    SMSMessage *smsMessage = (SMSMessage *)message;
+                    if (smsMessage.did.pbx != pbx) {
+                        continue;
+                    }
+                    
+                    id<JCPhoneNumberDataSource> phoneNumber = [_phoneBook localPhoneNumberForNumber:conversationGroupId name:smsMessage.localContact.name];
+                    JCSMSConversationGroup *smsConversationGroup = [[JCSMSConversationGroup alloc] initWithName:smsMessage phoneNumber:phoneNumber];
+                    [conversationGroups addObject:smsConversationGroup];
+                } else {
+                    
+                    // TODO: for chat implement lookup here for chat, whatever we need to do here.
+                    
                 }
             }
         }
     }
     return conversationGroups;
-}
-
--(void)fetchAddressBookNamesForConversationsGroups:(NSArray *)conversationsGroups {
-    
-    // Get the numbers that we are querying for. They should only be SMS numbers which are the
-    // default value matching the conversationGroupId.
-    NSMutableSet *numbers = [NSMutableSet new];
-    for (JCConversationGroup *conversationGroup in conversationsGroups) {
-        if (conversationGroup.isSMS && !conversationGroup.name) {
-            [numbers addObject:conversationGroup.conversationGroupId];
-        }
-    }
-    
-    // Only ask the address book if we have numbers to look up.
-    if (numbers.count == 0) {
-        return;
-    }
-    
-    // get names for numbers.
-    [[JCPhoneBook sharedPhoneBook].addressBook formattedNamesForNumbers:numbers
-                                      begin:^{
-                                          
-                                      }
-                                     number:^(NSString *name, NSString *number) {
-                                         if (_fetchedObjects) {
-                                             JCConversationGroup *conversationGroup = [JCConversationGroupsResultsController conversationGroupForConversationGroupId:number conversationGroups:_fetchedObjects];
-                                             conversationGroup.name = name;
-                                             NSUInteger index = [_fetchedObjects indexOfObject:conversationGroup];
-                                             [self didChangeObject:conversationGroup
-                                                           atIndex:index
-                                                     forChangeType:JCConversationGroupsResultsChangeUpdate
-                                                          newIndex:index];
-                                         } else {
-                                             JCConversationGroup *conversationGroup = [JCConversationGroupsResultsController conversationGroupForConversationGroupId:number conversationGroups:conversationsGroups];
-                                             conversationGroup.name = name;
-                                         }
-                                     }
-                                 completion:^(BOOL success, NSError *error) {
-                                     if (success && _fetchedObjects) {
-                                         [self didChangeContent];
-                                     }
-                                 }];
-}
-
-+(JCConversationGroup *)conversationGroupForConversationGroupId:(NSString *)conversationGroupId conversationGroups:(NSArray *)conversationGroups
-{
-    for (JCConversationGroup *conversationGroup in conversationGroups) {
-        if ([conversationGroup.conversationGroupId isEqualToString:conversationGroupId]) {
-            return conversationGroup;
-        }
-    }
-    return nil;
 }
 
 @end
