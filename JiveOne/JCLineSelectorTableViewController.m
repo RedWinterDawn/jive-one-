@@ -42,6 +42,7 @@
         cell.textLabel.text = [NSString stringWithFormat:@"%@ on %@", line.number, line.pbx.name];
         if ([line isEqual:[JCAuthenticationManager sharedInstance].line]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            cell.accessoryView.tintColor = [UIColor grayColor];
         }
         else {
             cell.accessoryType = UITableViewCellAccessoryNone;

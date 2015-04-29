@@ -17,4 +17,6 @@
 
 @property (nonatomic, strong) ContactGroup *contactGroup;
 
+-(IBAction)toggleFilterState:(id)sender;
+
 @end

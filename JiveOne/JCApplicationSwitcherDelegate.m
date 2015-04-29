@@ -11,7 +11,7 @@
 
 // View Controllers
 #import "JCApplicationSwitcherViewController.h"
-#import "JCCallHistoryViewController.h"
+#import "JCCallHistoryViewController_iPhone.h"
 #import "JCVoicemailViewController.h"
 #import "JCConversationsTableViewController.h"
 
@@ -24,11 +24,10 @@
 #import "PBX.h"
 
 #import "JCAuthenticationManager.h"
-
-NSString *const kApplicationSwitcherLastSelectedViewControllerIdentifierKey = @"applicationSwitcherLastSelected";
+#import "JCAppSettings.h"
 
 NSString *const kApplicationSwitcherPhoneRestorationIdentifier      = @"PhoneTabBarController";
-NSString *const kApplicationSwitcherMessagesRestorationIdentifier      = @"MessagesNavigationController";
+NSString *const kApplicationSwitcherMessagesRestorationIdentifier   = @"MessagesNavigationController";
 NSString *const kApplicationSwitcherContactsRestorationIdentifier   = @"ContactsNavigationController";
 NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"SettingsNavigationController";
 
@@ -36,25 +35,33 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 {
     JCApplicationSwitcherViewController *_applicationSwitcher;
     NSArray *_viewControllers;
+    JCAppSettings *_appSettings;
+    JCAuthenticationManager *_authenticationManager;
 }
-
-@property (nonatomic, strong) NSString *lastSelectedViewControllerIdentifier;
 
 @end
 
 @implementation JCApplicationSwitcherDelegate
 
--(instancetype)init
+-(instancetype)initWithAppsSettings:(JCAppSettings *)appSettings authenticationManager:(JCAuthenticationManager *)authenticationManager
 {
     self = [super init];
     if (self) {
+        _appSettings = appSettings;
+        _authenticationManager = authenticationManager;
+        
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
         [center addObserver:self selector:@selector(reset:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
         [center addObserver:self selector:@selector(reload:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
         [center addObserver:self selector:@selector(reload:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
     }
     return self;
+}
+
+-(instancetype)init
+{
+    return [self initWithAppsSettings:[JCAppSettings sharedSettings]
+                authenticationManager:[JCAuthenticationManager sharedInstance]];
 }
 
 -(void)dealloc
@@ -64,7 +71,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 
 -(void)reset:(NSNotification *)notification
 {
-    self.lastSelectedViewControllerIdentifier = nil;
+    _appSettings.appSwitcherLastSelectedViewControllerIdentifier = nil;
     if (_applicationSwitcher) {
         _applicationSwitcher.selectedViewController = nil;
     }
@@ -77,8 +84,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 
 -(NSMutableArray *)determineControllersAccess:(NSMutableArray *)viewControllers
 {
-    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
-    PBX *pbx = authenticationManager.line.pbx;
+    PBX *pbx = _authenticationManager.line.pbx;
     if (!pbx) {
         return viewControllers;
     }
@@ -94,23 +100,6 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
         }
     }
     return viewControllers;
-}
-
-
-#pragma mark - Setters -
-
--(void)setLastSelectedViewControllerIdentifier:(NSString *)lastSelectedViewControllerIdentifier
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:lastSelectedViewControllerIdentifier forKey:kApplicationSwitcherLastSelectedViewControllerIdentifierKey];
-    [defaults synchronize];
-}
-
-#pragma mark - Getters -
-
--(NSString *)lastSelectedViewControllerIdentifier
-{
-    return [[NSUserDefaults standardUserDefaults] valueForKey:kApplicationSwitcherLastSelectedViewControllerIdentifierKey];
 }
 
 #pragma mark - Privete -
@@ -161,8 +150,8 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 {
     if ([viewController isKindOfClass:[UINavigationController class]]) {
         viewController = ((UINavigationController *)viewController).topViewController;
-        if ([viewController isKindOfClass:[JCCallHistoryViewController class]]) {
-            JCCallHistoryViewController *callHistoryViewController = (JCCallHistoryViewController *)viewController;
+        if ([viewController isKindOfClass:[JCCallHistoryViewController_iPhone class]]) {
+            JCCallHistoryViewController_iPhone *callHistoryViewController = (JCCallHistoryViewController_iPhone *)viewController;
             JCCallHistoryTableViewController *callHistoryTableViewController = callHistoryViewController.callHistoryTableViewController;
             NSIndexPath *indexPath = [callHistoryTableViewController indexPathOfObject:recentEvent];
             
@@ -232,7 +221,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
  */
 -(UIViewController *)applicationSwitcherLastSelectedViewController:(JCApplicationSwitcherViewController *)controller
 {
-    NSString *identifier = self.lastSelectedViewControllerIdentifier;
+    NSString *identifier = _appSettings.appSwitcherLastSelectedViewControllerIdentifier;
     for (UIViewController *viewController in controller.viewControllers) {
         if ([viewController.restorationIdentifier isEqualToString:identifier]) {
             return viewController;
@@ -268,7 +257,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
     if (viewController.restorationIdentifier) {
-        self.lastSelectedViewControllerIdentifier = viewController.restorationIdentifier;
+        _appSettings.appSwitcherLastSelectedViewControllerIdentifier = viewController.restorationIdentifier;
     }
 }
 
