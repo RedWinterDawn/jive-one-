@@ -42,6 +42,7 @@ NSString *const kApplicationSwitcherSettingsIdentifier   = @"Settings";
     [center addObserver:self selector:@selector(showCall:) name:kJCPhoneManagerShowCallsNotification object:self.phoneManager];
     
     [self performSelectorOnMainThread:@selector(loadLastSelected) withObject:nil waitUntilDone:NO];
+    [self reload:nil];
 }
 
 -(void)loadLastSelected
