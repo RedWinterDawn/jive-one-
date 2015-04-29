@@ -169,9 +169,7 @@
         if (name) {
             self.title = name;
         } else {
-            JCPhoneBook *phoneBook = self.phoneBook;
-            PBX *pbx = self.authenticationManager.pbx;
-            id<JCPhoneNumberDataSource> phoneNumber = [phoneBook phoneNumberForNumber:person.number forPbx:pbx excludingLine:nil];
+            id<JCPhoneNumberDataSource> phoneNumber = [self.phoneBook localPhoneNumberForNumber:person.number name:nil];
             self.title = phoneNumber.titleText;
         }
     } else {

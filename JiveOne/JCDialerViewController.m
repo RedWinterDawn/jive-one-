@@ -145,7 +145,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     }
     
     // Fetch the phone number.
-    id<JCPhoneNumberDataSource> phoneNumber = [self.phoneBook phoneNumberForNumber:string forPbx:line.pbx excludingLine:line];
+    id<JCPhoneNumberDataSource> phoneNumber = [self.phoneBook phoneNumberForNumber:string name:nil forPbx:line.pbx excludingLine:line];
     [self dialPhoneNumber:phoneNumber
                 usingLine:line
                    sender:sender
