@@ -207,6 +207,9 @@ static BOOL JCErrorOrUnderlyingErrorHasCode(NSError *error, NSInteger code) {
         case API_CLIENT_INVALID_ARGUMENTS:
             return @"Invalid Arguments";
             
+        case API_CLIENT_INVALID_REQUEST_PARAMETERS:
+            return @"Invalid Arguments";
+            
         case API_CLIENT_RESPONSE_PARSER_ERROR:
             return @"Response Empty";
             
