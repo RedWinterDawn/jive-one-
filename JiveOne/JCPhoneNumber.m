@@ -13,7 +13,7 @@
 
 +(instancetype)phoneNumberWithName:(NSString *)name number:(NSString *)number
 {
-    return [[JCPhoneNumber alloc] initWithName:name number:number];
+    return [[[self class] alloc] initWithName:name number:number];
 }
 
 -(instancetype)initWithName:(NSString *)name number:(NSString *)number
