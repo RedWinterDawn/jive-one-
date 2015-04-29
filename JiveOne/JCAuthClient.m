@@ -131,7 +131,7 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
     }
     else {
         [webView stopLoading];
-        [self reportError:[JCAuthClientError errorWithCode:API_CLIENT_INVALID_REQUEST_PARAMETERS]];
+        [self reportError:[JCAuthClientError errorWithCode:API_CLIENT_AUTHENTICATION_ERROR]];
     }
 }
 
@@ -156,6 +156,8 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
 
 
 @implementation JCAuthClientError
+
+
 
 @end
 
