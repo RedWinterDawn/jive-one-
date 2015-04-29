@@ -18,6 +18,9 @@ extern NSString *const kJCAppSettingsPresenceAttribute;
 @property (nonatomic, getter = isPresenceEnabled) BOOL presenceEnabled;
 @property (nonatomic, getter = isVibrateOnRing) BOOL vibrateOnRing;
 
+// Remembers the last selected view controller for the app switcher.
+@property (nonatomic) NSString *appSwitcherLastSelectedViewControllerIdentifier;
+
 @end
 
 @interface JCAppSettings (Singleton)

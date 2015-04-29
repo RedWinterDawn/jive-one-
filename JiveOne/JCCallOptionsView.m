@@ -19,7 +19,8 @@
     CGFloat _defaultMergePosition;
     CGFloat _defaultFinishPosition;
     CGFloat _halfTheScreenDistance;
-    CGFloat _oneThridTheScreenDistance;
+    CGFloat _oneThirdTheScreenDistance;
+    CGFloat _callOptionsWidth;
         
     bool _showingSingle;
     bool _showingMultiple;
@@ -30,14 +31,11 @@
 @end
 
 @implementation JCCallOptionsView
-CGFloat _callOptionsWidth;
-
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    if (self)
-    {
+    if (self) {
         _annimationDuration = DIAL_OPTIONS_ANIMATION_DURATION;
         _showingSingle = true;
     }
@@ -52,19 +50,17 @@ CGFloat _callOptionsWidth;
     _defaultSwapPosition            = _swapBtnHorizontalContstraint.constant;
     _defaultMergePosition           = _mergeBtnHorizontalContstraint.constant;
     _defaultFinishPosition          = _finishTransferConstraint.constant;
-    
-    
 }
-
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    _callOptionsWidth = self.bounds.size.width;
-    _halfTheScreenDistance       = _callOptionsWidth/2-30;
-    _oneThridTheScreenDistance = _callOptionsWidth/4;
-  
+    _callOptionsWidth          = self.bounds.size.width;
+    _halfTheScreenDistance     = _callOptionsWidth/2-30;
+    _oneThirdTheScreenDistance = _callOptionsWidth/4;
 }
+
+#pragma mark - Setters -
 
 -(void)setState:(JCCallOptionViewState)state
 {
@@ -77,6 +73,8 @@ CGFloat _callOptionsWidth;
     if (self.superview)
         [self changeState:animated];
 }
+
+#pragma mark - Private -
 
 -(void)changeState:(bool)animated
 {
@@ -99,7 +97,22 @@ CGFloat _callOptionsWidth;
     }
 }
 
-#pragma mark - Single -
+-(void)animate:(bool)animated completion:(void (^)(BOOL finished))completion
+{
+    [self needsUpdateConstraints];
+    [UIView animateWithDuration:animated ? _annimationDuration : 0
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         [self layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished) {
+                         if (completion != NULL && finished)
+                             completion(finished);
+                     }];
+}
+
+#pragma mark Single
 
 -(void)showSingle:(BOOL)animated
 {
@@ -134,9 +147,9 @@ CGFloat _callOptionsWidth;
 
 -(void)hideSingle:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _transferBtnHorizontalContstraint.constant = - (5 * _defaultTransferPosition);
-    _warmBtnVerticalConstraint.constant = - (5 * _defaultWarmTransferPosition);
-    _addCallBtnHorizontalContstraint.constant = - (5 * _defaultAddCallPosition);
+    _transferBtnHorizontalContstraint.constant  = - (5 * _defaultTransferPosition);
+    _warmBtnVerticalConstraint.constant         = - (5 * _defaultWarmTransferPosition);
+    _addCallBtnHorizontalContstraint.constant   = - (5 * _defaultAddCallPosition);
        
     [self animate:animated completion:^(BOOL finished) {
         _showingSingle = false;
@@ -146,7 +159,7 @@ CGFloat _callOptionsWidth;
 }
 
 
-#pragma mark - Multiple -
+#pragma mark Multiple
 
 -(void)showMultiple:(BOOL)animated
 {
@@ -166,8 +179,8 @@ CGFloat _callOptionsWidth;
 
 -(void)showMultiple:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _mergeBtnHorizontalContstraint.constant = _oneThridTheScreenDistance;
-    _swapBtnHorizontalContstraint.constant   = _oneThridTheScreenDistance;
+    _mergeBtnHorizontalContstraint.constant     = _oneThirdTheScreenDistance;
+    _swapBtnHorizontalContstraint.constant      = _oneThirdTheScreenDistance;
     
     [self animate:animated completion:^(BOOL finished) {
         _showingMultiple = true;
@@ -180,8 +193,8 @@ CGFloat _callOptionsWidth;
 
 -(void)hideMultiple:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _mergeBtnHorizontalContstraint.constant = - _halfTheScreenDistance;
-    _swapBtnHorizontalContstraint.constant = - _halfTheScreenDistance;
+    _mergeBtnHorizontalContstraint.constant     = - _halfTheScreenDistance;
+    _swapBtnHorizontalContstraint.constant      = - _halfTheScreenDistance;
     
     [self animate:animated completion:^(BOOL finished) {
         _showingMultiple = false;
@@ -190,7 +203,7 @@ CGFloat _callOptionsWidth;
     }];
 }
 
-#pragma mark - Conference -
+#pragma mark Conference
 
 -(void)showConference:(bool)animated
 {
@@ -235,7 +248,7 @@ CGFloat _callOptionsWidth;
     }];
 }
 
-#pragma mark - Finish Transfer -
+#pragma mark Finish Transfer
 
 -(void)showFinishTransfer:(bool)animated
 {
@@ -273,21 +286,6 @@ CGFloat _callOptionsWidth;
         if (completion != NULL && finished)
             completion(finished);
     }];
-}
-
--(void)animate:(bool)animated completion:(void (^)(BOOL finished))completion
-{
-    [self needsUpdateConstraints];
-    [UIView animateWithDuration:animated ? _annimationDuration : 0
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         [self layoutIfNeeded];
-                     }
-                     completion:^(BOOL finished) {
-                         if (completion != NULL && finished)
-                             completion(finished);
-                     }];
 }
 
 @end

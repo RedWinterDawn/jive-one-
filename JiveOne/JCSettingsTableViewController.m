@@ -36,11 +36,22 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     self.appLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     self.buildLabel.text = [NSString stringWithFormat:@"%@ (%@)", [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
     
+    UIDevice *device = [UIDevice currentDevice];
+    self.installationIdentifier.text = device.installationIdentifier;
+    self.uuid.text = [device userUniqueIdentiferForUser:self.authenticationManager.jiveUserId];
+    
     JCAppSettings *settings = self.appSettings;
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
     [self cell:self.enablePreasenceCell setHidden:!self.authenticationManager.line.pbx.isV5];
     [self cell:self.defaultDIDCell setHidden:!self.authenticationManager.pbx.smsEnabled];
+    
+    #ifndef DEBUG
+    if (self.debugCell) {
+        [self cell:self.debugCell setHidden:YES];
+    }
+    #endif
+    
     [self reloadDataAnimated:NO];
 }
 

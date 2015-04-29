@@ -18,6 +18,7 @@
 #import "JCPhoneAudioManager.h"
 #import "JCPhoneNumberDataSource.h"
 #import "JCPhoneBook.h"
+#import "JCCallerViewController.h"
 
 @class Line;
 
@@ -25,6 +26,8 @@ extern NSString *const kJCPhoneManagerRegisteringNotification;
 extern NSString *const kJCPhoneManagerRegisteredNotification;
 extern NSString *const kJCPhoneManagerUnregisteredNotification;
 extern NSString *const kJCPhoneManagerRegistrationFailureNotification;
+extern NSString *const kJCPhoneManagerShowCallsNotification;
+extern NSString *const kJCPhoneManagerHideCallsNotification;
 
 typedef enum : NSUInteger {
     JCPhoneManagerSingleDial = 0,
@@ -46,6 +49,7 @@ typedef enum : NSInteger {
 
 @property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly) JCPhoneManagerNetworkType networkType;
+@property (nonatomic, readonly) JCCallerViewController *callViewController;
 
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
 @property (nonatomic, readonly, getter=isRegistering) BOOL registering;

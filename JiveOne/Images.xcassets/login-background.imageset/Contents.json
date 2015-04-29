@@ -1,19 +1,52 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
+      "idiom" : "iphone",
       "scale" : "1x",
-      "filename" : "iPhone2Xnew.png"
+      "filename" : "5C@1x.png"
     },
     {
-      "idiom" : "universal",
+      "idiom" : "iphone",
       "scale" : "2x",
-      "filename" : "iPadlaunch1Xnew.png"
+      "filename" : "5C@2x.png"
     },
     {
-      "idiom" : "universal",
+      "idiom" : "iphone",
+      "filename" : "5C@2x-1.png",
+      "subtype" : "retina4",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "iphone",
       "scale" : "3x",
-      "filename" : "iPadLaunch2Xnew.png"
+      "filename" : "5C@3x.png"
+    },
+    {
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "filename" : "Artboard 8@2x-1.png"
+    },
+    {
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "filename" : "Artboard 8@3x.png"
+    },
+    {
+      "idiom" : "watch",
+      "scale" : "2x",
+      "filename" : "Apple Watch 42mm@2x-1.png"
+    },
+    {
+      "idiom" : "watch",
+      "screenWidth" : "{130,145}",
+      "filename" : "Apple Watch 38mm@2x.png",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "watch",
+      "screenWidth" : "{146,165}",
+      "filename" : "Apple Watch 42mm@2x.png",
+      "scale" : "2x"
     }
   ],
   "info" : {

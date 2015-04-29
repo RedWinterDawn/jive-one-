@@ -62,12 +62,12 @@ CGFloat *_callOptionsWidth;
         _transferAnimationDuration             = TRANSFER_ANIMATION_DURATION;
         _keyboardAnimationDuration             = KEYBOARD_ANIMATION_DURATION;
         
-        self.warmTransfer.enabled   = false;
-        self.blindTransfer.enabled    = false;
-        self.swapBtn.enabled           = false;
-        self.mergeBtn.enabled         = false;
+        self.warmTransfer.enabled       = false;
+        self.blindTransfer.enabled      = false;
+        self.swapBtn.enabled            = false;
+        self.mergeBtn.enabled           = false;
         self.addBtn.enabled             = false;
-        self.finishTransferBtn.enabled = false;
+        self.finishTransferBtn.enabled  = false;
     }
     return self;
 }
@@ -75,9 +75,7 @@ CGFloat *_callOptionsWidth;
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [UIDevice currentDevice].proximityMonitoringEnabled = YES;
-        
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -299,7 +297,6 @@ CGFloat *_callOptionsWidth;
         state = JCCallOptionViewConferenceCallState;
     }
     else if (phoneManager.calls.count > 1) {
-        
         state = JCCallOptionViewMultipleCallsState;
         NSArray *calls = phoneManager.calls;
        

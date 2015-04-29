@@ -11,6 +11,9 @@
 #import <UIKit/UIKit.h>
 
 #define DEFAULT_SELECTED_BACKGROUND_COLOR [UIColor whiteColor]
+#define DEFAULT_ROUNDED_BUTTON_BORDER_WIDTH 0
+#define DEFAULT_ROUNDED_BUTTON_BORDER_COLOR [UIColor clearColor]
+
 
 @implementation JCRoundedButton
 
@@ -19,6 +22,8 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         _selectedBackgroundColor = DEFAULT_SELECTED_BACKGROUND_COLOR;
+        self.borderWidth = DEFAULT_ROUNDED_BUTTON_BORDER_WIDTH;
+        self.borderColor = DEFAULT_ROUNDED_BUTTON_BORDER_COLOR;
     }
     return self;
 }
@@ -27,7 +32,6 @@
 -(void)awakeFromNib
 {
     _defaultBackgroundColor = self.backgroundColor;
-//    self.selected = self.selected;
 }
 
 -(void)layoutSubviews
@@ -56,5 +60,30 @@
         self.backgroundColor = _defaultBackgroundColor; // [UIColor colorWithWhite:1 alpha:.2];
     }
 }
+
+#pragma mark - Setters -
+
+-(void)setBorderColor:(UIColor *)borderColor
+{
+    self.layer.borderColor = borderColor.CGColor;
+}
+
+-(void)setBorderWidth:(CGFloat)borderWidth
+{
+    self.layer.borderWidth = borderWidth;
+}
+
+#pragma mark - Getters -
+
+-(CGFloat)borderWidth
+{
+    return self.layer.borderWidth;
+}
+
+-(UIColor *)borderColor
+{
+    return [UIColor colorWithCGColor:self.layer.borderColor];
+}
+
 
 @end

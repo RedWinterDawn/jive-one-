@@ -14,6 +14,7 @@ NSString *const kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute = @"interco
 NSString *const kJCAppSettingsWifiOnlyAttribute = @"wifiOnly";
 NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
 NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
+NSString *const kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute = @"applicationSwitcherLastSelected";
 
 @interface JCAppSettings ()
 
@@ -64,6 +65,11 @@ NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
     [self setSettingBoolValue:vibrateOnRing forKey:kJCAppSettingsVibrateOnRingAttribute];
 }
 
+-(void)setAppSwitcherLastSelectedViewControllerIdentifier:(NSString *)lastSelectedViewControllerIdentifier
+{
+    [self setSettingStringValue:lastSelectedViewControllerIdentifier forKey:kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute];
+}
+
 #pragma mark - Getters -
 
 -(BOOL)isIntercomEnabled
@@ -89,6 +95,11 @@ NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
     return [self.userDefaults boolForKey:kJCAppSettingsVibrateOnRingAttribute];
 }
 
+-(NSString *)appSwitcherLastSelectedViewControllerIdentifier
+{
+    return [self.userDefaults valueForKey:kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute];
+}
+
 #pragma mark - Private -
 
 -(void)setSettingBoolValue:(BOOL)value forKey:(NSString *)key
@@ -97,6 +108,14 @@ NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
     NSUserDefaults *defaults = self.userDefaults;
     [defaults setBool:value forKey:key];
     [defaults synchronize];
+    [self didChangeValueForKey:key];
+}
+
+-(void)setSettingStringValue:(NSString *)value forKey:(NSString *)key
+{
+    [self willChangeValueForKey:key];
+    NSUserDefaults *defaults = self.userDefaults;
+    [defaults setValue:value forKey:key];
     [self didChangeValueForKey:key];
 }
 
