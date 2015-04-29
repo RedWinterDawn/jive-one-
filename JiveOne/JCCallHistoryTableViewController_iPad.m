@@ -59,6 +59,7 @@ NSString *const kJCCallHistoryVisualVoicemailViewControllerIdentifier = @"Visual
     viewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     viewController.view.frame = self.view.bounds;
     viewController.view.translatesAutoresizingMaskIntoConstraints = TRUE;
+    viewController.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:viewController.view];
     [self.view bringSubviewToFront:viewController.view];
 }
