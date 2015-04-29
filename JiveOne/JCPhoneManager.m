@@ -119,7 +119,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
  */
 -(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
 {
-    [UIApplication showStatus:@"Selecting Line..."];
+    
     self.completion = ^(BOOL success, NSError *error) {
         if (error){
             
@@ -186,6 +186,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
    
     // If we made it here, we do not have a line configuration, we need to request it. If the
     // request was successfull, we try to register.
+    [UIApplication showStatus:@"Selecting Line..."];
     [LineConfiguration downloadLineConfigurationForLine:line completion:^(BOOL success, NSError *error) {
         if (success) {
             [self registerWithLine:line];
@@ -243,7 +244,9 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 -(void)sipHandler:(JCSipManager *)sipHandler didFailToRegisterWithError:(NSError *)error
 {
     NSLog(@"Phone Manager Registration failure: %@", error.description);
-    [UIApplication hideStatus];
+    if(error.code != JC_SIP_ALREADY_REGISTERING) {
+        [UIApplication hideStatus];
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegistrationFailureNotification object:self];
     [self reportError:error];
 }
