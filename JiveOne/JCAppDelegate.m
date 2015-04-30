@@ -30,7 +30,7 @@
 #import "JCSocket.h"
 #import "JCSocketLogger.h"
 #import "UIDevice+Additions.h"
-#import <Appsee/Appsee.h>
+
 
 #import "PBX.h"
 #import "Line.h"

@@ -24,7 +24,6 @@
     #import <MagicalRecord/CoreData+MagicalRecord.h>
     #import <MobileCoreServices/MobileCoreServices.h>
     #import <AFNetworking/AFNetworking.h>
-    #import <NewRelicAgent/NewRelic.h>
 
     // Singletons
     #import "Constants.h"
