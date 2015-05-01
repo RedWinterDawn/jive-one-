@@ -400,7 +400,6 @@
                          
                          [activityViewController removeFromParentViewController];
                          [activityViewController.view removeFromSuperview];
-                         self.activityViewController = nil;
                          
                          [_statusBarView removeFromSuperview];
                          _statusBarView = nil;

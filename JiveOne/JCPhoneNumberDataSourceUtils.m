@@ -65,9 +65,10 @@
 
 +(BOOL)phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber isEqual:(id)object
 {
-    if (![phoneNumber conformsToProtocol:@protocol(JCPhoneNumberDataSource)] || ![object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
+    if (![phoneNumber conformsToProtocol:@protocol(JCPhoneNumberDataSource)] || ![object conformsToProtocol:@protocol(JCPhoneNumberDataSource)] || ![object respondsToSelector:@selector(nationalNumber)]) {
         return FALSE;
     }
+    
     return (phoneNumber.nationalNumber.integerValue == ((id<JCPhoneNumberDataSource>)object).nationalNumber.integerValue);
 }
 
