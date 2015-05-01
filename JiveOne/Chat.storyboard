@@ -8,12 +8,14 @@
         <!--Conversation View Controller-->
         <scene sceneID="d6R-5W-PMC">
             <objects>
-                <viewController id="pWz-tY-54G" customClass="JCConversationViewController" sceneMemberID="viewController">
+                <viewController autoresizesArchivedViewToFullSize="NO" id="pWz-tY-54G" customClass="JCConversationViewController" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="h7Q-pH-F2P"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="moY-jo-RbA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2016" y="-138"/>
+            <point key="canvasLocation" x="2149.5" y="-138"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="bhW-Ox-rfs">
@@ -57,12 +59,12 @@
                         <color key="barTintColor" red="0.0" green="0.46666666670000001" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="pWz-tY-54G" kind="relationship" relationship="rootViewController" id="jYw-1W-xMS"/>
+                        <segue destination="pWz-tY-54G" kind="relationship" relationship="rootViewController" id="xMT-Fn-SCd"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3T3-cd-drw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1234.5" y="-752"/>
+            <point key="canvasLocation" x="1210.5" y="-615"/>
         </scene>
         <!--New Message-->
         <scene sceneID="Dh4-ch-BlW">
@@ -219,7 +221,7 @@
                                     <outlet property="date" destination="5pa-Vh-mNq" id="9cE-dR-Myg"/>
                                     <outlet property="detail" destination="qVa-e2-mlP" id="SMI-Hq-QQC"/>
                                     <outlet property="name" destination="hYA-nm-SF2" id="QEy-Rq-mIY"/>
-                                    <segue destination="pWz-tY-54G" kind="showDetail" identifier="LoadMessageGroup" id="snu-X8-jIe"/>
+                                    <segue destination="pWz-tY-54G" kind="showDetail" identifier="LoadMessageGroup" id="nzs-3q-3N3"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -260,7 +262,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="2E9-x3-8Sc"/>
-        <segue reference="snu-X8-jIe"/>
+        <segue reference="nzs-3q-3N3"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>
