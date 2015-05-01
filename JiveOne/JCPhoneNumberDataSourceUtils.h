@@ -11,8 +11,8 @@
 @interface JCPhoneNumberDataSourceUtils : NSObject
 
 +(BOOL)phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber containsT9Keyword:(NSString *)keyword;
-
 +(BOOL)phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber containsKeyword:(NSString *)keyword;
++(BOOL)phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber isEqualToPhoneNumber:(id<JCPhoneNumberDataSource>)object;
 
 +(BOOL)phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber isEqual:(id)object;
 

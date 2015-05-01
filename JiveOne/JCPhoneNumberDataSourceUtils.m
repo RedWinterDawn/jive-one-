@@ -8,8 +8,10 @@
 
 #import "JCPhoneNumberDataSourceUtils.h"
 
+#import <libPhoneNumber-iOS/NBPhoneNumber.h>
 #import <libPhoneNumber-iOS/NBPhoneNumberUtil.h>
 #import <libPhoneNumber-iOS/NBAsYouTypeFormatter.h>
+#import "JCPhoneNumber.h"
 
 @implementation JCPhoneNumberDataSourceUtils
 
@@ -43,17 +45,31 @@
     return NO;
 }
 
-+(BOOL)phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber isEqual:(id)object
++(BOOL)phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber isEqualToPhoneNumber:(id<JCPhoneNumberDataSource>)otherPhoneNumber
 {
-    if (![object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
+    if (![phoneNumber conformsToProtocol:@protocol(JCPhoneNumberDataSource)] || ![otherPhoneNumber conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
         return FALSE;
     }
     
-    id<JCPhoneNumberDataSource> otherPhoneNumber = (id<JCPhoneNumberDataSource>)object;
-    if ([phoneNumber.name isEqualToString:otherPhoneNumber.name] && [phoneNumber.dialableNumber isEqualToString:otherPhoneNumber.dialableNumber]) {
-        return TRUE;
+    NSInteger number            = phoneNumber.nationalNumber.integerValue;
+    NSInteger otherNumber       = otherPhoneNumber.nationalNumber.integerValue;
+    NSCharacterSet *whitespace  = [NSCharacterSet whitespaceCharacterSet];
+    NSString *name              = phoneNumber.name;
+    NSString *otherName         = otherPhoneNumber.name;
+    NSLocale *locale             = name.locale;
+    
+    name = [[name lowercaseStringWithLocale:locale] stringByTrimmingCharactersInSet:whitespace];
+    otherName = [[otherName lowercaseStringWithLocale:locale] stringByTrimmingCharactersInSet:whitespace];
+    return otherName ? (number == otherNumber && [name isEqualToString:otherName]) : (number == otherNumber);
+}
+
++(BOOL)phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber isEqual:(id)object
+{
+    if (![phoneNumber conformsToProtocol:@protocol(JCPhoneNumberDataSource)] || ![object conformsToProtocol:@protocol(JCPhoneNumberDataSource)] || ![object respondsToSelector:@selector(nationalNumber)]) {
+        return FALSE;
     }
-    return FALSE;
+    
+    return (phoneNumber.nationalNumber.integerValue == ((id<JCPhoneNumberDataSource>)object).nationalNumber.integerValue);
 }
 
 +(NSString *)t9StringForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber

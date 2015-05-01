@@ -24,7 +24,7 @@
         NSString *dialString = self.formattedPhoneNumberLabel.dialString;
         JCPhoneBook *phoneBook = self.phoneBook;
         Line *line = self.authenticationManager.line;
-        id <JCPhoneNumberDataSource> phoneNumber = [phoneBook phoneNumberForNumber:dialString forPbx:line.pbx excludingLine:line];
+        id <JCPhoneNumberDataSource> phoneNumber = [phoneBook phoneNumberForNumber:dialString name:nil forPbx:line.pbx excludingLine:line];
         [_delegate transferViewController:self shouldDialNumber:phoneNumber];
     }
 }

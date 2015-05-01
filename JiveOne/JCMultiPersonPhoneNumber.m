@@ -28,7 +28,7 @@ NSString *const kMultiPersonPhoneNumberFormattingThreePlusPeople = @"%@,...+%li"
         [self validatePhoneNumbersArray:phoneNumbers number:number];
         name = [self nameForNumbers:phoneNumbers];
     }
-    return [[JCMultiPersonPhoneNumber alloc] initWithName:name number:number phoneNumbers:phoneNumbers];
+    return [[[self class] alloc] initWithName:name number:number phoneNumbers:phoneNumbers];
 }
 
 #pragma mark - Private -
@@ -56,16 +56,21 @@ NSString *const kMultiPersonPhoneNumberFormattingThreePlusPeople = @"%@,...+%li"
 
 +(NSString *)nameForNumbers:(NSArray *)phoneNumbers
 {
-    NSString *firstName = [self nameFromPhoneNumber:phoneNumbers.firstObject];
+    id<JCPhoneNumberDataSource> phoneNumber = phoneNumbers.firstObject;
+    NSString *firstName = [self nameFromPhoneNumber:phoneNumber];
     NSUInteger count = phoneNumbers.count;
     if (count == 1) {
-        return firstName;
+        return firstName ? firstName : nil;
     }
     if (count == 2) {
-        NSString *lastName = [self nameFromPhoneNumber:phoneNumbers.lastObject];
-        return [NSString stringWithFormat:kMultiPersonPhoneNumberFormattingTwoPeople, firstName, lastName];
+        id<JCPhoneNumberDataSource> otherPhoneNumber = phoneNumbers.lastObject;
+        NSString *lastName = [self nameFromPhoneNumber:otherPhoneNumber];
+        if ([firstName isEqualToString:lastName] && [phoneNumber.name isEqualToString:otherPhoneNumber.name]) {
+            return phoneNumber.name;
+        }
+        return lastName ? [NSString stringWithFormat:kMultiPersonPhoneNumberFormattingTwoPeople, firstName, lastName] : (firstName ? firstName : nil);
     }
-    return [NSString stringWithFormat:kMultiPersonPhoneNumberFormattingThreePlusPeople, firstName, (long)count-1];
+    return firstName ? [NSString stringWithFormat:kMultiPersonPhoneNumberFormattingThreePlusPeople, firstName, (long)count-1] : nil;
 }
 
 -(instancetype)initWithName:(NSString *)name number:(NSString *)number phoneNumbers:(NSArray *)phoneNumbers
