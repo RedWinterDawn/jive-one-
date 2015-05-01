@@ -7,6 +7,7 @@
 //
 
 #import "JCFetchedResultsTableViewController.h"
+#import "JCConversationGroupObject.h"
 
 @interface JCConversationsTableViewController : UITableViewController
 
@@ -15,7 +16,7 @@
 
 @property (nonatomic) BOOL showTopCellSeperator;
 
-- (id<NSObject>)objectAtIndexPath:(NSIndexPath *)indexPath;
-- (NSIndexPath *)indexPathOfObject:(id<NSObject>)object;
+- (id<JCConversationGroupObject>)objectAtIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)indexPathOfObject:(id<JCConversationGroupObject>)object;
 
 @end

@@ -38,66 +38,36 @@
     return self;
 }
 
-#pragma mark - Public Methods -
+#pragma mark - Phone number search -
 
--(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number forPbx:(PBX *)pbx excludingLine:(Line *)line;
-{
-    return [self phoneNumberForName:nil number:number forPbx:pbx excludingLine:line];
-}
+//  These methods search the combined phonebook of Jive contacts, local contacts and the local
+//  address book contacts, and returns a phone number object that represents the phone number for
+//  that requested name or name and number. This logic is used to identify a phone number and place
+//  it into a object to provide its name, t9 value and formated and dialable value. If multiple
+//  contacts were found, it returns a JCMultiPhoneNumber object that represents a phone number.
 
--(id<JCPhoneNumberDataSource>)phoneNumberForName:(NSString *)name number:(NSString *)number forPbx:(PBX *)pbx excludingLine:(Line *)line;
+-(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number name:(NSString *)name forPbx:(PBX *)pbx excludingLine:(Line *)line;
 {
+    
+    
     // We must at least have a number. If we do not have a number, we return nil.
     if (!number) {
         return nil;
     }
     
+    // Check if the number is voicemail
     if ([number isEqual:@"*99"]) {
         return [JCVoicemailNumber new];
     }
     
-    // Check if the number is the extension for a jive contact. Since extensions are unique to a
-    // line, and jive contacts represent a line rather than an person entity, line's name
-    // representing the caller id is unique to the number, we only search on the basis of the number.
-    // if we have found it, we do not need to search the rest of the phone book.
-    Extension *extension = nil;
-    if (line) {
-        extension = [Extension extensionForNumber:number onPbx:pbx excludingLine:line];
-    } else {
-        extension = [Extension extensionForNumber:number onPbx:pbx];
-    }
-    if (extension) {
-        return extension;
+    // Check if the number is a jive contact.
+    id<JCPhoneNumberDataSource> phoneNumber = [self extensionForNumber:number pbx:pbx excludingLine:line];
+    if (phoneNumber) {
+        return phoneNumber;
     }
     
-    // Get phone numbers from the address book for the given name and number. Since its possible to
-    // have multiple contacts with the same number, we work with them as an array.
-    NSMutableArray *phoneNumbers = [self phoneNumbersForName:name number:number].mutableCopy;
-    
-    // If we have a local contact that matches one of our address contacts we swap the address book
-    // contact for the local contact, and linke the addresbook record to local contact.
-    NSArray *localContacts = [self localContactsForName:name number:number];
-    for (LocalContact *localContact in localContacts) {
-        if ([phoneNumbers containsObject:localContact]) {
-            NSInteger index = [phoneNumbers indexOfObject:localContact];
-            JCAddressBookNumber *number = [phoneNumbers objectAtIndex:index];
-            localContact.phoneNumber = number;
-            [phoneNumbers replaceObjectAtIndex:index withObject:localContact];
-        } else {
-            [phoneNumbers addObject:localContact];
-        }
-    }
-    
-    // if we have results determine if we need to return a multi phone number object or a single
-    // phone number object.
-    if (phoneNumbers.count > 0) {
-        if (phoneNumbers.count > 1) {
-            return [JCMultiPersonPhoneNumber multiPersonPhoneNumberWithPhoneNumbers:phoneNumbers];
-        }
-        else {
-            return phoneNumbers.firstObject;
-        }
-    }
+    // Check if the number is a local contact from the local contacts address book.
+    return [self localPhoneNumberForPhoneNumber:[JCPhoneNumber phoneNumberWithName:name number:number]context:pbx.managedObjectContext];
     
     // If we did not get a phone number object, we have a unknown number. If we have the name, we
     // can return a named number, otherwise we return an unknown number.
@@ -106,6 +76,95 @@
     }
     return [JCUnknownNumber unknownNumberWithNumber:number];
 }
+
+/**
+ * Check if the number is the extension for a jive contact. Since extensions are unique to a line,
+ * and jive contacts represent a line rather than an person entity, line's name representing the
+ * caller id is unique to the number, we only search on the basis of the number. if we have found
+ * it, we do not need to search the rest of the phone book.
+ */
+-(id<JCPhoneNumberDataSource>)extensionForNumber:(NSString *)number pbx:(PBX *)pbx excludingLine:(Line *)line
+{
+    // We must at least have a number. If we do not have a number, we return nil.
+    if (!number) {
+        return nil;
+    }
+    
+    if (line) {
+        return [Extension extensionForNumber:number onPbx:pbx excludingLine:line];
+    }
+    
+    return [Extension extensionForNumber:number onPbx:pbx];
+}
+
+-(id<JCPhoneNumberDataSource>)localPhoneNumberForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber context:(NSManagedObjectContext *)context
+{
+    // Get phone numbers from the address book for the given name and number. Since its possible to
+    // have multiple contacts with the same number, we work with them as an array.
+    NSMutableArray *phoneNumbers = [_addressBook fetchNumbersWithPhoneNumber:phoneNumber sortedByKey:NSStringFromSelector(@selector(number)) ascending:NO].mutableCopy;
+    
+    // If we have a local contact that matches one of our address contacts we swap the address book
+    // contact for the local contact, and linke the addresbook record to local contact.
+    //[self mapLocalContactsForPhoneNumbers:phoneNumbers number:number name:name context:context];
+    
+    NSUInteger count = phoneNumbers.count;
+    if (count > 1) {
+        return [JCMultiPersonPhoneNumber multiPersonPhoneNumberWithPhoneNumbers:phoneNumbers];
+    } else if (count > 0) {
+        return phoneNumbers.firstObject;
+    }
+    return phoneNumber;
+}
+
+//-(void)mapLocalContactsForPhoneNumbers:(NSMutableArray *)phoneNumbers number:(NSString *)number name:(NSString *)name context:(NSManagedObjectContext *)context
+//{
+//    if (!context) {
+//        return;
+//    }
+//    
+//    NSArray *localContacts = [self localContactsForName:name number:number context:context];
+//    for (LocalContact *localContact in localContacts) {
+//        if ([phoneNumbers containsObject:localContact]) {
+//            NSInteger index = [phoneNumbers indexOfObject:localContact];
+//            JCAddressBookNumber *number = [phoneNumbers objectAtIndex:index];
+//            localContact.phoneNumber = number;
+//            [phoneNumbers replaceObjectAtIndex:index withObject:localContact];
+//        } else {
+//            [phoneNumbers addObject:localContact];
+//        }
+//    }
+//}
+
+#pragma mark Private
+
+-(NSArray *)localContactsForName:(NSString *)name number:(NSString *)number context:(NSManagedObjectContext *)context
+{
+    NSPredicate *predicate = [self predicateForName:name
+                                            nameKey:NSStringFromSelector(@selector(name))
+                                             number:number
+                                          numberKey:NSStringFromSelector(@selector(number))];
+    
+    // Search the local contacts history stored in core data, to see if it tis a local contact which
+    // we already know, and have a history with, so we can link it to that history.
+    return [LocalContact MR_findAllWithPredicate:predicate inContext:context];
+}
+
+-(NSPredicate *)predicateForName:(NSString *)name nameKey:(NSString *)nameKey number:(NSString *)number numberKey:(NSString *)numberKey
+{
+    static NSString *predicateString = @"%K CONTAINS[cd] %@";
+    static NSString *predicateNumberString = @"%K CONTAINS[cd] %@";
+    
+    if (!name) {
+        return [NSPredicate predicateWithFormat:predicateNumberString, numberKey, number];
+    }
+    
+    NSArray *predicates = @[[NSPredicate predicateWithFormat:predicateNumberString, numberKey, number],
+                            [NSPredicate predicateWithFormat:predicateString, nameKey, name]];
+    
+    return [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
+}
+
+#pragma mark - Keyword Search -
 
 -(void)phoneNumbersWithKeyword:(NSString *)keyword forLine:(Line *)line sortedByKey:sortedByKey ascending:(BOOL)ascending completion:(void (^)(NSArray *phoneNumbers))completion
 {
@@ -153,44 +212,6 @@
     return phoneNumbers;
 }
 
-#pragma mark - Private -
-
--(NSArray *)phoneNumbersForName:(NSString *)name number:(NSString *)number
-{
-    NSPredicate *predicate = [self predicateForName:name
-                                            nameKey:NSStringFromSelector(@selector(name))
-                                             number:number
-                                          numberKey:NSStringFromSelector(@selector(dialableNumber))];
-    
-    return [_addressBook fetchNumbersWithPredicate:predicate sortedByKey:NSStringFromSelector(@selector(name)) ascending:YES];
-}
-
--(NSArray *)localContactsForName:(NSString *)name number:(NSString *)number
-{
-    NSPredicate *predicate = [self predicateForName:name
-                                            nameKey:NSStringFromSelector(@selector(name))
-                                             number:number
-                                          numberKey:NSStringFromSelector(@selector(number))];
-    
-    // Search the local contacts history stored in core data, to see if it tis a local contact which
-    // we already know, and have a history with, so we can link it to that history.
-    return [LocalContact MR_findAllWithPredicate:predicate];
-}
-
--(NSPredicate *)predicateForName:(NSString *)name nameKey:(NSString *)nameKey number:(NSString *)number numberKey:(NSString *)numberKey
-{
-    static NSString *predicateString = @"%K CONTAINS[cd] %@";
-    static NSString *predicateNumberString = @"%K = %@";
-    
-    if (!name) {
-        return [NSPredicate predicateWithFormat:predicateNumberString, numberKey, number];
-    }
-    
-    NSArray *predicates = @[[NSPredicate predicateWithFormat:predicateNumberString, numberKey, number],
-                            [NSPredicate predicateWithFormat:predicateString, nameKey, name]];
-    
-    return [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
-}
 
 
 @end
