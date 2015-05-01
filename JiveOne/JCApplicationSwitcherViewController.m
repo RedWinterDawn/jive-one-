@@ -27,6 +27,8 @@
 
 @implementation JCApplicationSwitcherViewController
 
+@dynamic delegate;
+
 /**
  * Override to retreive the child view controllers loaded from the nib, and ensure that they are stored in a local 
  * array, but not attached as children view controllers yet.

@@ -97,30 +97,6 @@
     return [Extension extensionForNumber:number onPbx:pbx];
 }
 
-//-(void)localPhoneNumberForNumber:(NSNumber *)number name:(NSString *)name context:(NSManagedObjectContext *)context completion:(void (^)(id<JCPhoneNumberDataSource> phoneNumber))completion
-//{
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-//        __block id<JCPhoneNumberDataSource> phoneNumber = [self localPhoneNumberForNumber:number name:name context:localContext];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            
-//            if ([phoneNumber isKindOfClass:[LocalContact class]]) {
-//                LocalContact *contact = (LocalContact *)phoneNumber;
-//                JCAddressBookNumber *addressBookNumber = contact.phoneNumber;
-//                contact = (LocalContact *)[context objectWithID:contact.objectID];
-//                contact.phoneNumber = addressBookNumber;
-//                if (completion) {
-//                    completion(contact);
-//                }
-//            } else {
-//                if (completion) {
-//                    completion(phoneNumber);
-//                }
-//            }
-//        });
-//    });
-//}
-
 -(id<JCPhoneNumberDataSource>)localPhoneNumberForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber context:(NSManagedObjectContext *)context
 {
     // Get phone numbers from the address book for the given name and number. Since its possible to

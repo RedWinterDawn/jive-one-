@@ -27,8 +27,6 @@
 - (id<JCConversationGroupObject>)objectAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathForObject:(id<JCConversationGroupObject>)object;
 
-- (void)updateNameForObject:(id<JCConversationGroupObject>)object;
-
 @end
 
 @protocol JCConversationGroupsResultsControllerDelegate <NSObject>
