@@ -62,10 +62,9 @@
     [self checkParticipants];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidDisappear:animated];
-    
+    [super viewWillDisappear:animated];
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         NSArray *messages = [Message MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];
         for (Message *message in messages) {
@@ -75,6 +74,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
     }];
 }
+
 
 -(void)didReceiveMemoryWarning
 {
@@ -169,10 +169,8 @@
         if (name) {
             self.title = name;
         } else {
-            JCPhoneBook *phoneBook = self.phoneBook;
-            PBX *pbx = self.authenticationManager.pbx;
-            id<JCPhoneNumberDataSource> phoneNumber = [phoneBook phoneNumberForNumber:person.number forPbx:pbx excludingLine:nil];
-            self.title = phoneNumber.titleText;
+            /*id<JCPhoneNumberDataSource> phoneNumber = [self.phoneBook localPhoneNumberForNumber:person.number name:nil context:[NSManagedObjectContext MR_defaultContext]];
+            self.title = phoneNumber.titleText;*/
         }
     } else {
         self.title = person.name;

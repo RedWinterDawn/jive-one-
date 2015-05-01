@@ -64,8 +64,8 @@ NSString *const kJCSMSMessageManagerTypeSMSMessageKey       = @"smsmessage";
         return;
     }
     
-    NSString *did = [data stringValueForKey:kJCSMSMessageManagerUID];
-    DID *didID = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(did)) withValue:did];
+    NSString *didId = [data stringValueForKey:kJCSMSMessageManagerUID];
+    DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(did)) withValue:didId];
     
     NSString *fromNumber = [data stringValueForKey:@"fromNumber"];
     JCUnknownNumber *person = [JCUnknownNumber new];

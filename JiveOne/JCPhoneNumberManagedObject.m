@@ -82,4 +82,9 @@ NSString *const kPersonT9AttributeKey = @"t9";
                                    containsT9Keyword:keyword];
 }
 
+-(BOOL)isEqualToPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    return [JCPhoneNumberDataSourceUtils phoneNumber:self isEqualToPhoneNumber:phoneNumber];
+}
+
 @end

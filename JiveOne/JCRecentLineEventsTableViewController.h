@@ -10,4 +10,6 @@
 
 @interface JCRecentLineEventsTableViewController : JCFetchedResultsTableViewController
 
+- (void)reloadTable;
+
 @end

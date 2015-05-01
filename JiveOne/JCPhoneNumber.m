@@ -11,19 +11,47 @@
 
 @implementation JCPhoneNumber
 
++(NBPhoneNumberUtil *)phoneNumberUtilities
+{
+    static NBPhoneNumberUtil *phoneNumberUtil;
+    static dispatch_once_t pred;
+    dispatch_once(&pred, ^{
+        phoneNumberUtil = [NBPhoneNumberUtil new];
+    });
+    return phoneNumberUtil;
+}
+
 +(instancetype)phoneNumberWithName:(NSString *)name number:(NSString *)number
 {
-    return [[JCPhoneNumber alloc] initWithName:name number:number];
+    return [[[self class] alloc] initWithName:name number:number];
 }
 
 -(instancetype)initWithName:(NSString *)name number:(NSString *)number
 {
+    NSString *extension;
+    if ([number rangeOfString:@";"].location != NSNotFound)
+    {
+        NSArray *components = [number componentsSeparatedByString:@";"];
+        if (components.count == 2) {
+            number = components.firstObject;
+            extension = components.lastObject;
+        }
+    }
+    
+    __autoreleasing NSError *error;
+    NBPhoneNumber *phoneNumber = [[[self class] phoneNumberUtilities] parse:number defaultRegion:@"US" error:&error];
     self = [super init];
     if (self) {
         if (!number) {
             return nil;
         }
-        _number = [number copy];
+        _number                         = [number copy];
+        _countryCode                    = phoneNumber.countryCode;
+        _nationalNumber                 = phoneNumber.nationalNumber;
+        _extension                      = extension ? extension : phoneNumber.extension;
+        _countryCodeSource              = phoneNumber.countryCodeSource;
+        _preferredDomesticCarrierCode   = phoneNumber.preferredDomesticCarrierCode;
+        _italianLeadingZero             = phoneNumber.italianLeadingZero;
         
         if (name) {
             _name = [name copy];
@@ -86,6 +114,12 @@
 {
     return [JCPhoneNumberDataSourceUtils phoneNumber:self
                                    containsT9Keyword:keyword];
+}
+
+-(BOOL)isEqualToPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+                                             isEqualToPhoneNumber:phoneNumber];
 }
 
 -(BOOL)isEqual:(id)object
