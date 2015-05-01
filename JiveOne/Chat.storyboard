@@ -13,7 +13,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="moY-jo-RbA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2003" y="-694"/>
+            <point key="canvasLocation" x="2016" y="-138"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="bhW-Ox-rfs">
@@ -62,7 +62,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3T3-cd-drw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1246" y="-694"/>
+            <point key="canvasLocation" x="1234.5" y="-752"/>
         </scene>
         <!--New Message-->
         <scene sceneID="Dh4-ch-BlW">
@@ -159,7 +159,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yld-9h-Svs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2003" y="47"/>
+            <point key="canvasLocation" x="2829" y="-138"/>
         </scene>
         <!--Messages-->
         <scene sceneID="l0x-Py-XZY">
@@ -219,7 +219,7 @@
                                     <outlet property="date" destination="5pa-Vh-mNq" id="9cE-dR-Myg"/>
                                     <outlet property="detail" destination="qVa-e2-mlP" id="SMI-Hq-QQC"/>
                                     <outlet property="name" destination="hYA-nm-SF2" id="QEy-Rq-mIY"/>
-                                    <segue destination="zOB-gc-we6" kind="showDetail" id="yI4-8z-wof"/>
+                                    <segue destination="pWz-tY-54G" kind="showDetail" identifier="LoadMessageGroup" id="snu-X8-jIe"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -259,7 +259,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yI4-8z-wof"/>
+        <segue reference="2E9-x3-8Sc"/>
+        <segue reference="snu-X8-jIe"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>
