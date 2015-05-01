@@ -8,7 +8,7 @@
 
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
-#import <NewRelicAgent/NewRelic.h>
+
 #import <Parse/Parse.h>
 #import "AFNetworkActivityIndicatorManager.h"
 #import "JCLoginViewController.h"
@@ -17,6 +17,7 @@
 #import "JCVersion.h"
 #import "LoggerClient.h"
 #import "JCLinePickerViewController.h"
+#import <Crashlytics/Crashlytics.h>
 
 #import "JCPhoneManager.h"
 #import "JCPresenceManager.h"
@@ -29,7 +30,7 @@
 #import "JCSocket.h"
 #import "JCSocketLogger.h"
 #import "UIDevice+Additions.h"
-#import <Appsee/Appsee.h>
+
 
 #import "PBX.h"
 #import "Line.h"
@@ -421,18 +422,12 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    LOG_Info();
-//    NSLog(LOGGER_TARGET);
-    /*
-     * New Relic
-     */
-    [NewRelicAgent startWithApplicationToken:@"AA6303a3125152af3660d1e3371797aefedfb29761"];
+
+    [Crashlytics startWithAPIKey:@"dd3685563712dc20cfb83957dedcfbe78fbb2be4"];
+    
     
     [Parse setApplicationId:@"bQTDjU0QtxWVpNQp2yJp7d9ycntVZdCXF5QrVH8q"
                   clientKey:@"ec135dl8Xfu4VAUXz0ub6vt3QqYnQEur2VcMH1Yf"];
-    
-
-    [Appsee start:@"a57e92aea6e541529dc5227171341113"];
     
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
