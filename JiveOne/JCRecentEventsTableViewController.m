@@ -13,6 +13,7 @@
 #import "JCConversationTableViewCell.h"
 #import "Message.h"
 #import "PBX.h"
+#import "JCAuthenticationManager.h"
 
 NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationCell";
 
@@ -27,6 +28,13 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 @end
 
 @implementation JCRecentEventsTableViewController
+
+-(void)reloadTable
+{
+    self.conversationGroupsResultsController = nil;
+    self.tableData = nil;
+    [super reloadTable];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
