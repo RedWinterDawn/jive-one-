@@ -61,6 +61,11 @@ NSString *const kApplicationSwitcherSettingsIdentifier   = @"Settings";
     
     UITableView *tableView = self.tableView;
     UITableViewCell *tableViewCell = [self cellForIdentifier:identifier];
+    NSString *sanityCheck = [self identifierForTableViewCell:tableViewCell];
+    if (![identifier isEqualToString:sanityCheck]) {
+        identifier = sanityCheck;
+    }
+
     NSIndexPath *indexPath = [tableView indexPathForCell:tableViewCell];
     [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     [self performSegueWithIdentifier:identifier sender:tableViewCell];
