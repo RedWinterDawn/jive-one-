@@ -12,6 +12,7 @@
 #import "JCConversationTableViewCell.h"
 #import "Message.h"
 #import "PBX.h"
+#import "JCAuthenticationManager.h"
 
 NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationCell";
 
@@ -26,6 +27,13 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 @end
 
 @implementation JCRecentEventsTableViewController
+
+-(void)reloadTable
+{
+    _conversationGroupsResultsController = nil;
+    _tableData = nil;
+    [super reloadTable];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -116,8 +124,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 -(JCConversationGroupsResultsController *)conversationGroupResultsController
 {
     if (!_conversationGroupsResultsController){
-        JCAuthenticationManager *authManager = [JCAuthenticationManager sharedInstance];
-        PBX *pbx = authManager.pbx;
+        PBX *pbx = self.authenticationManager.pbx;
         if (pbx && [pbx smsEnabled])
         {
             NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:pbx.managedObjectContext];

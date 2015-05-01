@@ -29,7 +29,12 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTable:) name:kJCPresenceManagerLinesChangedNotification object:[JCPresenceManager sharedManager]];
+        JCAuthenticationManager *authenticationManager = self.authenticationManager;
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
+        [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
+        [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
+        [center addObserver:self selector:@selector(reloadTable) name:kJCPresenceManagerLinesChangedNotification object:[JCPresenceManager sharedManager]];
     }
     return self;
 }
@@ -94,8 +99,9 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 
 #pragma mark - Notification Handlers -
          
-- (void)reloadTable:(NSNotification *)notification
+- (void)reloadTable
 {
+    self.fetchedResultsController = nil;
     [self.tableView reloadData];
 }
 
