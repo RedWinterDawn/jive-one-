@@ -56,6 +56,8 @@
     _overlayNavigationBar.translucent = self.navigationBar.translucent;
     _overlayNavigationBar.tintColor = self.navigationBar.tintColor;
     _overlayNavigationBar.tintAdjustmentMode = self.navigationBar.tintAdjustmentMode;
+    _overlayNavigationBar.barTintColor = self.navigationBar.barTintColor;
+    _overlayNavigationBar.barStyle = self.navigationBar.barStyle;
     
     [self.view addSubview:_overlayNavigationBar];
     
