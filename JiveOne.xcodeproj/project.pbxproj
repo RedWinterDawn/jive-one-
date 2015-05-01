@@ -267,9 +267,8 @@
 		B70EAB3D1AD32B1E00305F43 /* JCDidTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */; };
 		B70EAB3F1AD3302000305F43 /* JCAuthenticationManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */; };
 		B73690D41AE6F7BC0025071C /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B73690D31AE6F7BC0025071C /* Contacts.storyboard */; };
-		B7442AF41AEFF8B800517A56 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
-		B7442AF51AEFF8B800517A56 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
+		B7619F291AF298D80075CF2D /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7619F281AF298D80075CF2D /* Crashlytics.framework */; };
 		B79F55551AEF1DF900E4768F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
 		B79F55561AEF1DF900E4768F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
 		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
@@ -760,6 +759,7 @@
 		B73690D31AE6F7BC0025071C /* Contacts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Contacts.storyboard; sourceTree = "<group>"; };
 		B75899741A9FEA320025D5AD /* JCMessagesMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagesMenuCell.h; sourceTree = "<group>"; };
 		B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesMenuCell.m; sourceTree = "<group>"; };
+		B7619F281AF298D80075CF2D /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		B7AEDD561ABA08670063033E /* JCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionSheet.h; sourceTree = "<group>"; };
 		B7AEDD571ABA08670063033E /* JCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionSheet.m; sourceTree = "<group>"; };
 		B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -868,6 +868,7 @@
 				B7DFAA371AC0CDA50033ACFB /* CoreMedia.framework in Frameworks */,
 				B79F55561AEF1DF900E4768F /* CoreGraphics.framework in Frameworks */,
 				9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */,
+				B7619F291AF298D80075CF2D /* Crashlytics.framework in Frameworks */,
 				279A4E1219DA87DA00E8AB7B /* libstdc++.dylib in Frameworks */,
 				279A4E0E19DA873200E8AB7B /* OpenGLES.framework in Frameworks */,
 				279A4E0C19DA870600E8AB7B /* libresolv.dylib in Frameworks */,
@@ -1064,6 +1065,7 @@
 		275F4A5018AD0FBC00D2F069 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B7619F281AF298D80075CF2D /* Crashlytics.framework */,
 				5D85A97D1ACF933200991A97 /* Bolts.framework */,
 				5D85A97E1ACF933200991A97 /* Crashlytics.framework */,
 				5D85A97F1ACF933200991A97 /* Parse.framework */,
@@ -2102,7 +2104,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "SCRIPT=`/usr/bin/find \"${SRCROOT}\" -name newrelic_postbuild.sh | head -n 1`\n\n/bin/sh \"${SCRIPT}\" \"AA6303a3125152af3660d1e3371797aefedfb29761\"";
+			shellScript = "./Crashlytics.framework/run dd3685563712dc20cfb83957dedcfbe78fbb2be4 3db37eb4f8adc25e3a968d17d6b92daaa2afa2e77db0b7089c54b7f7a5bef8d7";
 		};
 		F917AE6DB1E89C27EF2B2073 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

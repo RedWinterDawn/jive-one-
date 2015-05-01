@@ -1828,7 +1828,7 @@
                                             <constraint firstAttribute="width" secondItem="qx4-PQ-K1f" secondAttribute="height" multiplier="1:1" id="Al6-Mt-NNs"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gRx-8z-M5N">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gRx-8z-M5N">
                                         <rect key="frame" x="10" y="61" width="240" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="40" id="MUQ-q6-7oy"/>
