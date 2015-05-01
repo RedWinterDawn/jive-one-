@@ -22,11 +22,23 @@
 
 @property (nonatomic, readonly) JCAddressBook *addressBook;
 
-// Search for a specific phone number in our Jive and Local Contacts Phone books.
--(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number forPbx:(PBX *)pbx excludingLine:(Line *)line;
+// Search for a specific phone number and name in our Jive and Local Contacts phone books. If no
+// contact is found
+-(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number
+                                              name:(NSString *)name
+                                            forPbx:(PBX *)pbx
+                                     excludingLine:(Line *)line;
 
-// Search for a specific phone number and name in our Jive and Local Contacts phone books.
--(id<JCPhoneNumberDataSource>)phoneNumberForName:(NSString *)name number:(NSString *)number forPbx:(PBX *)pbx excludingLine:(Line *)line;
+// Search for a specific extension in our jive contacts. If none is found, a nil result is returned.
+-(id<JCPhoneNumberDataSource>)extensionForNumber:(NSString *)number
+                                             pbx:(PBX *)pbx
+                                   excludingLine:(Line *)line;
+
+// Search for a specific name and number in our local contacts. If multiple contacts were
+// encountered, and JCMultiPersonPhoneNumber object is returned, representing the aggregate contact.
+// If no phone number is found, a nil result is returned.
+-(id<JCPhoneNumberDataSource>)localPhoneNumberForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
+                                                     context:(NSManagedObjectContext *)context;
 
 
 -(void)phoneNumbersWithKeyword:(NSString *)keyword

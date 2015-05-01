@@ -9,7 +9,6 @@
 #import "JCRecentEventsTableViewController.h"
 
 #import "JCConversationGroupsResultsController.h"
-#import "JCConversationGroup.h"
 #import "JCConversationTableViewCell.h"
 #import "Message.h"
 #import "PBX.h"
@@ -71,7 +70,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id <NSObject>)object atIndexPath:(NSIndexPath*)indexPath;
 {
-    if ([object isKindOfClass:[JCConversationGroup class]])
+    if ([object conformsToProtocol:@protocol(JCConversationGroupObject)])
     {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCRecentEventConversationCellResuseIdentifier];
         [self configureCell:cell withObject:object];
@@ -84,11 +83,10 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
-    if ([object isKindOfClass:[JCConversationGroup class]] && [cell isKindOfClass:[JCConversationTableViewCell class]])
+    if ([object conformsToProtocol:@protocol(JCConversationGroupObject)] && [cell isKindOfClass:[JCConversationTableViewCell class]])
     {
-        JCConversationGroup *group = (JCConversationGroup *)object;
+        id<JCConversationGroupObject> group = (id<JCConversationGroupObject>)object;
         JCConversationTableViewCell *conversationCell = (JCConversationTableViewCell *)cell;
-        
         conversationCell.name.text    = group.titleText;
         conversationCell.detail.text  = group.detailText;
         conversationCell.date.text    = group.formattedModifiedShortDate;
@@ -130,11 +128,10 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
         PBX *pbx = authManager.pbx;
         if (pbx && [pbx smsEnabled])
         {
-            NSManagedObjectContext *context = self.managedObjectContext;
-            NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:context];
+            NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:pbx.managedObjectContext];
             fetchRequest.includesSubentities = YES;
             fetchRequest.sortDescriptors = self.fetchedResultsController.fetchRequest.sortDescriptors;
-            _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest pbx:pbx managedObjectContext:context];
+            _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest pbx:pbx];
             _conversationGroupsResultsController.delegate = self;
             
             __autoreleasing NSError *error = nil;

@@ -33,10 +33,22 @@
 // Method to return true if the persons name contains a t9 equivalent of the name
 -(BOOL)containsT9Keyword:(NSString *)keyword;
 
+// Method to determine if the number is an match. Case insensitve.
+-(BOOL)isEqualToPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber;
+
 @property (nonatomic, readonly) NSString *name;
 @property (nonatomic, readonly) NSString *number;
 @property (nonatomic, readonly) NSString *dialableNumber;
 @property (nonatomic, readonly) NSString *formattedNumber;
 @property (nonatomic, readonly) NSString *t9;
+
+@optional;
+@property (nonatomic, readonly) NSNumber *countryCode;
+@property (nonatomic, readonly) NSNumber *nationalNumber;
+@property (nonatomic, readonly) NSString *extension;
+@property (nonatomic, readonly) BOOL italianLeadingZero;
+@property (nonatomic, readonly) NSString *rawInput;
+@property (nonatomic, readonly) NSNumber *countryCodeSource;
+@property (nonatomic, readonly) NSString *preferredDomesticCarrierCode;
 
 @end

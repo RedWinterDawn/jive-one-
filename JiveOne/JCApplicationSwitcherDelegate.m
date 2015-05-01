@@ -17,9 +17,9 @@
 
 #import "JCPhoneTabBarControllerDelegate.h"
 
+#import "JCConversationGroupObject.h"
 #import "Voicemail.h"
 #import "Call.h"
-#import "JCConversationGroup.h"
 #import "Line.h"
 #import "PBX.h"
 
@@ -109,7 +109,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
     if ([recentEvent isKindOfClass:[Voicemail class]] || [recentEvent isKindOfClass:[Call class]]) {
         return kApplicationSwitcherPhoneRestorationIdentifier;
     }
-    else if ([recentEvent isKindOfClass:[JCConversationGroup class]]) {
+    else if ([recentEvent conformsToProtocol:@protocol(JCConversationGroupObject)]) {
         return kApplicationSwitcherMessagesRestorationIdentifier;
     }
     
@@ -277,7 +277,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
                 if ([restorationIdentifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier] && [viewController isKindOfClass:[UITabBarController class]]){
                     [self navigatePhoneViewController:(UITabBarController *)viewController forRecentEvent:recentEvent];
                 }
-                else if ([restorationIdentifier isEqualToString:kApplicationSwitcherMessagesRestorationIdentifier] && [viewController isKindOfClass:[UINavigationController class]] && [recentEvent isKindOfClass:[JCConversationGroup class]]) {
+                else if ([restorationIdentifier isEqualToString:kApplicationSwitcherMessagesRestorationIdentifier] && [viewController isKindOfClass:[UINavigationController class]] && [recentEvent conformsToProtocol:@protocol(JCConversationGroupObject)]) {
                     UINavigationController *navigationController = (UINavigationController *)viewController;
                     [navigationController popToRootViewControllerAnimated:NO];
                     JCConversationsTableViewController *conversationViewController = (JCConversationsTableViewController *)navigationController.topViewController;

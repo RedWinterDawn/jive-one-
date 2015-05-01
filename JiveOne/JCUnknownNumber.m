@@ -12,8 +12,12 @@
 
 +(instancetype)unknownNumberWithNumber:(NSString *)number
 {
-    NSString *name = NSLocalizedString(@"Unknown", nil);
-    return [JCUnknownNumber phoneNumberWithName:name number:number];
+    return [JCUnknownNumber phoneNumberWithName:nil number:number];
+}
+
+-(NSString *)titleText
+{
+    return NSLocalizedString(@"Unknown", nil);
 }
 
 @end
