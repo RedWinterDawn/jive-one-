@@ -30,8 +30,8 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 
 -(void)reloadTable
 {
-    self.conversationGroupsResultsController = nil;
-    self.tableData = nil;
+    _conversationGroupsResultsController = nil;
+    _tableData = nil;
     [super reloadTable];
 }
 
@@ -124,8 +124,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 -(JCConversationGroupsResultsController *)conversationGroupResultsController
 {
     if (!_conversationGroupsResultsController){
-        JCAuthenticationManager *authManager = [JCAuthenticationManager sharedInstance];
-        PBX *pbx = authManager.pbx;
+        PBX *pbx = self.authenticationManager.pbx;
         if (pbx && [pbx smsEnabled])
         {
             NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:pbx.managedObjectContext];
