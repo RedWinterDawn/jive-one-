@@ -48,6 +48,8 @@
 
 -(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number name:(NSString *)name forPbx:(PBX *)pbx excludingLine:(Line *)line;
 {
+    
+    
     // We must at least have a number. If we do not have a number, we return nil.
     if (!number) {
         return nil;
@@ -65,7 +67,7 @@
     }
     
     // Check if the number is a local contact from the local contacts address book.
-    return [self localPhoneNumberForNumber:number name:name];
+    return [self localPhoneNumberForPhoneNumber:[JCPhoneNumber phoneNumberWithName:name number:number]context:pbx.managedObjectContext];
     
     // If we did not get a phone number object, we have a unknown number. If we have the name, we
     // can return a named number, otherwise we return an unknown number.
@@ -95,25 +97,39 @@
     return [Extension extensionForNumber:number onPbx:pbx];
 }
 
--(id<JCPhoneNumberDataSource>)localPhoneNumberForNumber:(NSString *)number name:(NSString *)name
+//-(void)localPhoneNumberForNumber:(NSNumber *)number name:(NSString *)name context:(NSManagedObjectContext *)context completion:(void (^)(id<JCPhoneNumberDataSource> phoneNumber))completion
+//{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+//        __block id<JCPhoneNumberDataSource> phoneNumber = [self localPhoneNumberForNumber:number name:name context:localContext];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            
+//            if ([phoneNumber isKindOfClass:[LocalContact class]]) {
+//                LocalContact *contact = (LocalContact *)phoneNumber;
+//                JCAddressBookNumber *addressBookNumber = contact.phoneNumber;
+//                contact = (LocalContact *)[context objectWithID:contact.objectID];
+//                contact.phoneNumber = addressBookNumber;
+//                if (completion) {
+//                    completion(contact);
+//                }
+//            } else {
+//                if (completion) {
+//                    completion(phoneNumber);
+//                }
+//            }
+//        });
+//    });
+//}
+
+-(id<JCPhoneNumberDataSource>)localPhoneNumberForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber context:(NSManagedObjectContext *)context
 {
     // Get phone numbers from the address book for the given name and number. Since its possible to
     // have multiple contacts with the same number, we work with them as an array.
-    NSMutableArray *phoneNumbers = [self phoneNumbersForName:name number:number].mutableCopy;
+    NSMutableArray *phoneNumbers = [_addressBook fetchNumbersWithPhoneNumber:phoneNumber sortedByKey:NSStringFromSelector(@selector(number)) ascending:NO].mutableCopy;
     
     // If we have a local contact that matches one of our address contacts we swap the address book
     // contact for the local contact, and linke the addresbook record to local contact.
-    NSArray *localContacts = [self localContactsForName:name number:number];
-    for (LocalContact *localContact in localContacts) {
-        if ([phoneNumbers containsObject:localContact]) {
-            NSInteger index = [phoneNumbers indexOfObject:localContact];
-            JCAddressBookNumber *number = [phoneNumbers objectAtIndex:index];
-            localContact.phoneNumber = number;
-            [phoneNumbers replaceObjectAtIndex:index withObject:localContact];
-        } else {
-            [phoneNumbers addObject:localContact];
-        }
-    }
+    //[self mapLocalContactsForPhoneNumbers:phoneNumbers number:number name:name context:context];
     
     NSUInteger count = phoneNumbers.count;
     if (count > 1) {
@@ -121,22 +137,31 @@
     } else if (count > 0) {
         return phoneNumbers.firstObject;
     }
-    return nil;
+    return phoneNumber;
 }
+
+//-(void)mapLocalContactsForPhoneNumbers:(NSMutableArray *)phoneNumbers number:(NSString *)number name:(NSString *)name context:(NSManagedObjectContext *)context
+//{
+//    if (!context) {
+//        return;
+//    }
+//    
+//    NSArray *localContacts = [self localContactsForName:name number:number context:context];
+//    for (LocalContact *localContact in localContacts) {
+//        if ([phoneNumbers containsObject:localContact]) {
+//            NSInteger index = [phoneNumbers indexOfObject:localContact];
+//            JCAddressBookNumber *number = [phoneNumbers objectAtIndex:index];
+//            localContact.phoneNumber = number;
+//            [phoneNumbers replaceObjectAtIndex:index withObject:localContact];
+//        } else {
+//            [phoneNumbers addObject:localContact];
+//        }
+//    }
+//}
 
 #pragma mark Private
 
--(NSArray *)phoneNumbersForName:(NSString *)name number:(NSString *)number
-{
-    NSPredicate *predicate = [self predicateForName:name
-                                            nameKey:NSStringFromSelector(@selector(name))
-                                             number:number
-                                          numberKey:NSStringFromSelector(@selector(dialableNumber))];
-    
-    return [_addressBook fetchNumbersWithPredicate:predicate sortedByKey:NSStringFromSelector(@selector(name)) ascending:YES];
-}
-
--(NSArray *)localContactsForName:(NSString *)name number:(NSString *)number
+-(NSArray *)localContactsForName:(NSString *)name number:(NSString *)number context:(NSManagedObjectContext *)context
 {
     NSPredicate *predicate = [self predicateForName:name
                                             nameKey:NSStringFromSelector(@selector(name))
@@ -145,7 +170,7 @@
     
     // Search the local contacts history stored in core data, to see if it tis a local contact which
     // we already know, and have a history with, so we can link it to that history.
-    return [LocalContact MR_findAllWithPredicate:predicate];
+    return [LocalContact MR_findAllWithPredicate:predicate inContext:context];
 }
 
 -(NSPredicate *)predicateForName:(NSString *)name nameKey:(NSString *)nameKey number:(NSString *)number numberKey:(NSString *)numberKey
@@ -162,8 +187,6 @@
     
     return [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
 }
-
-
 
 #pragma mark - Keyword Search -
 

@@ -27,11 +27,10 @@ extern NSString *const kJCAddressBookFailedToLoadNotification;
 - (NSArray *)fetchAllNumbersAscending:(BOOL)ascending;
 - (NSArray *)fetchAllNumbersSortedByKey:(NSString *)sortedByKey ascending:(BOOL)ascending;
 - (NSArray *)fetchNumbersWithKeyword:(NSString *)keyword sortedByKey:(NSString *)sortedByKey ascending:(BOOL)ascending;
+- (NSArray *)fetchNumbersWithPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber sortedByKey:(NSString *)sortedByKey ascending:(BOOL)ascending;
 - (NSArray *)fetchNumbersWithPredicate:(NSPredicate *)predicate sortedByKey:(NSString *)sortedByKey ascending:(BOOL)ascending;
 
 // People Requests
-
-
 
 // General requests
 - (NSArray *)fetchWithFetchRequest:(NSFetchRequest *)request;

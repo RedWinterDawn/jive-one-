@@ -56,13 +56,18 @@ NSString *const kMultiPersonPhoneNumberFormattingThreePlusPeople = @"%@,...+%li"
 
 +(NSString *)nameForNumbers:(NSArray *)phoneNumbers
 {
-    NSString *firstName = [self nameFromPhoneNumber:phoneNumbers.firstObject];
+    id<JCPhoneNumberDataSource> phoneNumber = phoneNumbers.firstObject;
+    NSString *firstName = [self nameFromPhoneNumber:phoneNumber];
     NSUInteger count = phoneNumbers.count;
     if (count == 1) {
         return firstName ? firstName : nil;
     }
     if (count == 2) {
-        NSString *lastName = [self nameFromPhoneNumber:phoneNumbers.lastObject];
+        id<JCPhoneNumberDataSource> otherPhoneNumber = phoneNumbers.lastObject;
+        NSString *lastName = [self nameFromPhoneNumber:otherPhoneNumber];
+        if ([firstName isEqualToString:lastName] && [phoneNumber.name isEqualToString:otherPhoneNumber.name]) {
+            return phoneNumber.name;
+        }
         return lastName ? [NSString stringWithFormat:kMultiPersonPhoneNumberFormattingTwoPeople, firstName, lastName] : (firstName ? firstName : nil);
     }
     return firstName ? [NSString stringWithFormat:kMultiPersonPhoneNumberFormattingThreePlusPeople, firstName, (long)count-1] : nil;

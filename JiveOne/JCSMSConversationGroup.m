@@ -13,17 +13,20 @@
 
 @implementation JCSMSConversationGroup
 
-@synthesize sms           = _sms;
 @synthesize read          = _read;
 @synthesize lastMessage   = _lastMessage;
 @synthesize lastMessageId = _lastMessageId;
 @synthesize date          = _date;
 
--(instancetype)initWithName:(SMSMessage *)smsMessage phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
+-(instancetype)initWithMessage:(SMSMessage *)smsMessage phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
-    self = [super initWithName:phoneNumber.name number:smsMessage.messageGroupId];
+    NSString *name = smsMessage.localContact.name;
+    if (!name) {
+        name = phoneNumber.name;
+    }
+    
+    self = [super initWithName:name number:smsMessage.messageGroupId];
     if (self) {
-        _sms = TRUE;
         _read           = [self readStateForConversationGroupId:smsMessage.messageGroupId context:smsMessage.managedObjectContext];
         _lastMessageId  = smsMessage.eventId;
         _lastMessage    = smsMessage.text;
@@ -66,6 +69,16 @@
 -(NSString *)conversationGroupId
 {
     return self.number;
+}
+
+-(BOOL)isSMS
+{
+    return TRUE;
+}
+
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ %@\n", self.titleText, self.detailText];
 }
 
 @end

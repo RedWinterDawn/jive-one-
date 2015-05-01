@@ -24,8 +24,8 @@
 
 // Search for a specific phone number and name in our Jive and Local Contacts phone books. If no
 // contact is found
--(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)name
-                                              name:(NSString *)number
+-(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number
+                                              name:(NSString *)name
                                             forPbx:(PBX *)pbx
                                      excludingLine:(Line *)line;
 
@@ -34,11 +34,19 @@
                                              pbx:(PBX *)pbx
                                    excludingLine:(Line *)line;
 
+// Search for a specific name and number in our local contacts on a background thread. Calls method
+// below, handling interthreading of core data objects.
+-(void)localPhoneNumberForNumber:(NSNumber *)number
+                            name:(NSString *)name
+                         context:(NSManagedObjectContext *)context
+                      completion:(void (^)(id<JCPhoneNumberDataSource> phoneNumber))completion;
+
 // Search for a specific name and number in our local contacts. If multiple contacts were
 // encountered, and JCMultiPersonPhoneNumber object is returned, representing the aggregate contact.
 // If no phone number is found, a nil result is returned.
--(id<JCPhoneNumberDataSource>)localPhoneNumberForNumber:(NSString *)name
-                                                   name:(NSString *)number;
+-(id<JCPhoneNumberDataSource>)localPhoneNumberForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
+                                                     context:(NSManagedObjectContext *)context;
+
 
 -(void)phoneNumbersWithKeyword:(NSString *)keyword
                        forLine:(Line *)line

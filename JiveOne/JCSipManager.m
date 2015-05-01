@@ -171,10 +171,12 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMU];
     [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G729];
     [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G722];
+    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
+    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_OPUS];
     
     // Not used Audio Codecs
     //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
-    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
+    
     //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_GSM];
     //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_ILBC];
     //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_AMR];

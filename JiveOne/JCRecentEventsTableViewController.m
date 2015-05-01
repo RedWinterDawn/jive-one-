@@ -120,11 +120,10 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
         PBX *pbx = authManager.pbx;
         if (pbx && [pbx smsEnabled])
         {
-            NSManagedObjectContext *context = self.managedObjectContext;
-            NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:context];
+            NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:pbx.managedObjectContext];
             fetchRequest.includesSubentities = YES;
             fetchRequest.sortDescriptors = self.fetchedResultsController.fetchRequest.sortDescriptors;
-            _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest pbx:pbx managedObjectContext:context];
+            _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest pbx:pbx];
             _conversationGroupsResultsController.delegate = self;
             
             __autoreleasing NSError *error = nil;

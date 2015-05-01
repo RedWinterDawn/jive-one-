@@ -15,7 +15,7 @@
 
 @interface JCConversationGroupsResultsController : NSObject
 
-- (instancetype)initWithFetchRequest:(NSFetchRequest *)fetchRequest pbx:(PBX *)pbx managedObjectContext:(NSManagedObjectContext *)context;
+- (instancetype)initWithFetchRequest:(NSFetchRequest *)fetchRequest pbx:(PBX *)pbx;
 
 @property (nonatomic, weak) id <JCConversationGroupsResultsControllerDelegate> delegate;
 
@@ -26,6 +26,8 @@
 - (BOOL)performFetch:(NSError **)error;
 - (id<JCConversationGroupObject>)objectAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathForObject:(id<JCConversationGroupObject>)object;
+
+- (void)updateNameForObject:(id<JCConversationGroupObject>)object;
 
 @end
 

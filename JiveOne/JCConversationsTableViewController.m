@@ -36,11 +36,10 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     
     PBX *pbx = [JCAuthenticationManager sharedInstance].pbx;
     if (pbx && [pbx smsEnabled]) {
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-        NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:context];
+        NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:pbx.managedObjectContext];
         fetchRequest.includesSubentities = YES;
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(date)) ascending:NO]];
-        _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest pbx:pbx managedObjectContext:context];
+        _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest pbx:pbx];
         _conversationGroupsResultsController.delegate = self;
         
         __autoreleasing NSError *error = nil;
