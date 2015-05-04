@@ -44,7 +44,7 @@ NSString *const kLineConfigurationResponseSipPasswordKey            = @"password
 NSString *const kLineConfigurationResponseSipAccountNameKey         = @"accountName";
 
 NSString *const kLineConfigurationInvalidServerRequestException  = @"invalidServerRequest";
-NSString *const kLineConfigurationServerErrorException           = @"serverError";
+NSString *const kLineConfigurationServerErrorException           = @"lineConfigurationServerError";
 NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServerResponse";
 
 @implementation LineConfiguration (Custom)
@@ -104,13 +104,20 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
         NSDictionary *status = [responseObject valueForKeyPath:kLineConfigurationResponseStatusPath];
         NSString *success = [status stringValueForKey:kLineConfigurationResponseStatusSuccessKey];
         if ([success isEqualToString:kLineConfigurationResponseStatusFailureValue]) {
-            [NSException raise:kLineConfigurationServerErrorException format:@"%@", [status stringValueForKey:kLineConfigurationResponseStatusErrorKey]];
+            NSString *error = [status stringValueForKey:kLineConfigurationResponseStatusErrorKey];
+            if (completion) {
+                completion(NO, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_ERROR reason:error]);
+            }
+            return;
         }
         
         // Fetch data from response. If we have no line configuration, fail.
         NSArray *array = [responseObject valueForKeyPath:kLineContigurationResponseDataPath];
         if (!array || array.count == 0) {
-            [NSException raise:kLineConfigurationInvalidServerResponseException format:@"No Line Configuration present"];
+            if (completion) {
+                completion(NO, [JCApiClientError errorWithCode:API_CLIENT_UNEXPECTED_RESPONSE_ERROR reason:@"No Line Configuration present"]);
+            }
+            return;
         }
         
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
