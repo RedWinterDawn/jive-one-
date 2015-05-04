@@ -8,7 +8,6 @@
 
 #import "JCSMSConversationGroup.h"
 #import "LocalContact.h"
-#import "JCUnknownNumber.h"
 #import "Common.h"
 
 @implementation JCSMSConversationGroup
@@ -18,19 +17,30 @@
 @synthesize lastMessageId = _lastMessageId;
 @synthesize date          = _date;
 
+-(instancetype)initWithPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    return [self initWithMessage:nil phoneNumber:phoneNumber];
+}
+
 -(instancetype)initWithMessage:(SMSMessage *)smsMessage phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
-    NSString *name = smsMessage.localContact.name;
-    if (!name) {
-        name = phoneNumber.name;
+    NSString *name;
+    if (smsMessage) {
+        name = smsMessage.localContact.name;
+        if (!name) {
+            name = phoneNumber.name;
+        }
     }
     
     self = [super initWithName:name number:smsMessage.messageGroupId];
     if (self) {
-        _read           = [self readStateForConversationGroupId:smsMessage.messageGroupId context:smsMessage.managedObjectContext];
-        _lastMessageId  = smsMessage.eventId;
-        _lastMessage    = smsMessage.text;
-        _date           = smsMessage.date;
+        if (smsMessage)
+        {
+            _read           = [self readStateForConversationGroupId:smsMessage.messageGroupId context:smsMessage.managedObjectContext];
+            _lastMessageId  = smsMessage.eventId;
+            _lastMessage    = smsMessage.text;
+            _date           = smsMessage.date;
+        }
     }
     return self;
 }
