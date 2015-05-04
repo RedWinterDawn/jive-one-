@@ -9,6 +9,10 @@
 #import "JCMessageParticipantTableViewController.h"
 #import "JCPhoneBook.h"
 #import "JCUnknownNumber.h"
+#import "JCConversationGroupObject.h"
+#import "JCSMSConversationGroup.h"
+#import "Extension.h"
+#import "PBX.h"
 
 @interface JCMessageParticipantTableViewController ()
 
@@ -41,8 +45,17 @@
 
 #pragma mark - Private -
 
--(id<JCPersonDataSource>)objectAtIndexPath:(NSIndexPath *)indexPath {
+-(id<JCPhoneNumberDataSource>)objectAtIndexPath:(NSIndexPath *)indexPath {
     return [self.tableData objectAtIndex:indexPath.row];
+}
+
+-(id<JCConversationGroupObject>)conversationGroupAtIndexPath:(NSIndexPath *)indexPath
+{
+    id<JCPhoneNumberDataSource> phoneNumber = [self objectAtIndexPath:indexPath];
+    if ([phoneNumber isKindOfClass:[Extension class]]) {
+        return nil; // TODO for chat.
+    }
+    return [[JCSMSConversationGroup alloc] initWithPhoneNumber:phoneNumber];
 }
 
 #pragma mark - Setters -
@@ -100,20 +113,20 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id<JCPersonDataSource> person = [self objectAtIndexPath:indexPath];
+    id<JCPhoneNumberDataSource> phoneNumber = [self objectAtIndexPath:indexPath];
     NSString *identifier;
-    if ([person isKindOfClass:[JCUnknownNumber class]]) {
+    if ([phoneNumber isKindOfClass:[JCUnknownNumber class]]) {
         identifier = @"UnknownNumberCell";
     } else {
         identifier = @"SearchResultCell";
     }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if ([person isKindOfClass:[JCAddressBookNumber class]]) {
-        cell.textLabel.text = person.name;
-        cell.detailTextLabel.text = person.detailText;
+    if ([phoneNumber isKindOfClass:[JCAddressBookNumber class]]) {
+        cell.textLabel.text = phoneNumber.name;
+        cell.detailTextLabel.text = phoneNumber.detailText;
     } else {
-        cell.textLabel.text = person.detailText;
+        cell.textLabel.text = phoneNumber.detailText;
     }
     return cell;
 }
@@ -122,8 +135,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id<JCPersonDataSource> person = [self objectAtIndexPath:indexPath];
-    [self.delegate messageParticipantTableViewController:self didSelectParticipants:@[person]];
+    id<JCConversationGroupObject> conversationGroup = [self conversationGroupAtIndexPath:indexPath];
+    [self.delegate messageParticipantTableViewController:self didSelectConversationGroup:conversationGroup];
     [self.view endEditing:YES];
 }
 

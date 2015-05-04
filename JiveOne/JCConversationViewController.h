@@ -8,6 +8,7 @@
 
 #import <JCMessagesViewController/JCMessagesViewController.h>
 #import "JCMessageParticipantTableViewController.h"
+#import "JCConversationGroupObject.h"
 
 @interface JCConversationViewController : JCMessagesViewController <JCMessageParticipantTableViewControllerDelegate, UIActionSheetDelegate>
 

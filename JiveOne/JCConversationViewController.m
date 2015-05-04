@@ -430,9 +430,9 @@
 
 #pragma mark JCMessageParticipantTableViewControllerDelegate
 
--(void)messageParticipantTableViewController:(JCMessageParticipantTableViewController *)controller didSelectParticipants:(NSArray *)participants
+-(void)messageParticipantTableViewController:(JCMessageParticipantTableViewController *)controller didSelectConversationGroup:(id<JCConversationGroupObject>)conversationGroup
 {
-    self.participants = participants;
+    self.conversationGroup = conversationGroup;
     [self dismissDropdownViewControllerAnimated:YES completion:NULL];
 }
 
