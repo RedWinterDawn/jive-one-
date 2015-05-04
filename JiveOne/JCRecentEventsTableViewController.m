@@ -13,6 +13,7 @@
 #import "Message.h"
 #import "PBX.h"
 #import "JCAuthenticationManager.h"
+#import "JCStoryboardLoaderViewController.h"
 
 NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationCell";
 
@@ -27,6 +28,27 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 @end
 
 @implementation JCRecentEventsTableViewController
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    [super prepareForSegue:segue sender:sender];
+    
+    UIViewController *viewController = segue.destinationViewController;
+    
+    if ([viewController isKindOfClass:[JCStoryboardLoaderViewController class]]) {
+        viewController = ((JCStoryboardLoaderViewController *)viewController).embeddedViewController;
+    }
+    
+    if ([viewController isKindOfClass:[UISplitViewController class]]) {
+        UISplitViewController *splitViewController = (UISplitViewController *)viewController;
+        viewController = splitViewController.viewControllers.firstObject;
+        if ([viewController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *navigationController = (UINavigationController *)viewController;
+            UIColor *barColor = navigationController.navigationBar.barTintColor;
+            self.navigationController.navigationBar.barTintColor = barColor;
+        }
+    }
+}
 
 -(void)reloadTable
 {

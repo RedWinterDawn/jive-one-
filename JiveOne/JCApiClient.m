@@ -219,8 +219,8 @@ static BOOL JCErrorOrUnderlyingErrorHasCode(NSError *error, NSInteger code) {
         case API_CLIENT_TIMEOUT_ERROR:
             return @"It took to long to get an answer try again.";
             
-        case API_CLIENT_RESPONSE_ERROR:
-            return @"Server returned an invalid server response.";
+//        case API_CLIENT_RESPONSE_ERROR:
+//            return @"Server returned an invalid server response.";
             
         case API_CLIENT_AUTHENTICATION_ERROR:
             return @"Authentication was invalid please check Username and Password";
@@ -249,8 +249,8 @@ static BOOL JCErrorOrUnderlyingErrorHasCode(NSError *error, NSInteger code) {
         case API_CLIENT_SMS_MESSAGE_CAP_UNDEFINED:
             return @"Hourly, daily and montly caps have not been defined.";
             
-        default:
-            return @"Unknown Error Has Occured.";
+//        default:
+//            return @"Unknown Error Has Occured.";
     }
     return nil;
 }

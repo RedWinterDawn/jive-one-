@@ -6,18 +6,23 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCSettingsTableViewController.h"
-#import "JCPhoneManager.h"
-#import <MessageUI/MessageUI.h>
-#import <MessageUI/MFMailComposeViewController.h>
-#import "JCTermsAndConditonsViewController.h"
-#import "JCAuthenticationManager.h"
-#import "JCAppSettings.h"
+@import MessageUI;
 
+#import "JCSettingsTableViewController.h"
+
+// Managers
+#import "JCAuthenticationManager.h"
+#import "JCPhoneManager.h"
+
+// Models
+#import "JCAppSettings.h"
 #import "PBX.h"
 #import "DID.h"
 #import "User.h"
 #import "Line.h"
+
+// Controllers
+#import "JCTermsAndConditonsViewController.h"
 
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedback :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@ <br> Domain : %@  <br> Carrier : %@ <br> Connection Type : %@ <br> ";
 
@@ -29,22 +34,23 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 
 @implementation JCSettingsTableViewController
 
-- (void)viewDidLoad {
+-(void)viewDidLoad
+{
     [super viewDidLoad];
     
+    // Device Info
+    UIDevice *device = [UIDevice currentDevice];
+    self.installationIdentifier.text = device.installationIdentifier;
+    
+    // App Info
     NSBundle *bundle = [NSBundle mainBundle];
     self.appLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     self.buildLabel.text = [NSString stringWithFormat:@"%@ (%@)", [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
     
-    UIDevice *device = [UIDevice currentDevice];
-    self.installationIdentifier.text = device.installationIdentifier;
-    self.uuid.text = [device userUniqueIdentiferForUser:self.authenticationManager.jiveUserId];
-    
+    // Settings Info
     JCAppSettings *settings = self.appSettings;
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
-    [self cell:self.enablePreasenceCell setHidden:!self.authenticationManager.line.pbx.isV5];
-    [self cell:self.defaultDIDCell setHidden:!self.authenticationManager.pbx.smsEnabled];
     
     #ifndef DEBUG
     if (self.debugCell) {
@@ -52,7 +58,14 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     }
     #endif
     
-    [self reloadDataAnimated:NO];
+    // Authentication Info
+    JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(updateAccountInfo) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(updateAccountInfo) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(updateAccountInfo) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
+    
+    [self updateAccountInfo];
 }
 
 -(void)awakeFromNib
@@ -64,47 +77,17 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     #endif
 }
 
-- (void)viewWillAppear:(BOOL)animated
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [super viewWillAppear:animated];
-   // [self.view setNeedsLayout];
-    
-     JCAuthenticationManager *authenticationManager = self.authenticationManager;
-    [self cell:self.enablePreasenceCell setHidden:!authenticationManager.line.pbx.isV5];
-    BOOL sendSmsMessages = authenticationManager.pbx.sendSMSMessages;
-    [self cell:self.defaultDIDCell setHidden:!sendSmsMessages];
-
-    [self reloadDataAnimated:NO];
-}
-
--(void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
--(void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    
-    JCAuthenticationManager *authenticationManager = self.authenticationManager;
-    self.userNameLabel.text     = authenticationManager.line.pbx.user.jiveUserId;
-    self.extensionLabel.text    = authenticationManager.line.number;
-    self.smsUserDefaultNumber.text = authenticationManager.did.number;
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UIViewController *controller = segue.destinationViewController;
     if ([controller isKindOfClass:[JCTermsAndConditonsViewController class]]) {
         controller.navigationItem.leftBarButtonItem = nil;
     }
 }
 
--(AFNetworkReachabilityManager *)networkReachabilityManager
+-(void)dealloc
 {
-    if (!_networkReachabilityManager) {
-        _networkReachabilityManager = [AFNetworkReachabilityManager sharedManager];
-    }
-    return _networkReachabilityManager;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - IBActions -
@@ -141,6 +124,48 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     }
 }
 
+-(IBAction)logout:(id)sender
+{
+    [self.authenticationManager logout];
+}
+
+-(IBAction)toggleWifiOnly:(id)sender
+{
+    if ([sender isKindOfClass:[UISwitch class]]) {
+        UISwitch *switchBtn = (UISwitch *)sender;
+        JCAppSettings *settings = self.appSettings;
+        settings.wifiOnly = !settings.isWifiOnly;
+        switchBtn.on = settings.isWifiOnly;
+        [self.phoneManager connectToLine:self.authenticationManager.line];
+    }
+}
+
+-(IBAction)togglePresenceEnabled:(id)sender
+{
+    if ([sender isKindOfClass:[UISwitch class]]) {
+        UISwitch *switchBtn = (UISwitch *)sender;
+        self.appSettings.presenceEnabled = !self.appSettings.isPresenceEnabled;
+        switchBtn.on = self.appSettings.isPresenceEnabled;
+    }
+}
+
+-(IBAction)showDebug:(id)sender
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Debug" bundle:[NSBundle mainBundle]];
+    UIViewController *rootViewController = [storyboard instantiateInitialViewController];
+    [self.navigationController pushViewController:rootViewController animated:YES];
+}
+
+#pragma mark - Getters -
+
+-(AFNetworkReachabilityManager *)networkReachabilityManager
+{
+    if (!_networkReachabilityManager) {
+        _networkReachabilityManager = [AFNetworkReachabilityManager sharedManager];
+    }
+    return _networkReachabilityManager;
+}
+
 -(NSString *)networkType
 {
     AFNetworkReachabilityStatus status = self.networkReachabilityManager.networkReachabilityStatus;
@@ -160,34 +185,22 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     }
 }
 
--(IBAction)logout:(id)sender
+#pragma mark - Notification Handlers -
+
+-(void)updateAccountInfo
 {
-    [self.authenticationManager logout];
-}
-
--(IBAction)toggleWifiOnly:(id)sender
-{
-    if ([sender isKindOfClass:[UISwitch class]]) {
-        UISwitch *switchBtn = (UISwitch *)sender;
-        JCAppSettings *settings = self.appSettings;
-        settings.wifiOnly = !settings.isWifiOnly;
-        switchBtn.on = settings.isWifiOnly;
-        [self.phoneManager connectToLine:self.authenticationManager.line];
-    }
-}
-
-- (IBAction)togglePresenceEnabled:(id)sender {
-    if ([sender isKindOfClass:[UISwitch class]]) {
-        UISwitch *switchBtn = (UISwitch *)sender;
-        self.appSettings.presenceEnabled = !self.appSettings.isPresenceEnabled;
-        switchBtn.on = self.appSettings.isPresenceEnabled;
-    }
-}
-
--(IBAction)showDebug:(id)sender{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Debug" bundle:[NSBundle mainBundle]];
-    UIViewController *rootViewController = [storyboard instantiateInitialViewController];
-    [self.navigationController pushViewController:rootViewController animated:YES];
+    JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    UIDevice *device = [UIDevice currentDevice];
+    
+    self.uuid.text                  = [device userUniqueIdentiferForUser:authenticationManager.jiveUserId];
+    self.userNameLabel.text         = authenticationManager.line.pbx.user.jiveUserId;
+    self.extensionLabel.text        = authenticationManager.line.number;
+    self.smsUserDefaultNumber.text  = authenticationManager.did.number;
+    
+    [self cell:self.enablePreasenceCell setHidden:!authenticationManager.line.pbx.isV5];
+    [self cell:self.defaultDIDCell setHidden:!authenticationManager.pbx.sendSMSMessages];
+    
+    [self reloadDataAnimated:NO];
 }
 
 #pragma mark - Delegate Handlers -
