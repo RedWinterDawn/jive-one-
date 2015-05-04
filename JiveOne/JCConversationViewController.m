@@ -88,39 +88,40 @@
                  senderId:(NSString *)senderId
         senderDisplayName:(NSString *)senderDisplayName
                      date:(NSDate *)date
-    {
-        id<JCPersonDataSource> person = _participants.lastObject;
-        if (self.count == 0) {
+{
+    JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    id<JCConversationGroupObject> conversationGroup = self.conversationGroup;
+    if (self.count == 0) {
+        NSMutableArray *dids = authenticationManager.pbx.dids.allObjects.mutableCopy;
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES];
+        [dids sortUsingDescriptors:@[sortDescriptor]];
+        NSMutableArray *titles = [NSMutableArray array];
+        for (DID *did in dids) {
+            [titles addObject:did.titleText];
+        }
             
-            NSMutableArray *dids= [JCAuthenticationManager sharedInstance].pbx.dids.allObjects.mutableCopy;
-            NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES];
-             [dids sortUsingDescriptors:@[sortDescriptor]];
-            NSMutableArray *titles = [NSMutableArray array];
-            for (DID *did in dids) {
-                [titles addObject:did.titleText];
-            }
-            
-            JCActionSheet *didOptions = [[JCActionSheet alloc] initWithTitle:@"Which number would you like to send from"
-                                                                   dismissed:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
-                                                                       if (buttonIndex != actionSheet.cancelButtonIndex) {
-                                                                            DID *did = [dids objectAtIndex:buttonIndex];
-                                                                           [self sendMessageWithSelectedDID:text toPerson:person fromDid:did];
-                                                                       }
-                                                                   }
-                                                           cancelButtonTitle:@"Cancel"
-                                                           otherButtons:titles];
-            [didOptions show:self.view];
-            
+        JCActionSheet *didOptions = [[JCActionSheet alloc] initWithTitle:@"Which number would you like to send from"
+                                                               dismissed:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
+                                                                   if (buttonIndex != actionSheet.cancelButtonIndex) {
+                                                                       DID *did = [dids objectAtIndex:buttonIndex];
+                                                                       [self sendMessageWithSelectedDID:text toConversationGroup:conversationGroup fromDid:did];
+                                                                    }
+                                                               }
+                                                       cancelButtonTitle:@"Cancel"
+                                                            otherButtons:titles];
+        [didOptions show:self.view];
     } else {
-        [self sendMessageWithSelectedDID:text toPerson:person fromDid:[JCAuthenticationManager sharedInstance].did];
+        [self sendMessageWithSelectedDID:text toConversationGroup:conversationGroup fromDid:authenticationManager.did];
     }
        
 }
 
--(void)sendMessageWithSelectedDID:(NSString *)text toPerson:(id<JCPersonDataSource>)person fromDid:(DID *)did {
+-(void)sendMessageWithSelectedDID:(NSString *)text toConversationGroup:(id<JCConversationGroupObject>)conversationGroup fromDid:(DID *)did {
     NSLog(@"Sending Stuff : %@",did);
     
-    [SMSMessage sendMessage:text toPerson:person fromDid:did completion:^(BOOL success, NSError *error) {
+    
+    
+    [SMSMessage sendMessage:text toConversationGroup:conversationGroup fromDid:did completion:^(BOOL success, NSError *error) {
         if (success) {
             [self finishSendingMessageAnimated:YES];
         }else {

@@ -8,8 +8,8 @@
 
 #import "JCSMSMessageManager.h"
 #import "SMSMessage+V5Client.h"
-#import "JCUnknownNumber.h"
 #import "PBX.h"
+#import "JCSMSConversationGroup.h"
 
 NSString *const kJCSMSMessageManagerTypeKey              = @"type";
 NSString *const kJCSMSMessageManagerUID                    = @"UID";
@@ -68,9 +68,8 @@ NSString *const kJCSMSMessageManagerTypeSMSMessageKey       = @"smsmessage";
     DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(did)) withValue:didId];
     
     NSString *fromNumber = [data stringValueForKey:@"fromNumber"];
-    JCUnknownNumber *person = [JCUnknownNumber new];
-    person.number = fromNumber;
-    [SMSMessage downloadMessagesForDID:did toPerson:person completion:NULL];
+    JCSMSConversationGroup *conversationGroup = [[JCSMSConversationGroup alloc] initWithName:nil number:fromNumber];
+    [SMSMessage downloadMessagesForDID:did toConversationGroup:conversationGroup completion:NULL];
 }
 
 @end
