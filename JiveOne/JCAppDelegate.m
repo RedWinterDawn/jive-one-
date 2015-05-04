@@ -40,6 +40,7 @@
 #import "Voicemail+V5Client.h"
 #import "SMSMessage+V5Client.h"
 #import "JCUnknownNumber.h"
+#import "JCSMSConversationGroup.h"
 
 #import  "JCAppSettings.h"
 
@@ -615,8 +616,8 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(didId)) withValue:didId inContext:context];
     if (did) {
         
-        JCUnknownNumber *unknownNumber = [JCUnknownNumber unknownNumberWithNumber:fromNumber];
-        [SMSMessage downloadMessagesForDID:did toPerson:unknownNumber completion:^(BOOL success, NSError *error) {
+        JCSMSConversationGroup *conversationGroup = [[JCSMSConversationGroup alloc] initWithName:nil number:fromNumber];
+        [SMSMessage downloadMessagesForDID:did toConversationGroup:conversationGroup completion:^(BOOL success, NSError *error) {
             if (success) {
                 if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
                     SMSMessage *message = [SMSMessage MR_findFirstByAttribute:NSStringFromSelector(@selector(eventId)) withValue:uid inContext:context];

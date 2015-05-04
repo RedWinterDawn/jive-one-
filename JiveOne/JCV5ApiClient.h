@@ -7,7 +7,7 @@
 //
 
 #import "JCApiClient.h"
-#import "JCPhoneNumberDataSource.h"
+#import "JCConversationGroupObject.h"
 
 typedef void(^JCV5ApiClientCompletionHandler)(BOOL success, id response, NSError *error);
 
@@ -35,7 +35,7 @@ typedef void(^JCV5ApiClientCompletionHandler)(BOOL success, id response, NSError
                     completion:(JCV5ApiClientCompletionHandler)completion;
 
 + (void)downloadMessagesForDID:(DID *)did
-                      toPerson:(id<JCPhoneNumberDataSource>)person
+           toConversationGroup:(id<JCConversationGroupObject>)person
                     completion:(JCV5ApiClientCompletionHandler)completion;
 
 @end
