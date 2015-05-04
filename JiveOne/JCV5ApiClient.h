@@ -35,7 +35,19 @@ typedef void(^JCV5ApiClientCompletionHandler)(BOOL success, id response, NSError
                     completion:(JCV5ApiClientCompletionHandler)completion;
 
 + (void)downloadMessagesForDID:(DID *)did
-           toConversationGroup:(id<JCConversationGroupObject>)person
+           toConversationGroup:(id<JCConversationGroupObject>)conversationGroup
                     completion:(JCV5ApiClientCompletionHandler)completion;
 
+#pragma mark - SMS Message Blocking -
+
++ (void)blockSMSMessageForDID:(DID *)did
+                       number:(id<JCPhoneNumberDataSource>)phoneNumber
+                   completion:(JCV5ApiClientCompletionHandler)completion;
+
++ (void)unblockSMSMessageForDID:(DID *)did
+                         number:(id<JCPhoneNumberDataSource>)phoneNumber
+                     completion:(JCV5ApiClientCompletionHandler)completion;
+
++ (void)downloadMessagesBlockedForDID:(DID *)did
+                           completion:(JCV5ApiClientCompletionHandler)completion;
 @end

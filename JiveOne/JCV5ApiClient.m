@@ -166,6 +166,56 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
                     completion:completion];
 }
 
+#pragma mark - SMS Message Blocking -
+
+#ifndef MESSAGES_BLOCK_NUMBER_OF_TRIES
+#define MESSAGES_BLOCK_NUMBER_OF_TRIES 1
+#endif
+
+#ifndef MESSAGES_UNBLOCK_NUMBER_OF_TRIES
+#define MESSAGES_UNBLOCK_NUMBER_OF_TRIES 1
+#endif
+
+#ifndef MESSAGES_BLOCKED_NUMBER_DOWNLOAD_NUMBER_OF_TRIES
+#define MESSAGES_BLOCKED_NUMBER_DOWNLOAD_NUMBER_OF_TRIES 1
+#endif
+
+NSString *const kJCV5ApiSMSMessageBlockedNumbersURLPath                = @"sms/blockedNumbers/did/%@";
+NSString *const kJCV5ApiSMSMessageBlockURLPath                         = @"sms/block/did/%@/number/%@";
+NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/unblock/did/%@/number/%@";
+
++ (void)blockSMSMessageForDID:(DID *)did
+                       number:(id<JCPhoneNumberDataSource>)phoneNumber
+                   completion:(JCV5ApiClientCompletionHandler)completion
+{
+    NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageBlockURLPath, did.number, phoneNumber.dialableNumber];
+    [JCV5ApiClient postWithPath:path
+                     parameters:nil
+                        retries:MESSAGES_UNBLOCK_NUMBER_OF_TRIES
+                     completion:completion];
+}
+
++ (void)unblockSMSMessageForDID:(DID *)did
+                         number:(id<JCPhoneNumberDataSource>)phoneNumber
+                     completion:(JCV5ApiClientCompletionHandler)completion
+{
+    NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageUnblockURLPath, did.number, phoneNumber.dialableNumber];
+    [JCV5ApiClient postWithPath:path
+                     parameters:nil
+                        retries:MESSAGES_UNBLOCK_NUMBER_OF_TRIES
+                     completion:completion];
+}
+
++ (void)downloadMessagesBlockedForDID:(DID *)did
+                           completion:(JCV5ApiClientCompletionHandler)completion
+{
+    NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageBlockedNumbersURLPath, did.number];
+    [JCV5ApiClient postWithPath:path
+                     parameters:nil
+                        retries:MESSAGES_BLOCKED_NUMBER_DOWNLOAD_NUMBER_OF_TRIES
+                     completion:completion];
+}
+
 #pragma - Private -
 
 #pragma Retrying GETs
