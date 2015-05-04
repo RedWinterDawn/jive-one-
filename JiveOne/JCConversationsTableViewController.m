@@ -34,7 +34,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    PBX *pbx = [JCAuthenticationManager sharedInstance].pbx;
+    PBX *pbx = self.authenticationManager.pbx;
     if (pbx && [pbx smsEnabled]) {
         NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:pbx.managedObjectContext];
         fetchRequest.includesSubentities = YES;
@@ -109,12 +109,15 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
+    UIViewController *viewController = segue.destinationViewController;
+    if([viewController isKindOfClass:[UINavigationController class]])
+        viewController = ((UINavigationController *)viewController).topViewController;
+    
     if ([sender isKindOfClass:[UITableViewCell class]]) {
-        UIViewController *viewController = segue.destinationViewController;
         if ([viewController isKindOfClass:[JCConversationViewController class]]) {
             JCConversationViewController *messagesViewController = (JCConversationViewController *)viewController;
             id<JCConversationGroupObject> conversationGroup = (id<JCConversationGroupObject>)[self objectAtIndexPath:[self.tableView indexPathForCell:sender]];
-            messagesViewController.messageGroupId = conversationGroup.conversationGroupId;
+            messagesViewController.conversationGroup = conversationGroup;
         }
     }
 }
@@ -184,6 +187,5 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 {
     [self.tableView endUpdates];
 }
-
 
 @end

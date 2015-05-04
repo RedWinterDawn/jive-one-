@@ -74,9 +74,9 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
 
 #pragma mark - Send -
 
-+(void)sendMessage:(NSString *)message toPerson:(id<JCPhoneNumberDataSource>)person fromDid:(DID *)did completion:(CompletionHandler)completion
++(void)sendMessage:(NSString *)message toConversationGroup:(id<JCConversationGroupObject>)conversationGroup fromDid:(DID *)did completion:(CompletionHandler)completion
 {
-    NSDictionary *parameters = @{kSMSMessageSendRequestToKey: person.number.numericStringValue,
+    NSDictionary *parameters = @{kSMSMessageSendRequestToKey: conversationGroup.dialableNumber,
                                  kSMSMessageSendRequestFromKey: did.number,
                                  kSMSMessageSendRequestBodyKey: message};
     
@@ -180,9 +180,9 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
 
 #pragma mark Conversation
 
-+(void)downloadMessagesForDID:(DID *)did toPerson:(id<JCPhoneNumberDataSource>)person completion:(CompletionHandler)completion
++(void)downloadMessagesForDID:(DID *)did toConversationGroup:(id<JCConversationGroupObject>)conversationGroup completion:(CompletionHandler)completion
 {
-    [JCV5ApiClient downloadMessagesForDID:did toPerson:person completion:^(BOOL success, id response, NSError *error) {
+    [JCV5ApiClient downloadMessagesForDID:did toConversationGroup:conversationGroup completion:^(BOOL success, id response, NSError *error) {
         if(success) {
             [self processSMSDownloadConversationResponseObject:response did:did completion:completion];
         }

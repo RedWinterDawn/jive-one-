@@ -12,6 +12,7 @@
 
 @interface JCSMSConversationGroup : JCPhoneNumber <JCConversationGroupObject>
 
+-(instancetype)initWithPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber;
 -(instancetype)initWithMessage:(SMSMessage *)smsMessage phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber;
 
 @end

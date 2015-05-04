@@ -141,7 +141,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
                     completion:completion];
 }
 
-+ (void)downloadMessagesForDID:(DID *)did toPerson:(id<JCPhoneNumberDataSource>)person completion:(JCV5ApiClientCompletionHandler)completion
++ (void)downloadMessagesForDID:(DID *)did toConversationGroup:(id<JCConversationGroupObject>)conversationGroup completion:(JCV5ApiClientCompletionHandler)completion
 {
     if (!did) {
         if (completion) {
@@ -150,7 +150,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
         return;
     }
     
-    if (!person) {
+    if (!conversationGroup) {
         if (completion) {
             completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Person Is Null"]);
         }
@@ -158,7 +158,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
     }
     
     
-    NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageRequestConversationURLPath, did.number, person.number];
+    NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageRequestConversationURLPath, did.number, conversationGroup.dialableNumber];
     [JCV5ApiClient getWithPath:path
                     parameters:nil
              requestSerializer:nil
