@@ -273,11 +273,11 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
             }
         }
         completion:^(BOOL success, NSError *error) {
-            if (success) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
-            }
             if (completion) {
                 completion(success, error);
+            }
+            if (success) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
             }
         }];
     }
