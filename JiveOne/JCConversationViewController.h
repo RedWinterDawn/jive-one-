@@ -13,7 +13,7 @@
 @interface JCConversationViewController : JCMessagesViewController <JCMessageParticipantTableViewControllerDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic, readonly) UIButton *participantsButton;
-@property (strong, nonatomic) NSString *messageGroupId;
+
 @property (nonatomic, strong) id<JCConversationGroupObject> conversationGroup;
 
 @end

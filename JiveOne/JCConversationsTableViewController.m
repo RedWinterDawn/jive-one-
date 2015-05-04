@@ -109,8 +109,11 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
+    UIViewController *viewController = segue.destinationViewController;
+    if([viewController isKindOfClass:[UINavigationController class]])
+        viewController = ((UINavigationController *)viewController).topViewController;
+    
     if ([sender isKindOfClass:[UITableViewCell class]]) {
-        UIViewController *viewController = segue.destinationViewController;
         if ([viewController isKindOfClass:[JCConversationViewController class]]) {
             JCConversationViewController *messagesViewController = (JCConversationViewController *)viewController;
             id<JCConversationGroupObject> conversationGroup = (id<JCConversationGroupObject>)[self objectAtIndexPath:[self.tableView indexPathForCell:sender]];
