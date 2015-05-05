@@ -18,12 +18,14 @@
 
 #import "Line.h"
 #import "PBX.h"
+#import "BlockedNumber+V5Client.h"
+#import "JCSMSConversationGroup.h"
 
 #import "JCConversationGroupsResultsController.h"
 
 NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
-@interface JCConversationsTableViewController () <JCConversationGroupsResultsControllerDelegate>
+@interface JCConversationsTableViewController () <JCConversationGroupsResultsControllerDelegate, JCConversationTableViewCellDelegate>
 
 @property (nonatomic, strong) JCConversationGroupsResultsController *conversationGroupsResultsController;
 
@@ -51,6 +53,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<JCConversationGroupObject>)object atIndexPath:(NSIndexPath *)indexPath {
     JCConversationTableViewCell *cell = (JCConversationTableViewCell *)[tableView dequeueReusableCellWithIdentifier:kJCConversationsTableViewController];
+    cell.delegate = self;
     [self configureCell:cell withObject:object];
     return cell;
 }
@@ -186,6 +189,16 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 -(void)conversationGroupResultsControllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView endUpdates];
+}
+
+-(void)didBlockConverastionTableViewCell:(JCConversationTableViewCell *)cell
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    id<JCConversationGroupObject> conversationGroup = [self objectAtIndexPath:indexPath];
+    if ([conversationGroup isKindOfClass:[JCSMSConversationGroup class]]) {
+        DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:((JCSMSConversationGroup *)conversationGroup).didJrn];
+        [BlockedNumber blockNumber:conversationGroup did:did completion:NULL];
+    }
 }
 
 @end

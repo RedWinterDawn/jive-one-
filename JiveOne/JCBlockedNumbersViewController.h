@@ -10,7 +10,4 @@
 
 @interface JCBlockedNumbersViewController : JCFetchedResultsTableViewController
 
-
-@property (nonatomic, strong) DID *did;
-
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "JCConversationTableViewCell.h"
+#import "BlockedNumber+V5Client.h"
+#import "JCPhoneNumber.h"
 
 @interface JCConversationTableViewCell () {
     UIFont *_nameFont;
@@ -63,6 +65,11 @@
 -(UIButton *)blockBtn{
     //make Call to block a number
     return 0;
+}
+
+-(IBAction)blockNumberBtn:(id)sender
+{
+    [self.delegate didBlockConverastionTableViewCell:self];
 }
 
 @end

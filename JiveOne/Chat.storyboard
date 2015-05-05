@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -294,7 +295,6 @@
                                         <mask key="constraints">
                                             <exclude reference="VZA-kQ-xXn"/>
                                             <exclude reference="Way-N7-lrs"/>
-                                            <exclude reference="lno-9F-4Gg"/>
                                             <exclude reference="1oX-sF-oxv"/>
                                             <exclude reference="GeW-Jf-TYU"/>
                                             <exclude reference="L9f-T4-FqB"/>
@@ -305,6 +305,7 @@
                                             <exclude reference="h8Y-Vu-n1u"/>
                                             <exclude reference="iXN-5Y-3xI"/>
                                             <exclude reference="l1v-ed-1dU"/>
+                                            <exclude reference="lno-9F-4Gg"/>
                                             <exclude reference="5b9-hG-kHs"/>
                                             <exclude reference="OBE-9Q-PuL"/>
                                             <exclude reference="km6-Ld-4zp"/>
@@ -319,9 +320,6 @@
                                             <exclude reference="GKv-FA-eny"/>
                                             <include reference="VZA-kQ-xXn"/>
                                             <include reference="Way-N7-lrs"/>
-                                            <exclude reference="LsV-jK-hOA"/>
-                                            <exclude reference="V7P-FD-hYG"/>
-                                            <include reference="lno-9F-4Gg"/>
                                             <exclude reference="1oX-sF-oxv"/>
                                             <exclude reference="GeW-Jf-TYU"/>
                                             <include reference="L9f-T4-FqB"/>
@@ -332,6 +330,9 @@
                                             <include reference="h8Y-Vu-n1u"/>
                                             <exclude reference="iXN-5Y-3xI"/>
                                             <exclude reference="l1v-ed-1dU"/>
+                                            <exclude reference="LsV-jK-hOA"/>
+                                            <exclude reference="V7P-FD-hYG"/>
+                                            <include reference="lno-9F-4Gg"/>
                                             <include reference="5b9-hG-kHs"/>
                                             <exclude reference="6vo-xJ-B2x"/>
                                             <exclude reference="OBE-9Q-PuL"/>
