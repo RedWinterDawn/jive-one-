@@ -6,11 +6,11 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "BlockedContact+V5Client.h"
+#import "BlockedNumber+V5Client.h"
 #import "JCV5ApiClient.h"
 #import "DID.h"
 
-@implementation BlockedContact (V5Client)
+@implementation BlockedNumber (V5Client)
 
 +(void)downloadBlockedForDIDs:(NSSet *)dids completion:(CompletionHandler)completion
 {
@@ -69,8 +69,8 @@
                               completion:^(BOOL success, id response, NSError *error) {
                                   [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
                                       DID *localDID = (DID *)[localContext objectWithID:did.objectID];
-                                      BlockedContact *blockedContact = [self createBlockedMessageWithNumber:phoneNumber.number did:localDID];
-                                      blockedContact.pendingUpload = !success;
+                                      BlockedNumber *blockedNumber = [self createBlockedMessageWithNumber:phoneNumber.number did:localDID];
+                                      blockedNumber.pendingUpload = !success;
                                       if (completion) {
                                           completion((error == nil), error);
                                       }
@@ -83,17 +83,17 @@
     //TODO: do this.
 }
 
-+(void)unblockNumber:(BlockedContact *)blockedContact completion:(CompletionHandler)completion;
++(void)unblockNumber:(BlockedNumber *)blockedNumber completion:(CompletionHandler)completion;
 {
-    [JCV5ApiClient unblockSMSMessageForDID:blockedContact.did
-                                    number:blockedContact
+    [JCV5ApiClient unblockSMSMessageForDID:blockedNumber.did
+                                    number:blockedNumber
                                 completion:^(BOOL success, id response, NSError *error) {
                                     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                                        BlockedContact *localBlockedContact = (BlockedContact *)[localContext objectWithID:blockedContact.objectID];
+                                        BlockedNumber *localBlockedNumber = (BlockedNumber *)[localContext objectWithID:blockedNumber.objectID];
                                         if (success) {
-                                            [localContext deleteObject:blockedContact];
+                                            [localContext deleteObject:localBlockedNumber];
                                         } else {
-                                            localBlockedContact.markForDeletion = TRUE;
+                                            localBlockedNumber.markForDeletion = TRUE;
                                         }
                                         
                                         if (completion) {
@@ -117,24 +117,24 @@
             // Get list of existing contacts. As we add contacts, if we come across a contact we
             // already know, we remove it from the list of contacts to be removed.
             DID *localDID = (DID *)[localContext objectWithID:did.objectID];
-            NSMutableSet *blockedContactsToRemove = localDID.blockedContacts.mutableCopy;
+            NSMutableSet *blockedNumbersToRemove = localDID.blockedContacts.mutableCopy;
             
             // Iterate over list of blocked numbers from the result. If we do not have a blocked
             // Contact, create one, otherwise just return existing one.
             for (id object in blockedNumbers) {
                 if ([object isKindOfClass:[NSString class]]) {
-                    BlockedContact *blockedContact = [self createBlockedMessageWithNumber:(NSString *)object did:localDID];
-                    if ([blockedContactsToRemove containsObject:blockedContact]) {
-                        [blockedContactsToRemove removeObject:blockedContact];
+                    BlockedNumber *blockedNumber = [self createBlockedMessageWithNumber:(NSString *)object did:localDID];
+                    if ([blockedNumbersToRemove containsObject:blockedNumber]) {
+                        [blockedNumbersToRemove removeObject:blockedNumber];
                     }
                 }
             }
             
             // Any remaining blocked numbers that were not removed from our blockedContactsToRemove
             // array are now invalid, and are deleted from the local store.
-            if (blockedContactsToRemove.count > 0) {
-                for (BlockedContact *blockedContact in blockedContactsToRemove) {
-                    [localDID.managedObjectContext deleteObject:blockedContact];
+            if (blockedNumbersToRemove.count > 0) {
+                for (BlockedNumber *blockedNumber in blockedNumbersToRemove) {
+                    [localDID.managedObjectContext deleteObject:blockedNumber];
                 }
             }
         } completion:^(BOOL success, NSError *error) {
@@ -154,16 +154,16 @@
     }
 }
 
-+ (BlockedContact *)createBlockedMessageWithNumber:(NSString *)number did:(DID *)did
++ (BlockedNumber *)createBlockedMessageWithNumber:(NSString *)number did:(DID *)did
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"did = %@ AND number = %@", did, number];
-    BlockedContact *blockedContact = [BlockedContact MR_findFirstWithPredicate:predicate inContext:did.managedObjectContext];
-    if (!blockedContact) {
-        blockedContact = [BlockedContact MR_createInContext:did.managedObjectContext];
-        blockedContact.number = number;
-        blockedContact.did = did;
+    BlockedNumber *blockedNumber = [BlockedNumber MR_findFirstWithPredicate:predicate inContext:did.managedObjectContext];
+    if (!blockedNumber) {
+        blockedNumber = [BlockedNumber MR_createInContext:did.managedObjectContext];
+        blockedNumber.number = number;
+        blockedNumber.did = did;
     }
-    return blockedContact;
+    return blockedNumber;
 }
 
 @end

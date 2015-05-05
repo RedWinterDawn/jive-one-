@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "BlockedContact.h"
+#import "BlockedNumber.h"
 
 // Managed Objects
 #import "DID.h"
@@ -16,7 +16,7 @@
 NSString *const kBlockedContactMarkForDeletionAttribute = @"markForDeletion";
 NSString *const kBlockedContactPendingUploadAttribute = @"pendingUpload";
 
-@implementation BlockedContact
+@implementation BlockedNumber
 
 #pragma mark - Attributes -
 

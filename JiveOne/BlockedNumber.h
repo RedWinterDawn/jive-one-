@@ -10,7 +10,7 @@
 
 @class DID;
 
-@interface BlockedContact : JCPhoneNumberManagedObject
+@interface BlockedNumber : JCPhoneNumberManagedObject
 
 @property (nonatomic) BOOL markForDeletion;
 @property (nonatomic) BOOL pendingUpload;

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "BlockedContact.h"
+#import "BlockedNumber.h"
 
-@interface BlockedContact (V5Client)
+@interface BlockedNumber (V5Client)
 
 #pragma mark - Blocking -
 
@@ -24,7 +24,7 @@
                 did:(DID *)did
          completion:(CompletionHandler)completion;
 
-+ (void)unblockNumber:(BlockedContact *)blockedContact
++ (void)unblockNumber:(BlockedNumber *)blockedContact
            completion:(CompletionHandler)completion;
 
 + (void)unblockPendingBlockedContacts;
