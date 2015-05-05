@@ -268,6 +268,7 @@
 		B70EAB3D1AD32B1E00305F43 /* JCDidTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */; };
 		B70EAB3F1AD3302000305F43 /* JCAuthenticationManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */; };
 		B73690D41AE6F7BC0025071C /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B73690D31AE6F7BC0025071C /* Contacts.storyboard */; };
+		B744DE321AF920F500A72682 /* JCBlockedNumbersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */; };
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
 		B7619F291AF298D80075CF2D /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7619F281AF298D80075CF2D /* Crashlytics.framework */; };
 		B79F55551AEF1DF900E4768F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
@@ -761,6 +762,8 @@
 		B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDidTests.m; sourceTree = "<group>"; };
 		B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationManagerTests.m; sourceTree = "<group>"; };
 		B73690D31AE6F7BC0025071C /* Contacts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Contacts.storyboard; sourceTree = "<group>"; };
+		B744DE301AF920F500A72682 /* JCBlockedNumbersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBlockedNumbersViewController.h; sourceTree = "<group>"; };
+		B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBlockedNumbersViewController.m; sourceTree = "<group>"; };
 		B75899741A9FEA320025D5AD /* JCMessagesMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagesMenuCell.h; sourceTree = "<group>"; };
 		B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesMenuCell.m; sourceTree = "<group>"; };
 		B7619F281AF298D80075CF2D /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -1177,6 +1180,8 @@
 				5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */,
 				B7FCA5A81AD2E74E0034C5EC /* JCDIDSelectorViewController.h */,
 				B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */,
+				B744DE301AF920F500A72682 /* JCBlockedNumbersViewController.h */,
+				B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -2243,6 +2248,7 @@
 				27D2C1F7196F030C005285FF /* JCLineSelectorTableViewController.m in Sources */,
 				5D1FD5C41A48B05E007EF8B6 /* JCKeychain.m in Sources */,
 				5D241FCE1A36AF2C008B498A /* JCPickerViewController.m in Sources */,
+				B744DE321AF920F500A72682 /* JCBlockedNumbersViewController.m in Sources */,
 				5DB0BFC71A0033B5006737D7 /* JCView.m in Sources */,
 				5D6243781A678B6F001DF88E /* JCError.m in Sources */,
 				27EA1DFD1900A83D0075CAEE /* JCVoicemailTableViewController.m in Sources */,

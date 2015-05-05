@@ -60,5 +60,9 @@
     [self setNeedsLayout];
     [self layoutIfNeeded];
 }
+-(UIButton *)blockBtn{
+    //make Call to block a number
+    return 0;
+}
 
 @end

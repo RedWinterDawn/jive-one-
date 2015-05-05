@@ -205,6 +205,19 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vs3-dz-KQW">
+                                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <state key="normal" title="Block Number">
+                                                <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <variation key="widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="270" y="21" width="122" height="30"/>
+                                            </variation>
+                                            <connections>
+                                                <action selector="blockNumberBtn:" destination="vRQ-Sk-EjJ" eventType="touchUpInside" id="XBg-g8-e11"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="5pa-Vh-mNq" firstAttribute="top" secondItem="pzP-wd-be5" secondAttribute="top" constant="8" id="6vo-xJ-B2x"/>
@@ -216,8 +229,19 @@
                                         <constraint firstItem="5pa-Vh-mNq" firstAttribute="trailing" secondItem="pzP-wd-be5" secondAttribute="trailing" constant="-8" id="h5m-Q5-mbd"/>
                                         <constraint firstItem="qVa-e2-mlP" firstAttribute="top" secondItem="hYA-nm-SF2" secondAttribute="bottom" constant="3" id="ikm-Xt-tSz"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="Vs3-dz-KQW"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="Vs3-dz-KQW"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="blockBtn" destination="Vs3-dz-KQW" id="MgT-57-RmA"/>
                                     <outlet property="date" destination="5pa-Vh-mNq" id="9cE-dR-Myg"/>
                                     <outlet property="detail" destination="qVa-e2-mlP" id="SMI-Hq-QQC"/>
                                     <outlet property="name" destination="hYA-nm-SF2" id="QEy-Rq-mIY"/>
@@ -257,7 +281,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b2c-9C-Leo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="317" y="-138"/>
+            <point key="canvasLocation" x="316.5" y="-138"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

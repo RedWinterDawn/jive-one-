@@ -13,6 +13,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *detail;
 @property (weak, nonatomic) IBOutlet UILabel *date;
+@property (weak, nonatomic) IBOutlet UIButton *blockBtn;
+- (IBAction)blockNumberBtn:(id)sender;
 
 @property (nonatomic, getter=isRead) BOOL read;
 

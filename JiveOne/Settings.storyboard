@@ -136,6 +136,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Cc8-8H-shj" kind="showDetail" id="UUF-Zw-QhO"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="XtU-6m-RWQ" style="IBUITableViewCellStyleDefault" id="70b-2k-4Ae">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -912,7 +915,7 @@
         <!--Blocked Numbers-->
         <scene sceneID="r1p-lk-3Li">
             <objects>
-                <tableViewController id="663-aX-9gi" sceneMemberID="viewController">
+                <tableViewController id="663-aX-9gi" customClass="JCBlockedNumbersViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="wOq-gk-6FP">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -943,6 +946,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" button="YES"/>
+                                </accessibility>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -956,6 +962,23 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zYd-SN-XvO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4011" y="3351"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="sAS-Qt-B2h">
+            <objects>
+                <navigationController id="Cc8-8H-shj" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="yrG-bn-H9u">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.96862745100000003" green="0.73725490199999999" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Rek-Hn-7uR" kind="relationship" relationship="rootViewController" id="P0y-1o-81E"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UUN-5U-iFq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3187.5" y="2548"/>
         </scene>
     </scenes>
     <resources>
