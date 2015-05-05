@@ -7,6 +7,7 @@
 //
 
 #import "JCBlockedNumbersViewController.h"
+#import "BlockedContact+V5Client.h"
 #import "BlockedContact.h"
 
 
@@ -39,5 +40,6 @@
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //make Call to unblock method
+    
 }
 @end
