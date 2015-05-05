@@ -9,12 +9,21 @@
 #import "JCBlockedNumbersViewController.h"
 #import "JCAuthenticationManager.h"
 #import "BlockedNumber+V5Client.h"
+#import "PBX.h"
 
 @interface JCBlockedNumbersViewController ()
 
 @end
 
 @implementation JCBlockedNumbersViewController
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    PBX *pbx = self.authenticationManager.pbx;
+    [BlockedNumber downloadBlockedForDIDs:pbx.dids completion:NULL];
+}
 
 -(NSFetchedResultsController *)fetchedResultsController
 {
@@ -53,6 +62,20 @@
 -(void)deleteObject:(BlockedNumber *)blockedNumber
 {
     [BlockedNumber unblockNumber:blockedNumber completion:NULL];
+}
+
+-(IBAction)refeshTable:(id)sender
+{
+    if ([sender isKindOfClass:[UIRefreshControl class]]) {
+        PBX *pbx = self.authenticationManager.pbx;
+        [BlockedNumber downloadBlockedForDIDs:pbx.dids
+                                   completion:^(BOOL success, NSError *error) {
+                                       [((UIRefreshControl *)sender) endRefreshing];
+                                       if (!success) {
+                                           [self showError:error];
+                                       }
+                                   }];
+    }
 }
 
 @end

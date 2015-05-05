@@ -60,7 +60,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DID *did = (DID *)[self objectAtIndexPath:indexPath];
-    [JCAuthenticationManager sharedInstance].did = did;
+    self.authenticationManager.did = did;
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         DID *currentDID = (DID *)[localContext objectWithID:did.objectID];
         NSArray *numbers = [DID MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];
@@ -71,6 +71,10 @@
             else{
                 item.userDefault = FALSE;
             }
+        }
+    } completion:^(BOOL success, NSError *error) {
+        if (_delegate && [_delegate respondsToSelector:@selector(didUpdateDIDSelectorViewController:)]) {
+            [_delegate didUpdateDIDSelectorViewController:self];
         }
     }];
 }

@@ -23,10 +23,11 @@
 
 // Controllers
 #import "JCTermsAndConditonsViewController.h"
+#import "JCDIDSelectorViewController.h"
 
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedback :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@ <br> Domain : %@  <br> Carrier : %@ <br> Connection Type : %@ <br> ";
 
-@interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate>
+@interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate, JCDIDSelectorViewControllerDelegate>
 
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
 
@@ -80,8 +81,14 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *controller = segue.destinationViewController;
+    if ([controller isKindOfClass:[UINavigationController class]]) {
+        controller = ((UINavigationController *)controller).topViewController;
+    }
+    
     if ([controller isKindOfClass:[JCTermsAndConditonsViewController class]]) {
         controller.navigationItem.leftBarButtonItem = nil;
+    } else if ([controller isKindOfClass:[JCDIDSelectorViewController class]]) {
+        ((JCDIDSelectorViewController *)controller).delegate = self;
     }
 }
 
@@ -195,7 +202,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     self.uuid.text                  = [device userUniqueIdentiferForUser:authenticationManager.jiveUserId];
     self.userNameLabel.text         = authenticationManager.line.pbx.user.jiveUserId;
     self.extensionLabel.text        = authenticationManager.line.number;
-    self.smsUserDefaultNumber.text  = authenticationManager.did.number;
+    self.smsUserDefaultNumber.text  = authenticationManager.did.formattedNumber;
     
     [self cell:self.enablePreasenceCell setHidden:!authenticationManager.line.pbx.isV5];
     [self cell:self.defaultDIDCell setHidden:!authenticationManager.pbx.sendSMSMessages];
@@ -209,6 +216,11 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)didUpdateDIDSelectorViewController:(JCDIDSelectorViewController *)viewController
+{
+    [self updateAccountInfo];
 }
 
 @end

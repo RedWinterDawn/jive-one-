@@ -10,4 +10,6 @@
 
 @interface JCBlockedNumbersViewController : JCFetchedResultsTableViewController
 
+-(IBAction)refeshTable:(id)sender;
+
 @end
