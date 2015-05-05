@@ -995,8 +995,6 @@
 		2751591518AD2FF700FD8D3F /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				5DFFF3DB1AF90DD30091F479 /* BlockedContact.h */,
-				5DFFF3DC1AF90DD30091F479 /* BlockedContact.m */,
 				2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */,
 				5D241FCF1A37F511008B498A /* User.h */,
 				5D241FD01A37F511008B498A /* User.m */,
@@ -1038,6 +1036,8 @@
 				5D490E661A8D4C01004B62C0 /* DID.m */,
 				5D490E681A8D4DB4004B62C0 /* LocalContact.h */,
 				5D490E691A8D4DB4004B62C0 /* LocalContact.m */,
+				5DFFF3DB1AF90DD30091F479 /* BlockedContact.h */,
+				5DFFF3DC1AF90DD30091F479 /* BlockedContact.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";

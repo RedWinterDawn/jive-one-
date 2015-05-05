@@ -35,6 +35,19 @@
     }
 }
 
++(void)blockPendingBlockedContacts
+{
+    // TODO: do this.
+    
+//    NSArray *pendingBlockedContacts = [BlockedContact MR_findByAttribute:@"pendingUpload" withValue:@TRUE];
+//    if (pendingBlockedContacts.count > 0) {
+////        for (<#type *object#> in pendingBlockedContacts) {
+////            <#statements#>
+////        }
+//    }
+}
+
+
 +(void)downloadBlockedForDID:(DID *)did completion:(CompletionHandler)completion
 {
     [JCV5ApiClient downloadMessagesBlockedForDID:did completion:^(BOOL success, id response, NSError *error) {
@@ -47,6 +60,47 @@
             }
         }
     }];
+}
+
++(void)blockNumber:(id<JCPhoneNumberDataSource>)phoneNumber did:(DID *)did completion:(CompletionHandler)completion;
+{
+    [JCV5ApiClient blockSMSMessageForDID:did
+                                  number:phoneNumber
+                              completion:^(BOOL success, id response, NSError *error) {
+                                  [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                                      DID *localDID = (DID *)[localContext objectWithID:did.objectID];
+                                      BlockedContact *blockedContact = [self createBlockedMessageWithNumber:phoneNumber.number did:localDID];
+                                      blockedContact.pendingUpload = !success;
+                                      if (completion) {
+                                          completion((error == nil), error);
+                                      }
+                                  }];
+                              }];
+}
+
++(void)unblockPendingBlockedContacts
+{
+    //TODO: do this.
+}
+
++(void)unblockNumber:(BlockedContact *)blockedContact completion:(CompletionHandler)completion;
+{
+    [JCV5ApiClient unblockSMSMessageForDID:blockedContact.did
+                                    number:blockedContact
+                                completion:^(BOOL success, id response, NSError *error) {
+                                    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                                        BlockedContact *localBlockedContact = (BlockedContact *)[localContext objectWithID:blockedContact.objectID];
+                                        if (success) {
+                                            [localContext deleteObject:blockedContact];
+                                        } else {
+                                            localBlockedContact.markForDeletion = TRUE;
+                                        }
+                                        
+                                        if (completion) {
+                                            completion((error == nil), error);
+                                        }
+                                    }];
+                                }];
 }
 
 + (void)processBlockedResponseObject:(id)responseObject did:(DID *)did completion:(CompletionHandler)completion

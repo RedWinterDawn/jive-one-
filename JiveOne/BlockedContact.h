@@ -12,6 +12,9 @@
 
 @interface BlockedContact : JCPhoneNumberManagedObject
 
+@property (nonatomic) BOOL markForDeletion;
+@property (nonatomic) BOOL pendingUpload;
+
 @property (nonatomic, retain) DID *did;
 
 @end
