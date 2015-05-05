@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="BlockedContact" representedClassName="BlockedContact" syncable="YES">
+    <entity name="BlockedNumber" representedClassName="BlockedContact" syncable="YES">
         <attribute name="markForDeletion" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
@@ -37,7 +37,7 @@
         <attribute name="sendSMS" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="userDefault" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
-        <relationship name="blockedContacts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BlockedContact" inverseName="did" inverseEntity="BlockedContact" syncable="YES"/>
+        <relationship name="blockedContacts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BlockedNumber" inverseName="did" inverseEntity="BlockedNumber" syncable="YES"/>
         <relationship name="pbx" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBX" inverseName="dids" inverseEntity="PBX" syncable="YES"/>
         <relationship name="smsMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SMSMessage" inverseName="did" inverseEntity="SMSMessage" syncable="YES"/>
     </entity>
@@ -129,7 +129,7 @@
         <attribute name="url_self" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BlockedContact" positionX="-189" positionY="378" width="128" height="133"/>
+        <element name="BlockedNumber" positionX="-189" positionY="378" width="128" height="133"/>
         <element name="Call" positionX="538" positionY="-360" width="128" height="45"/>
         <element name="Contact" positionX="-243" positionY="-36" width="128" height="135"/>
         <element name="ContactGroup" positionX="-45" positionY="117" width="128" height="90"/>

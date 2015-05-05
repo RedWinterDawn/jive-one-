@@ -7,8 +7,7 @@
 //
 
 #import "JCBlockedNumbersViewController.h"
-#import "BlockedContact.h"
-
+#import "BlockedNumber.h"
 
 @interface JCBlockedNumbersViewController ()
 
@@ -20,7 +19,7 @@
 {
     if (!_fetchedResultsController) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"did = %@", self.did];
-        NSFetchRequest *fetchRequest = [BlockedContact MR_requestAllWithPredicate:predicate];
+        NSFetchRequest *fetchRequest = [BlockedNumber MR_requestAllWithPredicate:predicate];
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES]];
         super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                              managedObjectContext:self.managedObjectContext
@@ -30,9 +29,9 @@
     return _fetchedResultsController;
 }
 
--(void)configureCell:(UITableViewCell *)cell withObject:(BlockedContact *)blockedContact
+-(void)configureCell:(UITableViewCell *)cell withObject:(BlockedNumber *)blockedNumber
 {
-    cell.textLabel.text = blockedContact.number;
+    cell.textLabel.text = blockedNumber.number;
 }
 
 
