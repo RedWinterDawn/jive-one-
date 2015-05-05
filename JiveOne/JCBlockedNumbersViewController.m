@@ -7,7 +7,8 @@
 //
 
 #import "JCBlockedNumbersViewController.h"
-#import "BlockedNumber.h"
+#import "JCAuthenticationManager.h"
+#import "BlockedNumber+V5Client.h"
 
 @interface JCBlockedNumbersViewController ()
 
@@ -18,12 +19,15 @@
 -(NSFetchedResultsController *)fetchedResultsController
 {
     if (!_fetchedResultsController) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"did = %@", self.did];
+        
+        PBX *pbx = self.authenticationManager.pbx;
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"did.pbx = %@", pbx];
         NSFetchRequest *fetchRequest = [BlockedNumber MR_requestAllWithPredicate:predicate];
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES]];
         super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                              managedObjectContext:self.managedObjectContext
-                                                                               sectionNameKeyPath:nil
+                                                                               sectionNameKeyPath:@"did.titleText"
                                                                                         cacheName:nil];
     }
     return _fetchedResultsController;
@@ -31,13 +35,24 @@
 
 -(void)configureCell:(UITableViewCell *)cell withObject:(BlockedNumber *)blockedNumber
 {
-    cell.textLabel.text = blockedNumber.number;
+    cell.textLabel.text = blockedNumber.detailText;
 }
 
-
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-//make Call to unblock method
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
     
+    return sectionInfo.name;
 }
+
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Unblock";
+}
+
+-(void)deleteObject:(BlockedNumber *)blockedNumber
+{
+    [BlockedNumber unblockNumber:blockedNumber completion:NULL];
+}
+
 @end

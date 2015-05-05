@@ -8,14 +8,25 @@
 
 #import "JCTableViewCell.h"
 
+@protocol JCConversationTableViewCellDelegate;
+
 @interface JCConversationTableViewCell : JCTableViewCell
+
+@property (weak, nonatomic) id<JCConversationTableViewCellDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *detail;
 @property (weak, nonatomic) IBOutlet UILabel *date;
 @property (weak, nonatomic) IBOutlet UIButton *blockBtn;
+
 - (IBAction)blockNumberBtn:(id)sender;
 
 @property (nonatomic, getter=isRead) BOOL read;
+
+@end
+
+@protocol JCConversationTableViewCellDelegate <NSObject>
+
+-(void)didBlockConverastionTableViewCell:(JCConversationTableViewCell *)cell;
 
 @end
