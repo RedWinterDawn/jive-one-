@@ -1220,6 +1220,29 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="cqn-nd-Buw" detailTextLabel="0OQ-Pd-Ynn" style="IBUITableViewCellStyleValue1" id="0hn-J2-p4P">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0hn-J2-p4P" id="9iB-kp-BwT">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="blocked contacts:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cqn-nd-Buw">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0OQ-Pd-Ynn">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="0k1-NG-oHc" kind="push" id="LIK-mA-YyB"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -1230,6 +1253,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="DID" id="eBv-ju-j6W"/>
                     <connections>
+                        <outlet property="blockedContacts" destination="0OQ-Pd-Ynn" id="naa-bK-WOB"/>
                         <outlet property="didId" destination="PC0-Xn-8Tp" id="0fh-DU-B3r"/>
                         <outlet property="jrn" destination="IQd-lH-RJf" id="oJN-DK-ZSb"/>
                         <outlet property="makeCall" destination="tC7-Tc-HmW" id="RX8-E2-0Gu"/>
@@ -1243,6 +1267,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lX3-6H-4gy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3145" y="2366"/>
+        </scene>
+        <!--Debug Blocked Contacts Table View Controller-->
+        <scene sceneID="eqY-pt-2Rd">
+            <objects>
+                <tableViewController id="0k1-NG-oHc" customClass="JCDebugBlockedContactsTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8e1-yA-x2o">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="Egl-rg-Fye" style="IBUITableViewCellStyleDefault" id="ZNj-dZ-nuD">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZNj-dZ-nuD" id="wSF-lf-qmc">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Egl-rg-Fye">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="0k1-NG-oHc" id="3iK-Us-Cor"/>
+                            <outlet property="delegate" destination="0k1-NG-oHc" id="fh3-ba-ZOz"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="l7n-rR-54m"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gYa-M6-qS5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3557" y="2366"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

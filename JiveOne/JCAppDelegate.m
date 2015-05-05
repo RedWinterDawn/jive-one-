@@ -39,6 +39,7 @@
 #import "Contact+V5Client.h"
 #import "Voicemail+V5Client.h"
 #import "SMSMessage+V5Client.h"
+#import "BlockedContact+V5Client.h"
 #import "JCUnknownNumber.h"
 #import "JCSMSConversationGroup.h"
 
@@ -245,7 +246,9 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 
 	// Download all SMS Messages is sms is enabled for the pbx.
     if ([line.pbx smsEnabled]) {
-        [SMSMessage downloadMessagesForDIDs:line.pbx.dids completion:NULL];
+        NSSet *dids = line.pbx.dids;
+        [SMSMessage downloadMessagesForDIDs:dids completion:NULL];
+        [BlockedContact downloadBlockedForDIDs:dids completion:NULL];
     }
     
     // Register the Phone.

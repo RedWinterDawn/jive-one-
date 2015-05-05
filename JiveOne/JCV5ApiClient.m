@@ -210,10 +210,11 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
                            completion:(JCV5ApiClientCompletionHandler)completion
 {
     NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageBlockedNumbersURLPath, did.number];
-    [JCV5ApiClient postWithPath:path
-                     parameters:nil
-                        retries:MESSAGES_BLOCKED_NUMBER_DOWNLOAD_NUMBER_OF_TRIES
-                     completion:completion];
+    [JCV5ApiClient getWithPath:path
+                    parameters:nil
+             requestSerializer:nil
+                       retries:MESSAGES_BLOCKED_NUMBER_DOWNLOAD_NUMBER_OF_TRIES
+                    completion:completion];
 }
 
 #pragma - Private -
