@@ -886,6 +886,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="appLabel" destination="r0i-CD-OoY" id="kFO-U9-cCh"/>
+                        <outlet property="blockedNumbersCell" destination="FtV-6D-KB2" id="AS7-jd-G4r"/>
                         <outlet property="buildLabel" destination="UjK-HA-EeS" id="jwm-RA-hC8"/>
                         <outlet property="defaultDIDCell" destination="EVV-ga-5fF" id="rqv-zJ-QpX"/>
                         <outlet property="enablePreasenceCell" destination="wFh-qN-Em8" id="SGe-wX-6br"/>
@@ -1579,10 +1580,10 @@
                         <viewControllerLayoutGuide type="bottom" id="AiG-Lb-b2c"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vw4-gr-jHe">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView autoresizesSubviews="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nq-wa-FF2">
+                            <webView autoresizesSubviews="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nq-wa-FF2">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
@@ -1615,19 +1616,27 @@
             </objects>
             <point key="canvasLocation" x="973" y="3507"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Blocked Numbers-->
         <scene sceneID="HWJ-wD-cNL">
             <objects>
-                <tableViewController id="sLh-jK-hdR" sceneMemberID="viewController">
+                <tableViewController id="sLh-jK-hdR" customClass="JCBlockedNumbersViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FnJ-6N-ZCS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Vjg-ah-fpm">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="AWb-yp-ztg" style="IBUITableViewCellStyleDefault" id="Vjg-ah-fpm">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vjg-ah-fpm" id="Ys6-cM-WQg">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AWb-yp-ztg">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -1636,7 +1645,21 @@
                             <outlet property="delegate" destination="sLh-jK-hdR" id="lT7-yV-oaU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="GSd-cZ-vhc"/>
+                    <navigationItem key="navigationItem" title="Blocked Numbers" id="GSd-cZ-vhc"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Dhm-Eq-QWO">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Updating...">
+                                <attributes>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <connections>
+                            <action selector="refeshTable:" destination="sLh-jK-hdR" eventType="valueChanged" id="gqm-YB-Ui8"/>
+                        </connections>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kB8-rO-iDc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3404,8 +3427,8 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="ZYx-zc-gsM"/>
+        <segue reference="Uqi-bD-GAX"/>
         <segue reference="NV4-rr-lnW"/>
-        <segue reference="xxt-tb-rPs"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>
