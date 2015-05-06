@@ -16,6 +16,7 @@
 #import "JCUnknownNumber.h"
 #import "LocalContact.h"
 #import "SMSMessage+V5Client.h"
+#import "BlockedNumber+V5Client.h"
 #import "PBX.h"
 #import "Line.h"
 #import "JCPhoneBook.h"
@@ -52,6 +53,14 @@
     
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedString(@"Send SMS", nil);
     self.inputToolbar.contentView.leftBarButtonItem = nil;
+    UIBarButtonItem *blockButton = [[UIBarButtonItem alloc]
+                                    initWithTitle:@"Block"
+                                    style:UIBarButtonItemStyleBordered
+                                    target:self
+                                    action:@selector(blockNumberBtn:)];
+    self.navigationItem.rightBarButtonItem = blockButton;
+
+
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -161,6 +170,7 @@
 {
     _conversationGroup = conversationGroup;
     self.title = conversationGroup.titleText;
+//       self.navigationController.navigationItem.rightBarButtonItem = _blockBtn;
     if (conversationGroup.isSMS) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", conversationGroup.conversationGroupId];
         SMSMessage *message = [SMSMessage MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
@@ -371,6 +381,15 @@
 {
     self.conversationGroup = conversationGroup;
     [self dismissDropdownViewControllerAnimated:YES completion:NULL];
+}
+
+-(IBAction)blockNumberBtn:(id)sender
+{
+    [self didBlockConverastionView];
+ }
+-(void)didBlockConverastionView
+{
+    [BlockedNumber blockNumber:_conversationGroup did:self.did completion:NULL];
 }
 
 @end
