@@ -28,6 +28,7 @@
 // Controllers
 #import "JCMessageParticipantTableViewController.h"
 #import "JCNavigationController.h"
+#import "JCConversationDetailsViewController.h"
 
 // Categories
 #import "NSString+Additions.h"
@@ -90,6 +91,14 @@
     } completion:^(BOOL success, NSError *error) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
     }];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UIViewController *viewController = segue.destinationViewController;
+    if ([viewController isKindOfClass:[JCConversationDetailsViewController class]]) {
+        ((JCConversationDetailsViewController *)viewController).conversationGroup = self.conversationGroup;
+    }
 }
 
 -(void)didReceiveMemoryWarning

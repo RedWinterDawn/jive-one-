@@ -256,6 +256,7 @@
 		5DFFF3DA1AF90BD60091F479 /* BlockedNumber+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFFF3D91AF90BD60091F479 /* BlockedNumber+V5Client.m */; };
 		5DFFF3DD1AF90DD30091F479 /* BlockedNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFFF3DC1AF90DD30091F479 /* BlockedNumber.m */; };
 		5DFFF3E01AF9178A0091F479 /* JCDebugBlockedContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFFF3DF1AF9178A0091F479 /* JCDebugBlockedContactsTableViewController.m */; };
+		5DFFF3E31AF98E970091F479 /* JCConversationDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFFF3E21AF98E970091F479 /* JCConversationDetailsViewController.m */; };
 		9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9135DE0318BC01550052E998 /* AVFoundation.framework */; };
 		9145E31F191D842500840D66 /* JCVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31E191D842500840D66 /* JCVersion.m */; };
 		9154947819366C54003DCED4 /* JCPlayPauseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9154947719366C54003DCED4 /* JCPlayPauseButton.m */; };
@@ -734,6 +735,8 @@
 		5DFFF3DC1AF90DD30091F479 /* BlockedNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockedNumber.m; sourceTree = "<group>"; };
 		5DFFF3DE1AF9178A0091F479 /* JCDebugBlockedContactsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDebugBlockedContactsTableViewController.h; sourceTree = "<group>"; };
 		5DFFF3DF1AF9178A0091F479 /* JCDebugBlockedContactsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDebugBlockedContactsTableViewController.m; sourceTree = "<group>"; };
+		5DFFF3E11AF98E970091F479 /* JCConversationDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCConversationDetailsViewController.h; sourceTree = "<group>"; };
+		5DFFF3E21AF98E970091F479 /* JCConversationDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCConversationDetailsViewController.m; sourceTree = "<group>"; };
 		6818B7FC8A9DCEE51B290F02 /* Pods-UnitTests.enterprise.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.enterprise.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.enterprise.xcconfig"; sourceTree = "<group>"; };
 		86ED89B2764949AC9BCC0C7B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9135DE0318BC01550052E998 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1618,6 +1621,8 @@
 				5D87FF331A7FF576001B8BB2 /* JCConversationViewController.m */,
 				5D490E441A89774C004B62C0 /* JCMessageParticipantTableViewController.h */,
 				5D490E451A89774C004B62C0 /* JCMessageParticipantTableViewController.m */,
+				5DFFF3E11AF98E970091F479 /* JCConversationDetailsViewController.h */,
+				5DFFF3E21AF98E970091F479 /* JCConversationDetailsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2233,6 +2238,7 @@
 				5D55236F1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m in Sources */,
 				5D97A7FF1A828B4700A4434D /* JCIntercomTableViewController.m in Sources */,
 				27EB18BF19DE045900C1503B /* JCV5ApiClient.m in Sources */,
+				5DFFF3E31AF98E970091F479 /* JCConversationDetailsViewController.m in Sources */,
 				5D6AE3671A094A9C002BDAAF /* NSDictionary+Validations.m in Sources */,
 				5D25F84B1AE6E3E500981DB6 /* JCCallHistoryTableViewController_iPad.m in Sources */,
 				279A4E2C19DA91E100E8AB7B /* JCSipManager.m in Sources */,

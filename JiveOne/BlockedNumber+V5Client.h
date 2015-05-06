@@ -7,6 +7,7 @@
 //
 
 #import "BlockedNumber.h"
+#import "JCConversationGroupObject.h"
 
 @interface BlockedNumber (V5Client)
 
@@ -28,5 +29,9 @@
            completion:(CompletionHandler)completion;
 
 + (void)unblockPendingBlockedContacts;
+
++ (BlockedNumber *)blockedNumberForNumber:(NSString *)number forDID:(DID *)did;
+
++ (BlockedNumber *)blockedNumberForConversationGroup:(id<JCConversationGroupObject>)conversationGroup context:(NSManagedObjectContext *)context;
 
 @end

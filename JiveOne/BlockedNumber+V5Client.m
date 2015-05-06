@@ -9,6 +9,7 @@
 #import "BlockedNumber+V5Client.h"
 #import "JCV5ApiClient.h"
 #import "DID.h"
+#import "JCSMSConversationGroup.h"
 
 @implementation BlockedNumber (V5Client)
 
@@ -156,14 +157,30 @@
 
 + (BlockedNumber *)createBlockedMessageWithNumber:(NSString *)number did:(DID *)did
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"did = %@ AND number = %@", did, number];
-    BlockedNumber *blockedNumber = [BlockedNumber MR_findFirstWithPredicate:predicate inContext:did.managedObjectContext];
+    BlockedNumber *blockedNumber = [self blockedNumberForNumber:number forDID:did];
     if (!blockedNumber) {
         blockedNumber = [BlockedNumber MR_createInContext:did.managedObjectContext];
         blockedNumber.number = number;
         blockedNumber.did = did;
     }
+    blockedNumber.pendingUpload = FALSE;
     return blockedNumber;
+}
+
++ (BlockedNumber *)blockedNumberForNumber:(NSString *)number forDID:(DID *)did
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"did = %@ AND number = %@", did, number];
+    return [BlockedNumber MR_findFirstWithPredicate:predicate inContext:did.managedObjectContext];
+}
+
++ (BlockedNumber *)blockedNumberForConversationGroup:(id<JCConversationGroupObject>)conversationGroup context:(NSManagedObjectContext *)context
+{
+    if (![conversationGroup isKindOfClass:[JCSMSConversationGroup class]]) {
+        return nil;
+    }
+    
+    DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:((JCSMSConversationGroup *)conversationGroup).didJrn inContext:context];
+    return [BlockedNumber blockedNumberForNumber:conversationGroup.conversationGroupId forDID:did];
 }
 
 @end

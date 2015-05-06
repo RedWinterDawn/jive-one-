@@ -16,5 +16,6 @@
 -(instancetype)initWithMessage:(SMSMessage *)smsMessage phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber;
 
 @property (nonatomic, readonly) NSString *didJrn;
+@property (nonatomic, readonly) id<JCPhoneNumberDataSource> phoneNumber;
 
 @end

@@ -11,12 +11,102 @@
             <objects>
                 <viewController autoresizesArchivedViewToFullSize="NO" id="pWz-tY-54G" customClass="JCConversationViewController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" id="h7Q-pH-F2P"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <navigationItem key="navigationItem" id="h7Q-pH-F2P">
+                        <barButtonItem key="rightBarButtonItem" title="Details" id="qo1-nf-jvR">
+                            <connections>
+                                <segue destination="JOM-0T-xlO" kind="show" id="64j-Ib-zYl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="moY-jo-RbA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2320" y="-746"/>
+        </scene>
+        <!--Conversation Details View Controller-->
+        <scene sceneID="oqI-RC-gHS">
+            <objects>
+                <tableViewController id="JOM-0T-xlO" customClass="JCConversationDetailsViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="PsT-GD-zBH">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="51S-6e-Rg3">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="jld-WF-yRr" detailTextLabel="J8I-zG-k2G" style="IBUITableViewCellStyleValue1" id="8yU-zj-9IL">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8yU-zj-9IL" id="LXS-qq-D8H">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jld-WF-yRr">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="J8I-zG-k2G">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection footerTitle="Blocks this number from sending or recieving an SMS message on your PBX for all users." id="Vv3-tz-o6o">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="5nU-kk-aWd">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5nU-kk-aWd" id="Gat-K6-bGU">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Block Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tPN-wh-a8h">
+                                                    <rect key="frame" x="14" y="12" width="513" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y2O-yR-NXl">
+                                                    <rect key="frame" x="535" y="6" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="CdK-hF-AtL"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="toggleBlock:" destination="JOM-0T-xlO" eventType="valueChanged" id="cTr-zj-Aok"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="tPN-wh-a8h" firstAttribute="leading" secondItem="Gat-K6-bGU" secondAttribute="leading" constant="14" id="4DB-y9-2Tr"/>
+                                                <constraint firstAttribute="bottom" secondItem="tPN-wh-a8h" secondAttribute="bottom" constant="11" id="5t4-Q2-no9"/>
+                                                <constraint firstAttribute="trailing" secondItem="Y2O-yR-NXl" secondAttribute="trailing" constant="16" id="Nru-bN-kO8"/>
+                                                <constraint firstItem="Y2O-yR-NXl" firstAttribute="leading" secondItem="tPN-wh-a8h" secondAttribute="trailing" constant="8" id="Tgo-1Y-pIY"/>
+                                                <constraint firstItem="Y2O-yR-NXl" firstAttribute="top" secondItem="Gat-K6-bGU" secondAttribute="top" constant="6" id="ZRG-Vv-sAf"/>
+                                                <constraint firstAttribute="bottom" secondItem="Y2O-yR-NXl" secondAttribute="bottom" constant="6" id="gVg-Ih-8EZ"/>
+                                                <constraint firstItem="tPN-wh-a8h" firstAttribute="top" secondItem="Gat-K6-bGU" secondAttribute="top" constant="12" id="pKS-RA-0cV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="JOM-0T-xlO" id="mId-AT-SHr"/>
+                            <outlet property="delegate" destination="JOM-0T-xlO" id="esi-hh-gTf"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="blockNumberCell" destination="5nU-kk-aWd" id="nsc-uL-Fjr"/>
+                        <outlet property="blockSwitch" destination="Y2O-yR-NXl" id="NaM-DA-OZx"/>
+                        <outlet property="phoneNumberCell" destination="8yU-zj-9IL" id="SYz-Nu-NIC"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9EL-ht-0f8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3162" y="-746"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="bhW-Ox-rfs">
@@ -162,7 +252,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yld-9h-Svs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3113" y="-738"/>
+            <point key="canvasLocation" x="2320" y="-56"/>
         </scene>
         <!--Messages-->
         <scene sceneID="l0x-Py-XZY">

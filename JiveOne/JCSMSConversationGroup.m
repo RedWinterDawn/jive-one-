@@ -42,6 +42,8 @@
             _lastMessage    = smsMessage.text;
             _date           = smsMessage.date;
             _didJrn         = smsMessage.did.jrn;
+            
+            _phoneNumber    = phoneNumber;
         }
     }
     return self;
