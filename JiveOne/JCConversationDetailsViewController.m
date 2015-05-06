@@ -22,6 +22,10 @@
     
     id<JCConversationGroupObject> conversationGroup = self.conversationGroup;
     
+    NSString *name = conversationGroup.name;
+    self.phoneNumberCell.textLabel.text = name ? name : NSLocalizedString(@"Unknown", nil);
+    self.phoneNumberCell.detailTextLabel.text = self.conversationGroup.formattedNumber;
+    
     [self cell:self.blockNumberCell setHidden:!conversationGroup.isSMS];
     
     BlockedNumber *blockedNumber = [BlockedNumber blockedNumberForConversationGroup:conversationGroup context:[NSManagedObjectContext MR_defaultContext]];

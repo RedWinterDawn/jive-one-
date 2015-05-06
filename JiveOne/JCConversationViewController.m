@@ -54,14 +54,6 @@
     
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedString(@"Send SMS", nil);
     self.inputToolbar.contentView.leftBarButtonItem = nil;
-    UIBarButtonItem *blockButton = [[UIBarButtonItem alloc]
-                                    initWithTitle:@"Block"
-                                    style:UIBarButtonItemStyleBordered
-                                    target:self
-                                    action:@selector(blockNumberBtn:)];
-    self.navigationItem.rightBarButtonItem = blockButton;
-
-
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -390,15 +382,6 @@
 {
     self.conversationGroup = conversationGroup;
     [self dismissDropdownViewControllerAnimated:YES completion:NULL];
-}
-
--(IBAction)blockNumberBtn:(id)sender
-{
-    [self didBlockConverastionView];
- }
--(void)didBlockConverastionView
-{
-    [BlockedNumber blockNumber:_conversationGroup did:self.did completion:NULL];
 }
 
 @end

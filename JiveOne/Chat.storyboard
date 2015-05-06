@@ -23,7 +23,7 @@
             </objects>
             <point key="canvasLocation" x="2320" y="-746"/>
         </scene>
-        <!--Conversation Details View Controller-->
+        <!--Details-->
         <scene sceneID="oqI-RC-gHS">
             <objects>
                 <tableViewController id="JOM-0T-xlO" customClass="JCConversationDetailsViewController" sceneMemberID="viewController">
@@ -98,6 +98,7 @@
                             <outlet property="delegate" destination="JOM-0T-xlO" id="esi-hh-gTf"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Details" id="TxK-l8-YtH"/>
                     <connections>
                         <outlet property="blockNumberCell" destination="5nU-kk-aWd" id="nsc-uL-Fjr"/>
                         <outlet property="blockSwitch" destination="Y2O-yR-NXl" id="NaM-DA-OZx"/>
