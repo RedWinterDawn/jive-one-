@@ -16,7 +16,7 @@
 @property (nonatomic, strong, readwrite) NSString *lastMessageId;
 @property (nonatomic, strong, readwrite) NSString *lastMessage;
 @property (nonatomic, strong, readwrite) NSDate *date;
-@property (nonatomic, strong, readwrite) UIImage *avatar;
+
 
 @property (nonatomic, readonly, getter=isSMS) BOOL sms;
 @property (nonatomic, readonly, getter=isRead) BOOL read;
