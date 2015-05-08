@@ -11,18 +11,19 @@
 
 #import "JCVoicemailTableViewController.h"
 #import "JCVoicemailPlaybackCell.h"
+#import "JCVoicemailDetailViewController.h"
 #import "JCV5ApiClient.h"
 
 #import "JCAppDelegate.h"
 #import "Voicemail+V5Client.h"
 #import "JCError.h"
 
-@interface JCVoicemailTableViewController () <AVAudioPlayerDelegate, JCVoiceCellDelegate>
+@interface JCVoicemailTableViewController () < JCVoiceCellDelegate>
 {
-    NSData *soundData;
-    AVAudioPlayer *player;
+//    NSData *soundData;
+//    AVAudioPlayer *player;
     NSManagedObjectContext *context;
-    BOOL _playThroughSpeaker;
+//    BOOL _playThroughSpeaker;
     NSTimer *requestTimeout;
 }
 
@@ -105,10 +106,10 @@
 	if (isSelected)
 	{
 		self.selectedCell = voiceCell;
-		voiceCell.playPauseButton.selected = [player isPlaying];
-		voiceCell.speakerButton.selected = _playThroughSpeaker;
-		[self updateViewForPlayerInfo];
-		[self updateProgress:nil];
+//		voiceCell.playPauseButton.selected = [player isPlaying];
+//		voiceCell.speakerButton.selected = _playThroughSpeaker;
+//		[self updateViewForPlayerInfo];
+//		[self updateProgress:nil];
 	}
 	
 }
@@ -118,12 +119,12 @@
 	[self addOrRemoveSelectedIndexPath:indexPath];
 	
 	// if we are playing a voicemail and we delete the voicemail cell that is being played -> stop playing then delete.
-	if (player.isPlaying && (self.selectedCell.indexPath == indexPath)) {
+//	if (player.isPlaying && (self.selectedCell.indexPath == indexPath)) {
 		//pause
-		[player pause];
+//		[player pause];
 		
-		[self stopProgressTimerForVoicemail];
-	}
+//		[self stopProgressTimerForVoicemail];
+//	}
 	
 	Voicemail *voicemail = (Voicemail *)[self objectAtIndexPath:indexPath];
     [voicemail markForDeletion:NULL];
@@ -131,8 +132,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
-    return isSelected ? 180.0f : 60.0f;
+    return 60.0f;
+//    BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
+//    return isSelected ? 180.0f : 60.0f;
 }
 
 -(void)resetSlider
@@ -140,36 +142,63 @@
         [self.selectedCell setSliderValue:0];
         [self.selectedCell.slider updateThumbWithCurrentProgress];
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ((player.currentTime > 0) && (self.selectedCell.indexPath == indexPath)) {
-        //pause
-        [player pause];
-        
-        [self stopProgressTimerForVoicemail];
-        [self performSelector:@selector(resetSlider) withObject:nil afterDelay:.5];
-    }
-    [self addOrRemoveSelectedIndexPath:indexPath];
+    
+    Voicemail *voicemail = (Voicemail *)[self objectAtIndexPath:indexPath];
+    
+    
+
+//    if ((player.currentTime > 0) && (self.selectedCell.indexPath == indexPath)) {
+//        //pause
+//        [player pause];
+//        
+//        [self stopProgressTimerForVoicemail];
+//        [self performSelector:@selector(resetSlider) withObject:nil afterDelay:.5];
+//    }
+//    [self addOrRemoveSelectedIndexPath:indexPath];
     
     BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
     
-    if (isSelected) {
-        [self prepareAudioForIndexPath:indexPath];
-        self.selectedCell = (JCVoicemailPlaybackCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        self.selectedCell.speakerButton.selected = _playThroughSpeaker;
+//    if (isSelected) {
+    
         
-        CGPoint positionRelativeToWindow = [self.selectedCell.contentView convertPoint:self.selectedCell.contentView.frame.origin toView:[UIApplication sharedApplication].keyWindow];
-        NSLog(@"PositionRelativeToWindow%@", NSStringFromCGPoint(positionRelativeToWindow));
-        if (positionRelativeToWindow.y > 338) {
-            NSLog(@"SelectedCellFrame:%@", NSStringFromCGRect(self.selectedCell.frame));
-            CGPoint currentContentOffset = self.tableView.contentOffset;
-            int amountToOffsetWithExpandedCell = currentContentOffset.y + (positionRelativeToWindow.y - 338);
-            NSLog(@"amountToOffsetWithExpandedCell:%d",amountToOffsetWithExpandedCell);
-            [tableView setContentOffset:CGPointMake(0, amountToOffsetWithExpandedCell)animated:YES];
-        }
-    }
+//        [self prepareAudioForIndexPath:indexPath];
+//        self.selectedCell = (JCVoicemailPlaybackCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+//        self.selectedCell.speakerButton.selected = _playThroughSpeaker;
+        
+//        CGPoint positionRelativeToWindow = [self.selectedCell.contentView convertPoint:self.selectedCell.contentView.frame.origin toView:[UIApplication sharedApplication].keyWindow];
+//        NSLog(@"PositionRelativeToWindow%@", NSStringFromCGPoint(positionRelativeToWindow));
+//        if (positionRelativeToWindow.y > 338) {
+//            NSLog(@"SelectedCellFrame:%@", NSStringFromCGRect(self.selectedCell.frame));
+//            CGPoint currentContentOffset = self.tableView.contentOffset;
+//            int amountToOffsetWithExpandedCell = currentContentOffset.y + (positionRelativeToWindow.y - 338);
+//            NSLog(@"amountToOffsetWithExpandedCell:%d",amountToOffsetWithExpandedCell);
+//            [tableView setContentOffset:CGPointMake(0, amountToOffsetWithExpandedCell)animated:YES];
+//        }
+//    }
     
 }
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    UIViewController *controller = segue.destinationViewController;
+    if ([controller isKindOfClass:[UINavigationController class]]) {
+        controller = ((UINavigationController *)controller).topViewController;
+    }
+     if ([controller isKindOfClass:[JCVoicemailDetailViewController class]]) {
+         if ([sender isKindOfClass:[UITableViewCell class]]) {
+             JCVoicemailDetailViewController *voicemailDetailViewController =(JCVoicemailDetailViewController *)controller;
+             NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+             Voicemail *voicemail = (Voicemail *)[self objectAtIndexPath:indexPath];
+             voicemailDetailViewController.voicemail = voicemail;
+         }
+     }
+}
+
+
+
+
 
 #pragma mark - JCVoicemailCellDelegate
 
@@ -202,154 +231,154 @@
 }
 
 #pragma mark - JCVoiceCell Delegate
-- (void)voiceCellPlayTapped:(JCVoicemailPlaybackCell *)cell
-{
-    [self playPauseAudio:cell];
-}
+//- (void)voiceCellPlayTapped:(JCVoicemailPlaybackCell *)cell
+//{
+//    [self playPauseAudio:cell];
+//}
 
-- (void)voiceCellSliderMoved:(float)value
-{
-    player.currentTime = value;
-    [self updateProgress:nil];
-    [self startProgressTimerForVoicemail];
-}
+//- (void)voiceCellSliderMoved:(float)value
+//{
+//    player.currentTime = value;
+//    [self updateProgress:nil];
+//    [self startProgressTimerForVoicemail];
+//}
+//
+//- (void)voiceCellSliderTouched:(BOOL)touched
+//{
+//    [self stopProgressTimerForVoicemail];
+//}
+//
+//- (void)voicecellSpeakerTouched
+//{
+//    _playThroughSpeaker = !_playThroughSpeaker;
+//    self.selectedCell.speakerButton.selected = _playThroughSpeaker;
+//    [self setupSpeaker];
+//}
 
-- (void)voiceCellSliderTouched:(BOOL)touched
-{
-    [self stopProgressTimerForVoicemail];
-}
-
-- (void)voicecellSpeakerTouched
-{
-    _playThroughSpeaker = !_playThroughSpeaker;
-    self.selectedCell.speakerButton.selected = _playThroughSpeaker;
-    [self setupSpeaker];
-}
-
-- (void)voiceCellAudioAvailable:(NSIndexPath *)indexPath
-{
-    if (!player.isPlaying) {
-        [self prepareAudioForIndexPath:indexPath];
-    }
-}
+//- (void)voiceCellAudioAvailable:(NSIndexPath *)indexPath
+//{
+//    if (!player.isPlaying) {
+//        [self prepareAudioForIndexPath:indexPath];
+//    }
+//}
 
 #pragma mark - Audio Operations
 
-- (void)prepareAudioForIndexPath:(NSIndexPath*)indexPath
-{
-    if (player && player.isPlaying) {
-        [player stop];
-    }
-    self.selectedCell = (JCVoicemailPlaybackCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    
-    NSError *error;
-    player = [[AVAudioPlayer alloc] initWithData:self.selectedCell.voicemail.data fileTypeHint:AVFileTypeWAVE error:&error];
-    if (player) {
-        [self setupSpeaker];
-        player.delegate = self;
-        [player prepareToPlay];
-        [self updateViewForPlayerInfo];
-    }
-}
+//- (void)prepareAudioForIndexPath:(NSIndexPath*)indexPath
+//{
+//    if (player && player.isPlaying) {
+//        [player stop];
+//    }
+//    self.selectedCell = (JCVoicemailPlaybackCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+//    
+//    NSError *error;
+//    player = [[AVAudioPlayer alloc] initWithData:self.selectedCell.voicemail.data fileTypeHint:AVFileTypeWAVE error:&error];
+//    if (player) {
+//        [self setupSpeaker];
+//        player.delegate = self;
+//        [player prepareToPlay];
+//        [self updateViewForPlayerInfo];
+//    }
+//}
 
-- (void)playPauseAudio:(JCVoicemailPlaybackCell *)cell
-{
-    BOOL playing = player.isPlaying;
-    
-    if (playing) {
-        //pause
-        [player pause];
-        
-        [self stopProgressTimerForVoicemail];
-        self.selectedCell.playPauseButton.selected = false;
-        [UIDevice currentDevice].proximityMonitoringEnabled = NO;
-    }
-    else {
-        //play
-        [player play];
-        
-        [self startProgressTimerForVoicemail];
-        self.selectedCell.playPauseButton.selected = TRUE;
-        [self.selectedCell.voicemail markAsRead:NULL];
-        [UIDevice currentDevice].proximityMonitoringEnabled = YES;
-    }
-}
+//- (void)playPauseAudio:(JCVoicemailPlaybackCell *)cell
+//{
+//    BOOL playing = player.isPlaying;
+//    
+//    if (playing) {
+//        //pause
+//        [player pause];
+//        
+//        [self stopProgressTimerForVoicemail];
+//        self.selectedCell.playPauseButton.selected = false;
+//        [UIDevice currentDevice].proximityMonitoringEnabled = NO;
+//    }
+//    else {
+//        //play
+//        [player play];
+//        
+//        [self startProgressTimerForVoicemail];
+//        self.selectedCell.playPauseButton.selected = TRUE;
+//        [self.selectedCell.voicemail markAsRead:NULL];
+//        [UIDevice currentDevice].proximityMonitoringEnabled = YES;
+//    }
+//}
 
-- (void)updateViewForPlayerInfo
-{
-	self.selectedCell.duration.text = [NSString stringWithFormat:@"%d:%02d", (int)player.duration / 60, (int)player.duration % 60, nil];
-	self.selectedCell.slider.maximumValue = player.duration;
-}
+//- (void)updateViewForPlayerInfo
+//{
+//	self.selectedCell.duration.text = [NSString stringWithFormat:@"%d:%02d", (int)player.duration / 60, (int)player.duration % 60, nil];
+//	self.selectedCell.slider.maximumValue = player.duration;
+//}
 
-- (void)startProgressTimerForVoicemail {
-    if (player.isPlaying) {
-        if (self.progressTimer) {
-            [self stopProgressTimerForVoicemail];
-        }
-        
-        self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateProgress:) userInfo:nil repeats:YES];
-    }    
-}
+//- (void)startProgressTimerForVoicemail {
+//    if (player.isPlaying) {
+//        if (self.progressTimer) {
+//            [self stopProgressTimerForVoicemail];
+//        }
+//        
+//        self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateProgress:) userInfo:nil repeats:YES];
+//    }    
+//}
 
-- (void)stopProgressTimerForVoicemail {
-    [self.progressTimer invalidate];
-    self.progressTimer = nil;
-    
-}
+//- (void)stopProgressTimerForVoicemail {
+//    [self.progressTimer invalidate];
+//    self.progressTimer = nil;
+//    
+//}
 
-- (void)updateProgress:(NSNotification*)notification {
-    if (self.selectedCell.playPauseButton.selected == FALSE && player.isPlaying) {
-        self.selectedCell.playPauseButton.selected = TRUE;
-    }
-    self.selectedCell.duration.text = [self formatSeconds:player.duration];
-    [self.selectedCell setSliderValue:player.currentTime];
-    [self.selectedCell.slider updateThumbWithCurrentProgress];
-}
+//- (void)updateProgress:(NSNotification*)notification {
+//    if (self.selectedCell.playPauseButton.selected == FALSE && player.isPlaying) {
+//        self.selectedCell.playPauseButton.selected = TRUE;
+//    }
+//    self.selectedCell.duration.text = [self formatSeconds:player.duration];
+//    [self.selectedCell setSliderValue:player.currentTime];
+//    [self.selectedCell.slider updateThumbWithCurrentProgress];
+//}
 
-/** Time formatting helper fn: N seconds => M:SS */
--(NSString *)formatSeconds:(NSTimeInterval)seconds {
-    NSInteger minutes = (NSInteger)(seconds/60.);
-    NSInteger remainingSeconds = (NSInteger)seconds % 60;
-    return [NSString stringWithFormat:@"%.1ld:%.2ld",(long)minutes,(long)remainingSeconds];
-}
+///** Time formatting helper fn: N seconds => M:SS */
+//-(NSString *)formatSeconds:(NSTimeInterval)seconds {
+//    NSInteger minutes = (NSInteger)(seconds/60.);
+//    NSInteger remainingSeconds = (NSInteger)seconds % 60;
+//    return [NSString stringWithFormat:@"%.1ld:%.2ld",(long)minutes,(long)remainingSeconds];
+//}
 
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-    [self stopProgressTimerForVoicemail];
-    self.selectedCell.playPauseButton.selected = FALSE;
-    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
-}
+//- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+//    [self stopProgressTimerForVoicemail];
+//    self.selectedCell.playPauseButton.selected = FALSE;
+//    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
+//}
+//
+//- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
+//    [self stopProgressTimerForVoicemail];
+//    self.selectedCell.playPauseButton.selected = TRUE;
+//    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
+//}
 
-- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
-    [self stopProgressTimerForVoicemail];
-    self.selectedCell.playPauseButton.selected = TRUE;
-    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
-}
-
-- (void)setupSpeaker
-{
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    NSError *error;
-    
-    // set category PlanAndRecord in order to be able to use AudioRoueOverride
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord
-                             error:&error];
-    
-    AVAudioSessionPortOverride portOverride = _playThroughSpeaker ? AVAudioSessionPortOverrideSpeaker : AVAudioSessionPortOverrideNone;
-    [session overrideOutputAudioPort:portOverride error:&error];
-    
-    if (!error) {
-        [session setActive:YES error:&error];
-        
-        if (!error) {
-            if (_playThroughSpeaker) {
-                self.selectedCell.speakerButton.selected = YES;
-            }
-            else {
-                self.selectedCell.speakerButton.selected = NO;
-            }
-        }
-    }
-}
+//- (void)setupSpeaker
+//{
+//    AVAudioSession *session = [AVAudioSession sharedInstance];
+//    NSError *error;
+//    
+//    // set category PlanAndRecord in order to be able to use AudioRoueOverride
+//    [session setCategory:AVAudioSessionCategoryPlayAndRecord
+//                             error:&error];
+//    
+//    AVAudioSessionPortOverride portOverride = _playThroughSpeaker ? AVAudioSessionPortOverrideSpeaker : AVAudioSessionPortOverrideNone;
+//    [session overrideOutputAudioPort:portOverride error:&error];
+//    
+//    if (!error) {
+//        [session setActive:YES error:&error];
+//        
+//        if (!error) {
+//            if (_playThroughSpeaker) {
+//                self.selectedCell.speakerButton.selected = YES;
+//            }
+//            else {
+//                self.selectedCell.speakerButton.selected = NO;
+//            }
+//        }
+//    }
+//}
 
 
 @end

@@ -64,50 +64,50 @@
 
 #pragma mark - Methods -
 
-- (void)setSliderValue:(float)value
-{
-    self.slider.value = value;
-}
+//- (void)setSliderValue:(float)value
+//{
+//    self.slider.value = value;
+//}
 
 #pragma mark - IBActions -
 
-- (IBAction)playPauseButtonTapped:(id)sender
-{
-    if ([sender isKindOfClass:[UIButton class]]) {
-        UIButton *button = (UIButton *)sender;
-        button.selected = !button.selected;
-        if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellPlayTapped:)]) {
-            [self.delegate voiceCellPlayTapped:self];
-        }
-    }
-}
+//- (IBAction)playPauseButtonTapped:(id)sender
+//{
+//    if ([sender isKindOfClass:[UIButton class]]) {
+//        UIButton *button = (UIButton *)sender;
+//        button.selected = !button.selected;
+//        if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellPlayTapped:)]) {
+//            [self.delegate voiceCellPlayTapped:self];
+//        }
+//    }
+//}
+//
+//- (IBAction)progressSliderMoved:(id)sender
+//{
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellSliderMoved:)]) {
+//        [self.delegate voiceCellSliderMoved:self.slider.value];
+//    }
+//}
+//
+//
+//- (IBAction)progressSliderTouched:(id)sender
+//{
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellSliderTouched:)]) {
+//        [self.delegate voiceCellSliderTouched:YES];
+//    }
+//}
 
-- (IBAction)progressSliderMoved:(id)sender
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellSliderMoved:)]) {
-        [self.delegate voiceCellSliderMoved:self.slider.value];
-    }
-}
-
-
-- (IBAction)progressSliderTouched:(id)sender
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellSliderTouched:)]) {
-        [self.delegate voiceCellSliderTouched:YES];
-    }
-}
-
-- (IBAction)speakerTouched:(id)sender {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(voicecellSpeakerTouched)]) {
-        [self.delegate voicecellSpeakerTouched];
-    }
-}
-
--(IBAction)voiceCellDeleteTapped:(id)sender
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellDeleteTapped:)]) {
-        [self.delegate voiceCellDeleteTapped:self];
-    }
-}
+//- (IBAction)speakerTouched:(id)sender {
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(voicecellSpeakerTouched)]) {
+//        [self.delegate voicecellSpeakerTouched];
+//    }
+//}
+//
+//-(IBAction)voiceCellDeleteTapped:(id)sender
+//{
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellDeleteTapped:)]) {
+//        [self.delegate voiceCellDeleteTapped:self];
+//    }
+//}
 
 @end

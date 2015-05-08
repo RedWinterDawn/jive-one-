@@ -45,7 +45,7 @@ NSString *const kJCCallHistoryVisualVoicemailViewControllerIdentifier = @"Visual
                 break;
             }
             default:
-                [self hideVoicemail];
+                [self showVoicemail];
                 self.fetchRequest = nil;
                 break;
         }
