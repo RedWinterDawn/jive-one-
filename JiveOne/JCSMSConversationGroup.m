@@ -17,6 +17,7 @@
 @synthesize lastMessage   = _lastMessage;
 @synthesize lastMessageId = _lastMessageId;
 @synthesize date          = _date;
+@synthesize avatar          = _avatar;
 
 -(instancetype)initWithPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
@@ -42,7 +43,7 @@
             _lastMessage    = smsMessage.text;
             _date           = smsMessage.date;
             _didJrn         = smsMessage.did.jrn;
-            
+            _avatar           = [UIImage imageNamed:@"avatar"];
             _phoneNumber    = phoneNumber;
         }
     }
