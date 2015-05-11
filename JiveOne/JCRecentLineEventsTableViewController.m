@@ -21,6 +21,7 @@
 // Managers
 #import "JCPresenceManager.h"
 
+// Controllers
 #import "JCNonVisualVoicemailViewController.h"
 
 NSString *const kJCHistoryCellReuseIdentifier = @"HistoryCell";
@@ -198,9 +199,6 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     [viewController.view removeFromSuperview];
     _voicemailViewController = nil;
 }
-
-NSString *const kJCCallHistoryNonVisualVoicemailViewControllerIdentifier = @"NonVisualVoicemailViewController";
-NSString *const kJCCallHistoryVisualVoicemailViewControllerIdentifier = @"VisualVoicemailViewController";
 
 -(UIViewController *)voicemailViewController {
     if (!_voicemailViewController) {
