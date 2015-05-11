@@ -8,7 +8,7 @@
 
 @import UIKit;
 
-@interface JCVoiceNonVisualViewController : UIViewController
+@interface JCNonVisualVoicemailViewController : UIViewController
 
 -(IBAction)callVoicemail:(id)sender;
 

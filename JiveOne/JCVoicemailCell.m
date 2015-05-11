@@ -7,33 +7,7 @@
 //
 
 #import "JCVoicemailCell.h"
-#import "PBX.h"
-#import "Common.h"
 
 @implementation JCVoicemailCell
-
--(void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    self.number.text = self.voicemail.number;
-    self.duration.text = self.voicemail.displayDuration;
-}
-
-#pragma mark - Setters -
-
--(void)setRecentEvent:(RecentEvent *)recentEvent
-{
-    if ([recentEvent isKindOfClass:[Voicemail class]])
-    {
-        self.voicemail = (Voicemail *)recentEvent;
-    }
-}
-
--(void)setVoicemail:(Voicemail *)voicemail
-{
-    _voicemail = voicemail;
-    super.recentEvent = voicemail;
-}
 
 @end

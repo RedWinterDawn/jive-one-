@@ -11,7 +11,7 @@
 
 @interface JCRecentEventCell : JCPresenceCell
 
-@property (nonatomic, strong) RecentEvent *recentEvent;
+@property (nonatomic, getter=isRead) BOOL read;
 
 @property (nonatomic, weak) IBOutlet UILabel *name;
 @property (nonatomic, weak) IBOutlet UILabel *number;

@@ -14,13 +14,7 @@
 // Managed objects
 #import "Call.h"
 #import "MissedCall.h"
-
-@interface JCCallHistoryTableViewController ()
-{
-    NSFetchRequest *_fetchRequest;
-}
-
-@end
+#import "RecentLineEvent.h"
 
 @implementation JCCallHistoryTableViewController
 
@@ -40,39 +34,6 @@
 {
     [super viewDidAppear:animated];
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-}
-
-#pragma mark - Setters - 
-
--(void)setFetchRequest:(NSFetchRequest *)fetchRequest
-{
-    _fetchRequest = fetchRequest;
-    self.fetchedResultsController = nil;
-    [self.tableView reloadData];
-}
-
-#pragma mark - Getters -
-
--(NSFetchedResultsController *)fetchedResultsController
-{
-    if (!_fetchedResultsController) {
-        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
-    }
-    return _fetchedResultsController;
-}
-
--(NSFetchRequest *)fetchRequest
-{
-    if (!_fetchRequest)
-    {
-        _fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kCallEntityName];
-        _fetchRequest.fetchBatchSize = 6;
-        _fetchRequest.includesSubentities = TRUE;
-        
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:false];
-        _fetchRequest.sortDescriptors = @[sortDescriptor];
-    }
-    return _fetchRequest;
 }
 
 #pragma mark - Delegate Handlers
