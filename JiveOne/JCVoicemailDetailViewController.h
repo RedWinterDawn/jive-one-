@@ -9,26 +9,25 @@
 #import <UIKit/UIKit.h>
 #import "JCVoicemailPlaybackCell.h"
 #import "JCVoicemailCell.h"
+#import "JCVoicemailAudioPlayer.h"
 @import AVFoundation;
 @import UIKit;
 
-@class JCVoicemailDetailViewPlayback;
-@protocol JCVoicemailDetailDelegate <NSObject>
+//@class JCVoicemailDetailViewPlayback;
+//@protocol JCVoicemailDetailDelegate <NSObject>
+//
+//-(void)voiceDetailPlayTapped:(BOOL)play;
+//-(void)sliderMoved:(float)value;
+//-(void)sliderTouched:(BOOL)touched;
+//-(void)voiceSpeakerTouched;
+//-(void)voiceMailAudioAvailable:(BOOL)available;
+//-(void)voiceDeleteTapped:(BOOL)deletePressed;
+//
+//@end
 
--(void)voiceDetailPlayTapped:(BOOL)play;
--(void)sliderMoved:(float)value;
--(void)sliderTouched:(BOOL)touched;
--(void)voiceSpeakerTouched;
--(void)voiceMailAudioAvailable:(BOOL)available;
--(void)voiceDeleteTapped:(BOOL)deletePressed;
+@interface JCVoicemailDetailViewController : UIViewController
 
-@end
-
-@interface JCVoicemailDetailViewController : UIViewController <AVAudioPlayerDelegate , JCVoicemailDetailDelegate>
-
-//@interface JCVoicemailDetailViewPlayback : JCVoicemailCell
-
-@property (nonatomic, weak) id <JCVoicemailDetailDelegate> delegate;
+//@property (nonatomic, weak) id <JCVoicemailDetailDelegate> delegate;
 
 @property (strong, nonatomic) Voicemail *voicemail;
 
