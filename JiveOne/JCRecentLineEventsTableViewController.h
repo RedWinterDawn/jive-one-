@@ -16,7 +16,6 @@ typedef enum : NSUInteger {
 
 @interface JCRecentLineEventsTableViewController : JCFetchedResultsTableViewController
 
-@property (nonatomic, strong) NSFetchRequest *fetchRequest;
 @property (nonatomic) JCRecentLineEventsViewFilters viewFilter;
 
 - (void)reloadTable;

@@ -30,7 +30,6 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 
 @interface JCRecentLineEventsTableViewController ()
 {
-    NSFetchRequest *_fetchRequest;
     UIViewController *_voicemailViewController;
 }
 
