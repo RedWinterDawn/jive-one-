@@ -38,17 +38,14 @@
     return _player.isPlaying;
 }
 -(void)voiceMailAudioAvailable:(BOOL)available  {
-//    if(player && player.isPlaying)  {
-//        [player stop];
-//    }
-//    NSError *error;
-//    player = [[AVAudioPlayer alloc] initWithData:self.voicemail fileTypeHint:AVFileTypeWAVE error:&error];
-//    if (player) {
-//        [self setupSpeaker];
-//        player.delegate = self;
-//        [player prepareToPlay];
-////        [self updateViewForPlayerInfo];
-//    }
+    if (_player && _player.isPlaying) {
+        [_player stop];
+    }
+    if (_player) {
+        [self setupSpeaker];
+        _player.delegate = self;
+        [_player prepareToPlay];
+    }
 }
 
 -(void)playPause {
@@ -90,14 +87,6 @@
     if (!error) {
         [session setActive:YES error:&error];
         
-//        if (!error) {
-//            if (_playThroughSpeaker) {
-//                self.speakerButton.selected = YES;
-//            }
-//            else {
-//                self.speakerButton.selected = NO;
-//            }
-//        }
     }
 }
 @end

@@ -35,5 +35,6 @@
 @property (nonatomic, weak) id<JCVoicemailAudioPlayerDelegate> delegate;
 
 -(void)setSliderValue:(float)position;
+-(void)getSliderPosition:(float)position;
 
 @end
