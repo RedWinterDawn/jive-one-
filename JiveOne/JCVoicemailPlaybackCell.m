@@ -18,15 +18,15 @@
     self.slider.minimumValue = 0.0;
     
     // Loading indicator.
-    [self.voicemail addObserver:self forKeyPath:kVoicemailDataAttributeKey options:NSKeyValueObservingOptionNew context:NULL];
-    if (self.voicemail.data.length > 0) {
-        [self.spinningWheel stopAnimating];
-        self.playPauseButton.enabled = true;
-    }
-    else {
-        [self.spinningWheel startAnimating];
-        self.playPauseButton.enabled = false;
-    }
+//    [self.voicemail addObserver:self forKeyPath:kVoicemailDataAttributeKey options:NSKeyValueObservingOptionNew context:NULL];
+//    if (self.voicemail.data.length > 0) {
+//        [self.spinningWheel stopAnimating];
+//        self.playPauseButton.enabled = true;
+//    }
+//    else {
+//        [self.spinningWheel startAnimating];
+//        self.playPauseButton.enabled = false;
+//    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -47,9 +47,9 @@
 {
     [super prepareForReuse];
 
-    if (self.voicemail){
-        [self.voicemail removeObserver:self forKeyPath:kVoicemailDataAttributeKey];
-    }
+//    if (self.voicemail){
+//        [self.voicemail removeObserver:self forKeyPath:kVoicemailDataAttributeKey];
+//    }
     
     self.playPauseButton.selected = false;
     self.speakerButton.selected = false;
@@ -57,9 +57,9 @@
 
 -(void)dealloc
 {
-    if (self.voicemail){
-        [self.voicemail removeObserver:self forKeyPath:kVoicemailDataAttributeKey];
-    }
+//    if (self.voicemail){
+//        [self.voicemail removeObserver:self forKeyPath:kVoicemailDataAttributeKey];
+//    }
 }
 
 #pragma mark - Methods -

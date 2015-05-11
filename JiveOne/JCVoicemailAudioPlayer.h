@@ -9,8 +9,11 @@
 #import <AVFoundation/AVFoundation.h>
 #import "Voicemail+V5Client.h"
 
-@class JCVoicemailDetailViewPlayback;
-@protocol JCVoicemailPlayerDelegate <NSObject>
+@class JCVoicemailAudioPlayer;
+@protocol JCVoicemailAudioPlayerDelegate <NSObject>
+
+-(void)didStartPlayback:(JCVoicemailAudioPlayer *)player;
+-(void)didPausePlayback:(JCVoicemailAudioPlayer *)player;
 
 -(void)voicemailPlayTapped:(BOOL)play;
 -(void)voicemailSliderMoved:(float)value;
@@ -21,11 +24,16 @@
 
 @end
 
-@interface JCVoicemailAudioPlayer : AVAudioPlayer<AVAudioPlayerDelegate>
+@interface JCVoicemailAudioPlayer : NSObject <AVAudioPlayerDelegate>
 
-@property (strong, nonatomic) Voicemail *voicemail;
+@property (nonatomic, readonly) BOOL isPlaying;
+
+-(void)playPause;
+
+-(instancetype)initWithVoicemail:(Voicemail *)voicemail;
+
+@property (nonatomic, weak) id<JCVoicemailAudioPlayerDelegate> delegate;
 
 -(void)setSliderValue:(float)position;
--(BOOL)getIsPlaying;
 
 @end

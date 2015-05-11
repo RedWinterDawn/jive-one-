@@ -50,31 +50,31 @@
 
 -(void) updateViewForPlayerInfo
 {
-    self.duration.text = [NSString stringWithFormat:@"%d:%02d", (int)player.duration/60, (int)player.duration % 60, nil];
-    self.slider.maximumValue = vmailPlayer.duration;
+//    self.duration.text = [NSString stringWithFormat:@"%d:%02d", (int)player.duration/60, (int)player.duration % 60, nil];
+//    self.slider.maximumValue = vmailPlayer.duration;
 }
 
 -(void)startProgressTimerForVoicemail   {
-    if (player.isPlaying) {
-        if(self.progressTimer) {
-            [self stopProgressTimerForVoicemail];
-        }
-        self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(UpdateProgress:) userInfo:nil repeats:YES];
-    }
+//    if (player.isPlaying) {
+//        if(self.progressTimer) {
+//            [self stopProgressTimerForVoicemail];
+//        }
+//        self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(UpdateProgress:) userInfo:nil repeats:YES];
+//    }
 }
 
 -(void)stopProgressTimerForVoicemail {
-    [self.progressTimer invalidate];
-    self.progressTimer = nil;
+//    [self.progressTimer invalidate];
+//    self.progressTimer = nil;
 }
 
 -(void)UpdateProgress:(NSNotification*)notification {
-    if (self.playPauseButton.selected == FALSE && player.isPlaying){
-        self.playPauseButton.selected = TRUE;
-    }
-    self.duration.text = [self formatSeconds:player.duration];
-    [self setSliderValue:player.currentTime];
-    [self.slider updateThumbWithCurrentProgress];
+//    if (self.playPauseButton.selected == FALSE && player.isPlaying){
+//        self.playPauseButton.selected = TRUE;
+//    }
+//    self.duration.text = [self formatSeconds:player.duration];
+//    [self setSliderValue:player.currentTime];
+//    [self.slider updateThumbWithCurrentProgress];
 
 }
 
