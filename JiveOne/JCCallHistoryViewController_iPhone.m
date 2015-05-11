@@ -7,32 +7,14 @@
 //
 
 #import "JCCallHistoryViewController_iPhone.h"
-#import "MissedCall.h"
 
 @implementation JCCallHistoryViewController_iPhone
 
 -(IBAction)toggleFilterState:(id)sender
 {
-    if ([sender isKindOfClass:[UISegmentedControl class]])
-    {
+    if ([sender isKindOfClass:[UISegmentedControl class]]) {
         UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
-        switch (segmentedControl.selectedSegmentIndex) {
-            case 1:
-            {
-                NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kMissedCallEntityName];
-                fetchRequest.fetchBatchSize = 6;
-                
-                NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:false];
-                fetchRequest.sortDescriptors = @[sortDescriptor];
-            
-                _callHistoryTableViewController.fetchRequest = fetchRequest;
-                break;
-            }
-            default:
-                _callHistoryTableViewController.fetchRequest = nil;
-                break;
-        }
-        
+        _callHistoryTableViewController.viewFilter = segmentedControl.selectedSegmentIndex;
     }
 }
 
@@ -42,7 +24,6 @@
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCCallHistoryTableViewController class]]){
         _callHistoryTableViewController = (JCCallHistoryTableViewController *)viewController;
-    
     }
 }
 

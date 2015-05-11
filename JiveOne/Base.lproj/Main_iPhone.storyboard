@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -3042,10 +3041,10 @@
             </objects>
             <point key="canvasLocation" x="472" y="-1849"/>
         </scene>
-        <!--Voice Non Visual View Controller-->
+        <!--Non Visual Voicemail View Controller-->
         <scene sceneID="qtv-6A-LEv">
             <objects>
-                <viewController storyboardIdentifier="VoiceNonVisualViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uGc-fk-52J" customClass="JCVoiceNonVisualViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VoiceNonVisualViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uGc-fk-52J" customClass="JCNonVisualVoicemailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kFk-2I-0KB"/>
                         <viewControllerLayoutGuide type="bottom" id="w5J-ey-1e8"/>

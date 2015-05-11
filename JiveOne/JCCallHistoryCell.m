@@ -10,39 +10,4 @@
 
 @implementation JCCallHistoryCell
 
--(void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    self.number.text = self.call.detailText;
-    self.icon.image = self.call.icon;
-}
-
-#pragma mark - Setters -
-
--(void)setRecentEvent:(RecentEvent *)recentEvent
-{
-    if ([self.call isKindOfClass:[Call class]]) {
-        self.call = (Call *)recentEvent;
-    }
-}
-
--(void)setCall:(Call *)call
-{
-    super.recentEvent = call;
-    [self setNeedsLayout];
-}
-
-#pragma mark - Getters -
-
--(Call *)call
-{
-    RecentEvent *recentEvent = self.recentEvent;
-    if ([recentEvent isKindOfClass:[Call class]]) {
-        return (Call *)self.recentEvent;
-    }
-    return nil;
-}
-
-
 @end
