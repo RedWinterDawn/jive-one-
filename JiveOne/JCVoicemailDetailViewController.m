@@ -17,35 +17,33 @@
 #import "JCSpeakerButton.h"
 #import "JCPlayPauseButton.h"
 
-
 @implementation JCVoicemailDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.slider.minimumValue = 0.0;
-    JCVoicemailAudioPlayer* vmailPlayer;
-    //Loading Indicator
+    self.slider.maximumValue = 1.0;
     
-    [self.voicemail addObserver:self forKeyPath:kVoicemailDataAttributeKey options:NSKeyValueObservingOptionNew context:NULL];
-    if(self.voicemail.data.length > 0) {
+    // TODO: Make sure the voicemail data is loaded from the V5 api client.
+    
+    //[self.voicemail addObserver:self forKeyPath:kVoicemailDataAttributeKey options:NSKeyValueObservingOptionNew context:NULL];
+    /*if(self.voicemail.data.length > 0) {
         [self.spinningWheel stopAnimating];
         self.playPauseButton.enabled = true;
     }
     else {
         [self.spinningWheel startAnimating];
         self.playPauseButton.enabled = false;
-    }
+    }*/
     
     self.title = _voicemail.titleText;
-    if (self.playPauseButton.isSelected)
-      
-//        self.playPauseButton.selected = [JCVoicemailAudioPlayer getIsPlaying];
-    //self.speakerButton.selected = _playThroughSpeaker;
-    [self updateTimer];
-  
-    self.nameLabel.text = _voicemail.titleText;
-    [self reloadInputViews];
+//    if (self.playPauseButton.isSelected)
+//        self.playPauseButton.selected = [player isPlaying];
+//    self.speakerButton.selected = _playThroughSpeaker;
+//  
+    //self.nameLabel.text = _voicemail.titleText;
+//    [self reloadInputViews];
 }
 
 -(void) updateViewForPlayerInfo
@@ -121,53 +119,46 @@
     if ([sender isKindOfClass:[UIButton class]]) {
         UIButton *button = (UIButton *)sender;
         button.selected = !button.selected;
-//        if (self.delegate && [self.delegate respondsToSelector:@selector(voiceDetailPlayTapped:)]) {
-//            [self.delegate voiceDetailPlayTapped:self];
-//        }
+        
+        // TODO: Tell player to start playback
+        
     }
 }
 
 - (IBAction)progressSliderMoved:(id)sender
 {
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(sliderMoved:)]) {
-//        [self.delegate sliderMoved:self.slider.value];
-//    }
+    if([sender isKindOfClass:[UISlider class]])
+    {
+        UISlider *slider = (UISlider *)sender;
+        float value = slider.value;
+        
+        // TODO: set the current time of the player to the value.
+    }
 }
 
 - (IBAction)progressSliderTouched:(id)sender
 {
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(sliderTouched:)]) {
-//        [self.delegate sliderTouched:YES];
-//    }
+    
 }
 
 - (IBAction)speakerTouched:(id)sender {
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(voiceSpeakerTouched)]) {
-//        [self.delegate voiceSpeakerTouched];
-//    }
+    
 }
 
 -(IBAction)voiceCellDeleteTapped:(id)sender
 {
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(voiceDeleteTapped:)]) {
-//        [self.delegate voiceDeleteTapped:self];
-//    }
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        Voicemail *localVoicemail = (Voicemail *)[localContext objectWithID:self.voicemail.objectID];
+        [localContext deleteObject:localVoicemail];
+    } completion:^(BOOL success, NSError *error) {
+        
+    }];
 }
 
--(void)voiceDeleteTapped:(BOOL)deletePressed{
-    [self delete:self.voicemail];
-    [self dismissViewControllerAnimated:NO completion:NULL];
-}
 #pragma mark - JCVoicemailDelegate
 -(void)voiceDetailPlayTapped:(BOOL)play{
     
 //    [self playPauseAudio];
-}
-
--(void)sliderMoved:(float)value {
-//    player.currentTime = value;
-    [self updateTimer];
-//    [self startProgressTimerForVoicemail];
 }
 
 -(void)sliderTouched:(BOOL)touched
