@@ -1168,10 +1168,9 @@
 			isa = PBXGroup;
 			children = (
 				5DE570851B01480A003F095F /* JCNonVisualVoicemailViewController.xib */,
+				5DE570871B024A20003F095F /* Models */,
 				5D5329921AD4EF3900C6AAC6 /* Controllers */,
 				5D5329931AD4EF7B00C6AAC6 /* Views */,
-				5DA30DD31AD78EA0008856DC /* JCVoicemailNumber.h */,
-				5DA30DD41AD78EA0008856DC /* JCVoicemailNumber.m */,
 			);
 			name = Voicemail;
 			sourceTree = "<group>";
@@ -1674,8 +1673,6 @@
 				919DD29C1922E2C90039205E /* JCPopoverSlider.m */,
 				919DD29F1922E3570039205E /* JCPopoverView.h */,
 				919DD2A01922E3570039205E /* JCPopoverView.m */,
-				B71506DD1B0122EC00C0E72C /* JCVoicemailAudioPlayer.h */,
-				B71506DE1B0122EC00C0E72C /* JCVoicemailAudioPlayer.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1864,6 +1861,17 @@
 				5DDE651119F0C2E100B90B55 /* Controllers */,
 			);
 			name = Phone;
+			sourceTree = "<group>";
+		};
+		5DE570871B024A20003F095F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B71506DD1B0122EC00C0E72C /* JCVoicemailAudioPlayer.h */,
+				B71506DE1B0122EC00C0E72C /* JCVoicemailAudioPlayer.m */,
+				5DA30DD31AD78EA0008856DC /* JCVoicemailNumber.h */,
+				5DA30DD41AD78EA0008856DC /* JCVoicemailNumber.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		5DF4680C1A5B4D2400E5826A /* V5Client */ = {

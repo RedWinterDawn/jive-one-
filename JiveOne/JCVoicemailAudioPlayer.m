@@ -10,13 +10,9 @@
 
 @interface JCVoicemailAudioPlayer () <AVAudioPlayerDelegate>
 {
-    NSData *soundData;
-    BOOL _playThroughSpeaker;
-    
     AVAudioPlayer *_player;
     NSTimer *_playbackTimer;
 }
-
 
 @end
 
@@ -30,35 +26,89 @@
         _player = [[AVAudioPlayer alloc] initWithData:voicemail.data fileTypeHint:AVFileTypeWAVE error:&error];
         _player.delegate = self;
         [_player prepareToPlay];
+        
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:audioSession];
+        [center addObserver:self selector:@selector(audioSessionInteruptionSelector:) name:AVAudioSessionInterruptionNotification object:audioSession];
     }
     return self;
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Setters -
+
+-(void)setSpeaker:(BOOL)speaker
+{
+    __autoreleasing NSError *error;
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+    [session overrideOutputAudioPort:speaker ? AVAudioSessionPortOverrideSpeaker : AVAudioSessionPortOverrideNone error:&error];
+    if (!error) {
+        [session setActive:YES error:&error];
+    }
+}
+
+#pragma mark - Getters -
+
 -(BOOL)isPlaying {
     return _player.isPlaying;
 }
+
+-(BOOL)speaker
+{
+    AVAudioSessionRouteDescription *route = [AVAudioSession sharedInstance].currentRoute;
+    for (AVAudioSessionPortDescription *port in route.outputs) {
+        if ([port.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+#pragma mark - Methods -
+
+-(void)playPause {
+    if (_player.isPlaying) {
+        [self pause];
+    }
+    else {
+        [self play];
+    }
+}
+
+-(void)play {
+    [_player play];
+    _playbackTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(playbackRefresh) userInfo:nil repeats:YES];
+    [_delegate didStartPlayback:self];
+}
+
+-(void)pause {
+    [_player pause];
+    [_delegate didPausePlayback:self];
+    [_playbackTimer invalidate];
+    _playbackTimer = nil;
+}
+
+-(void)stop {
+    if (_player.isPlaying) {
+        [_player stop];
+    }
+    [_playbackTimer invalidate];
+    _playbackTimer = nil;
+}
+
 -(void)voiceMailAudioAvailable:(BOOL)available  {
     if (_player && _player.isPlaying) {
         [_player stop];
     }
     if (_player) {
-        [self setupSpeaker];
         _player.delegate = self;
         [_player prepareToPlay];
-    }
-}
-
--(void)playPause {
-    if (_player.isPlaying) {
-        [_playbackTimer invalidate];
-        _playbackTimer = nil;
-        [_player pause];
-        [_delegate didPausePlayback:self];
-    }
-    else {
-        [_player play];
-        _playbackTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(playbackRefresh) userInfo:nil repeats:YES];
-        [_delegate didStartPlayback:self];
     }
 }
 
@@ -72,21 +122,16 @@
     [_player playAtTime: startTime];
 }
 
-- (void)setupSpeaker
+#pragma mark - Notification Handlers
+
+-(void)audioSessionRouteChangeSelector:(NSNotification *)notification
 {
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    NSError *error;
-    
-    // set category PlanAndRecord in order to be able to use AudioRoueOverride
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord
-                   error:&error];
-    
-    AVAudioSessionPortOverride portOverride = _playThroughSpeaker ? AVAudioSessionPortOverrideSpeaker : AVAudioSessionPortOverrideNone;
-    [session overrideOutputAudioPort:portOverride error:&error];
-    
-    if (!error) {
-        [session setActive:YES error:&error];
-        
-    }
+    [_delegate voicemailAudioPlayer:self didChangeToSpeaker:self.speaker];
 }
+
+-(void)audioSessionInteruptionSelector:(NSNotification *)notification
+{
+    [self pause];
+}
+
 @end

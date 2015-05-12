@@ -6,35 +6,42 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <AVFoundation/AVFoundation.h>
-#import "Voicemail+V5Client.h"
+@import AVFoundation;
 
-@class JCVoicemailAudioPlayer;
-@protocol JCVoicemailAudioPlayerDelegate <NSObject>
+#import "Voicemail.h"
 
--(void)didStartPlayback:(JCVoicemailAudioPlayer *)player;
--(void)didPausePlayback:(JCVoicemailAudioPlayer *)player;
+@protocol JCVoicemailAudioPlayerDelegate;
 
--(void)voicemailPlayTapped:(BOOL)play;
--(void)voicemailSliderMoved:(float)value;
--(void)voicemailSliderTouched:(BOOL)touched;
--(void)voicemailSpeakerTouched;
--(void)voicemailAudioAvailable:(BOOL)available;
--(void)voicemailDeleteTapped:(BOOL)deletePressed;
+@interface JCVoicemailAudioPlayer : NSObject
 
-@end
+-(instancetype)initWithVoicemail:(Voicemail *)voicemail;
 
-@interface JCVoicemailAudioPlayer : NSObject <AVAudioPlayerDelegate>
+@property (nonatomic, weak) id<JCVoicemailAudioPlayerDelegate> delegate;
+@property (nonatomic) BOOL speaker;
 
 @property (nonatomic, readonly) BOOL isPlaying;
 
 -(void)playPause;
 
--(instancetype)initWithVoicemail:(Voicemail *)voicemail;
+//-(void)setSliderValue:(float)position;
+//-(void)getSliderPosition:(float)position;
 
-@property (nonatomic, weak) id<JCVoicemailAudioPlayerDelegate> delegate;
+@end
 
--(void)setSliderValue:(float)position;
--(void)getSliderPosition:(float)position;
+
+@protocol JCVoicemailAudioPlayerDelegate <NSObject>
+
+-(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didChangeToSpeaker:(BOOL)speaker;
+
+-(void)didStartPlayback:(JCVoicemailAudioPlayer *)player;
+-(void)didPausePlayback:(JCVoicemailAudioPlayer *)player;
+-(void)didStopPlayback:(JCVoicemailAudioPlayer *)player;
+
+//-(void)voicemailPlayTapped:(BOOL)play;
+//-(void)voicemailSliderMoved:(float)value;
+//-(void)voicemailSliderTouched:(BOOL)touched;
+//-(void)voicemailSpeakerTouched;
+//-(void)voicemailAudioAvailable:(BOOL)available;
+//-(void)voicemailDeleteTapped:(BOOL)deletePressed;
 
 @end
