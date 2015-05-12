@@ -23,6 +23,7 @@
 
 // Controllers
 #import "JCNonVisualVoicemailViewController.h"
+#import "JCVoicemailDetailViewController.h"
 
 NSString *const kJCHistoryCellReuseIdentifier = @"HistoryCell";
 NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
@@ -57,7 +58,23 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id <NSObject>)object atIndexPath:(NSIndexPath*)indexPath;
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UIViewController *viewController = segue.destinationViewController;
+    if ([viewController isKindOfClass:[UINavigationController class]]) {
+        viewController = ((UINavigationController *)viewController).topViewController;
+    }
+    
+    if ([viewController isKindOfClass:[JCVoicemailDetailViewController class]] && [sender isKindOfClass:[UITableViewCell class]]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)sender];
+        id<NSObject> object = [self objectAtIndexPath:indexPath];
+        if ([object isKindOfClass:[Voicemail class]]) {
+            ((JCVoicemailDetailViewController *)viewController).voicemail = (Voicemail *)object;
+        }
+    }
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id <NSObject>)object atIndexPath:(NSIndexPath *)indexPath;
 {
     if ([object isKindOfClass:[Call class]])
     {
@@ -88,7 +105,6 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
         if (contact) {
             recentEventCell.identifier = contact.jrn;
         }
-        
     }
     
     if ([object isKindOfClass:[Call class]] && [cell isKindOfClass:[JCCallHistoryCell class]])

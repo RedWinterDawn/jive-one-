@@ -12,20 +12,30 @@
 {
     AVAudioPlayer *_player;
     NSTimer *_playbackTimer;
+    id <JCVoicemailAudioPlayerDelegate> _delegate;
 }
 
 @end
 
 @implementation JCVoicemailAudioPlayer
 
--(instancetype)initWithVoicemail:(Voicemail *)voicemail
+-(instancetype)initWithVoicemail:(Voicemail *)voicemail delegate:(id<JCVoicemailAudioPlayerDelegate>)delegate
 {
     self = [super init];
     if (self) {
+        _delegate = delegate;
+        
         __autoreleasing NSError *error;
         _player = [[AVAudioPlayer alloc] initWithData:voicemail.data fileTypeHint:AVFileTypeWAVE error:&error];
         _player.delegate = self;
         [_player prepareToPlay];
+        
+        // Notify of load.
+        [_delegate voicemailAudioPlayer:self didLoadWithDuration:_player.duration];
+        
+        // Notifiy of the initial speaker state
+        [_delegate voicemailAudioPlayer:self didChangeToSpeaker:self.speaker];
+        
         
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
@@ -83,23 +93,24 @@
 
 -(void)play {
     [_player play];
-    _playbackTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(playbackRefresh) userInfo:nil repeats:YES];
-    [_delegate didStartPlayback:self];
+    _playbackTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(playbackRefresh) userInfo:nil repeats:YES];
+    [_delegate voicemailAudioPlayer:self didChangePlaybackState:_player.isPlaying];
 }
 
 -(void)pause {
     [_player pause];
-    [_delegate didPausePlayback:self];
-    [_playbackTimer invalidate];
-    _playbackTimer = nil;
+    [_delegate voicemailAudioPlayer:self didChangePlaybackState:_player.isPlaying];
+    [self stopProgressTimer];
 }
 
 -(void)stop {
-    if (_player.isPlaying) {
-        [_player stop];
+    if (!_player.isPlaying) {
+        return;
     }
-    [_playbackTimer invalidate];
-    _playbackTimer = nil;
+    
+    [_player stop];
+    [_delegate voicemailAudioPlayer:self didChangePlaybackState:_player.isPlaying];
+    [self stopProgressTimer];
 }
 
 -(void)voiceMailAudioAvailable:(BOOL)available  {
@@ -133,5 +144,27 @@
 {
     [self pause];
 }
+
+#pragma mark - Delegate Handler -
+
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag  {
+    [_delegate voicemailAudioPlayer:self didChangePlaybackState:_player.isPlaying];
+    [self stopProgressTimer];
+}
+
+-(void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error   {
+    [_delegate voicemailAudioPlayer:self didChangePlaybackState:_player.isPlaying];
+    [_delegate voicemailAudioPlayer:self didFailWithError:error];
+    [self stopProgressTimer];
+}
+
+#pragma mark - Private -
+
+-(void)stopProgressTimer
+{
+    [_playbackTimer invalidate];
+    _playbackTimer = nil;
+}
+
 
 @end

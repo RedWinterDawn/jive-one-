@@ -14,34 +14,24 @@
 
 @interface JCVoicemailAudioPlayer : NSObject
 
--(instancetype)initWithVoicemail:(Voicemail *)voicemail;
+-(instancetype)initWithVoicemail:(Voicemail *)voicemail delegate:(id<JCVoicemailAudioPlayerDelegate>)delegate;
 
-@property (nonatomic, weak) id<JCVoicemailAudioPlayerDelegate> delegate;
 @property (nonatomic) BOOL speaker;
-
 @property (nonatomic, readonly) BOOL isPlaying;
 
 -(void)playPause;
 
-//-(void)setSliderValue:(float)position;
-//-(void)getSliderPosition:(float)position;
+-(void)play;
+-(void)pause;
+-(void)stop;
 
 @end
 
-
 @protocol JCVoicemailAudioPlayerDelegate <NSObject>
 
+-(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didLoadWithDuration:(NSTimeInterval)duration;
+-(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didChangePlaybackState:(BOOL)playing;
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didChangeToSpeaker:(BOOL)speaker;
-
--(void)didStartPlayback:(JCVoicemailAudioPlayer *)player;
--(void)didPausePlayback:(JCVoicemailAudioPlayer *)player;
--(void)didStopPlayback:(JCVoicemailAudioPlayer *)player;
-
-//-(void)voicemailPlayTapped:(BOOL)play;
-//-(void)voicemailSliderMoved:(float)value;
-//-(void)voicemailSliderTouched:(BOOL)touched;
-//-(void)voicemailSpeakerTouched;
-//-(void)voicemailAudioAvailable:(BOOL)available;
-//-(void)voicemailDeleteTapped:(BOOL)deletePressed;
+-(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didFailWithError:(NSError *)error;
 
 @end

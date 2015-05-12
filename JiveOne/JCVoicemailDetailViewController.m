@@ -7,8 +7,6 @@
 //
 
 #import "JCVoicemailDetailViewController.h"
-#import "JCV5ApiClient.h"
-
 
 #import "JCAppDelegate.h"
 #import "JCVoicemailAudioPlayer.h"
@@ -17,86 +15,56 @@
 #import "JCSpeakerButton.h"
 #import "JCPlayPauseButton.h"
 
+#import "JCVoicemailAudioPlayer.h"
+
+#import "Voicemail+V5Client.h"
+
+@interface JCVoicemailDetailViewController () <JCVoicemailAudioPlayerDelegate>
+{
+    JCVoicemailAudioPlayer *_player;
+}
+
+@end
+
+
 @implementation JCVoicemailDetailViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
-    self.slider.minimumValue = 0.0;
-    self.slider.maximumValue = 1.0;
+    Voicemail *voicemail = self.voicemail;
+    self.title = voicemail.titleText;
     
-    // TODO: Make sure the voicemail data is loaded from the V5 api client.
-    
-    //[self.voicemail addObserver:self forKeyPath:kVoicemailDataAttributeKey options:NSKeyValueObservingOptionNew context:NULL];
-    /*if(self.voicemail.data.length > 0) {
-        [self.spinningWheel stopAnimating];
-        self.playPauseButton.enabled = true;
+    // If we have the voicemail data, load the player and prepare for playback.
+    if (voicemail.data) {
+        _player = [[JCVoicemailAudioPlayer alloc] initWithVoicemail:voicemail delegate:self];
+        return;
     }
-    else {
-        [self.spinningWheel startAnimating];
-        self.playPauseButton.enabled = false;
-    }*/
     
-    self.title = _voicemail.titleText;
-//    if (self.playPauseButton.isSelected)
-//        self.playPauseButton.selected = [player isPlaying];
-//    self.speakerButton.selected = _playThroughSpeaker;
-//  
-    //self.nameLabel.text = _voicemail.titleText;
-//    [self reloadInputViews];
+    // If we do not have voicemail data, use the v5 client to download the voicemail data. Disable
+    // parts of the UI to show user it is unavailable for playback until downloaded.
+    self.playPauseButton.enabled = FALSE;
+    [self.spinningWheel startAnimating];
+    [voicemail downloadVoicemailAudio:^(BOOL success, NSError *error) {
+        if (success) {
+            [self.spinningWheel stopAnimating];
+            _player = [[JCVoicemailAudioPlayer alloc] initWithVoicemail:voicemail delegate:self];
+            self.playPauseButton.enabled = TRUE;
+        } else {
+            [self showError:error];
+        }
+    }];
 }
 
--(void) updateViewForPlayerInfo
-{
-//    self.duration.text = [NSString stringWithFormat:@"%d:%02d", (int)player.duration/60, (int)player.duration % 60, nil];
-//    self.slider.maximumValue = vmailPlayer.duration;
-}
-
--(void)startProgressTimerForVoicemail   {
-//    if (player.isPlaying) {
-//        if(self.progressTimer) {
-//            [self stopProgressTimerForVoicemail];
-//        }
-//        self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(UpdateProgress:) userInfo:nil repeats:YES];
-//    }
-}
-
--(void)stopProgressTimerForVoicemail {
-//    [self.progressTimer invalidate];
-//    self.progressTimer = nil;
-}
-
--(void)UpdateProgress:(NSNotification*)notification {
+//-(void)UpdateProgress:(NSNotification*)notification {
 //    if (self.playPauseButton.selected == FALSE && player.isPlaying){
 //        self.playPauseButton.selected = TRUE;
 //    }
 //    self.duration.text = [self formatSeconds:player.duration];
 //    [self setSliderValue:player.currentTime];
 //    [self.slider updateThumbWithCurrentProgress];
-
-}
-
-
-
-
-/** Time formatting helper fn: N seconds => M:SS */
--(NSString *)formatSeconds:(NSTimeInterval)seconds {
-    NSInteger minutes = (NSInteger)(seconds/60.);
-    NSInteger remainingSeconds = (NSInteger)seconds % 60;
-    return [NSString stringWithFormat:@"%.1ld:%.2ld",(long)minutes,(long)remainingSeconds];
-}
--(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag  {
-    [self stopProgressTimerForVoicemail];
-    self.playPauseButton.selected = FALSE;
-    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
-}
-
--(void) audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error   {
-    [self stopProgressTimerForVoicemail];
-    self.playPauseButton.selected = TRUE;
-    [UIDevice currentDevice].proximityMonitoringEnabled = YES;
-}
-
+//}
 
 -(void)dealloc
 {
@@ -142,8 +110,11 @@
 }
 
 - (IBAction)speakerTouched:(id)sender {
-    
+    BOOL speaker = _player.speaker;
+    _player.speaker = !speaker;
 }
+
+#pragma mark - Delegate Handlers -
 
 -(IBAction)voiceCellDeleteTapped:(id)sender
 {
@@ -155,21 +126,44 @@
     }];
 }
 
-#pragma mark - JCVoicemailDelegate
--(void)voiceDetailPlayTapped:(BOOL)play{
-    
-//    [self playPauseAudio];
-}
-
--(void)sliderTouched:(BOOL)touched
+-(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didLoadWithDuration:(NSTimeInterval)duration
 {
-//    [self stopProgressTimerForVoicemail];
+    self.playPauseButton.enabled = TRUE;
+    self.slider.enabled = TRUE;
+    self.slider.minimumValue = 0.0f;
+    self.slider.maximumValue = duration;
+    self.duration.text = [self formatSeconds:duration];
 }
 
--(void)voiceSpeakerTouched  {
-//    _playThroughSpeaker = !_playThroughSpeaker;
-//    self.speakerButton.selected =_playThroughSpeaker;
-//    [self setupSpeaker];
+-(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didChangePlaybackState:(BOOL)playing
+{
+    self.playPauseButton.selected = playing;
 }
+
+-(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didFailWithError:(NSError *)error
+{
+    self.playPauseButton.enabled = FALSE;
+    self.slider.enabled = FALSE;
+    [self showError:error];
+    self.playPauseButton.selected = player.isPlaying;
+}
+
+-(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didChangeToSpeaker:(BOOL)speaker
+{
+    self.speakerButton.selected = speaker;
+}
+
+
+
+#pragma mark - Private -
+
+/** Time formatting helper fn: N seconds => M:SS */
+-(NSString *)formatSeconds:(NSTimeInterval)seconds
+{
+    NSInteger minutes = (NSInteger)(seconds/60.);
+    NSInteger remainingSeconds = (NSInteger)seconds % 60;
+    return [NSString stringWithFormat:@"%.1ld:%.2ld",(long)minutes,(long)remainingSeconds];
+}
+
 
 @end

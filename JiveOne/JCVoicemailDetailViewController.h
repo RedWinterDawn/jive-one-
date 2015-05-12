@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-@import UIKit;
+#import <StaticDataTableViewController/StaticDataTableViewController.h>
 
 #import "Voicemail.h"
 #import "JCPopoverSlider.h"
 
-@interface JCVoicemailDetailViewController : UIViewController
+@interface JCVoicemailDetailViewController : StaticDataTableViewController
 
 @property (strong, nonatomic) Voicemail *voicemail;
 
