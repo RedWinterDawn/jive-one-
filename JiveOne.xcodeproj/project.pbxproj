@@ -1644,10 +1644,7 @@
 		5D5329921AD4EF3900C6AAC6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5D629BAB19D9C41900F5744E /* JCVoicemailViewController.h */,
-				5D629BAC19D9C41900F5744E /* JCVoicemailViewController.m */,
-				27EA1DFB1900A83D0075CAEE /* JCVoicemailTableViewController.h */,
-				27EA1DFC1900A83D0075CAEE /* JCVoicemailTableViewController.m */,
+				5DE570881B02B435003F095F /* iPhone */,
 				5D629BAE19D9CE4500F5744E /* JCNonVisualVoicemailViewController.h */,
 				5D629BAF19D9CE4500F5744E /* JCNonVisualVoicemailViewController.m */,
 				B7F331E71AFC015900343DAC /* JCVoicemailDetailViewController.h */,
@@ -1872,6 +1869,17 @@
 				5DA30DD41AD78EA0008856DC /* JCVoicemailNumber.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		5DE570881B02B435003F095F /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				5D629BAB19D9C41900F5744E /* JCVoicemailViewController.h */,
+				5D629BAC19D9C41900F5744E /* JCVoicemailViewController.m */,
+				27EA1DFB1900A83D0075CAEE /* JCVoicemailTableViewController.h */,
+				27EA1DFC1900A83D0075CAEE /* JCVoicemailTableViewController.m */,
+			);
+			name = iPhone;
 			sourceTree = "<group>";
 		};
 		5DF4680C1A5B4D2400E5826A /* V5Client */ = {

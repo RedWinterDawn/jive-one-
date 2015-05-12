@@ -21,4 +21,6 @@
 
 @property (nonatomic, weak) id <JCRecentEventsTableViewControllerDelegate> delegate;
 
+-(IBAction)refreshData:(id)sender;
+
 @end

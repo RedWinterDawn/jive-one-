@@ -14,7 +14,7 @@
 
 // Data Models
 #import "Call.h"
-#import "Voicemail.h"
+#import "Voicemail+V5Client.h"
 #import "RecentLineEvent.h"
 #import "MissedCall.h"
 
@@ -71,6 +71,19 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
         if ([object isKindOfClass:[Voicemail class]]) {
             ((JCVoicemailDetailViewController *)viewController).voicemail = (Voicemail *)object;
         }
+    }
+}
+
+-(IBAction)refreshData:(id)sender
+{
+    if ([sender isKindOfClass:[UIRefreshControl class]]) {
+        Line *line = self.authenticationManager.line;
+        [Voicemail downloadVoicemailsForLine:line completion:^(BOOL success, NSError *error) {
+            [((UIRefreshControl *)sender) endRefreshing];
+            if (!success) {
+                [self showError:error];
+            }
+        }];
     }
 }
 

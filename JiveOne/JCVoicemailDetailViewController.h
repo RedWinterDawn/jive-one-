@@ -23,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *playPauseButton;
 @property (weak, nonatomic) IBOutlet UIButton *speakerButton;
 @property (weak, nonatomic) IBOutlet UISlider *slider;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinningWheel;
 
 - (IBAction)playPauseButtonTapped:(id)sender;
 - (IBAction)progressSliderMoved:(id)sender;

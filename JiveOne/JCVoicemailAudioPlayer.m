@@ -27,11 +27,15 @@
         
         __autoreleasing NSError *error;
         _player = [[AVAudioPlayer alloc] initWithData:voicemail.data fileTypeHint:AVFileTypeWAVE error:&error];
-        _player.delegate = self;
-        [_player prepareToPlay];
+        if (error) {
+            [_delegate voicemailAudioPlayer:self didFailWithError:error];
+        }
         
-        // Notify of load.
-        [_delegate voicemailAudioPlayer:self didLoadWithDuration:_player.duration];
+        _player.delegate = self;
+        BOOL result = [_player prepareToPlay];
+        if (result) {
+            [_delegate voicemailAudioPlayer:self didLoadWithDuration:_player.duration];
+        }
         
         // Notifiy of the initial speaker state
         [_delegate voicemailAudioPlayer:self didChangeToSpeaker:self.speaker];

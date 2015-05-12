@@ -42,21 +42,18 @@
     self.duration.text = [self formatSeconds:voicemail.duration];
     
     // If we have the voicemail data, load the player and prepare for playback.
-    if (voicemail.data) {
+    if (voicemail.data.length > 0) {
         _player = [[JCVoicemailAudioPlayer alloc] initWithVoicemail:voicemail delegate:self];
         return;
     }
     
-    
-    
     // If we do not have voicemail data, use the v5 client to download the voicemail data. Disable
     // parts of the UI to show user it is unavailable for playback until downloaded.
     self.playPauseButton.enabled = FALSE;
-    [self.spinningWheel startAnimating];
-    
+    [self showStatus:@"Downloading..."];
     [voicemail downloadVoicemailAudio:^(BOOL success, NSError *error) {
         if (success) {
-            //[self.spinningWheel stopAnimating];
+            [self hideStatus];
             _player = [[JCVoicemailAudioPlayer alloc] initWithVoicemail:voicemail delegate:self];
             self.playPauseButton.enabled = TRUE;
         } else {
@@ -92,13 +89,7 @@
 
 - (IBAction)playPauseButtonTapped:(id)sender
 {
-    if ([sender isKindOfClass:[UIButton class]]) {
-        UIButton *button = (UIButton *)sender;
-        button.selected = !button.selected;
-        
-        // TODO: Tell player to start playback
-        
-    }
+    [_player playPause];
 }
 
 - (IBAction)progressSliderMoved:(id)sender
@@ -160,8 +151,6 @@
 {
     self.speakerButton.selected = speaker;
 }
-
-
 
 #pragma mark - Private -
 
