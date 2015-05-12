@@ -36,19 +36,27 @@
     Voicemail *voicemail = self.voicemail;
     self.title = voicemail.titleText;
     
+    self.name.text = voicemail.name;
+    self.number.text = voicemail.formattedNumber;
+    self.date.text = voicemail.formattedLongDate;
+    self.duration.text = [self formatSeconds:voicemail.duration];
+    
     // If we have the voicemail data, load the player and prepare for playback.
     if (voicemail.data) {
         _player = [[JCVoicemailAudioPlayer alloc] initWithVoicemail:voicemail delegate:self];
         return;
     }
     
+    
+    
     // If we do not have voicemail data, use the v5 client to download the voicemail data. Disable
     // parts of the UI to show user it is unavailable for playback until downloaded.
     self.playPauseButton.enabled = FALSE;
     [self.spinningWheel startAnimating];
+    
     [voicemail downloadVoicemailAudio:^(BOOL success, NSError *error) {
         if (success) {
-            [self.spinningWheel stopAnimating];
+            //[self.spinningWheel stopAnimating];
             _player = [[JCVoicemailAudioPlayer alloc] initWithVoicemail:voicemail delegate:self];
             self.playPauseButton.enabled = TRUE;
         } else {
@@ -116,7 +124,7 @@
 
 #pragma mark - Delegate Handlers -
 
--(IBAction)voiceCellDeleteTapped:(id)sender
+-(IBAction)deleteVoicemail:(id)sender
 {
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         Voicemail *localVoicemail = (Voicemail *)[localContext objectWithID:self.voicemail.objectID];
