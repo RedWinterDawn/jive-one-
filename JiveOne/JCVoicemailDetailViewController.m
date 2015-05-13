@@ -13,6 +13,7 @@
 #import "JCVoicemailAudioPlayer.h"
 
 #import "Voicemail+V5Client.h"
+#import "VoicemailTranscription.h"
 
 @interface JCVoicemailDetailViewController () <JCVoicemailAudioPlayerDelegate>
 {
@@ -20,6 +21,9 @@
 }
 
 @end
+
+NSString *const  kConfidenceLabelPreText = @"Confidence";
+NSString *const kWordCountLabelPreText = @"Word count";
 
 @implementation JCVoicemailDetailViewController
 
@@ -34,6 +38,21 @@
     self.number.text = voicemail.formattedNumber;
     self.date.text = voicemail.formattedLongDate;
     self.duration.text = [self formatSeconds:voicemail.duration];
+    
+    VoicemailTranscription *transcription = self.voicemail.transcription;
+    self.voicemailTranscription.text = transcription.text;
+    
+    NSNumberFormatter *percent = [[NSNumberFormatter alloc] init];
+    [percent setNumberStyle:NSNumberFormatterPercentStyle];
+    [percent setMaximumFractionDigits:2];
+   
+    
+    self.transcriptionConfidence.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(kConfidenceLabelPreText, nil) , [percent stringFromNumber:[NSNumber numberWithFloat:transcription.confidence]]];
+    
+    NSNumber *wordcountNumber = [NSNumber numberWithLong:transcription.wordCount];
+    
+    self.transcriptionWordCount.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(kWordCountLabelPreText, nil), wordcountNumber];
+    
     
     // If we have the voicemail data, load the player and prepare for playback.
     if (voicemail.data.length > 0) {
