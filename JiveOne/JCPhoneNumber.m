@@ -65,7 +65,11 @@
 
 -(NSString *)titleText
 {
-    return self.name;
+    NSString *name = self.name;
+    if (!name) {
+        name = NSLocalizedString(@"Unknown", nil);
+    }
+    return name;
 }
 
 -(NSString *)detailText

@@ -10,6 +10,4 @@
 
 @interface JCCallHistoryTableViewController : JCRecentLineEventsTableViewController
 
-@property (nonatomic, strong) NSFetchRequest *fetchRequest;
-
 @end

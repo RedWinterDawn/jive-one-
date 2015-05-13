@@ -11,6 +11,7 @@
 #import "Line.h"
 
 #import "JCPhoneNumberDataSourceUtils.h"
+#import "JCMultiPersonPhoneNumber.h"
 
 @implementation RecentLineEvent
 
@@ -27,7 +28,19 @@
 
 -(NSString *)titleText
 {
-    return self.name;
+    NSString *name = self.name;
+    if (!name) {
+        Contact *contact = self.contact;
+        NSArray *localContacts = self.localContacts.allObjects;
+        if (contact) {
+            name = contact.titleText;
+        } else if (localContacts.count > 0) {
+            name = [JCMultiPersonPhoneNumber multiPersonPhoneNumberWithPhoneNumbers:localContacts].name;
+        } else {
+            name = NSLocalizedString(@"Unknown", nil);
+        }
+    }
+    return name;
 }
 
 -(NSString *)detailText

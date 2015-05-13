@@ -17,6 +17,8 @@
 #import "Voicemail+V5Client.h"
 #import "RecentLineEvent.h"
 #import "MissedCall.h"
+#import "JCPhoneBook.h"
+#import "JCMultiPersonPhoneNumber.h"
 
 // Managers
 #import "JCPresenceManager.h"
@@ -138,9 +140,25 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
         if ([object isKindOfClass:[RecentLineEvent class]]) {
             RecentLineEvent *recentLineEvent = (RecentLineEvent *)object;
             Contact *contact = recentLineEvent.contact;
+            NSArray *localContacts = recentLineEvent.localContacts.allObjects;
+            id<JCPhoneNumberDataSource> phoneNumber;
             if (contact) {
-                contactDetailViewController.person = contact;
+                phoneNumber = contact;
             }
+            else if (localContacts.count > 0) {
+                if (localContacts.count > 1) {
+                    phoneNumber = [JCMultiPersonPhoneNumber multiPersonPhoneNumberWithPhoneNumbers:localContacts];
+                } else {
+                    phoneNumber = localContacts.firstObject;
+                }
+            }
+            else {
+                phoneNumber = [self.phoneBook phoneNumberForNumber:recentLineEvent.number
+                                                              name:recentLineEvent.name
+                                                            forPbx:recentLineEvent.line.pbx
+                                                     excludingLine:recentLineEvent.line];
+            }
+            contactDetailViewController.phoneNumber = phoneNumber;
         }
     }
 }
