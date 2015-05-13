@@ -22,13 +22,16 @@
     [super viewDidLoad];
     
     UIViewController *embeddedViewController = self.embeddedViewController;
+    if (!embeddedViewController) {
+        return;
+    }
     
-        embeddedViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [embeddedViewController.view setTranslatesAutoresizingMaskIntoConstraints:YES];
-        embeddedViewController.view.frame = self.view.bounds;
-        [self addChildViewController:embeddedViewController];
-        [self.view addSubview:embeddedViewController.view];
-    
+    embeddedViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [embeddedViewController.view setTranslatesAutoresizingMaskIntoConstraints:YES];
+    embeddedViewController.view.frame = self.view.bounds;
+    [self addChildViewController:embeddedViewController];
+    [self.view addSubview:embeddedViewController.view];
+    self.title = embeddedViewController.title;
 }
 
 -(UIViewController *)embeddedViewController
@@ -53,6 +56,8 @@
     }
     return _embeddedViewController;
 }
+
+
 
 
 @end

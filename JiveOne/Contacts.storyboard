@@ -40,7 +40,7 @@
         <!--Contact Detail Table View Controller-->
         <scene sceneID="KIP-rl-sjN">
             <objects>
-                <tableViewController id="PY2-Q9-cLS" customClass="JCContactDetailTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ContactsDetailViewTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PY2-Q9-cLS" customClass="JCContactDetailTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="sIa-Ho-YGp">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -56,7 +56,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U6D-l3-ORb">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.32549019610000002" green="0.25098039220000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -82,7 +82,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Extension" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hhh-5d-Rvp">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.32549019610000002" green="0.25098039220000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -100,7 +100,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outletCollection property="gestureRecognizers" destination="Rgt-29-tDq" appends="YES" id="NUj-Kc-8iB"/>
+                                            <outletCollection property="gestureRecognizers" destination="WX5-Ic-K33" appends="YES" id="yI9-15-r57"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="YmX-dQ-bCu" detailTextLabel="82N-g7-bfh" style="IBUITableViewCellStyleValue2" id="NnB-dF-2T7">
@@ -111,7 +111,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Jive ID" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YmX-dQ-bCu">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.32549019610000002" green="0.25098039220000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -145,9 +145,9 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nad-Tf-4kl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Rgt-29-tDq">
+                <tapGestureRecognizer id="WX5-Ic-K33">
                     <connections>
-                        <action selector="callExtension:" destination="PY2-Q9-cLS" id="8JF-68-trG"/>
+                        <action selector="callExtension:" destination="PY2-Q9-cLS" id="uEu-82-o4Q"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

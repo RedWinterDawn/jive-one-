@@ -8,13 +8,8 @@
 
 #import "JCVoicemailDetailViewController.h"
 
-#import "JCAppDelegate.h"
-#import "JCVoicemailAudioPlayer.h"
-#import "Voicemail+V5Client.h"
-#import "JCPopoverSlider.h"
 #import "JCSpeakerButton.h"
 #import "JCPlayPauseButton.h"
-
 #import "JCVoicemailAudioPlayer.h"
 
 #import "Voicemail+V5Client.h"
@@ -26,16 +21,15 @@
 
 @end
 
-
 @implementation JCVoicemailDetailViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    // Populate UI Data.
     Voicemail *voicemail = self.voicemail;
     self.title = voicemail.titleText;
-    
     self.name.text = voicemail.name;
     self.number.text = voicemail.formattedNumber;
     self.date.text = voicemail.formattedLongDate;
@@ -60,22 +54,6 @@
             [self showError:error];
         }
     }];
-}
-
-//-(void)UpdateProgress:(NSNotification*)notification {
-//    if (self.playPauseButton.selected == FALSE && player.isPlaying){
-//        self.playPauseButton.selected = TRUE;
-//    }
-//    self.duration.text = [self formatSeconds:player.duration];
-//    [self setSliderValue:player.currentTime];
-//    [self.slider updateThumbWithCurrentProgress];
-//}
-
--(void)dealloc
-{
-    if(self.voicemail){
-        [self.voicemail removeObserver:self forKeyPath:kVoicemailDataAttributeKey];
-    }
 }
 
 #pragma mark - Methods -

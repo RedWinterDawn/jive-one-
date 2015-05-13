@@ -22,7 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *playPauseButton;
 @property (weak, nonatomic) IBOutlet UIButton *speakerButton;
-@property (weak, nonatomic) IBOutlet UISlider *slider;
+@property (weak, nonatomic) IBOutlet JCPopoverSlider *slider;
 
 - (IBAction)playPauseButtonTapped:(id)sender;
 - (IBAction)progressSliderMoved:(id)sender;

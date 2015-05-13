@@ -24,6 +24,8 @@
 // Controllers
 #import "JCNonVisualVoicemailViewController.h"
 #import "JCVoicemailDetailViewController.h"
+#import "JCStoryboardLoaderViewController.h"
+#import "JCContactDetailTableViewController.h"
 
 NSString *const kJCHistoryCellReuseIdentifier = @"HistoryCell";
 NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
@@ -52,39 +54,15 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     return self;
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    UIViewController *viewController = segue.destinationViewController;
-    if ([viewController isKindOfClass:[UINavigationController class]]) {
-        viewController = ((UINavigationController *)viewController).topViewController;
-    }
-    
-    if ([viewController isKindOfClass:[JCVoicemailDetailViewController class]] && [sender isKindOfClass:[UITableViewCell class]]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)sender];
-        id<NSObject> object = [self objectAtIndexPath:indexPath];
-        if ([object isKindOfClass:[Voicemail class]]) {
-            ((JCVoicemailDetailViewController *)viewController).voicemail = (Voicemail *)object;
-        }
-    }
-}
-
--(IBAction)refreshData:(id)sender
-{
-    if ([sender isKindOfClass:[UIRefreshControl class]]) {
-        Line *line = self.authenticationManager.line;
-        [Voicemail downloadVoicemailsForLine:line completion:^(BOOL success, NSError *error) {
-            [((UIRefreshControl *)sender) endRefreshing];
-            if (!success) {
-                [self showError:error];
-            }
-        }];
-    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id <NSObject>)object atIndexPath:(NSIndexPath *)indexPath;
@@ -133,7 +111,54 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     }
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UIViewController *viewController = segue.destinationViewController;
+    if ([viewController isKindOfClass:[UINavigationController class]]) {
+        viewController = ((UINavigationController *)viewController).topViewController;
+    }
+    
+    if ([viewController isKindOfClass:[JCStoryboardLoaderViewController class]]) {
+        viewController = ((JCStoryboardLoaderViewController *)viewController).embeddedViewController;
+    }
+    
+    if ([viewController isKindOfClass:[JCVoicemailDetailViewController class]] && [sender isKindOfClass:[UITableViewCell class]]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)sender];
+        id<NSObject> object = [self objectAtIndexPath:indexPath];
+        if ([object isKindOfClass:[Voicemail class]]) {
+            JCVoicemailDetailViewController *detailViewController = (JCVoicemailDetailViewController *)viewController;
+            detailViewController.voicemail = (Voicemail *)object;
+        }
+    }
+    
+    else if ([viewController isKindOfClass:[JCContactDetailTableViewController class]]){
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)sender];
+        id<NSObject> object = [self objectAtIndexPath:indexPath];
+        JCContactDetailTableViewController *contactDetailViewController = (JCContactDetailTableViewController *)viewController;
+        if ([object isKindOfClass:[RecentLineEvent class]]) {
+            RecentLineEvent *recentLineEvent = (RecentLineEvent *)object;
+            Contact *contact = recentLineEvent.contact;
+            if (contact) {
+                contactDetailViewController.person = contact;
+            }
+        }
+    }
+}
+
 #pragma mark - IBActions -
+
+-(IBAction)refreshData:(id)sender
+{
+    if ([sender isKindOfClass:[UIRefreshControl class]]) {
+        Line *line = self.authenticationManager.line;
+        [Voicemail downloadVoicemailsForLine:line completion:^(BOOL success, NSError *error) {
+            [((UIRefreshControl *)sender) endRefreshing];
+            if (!success) {
+                [self showError:error];
+            }
+        }];
+    }
+}
 
 -(IBAction)toggleFilterState:(id)sender
 {

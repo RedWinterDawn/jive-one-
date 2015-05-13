@@ -1644,7 +1644,7 @@
 		5D5329921AD4EF3900C6AAC6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5DE570881B02B435003F095F /* iPhone */,
+				5DE570891B03AD5A003F095F /* iPhone */,
 				5D629BAE19D9CE4500F5744E /* JCNonVisualVoicemailViewController.h */,
 				5D629BAF19D9CE4500F5744E /* JCNonVisualVoicemailViewController.m */,
 				B7F331E71AFC015900343DAC /* JCVoicemailDetailViewController.h */,
@@ -1871,7 +1871,7 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		5DE570881B02B435003F095F /* iPhone */ = {
+		5DE570891B03AD5A003F095F /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
 				5D629BAB19D9C41900F5744E /* JCVoicemailViewController.h */,
