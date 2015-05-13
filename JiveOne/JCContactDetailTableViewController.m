@@ -17,10 +17,23 @@
 #import "PBX.h"
 #import "User.h"
 
+#import "JCDialerViewController.h"
+#import "JCStoryboardLoaderViewController.h"
+
 @implementation JCContactDetailTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    JCPhoneManager *phoneManager = self.phoneManager;
+    if (self.isTablet) {
+        [center addObserver:self selector:@selector(onActiveCall) name:kJCPhoneManagerShowCallsNotification object:phoneManager];
+        [center addObserver:self selector:@selector(onInactiveCall) name:kJCPhoneManagerHideCallsNotification object:phoneManager];
+        if (phoneManager.isActiveCall) {
+            [self onActiveCall];
+        }
+    }
     
     [self cell:self.nameCell setHidden:YES];
     [self cell:self.extensionCell setHidden:YES];
@@ -53,6 +66,38 @@
         }
     }
     [self reloadDataAnimated:NO];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)onActiveCall
+{
+    JCCallerViewController *callViewController = self.phoneManager.callViewController;
+    if (!callViewController) {
+        return;
+    }
+    
+    // If we are the top view controller, we need to push the call view controller onto the view
+    // controller stack.
+    UINavigationController *navigationController = self.navigationController;
+    callViewController.navigationItem.hidesBackButton = TRUE;
+    [navigationController pushViewController:callViewController animated:NO];
+}
+
+-(void)onInactiveCall
+{
+    JCCallerViewController *callViewController = self.phoneManager.callViewController;
+    if (!callViewController) {
+        return;
+    }
+    
+    UINavigationController *navigationController = self.navigationController;
+    if (navigationController.topViewController != self) {
+        [navigationController popToRootViewControllerAnimated:NO];
+    }
 }
 
 -(IBAction)callExtension:(id)sender

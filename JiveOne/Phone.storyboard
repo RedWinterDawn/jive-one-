@@ -20,7 +20,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0fY-vT-dKH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="q1N-pU-KrT" customClass="JCModuleSplitViewControllerDelegate"/>
             </objects>
-            <point key="canvasLocation" x="159" y="228"/>
+            <point key="canvasLocation" x="919" y="908"/>
         </scene>
         <!--Recent Line Events Table View Controller-->
         <scene sceneID="dsz-A0-Cfd">
@@ -96,6 +96,7 @@
                                     <outlet property="icon" destination="gcW-BS-Eua" id="fYy-gx-0iv"/>
                                     <outlet property="name" destination="PKM-zV-Ygr" id="aCB-qd-xYq"/>
                                     <outlet property="number" destination="QCh-kZ-Oh6" id="WVq-nu-jXF"/>
+                                    <segue destination="P8B-bZ-9QR" kind="showDetail" id="sWw-M5-jPc"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VoicemailCell" rowHeight="61" id="nE3-2P-AVW" customClass="JCVoicemailCell">
@@ -206,7 +207,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fqi-8b-4ba" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1704" y="-242"/>
+            <point key="canvasLocation" x="2748" y="-526"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sTM-xW-0Ib">
@@ -223,7 +224,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P3A-mS-nB7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="979" y="-242"/>
+            <point key="canvasLocation" x="2023" y="-526"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="P5t-vr-TOR">
@@ -240,7 +241,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2mp-pq-NFa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="979" y="555"/>
+            <point key="canvasLocation" x="4687" y="1082"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fUW-GX-Kka">
@@ -257,7 +258,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hVo-Ru-GU5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2679" y="-242"/>
+            <point key="canvasLocation" x="2743" y="500"/>
         </scene>
         <!--Voicemail-->
         <scene sceneID="d2e-vV-ms1">
@@ -403,6 +404,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Delete" id="72c-iI-Aqr">
                             <connections>
                                 <action selector="deleteVoicemail:" destination="vNw-XP-xAw" id="sin-zL-7Qj"/>
+                                <segue destination="WhA-Bu-xlD" kind="showDetail" id="703-7P-Tom"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -418,7 +420,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jf6-Fw-iBw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3572" y="-242"/>
+            <point key="canvasLocation" x="3476" y="500"/>
         </scene>
         <!--Dialer-->
         <scene sceneID="Klv-fG-5td">
@@ -1369,7 +1371,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1722" y="555"/>
+            <point key="canvasLocation" x="5450" y="1082"/>
         </scene>
         <!--Debug Phone Manager Table View Controller-->
         <scene sceneID="JQa-D5-s9o">
@@ -1511,7 +1513,47 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r4E-iZ-8SV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2671" y="878"/>
+            <point key="canvasLocation" x="6319" y="1082"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="vR4-Mr-zh6">
+            <objects>
+                <navigationController id="P8B-bZ-9QR" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="k82-WE-ECU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="KNn-63-C2z" kind="relationship" relationship="rootViewController" id="2ix-9b-NXM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kt6-g3-aSR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3497" y="-518"/>
+        </scene>
+        <!--Storyboard Loader View Controller-->
+        <scene sceneID="yWq-Jq-Ghf">
+            <objects>
+                <viewController id="KNn-63-C2z" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BAY-ld-868"/>
+                        <viewControllerLayoutGuide type="bottom" id="ln9-9f-MEc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xz8-F3-u5O">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="HFN-4T-z6d"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Contacts"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="viewControllerIdentifier" value="ContactsDetailViewTableViewController"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WXX-BR-YIl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4169" y="-518"/>
         </scene>
     </scenes>
     <resources>
@@ -1520,5 +1562,8 @@
         <image name="gray-callbutton" width="58" height="58"/>
         <image name="nav-voicemail-black" width="33" height="16"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="ESY-Lb-tiB"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

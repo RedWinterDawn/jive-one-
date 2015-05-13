@@ -11,7 +11,7 @@
 
 @interface JCContactDetailTableViewController : StaticDataTableViewController
 
-@property (strong, nonatomic) JCPersonManagedObject *person;
+@property (strong, nonatomic) id<JCPersonDataSource> person;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *nameCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *extensionCell;
