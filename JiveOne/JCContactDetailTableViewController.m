@@ -16,6 +16,7 @@
 #import "Line.h"
 #import "PBX.h"
 #import "User.h"
+#import "JCVoicemailNumber.h"
 
 #import "JCDialerViewController.h"
 #import "JCStoryboardLoaderViewController.h"
@@ -39,30 +40,33 @@
     [self cell:self.extensionCell setHidden:YES];
     [self cell:self.jiveIdCell setHidden:YES];
     
-    JCPersonManagedObject *person = self.person;
-    if (person) {
-        
-        if (person.name) {
-            self.title = person.titleText;
-            self.nameCell.detailTextLabel.text  = person.name;
+    id <JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
+    if (phoneNumber) {
+        if (phoneNumber.titleText) {
+            self.title = phoneNumber.titleText;
+            self.nameCell.detailTextLabel.text  = phoneNumber.titleText;
             [self cell:self.nameCell setHidden:FALSE];
         }
         
-        if ([person isKindOfClass:[Extension class]]) {
-            self.extensionCell.detailTextLabel.text = person.number;
+        if ([phoneNumber isKindOfClass:[Extension class]]) {
+            self.extensionCell.detailTextLabel.text = phoneNumber.number;
             [self cell:self.extensionCell setHidden:NO];
             
-            if ([person isKindOfClass:[Contact class]]) {
-                NSString *jiveId = ((Contact *)person).jiveUserId;
+            if ([phoneNumber isKindOfClass:[Contact class]]) {
+                NSString *jiveId = ((Contact *)phoneNumber).jiveUserId;
                 if (jiveId) {
                     self.jiveIdCell.detailTextLabel.text = jiveId;
                     [self cell:self.jiveIdCell setHidden:NO];
                 }
             }
-            else {
-                self.jiveIdCell.detailTextLabel.text = ((Line *)person).pbx.user.jiveUserId;
+            else if([phoneNumber isKindOfClass:[Line class]]) {
+                self.jiveIdCell.detailTextLabel.text = ((Line *)phoneNumber).pbx.user.jiveUserId;
                 [self cell:self.jiveIdCell setHidden:NO];
             }
+        } else {
+            self.extensionCell.textLabel.text = NSLocalizedString(@"Number", nil);
+            self.extensionCell.detailTextLabel.text = phoneNumber.formattedNumber;
+            [self cell:self.extensionCell setHidden:NO];
         }
     }
     [self reloadDataAnimated:NO];
@@ -105,7 +109,7 @@
     if ([sender isKindOfClass:[UITapGestureRecognizer class]]) {
         UITableViewCell *cell = (UITableViewCell *)((UITapGestureRecognizer *)sender).view;
         if (cell == self.extensionCell) {
-            [self dialPhoneNumber:self.person
+            [self dialPhoneNumber:self.phoneNumber
                         usingLine:self.authenticationManager.line
                            sender:sender];
         }
