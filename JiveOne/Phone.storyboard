@@ -271,21 +271,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bob Seger" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddr-iV-54q" userLabel="callerId">
-                                <rect key="frame" x="16" y="94" width="414" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="32e-1T-1rb"/>
-                                    <constraint firstAttribute="width" constant="414" id="Zbk-EV-Pzs"/>
-                                    <constraint firstAttribute="height" constant="20" id="y2e-6X-7gG"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="32e-1T-1rb"/>
-                                    </mask>
-                                </variation>
-                            </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today, 10:57 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CQZ-eU-dLa" userLabel="creationTime">
                                 <rect key="frame" x="438" y="98" width="148" height="15"/>
                                 <constraints>
@@ -322,7 +307,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Wk-uq-aXj" userLabel="duration">
-                                <rect key="frame" x="565" y="126" width="21" height="11"/>
+                                <rect key="frame" x="565" y="478" width="21" height="11"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="11" id="sTM-an-3I7"/>
                                     <constraint firstAttribute="width" constant="21" id="y21-xg-0PK"/>
@@ -330,46 +315,17 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tkB-bc-x5R" customClass="JCSpeakerButton">
-                                <rect key="frame" x="535" y="166" width="51" height="46"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="46" id="ByV-kF-3rV"/>
-                                    <constraint firstAttribute="height" constant="46" id="mcq-UG-e7a"/>
-                                    <constraint firstAttribute="width" constant="51" id="pr2-nh-BQC"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="113" id="xM2-Cq-Rdx"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="ByV-kF-3rV"/>
-                                        <exclude reference="xM2-Cq-Rdx"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="speakerTouched:" destination="vNw-XP-xAw" eventType="touchUpInside" id="iSo-ah-Wis"/>
-                                </connections>
-                            </view>
-                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="zgt-bc-orK" userLabel="PlayPauseView" customClass="JCPlayPauseButton">
-                                <rect key="frame" x="16" y="163" width="51" height="51"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="51" id="O8g-Dp-HpX"/>
-                                    <constraint firstAttribute="width" constant="51" id="pip-RA-j6a"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="playPauseButtonTapped:" destination="vNw-XP-xAw" eventType="touchUpInside" id="wCb-Ww-Ilt"/>
-                                </connections>
-                            </view>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Xj5-C9-rSo" userLabel="slider" customClass="JCPopoverSlider">
-                                <rect key="frame" x="82" y="174" width="442" height="31"/>
+                                <rect key="frame" x="82" y="482" width="442" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="298" id="V00-dV-4Bt"/>
                                     <constraint firstAttribute="height" constant="30" id="XvS-cJ-Hag"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="fr0-ka-HsJ"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="V00-dV-4Bt"/>
+                                        <exclude reference="fr0-ka-HsJ"/>
                                     </mask>
                                 </variation>
                                 <connections>
@@ -377,27 +333,76 @@
                                     <action selector="progressSliderTouched:" destination="vNw-XP-xAw" eventType="touchUpInside" id="x9q-SB-exX"/>
                                 </connections>
                             </slider>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pDo-Th-8yt">
+                                <rect key="frame" x="18" y="458" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="pDo-Th-8yt" secondAttribute="height" multiplier="1:1" id="Kd9-iu-PiG"/>
+                                    <constraint firstAttribute="width" constant="50" id="MEA-dW-4vL"/>
+                                </constraints>
+                                <state key="normal" image="black-play">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="black-hold"/>
+                                <connections>
+                                    <action selector="playPauseButtonTapped:" destination="vNw-XP-xAw" eventType="touchUpInside" id="sYp-6s-rBm"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bob Seger" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddr-iV-54q" userLabel="callerId">
+                                <rect key="frame" x="16" y="94" width="414" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="32e-1T-1rb"/>
+                                    <constraint firstAttribute="width" constant="414" id="Zbk-EV-Pzs"/>
+                                    <constraint firstAttribute="height" constant="20" id="y2e-6X-7gG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="32e-1T-1rb"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IZU-6X-OCc">
+                                <rect key="frame" x="275" y="513" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="bh5-pV-Zpu"/>
+                                    <constraint firstAttribute="width" secondItem="IZU-6X-OCc" secondAttribute="height" multiplier="1:1" id="uL9-A8-Zoe"/>
+                                </constraints>
+                                <state key="normal" image="black-speaker">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="speakerTouched:" destination="vNw-XP-xAw" eventType="touchUpInside" id="fsr-0N-4sH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="pDo-Th-8yt" firstAttribute="centerY" secondItem="Xj5-C9-rSo" secondAttribute="centerY" constant="-14" id="0zP-tY-d8O"/>
                             <constraint firstAttribute="trailing" secondItem="8Wk-uq-aXj" secondAttribute="trailing" constant="14" id="2TP-0g-dED"/>
                             <constraint firstItem="CQZ-eU-dLa" firstAttribute="leading" secondItem="ddr-iV-54q" secondAttribute="trailing" constant="8" id="2pS-WI-wsB"/>
-                            <constraint firstItem="zgt-bc-orK" firstAttribute="top" secondItem="AEl-R2-Jqz" secondAttribute="bottom" constant="21" id="3p0-Gh-mwK"/>
                             <constraint firstAttribute="trailing" secondItem="CQZ-eU-dLa" secondAttribute="trailing" constant="14" id="4eq-Vi-Cb3"/>
-                            <constraint firstAttribute="trailing" secondItem="tkB-bc-x5R" secondAttribute="trailing" constant="14" id="9bY-Ws-DyT"/>
-                            <constraint firstItem="Xj5-C9-rSo" firstAttribute="leading" secondItem="zgt-bc-orK" secondAttribute="trailing" constant="17" id="RbU-GS-QIS"/>
+                            <constraint firstItem="Xj5-C9-rSo" firstAttribute="centerY" secondItem="8Wk-uq-aXj" secondAttribute="centerY" constant="-8" id="F47-Z3-nMt"/>
+                            <constraint firstItem="pDo-Th-8yt" firstAttribute="centerY" secondItem="8Wk-uq-aXj" secondAttribute="centerY" id="I6O-Gw-9Z9"/>
                             <constraint firstItem="ddr-iV-54q" firstAttribute="top" secondItem="sOj-E6-7EU" secondAttribute="bottom" constant="30" id="S79-ua-0kv"/>
                             <constraint firstItem="8Wk-uq-aXj" firstAttribute="top" secondItem="CQZ-eU-dLa" secondAttribute="bottom" constant="13" id="SFR-7K-PrZ"/>
                             <constraint firstItem="ddr-iV-54q" firstAttribute="leading" secondItem="l97-Xp-skf" secondAttribute="leading" constant="16" id="TTI-Fy-3O6"/>
+                            <constraint firstItem="IZU-6X-OCc" firstAttribute="top" secondItem="Xj5-C9-rSo" secondAttribute="bottom" constant="1" id="Wy4-eV-QtP"/>
+                            <constraint firstAttribute="centerX" secondItem="IZU-6X-OCc" secondAttribute="centerX" id="arA-J4-dJk"/>
                             <constraint firstItem="AEl-R2-Jqz" firstAttribute="leading" secondItem="l97-Xp-skf" secondAttribute="leadingMargin" id="bvd-dS-bOs"/>
-                            <constraint firstItem="Xj5-C9-rSo" firstAttribute="top" secondItem="AEl-R2-Jqz" secondAttribute="bottom" constant="32" id="iDU-Y9-8do"/>
-                            <constraint firstItem="zgt-bc-orK" firstAttribute="leading" secondItem="l97-Xp-skf" secondAttribute="leading" constant="16" id="lcb-c6-KDO"/>
                             <constraint firstItem="CQZ-eU-dLa" firstAttribute="top" secondItem="sOj-E6-7EU" secondAttribute="bottom" constant="34" id="m8a-xG-Ggq"/>
-                            <constraint firstItem="tkB-bc-x5R" firstAttribute="leading" secondItem="Xj5-C9-rSo" secondAttribute="trailing" constant="13" id="nJk-z5-7iq"/>
-                            <constraint firstItem="8Wk-uq-aXj" firstAttribute="leading" secondItem="AEl-R2-Jqz" secondAttribute="trailing" constant="135" id="nrK-qM-r3j"/>
-                            <constraint firstItem="tkB-bc-x5R" firstAttribute="top" secondItem="8Wk-uq-aXj" secondAttribute="bottom" constant="29" id="uFn-uI-QQr"/>
+                            <constraint firstItem="Xj5-C9-rSo" firstAttribute="leading" secondItem="pDo-Th-8yt" secondAttribute="trailing" constant="16" id="pMN-Zq-lTg"/>
+                            <constraint firstItem="8Wk-uq-aXj" firstAttribute="leading" secondItem="Xj5-C9-rSo" secondAttribute="trailing" constant="43" id="tKM-Js-lQK"/>
                             <constraint firstItem="AEl-R2-Jqz" firstAttribute="top" secondItem="ddr-iV-54q" secondAttribute="bottom" constant="8" id="ufk-IQ-sVw"/>
+                            <constraint firstItem="pDo-Th-8yt" firstAttribute="leading" secondItem="l97-Xp-skf" secondAttribute="leadingMargin" constant="2" id="vCJ-tD-EmP"/>
+                            <constraint firstItem="z0w-LZ-UT9" firstAttribute="top" secondItem="IZU-6X-OCc" secondAttribute="bottom" constant="37" id="zuq-r0-Nth"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="F47-Z3-nMt"/>
+                                <exclude reference="SFR-7K-PrZ"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Voicemail" id="A5Z-Jv-4XP">
                         <barButtonItem key="rightBarButtonItem" title="Delete" id="72c-iI-Aqr">
@@ -411,9 +416,9 @@
                         <outlet property="duration" destination="8Wk-uq-aXj" id="QtT-km-uWv"/>
                         <outlet property="name" destination="ddr-iV-54q" id="hgJ-pQ-Htv"/>
                         <outlet property="number" destination="AEl-R2-Jqz" id="9Bi-jD-mLT"/>
-                        <outlet property="playPauseButton" destination="zgt-bc-orK" id="IZg-tx-gJy"/>
+                        <outlet property="playPauseButton" destination="pDo-Th-8yt" id="1JL-ST-AxQ"/>
                         <outlet property="slider" destination="Xj5-C9-rSo" id="GG3-Jt-hIf"/>
-                        <outlet property="speakerButton" destination="tkB-bc-x5R" id="X7P-9c-Bhq"/>
+                        <outlet property="speakerButton" destination="IZU-6X-OCc" id="hNg-Ts-1AQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jf6-Fw-iBw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1515,6 +1520,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="black-hold" width="30" height="30"/>
+        <image name="black-play" width="15" height="15"/>
+        <image name="black-speaker" width="35" height="33"/>
         <image name="delete-black" width="35" height="35"/>
         <image name="dialer-callButton-green" width="58" height="58"/>
         <image name="gray-callbutton" width="58" height="58"/>
