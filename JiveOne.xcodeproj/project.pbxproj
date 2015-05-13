@@ -273,6 +273,7 @@
 		B744DE321AF920F500A72682 /* JCBlockedNumbersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */; };
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
 		B7619F291AF298D80075CF2D /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7619F281AF298D80075CF2D /* Crashlytics.framework */; };
+		B77EFA2D1B03E51700D94AE9 /* VoicemailTranscription.m in Sources */ = {isa = PBXBuildFile; fileRef = B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */; };
 		B79F55551AEF1DF900E4768F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
 		B79F55561AEF1DF900E4768F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
 		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
@@ -773,6 +774,8 @@
 		B75899741A9FEA320025D5AD /* JCMessagesMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagesMenuCell.h; sourceTree = "<group>"; };
 		B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesMenuCell.m; sourceTree = "<group>"; };
 		B7619F281AF298D80075CF2D /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		B77EFA2B1B03E51700D94AE9 /* VoicemailTranscription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoicemailTranscription.h; sourceTree = "<group>"; };
+		B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoicemailTranscription.m; sourceTree = "<group>"; };
 		B7AEDD561ABA08670063033E /* JCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionSheet.h; sourceTree = "<group>"; };
 		B7AEDD571ABA08670063033E /* JCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionSheet.m; sourceTree = "<group>"; };
 		B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -1046,6 +1049,8 @@
 				5D490E691A8D4DB4004B62C0 /* LocalContact.m */,
 				5DFFF3DB1AF90DD30091F479 /* BlockedNumber.h */,
 				5DFFF3DC1AF90DD30091F479 /* BlockedNumber.m */,
+				B77EFA2B1B03E51700D94AE9 /* VoicemailTranscription.h */,
+				B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -2192,6 +2197,7 @@
 				5D25F8441AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m in Sources */,
 				5D87FF341A7FF576001B8BB2 /* JCConversationViewController.m in Sources */,
 				F8A2BC0B19DB5B3C00251310 /* JCCallOptionsView.m in Sources */,
+				B77EFA2D1B03E51700D94AE9 /* VoicemailTranscription.m in Sources */,
 				5D490E671A8D4C01004B62C0 /* DID.m in Sources */,
 				F8C9A7E919EC5F4C0049A715 /* JCCallHistoryTableViewController.m in Sources */,
 				5D490E701A8E81AF004B62C0 /* JCConversationTableViewCell.m in Sources */,

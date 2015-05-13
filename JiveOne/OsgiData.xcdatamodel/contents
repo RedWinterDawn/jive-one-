@@ -127,6 +127,14 @@
         <attribute name="url_download" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url_pbx" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url_self" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="transcription" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="VoicemailTranscription" inverseName="voicemail" inverseEntity="VoicemailTranscription" syncable="YES"/>
+    </entity>
+    <entity name="VoicemailTranscription" representedClassName="VoicemailTranscription" syncable="YES">
+        <attribute name="confidence" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url_self" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wordCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="voicemail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Voicemail" inverseName="transcription" inverseEntity="Voicemail" syncable="YES"/>
     </entity>
     <elements>
         <element name="BlockedNumber" positionX="-189" positionY="378" width="128" height="133"/>
@@ -148,6 +156,7 @@
         <element name="RecentLineEvent" positionX="412" positionY="-160" width="128" height="118"/>
         <element name="SMSMessage" positionX="610" positionY="378" width="128" height="90"/>
         <element name="User" positionX="-1134" positionY="207" width="128" height="90"/>
-        <element name="Voicemail" positionX="711" positionY="-189" width="128" height="180"/>
+        <element name="Voicemail" positionX="711" positionY="-189" width="128" height="193"/>
+        <element name="VoicemailTranscription" positionX="945" positionY="-162" width="128" height="118"/>
     </elements>
 </model>
