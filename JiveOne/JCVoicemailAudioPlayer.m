@@ -27,6 +27,7 @@
         
         __autoreleasing NSError *error;
         _player = [[AVAudioPlayer alloc] initWithData:voicemail.data fileTypeHint:AVFileTypeWAVE error:&error];
+        
         if (error) {
             [_delegate voicemailAudioPlayer:self didFailWithError:error];
         }
@@ -97,8 +98,18 @@
 
 -(void)play {
     [_player play];
-    _playbackTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(playbackRefresh) userInfo:nil repeats:YES];
+    _playbackTimer = [NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(playbackRefresh) userInfo:nil repeats:YES];
     [_delegate voicemailAudioPlayer:self didChangePlaybackState:_player.isPlaying];
+}
+
+-(void)playAtTime:(NSTimeInterval)timeInterval
+{
+    NSTimeInterval time = MIN(MAX(0, timeInterval), _player.duration);
+    
+    NSLog(@"%f %f %f", timeInterval, time, _player.duration);
+    
+    
+    //[_player playAtTime: timeInterval];
 }
 
 -(void)pause {
@@ -129,7 +140,7 @@
 
 -(void)playbackRefresh
 {
-    // TODO: Tell delegate that we have updated our playback position, and it should update any UI based on that position.
+    [_delegate voicemailAudioPlayer:self didUpdateProgress:_player.currentTime duration:_player.duration];
 }
 
 -(void)setSliderValue:(float)position{
@@ -153,6 +164,7 @@
 
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag  {
     [_delegate voicemailAudioPlayer:self didChangePlaybackState:_player.isPlaying];
+    [_delegate voicemailAudioPlayer:self didUpdateProgress:_player.currentTime duration:_player.duration];
     [self stopProgressTimer];
 }
 

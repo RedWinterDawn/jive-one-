@@ -26,6 +26,7 @@
 @interface JCVoicemailPlaybackCell : JCVoicemailCell
 
 @property (nonatomic, weak) id <JCVoiceCellDelegate> delegate;
+@property (nonatomic, strong) Voicemail *voicemail;
 
 @property (nonatomic, weak) IBOutlet UIButton *playPauseButton;
 @property (nonatomic, weak) IBOutlet UIButton *speakerButton;

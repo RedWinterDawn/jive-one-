@@ -94,15 +94,22 @@ NSString *const kWordCountLabelPreText = @"Word count";
     if([sender isKindOfClass:[UISlider class]])
     {
         UISlider *slider = (UISlider *)sender;
-        float value = slider.value;
-        
-        // TODO: set the current time of the player to the value.
+        NSTimeInterval value = slider.value;
+        [_player playAtTime:value];
     }
 }
 
 - (IBAction)progressSliderTouched:(id)sender
 {
+    [_player pause];
     
+    
+//    if([sender isKindOfClass:[UISlider class]])
+//    {
+//        UISlider *slider = (UISlider *)sender;
+//        NSTimeInterval value = slider.value;
+//        [_player playAtTime:value];
+//    }
 }
 
 - (IBAction)speakerTouched:(id)sender {
@@ -147,6 +154,12 @@ NSString *const kWordCountLabelPreText = @"Word count";
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didChangeToSpeaker:(BOOL)speaker
 {
     self.speakerButton.selected = speaker;
+}
+
+-(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didUpdateProgress:(NSTimeInterval)currentTime duration:(NSTimeInterval)duration
+{
+    self.slider.value = currentTime;
+    [self.slider updateThumbWithCurrentProgress];
 }
 
 #pragma mark - Private -

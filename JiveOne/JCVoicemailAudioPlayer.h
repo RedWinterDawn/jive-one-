@@ -25,6 +25,8 @@
 -(void)pause;
 -(void)stop;
 
+-(void)playAtTime:(NSTimeInterval)timeInterval;
+
 @end
 
 @protocol JCVoicemailAudioPlayerDelegate <NSObject>
@@ -33,5 +35,6 @@
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didChangePlaybackState:(BOOL)playing;
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didChangeToSpeaker:(BOOL)speaker;
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didFailWithError:(NSError *)error;
+-(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didUpdateProgress:(NSTimeInterval)currentTime duration:(NSTimeInterval)duration;
 
 @end
