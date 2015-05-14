@@ -12,7 +12,7 @@
 // View Controllers
 #import "JCApplicationSwitcherViewController.h"
 #import "JCCallHistoryViewController_iPhone.h"
-#import "JCVoicemailViewController.h"
+//#import "JCVoicemailViewController.h"
 #import "JCConversationsTableViewController.h"
 
 #import "JCPhoneTabBarControllerDelegate.h"
@@ -164,10 +164,10 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 {
     if ([viewController isKindOfClass:[UINavigationController class]]) {
         viewController = ((UINavigationController *)viewController).topViewController;
-        if ([viewController isKindOfClass:[JCVoicemailViewController class]]) {
-            JCVoicemailViewController *voicemailViewController = (JCVoicemailViewController *)viewController;
-            voicemailViewController.voicemail = recentEvent;
-        }
+//        if ([viewController isKindOfClass:[JCVoicemailViewController class]]) {
+//            JCVoicemailViewController *voicemailViewController = (JCVoicemailViewController *)viewController;
+//            voicemailViewController.voicemail = recentEvent;
+//        }
     }
 }
 

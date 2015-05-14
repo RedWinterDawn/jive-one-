@@ -12,11 +12,12 @@ typedef enum : NSUInteger {
     JCRecentLineEventsViewAll = 0,
     JCRecentLineEventsViewMissedCalls = 1,
     JCRecentLineEventsViewVoicemails = 2,
-} JCRecentLineEventsViewFilters;
+    JCRecentLineEventsViewAllCalls = 3
+} JCRecentLineEventsViewFilter;
 
 @interface JCRecentLineEventsTableViewController : JCFetchedResultsTableViewController
 
-@property (nonatomic) JCRecentLineEventsViewFilters viewFilter;
+@property (nonatomic) JCRecentLineEventsViewFilter viewFilter;
 
 - (void)reloadTable;
 

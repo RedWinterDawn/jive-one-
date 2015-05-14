@@ -8,10 +8,6 @@
 
 #import "JCRecentLineEventsTableViewController.h"
 
-// Views
-#import "JCCallHistoryCell.h"
-#import "JCVoicemailCell.h"
-
 // Data Models
 #import "Call.h"
 #import "Voicemail+V5Client.h"
@@ -19,6 +15,10 @@
 #import "MissedCall.h"
 #import "JCPhoneBook.h"
 #import "JCMultiPersonPhoneNumber.h"
+
+// Views
+#import "JCCallHistoryCell.h"
+#import "JCVoicemailCell.h"
 
 // Managers
 #import "JCPresenceManager.h"
@@ -188,19 +188,27 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 
 #pragma mark - Setters -
 
--(void)setViewFilter:(JCRecentLineEventsViewFilters)viewFilter
+-(void)viewDidLayoutSubviews
 {
-    _viewFilter = viewFilter;
-    self.fetchedResultsController = nil;
-    [self.tableView reloadData];
+    [super viewDidLayoutSubviews];
     
     PBX *pbx = self.authenticationManager.pbx;
-    if (viewFilter == JCRecentLineEventsViewVoicemails && !pbx.isV5) {
+    if (self.viewFilter == JCRecentLineEventsViewVoicemails && !pbx.isV5) {
         [self showVoicemail];
     }
     else {
         [self hideVoicemail];
     }
+}
+
+-(void)setViewFilter:(JCRecentLineEventsViewFilter)viewFilter
+{
+    _viewFilter = viewFilter;
+    self.fetchedResultsController = nil;
+    [self.tableView reloadData];
+    
+    [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
 }
 
 #pragma mark - Getters -
@@ -219,7 +227,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 
 -(NSFetchRequest *)fetchRequest
 {
-    JCRecentLineEventsViewFilters viewFilter = self.viewFilter;
+    JCRecentLineEventsViewFilter viewFilter = self.viewFilter;
     NSFetchRequest *fetchRequest = nil;
     NSManagedObjectContext *context = self.managedObjectContext;
     
@@ -233,6 +241,10 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
          
         case JCRecentLineEventsViewVoicemails:
             fetchRequest = [Voicemail MR_requestAllWithPredicate:predicate inContext:context];
+            break;
+            
+        case JCRecentLineEventsViewAllCalls:
+            fetchRequest = [Call MR_requestAllWithPredicate:predicate inContext:context];
             break;
             
         default:

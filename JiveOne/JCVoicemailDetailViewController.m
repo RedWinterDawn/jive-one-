@@ -8,12 +8,15 @@
 
 #import "JCVoicemailDetailViewController.h"
 
-#import "JCSpeakerButton.h"
-#import "JCPlayPauseButton.h"
+// Models
 #import "JCVoicemailAudioPlayer.h"
-
-#import "Voicemail+V5Client.h"
 #import "VoicemailTranscription.h"
+
+// Clients
+#import "Voicemail+V5Client.h"
+
+NSString *const  kConfidenceLabelPreText = @"Confidence";
+NSString *const kWordCountLabelPreText = @"Word count";
 
 @interface JCVoicemailDetailViewController () <JCVoicemailAudioPlayerDelegate>
 {
@@ -21,9 +24,6 @@
 }
 
 @end
-
-NSString *const  kConfidenceLabelPreText = @"Confidence";
-NSString *const kWordCountLabelPreText = @"Word count";
 
 @implementation JCVoicemailDetailViewController
 
