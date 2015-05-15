@@ -276,7 +276,7 @@
                                 <rect key="frame" x="16" y="159" width="568" height="291"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word count: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hD-2T-xYG">
-                                        <rect key="frame" x="488" y="262" width="72" height="15"/>
+                                        <rect key="frame" x="488" y="266" width="72" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="99" id="SwH-pX-gz6"/>
                                         </constraints>
@@ -290,7 +290,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confidence :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDJ-eE-vfh">
-                                        <rect key="frame" x="14" y="268" width="71" height="15"/>
+                                        <rect key="frame" x="14" y="266" width="71" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="71" id="goI-5R-PSG"/>
                                         </constraints>
@@ -310,12 +310,12 @@
                                     <constraint firstAttribute="bottom" secondItem="F9q-cd-yQV" secondAttribute="bottom" constant="14" id="63e-Ig-mCw"/>
                                     <constraint firstAttribute="trailing" secondItem="3hD-2T-xYG" secondAttribute="trailing" constant="10" id="KBz-k5-vkO"/>
                                     <constraint firstAttribute="trailing" secondItem="F9q-cd-yQV" secondAttribute="trailing" constant="14" id="Kjv-BN-rmp"/>
-                                    <constraint firstAttribute="bottom" secondItem="zDJ-eE-vfh" secondAttribute="bottom" constant="8" id="SQL-xh-cha"/>
+                                    <constraint firstAttribute="bottom" secondItem="zDJ-eE-vfh" secondAttribute="bottom" constant="10" id="SQL-xh-cha"/>
                                     <constraint firstItem="3hD-2T-xYG" firstAttribute="top" secondItem="xaL-1h-9us" secondAttribute="top" constant="14" id="TND-t4-nXs"/>
                                     <constraint firstAttribute="trailing" secondItem="3hD-2T-xYG" secondAttribute="trailing" constant="8" id="cjB-nj-46s"/>
                                     <constraint firstItem="F9q-cd-yQV" firstAttribute="leading" secondItem="xaL-1h-9us" secondAttribute="leading" constant="14" id="cqM-hU-Grs"/>
                                     <constraint firstItem="zDJ-eE-vfh" firstAttribute="leading" secondItem="xaL-1h-9us" secondAttribute="leading" constant="14" id="h39-KF-aHv"/>
-                                    <constraint firstAttribute="bottom" secondItem="3hD-2T-xYG" secondAttribute="bottom" constant="14" id="idK-3f-K5p"/>
+                                    <constraint firstAttribute="bottom" secondItem="3hD-2T-xYG" secondAttribute="bottom" constant="10" id="idK-3f-K5p"/>
                                     <constraint firstItem="F9q-cd-yQV" firstAttribute="top" secondItem="xaL-1h-9us" secondAttribute="top" constant="10" id="r6w-0T-bnb"/>
                                     <constraint firstItem="zDJ-eE-vfh" firstAttribute="top" secondItem="xaL-1h-9us" secondAttribute="top" constant="14" id="suV-Jv-pJH"/>
                                 </constraints>
@@ -327,8 +327,8 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Today, 10:57 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CQZ-eU-dLa" userLabel="creationTime">
-                                <rect key="frame" x="432" y="98" width="148" height="15"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today, 10:57 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CQZ-eU-dLa" userLabel="creationTime">
+                                <rect key="frame" x="436" y="98" width="148" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="148" id="Nwg-aT-ik6"/>
                                     <constraint firstAttribute="width" constant="148" id="gUi-hT-daL"/>
