@@ -419,18 +419,64 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IZU-6X-OCc">
-                                <rect key="frame" x="275" y="513" width="50" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IZU-6X-OCc" customClass="JCRoundedButton">
+                                <rect key="frame" x="225" y="513" width="100" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="bh5-pV-Zpu"/>
+                                    <constraint firstAttribute="width" constant="100" id="bh5-pV-Zpu"/>
+                                    <constraint firstAttribute="height" constant="50" id="ewv-kq-WSf"/>
                                     <constraint firstAttribute="width" secondItem="IZU-6X-OCc" secondAttribute="height" multiplier="1:1" id="uL9-A8-Zoe"/>
                                 </constraints>
                                 <state key="normal" image="black-speaker">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="uL9-A8-Zoe"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="speakerTouched:" destination="vNw-XP-xAw" eventType="touchUpInside" id="fsr-0N-4sH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UrK-df-fI0" customClass="JCRoundedButton">
+                                <rect key="frame" x="335" y="513" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="7GT-gP-F67"/>
+                                    <constraint firstAttribute="width" secondItem="UrK-df-fI0" secondAttribute="height" multiplier="1:1" id="wGs-nZ-uQF"/>
+                                </constraints>
+                                <state key="normal" image="black-trash">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="7GT-gP-F67"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="deleteVoicemail:" destination="vNw-XP-xAw" eventType="touchUpInside" id="3Ql-4m-mSG"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -443,13 +489,16 @@
                             <constraint firstItem="CQZ-eU-dLa" firstAttribute="leading" secondItem="ddr-iV-54q" secondAttribute="trailing" constant="2" id="2pS-WI-wsB"/>
                             <constraint firstAttribute="trailing" secondItem="CQZ-eU-dLa" secondAttribute="trailing" constant="14" id="4eq-Vi-Cb3"/>
                             <constraint firstItem="xaL-1h-9us" firstAttribute="top" secondItem="AEl-R2-Jqz" secondAttribute="bottom" constant="17" id="55H-ao-oFs"/>
+                            <constraint firstItem="UrK-df-fI0" firstAttribute="leading" secondItem="IZU-6X-OCc" secondAttribute="trailing" constant="10" id="CmH-qm-TdC"/>
+                            <constraint firstItem="UrK-df-fI0" firstAttribute="width" secondItem="UrK-df-fI0" secondAttribute="height" multiplier="1:1" id="Dny-2c-Dmg"/>
                             <constraint firstItem="Xj5-C9-rSo" firstAttribute="centerY" secondItem="8Wk-uq-aXj" secondAttribute="centerY" constant="-8" id="F47-Z3-nMt"/>
                             <constraint firstItem="pDo-Th-8yt" firstAttribute="centerY" secondItem="8Wk-uq-aXj" secondAttribute="centerY" id="I6O-Gw-9Z9"/>
+                            <constraint firstItem="IZU-6X-OCc" firstAttribute="height" secondItem="UrK-df-fI0" secondAttribute="height" id="NK1-qc-md3"/>
                             <constraint firstItem="ddr-iV-54q" firstAttribute="top" secondItem="sOj-E6-7EU" secondAttribute="bottom" constant="30" id="S79-ua-0kv"/>
                             <constraint firstItem="8Wk-uq-aXj" firstAttribute="top" secondItem="CQZ-eU-dLa" secondAttribute="bottom" constant="13" id="SFR-7K-PrZ"/>
                             <constraint firstItem="ddr-iV-54q" firstAttribute="leading" secondItem="l97-Xp-skf" secondAttribute="leading" constant="16" id="TTI-Fy-3O6"/>
                             <constraint firstItem="IZU-6X-OCc" firstAttribute="top" secondItem="Xj5-C9-rSo" secondAttribute="bottom" constant="1" id="Wy4-eV-QtP"/>
-                            <constraint firstAttribute="centerX" secondItem="IZU-6X-OCc" secondAttribute="centerX" id="arA-J4-dJk"/>
+                            <constraint firstAttribute="centerX" secondItem="IZU-6X-OCc" secondAttribute="centerX" constant="25" id="arA-J4-dJk"/>
                             <constraint firstItem="AEl-R2-Jqz" firstAttribute="leading" secondItem="l97-Xp-skf" secondAttribute="leadingMargin" id="bvd-dS-bOs"/>
                             <constraint firstItem="ddr-iV-54q" firstAttribute="leading" secondItem="l97-Xp-skf" secondAttribute="leadingMargin" id="fff-wz-xAZ"/>
                             <constraint firstItem="8Wk-uq-aXj" firstAttribute="leading" secondItem="Xj5-C9-rSo" secondAttribute="trailing" constant="30" id="hBD-5H-b6C"/>
@@ -458,6 +507,7 @@
                             <constraint firstItem="CQZ-eU-dLa" firstAttribute="top" secondItem="sOj-E6-7EU" secondAttribute="bottom" constant="34" id="m8a-xG-Ggq"/>
                             <constraint firstItem="Xj5-C9-rSo" firstAttribute="leading" secondItem="pDo-Th-8yt" secondAttribute="trailing" constant="16" id="pMN-Zq-lTg"/>
                             <constraint firstItem="z0w-LZ-UT9" firstAttribute="top" secondItem="xaL-1h-9us" secondAttribute="bottom" constant="150" id="rbI-xg-KfG"/>
+                            <constraint firstItem="IZU-6X-OCc" firstAttribute="centerY" secondItem="UrK-df-fI0" secondAttribute="centerY" id="son-X6-Eqf"/>
                             <constraint firstItem="8Wk-uq-aXj" firstAttribute="leading" secondItem="Xj5-C9-rSo" secondAttribute="trailing" constant="43" id="tKM-Js-lQK"/>
                             <constraint firstItem="AEl-R2-Jqz" firstAttribute="top" secondItem="ddr-iV-54q" secondAttribute="bottom" constant="8" id="ufk-IQ-sVw"/>
                             <constraint firstItem="pDo-Th-8yt" firstAttribute="leading" secondItem="l97-Xp-skf" secondAttribute="leadingMargin" constant="2" id="vCJ-tD-EmP"/>
@@ -1639,6 +1689,7 @@
         <image name="black-hold" width="30" height="30"/>
         <image name="black-play" width="15" height="15"/>
         <image name="black-speaker" width="27" height="24"/>
+        <image name="black-trash" width="18" height="21"/>
         <image name="delete-black" width="35" height="35"/>
         <image name="dialer-callButton-green" width="58" height="58"/>
         <image name="gray-callbutton" width="58" height="58"/>
