@@ -17,6 +17,7 @@
 @property (nonatomic, strong, readwrite) NSString *lastMessage;
 @property (nonatomic, strong, readwrite) NSDate *date;
 
+
 @property (nonatomic, readonly, getter=isSMS) BOOL sms;
 @property (nonatomic, readonly, getter=isRead) BOOL read;
 @property (nonatomic, readonly) NSString *conversationGroupId;
