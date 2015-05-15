@@ -3003,7 +3003,7 @@
                                     <outlet property="icon" destination="aaV-Hh-0FM" id="sID-r3-uat"/>
                                     <outlet property="name" destination="TmI-c8-kkS" id="x5m-8O-pWi"/>
                                     <outlet property="number" destination="xbE-Wj-ANr" id="sd3-eO-J0h"/>
-                                    <segue destination="33k-kc-YAG" kind="push" id="5ew-TV-5h3"/>
+                                    <segue destination="fBA-aH-3fS" kind="push" id="aL2-Zz-7qY"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -3055,32 +3055,28 @@
             </objects>
             <point key="canvasLocation" x="1460" y="-2547"/>
         </scene>
-        <!--Contact Detail Table View Controller-->
-        <scene sceneID="CdL-6y-XNj">
+        <!--Storyboard Loader View Controller-->
+        <scene sceneID="ed8-Qg-rzO">
             <objects>
-                <tableViewController id="33k-kc-YAG" customClass="JCContactDetailTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="zOL-TN-JpY">
+                <viewController id="fBA-aH-3fS" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VBO-xg-eAS"/>
+                        <viewControllerLayoutGuide type="bottom" id="wgy-ba-w5m"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0cF-h8-cXU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="412"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="y1g-u7-JPr">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y1g-u7-JPr" id="pkc-D6-JMG">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="33k-kc-YAG" id="p4y-BM-5cW"/>
-                            <outlet property="delegate" destination="33k-kc-YAG" id="G1u-MG-Rpd"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="Byj-GJ-b0w"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Upa-1w-eWN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="151-Hg-jlk"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Contacts"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="viewControllerIdentifier" value="ContactsDetailViewTableViewController"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qKY-75-5Rh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1920" y="-2562"/>
+            <point key="canvasLocation" x="1872" y="-2547"/>
         </scene>
         <!--Contacts View Controller-->
         <scene sceneID="fU7-rd-d05">
