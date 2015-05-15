@@ -8,6 +8,7 @@
 
 #import "JCDebugDIDTableViewController.h"
 #import "PBX.h"
+#import "JCDebugBlockedContactsTableViewController.h"
 
 @implementation JCDebugDIDTableViewController
 
@@ -24,6 +25,15 @@
     self.receiveSMS.text    = self.did.canReceiveSMS ? @"Yes" : @"No";
     
     self.pbx.text = self.did.pbx.name;
+    self.blockedContacts.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.did.blockedContacts.count];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UIViewController *viewController = segue.destinationViewController;
+    if ([viewController isKindOfClass:[JCDebugBlockedContactsTableViewController class]]) {
+        ((JCDebugBlockedContactsTableViewController *)viewController).did = self.did;
+    }
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import "JCSMSConversationGroup.h"
 #import "LocalContact.h"
+#import "DID.h"
 #import "Common.h"
 
 @implementation JCSMSConversationGroup
@@ -40,6 +41,9 @@
             _lastMessageId  = smsMessage.eventId;
             _lastMessage    = smsMessage.text;
             _date           = smsMessage.date;
+            _didJrn         = smsMessage.did.jrn;
+            
+            _phoneNumber    = phoneNumber;
         }
     }
     return self;

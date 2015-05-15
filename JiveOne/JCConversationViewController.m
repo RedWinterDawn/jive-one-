@@ -16,6 +16,7 @@
 #import "JCUnknownNumber.h"
 #import "LocalContact.h"
 #import "SMSMessage+V5Client.h"
+#import "BlockedNumber+V5Client.h"
 #import "PBX.h"
 #import "Line.h"
 #import "JCPhoneBook.h"
@@ -27,6 +28,7 @@
 // Controllers
 #import "JCMessageParticipantTableViewController.h"
 #import "JCNavigationController.h"
+#import "JCConversationDetailsViewController.h"
 
 // Categories
 #import "NSString+Additions.h"
@@ -81,6 +83,14 @@
     } completion:^(BOOL success, NSError *error) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
     }];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UIViewController *viewController = segue.destinationViewController;
+    if ([viewController isKindOfClass:[JCConversationDetailsViewController class]]) {
+        ((JCConversationDetailsViewController *)viewController).conversationGroup = self.conversationGroup;
+    }
 }
 
 -(void)didReceiveMemoryWarning
@@ -161,6 +171,7 @@
 {
     _conversationGroup = conversationGroup;
     self.title = conversationGroup.titleText;
+//       self.navigationController.navigationItem.rightBarButtonItem = _blockBtn;
     if (conversationGroup.isSMS) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", conversationGroup.conversationGroupId];
         SMSMessage *message = [SMSMessage MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];

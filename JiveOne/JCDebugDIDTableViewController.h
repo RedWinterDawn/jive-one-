@@ -21,5 +21,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *sendSMS;
 @property (weak, nonatomic) IBOutlet UILabel *receiveSMS;
 @property (weak, nonatomic) IBOutlet UILabel *pbx;
+@property (weak, nonatomic) IBOutlet UILabel *blockedContacts;
 
 @end

@@ -8,6 +8,16 @@
 
 #import "JCFetchedResultsTableViewController.h"
 
+@protocol JCDIDSelectorViewControllerDelegate;
+
 @interface JCDIDSelectorViewController : JCFetchedResultsTableViewController
+
+@property (nonatomic, weak) id <JCDIDSelectorViewControllerDelegate> delegate;
+
+@end
+
+@protocol JCDIDSelectorViewControllerDelegate <NSObject>
+
+-(void)didUpdateDIDSelectorViewController:(JCDIDSelectorViewController *)viewController;
 
 @end

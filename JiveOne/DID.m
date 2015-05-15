@@ -24,6 +24,7 @@ NSString *const kDIDReceiveSMSAttribute     = @"receiveSMS";
 @dynamic jrn;
 @dynamic pbx;
 @dynamic smsMessages;
+@dynamic blockedContacts;
 
 #pragma mark - Setters -
 -(void)setUserDefault:(BOOL)userDefault
@@ -57,7 +58,6 @@ NSString *const kDIDReceiveSMSAttribute     = @"receiveSMS";
 {
     return [self boolValueFromPrimitiveValueForKey:kDIDUserDefaultAttribute];
 }
-
 
 -(BOOL)canMakeCall
 {
