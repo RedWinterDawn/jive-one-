@@ -3058,7 +3058,7 @@
         <!--Storyboard Loader View Controller-->
         <scene sceneID="ed8-Qg-rzO">
             <objects>
-                <viewController id="fBA-aH-3fS" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="fBA-aH-3fS" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VBO-xg-eAS"/>
                         <viewControllerLayoutGuide type="bottom" id="wgy-ba-w5m"/>
