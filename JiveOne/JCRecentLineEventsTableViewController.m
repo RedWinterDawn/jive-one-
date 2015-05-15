@@ -124,42 +124,40 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
         viewController = ((JCStoryboardLoaderViewController *)viewController).embeddedViewController;
     }
     
-    if ([viewController isKindOfClass:[JCVoicemailDetailViewController class]] && [sender isKindOfClass:[UITableViewCell class]]) {
+    RecentLineEvent *recentLineEvent;
+    if ([sender isKindOfClass:[UITableViewCell class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)sender];
-        id<NSObject> object = [self objectAtIndexPath:indexPath];
-        if ([object isKindOfClass:[Voicemail class]]) {
-            JCVoicemailDetailViewController *detailViewController = (JCVoicemailDetailViewController *)viewController;
-            detailViewController.voicemail = (Voicemail *)object;
-        }
+        recentLineEvent = (RecentLineEvent *)[self objectAtIndexPath:indexPath];
+    }
+    else if([sender isKindOfClass:[RecentLineEvent class]]) {
+        recentLineEvent = (RecentLineEvent *)sender;
     }
     
-    else if ([viewController isKindOfClass:[JCContactDetailTableViewController class]]){
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)sender];
-        id<NSObject> object = [self objectAtIndexPath:indexPath];
-        JCContactDetailTableViewController *contactDetailViewController = (JCContactDetailTableViewController *)viewController;
-        if ([object isKindOfClass:[RecentLineEvent class]]) {
-            RecentLineEvent *recentLineEvent = (RecentLineEvent *)object;
-            Contact *contact = recentLineEvent.contact;
-            NSArray *localContacts = recentLineEvent.localContacts.allObjects;
-            id<JCPhoneNumberDataSource> phoneNumber;
-            if (contact) {
-                phoneNumber = contact;
+    if ([viewController isKindOfClass:[JCVoicemailDetailViewController class]] && recentLineEvent && [recentLineEvent isKindOfClass:[Voicemail class]]) {
+        ((JCVoicemailDetailViewController *)viewController).voicemail = (Voicemail *)recentLineEvent;
+    }
+    
+    else if ([viewController isKindOfClass:[JCContactDetailTableViewController class]] && recentLineEvent){
+        Contact *contact = recentLineEvent.contact;
+        NSArray *localContacts = recentLineEvent.localContacts.allObjects;
+        id<JCPhoneNumberDataSource> phoneNumber;
+        if (contact) {
+            phoneNumber = contact;
+        }
+        else if (localContacts.count > 0) {
+            if (localContacts.count > 1) {
+                phoneNumber = [JCMultiPersonPhoneNumber multiPersonPhoneNumberWithPhoneNumbers:localContacts];
+            } else {
+                phoneNumber = localContacts.firstObject;
             }
-            else if (localContacts.count > 0) {
-                if (localContacts.count > 1) {
-                    phoneNumber = [JCMultiPersonPhoneNumber multiPersonPhoneNumberWithPhoneNumbers:localContacts];
-                } else {
-                    phoneNumber = localContacts.firstObject;
-                }
-            }
-            else {
-                phoneNumber = [self.phoneBook phoneNumberForNumber:recentLineEvent.number
+        }
+        else {
+            phoneNumber = [self.phoneBook phoneNumberForNumber:recentLineEvent.number
                                                               name:recentLineEvent.name
                                                             forPbx:recentLineEvent.line.pbx
                                                      excludingLine:recentLineEvent.line];
-            }
-            contactDetailViewController.phoneNumber = phoneNumber;
         }
+        ((JCContactDetailTableViewController *)viewController).phoneNumber = phoneNumber;
     }
 }
 

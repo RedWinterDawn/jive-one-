@@ -152,10 +152,12 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
         viewController = ((UINavigationController *)viewController).topViewController;
         if ([viewController isKindOfClass:[JCCallHistoryViewController_iPhone class]]) {
             JCCallHistoryViewController_iPhone *callHistoryViewController = (JCCallHistoryViewController_iPhone *)viewController;
-            JCCallHistoryTableViewController *callHistoryTableViewController = callHistoryViewController.callHistoryTableViewController;
-            NSIndexPath *indexPath = [callHistoryTableViewController indexPathOfObject:recentEvent];
-            UITableViewCell *cell = [callHistoryTableViewController.tableView cellForRowAtIndexPath:indexPath];
-            [callHistoryTableViewController performSegueWithIdentifier:@"CallHistoryDetailNoAnimation" sender:cell];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                __block JCCallHistoryTableViewController *callHistoryTableViewController = callHistoryViewController.callHistoryTableViewController;
+                NSIndexPath *indexPath = [callHistoryTableViewController indexPathOfObject:recentEvent];
+                UITableViewCell *cell = [callHistoryTableViewController.tableView cellForRowAtIndexPath:indexPath];
+                [callHistoryTableViewController performSegueWithIdentifier:@"CallHistoryDetailNoAnimation" sender:cell];
+            });
         }
     }
 }
