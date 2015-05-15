@@ -201,7 +201,7 @@
                                     <outlet property="number" destination="wy5-2x-2pe" id="2Ux-qD-Ggy"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VoicemailCell" rowHeight="61" id="Wdn-ib-VLs" customClass="JCVoicemailCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="VoicemailCell" rowHeight="61" id="Wdn-ib-VLs" customClass="JCVoicemailCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wdn-ib-VLs" id="eXc-vE-Ziy">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -279,7 +279,7 @@
                                     <outlet property="number" destination="fEO-AB-gx9" id="JAw-cM-KLi"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="60" id="rwC-Sz-c4P" customClass="JCConversationTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="60" id="rwC-Sz-c4P" customClass="JCConversationTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rwC-Sz-c4P" id="lfj-VK-5vJ">
                                     <autoresizingMask key="autoresizingMask"/>
