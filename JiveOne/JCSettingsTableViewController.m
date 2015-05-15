@@ -42,6 +42,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     // Device Info
     UIDevice *device = [UIDevice currentDevice];
     self.installationIdentifier.text = device.installationIdentifier;
+    self.hideSectionsWithHiddenRows = TRUE;
     
     // App Info
     NSBundle *bundle = [NSBundle mainBundle];
@@ -204,8 +205,10 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     self.extensionLabel.text        = authenticationManager.line.number;
     self.smsUserDefaultNumber.text  = authenticationManager.did.formattedNumber;
     
-    [self cell:self.enablePreasenceCell setHidden:!authenticationManager.line.pbx.isV5];
-    [self cell:self.defaultDIDCell setHidden:!authenticationManager.pbx.sendSMSMessages];
+    PBX *pbx = authenticationManager.pbx;
+    [self cell:self.enablePreasenceCell setHidden:!pbx.isV5];
+    [self cell:self.defaultDIDCell setHidden:!pbx.sendSMSMessages];
+    [self cell:self.blockedNumbersCell setHidden:!pbx.sendSMSMessages];
     
     [self reloadDataAnimated:NO];
 }
