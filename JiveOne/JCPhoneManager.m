@@ -119,7 +119,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
  */
 -(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
 {
-    
+    __unsafe_unretained JCPhoneManager *weakSelf = self;
     self.completion = ^(BOOL success, NSError *error) {
         if (error){
             
@@ -127,11 +127,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
             // restart the application. We exit the app by raising an exception, whic will be
             // by our analytics.
             if(error.code == JC_SIP_REGISTRATION_TIMEOUT) {
+                
                 [JCAlertView alertWithError:error
                                   dismissed:^(NSInteger buttonIndex) {
-                                      [NSException raise:@"RegistrationTimoutException" format:@"The registration attempt timed out."];
+                                      [weakSelf disconnect];
                                   }
-                          cancelButtonTitle:@"Restart Application"
+                          cancelButtonTitle:@"OK"
                           otherButtonTitles:nil];
             }
             

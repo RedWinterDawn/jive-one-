@@ -2126,7 +2126,7 @@ NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
             return @"Phone is already attempting to register";
             
         case JC_SIP_REGISTRATION_TIMEOUT:
-            return @"Phone registration has encountered a fatal error and requires the application to be restarted.";
+            return @"Phone registration is unable to register at this time. Please check your network connection and try again. If problem persists, restart the application.";
             
         case JC_SIP_REGISTRATION_FAILURE:
             return @"Please try again. If the problem persists, please contact support.";
