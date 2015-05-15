@@ -46,13 +46,8 @@ NSString *const kWordCountLabelPreText = @"Word count";
     [percent setNumberStyle:NSNumberFormatterPercentStyle];
     [percent setMaximumFractionDigits:2];
    
-    
-    self.transcriptionConfidence.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(kConfidenceLabelPreText, nil) , [percent stringFromNumber:[NSNumber numberWithFloat:transcription.confidence]]];
-    
-    NSNumber *wordcountNumber = [NSNumber numberWithLong:transcription.wordCount];
-    
-    self.transcriptionWordCount.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(kWordCountLabelPreText, nil), wordcountNumber];
-    
+    self.transcriptionConfidence.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(kConfidenceLabelPreText, nil), [percent stringFromNumber:[NSNumber numberWithFloat:transcription.confidence]]];
+    self.transcriptionWordCount.text  = [NSString stringWithFormat:@"%@: %i", NSLocalizedString(kWordCountLabelPreText, nil), transcription.wordCount];
     
     // If we have the voicemail data, load the player and prepare for playback.
     if (voicemail.data.length > 0) {
@@ -75,11 +70,10 @@ NSString *const kWordCountLabelPreText = @"Word count";
     }];
 }
 
-#pragma mark - Methods -
-
-- (void)setSliderValue:(float)value
+- (void)viewDidAppear:(BOOL)animated
 {
-    self.slider.value = value;
+    [super viewDidAppear:animated];
+    [self.voicemail markAsRead:NULL];
 }
 
 #pragma mark - IBActions -
@@ -102,31 +96,17 @@ NSString *const kWordCountLabelPreText = @"Word count";
 - (IBAction)progressSliderTouched:(id)sender
 {
     [_player pause];
-    
-    
-//    if([sender isKindOfClass:[UISlider class]])
-//    {
-//        UISlider *slider = (UISlider *)sender;
-//        NSTimeInterval value = slider.value;
-//        [_player playAtTime:value];
-//    }
 }
 
 - (IBAction)speakerTouched:(id)sender {
-    BOOL speaker = _player.speaker;
-    _player.speaker = !speaker;
+    _player.speaker = !_player.speaker;
 }
 
 #pragma mark - Delegate Handlers -
 
 -(IBAction)deleteVoicemail:(id)sender
 {
-    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-        Voicemail *localVoicemail = (Voicemail *)[localContext objectWithID:self.voicemail.objectID];
-        [localContext deleteObject:localVoicemail];
-    } completion:^(BOOL success, NSError *error) {
-        
-    }];
+    [self.voicemail markForDeletion];
 }
 
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didLoadWithDuration:(NSTimeInterval)duration
