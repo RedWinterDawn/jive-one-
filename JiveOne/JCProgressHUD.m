@@ -55,7 +55,7 @@ static NSInteger JCProgressHUDDuration;
     
     NSError *underlyingError = [self underlyingErrorForError:error];
     NSString *underlyingFailureReason = [underlyingError localizedFailureReason];
-    if(underlyingFailureReason) {
+    if(underlyingFailureReason && ![underlyingFailureReason isEqualToString:message]) {
         message = [NSString stringWithFormat:@"%@(%li: %@)", NSLocalizedString(message, nil), (long)underlyingError.code, underlyingFailureReason];
     }
     else {
