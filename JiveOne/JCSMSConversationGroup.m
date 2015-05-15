@@ -18,6 +18,7 @@
 @synthesize lastMessageId = _lastMessageId;
 @synthesize date          = _date;
 
+
 -(instancetype)initWithPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
     return [self initWithMessage:nil phoneNumber:phoneNumber];
@@ -42,7 +43,6 @@
             _lastMessage    = smsMessage.text;
             _date           = smsMessage.date;
             _didJrn         = smsMessage.did.jrn;
-            
             _phoneNumber    = phoneNumber;
         }
     }

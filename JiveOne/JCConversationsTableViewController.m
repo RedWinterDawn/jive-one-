@@ -86,6 +86,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     cell.detail.text = object.detailText;
     cell.date.text   = object.formattedModifiedShortDate;
     cell.read        = object.isRead;
+//    cell.imageView.image = [UIImage imageNamed:@"avatar"];
 }
 
 - (IBAction)refreshTable:(id)sender {
