@@ -15,7 +15,7 @@
 "C1I-IP-hpm.text" = "WXYZ";
 
 /* Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[0] = "All"; ObjectID = "EMe-MP-2GH"; */
-"EMe-MP-2GH.segmentTitles[0]" = "Intercambiar llamadas";
+"EMe-MP-2GH.segmentTitles[0]" = "Todos";
 
 /* Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[1] = "Missed"; ObjectID = "EMe-MP-2GH"; */
 "EMe-MP-2GH.segmentTitles[1]" = "Perdidas";

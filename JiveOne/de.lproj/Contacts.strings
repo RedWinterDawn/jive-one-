@@ -18,7 +18,7 @@
 "ZlM-6f-NMM.segmentTitles[1]" = "Gruppen";
 
 /* Class = "UISegmentedControl"; ZlM-6f-NMM.segmentTitles[2] = "Local"; ObjectID = "ZlM-6f-NMM"; */
-"ZlM-6f-NMM.segmentTitles[2]" = "Lokale Kontakte";
+"ZlM-6f-NMM.segmentTitles[2]" = "Lokale";
 
 /* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "gyL-0L-l47"; */
 "gyL-0L-l47.placeholder" = "Suchen";
