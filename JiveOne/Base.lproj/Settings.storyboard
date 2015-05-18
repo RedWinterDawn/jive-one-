@@ -461,7 +461,7 @@
                                                         <action selector="toggleWifiOnly:" destination="loC-lu-gwI" eventType="valueChanged" id="J4i-bI-mlc"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make/Receive calls via Wi-Fi only" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="axJ-EB-B5c" userLabel="Calls Only Over Wifi Label">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make/Receive calls via Wi-Fi only" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="axJ-EB-B5c" userLabel="Calls Only Over Wifi Label">
                                                     <rect key="frame" x="14" y="11" width="514" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="i0S-eN-NPi"/>
@@ -472,12 +472,20 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="Pkg-yh-0LU" firstAttribute="leading" secondItem="axJ-EB-B5c" secondAttribute="trailing" constant="8" id="7Sx-Pn-lch"/>
                                                 <constraint firstItem="axJ-EB-B5c" firstAttribute="leading" secondItem="CUq-hK-yKU" secondAttribute="leading" constant="14" id="8qC-c9-M4s"/>
                                                 <constraint firstItem="Pkg-yh-0LU" firstAttribute="leading" secondItem="axJ-EB-B5c" secondAttribute="trailing" constant="8" id="CTm-wM-QWb"/>
                                                 <constraint firstAttribute="centerY" secondItem="Pkg-yh-0LU" secondAttribute="centerY" id="IF1-QX-Y3A"/>
+                                                <constraint firstItem="axJ-EB-B5c" firstAttribute="top" secondItem="CUq-hK-yKU" secondAttribute="top" constant="11" id="V5h-gA-Alp"/>
+                                                <constraint firstAttribute="bottom" secondItem="axJ-EB-B5c" secondAttribute="bottom" constant="11" id="Y5E-Yk-2qJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="Pkg-yh-0LU" secondAttribute="trailing" constant="15" id="oFa-Vn-0ub"/>
                                                 <constraint firstItem="axJ-EB-B5c" firstAttribute="centerY" secondItem="Pkg-yh-0LU" secondAttribute="centerY" id="r3X-JO-qbo"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="r3X-JO-qbo"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" restorationIdentifier="EnablePresenceCell" selectionStyle="none" indentationWidth="10" id="wAq-fn-DeO" userLabel="EnablePresenceCellRow">
@@ -492,8 +500,8 @@
                                                         <action selector="togglePresenceEnabled:" destination="loC-lu-gwI" eventType="valueChanged" id="thw-YW-9VJ"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show other people's availability" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKo-rY-a54" userLabel="Enable Presence label">
-                                                    <rect key="frame" x="14" y="12" width="218" height="19"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show other people's availability" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="iKo-rY-a54" userLabel="Enable Presence label">
+                                                    <rect key="frame" x="14" y="12" width="514" height="19"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -501,11 +509,19 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="iKo-rY-a54" firstAttribute="centerY" secondItem="XB1-kp-tjd" secondAttribute="centerY" id="9Tx-td-7un"/>
+                                                <constraint firstItem="iKo-rY-a54" firstAttribute="top" secondItem="myE-HP-xt7" secondAttribute="top" constant="12" id="LjH-mE-TRZ"/>
                                                 <constraint firstItem="iKo-rY-a54" firstAttribute="leading" secondItem="myE-HP-xt7" secondAttribute="leading" constant="14" id="TaM-nU-ee3"/>
                                                 <constraint firstAttribute="centerY" secondItem="XB1-kp-tjd" secondAttribute="centerY" id="dfR-dx-4s2"/>
                                                 <constraint firstAttribute="trailing" secondItem="XB1-kp-tjd" secondAttribute="trailing" constant="15" id="jAv-Vq-ioY"/>
+                                                <constraint firstAttribute="bottom" secondItem="iKo-rY-a54" secondAttribute="bottom" constant="12" id="z75-Lc-YK9"/>
+                                                <constraint firstItem="XB1-kp-tjd" firstAttribute="leading" secondItem="iKo-rY-a54" secondAttribute="trailing" constant="8" id="zfJ-3I-F6Y"/>
                                                 <constraint firstItem="iKo-rY-a54" firstAttribute="top" secondItem="myE-HP-xt7" secondAttribute="topMargin" constant="4" id="zib-f3-Ai7"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="9Tx-td-7un"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" none="YES" notEnabled="YES"/>
@@ -543,7 +559,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3942" y="-368.5"/>
+            <point key="canvasLocation" x="3942" y="-369"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="uJY-wQ-tOP">
