@@ -19,14 +19,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginlogo" translatesAutoresizingMaskIntoConstraints="NO" id="rfs-29-227">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="loginlogo" translatesAutoresizingMaskIntoConstraints="NO" id="rfs-29-227">
                                 <rect key="frame" x="225" y="27" width="150" height="148"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="rfs-29-227" secondAttribute="height" multiplier="19:18" constant="-6.2222222222222285" id="RXa-wY-6ch"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="150" id="weJ-4t-C97"/>
                                 </constraints>
                             </imageView>
-                            <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P0q-QF-wIv" userLabel="Login Prompt" customClass="JCRoundedView">
+                            <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P0q-QF-wIv" userLabel="Login Prompt" customClass="JCRoundedView">
                                 <rect key="frame" x="100" y="190" width="400" height="156"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NnA-un-IIS" customClass="JCVisualEffectsView">

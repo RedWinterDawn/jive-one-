@@ -1,0 +1,21 @@
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "6Lg-gi-Ebj"; */
+"6Lg-gi-Ebj.placeholder" = "contraseña";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "Rjl-m9-p92"; */
+"Rjl-m9-p92.normalTitle" = "Fatto";
+
+/* Class = "UITextField"; placeholder = "user name"; ObjectID = "RmQ-bW-WSU"; */
+"RmQ-bW-WSU.placeholder" = "nome utente";
+
+/* Class = "UILabel"; text = "Select a line extension to continue"; ObjectID = "Rsq-9f-ILa"; */
+"Rsq-9f-ILa.text" = "Selezionare una estensione di linea per continuare";
+
+/* Class = "UILabel"; text = "Remember me"; ObjectID = "Z3w-nO-T7g"; */
+"Z3w-nO-T7g.text" = "Ricordami";
+
+/* Class = "UILabel"; text = "By signing in you agree to our Terms & Conditions."; ObjectID = "a85-4q-BLA"; */
+"a85-4q-BLA.text" = "Firmando in voi accettato i Termini e Condizioni.";
+
+/* Class = "UIButton"; normalTitle = "CONTINUE"; ObjectID = "cuI-dB-ab2"; */
+"cuI-dB-ab2.normalTitle" = "CONTINUA";
