@@ -6,16 +6,16 @@
 "4S2-H7-xRN.text" = "Altavoz";
 
 /* Class = "IBUILabel"; text = "Add Call"; ObjectID = "7gw-EZ-yNz"; */
-"7gw-EZ-yNz.text" = "Agregar llamada";
+"7gw-EZ-yNz.text" = "Agregar";
 
 /* Class = "IBUILabel"; text = "Swap Calls"; ObjectID = "Bcm-TB-mqA"; */
-"Bcm-TB-mqA.text" = "Intercambiar llamadas";
+"Bcm-TB-mqA.text" = "Intercambiar";
 
 /* Class = "IBUILabel"; text = "Finish Transfer"; ObjectID = "Q2z-kh-jIP"; */
 "Q2z-kh-jIP.text" = "Finalizar la transferencia";
 
 /* Class = "IBUILabel"; text = "Merge Calls"; ObjectID = "UVV-07-6qc"; */
-"UVV-07-6qc.text" = "Unir Calls";
+"UVV-07-6qc.text" = "Unir";
 
 /* Class = "IBUILabel"; text = "TRANSFERRED TO"; ObjectID = "X2r-4X-bhX"; */
 "X2r-4X-bhX.text" = "TRANSFERIDO AL";
@@ -27,7 +27,7 @@
 "lmW-vI-lq5.text" = "Silencio";
 
 /* Class = "IBUILabel"; text = "Warm Transfer"; ObjectID = "mv1-cF-rXS"; */
-"mv1-cF-rXS.text" = "Transferencia Asistida";
+"mv1-cF-rXS.text" = "Remitir";
 
 /* Class = "IBUILabel"; text = "Transfer"; ObjectID = "tWV-rw-XMj"; */
 "tWV-rw-XMj.text" = "Transferir";
