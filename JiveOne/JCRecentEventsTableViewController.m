@@ -186,6 +186,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 -(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
     UITableView *tableView = self.tableView;
+    NSMutableArray *tableData = self.tableData;
     
     // TODO: translate index path for controller into index path for table, looking up the objects
     // index, and calculate the offset from the indexPath and newIndexPath, and convert into
@@ -198,9 +199,9 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
             // Insert the object into where we are told its supposed to go, which may not be
             // correct. Then resort the array it to find the actual index it will be, and update the
             // table view to show the inserted cell at the right index path.
-            [_tableData addObject:anObject];
-            [_tableData sortUsingDescriptors:self.fetchedResultsController.fetchRequest.sortDescriptors];
-            NSUInteger row = [_tableData indexOfObject:anObject];
+            [tableData addObject:anObject];
+            [tableData sortUsingDescriptors:self.fetchedResultsController.fetchRequest.sortDescriptors];
+            NSUInteger row = [tableData indexOfObject:anObject];
             newIndexPath = [NSIndexPath indexPathForRow:row inSection:newIndexPath.section];
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationTop];
             
@@ -208,9 +209,9 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
         }
         case NSFetchedResultsChangeDelete:
         {
-            if ([_tableData containsObject:anObject]) {
-                NSUInteger row = [_tableData indexOfObject:anObject];
-                [_tableData removeObject:anObject];
+            if ([tableData containsObject:anObject]) {
+                NSUInteger row = [tableData indexOfObject:anObject];
+                [tableData removeObject:anObject];
                 indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                 
@@ -219,8 +220,8 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
         }
         case NSFetchedResultsChangeUpdate:
         {
-            if ([_tableData containsObject:anObject]) {
-                NSUInteger row = [_tableData indexOfObject:anObject];
+            if ([tableData containsObject:anObject]) {
+                NSUInteger row = [tableData indexOfObject:anObject];
                 indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
                 UITableViewCell *cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
                 [self configureCell:cell atIndexPath:indexPath];
@@ -256,22 +257,23 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 
 -(void)conversationGroupResultsController:(JCConversationGroupsResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(JCConversationGroupsResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     UITableView *tableView = self.tableView;
+    NSMutableArray *tableData = self.tableData;
     switch(type)
     {
         case NSFetchedResultsChangeInsert:
         {
-            [_tableData addObject:anObject];
-            [_tableData sortUsingDescriptors:self.fetchedResultsController.fetchRequest.sortDescriptors];
-            NSUInteger row = [_tableData indexOfObject:anObject];
+            [tableData addObject:anObject];
+            [tableData sortUsingDescriptors:self.fetchedResultsController.fetchRequest.sortDescriptors];
+            NSUInteger row = [tableData indexOfObject:anObject];
             newIndexPath = [NSIndexPath indexPathForRow:row inSection:newIndexPath.section];
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationTop];
             break;
         }
         case NSFetchedResultsChangeDelete:
         {
-            if ([_tableData containsObject:anObject]) {
-                NSUInteger row = [_tableData indexOfObject:anObject];
-                [_tableData removeObject:anObject];
+            if ([tableData containsObject:anObject]) {
+                NSUInteger row = [tableData indexOfObject:anObject];
+                [tableData removeObject:anObject];
                 indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             }
@@ -279,9 +281,9 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
         }
         case NSFetchedResultsChangeUpdate:
         {
-            if ([_tableData containsObject:anObject]) {
-                NSUInteger row = [_tableData indexOfObject:anObject];
-                [_tableData replaceObjectAtIndex:row withObject:anObject];
+            if ([tableData containsObject:anObject]) {
+                NSUInteger row = [tableData indexOfObject:anObject];
+                [tableData replaceObjectAtIndex:row withObject:anObject];
                 indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
                 UITableViewCell *cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
                 [self configureCell:cell atIndexPath:indexPath];
@@ -295,16 +297,16 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
             // against the conversationGroupId, we are able to get the index of the object and
             // remove the old object because it is found in removeObject, which compares using the
             // isEqual: method.
-            if ([_tableData containsObject:anObject]) {
-                NSUInteger deleteRow = [_tableData indexOfObject:anObject];
+            if ([tableData containsObject:anObject]) {
+                NSUInteger deleteRow = [tableData indexOfObject:anObject];
                 indexPath = [NSIndexPath indexPathForRow:deleteRow inSection:indexPath.section];
-                [_tableData removeObject:anObject];
+                [tableData removeObject:anObject];
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             }
             
-            [_tableData addObject:anObject];
-            [_tableData sortUsingDescriptors:self.fetchedResultsController.fetchRequest.sortDescriptors];
-            NSUInteger newRow = [_tableData indexOfObject:anObject];
+            [tableData addObject:anObject];
+            [tableData sortUsingDescriptors:self.fetchedResultsController.fetchRequest.sortDescriptors];
+            NSUInteger newRow = [tableData indexOfObject:anObject];
             newIndexPath = [NSIndexPath indexPathForRow:newRow inSection:newIndexPath.section];
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
