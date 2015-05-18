@@ -1,0 +1,30 @@
+
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "A3I-As-eGt"; */
+"A3I-As-eGt.placeholder" = "Búsqueda";
+
+/* Class = "UILabel"; text = "Extension"; ObjectID = "Hhh-5d-Rvp"; */
+"Hhh-5d-Rvp.text" = "Extensión";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "U6D-l3-ORb"; */
+"U6D-l3-ORb.text" = "Nombre";
+
+/* Class = "UILabel"; text = "Jive ID"; ObjectID = "YmX-dQ-bCu"; */
+"YmX-dQ-bCu.text" = "Jive ID";
+
+/* Class = "UISegmentedControl"; ZlM-6f-NMM.segmentTitles[0] = "Contacts"; ObjectID = "ZlM-6f-NMM"; */
+"ZlM-6f-NMM.segmentTitles[0]" = "Contactos";
+
+/* Class = "UISegmentedControl"; ZlM-6f-NMM.segmentTitles[1] = "Groups"; ObjectID = "ZlM-6f-NMM"; */
+"ZlM-6f-NMM.segmentTitles[1]" = "Grupos";
+
+/* Class = "UISegmentedControl"; ZlM-6f-NMM.segmentTitles[2] = "Local"; ObjectID = "ZlM-6f-NMM"; */
+"ZlM-6f-NMM.segmentTitles[2]" = "Contactos locales";
+
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "gyL-0L-l47"; */
+"gyL-0L-l47.placeholder" = "Búsqueda";
+
+/* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "vNR-6x-fXV"; */
+"vNR-6x-fXV.title" = "Contactos";
+
+/* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "z08-gl-NAi"; */
+"z08-gl-NAi.title" = "Contactos";
