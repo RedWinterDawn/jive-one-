@@ -642,6 +642,13 @@
 		5D895EB41A0B230F0015368D /* JCPresenceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceCell.m; sourceTree = "<group>"; };
 		5D8A35741AB76120009BD5E6 /* JCVoicemailManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoicemailManager.h; sourceTree = "<group>"; };
 		5D8A35751AB76120009BD5E6 /* JCVoicemailManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailManager.m; sourceTree = "<group>"; };
+		5D8E33CF1B0A4AB000FD8AE1 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Main_iPad.strings"; sourceTree = "<group>"; };
+		5D8E33D11B0A4AB500FD8AE1 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Main_iPad.strings"; sourceTree = "<group>"; };
+		5D8E33D31B0A4AB700FD8AE1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main_iPad.strings; sourceTree = "<group>"; };
+		5D8E33D51B0A4AB900FD8AE1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPad.strings; sourceTree = "<group>"; };
+		5D8E33D71B0A4ABB00FD8AE1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Main_iPad.strings; sourceTree = "<group>"; };
+		5D8E33D91B0A4ABD00FD8AE1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main_iPad.strings; sourceTree = "<group>"; };
+		5D8E33DB1B0A4ABF00FD8AE1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		5D97A7FD1A828B4700A4434D /* JCIntercomTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCIntercomTableViewController.h; sourceTree = "<group>"; };
 		5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCIntercomTableViewController.m; sourceTree = "<group>"; };
 		5D9A5E201A24E30A00E8274C /* JCPhoneAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneAudioManager.h; sourceTree = "<group>"; };
@@ -657,7 +664,6 @@
 		5DA30DD91AD81F54008856DC /* JCPhoneNumberDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCPhoneNumberDataSource.h; sourceTree = "<group>"; };
 		5DA566421A1D454D00286BA5 /* JCSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSettingsTableViewController.h; sourceTree = "<group>"; };
 		5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSettingsTableViewController.m; sourceTree = "<group>"; };
-		5DA566461A1EEEFF00286BA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		5DA566471A20543500286BA5 /* JCAuthenticationManagerError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthenticationManagerError.h; sourceTree = "<group>"; };
 		5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationManagerError.m; sourceTree = "<group>"; };
 		5DA5A1AD19DAF91400968F7D /* JCCallerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallerViewController.h; sourceTree = "<group>"; };
@@ -2444,7 +2450,6 @@
 				F84FAF851A1BF0ED003BC143 /* pt */,
 				F84FAF8C1A1BF1A2003BC143 /* es */,
 				F84FAF9A1A1BF36F003BC143 /* it */,
-				5DA566461A1EEEFF00286BA5 /* en */,
 			);
 			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -2529,6 +2534,13 @@
 			isa = PBXVariantGroup;
 			children = (
 				5D25F8211AE5895E00981DB6 /* Base */,
+				5D8E33CF1B0A4AB000FD8AE1 /* en-GB */,
+				5D8E33D11B0A4AB500FD8AE1 /* es-MX */,
+				5D8E33D31B0A4AB700FD8AE1 /* fr */,
+				5D8E33D51B0A4AB900FD8AE1 /* de */,
+				5D8E33D71B0A4ABB00FD8AE1 /* pt */,
+				5D8E33D91B0A4ABD00FD8AE1 /* es */,
+				5D8E33DB1B0A4ABF00FD8AE1 /* it */,
 			);
 			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
