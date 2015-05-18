@@ -24,6 +24,7 @@ NSString *const kVoicemailDataAttributeKey = @"data";
 @dynamic url_pbx;
 @dynamic url_self;
 @dynamic data;
+@dynamic transcription;
 
 #pragma mark - Setters -
 

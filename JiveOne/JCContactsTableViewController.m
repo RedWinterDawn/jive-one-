@@ -89,7 +89,7 @@
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
             JCPersonManagedObject *person = (JCPersonManagedObject *)[self objectAtIndexPath:indexPath];
             JCContactDetailTableViewController *detailViewController = (JCContactDetailTableViewController *)viewController;
-            detailViewController.person = person;
+            detailViewController.phoneNumber = person;
         }
     }
 }

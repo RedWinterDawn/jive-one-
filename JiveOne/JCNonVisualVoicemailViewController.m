@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCVoiceNonVisualViewController.h"
+#import "JCNonVisualVoicemailViewController.h"
 #import "JCPhoneManager.h"
 #import "JCVoicemailNumber.h"
 
-@implementation JCVoiceNonVisualViewController
+@implementation JCNonVisualVoicemailViewController
 
 -(IBAction)callVoicemail:(id)sender
 {

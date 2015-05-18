@@ -14,7 +14,6 @@
 #define DEFAULT_ROUNDED_BUTTON_BORDER_WIDTH 0
 #define DEFAULT_ROUNDED_BUTTON_BORDER_COLOR [UIColor clearColor]
 
-
 @implementation JCRoundedButton
 
 -(id)initWithCoder:(NSCoder *)aDecoder
@@ -37,9 +36,9 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    self.layer.cornerRadius = self.bounds.size.width/2;
-    self.layer.masksToBounds = true;
-    
+    if (_cornerRadius == 0 ) {
+        self.cornerRadius = self.bounds.size.width/2;
+    }
 //    self.selected = self.selected;
 }
 -(void)setEnabled:(BOOL)enabled{
@@ -62,6 +61,13 @@
 }
 
 #pragma mark - Setters -
+
+-(void)setCornerRadius:(CGFloat)cornerRadius
+{
+    _cornerRadius = cornerRadius;
+    self.layer.cornerRadius = cornerRadius;
+    self.layer.masksToBounds = true;
+}
 
 -(void)setBorderColor:(UIColor *)borderColor
 {

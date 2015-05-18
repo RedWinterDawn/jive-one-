@@ -8,8 +8,19 @@
 
 #import "JCFetchedResultsTableViewController.h"
 
+typedef enum : NSUInteger {
+    JCRecentLineEventsViewAll = 0,
+    JCRecentLineEventsViewMissedCalls = 1,
+    JCRecentLineEventsViewVoicemails = 2,
+    JCRecentLineEventsViewAllCalls = 3
+} JCRecentLineEventsViewFilter;
+
 @interface JCRecentLineEventsTableViewController : JCFetchedResultsTableViewController
 
+@property (nonatomic) JCRecentLineEventsViewFilter viewFilter;
+
 - (void)reloadTable;
+
+- (IBAction)toggleFilterState:(id)sender;
 
 @end

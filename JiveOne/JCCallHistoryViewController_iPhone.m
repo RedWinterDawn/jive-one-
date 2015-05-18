@@ -11,29 +11,43 @@
 
 @implementation JCCallHistoryViewController_iPhone
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self markMissedAsRead];
+}
+
 -(IBAction)toggleFilterState:(id)sender
 {
-    if ([sender isKindOfClass:[UISegmentedControl class]])
-    {
+    if ([sender isKindOfClass:[UISegmentedControl class]]) {
         UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
+        JCRecentLineEventsViewFilter filter;
+        
         switch (segmentedControl.selectedSegmentIndex) {
             case 1:
-            {
-                NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kMissedCallEntityName];
-                fetchRequest.fetchBatchSize = 6;
-                
-                NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:false];
-                fetchRequest.sortDescriptors = @[sortDescriptor];
-            
-                _callHistoryTableViewController.fetchRequest = fetchRequest;
+                filter = JCRecentLineEventsViewMissedCalls;
                 break;
-            }
+                
             default:
-                _callHistoryTableViewController.fetchRequest = nil;
+                filter = JCRecentLineEventsViewAllCalls;
                 break;
         }
         
+        _callHistoryTableViewController.viewFilter = filter;
+        
     }
+}
+
+-(void)markMissedAsRead {
+    NSPredicate *predicate = _callHistoryTableViewController.fetchedResultsController.fetchRequest.predicate;
+    NSPredicate *readPredicate = [NSPredicate predicateWithFormat:@"read == %@", @NO];
+    predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, readPredicate]];
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        NSArray *missedCalls = [MissedCall MR_findAllWithPredicate:predicate inContext:localContext];
+        for (MissedCall *missedCall in missedCalls) {
+            missedCall.read = YES;
+        }
+    }];
 }
 
 #pragma mark - Navigation
@@ -42,7 +56,7 @@
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCCallHistoryTableViewController class]]){
         _callHistoryTableViewController = (JCCallHistoryTableViewController *)viewController;
-    
+        _callHistoryTableViewController.viewFilter = JCRecentLineEventsViewAllCalls;
     }
 }
 

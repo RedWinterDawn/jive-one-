@@ -10,6 +10,8 @@
 
 extern NSString *const kVoicemailDataAttributeKey;
 
+@class VoicemailTranscription;
+
 @interface Voicemail : RecentLineEvent
 
 // Primary Key
@@ -28,5 +30,7 @@ extern NSString *const kVoicemailDataAttributeKey;
 
 @property (nonatomic, readonly) NSString *displayExtension;
 @property (nonatomic, readonly) NSString *displayDuration;
+
+@property (nonatomic, retain) VoicemailTranscription *transcription;
 
 @end

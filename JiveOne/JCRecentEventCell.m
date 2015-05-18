@@ -7,11 +7,6 @@
 //
 
 #import "JCRecentEventCell.h"
-#import "Contact.h"
-#import "PBX.h"
-#import "Line.h"
-
-#import "RecentLineEvent.h"
 
 @interface JCRecentEventCell(){
     UIFont *_dateFont;
@@ -49,19 +44,8 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    RecentEvent *recentEvent = self.recentEvent;
-    
-    self.date.text = recentEvent.formattedModifiedShortDate;
-    if ([recentEvent isKindOfClass:[RecentLineEvent class]]) {
-        RecentLineEvent *lineEvent = (RecentLineEvent *)recentEvent;
-        self.name.text = lineEvent.titleText;
-        self.number.text = [NSString stringWithFormat:@"%@ %@ %@", lineEvent.detailText, NSLocalizedString(@"on", @"on"), lineEvent.line.pbx.name];
-    }
-    
-    
-    
-    if (self.recentEvent.isRead)
+
+    if (self.isRead)
     {
         self.date.font = _dateFont;
         self.name.font = _nameFont;
@@ -74,57 +58,6 @@
         self.name.font = _boldNameFont;
         self.number.font = _boldNumberFont;
         self.extension.font = _boldExtensionFont;
-    }
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:@"read"]) {
-        [self setNeedsLayout];
-        [self layoutIfNeeded];
-    }
-    else{
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
-
--(void)prepareForReuse
-{
-    [super prepareForReuse];
-    
-    if (_recentEvent) {
-        [_recentEvent removeObserver:self forKeyPath:@"read"];
-        _recentEvent = nil;
-    }
-}
-
--(void)dealloc
-{
-    if (_recentEvent) {
-        [_recentEvent removeObserver:self forKeyPath:@"read"];
-        _recentEvent = nil;
-    }
-}
-
-#pragma mark - Setters -
-
--(void)setRecentEvent:(RecentEvent *)recentEvent
-{
-    if (_recentEvent) {
-        [_recentEvent removeObserver:self forKeyPath:@"read"];
-    }
-    
-    _recentEvent = recentEvent;
-    if ([recentEvent isKindOfClass:[RecentLineEvent class]]) {
-        RecentLineEvent *lineEvent = (RecentLineEvent *)recentEvent;
-        Contact *contact = lineEvent.contact;
-        if (contact) {
-            self.identifier = contact.jrn;
-        }
-    }
-    
-    if (_recentEvent) {
-        [_recentEvent addObserver:self forKeyPath:@"read" options:NSKeyValueObservingOptionNew context:NULL];
     }
 }
 

@@ -11,8 +11,6 @@
 
 @interface JCCallHistoryCell : JCRecentEventCell
 
-@property (nonatomic, strong) Call *call;
-
 @property (nonatomic, weak) IBOutlet UIImageView *icon;
 
 @end
