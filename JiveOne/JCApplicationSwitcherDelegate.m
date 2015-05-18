@@ -12,7 +12,7 @@
 // View Controllers
 #import "JCApplicationSwitcherViewController.h"
 #import "JCCallHistoryViewController_iPhone.h"
-#import "JCVoicemailViewController.h"
+#import "JCRecentLineEventsTableViewController.h"
 #import "JCConversationsTableViewController.h"
 
 #import "JCPhoneTabBarControllerDelegate.h"
@@ -152,10 +152,12 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
         viewController = ((UINavigationController *)viewController).topViewController;
         if ([viewController isKindOfClass:[JCCallHistoryViewController_iPhone class]]) {
             JCCallHistoryViewController_iPhone *callHistoryViewController = (JCCallHistoryViewController_iPhone *)viewController;
-            JCCallHistoryTableViewController *callHistoryTableViewController = callHistoryViewController.callHistoryTableViewController;
-            NSIndexPath *indexPath = [callHistoryTableViewController indexPathOfObject:recentEvent];
-            
-            [callHistoryTableViewController.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                __block JCCallHistoryTableViewController *callHistoryTableViewController = callHistoryViewController.callHistoryTableViewController;
+                NSIndexPath *indexPath = [callHistoryTableViewController indexPathOfObject:recentEvent];
+                UITableViewCell *cell = [callHistoryTableViewController.tableView cellForRowAtIndexPath:indexPath];
+                [callHistoryTableViewController performSegueWithIdentifier:@"CallHistoryDetailNoAnimation" sender:cell];
+            });
         }
     }
 }
@@ -164,9 +166,11 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 {
     if ([viewController isKindOfClass:[UINavigationController class]]) {
         viewController = ((UINavigationController *)viewController).topViewController;
-        if ([viewController isKindOfClass:[JCVoicemailViewController class]]) {
-            JCVoicemailViewController *voicemailViewController = (JCVoicemailViewController *)viewController;
-            voicemailViewController.voicemail = recentEvent;
+        if ([viewController isKindOfClass:[JCRecentLineEventsTableViewController class]]) {
+            JCRecentLineEventsTableViewController *voicemailViewController = (JCRecentLineEventsTableViewController *)viewController;
+            NSIndexPath *indexPath = [voicemailViewController indexPathOfObject:recentEvent];
+            UITableViewCell *cell = [voicemailViewController.tableView cellForRowAtIndexPath:indexPath];
+            [voicemailViewController performSegueWithIdentifier:@"VoicemailDetailNoAnimation" sender:cell];
         }
     }
 }

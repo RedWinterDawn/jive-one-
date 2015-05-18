@@ -7,11 +7,8 @@
 //
 
 #import "JCRecentEventCell.h"
-#import "Voicemail.h"
 
 @interface JCVoicemailCell : JCRecentEventCell
-
-@property (nonatomic, strong) Voicemail *voicemail;
 
 @property (nonatomic, weak) IBOutlet UILabel *duration;
 

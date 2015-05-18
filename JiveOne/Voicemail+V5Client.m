@@ -16,6 +16,7 @@
 #import "PBX.h"
 #import "Contact.h"
 #import "Line.h"
+#import "VoicemailTranscription.h"
 
 NSString *const kVoicemailResponseIdentifierKey         = @"jrn";
 NSString *const kVoicemailResponseDurationKey           = @"duration";
@@ -27,6 +28,14 @@ NSString *const kVoicemailResponseSelfKey               = @"self";
 NSString *const kVoicemailResponseSelfDownloadKey       = @"self_download";
 NSString *const kVoicemailResponseSelfChangeStatusKey   = @"self_changeStatus";
 NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
+
+NSString *const kVoicemailResponseTranscriptionKey = @"transcription";
+NSString *const kVoicemailResponseTranscriptionTextKey = @"text";
+NSString *const kVoicemailResponseTranscriptionConfidenceKey = @"confidence";
+NSString *const kVoicemailResponseTranscriptionWordCountKey = @"wordCount";
+NSString *const kVoicemailResponseTranscriptionUrlKey = @"transcription";
+
+
 
 @implementation Voicemail (V5Client)
 
@@ -346,10 +355,35 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
         voicemail.contact = (Contact *)extension;
     }
     
+    NSDictionary *transcriptionData = [data dictionaryForKey:kVoicemailResponseTranscriptionKey];
+    if (transcriptionData) {
+        [self processVoicemailTranscriptionData:transcriptionData voicemail:voicemail];
+    }
+    
+    
     if (!voicemail.data) {
         [voicemail downloadVoicemailAudio:NULL];
     }
     return voicemail;
+}
+
++(void)processVoicemailTranscriptionData:(NSDictionary *)data voicemail:(Voicemail *)voicemail
+{
+    NSString *text = [data stringValueForKey:kVoicemailResponseTranscriptionTextKey];
+    if (!text) {
+        return;
+    }
+    
+    VoicemailTranscription *transcription = voicemail.transcription;
+    if (!transcription) {
+        transcription = [VoicemailTranscription MR_createInContext:voicemail.managedObjectContext];
+        transcription.voicemail = voicemail;
+    }
+    transcription.text = text;
+    transcription.wordCount = [data integerValueForKey:kVoicemailResponseTranscriptionWordCountKey];
+    transcription.confidence = [data floatValueForKey:kVoicemailResponseTranscriptionConfidenceKey];
+    transcription.url_self = [data stringValueForKey:kVoicemailResponseTranscriptionUrlKey];
+    
 }
 
 + (Voicemail *)voicemailForIdentifier:(NSString *)identifier line:(Line *)line
