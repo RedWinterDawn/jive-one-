@@ -95,10 +95,6 @@
 		5D25F82E1AE5A7DA00981DB6 /* JCSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F82D1AE5A7DA00981DB6 /* JCSplitViewController.m */; };
 		5D25F8411AE6872E00981DB6 /* JCAppMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8401AE6872E00981DB6 /* JCAppMenuTableViewController.m */; };
 		5D25F8441AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8431AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m */; };
-		5D25F84B1AE6E3E500981DB6 /* JCCallHistoryTableViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F84A1AE6E3E500981DB6 /* JCCallHistoryTableViewController_iPad.m */; };
-		5D25F8461AE6AE2F00981DB6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8451AE6AE2F00981DB6 /* Settings.storyboard */; };
-		5D25F8481AE6D95800981DB6 /* Phone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8471AE6D95800981DB6 /* Phone.storyboard */; };
-		5D25F84F1AE6F37500981DB6 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F84E1AE6F37500981DB6 /* Login.storyboard */; };
 		5D25F8511AE70E4D00981DB6 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8501AE70E4D00981DB6 /* Chat.storyboard */; };
 		5D2B2C081A30D8AE00938D76 /* JCVisualEffectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */; };
 		5D2B2C091A30D8AE00938D76 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C071A30D8AE00938D76 /* FXBlurView.m */; };
@@ -268,7 +264,6 @@
 		B70EAB3D1AD32B1E00305F43 /* JCDidTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */; };
 		B70EAB3F1AD3302000305F43 /* JCAuthenticationManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */; };
 		B71506DF1B0122EC00C0E72C /* JCVoicemailAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B71506DE1B0122EC00C0E72C /* JCVoicemailAudioPlayer.m */; };
-		B73690D41AE6F7BC0025071C /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B73690D31AE6F7BC0025071C /* Contacts.storyboard */; };
 		B744DE321AF920F500A72682 /* JCBlockedNumbersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */; };
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
 		B7619F291AF298D80075CF2D /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7619F281AF298D80075CF2D /* Crashlytics.framework */; };
@@ -476,11 +471,6 @@
 		5D25F8401AE6872E00981DB6 /* JCAppMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppMenuTableViewController.m; sourceTree = "<group>"; };
 		5D25F8421AE6A81F00981DB6 /* JCStoryboardLoaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStoryboardLoaderViewController.h; sourceTree = "<group>"; };
 		5D25F8431AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStoryboardLoaderViewController.m; sourceTree = "<group>"; };
-		5D25F8491AE6E3E500981DB6 /* JCCallHistoryTableViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallHistoryTableViewController_iPad.h; sourceTree = "<group>"; };
-		5D25F84A1AE6E3E500981DB6 /* JCCallHistoryTableViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallHistoryTableViewController_iPad.m; sourceTree = "<group>"; };
-		5D25F8451AE6AE2F00981DB6 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
-		5D25F8471AE6D95800981DB6 /* Phone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Phone.storyboard; sourceTree = "<group>"; };
-		5D25F84E1AE6F37500981DB6 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		5D25F8501AE70E4D00981DB6 /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
 		5D2B2C041A30D8AE00938D76 /* JCVisualEffectsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVisualEffectsView.h; sourceTree = "<group>"; };
 		5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVisualEffectsView.m; sourceTree = "<group>"; };
@@ -778,7 +768,6 @@
 		B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationManagerTests.m; sourceTree = "<group>"; };
 		B71506DD1B0122EC00C0E72C /* JCVoicemailAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoicemailAudioPlayer.h; sourceTree = "<group>"; };
 		B71506DE1B0122EC00C0E72C /* JCVoicemailAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailAudioPlayer.m; sourceTree = "<group>"; };
-		B73690D31AE6F7BC0025071C /* Contacts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Contacts.storyboard; sourceTree = "<group>"; };
 		B744DE301AF920F500A72682 /* JCBlockedNumbersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBlockedNumbersViewController.h; sourceTree = "<group>"; };
 		B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBlockedNumbersViewController.m; sourceTree = "<group>"; };
 		B75899741A9FEA320025D5AD /* JCMessagesMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagesMenuCell.h; sourceTree = "<group>"; };

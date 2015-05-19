@@ -2,6 +2,9 @@
 /* Class = "UILabel"; text = "MNO"; ObjectID = "0E0-Ga-yKj"; */
 "0E0-Ga-yKj.text" = "MNO";
 
+/* Class = "UIBarButtonItem"; title = "Delete"; ObjectID = "72c-iI-Aqr"; */
+"72c-iI-Aqr.title" = "Eliminar";
+
 /* Class = "UILabel"; text = "+"; ObjectID = "8Ra-dK-mWX"; */
 "8Ra-dK-mWX.text" = "+";
 
