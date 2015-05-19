@@ -14,9 +14,6 @@
 /* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "4Kr-1y-4AM"; */
 "4Kr-1y-4AM.title" = "Contacts";
 
-/* Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "4gy-wV-lhl"; */
-"4gy-wV-lhl.normalTitle" = "Line Picker";
-
 /* Class = "UILabel"; text = "Phone"; ObjectID = "5Sc-JQ-q86"; */
 "5Sc-JQ-q86.text" = "Téléphone";
 
@@ -62,9 +59,6 @@
 /* Class = "UILabel"; text = "Phone"; ObjectID = "KVp-sT-UM5"; */
 "KVp-sT-UM5.text" = "Téléphone";
 
-/* Class = "UILabel"; text = "name"; ObjectID = "Kbp-js-aK1"; */
-"Kbp-js-aK1.text" = "name";
-
 /* Class = "UILabel"; text = "Block Number"; ObjectID = "LEo-fN-aeJ"; */
 "LEo-fN-aeJ.text" = "Numéros bloqués";
 
@@ -76,12 +70,6 @@
 
 /* Class = "UITextField"; placeholder = "user name"; ObjectID = "OzV-9h-pmX"; */
 "OzV-9h-pmX.placeholder" = "nom d'utilisateur";
-
-/* Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "Pt8-Iw-P7v"; */
-"Pt8-Iw-P7v.normalTitle" = "Line Picker";
-
-/* Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "RNm-Vm-m5D"; */
-"RNm-Vm-m5D.normalTitle" = "Line Picker";
 
 /* Class = "UINavigationItem"; title = "Default DID"; ObjectID = "RaO-p9-fJI"; */
 "RaO-p9-fJI.title" = "Par défaut Nombre de SMS";

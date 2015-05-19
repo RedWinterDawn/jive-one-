@@ -38,10 +38,10 @@
 "aP5-Db-WW6.title" = "Gegensprechanlage";
 
 /* Class = "UILabel"; text = "Make/Receive calls via Wi-Fi only"; ObjectID = "axJ-EB-B5c"; */
-"axJ-EB-B5c.text" = "Make/Receive calls via Wi-Fi only";
+"axJ-EB-B5c.text" = "Hersteller / Empfangen von Anrufen über nur Wi-Fi";
 
 /* Class = "UILabel"; text = "EULA"; ObjectID = "bCr-bN-IuJ"; */
-"bCr-bN-IuJ.text" = "EULA";
+"bCr-bN-IuJ.text" = "Benutzerlizenz";
 
 /* Class = "UILabel"; text = "Account"; ObjectID = "cq8-ct-GGR"; */
 "cq8-ct-GGR.text" = "Konto";
