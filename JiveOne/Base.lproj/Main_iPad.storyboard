@@ -7,10 +7,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Storyboard Loader View Controller-->
+        <!--Phone Storyboard Loader View Controller-->
         <scene sceneID="kxC-co-Mqb">
             <objects>
-                <viewController id="Drm-io-gDF" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
+                <viewController id="Drm-io-gDF" userLabel="Phone Storyboard Loader View Controller" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DRk-my-moF"/>
                         <viewControllerLayoutGuide type="bottom" id="e2b-lu-dyG"/>
@@ -21,7 +21,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Phone"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Phone~iPad"/>
                     </userDefinedRuntimeAttributes>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3oo-pP-1LC" userLabel="First Responder" sceneMemberID="firstResponder"/>

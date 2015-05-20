@@ -5,12 +5,6 @@
 /* Class = "UILabel"; text = "Word count: %i"; ObjectID = "3hD-2T-xYG"; */
 "3hD-2T-xYG.text" = "Mot Compter: %i";
 
-/* Class = "UIBarButtonItem"; title = "Delete"; ObjectID = "72c-iI-Aqr"; */
-"72c-iI-Aqr.title" = "Effacer";
-
-/* Class = "UILabel"; text = "+"; ObjectID = "8Ra-dK-mWX"; */
-"8Ra-dK-mWX.text" = "+";
-
 /* Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "AkF-KA-69I"; */
 "AkF-KA-69I.title" = "Message vocal";
 

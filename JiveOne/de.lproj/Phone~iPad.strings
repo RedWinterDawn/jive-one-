@@ -5,9 +5,6 @@
 /* Class = "UILabel"; text = "Word count: %i"; ObjectID = "3hD-2T-xYG"; */
 "3hD-2T-xYG.text" = "Wortanzahl: %i";
 
-/* Class = "UIBarButtonItem"; title = "Delete"; ObjectID = "72c-iI-Aqr"; */
-"72c-iI-Aqr.title" = "Löschen";
-
 /* Class = "UILabel"; text = "+"; ObjectID = "8Ra-dK-mWX"; */
 "8Ra-dK-mWX.text" = "+";
 
