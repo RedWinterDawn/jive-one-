@@ -8,6 +8,7 @@
 
 #import "JCApplicationSwitcherViewController.h"
 #import "JCRecentEventsTableViewController.h"
+#import "JCStoryboardLoaderViewController.h"
 
 @interface JCApplicationSwitcherViewController () <UITableViewDataSource, UITableViewDelegate, JCRecentEventsTableViewControllerDelegate>
 {
@@ -255,6 +256,10 @@
  */
 -(void)addMenuBarButtonItemToViewController:(UIViewController *)viewController
 {
+    if ([viewController isKindOfClass:[JCStoryboardLoaderViewController class]]) {
+        viewController = ((JCStoryboardLoaderViewController *)viewController).embeddedViewController;
+    }
+    
     if ([viewController isKindOfClass:[UINavigationController class]])
     {
         UINavigationController *navigationController = (UINavigationController *)viewController;
