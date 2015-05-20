@@ -3,7 +3,7 @@
 "0Il-Me-eBv.text" = "Allow Intercom";
 
 /* Class = "UITabBarItem"; title = "Messages"; ObjectID = "1NY-Mi-445"; */
-"1NY-Mi-445.title" = "Messages";
+"1NY-Mi-445.title" = "Mensajes";
 
 /* Class = "UITabBarItem"; title = "Groups"; ObjectID = "25K-ui-BV6"; */
 "25K-ui-BV6.title" = "Groups";
@@ -33,7 +33,7 @@
 "ALp-8Y-kom.text" = "Select a line extension to continue";
 
 /* Class = "UINavigationItem"; title = "Messages"; ObjectID = "BUa-qT-EHb"; */
-"BUa-qT-EHb.title" = "Messages";
+"BUa-qT-EHb.title" = "Mensajes";
 
 /* Class = "UILabel"; text = "Voicemail:"; ObjectID = "BhM-7z-evk"; */
 "BhM-7z-evk.text" = "Buzón voz:";
@@ -177,7 +177,7 @@
 "k5B-9E-t78.placeholder" = "contraseña";
 
 /* Class = "UILabel"; text = "Messages"; ObjectID = "nGt-aj-HX8"; */
-"nGt-aj-HX8.text" = "Messages";
+"nGt-aj-HX8.text" = "Mensajes";
 
 /* Class = "UILabel"; text = "End User License Agreement"; ObjectID = "nNw-aj-1ph"; */
 "nNw-aj-1ph.text" = "Acuerdo de licencia de usuario";

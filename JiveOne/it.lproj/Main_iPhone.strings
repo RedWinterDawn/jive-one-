@@ -162,7 +162,7 @@
 "hn5-ub-HBZ.title" = "Telefono";
 
 /* Class = "UILabel"; text = "User"; ObjectID = "i1A-sz-Qdg"; */
-"i1A-sz-Qdg.text" = "User";
+"i1A-sz-Qdg.text" = "Utente";
 
 /* Class = "UITabBarItem"; title = "Keypad"; ObjectID = "idj-mu-viK"; */
 "idj-mu-viK.title" = "Tastierino";
@@ -193,9 +193,6 @@
 
 /* Class = "UINavigationItem"; title = "Intercom"; ObjectID = "orW-Zd-G29"; */
 "orW-Zd-G29.title" = "Intercom";
-
-/* Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "qG7-eu-aoo"; */
-"qG7-eu-aoo.normalTitle" = "Line Picker";
 
 /* Class = "UIBarButtonItem"; title = "back"; ObjectID = "qhs-l8-Uxl"; */
 "qhs-l8-Uxl.title" = "back";

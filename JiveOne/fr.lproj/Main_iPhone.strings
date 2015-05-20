@@ -1,7 +1,4 @@
 
-/* Class = "UILabel"; text = "Allow Intercom"; ObjectID = "0Il-Me-eBv"; */
-"0Il-Me-eBv.text" = "Autoriser Interphone";
-
 /* Class = "UITabBarItem"; title = "Messages"; ObjectID = "1NY-Mi-445"; */
 "1NY-Mi-445.title" = "Messages";
 
@@ -71,14 +68,8 @@
 /* Class = "UITextField"; placeholder = "user name"; ObjectID = "OzV-9h-pmX"; */
 "OzV-9h-pmX.placeholder" = "nom d'utilisateur";
 
-/* Class = "UINavigationItem"; title = "Default DID"; ObjectID = "RaO-p9-fJI"; */
-"RaO-p9-fJI.title" = "Par défaut Nombre de SMS";
-
 /* Class = "UITabBarItem"; title = "Local Contacts"; ObjectID = "S8g-R9-uuQ"; */
 "S8g-R9-uuQ.title" = "Contacts Locaux";
-
-/* Class = "UILabel"; text = "Logout"; ObjectID = "SOB-aA-7Rz"; */
-"SOB-aA-7Rz.text" = "Déconnexion";
 
 /* Class = "UILabel"; text = "Extension"; ObjectID = "Tj6-BS-QA2"; */
 "Tj6-BS-QA2.text" = "Extension";
@@ -107,20 +98,11 @@
 /* Class = "UIButton"; normalTitle = "Done"; ObjectID = "ZhL-2w-2Q2"; */
 "ZhL-2w-2Q2.normalTitle" = "Fini";
 
-/* Class = "UILabel"; text = "Make/Receive calls via Wi-Fi only"; ObjectID = "aJW-Bp-S2E"; */
-"aJW-Bp-S2E.text" = "Faire/Recevoir des appels via une connexion Wi-Fi uniquement";
-
 /* Class = "UITableViewSection"; headerTitle = "Calling"; ObjectID = "aSD-9F-7Ze"; */
 "aSD-9F-7Ze.headerTitle" = "Téléphone";
 
-/* Class = "UITableViewSection"; headerTitle = "Account"; ObjectID = "bw0-5L-SgE"; */
-"bw0-5L-SgE.headerTitle" = "Compte";
-
 /* Class = "UILabel"; text = "By signing in you agree to our Terms & Conditions."; ObjectID = "bxS-qG-c0L"; */
 "bxS-qG-c0L.text" = "En signant à vous acceptez nos Conditions générales.";
-
-/* Class = "UITableViewSection"; footerTitle = "When enabled, people can dial *%@ and start talking to you."; ObjectID = "c14-D9-4Hk"; */
-"c14-D9-4Hk.footerTitle" = "Lorsqu'elle est activée, les gens peuvent composer le *%@ et commencer à parler de vous.";
 
 /* Class = "UINavigationController"; title = "History"; ObjectID = "cIE-ip-pRf"; */
 "cIE-ip-pRf.title" = "Historique";
@@ -173,26 +155,11 @@
 /* Class = "UINavigationItem"; title = "Contacts"; ObjectID = "oEe-KQ-NpU"; */
 "oEe-KQ-NpU.title" = "Contacts";
 
-/* Class = "UITableViewSection"; headerTitle = "General"; ObjectID = "oRl-vc-sb2"; */
-"oRl-vc-sb2.headerTitle" = "Général";
-
-/* Class = "UINavigationItem"; title = "Intercom"; ObjectID = "orW-Zd-G29"; */
-"orW-Zd-G29.title" = "Interphone";
-
-/* Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "qG7-eu-aoo"; */
-"qG7-eu-aoo.normalTitle" = "Line Picker";
-
 /* Class = "UIBarButtonItem"; title = "back"; ObjectID = "qhs-l8-Uxl"; */
 "qhs-l8-Uxl.title" = "dos";
 
 /* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "qp7-Yq-maW"; */
 "qp7-Yq-maW.placeholder" = "Recherche";
-
-/* Class = "UILabel"; text = "Default Did for sending SMS"; ObjectID = "sVq-3X-jAZ"; */
-"sVq-3X-jAZ.text" = "Par défaut le numéro de téléphone pour envoyer des SMS";
-
-/* Class = "UILabel"; text = "Mute Microphone"; ObjectID = "tcX-CY-rDM"; */
-"tcX-CY-rDM.text" = "Muet Microphone";
 
 /* Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "vqB-Nx-EVk"; */
 "vqB-Nx-EVk.normalTitle" = "Line Picker";
@@ -202,9 +169,6 @@
 
 /* Class = "UINavigationController"; title = "Voicemail"; ObjectID = "wLV-k9-4Pz"; */
 "wLV-k9-4Pz.title" = "Messagerie vocale";
-
-/* Class = "UILabel"; text = "Leave Feedback"; ObjectID = "ya5-Sj-oDI"; */
-"ya5-Sj-oDI.text" = "Laisser Les Commentaires";
 
 /* Class = "UITabBarItem"; title = "Voicemail"; ObjectID = "yfS-ds-xyB"; */
 "yfS-ds-xyB.title" = "Messagerie vocale";

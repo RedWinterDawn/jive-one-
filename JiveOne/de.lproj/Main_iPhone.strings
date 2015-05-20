@@ -65,14 +65,8 @@
 /* Class = "UINavigationItem"; title = "Call History"; ObjectID = "Lhi-Ie-TBG"; */
 "Lhi-Ie-TBG.title" = "Anrufliste";
 
-/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Ngt-9V-IXb"; */
-"Ngt-9V-IXb.title" = "Einstellungen";
-
 /* Class = "UITextField"; placeholder = "user name"; ObjectID = "OzV-9h-pmX"; */
 "OzV-9h-pmX.placeholder" = "benutzername";
-
-/* Class = "UINavigationItem"; title = "Default DID"; ObjectID = "RaO-p9-fJI"; */
-"RaO-p9-fJI.title" = "Änderung Standard SMS Nummer";
 
 /* Class = "UITabBarItem"; title = "Local Contacts"; ObjectID = "S8g-R9-uuQ"; */
 "S8g-R9-uuQ.title" = "Lokale Kontakte";
@@ -184,9 +178,6 @@
 
 /* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "qp7-Yq-maW"; */
 "qp7-Yq-maW.placeholder" = "Suchen";
-
-/* Class = "UILabel"; text = "Default Did for sending SMS"; ObjectID = "sVq-3X-jAZ"; */
-"sVq-3X-jAZ.text" = "Standard SMS Nummer";
 
 /* Class = "UILabel"; text = "Mute Microphone"; ObjectID = "tcX-CY-rDM"; */
 "tcX-CY-rDM.text" = "Mute Microphone";
