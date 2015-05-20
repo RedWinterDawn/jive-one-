@@ -202,7 +202,7 @@
 		5D895EB21A0AC66B0015368D /* JCBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D895EB11A0AC66B0015368D /* JCBadgeView.m */; };
 		5D895EB51A0B230F0015368D /* JCPresenceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D895EB41A0B230F0015368D /* JCPresenceCell.m */; };
 		5D8A35761AB76120009BD5E6 /* JCVoicemailManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A35751AB76120009BD5E6 /* JCVoicemailManager.m */; };
-		5D8E33DC1B0A4F3100FD8AE1 /* Phone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33DE1B0A4F3100FD8AE1 /* Phone.storyboard */; };
+		5D8E33DC1B0A4F3100FD8AE1 /* Phone~iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33DE1B0A4F3100FD8AE1 /* Phone~iPad.storyboard */; };
 		5D8E33ED1B0A560500FD8AE1 /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33EF1B0A560500FD8AE1 /* Contacts.storyboard */; };
 		5D8E33FC1B0A5D7000FD8AE1 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33FE1B0A5D7000FD8AE1 /* Login.storyboard */; };
 		5D8E340C1B0A84AA00FD8AE1 /* Settings~iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E340E1B0A84AA00FD8AE1 /* Settings~iPad.storyboard */; };
@@ -634,12 +634,12 @@
 		5D8E33D71B0A4ABB00FD8AE1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		5D8E33D91B0A4ABD00FD8AE1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		5D8E33DB1B0A4ABF00FD8AE1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main_iPad.strings; sourceTree = "<group>"; };
-		5D8E33DD1B0A4F3100FD8AE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Phone.storyboard; sourceTree = "<group>"; };
-		5D8E33E41B0A4F3B00FD8AE1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Phone.strings; sourceTree = "<group>"; };
-		5D8E33E61B0A4F3D00FD8AE1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Phone.strings; sourceTree = "<group>"; };
-		5D8E33E81B0A4F4000FD8AE1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Phone.strings; sourceTree = "<group>"; };
-		5D8E33EA1B0A4F4200FD8AE1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Phone.strings; sourceTree = "<group>"; };
-		5D8E33EC1B0A4F4600FD8AE1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Phone.strings; sourceTree = "<group>"; };
+		5D8E33DD1B0A4F3100FD8AE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Phone~iPad.storyboard"; sourceTree = "<group>"; };
+		5D8E33E41B0A4F3B00FD8AE1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "fr.lproj/Phone~iPad.strings"; sourceTree = "<group>"; };
+		5D8E33E61B0A4F3D00FD8AE1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "de.lproj/Phone~iPad.strings"; sourceTree = "<group>"; };
+		5D8E33E81B0A4F4000FD8AE1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = "pt.lproj/Phone~iPad.strings"; sourceTree = "<group>"; };
+		5D8E33EA1B0A4F4200FD8AE1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = "es.lproj/Phone~iPad.strings"; sourceTree = "<group>"; };
+		5D8E33EC1B0A4F4600FD8AE1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = "it.lproj/Phone~iPad.strings"; sourceTree = "<group>"; };
 		5D8E33EE1B0A560500FD8AE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Contacts.storyboard; sourceTree = "<group>"; };
 		5D8E33F31B0A562000FD8AE1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Contacts.strings; sourceTree = "<group>"; };
 		5D8E33F51B0A562200FD8AE1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Contacts.strings; sourceTree = "<group>"; };
@@ -1833,7 +1833,7 @@
 		5DDE651219F0C49A00B90B55 /* Phone */ = {
 			isa = PBXGroup;
 			children = (
-				5D8E33DE1B0A4F3100FD8AE1 /* Phone.storyboard */,
+				5D8E33DE1B0A4F3100FD8AE1 /* Phone~iPad.storyboard */,
 				5D1175921AA0D82600D2B03A /* PhoneManager.storyboard */,
 				5D0199C41A1BBC0500F4CF13 /* IncomingCallViewCell.xib */,
 				5D0199BF1A1BBBF400F4CF13 /* CurrentCallViewCell.xib */,
@@ -2032,7 +2032,7 @@
 				F202433D18B2CF4A006DB2EF /* README.md in Resources */,
 				5D8E33FC1B0A5D7000FD8AE1 /* Login.storyboard in Resources */,
 				5D0199B81A1BBBAC00F4CF13 /* Main_iPhone.storyboard in Resources */,
-				5D8E33DC1B0A4F3100FD8AE1 /* Phone.storyboard in Resources */,
+				5D8E33DC1B0A4F3100FD8AE1 /* Phone~iPad.storyboard in Resources */,
 				5D8198ED1AC1D7520057FDDA /* Debug.storyboard in Resources */,
 				5D2D73CD1ACF97AE00B98BDF /* en-GB.xliff in Resources */,
 				5D8E33ED1B0A560500FD8AE1 /* Contacts.storyboard in Resources */,
@@ -2529,7 +2529,7 @@
 			name = Settings.storyboard;
 			sourceTree = "<group>";
 		};
-		5D8E33DE1B0A4F3100FD8AE1 /* Phone.storyboard */ = {
+		5D8E33DE1B0A4F3100FD8AE1 /* Phone~iPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				5D8E33DD1B0A4F3100FD8AE1 /* Base */,
@@ -2539,7 +2539,7 @@
 				5D8E33EA1B0A4F4200FD8AE1 /* es */,
 				5D8E33EC1B0A4F4600FD8AE1 /* it */,
 			);
-			name = Phone.storyboard;
+			name = "Phone~iPad.storyboard";
 			sourceTree = "<group>";
 		};
 		5D8E33EF1B0A560500FD8AE1 /* Contacts.storyboard */ = {
