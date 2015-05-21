@@ -72,48 +72,25 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
  */
 -(void)presentLoginViewController:(BOOL)animated
 {
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-    {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:[NSBundle mainBundle]];
-        UIViewController *loginViewController = [storyboard instantiateInitialViewController];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:[NSBundle mainBundle]];
+    UIViewController *loginViewController = [storyboard instantiateInitialViewController];
         
-        _navigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-        [_navigationController setNavigationBarHidden:TRUE];
+    _navigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+    [_navigationController setNavigationBarHidden:TRUE];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login-background"]];
-        imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        imageView.frame = _navigationController.view.bounds;
-        [_navigationController.view addSubview:imageView];
-        [_navigationController.view sendSubviewToBack:imageView];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login-background"]];
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    imageView.frame = _navigationController.view.bounds;
+    [_navigationController.view addSubview:imageView];
+    [_navigationController.view sendSubviewToBack:imageView];
         
-        [UIView transitionWithView:self.window
-                          duration:animated? 0.5 : 0
-                           options:UIViewAnimationOptionTransitionFlipFromLeft
-                        animations:^{
-                            self.window.rootViewController = _navigationController;
-                        }
-                        completion:nil];
-    }
-    else
-    {
-        UIViewController *loginViewController = [_appSwitcherViewController.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        _navigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-        [_navigationController setNavigationBarHidden:TRUE];
-        
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login-background"]];
-        imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        imageView.frame = _navigationController.view.bounds;
-        [_navigationController.view addSubview:imageView];
-        [_navigationController.view sendSubviewToBack:imageView];
-        
-        [UIView transitionWithView:self.window
-                          duration:animated? 0.5 : 0
-                           options:UIViewAnimationOptionTransitionFlipFromLeft
-                        animations:^{
-                            self.window.rootViewController = _navigationController;
-                        }
-                        completion:nil];
-    }
+    [UIView transitionWithView:self.window
+                      duration:animated? 0.5 : 0
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    animations:^{
+                        self.window.rootViewController = _navigationController;
+                    }
+                    completion:nil];
 }
 
 
@@ -130,13 +107,8 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     }
     
     JCLinePickerViewController *linePickerViewController;
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:[NSBundle mainBundle]];
-        linePickerViewController = (JCLinePickerViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LinePickerViewController"];
-    }
-    else {
-        linePickerViewController = (JCLinePickerViewController *)[_appSwitcherViewController.storyboard instantiateViewControllerWithIdentifier:@"LinePickerViewController"];
-    }
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:[NSBundle mainBundle]];
+    linePickerViewController = (JCLinePickerViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LinePickerViewController"];
     linePickerViewController.delegate = self;
     [_navigationController pushViewController:linePickerViewController animated:animated];
 }
