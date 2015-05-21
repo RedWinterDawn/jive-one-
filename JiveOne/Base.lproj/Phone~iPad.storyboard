@@ -1510,7 +1510,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="HFN-4T-z6d"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Contacts"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Contacts~iPad"/>
                         <userDefinedRuntimeAttribute type="string" keyPath="viewControllerIdentifier" value="ContactsDetailViewTableViewController"/>
                     </userDefinedRuntimeAttributes>
                 </viewController>
