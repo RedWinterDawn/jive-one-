@@ -1,225 +1,33 @@
 
-/* Class = "UILabel"; text = "Allow Intercom"; ObjectID = "0Il-Me-eBv"; */
-"0Il-Me-eBv.text" = "Allow Intercom";
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "4sy-b5-AC6"; */
+"4sy-b5-AC6.title" = "Impostazioni";
 
-/* Class = "UITabBarItem"; title = "Messages"; ObjectID = "1NY-Mi-445"; */
-"1NY-Mi-445.title" = "Messages";
-
-/* Class = "UITabBarItem"; title = "Groups"; ObjectID = "25K-ui-BV6"; */
-"25K-ui-BV6.title" = "Groups";
-
-/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "30a-yD-tba"; */
-"30a-yD-tba.title" = "Impostazioni";
-
-/* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "4Kr-1y-4AM"; */
-"4Kr-1y-4AM.title" = "Contatti";
-
-/* Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "4gy-wV-lhl"; */
-"4gy-wV-lhl.normalTitle" = "Line Picker";
-
-/* Class = "UILabel"; text = "Phone"; ObjectID = "5Sc-JQ-q86"; */
-"5Sc-JQ-q86.text" = "Telefono";
-
-/* Class = "UINavigationItem"; title = "New Message"; ObjectID = "5Ti-pI-zsM"; */
-"5Ti-pI-zsM.title" = "New Message";
-
-/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "5ds-mG-BrS"; */
-"5ds-mG-BrS.placeholder" = "Search";
-
-/* Class = "UITableViewSection"; footerTitle = "Blocks this number from sending or recieving an SMS message on your PBX for all users."; ObjectID = "9DX-qp-Peo"; */
-"9DX-qp-Peo.footerTitle" = "Blocks this number from sending or recieving an SMS message on your PBX for all users.";
-
-/* Class = "UILabel"; text = "Select a line extension to continue"; ObjectID = "ALp-8Y-kom"; */
-"ALp-8Y-kom.text" = "Select a line extension to continue";
-
-/* Class = "UINavigationItem"; title = "Messages"; ObjectID = "BUa-qT-EHb"; */
-"BUa-qT-EHb.title" = "Messages";
+/* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "9yC-Om-1a7"; */
+"9yC-Om-1a7.title" = "Contatti";
 
 /* Class = "UILabel"; text = "Voicemail:"; ObjectID = "BhM-7z-evk"; */
 "BhM-7z-evk.text" = "Segreteria:";
 
-/* Class = "UINavigationItem"; title = "Details"; ObjectID = "FOU-Cg-7VZ"; */
-"FOU-Cg-7VZ.title" = "Details";
-
-/* Class = "UINavigationItem"; title = "Blocked Numbers"; ObjectID = "GSd-cZ-vhc"; */
-"GSd-cZ-vhc.title" = "Blocked Numbers";
-
-/* Class = "UILabel"; text = "Remember me"; ObjectID = "HlT-GQ-JCc"; */
-"HlT-GQ-JCc.text" = "Remember me";
-
-/* Class = "UITableViewSection"; footerTitle = "Mutes your phone when someone calls you through the intercom. Requires you to unmute to talk to them."; ObjectID = "JXM-i4-rbx"; */
-"JXM-i4-rbx.footerTitle" = "Mutes your phone when someone calls you through the intercom. Requires you to unmute to talk to them.";
+/* Class = "UITabBarItem"; title = "Phone"; ObjectID = "CoS-1p-0WQ"; */
+"CoS-1p-0WQ.title" = "Telefono";
 
 /* Class = "UINavigationItem"; title = "Recent Activity"; ObjectID = "JYv-VQ-bNP"; */
-"JYv-VQ-bNP.title" = "Recent Activity";
+"JYv-VQ-bNP.title" = "Attività Recenti";
 
-/* Class = "UINavigationItem"; title = "Apps"; ObjectID = "JyO-Cf-e0j"; */
-"JyO-Cf-e0j.title" = "Apps";
-
-/* Class = "UINavigationItem"; title = "Select Line"; ObjectID = "K0c-El-0hB"; */
-"K0c-El-0hB.title" = "Select Line";
+/* Class = "UINavigationItem"; title = "My Jive"; ObjectID = "JyO-Cf-e0j"; */
+"JyO-Cf-e0j.title" = "Il mio Jive";
 
 /* Class = "UILabel"; text = "Phone"; ObjectID = "KVp-sT-UM5"; */
 "KVp-sT-UM5.text" = "Telefono";
 
-/* Class = "UILabel"; text = "name"; ObjectID = "Kbp-js-aK1"; */
-"Kbp-js-aK1.text" = "nome";
-
-/* Class = "UILabel"; text = "Block Number"; ObjectID = "LEo-fN-aeJ"; */
-"LEo-fN-aeJ.text" = "Block Number";
-
-/* Class = "UINavigationItem"; title = "Call History"; ObjectID = "Lhi-Ie-TBG"; */
-"Lhi-Ie-TBG.title" = "Cronologia chiamate";
-
-/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Ngt-9V-IXb"; */
-"Ngt-9V-IXb.title" = "Impostazioni";
-
-/* Class = "UILabel"; text = "name"; ObjectID = "OwV-S4-lMz"; */
-"OwV-S4-lMz.text" = "name";
-
-/* Class = "UITextField"; placeholder = "user name"; ObjectID = "OzV-9h-pmX"; */
-"OzV-9h-pmX.placeholder" = "user name";
-
-/* Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "Pt8-Iw-P7v"; */
-"Pt8-Iw-P7v.normalTitle" = "Line Picker";
-
-/* Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "RNm-Vm-m5D"; */
-"RNm-Vm-m5D.normalTitle" = "Line Picker";
-
-/* Class = "UINavigationItem"; title = "Default DID"; ObjectID = "RaO-p9-fJI"; */
-"RaO-p9-fJI.title" = "Default DID";
-
-/* Class = "UITabBarItem"; title = "Local Contacts"; ObjectID = "S8g-R9-uuQ"; */
-"S8g-R9-uuQ.title" = "Local Contacts";
-
-/* Class = "UILabel"; text = "Logout"; ObjectID = "SOB-aA-7Rz"; */
-"SOB-aA-7Rz.text" = "Esci";
-
-/* Class = "UILabel"; text = "Extension"; ObjectID = "Tj6-BS-QA2"; */
-"Tj6-BS-QA2.text" = "Extension";
-
-/* Class = "UILabel"; text = "Blocked Numbers"; ObjectID = "UXx-fC-exI"; */
-"UXx-fC-exI.text" = "Blocked Numbers";
-
-/* Class = "UITableViewSection"; headerTitle = "SMS"; ObjectID = "Unq-Lf-mp0"; */
-"Unq-Lf-mp0.headerTitle" = "SMS";
-
-/* Class = "UINavigationItem"; title = "Contact Group"; ObjectID = "W7L-pF-Ckr"; */
-"W7L-pF-Ckr.title" = "Contact Group";
-
-/* Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "XZj-bh-r5F"; */
-"XZj-bh-r5F.title" = "Segreteria";
-
 /* Class = "UILabel"; text = "Missed:"; ObjectID = "XiM-TR-LPH"; */
 "XiM-TR-LPH.text" = "Perse:";
 
-/* Class = "UILabel"; text = "Intercom"; ObjectID = "Ykz-N6-sCq"; */
-"Ykz-N6-sCq.text" = "Intercom";
-
-/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "ZKc-4d-xKF"; */
-"ZKc-4d-xKF.title" = "Back";
-
-/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "ZhL-2w-2Q2"; */
-"ZhL-2w-2Q2.normalTitle" = "Done";
-
-/* Class = "UILabel"; text = "Make/Receive calls via Wi-Fi only"; ObjectID = "aJW-Bp-S2E"; */
-"aJW-Bp-S2E.text" = "Make/Receive calls via Wi-Fi only";
-
-/* Class = "UITableViewSection"; headerTitle = "Calling"; ObjectID = "aSD-9F-7Ze"; */
-"aSD-9F-7Ze.headerTitle" = "Calling";
-
-/* Class = "UITableViewSection"; headerTitle = "Account"; ObjectID = "bw0-5L-SgE"; */
-"bw0-5L-SgE.headerTitle" = "Account";
-
-/* Class = "UILabel"; text = "By signing in you agree to our Terms & Conditions."; ObjectID = "bxS-qG-c0L"; */
-"bxS-qG-c0L.text" = "By signing in you agree to our Terms & Conditions.";
-
-/* Class = "UITableViewSection"; footerTitle = "When enabled, people can dial *%@ and start talking to you."; ObjectID = "c14-D9-4Hk"; */
-"c14-D9-4Hk.footerTitle" = "When enabled, people can dial *%@ and start talking to you.";
-
-/* Class = "UINavigationController"; title = "History"; ObjectID = "cIE-ip-pRf"; */
-"cIE-ip-pRf.title" = "Cronologia";
+/* Class = "UITabBarItem"; title = "Messages"; ObjectID = "akK-mD-dtz"; */
+"akK-mD-dtz.title" = "Messaggi";
 
 /* Class = "UILabel"; text = "SMS"; ObjectID = "dcG-34-Idc"; */
-"dcG-34-Idc.text" = "SMS";
-
-/* Class = "UISegmentedControl"; dp8-7e-BVH.segmentTitles[0] = "All"; ObjectID = "dp8-7e-BVH"; */
-"dp8-7e-BVH.segmentTitles[0]" = "Tutti";
-
-/* Class = "UISegmentedControl"; dp8-7e-BVH.segmentTitles[1] = "Missed"; ObjectID = "dp8-7e-BVH"; */
-"dp8-7e-BVH.segmentTitles[1]" = "Perse";
-
-/* Class = "UITabBarItem"; title = "History"; ObjectID = "dvD-nl-dwM"; */
-"dvD-nl-dwM.title" = "Cronologia";
-
-/* Class = "UIButton"; normalTitle = "★"; ObjectID = "fpX-p1-9pC"; */
-"fpX-p1-9pC.normalTitle" = "★";
-
-/* Class = "UIButton"; normalTitle = "CONTINUE"; ObjectID = "hhq-s3-oQT"; */
-"hhq-s3-oQT.normalTitle" = "CONTINUE";
-
-/* Class = "UITabBarItem"; title = "Phone"; ObjectID = "hn5-ub-HBZ"; */
-"hn5-ub-HBZ.title" = "Telefono";
-
-/* Class = "UILabel"; text = "User"; ObjectID = "i1A-sz-Qdg"; */
-"i1A-sz-Qdg.text" = "Utente";
-
-/* Class = "UITabBarItem"; title = "Keypad"; ObjectID = "idj-mu-viK"; */
-"idj-mu-viK.title" = "Tastierino";
-
-/* Class = "UILabel"; text = "Show other people's availability"; ObjectID = "itj-gb-n0Z"; */
-"itj-gb-n0Z.text" = "Show other people's availability";
-
-/* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "j3y-6c-YEc"; */
-"j3y-6c-YEc.title" = "Contatti";
-
-/* Class = "UITextField"; placeholder = "password"; ObjectID = "k5B-9E-t78"; */
-"k5B-9E-t78.placeholder" = "password";
+"dcG-34-Idc.text" = "SMS:";
 
 /* Class = "UILabel"; text = "Messages"; ObjectID = "nGt-aj-HX8"; */
-"nGt-aj-HX8.text" = "Messages";
-
-/* Class = "UILabel"; text = "End User License Agreement"; ObjectID = "nNw-aj-1ph"; */
-"nNw-aj-1ph.text" = "End User License Agreement";
-
-/* Class = "UISearchBar"; placeholder = "Search For People"; ObjectID = "nch-li-H3a"; */
-"nch-li-H3a.placeholder" = "Search For People";
-
-/* Class = "UINavigationItem"; title = "Contacts"; ObjectID = "oEe-KQ-NpU"; */
-"oEe-KQ-NpU.title" = "Contatti";
-
-/* Class = "UITableViewSection"; headerTitle = "General"; ObjectID = "oRl-vc-sb2"; */
-"oRl-vc-sb2.headerTitle" = "General";
-
-/* Class = "UINavigationItem"; title = "Intercom"; ObjectID = "orW-Zd-G29"; */
-"orW-Zd-G29.title" = "Intercom";
-
-/* Class = "UIBarButtonItem"; title = "back"; ObjectID = "qhs-l8-Uxl"; */
-"qhs-l8-Uxl.title" = "back";
-
-/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "qp7-Yq-maW"; */
-"qp7-Yq-maW.placeholder" = "Search";
-
-/* Class = "UILabel"; text = "Default Did for sending SMS"; ObjectID = "sVq-3X-jAZ"; */
-"sVq-3X-jAZ.text" = "Default Did for sending SMS";
-
-/* Class = "UILabel"; text = "Mute Microphone"; ObjectID = "tcX-CY-rDM"; */
-"tcX-CY-rDM.text" = "Mute Microphone";
-
-/* Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "vqB-Nx-EVk"; */
-"vqB-Nx-EVk.normalTitle" = "Line Picker";
-
-/* Class = "UINavigationController"; title = "Keypad"; ObjectID = "vrQ-kc-2ec"; */
-"vrQ-kc-2ec.title" = "Tastierino";
-
-/* Class = "UINavigationController"; title = "Voicemail"; ObjectID = "wLV-k9-4Pz"; */
-"wLV-k9-4Pz.title" = "Segreteria";
-
-/* Class = "UILabel"; text = "Leave Feedback"; ObjectID = "ya5-Sj-oDI"; */
-"ya5-Sj-oDI.text" = "Leave Feedback";
-
-/* Class = "UITabBarItem"; title = "Voicemail"; ObjectID = "yfS-ds-xyB"; */
-"yfS-ds-xyB.title" = "Segreteria";
-
-/* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "yqu-Rh-YHg"; */
-"yqu-Rh-YHg.title" = "Contatti";
+"nGt-aj-HX8.text" = "Messaggi";

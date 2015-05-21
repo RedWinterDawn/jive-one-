@@ -290,7 +290,7 @@
             </objects>
             <point key="canvasLocation" x="-216" y="1812"/>
         </scene>
-        <!--Apps-->
+        <!--My Jive-->
         <scene sceneID="8Fn-9g-wyp">
             <objects>
                 <tableViewController id="1OB-xw-STX" sceneMemberID="viewController">
@@ -419,7 +419,7 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Foa-eQ-vBM" id="CoH-o5-nad">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="SMS" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcG-34-Idc">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="SMS:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcG-34-Idc">
                                             <rect key="frame" x="254" y="16" width="32" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="32" id="Lb7-Vl-uXU"/>
@@ -487,11 +487,11 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="Apps" id="JyO-Cf-e0j"/>
+                    <navigationItem key="navigationItem" title="My Jive" id="JyO-Cf-e0j"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="net-e6-xWA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1393" y="784"/>
+            <point key="canvasLocation" x="-1422" y="784"/>
         </scene>
         <!--Menu Navigation Controller-->
         <scene sceneID="xcs-m7-xXE">
