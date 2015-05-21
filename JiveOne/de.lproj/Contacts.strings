@@ -1,0 +1,18 @@
+
+/* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "7JZ-gb-ulN"; */
+"DqX-dl-Ngq.title" = "Kontakte";
+
+/* Class = "UITabBarItem"; title = "Local Contacts"; ObjectID = "DUL-Wa-VNC"; */
+"DUL-Wa-VNC.title" = "Lokale Kontakte";
+
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "KBK-ek-azj"; */
+"KBK-ek-azj.placeholder" = "Suchen";
+
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "Kwx-dH-stY"; */
+"Kwx-dH-stY.placeholder" = "Suchen";
+
+/* Class = "UINavigationItem"; title = "Contacts"; ObjectID = "pOW-HV-x3k"; */
+"pOW-HV-x3k.title" = "Kontakte";
+
+/* Class = "UITabBarItem"; title = "Groups"; ObjectID = "z2I-cm-BpM"; */
+"z2I-cm-BpM.title" = "Gruppen";
