@@ -5,9 +5,6 @@
 /* Class = "UILabel"; text = "Word count: %i"; ObjectID = "3hD-2T-xYG"; */
 "3hD-2T-xYG.text" = "Wortanzahl: %i";
 
-/* Class = "UILabel"; text = "+"; ObjectID = "8Ra-dK-mWX"; */
-"8Ra-dK-mWX.text" = "+";
-
 /* Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "AkF-KA-69I"; */
 "AkF-KA-69I.title" = "Voicemail";
 
@@ -25,9 +22,6 @@
 
 /* Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[2] = "Voicemail"; ObjectID = "EMe-MP-2GH"; */
 "EMe-MP-2GH.segmentTitles[2]" = "Voicemail";
-
-/* Class = "UIButton"; normalTitle = "Call Voicemail"; ObjectID = "LpR-rv-Law"; */
-"LpR-rv-Law.normalTitle" = "Voicemail anrufen";
 
 /* Class = "UILabel"; text = "JKL"; ObjectID = "SgS-W2-AKQ"; */
 "SgS-W2-AKQ.text" = "JKL";

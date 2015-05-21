@@ -169,6 +169,7 @@
 		5D490E791A958A5A004B62C0 /* JCAddressBookNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E781A958A5A004B62C0 /* JCAddressBookNumber.m */; };
 		5D5448B61B0CF02400F44D8F /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D5448B81B0CF02400F44D8F /* Settings.storyboard */; };
 		5D5448C51B0D3BF500F44D8F /* Phone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D5448C71B0D3BF500F44D8F /* Phone.storyboard */; };
+		5D5448D61B0E2EAC00F44D8F /* JCNonVisualVoicemailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D5448D81B0E2EAC00F44D8F /* JCNonVisualVoicemailViewController.xib */; };
 		5D55236C1A7AB7B400CA8A6D /* calling.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5D55236B1A7AB7B400CA8A6D /* calling.mp3 */; };
 		5D55236F1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D55236E1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m */; };
 		5D5525BF1AC5DC730037F703 /* JCV4ApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5525BE1AC5DC730037F703 /* JCV4ApiClient.m */; };
@@ -251,7 +252,6 @@
 		5DDDA5481A4B08AD00E31AA3 /* JCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5471A4B08AD00E31AA3 /* JCSocket.m */; };
 		5DDDA54B1A4B238300E31AA3 /* JCLinePresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA54A1A4B238300E31AA3 /* JCLinePresence.m */; };
 		5DE0F1B519F6D47E000469D0 /* JCRoundedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0F1B419F6D47E000469D0 /* JCRoundedView.m */; };
-		5DE570861B01480A003F095F /* JCNonVisualVoicemailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DE570851B01480A003F095F /* JCNonVisualVoicemailViewController.xib */; };
 		5DF4C99B1AB8B6CB00BA4F8C /* JCSocketManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF4C99A1AB8B6CB00BA4F8C /* JCSocketManager.m */; };
 		5DFFF3DA1AF90BD60091F479 /* BlockedNumber+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFFF3D91AF90BD60091F479 /* BlockedNumber+V5Client.m */; };
 		5DFFF3DD1AF90DD30091F479 /* BlockedNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFFF3DC1AF90DD30091F479 /* BlockedNumber.m */; };
@@ -576,6 +576,12 @@
 		5D5448D11B0D450B00F44D8F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Phone.strings; sourceTree = "<group>"; };
 		5D5448D31B0D450D00F44D8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Phone.strings; sourceTree = "<group>"; };
 		5D5448D51B0D451000F44D8F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Phone.strings; sourceTree = "<group>"; };
+		5D5448D71B0E2EAC00F44D8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/JCNonVisualVoicemailViewController.xib; sourceTree = "<group>"; };
+		5D5448DC1B0E2F0300F44D8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/JCNonVisualVoicemailViewController.strings; sourceTree = "<group>"; };
+		5D5448DE1B0E2F0400F44D8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/JCNonVisualVoicemailViewController.strings; sourceTree = "<group>"; };
+		5D5448E01B0E2F0500F44D8F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/JCNonVisualVoicemailViewController.strings; sourceTree = "<group>"; };
+		5D5448E21B0E2F0600F44D8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/JCNonVisualVoicemailViewController.strings; sourceTree = "<group>"; };
+		5D5448E41B0E2F0700F44D8F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/JCNonVisualVoicemailViewController.strings; sourceTree = "<group>"; };
 		5D5523681A7811E500CA8A6D /* JCCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCustomCell.h; sourceTree = "<group>"; };
 		5D5523691A7811E500CA8A6D /* JCCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCustomCell.m; sourceTree = "<group>"; };
 		5D55236B1A7AB7B400CA8A6D /* calling.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = calling.mp3; sourceTree = "<group>"; };
@@ -749,7 +755,6 @@
 		5DDDA54A1A4B238300E31AA3 /* JCLinePresence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLinePresence.m; sourceTree = "<group>"; };
 		5DE0F1B319F6D47E000469D0 /* JCRoundedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRoundedView.h; sourceTree = "<group>"; };
 		5DE0F1B419F6D47E000469D0 /* JCRoundedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRoundedView.m; sourceTree = "<group>"; };
-		5DE570851B01480A003F095F /* JCNonVisualVoicemailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCNonVisualVoicemailViewController.xib; sourceTree = "<group>"; };
 		5DF4680F1A5B9BF600E5826A /* JCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCClient.m; sourceTree = "<group>"; };
 		5DF4C9991AB8B6CB00BA4F8C /* JCSocketManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocketManager.h; sourceTree = "<group>"; };
 		5DF4C99A1AB8B6CB00BA4F8C /* JCSocketManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSocketManager.m; sourceTree = "<group>"; };
@@ -1177,7 +1182,7 @@
 		277F093D18FECEA800EEF0E3 /* Voicemail */ = {
 			isa = PBXGroup;
 			children = (
-				5DE570851B01480A003F095F /* JCNonVisualVoicemailViewController.xib */,
+				5D5448D81B0E2EAC00F44D8F /* JCNonVisualVoicemailViewController.xib */,
 				5DE570871B024A20003F095F /* Models */,
 				5D5329921AD4EF3900C6AAC6 /* Controllers */,
 				5D5329931AD4EF7B00C6AAC6 /* Views */,
@@ -2058,7 +2063,7 @@
 				5D0199BD1A1BBBF400F4CF13 /* CurrentCallViewCell.xib in Resources */,
 				275F4A5C18AD0FBC00D2F069 /* InfoPlist.strings in Resources */,
 				5D0199C71A1BBC1500F4CF13 /* ConferenceCallViewCell.xib in Resources */,
-				5DE570861B01480A003F095F /* JCNonVisualVoicemailViewController.xib in Resources */,
+				5D5448D61B0E2EAC00F44D8F /* JCNonVisualVoicemailViewController.xib in Resources */,
 				5D87FCD31AB2822700AE1CA5 /* JCConversationViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2551,6 +2556,19 @@
 				5D5448D51B0D451000F44D8F /* it */,
 			);
 			name = Phone.storyboard;
+			sourceTree = "<group>";
+		};
+		5D5448D81B0E2EAC00F44D8F /* JCNonVisualVoicemailViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5D5448D71B0E2EAC00F44D8F /* Base */,
+				5D5448DC1B0E2F0300F44D8F /* fr */,
+				5D5448DE1B0E2F0400F44D8F /* de */,
+				5D5448E01B0E2F0500F44D8F /* pt */,
+				5D5448E21B0E2F0600F44D8F /* es */,
+				5D5448E41B0E2F0700F44D8F /* it */,
+			);
+			name = JCNonVisualVoicemailViewController.xib;
 			sourceTree = "<group>";
 		};
 		5D8E33DE1B0A4F3100FD8AE1 /* Phone~iPad.storyboard */ = {

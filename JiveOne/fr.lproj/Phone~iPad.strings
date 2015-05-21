@@ -23,9 +23,6 @@
 /* Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[2] = "Voicemail"; ObjectID = "EMe-MP-2GH"; */
 "EMe-MP-2GH.segmentTitles[2]" = "Message vocal";
 
-/* Class = "UIButton"; normalTitle = "Call Voicemail"; ObjectID = "LpR-rv-Law"; */
-"LpR-rv-Law.normalTitle" = "Appeler la messagerie";
-
 /* Class = "UILabel"; text = "JKL"; ObjectID = "SgS-W2-AKQ"; */
 "SgS-W2-AKQ.text" = "JKL";
 
