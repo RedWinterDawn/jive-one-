@@ -490,10 +490,10 @@
             </objects>
             <point key="canvasLocation" x="-379" y="150"/>
         </scene>
-        <!--Storyboard Loader View Controller-->
+        <!--Chat Storyboard Loader View Controller-->
         <scene sceneID="riW-RK-wbf">
             <objects>
-                <viewController id="TGY-rE-dxT" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
+                <viewController id="TGY-rE-dxT" userLabel="Chat Storyboard Loader View Controller" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hKr-ua-zXV"/>
                         <viewControllerLayoutGuide type="bottom" id="VTz-J0-jLf"/>
@@ -504,7 +504,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Chat"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Chat~iPad"/>
                     </userDefinedRuntimeAttributes>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ioX-7Y-JcH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -774,10 +774,10 @@
             </objects>
             <point key="canvasLocation" x="1951" y="1008"/>
         </scene>
-        <!--Storyboard Loader View Controller-->
+        <!--Contacts Storyboard Loader View Controller-->
         <scene sceneID="NXJ-Q0-HdF">
             <objects>
-                <viewController id="wxB-AX-6Kz" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
+                <viewController id="wxB-AX-6Kz" userLabel="Contacts Storyboard Loader View Controller" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Wbl-Lg-g37"/>
                         <viewControllerLayoutGuide type="bottom" id="Dy7-0B-GvE"/>
