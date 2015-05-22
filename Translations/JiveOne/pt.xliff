@@ -1,1092 +1,1443 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
-  <file original="JiveOne/Base.lproj/ConferenceCallViewCell.xib" source-language="en" datatype="plaintext" target-language="pt">
+  <file original="IntegrationTests/Info.plist" source-language="en" datatype="plaintext" target-language="Portuguese">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName">
+        <source>$(PRODUCT_NAME)</source>
+      </trans-unit>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.0</source>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="IntegrationTests/Localizable.strings" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="Cancel">
+        <source>Cancel</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="OK">
+        <source>OK</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Warning">
+        <source>Warning</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Yesterday">
+        <source>Yesterday</source>
+        <note>Yesterday</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/Chat.storyboard" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="8Tc-XC-snM.placeholder">
+        <source>Search For People</source>
+        <target>Procurar pessoas</target>
+        <note>Class = "UISearchBar"; placeholder = "Search For People"; ObjectID = "8Tc-XC-snM";</note>
+      </trans-unit>
+      <trans-unit id="Cht-DY-jlP.text">
+        <source>Contact Name</source>
+        <note>Class = "UILabel"; text = "Contact Name"; ObjectID = "Cht-DY-jlP";</note>
+      </trans-unit>
+      <trans-unit id="DCr-OK-3MX.text">
+        <source>Block Number</source>
+        <target>Bloquear este Chamador</target>
+        <note>Class = "UILabel"; text = "Block Number"; ObjectID = "DCr-OK-3MX";</note>
+      </trans-unit>
+      <trans-unit id="Dd8-pv-4JB.title">
+        <source>Messages</source>
+        <target>Mensagens</target>
+        <note>Class = "UINavigationItem"; title = "Messages"; ObjectID = "Dd8-pv-4JB";</note>
+      </trans-unit>
+      <trans-unit id="JFI-U0-fQF.text">
+        <source>Last Message</source>
+        <note>Class = "UILabel"; text = "Last Message"; ObjectID = "JFI-U0-fQF";</note>
+      </trans-unit>
+      <trans-unit id="PST-Th-8YM.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "PST-Th-8YM";</note>
+      </trans-unit>
+      <trans-unit id="QlF-7C-Iq3.title">
+        <source>Messages</source>
+        <target>Mensagens</target>
+        <note>Class = "UITabBarItem"; title = "Messages"; ObjectID = "QlF-7C-Iq3";</note>
+      </trans-unit>
+      <trans-unit id="Qvq-as-cHg.text">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "Qvq-as-cHg";</note>
+      </trans-unit>
+      <trans-unit id="SR8-Vw-dmU.text">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "SR8-Vw-dmU";</note>
+      </trans-unit>
+      <trans-unit id="XfF-8X-6TV.title">
+        <source>New Message</source>
+        <target>Nova Mensagem</target>
+        <note>Class = "UINavigationItem"; title = "New Message"; ObjectID = "XfF-8X-6TV";</note>
+      </trans-unit>
+      <trans-unit id="Z3S-aR-6oR.footerTitle">
+        <source>Blocks this number from sending or recieving an SMS message on your PBX for all users.</source>
+        <target>Blocos este número de enviar ou receber uma mensagem SMS em seu PBX para todos os usuários.</target>
+        <note>Class = "UITableViewSection"; footerTitle = "Blocks this number from sending or recieving an SMS message on your PBX for all users."; ObjectID = "Z3S-aR-6oR";</note>
+      </trans-unit>
+      <trans-unit id="hIn-Yb-LXh.text">
+        <source>Subtitle</source>
+        <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "hIn-Yb-LXh";</note>
+      </trans-unit>
+      <trans-unit id="hea-0j-GeP.title">
+        <source>Details</source>
+        <target>Detalhes</target>
+        <note>Class = "UIBarButtonItem"; title = "Details"; ObjectID = "hea-0j-GeP";</note>
+      </trans-unit>
+      <trans-unit id="mgM-GJ-Hkr.title">
+        <source>Details</source>
+        <target>Detalhes</target>
+        <note>Class = "UINavigationItem"; title = "Details"; ObjectID = "mgM-GJ-Hkr";</note>
+      </trans-unit>
+      <trans-unit id="vWD-lg-8BW.text">
+        <source>3:03 PM</source>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "vWD-lg-8BW";</note>
+      </trans-unit>
+      <trans-unit id="yAa-hQ-2ec.text">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "yAa-hQ-2ec";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/Chat_iPad.storyboard" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="5pa-Vh-mNq.text">
+        <source>3:03 PM</source>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "5pa-Vh-mNq";</note>
+      </trans-unit>
+      <trans-unit id="DqX-YJ-qdu.text">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "DqX-YJ-qdu";</note>
+      </trans-unit>
+      <trans-unit id="J8I-zG-k2G.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "J8I-zG-k2G";</note>
+      </trans-unit>
+      <trans-unit id="LUT-Vk-JWR.text">
+        <source>Subtitle</source>
+        <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "LUT-Vk-JWR";</note>
+      </trans-unit>
+      <trans-unit id="Thw-n3-ffm.title">
+        <source>Messages</source>
+        <target>Mensagens</target>
+        <note>Class = "UINavigationItem"; title = "Messages"; ObjectID = "Thw-n3-ffm";</note>
+      </trans-unit>
+      <trans-unit id="TxK-l8-YtH.title">
+        <source>Details</source>
+        <target>Detalhes</target>
+        <note>Class = "UINavigationItem"; title = "Details"; ObjectID = "TxK-l8-YtH";</note>
+      </trans-unit>
+      <trans-unit id="Vv3-tz-o6o.footerTitle">
+        <source>Blocks this number from sending or receiving an SMS message on your PBX for all users.</source>
+        <target>Blocos este número de enviar ou receber uma mensagem SMS em seu PBX para todos os usuários.</target>
+        <note>Class = "UITableViewSection"; footerTitle = "Blocks this number from sending or receiving an SMS message on your PBX for all users."; ObjectID = "Vv3-tz-o6o";</note>
+      </trans-unit>
+      <trans-unit id="g1X-2S-xoD.title">
+        <source>New Message</source>
+        <target>Nova Mensagem</target>
+        <note>Class = "UINavigationItem"; title = "New Message"; ObjectID = "g1X-2S-xoD";</note>
+      </trans-unit>
+      <trans-unit id="hYA-nm-SF2.text">
+        <source>Contact Name</source>
+        <note>Class = "UILabel"; text = "Contact Name"; ObjectID = "hYA-nm-SF2";</note>
+      </trans-unit>
+      <trans-unit id="jS0-2t-nJ7.text">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "jS0-2t-nJ7";</note>
+      </trans-unit>
+      <trans-unit id="jld-WF-yRr.text">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "jld-WF-yRr";</note>
+      </trans-unit>
+      <trans-unit id="qVa-e2-mlP.text">
+        <source>Last Message</source>
+        <note>Class = "UILabel"; text = "Last Message"; ObjectID = "qVa-e2-mlP";</note>
+      </trans-unit>
+      <trans-unit id="qo1-nf-jvR.title">
+        <source>Details</source>
+        <target>Detalhes</target>
+        <note>Class = "UIBarButtonItem"; title = "Details"; ObjectID = "qo1-nf-jvR";</note>
+      </trans-unit>
+      <trans-unit id="tPN-wh-a8h.text">
+        <source>Block Number</source>
+        <target>Bloquear este Chamador</target>
+        <note>Class = "UILabel"; text = "Block Number"; ObjectID = "tPN-wh-a8h";</note>
+      </trans-unit>
+      <trans-unit id="zad-Lo-XYN.placeholder">
+        <source>Search For People</source>
+        <target>Procurar pessoas</target>
+        <note>Class = "UISearchBar"; placeholder = "Search For People"; ObjectID = "zad-Lo-XYN";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/ConferenceCallViewCell.xib" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
     <body>
       <trans-unit id="3tE-5t-IUF.accessibilityHint">
         <source>callStateView</source>
-        <target>callStateView</target>
-        <note>Class = "IBUIView"; accessibilityHint = "callStateView"; ObjectID = "3tE-5t-IUF";</note>
-      </trans-unit>
-      <trans-unit id="3tE-5t-IUF.accessibilityLabel">
-        <source>callStateView</source>
-        <target>callStateView</target>
-        <note>Class = "IBUIView"; accessibilityLabel = "callStateView"; ObjectID = "3tE-5t-IUF";</note>
-      </trans-unit>
-      <trans-unit id="5Ts-vU-ZOh.accessibilityLabel">
-        <source>Callers Number</source>
-        <target>Callers Number</target>
-        <note>Class = "IBUILabel"; accessibilityLabel = "Callers Number"; ObjectID = "5Ts-vU-ZOh";</note>
+        <note>Class = "UIView"; accessibilityHint = "callStateView"; ObjectID = "3tE-5t-IUF";</note>
       </trans-unit>
       <trans-unit id="5Ts-vU-ZOh.text">
         <source>Callers Number</source>
-        <target>Callers Number</target>
-        <note>Class = "IBUILabel"; text = "Callers Number"; ObjectID = "5Ts-vU-ZOh";</note>
+        <note>Class = "UILabel"; text = "Callers Number"; ObjectID = "5Ts-vU-ZOh";</note>
       </trans-unit>
       <trans-unit id="DyB-N9-NeR.text">
         <source>ON HOLD</source>
-        <target>ON HOLD</target>
-        <note>Class = "IBUILabel"; text = "ON HOLD"; ObjectID = "DyB-N9-NeR";</note>
-      </trans-unit>
-      <trans-unit id="Trt-IP-BJb.text">
-        <source>CANCELED</source>
-        <target>CANCELED</target>
-        <note>Class = "IBUILabel"; text = "CANCELED"; ObjectID = "Trt-IP-BJb";</note>
+        <target>EM ESPERA</target>
+        <note>Class = "UILabel"; text = "ON HOLD"; ObjectID = "DyB-N9-NeR";</note>
       </trans-unit>
       <trans-unit id="cuQ-l6-1Vo.text">
         <source>1:03</source>
-        <target>1:03</target>
-        <note>Class = "IBUILabel"; text = "1:03"; ObjectID = "cuQ-l6-1Vo";</note>
+        <note>Class = "UILabel"; text = "1:03"; ObjectID = "cuQ-l6-1Vo";</note>
       </trans-unit>
       <trans-unit id="qfp-g2-efF.text">
         <source>Conference</source>
-        <target>Conference</target>
-        <note>Class = "IBUILabel"; text = "Conference"; ObjectID = "qfp-g2-efF";</note>
+        <target>Conferência</target>
+        <note>Class = "UILabel"; text = "Conference"; ObjectID = "qfp-g2-efF";</note>
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/CurrentCallViewCell.xib" source-language="en" datatype="plaintext" target-language="pt">
+  <file original="JiveOne/Base.lproj/Contacts.storyboard" source-language="en" datatype="plaintext" target-language="Portuguese">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="4Ry-Fo-vlb.text">
+        <source>name</source>
+        <note>Class = "UILabel"; text = "name"; ObjectID = "4Ry-Fo-vlb";</note>
+      </trans-unit>
+      <trans-unit id="7JZ-gb-ulN.title">
+        <source>Contacts</source>
+        <note>Class = "UITabBarItem"; title = "Contacts"; ObjectID = "7JZ-gb-ulN";</note>
+      </trans-unit>
+      <trans-unit id="AH7-6r-D1F.normalTitle">
+        <source>★</source>
+        <note>Class = "UIButton"; normalTitle = "★"; ObjectID = "AH7-6r-D1F";</note>
+      </trans-unit>
+      <trans-unit id="DUL-Wa-VNC.title">
+        <source>Local Contacts</source>
+        <target>Contato local</target>
+        <note>Class = "UITabBarItem"; title = "Local Contacts"; ObjectID = "DUL-Wa-VNC";</note>
+      </trans-unit>
+      <trans-unit id="DqX-dl-Ngq.title">
+        <source>Contacts</source>
+        <target>Contatos</target>
+      </trans-unit>
+      <trans-unit id="KBK-ek-azj.placeholder">
+        <source>Search</source>
+        <target>Busca</target>
+        <note>Class = "UISearchBar"; placeholder = "Search"; ObjectID = "KBK-ek-azj";</note>
+      </trans-unit>
+      <trans-unit id="Kwx-dH-stY.placeholder">
+        <source>Search</source>
+        <target>Busca</target>
+        <note>Class = "UISearchBar"; placeholder = "Search"; ObjectID = "Kwx-dH-stY";</note>
+      </trans-unit>
+      <trans-unit id="Pn4-ax-mMz.text">
+        <source>Label</source>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "Pn4-ax-mMz";</note>
+      </trans-unit>
+      <trans-unit id="Uwi-GE-t3C.text">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "Uwi-GE-t3C";</note>
+      </trans-unit>
+      <trans-unit id="aBa-fS-FIH.text">
+        <source>name</source>
+        <note>Class = "UILabel"; text = "name"; ObjectID = "aBa-fS-FIH";</note>
+      </trans-unit>
+      <trans-unit id="pOW-HV-x3k.title">
+        <source>Contacts</source>
+        <target>Contatos</target>
+        <note>Class = "UINavigationItem"; title = "Contacts"; ObjectID = "pOW-HV-x3k";</note>
+      </trans-unit>
+      <trans-unit id="pPi-nu-wYj.title">
+        <source>Contact Group</source>
+        <note>Class = "UINavigationItem"; title = "Contact Group"; ObjectID = "pPi-nu-wYj";</note>
+      </trans-unit>
+      <trans-unit id="z2I-cm-BpM.title">
+        <source>Groups</source>
+        <target>Grupos</target>
+        <note>Class = "UITabBarItem"; title = "Groups"; ObjectID = "z2I-cm-BpM";</note>
+      </trans-unit>
+      <trans-unit id="zTc-HM-fDX.text">
+        <source>Label</source>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "zTc-HM-fDX";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/Contacts_iPad.storyboard" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="82N-g7-bfh.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "82N-g7-bfh";</note>
+      </trans-unit>
+      <trans-unit id="A3I-As-eGt.placeholder">
+        <source>Search</source>
+        <target>Busca</target>
+        <note>Class = "UISearchBar"; placeholder = "Search"; ObjectID = "A3I-As-eGt";</note>
+      </trans-unit>
+      <trans-unit id="GZo-rs-Vym.normalTitle">
+        <source>★</source>
+        <note>Class = "UIButton"; normalTitle = "★"; ObjectID = "GZo-rs-Vym";</note>
+      </trans-unit>
+      <trans-unit id="Hhh-5d-Rvp.text">
+        <source>Extension</source>
+        <target>Extensão</target>
+        <note>Class = "UILabel"; text = "Extension"; ObjectID = "Hhh-5d-Rvp";</note>
+      </trans-unit>
+      <trans-unit id="IeK-gQ-uSI.text">
+        <source>name</source>
+        <note>Class = "UILabel"; text = "name"; ObjectID = "IeK-gQ-uSI";</note>
+      </trans-unit>
+      <trans-unit id="MDi-Ax-x1V.text">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "MDi-Ax-x1V";</note>
+      </trans-unit>
+      <trans-unit id="U6D-l3-ORb.text">
+        <source>Name</source>
+        <target>Nome</target>
+        <note>Class = "UILabel"; text = "Name"; ObjectID = "U6D-l3-ORb";</note>
+      </trans-unit>
+      <trans-unit id="XHn-eP-nWq.text">
+        <source>Label</source>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "XHn-eP-nWq";</note>
+      </trans-unit>
+      <trans-unit id="YmX-dQ-bCu.text">
+        <source>Jive ID</source>
+        <target>Jive ID</target>
+        <note>Class = "UILabel"; text = "Jive ID"; ObjectID = "YmX-dQ-bCu";</note>
+      </trans-unit>
+      <trans-unit id="Zkl-gn-z83.text">
+        <source>name</source>
+        <note>Class = "UILabel"; text = "name"; ObjectID = "Zkl-gn-z83";</note>
+      </trans-unit>
+      <trans-unit id="ZlM-6f-NMM.segmentTitles[0]">
+        <source>Contacts</source>
+        <target>Contatos</target>
+        <note>Class = "UISegmentedControl"; ZlM-6f-NMM.segmentTitles[0] = "Contacts"; ObjectID = "ZlM-6f-NMM";</note>
+      </trans-unit>
+      <trans-unit id="ZlM-6f-NMM.segmentTitles[1]">
+        <source>Groups</source>
+        <target>Grupos</target>
+        <note>Class = "UISegmentedControl"; ZlM-6f-NMM.segmentTitles[1] = "Groups"; ObjectID = "ZlM-6f-NMM";</note>
+      </trans-unit>
+      <trans-unit id="ZlM-6f-NMM.segmentTitles[2]">
+        <source>Local</source>
+        <target>Local</target>
+        <note>Class = "UISegmentedControl"; ZlM-6f-NMM.segmentTitles[2] = "Local"; ObjectID = "ZlM-6f-NMM";</note>
+      </trans-unit>
+      <trans-unit id="dp0-9n-ESH.text">
+        <source>Label</source>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "dp0-9n-ESH";</note>
+      </trans-unit>
+      <trans-unit id="gyL-0L-l47.placeholder">
+        <source>Search</source>
+        <target>Busca</target>
+        <note>Class = "UISearchBar"; placeholder = "Search"; ObjectID = "gyL-0L-l47";</note>
+      </trans-unit>
+      <trans-unit id="rHc-eK-MlA.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "rHc-eK-MlA";</note>
+      </trans-unit>
+      <trans-unit id="uSS-cb-HzU.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "uSS-cb-HzU";</note>
+      </trans-unit>
+      <trans-unit id="vNR-6x-fXV.title">
+        <source>Contacts</source>
+        <target>Contatos</target>
+        <note>Class = "UITabBarItem"; title = "Contacts"; ObjectID = "vNR-6x-fXV";</note>
+      </trans-unit>
+      <trans-unit id="z08-gl-NAi.title">
+        <source>Contacts</source>
+        <target>Contatos</target>
+        <note>Class = "UITabBarItem"; title = "Contacts"; ObjectID = "z08-gl-NAi";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/CurrentCallViewCell.xib" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
     <body>
       <trans-unit id="4Oj-D7-F4v.text">
         <source>ON HOLD</source>
-        <target>ON HOLD</target>
-        <note>Class = "IBUILabel"; text = "ON HOLD"; ObjectID = "4Oj-D7-F4v";</note>
+        <target>EM ESPERA</target>
+        <note>Class = "UILabel"; text = "ON HOLD"; ObjectID = "4Oj-D7-F4v";</note>
       </trans-unit>
       <trans-unit id="H4z-0p-bTI.text">
         <source>Katerina Illiov</source>
-        <target>Katerina Illiov</target>
-        <note>Class = "IBUILabel"; text = "Katerina Illiov"; ObjectID = "H4z-0p-bTI";</note>
+        <note>Class = "UILabel"; text = "Katerina Illiov"; ObjectID = "H4z-0p-bTI";</note>
       </trans-unit>
       <trans-unit id="ijK-Po-99E.accessibilityLabel">
         <source>Callers Number</source>
-        <target>Callers Number</target>
-        <note>Class = "IBUILabel"; accessibilityLabel = "Callers Number"; ObjectID = "ijK-Po-99E";</note>
-      </trans-unit>
-      <trans-unit id="ijK-Po-99E.text">
-        <source>(801) 238-9090</source>
-        <target>(801) 238-9090</target>
-        <note>Class = "IBUILabel"; text = "(801) 238-9090"; ObjectID = "ijK-Po-99E";</note>
+        <note>Class = "UILabel"; accessibilityLabel = "Callers Number"; ObjectID = "ijK-Po-99E";</note>
       </trans-unit>
       <trans-unit id="rkJ-cf-ec6.accessibilityHint">
         <source>callStateView</source>
-        <target>callStateView</target>
-        <note>Class = "IBUIView"; accessibilityHint = "callStateView"; ObjectID = "rkJ-cf-ec6";</note>
+        <note>Class = "UIView"; accessibilityHint = "callStateView"; ObjectID = "rkJ-cf-ec6";</note>
       </trans-unit>
       <trans-unit id="rkJ-cf-ec6.accessibilityLabel">
         <source>callStateView</source>
-        <target>callStateView</target>
-        <note>Class = "IBUIView"; accessibilityLabel = "callStateView"; ObjectID = "rkJ-cf-ec6";</note>
+        <note>Class = "UIView"; accessibilityLabel = "callStateView"; ObjectID = "rkJ-cf-ec6";</note>
       </trans-unit>
       <trans-unit id="vAI-dZ-8vN.text">
         <source>1:03</source>
-        <target>1:03</target>
-        <note>Class = "IBUILabel"; text = "1:03"; ObjectID = "vAI-dZ-8vN";</note>
-      </trans-unit>
-      <trans-unit id="zQp-R0-cci.text">
-        <source>CANCELED</source>
-        <target>CANCELED</target>
-        <note>Class = "IBUILabel"; text = "CANCELED"; ObjectID = "zQp-R0-cci";</note>
+        <note>Class = "UILabel"; text = "1:03"; ObjectID = "vAI-dZ-8vN";</note>
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/IncomingCallViewCell.xib" source-language="en" datatype="plaintext" target-language="pt">
+  <file original="JiveOne/Base.lproj/IncomingCallViewCell.xib" source-language="en" datatype="plaintext" target-language="Portuguese">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
     <body>
       <trans-unit id="5rL-pd-NyF.accessibilityLabel">
         <source>Callers Number</source>
-        <target>Callers Number</target>
-        <note>Class = "IBUILabel"; accessibilityLabel = "Callers Number"; ObjectID = "5rL-pd-NyF";</note>
+        <note>Class = "UILabel"; accessibilityLabel = "Callers Number"; ObjectID = "5rL-pd-NyF";</note>
       </trans-unit>
       <trans-unit id="5rL-pd-NyF.text">
         <source>Callers Number</source>
-        <target>Callers Number</target>
-        <note>Class = "IBUILabel"; text = "Callers Number"; ObjectID = "5rL-pd-NyF";</note>
+        <note>Class = "UILabel"; text = "Callers Number"; ObjectID = "5rL-pd-NyF";</note>
       </trans-unit>
       <trans-unit id="FT8-wZ-Uc2.text">
-        <source>Callers Nagme</source>
-        <target>Callers Nagme</target>
-        <note>Class = "IBUILabel"; text = "Callers Nagme"; ObjectID = "FT8-wZ-Uc2";</note>
+        <source>Callers Name</source>
+        <note>Class = "UILabel"; text = "Callers Name"; ObjectID = "FT8-wZ-Uc2";</note>
       </trans-unit>
       <trans-unit id="xbc-N2-nOI.text">
         <source>INCOMING CALL</source>
-        <target>INCOMING CALL</target>
-        <note>Class = "IBUILabel"; text = "INCOMING CALL"; ObjectID = "xbc-N2-nOI";</note>
+        <target>CHAMADA RECEBIDA</target>
+        <note>Class = "UILabel"; text = "INCOMING CALL"; ObjectID = "xbc-N2-nOI";</note>
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Main_iPad.storyboard" source-language="en" datatype="plaintext" target-language="pt">
+  <file original="JiveOne/Base.lproj/JCNonVisualVoicemailViewController.xib" source-language="en" datatype="plaintext" target-language="Portuguese">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
     <body>
-      <trans-unit id="0kh-qc-WfI.text">
-        <source>Last Socket Events</source>
-        <target>Last Socket Events</target>
-        <note>Class = "IBUILabel"; text = "Last Socket Events"; ObjectID = "0kh-qc-WfI";</note>
+      <trans-unit id="oe6-ps-Id0.normalTitle">
+        <source>Call Voicemail</source>
+        <target>Voicemail chamada</target>
+        <note>Class = "UIButton"; normalTitle = "Call Voicemail"; ObjectID = "oe6-ps-Id0";</note>
       </trans-unit>
-      <trans-unit id="1eE-By-mjG.text">
-        <source>Mobile</source>
-        <target>Mobile</target>
-        <note>Class = "IBUILabel"; text = "Mobile"; ObjectID = "1eE-By-mjG";</note>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/Login.storyboard" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="6Lg-gi-Ebj.accessibilityLabel">
+        <source>passwordTextField</source>
+        <note>Class = "UITextField"; accessibilityLabel = "passwordTextField"; ObjectID = "6Lg-gi-Ebj";</note>
       </trans-unit>
-      <trans-unit id="2S3-Go-rBA.text">
-        <source>Terms of Service</source>
-        <target>Terms of Service</target>
-        <note>Class = "IBUILabel"; text = "Terms of Service"; ObjectID = "2S3-Go-rBA";</note>
-      </trans-unit>
-      <trans-unit id="3qk-lx-qG5.text">
-        <source>Detail</source>
-        <target>Detail</target>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "3qk-lx-qG5";</note>
-      </trans-unit>
-      <trans-unit id="3yJ-FR-IRc.text">
-        <source>Email</source>
-        <target>Email</target>
-        <note>Class = "IBUILabel"; text = "Email"; ObjectID = "3yJ-FR-IRc";</note>
-      </trans-unit>
-      <trans-unit id="4Jm-fZ-n9Y.text">
-        <source>Socket Status</source>
-        <target>Socket Status</target>
-        <note>Class = "IBUILabel"; text = "Socket Status"; ObjectID = "4Jm-fZ-n9Y";</note>
-      </trans-unit>
-      <trans-unit id="9bn-7y-sBQ.title">
-        <source>Voicemail</source>
-        <target>Voicemail</target>
-        <note>Class = "IBUINavigationController"; title = "Voicemail"; ObjectID = "9bn-7y-sBQ";</note>
-      </trans-unit>
-      <trans-unit id="D5S-lp-U55.text">
-        <source>Invalid Credentials. Please try again. </source>
-        <target>Invalid Credentials. Please try again. </target>
-        <note>Class = "IBUILabel"; text = "Invalid Credentials. Please try again. "; ObjectID = "D5S-lp-U55";</note>
-      </trans-unit>
-      <trans-unit id="DHa-YI-KIp.text">
-        <source>Title</source>
-        <target>Title</target>
-        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "DHa-YI-KIp";</note>
-      </trans-unit>
-      <trans-unit id="DOB-7D-iil.text">
-        <source>Label</source>
-        <target>Label</target>
-        <note>Class = "IBUILabel"; text = "Label"; ObjectID = "DOB-7D-iil";</note>
-      </trans-unit>
-      <trans-unit id="EYN-EL-gZe.headerTitle">
-        <source>Other</source>
-        <target>Other</target>
-        <note>Class = "IBUITableViewSection"; headerTitle = "Other"; ObjectID = "EYN-EL-gZe";</note>
-      </trans-unit>
-      <trans-unit id="FSt-t0-kzI.title">
-        <source>Status</source>
-        <target>Status</target>
-        <note>Class = "IBUIBarButtonItem"; title = "Status"; ObjectID = "FSt-t0-kzI";</note>
-      </trans-unit>
-      <trans-unit id="IXE-LQ-XsN.text">
-        <source>Status</source>
-        <target>Status</target>
-        <note>Class = "IBUILabel"; text = "Status"; ObjectID = "IXE-LQ-XsN";</note>
-      </trans-unit>
-      <trans-unit id="JR8-hb-maU.placeholder">
-        <source>email</source>
-        <target>email</target>
-        <note>Class = "IBUITextField"; placeholder = "email"; ObjectID = "JR8-hb-maU";</note>
-      </trans-unit>
-      <trans-unit id="Jh2-oU-VTV.title">
-        <source>Refesh</source>
-        <target>Refesh</target>
-        <note>Class = "IBUIBarButtonItem"; title = "Refesh"; ObjectID = "Jh2-oU-VTV";</note>
-      </trans-unit>
-      <trans-unit id="JuC-uP-hk2.title">
-        <source>Voicemail</source>
-        <target>Voicemail</target>
-        <note>Class = "IBUINavigationItem"; title = "Voicemail"; ObjectID = "JuC-uP-hk2";</note>
-      </trans-unit>
-      <trans-unit id="Kh8-S4-3SL.text">
-        <source>Jive Messenger</source>
-        <target>Jive Messenger</target>
-        <note>Class = "IBUILabel"; text = "Jive Messenger"; ObjectID = "Kh8-S4-3SL";</note>
-      </trans-unit>
-      <trans-unit id="Khq-II-eJU.text">
-        <source>Title</source>
-        <target>Title</target>
-        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "Khq-II-eJU";</note>
-      </trans-unit>
-      <trans-unit id="Lag-ZT-wCs.text">
-        <source>EULA</source>
-        <target>EULA</target>
-        <note>Class = "IBUILabel"; text = "EULA"; ObjectID = "Lag-ZT-wCs";</note>
-      </trans-unit>
-      <trans-unit id="O6n-6O-iB6.normalTitle">
-        <source>Start Chat</source>
-        <target>Start Chat</target>
-        <note>Class = "IBUIButton"; normalTitle = "Start Chat"; ObjectID = "O6n-6O-iB6";</note>
-      </trans-unit>
-      <trans-unit id="PIH-7t-W8x.title">
-        <source>Groups</source>
-        <target>Groups</target>
-        <note>Class = "IBUINavigationItem"; title = "Groups"; ObjectID = "PIH-7t-W8x";</note>
-      </trans-unit>
-      <trans-unit id="QNU-fH-Fv6.title">
-        <source>Conversations</source>
-        <target>Conversations</target>
-        <note>Class = "IBUITabBarItem"; title = "Conversations"; ObjectID = "QNU-fH-Fv6";</note>
-      </trans-unit>
-      <trans-unit id="UeL-6G-gYt.text">
-        <source>Subtitle</source>
-        <target>Subtitle</target>
-        <note>Class = "IBUILabel"; text = "Subtitle"; ObjectID = "UeL-6G-gYt";</note>
-      </trans-unit>
-      <trans-unit id="UkW-TH-Q8u.title">
-        <source>Conversations</source>
-        <target>Conversations</target>
-        <note>Class = "IBUINavigationItem"; title = "Conversations"; ObjectID = "UkW-TH-Q8u";</note>
-      </trans-unit>
-      <trans-unit id="WcV-um-tSk.text">
-        <source>April Summers</source>
-        <target>April Summers</target>
-        <note>Class = "IBUILabel"; text = "April Summers"; ObjectID = "WcV-um-tSk";</note>
-      </trans-unit>
-      <trans-unit id="Wwa-1a-Syh.text">
-        <source>Jive ID</source>
-        <target>Jive ID</target>
-        <note>Class = "IBUILabel"; text = "Jive ID"; ObjectID = "Wwa-1a-Syh";</note>
-      </trans-unit>
-      <trans-unit id="Xer-c3-USK.text">
-        <source>my.email@jive.com</source>
-        <target>my.email@jive.com</target>
-        <note>Class = "IBUILabel"; text = "my.email@jive.com"; ObjectID = "Xer-c3-USK";</note>
-      </trans-unit>
-      <trans-unit id="ZBI-Pz-KHN.text">
-        <source>b.hennis@greentag.com</source>
-        <target>b.hennis@greentag.com</target>
-        <note>Class = "IBUILabel"; text = "b.hennis@greentag.com"; ObjectID = "ZBI-Pz-KHN";</note>
-      </trans-unit>
-      <trans-unit id="awg-Zv-a21.title">
-        <source>Create Group</source>
-        <target>Create Group</target>
-        <note>Class = "IBUINavigationItem"; title = "Create Group"; ObjectID = "awg-Zv-a21";</note>
-      </trans-unit>
-      <trans-unit id="bfX-fV-yQ5.text">
-        <source>(801) 109-2389</source>
-        <target>(801) 109-2389</target>
-        <note>Class = "IBUILabel"; text = "(801) 109-2389"; ObjectID = "bfX-fV-yQ5";</note>
-      </trans-unit>
-      <trans-unit id="dnh-LT-Evu.title">
-        <source>Groups</source>
-        <target>Groups</target>
-        <note>Class = "IBUIBarButtonItem"; title = "Groups"; ObjectID = "dnh-LT-Evu";</note>
-      </trans-unit>
-      <trans-unit id="e6i-od-nx2.title">
-        <source>People</source>
-        <target>People</target>
-        <note>Class = "IBUINavigationItem"; title = "People"; ObjectID = "e6i-od-nx2";</note>
-      </trans-unit>
-      <trans-unit id="ibP-3d-gTf.title">
-        <source>Voicemail</source>
-        <target>Voicemail</target>
-        <note>Class = "IBUITabBarItem"; title = "Voicemail"; ObjectID = "ibP-3d-gTf";</note>
-      </trans-unit>
-      <trans-unit id="j8q-yl-Kmk.title">
-        <source>Account</source>
-        <target>Account</target>
-        <note>Class = "IBUINavigationItem"; title = "Account"; ObjectID = "j8q-yl-Kmk";</note>
-      </trans-unit>
-      <trans-unit id="jFs-vR-O8m.text">
-        <source>Label</source>
-        <target>Label</target>
-        <note>Class = "IBUILabel"; text = "Label"; ObjectID = "jFs-vR-O8m";</note>
-      </trans-unit>
-      <trans-unit id="jdO-3p-aAq.title">
-        <source>Logout</source>
-        <target>Logout</target>
-        <note>Class = "IBUIBarButtonItem"; title = "Logout"; ObjectID = "jdO-3p-aAq";</note>
-      </trans-unit>
-      <trans-unit id="kmg-QN-rrX.text">
-        <source>801-801-8018</source>
-        <target>801-801-8018</target>
-        <note>Class = "IBUILabel"; text = "801-801-8018"; ObjectID = "kmg-QN-rrX";</note>
-      </trans-unit>
-      <trans-unit id="lci-1U-4Cw.headerTitle">
-        <source>Presence</source>
-        <target>Presence</target>
-        <note>Class = "IBUITableViewSection"; headerTitle = "Presence"; ObjectID = "lci-1U-4Cw";</note>
-      </trans-unit>
-      <trans-unit id="lql-ro-bDX.text">
-        <source>Title</source>
-        <target>Title</target>
-        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "lql-ro-bDX";</note>
-      </trans-unit>
-      <trans-unit id="mku-m6-TKH.headerTitle">
-        <source>My Info</source>
-        <target>My Info</target>
-        <note>Class = "IBUITableViewSection"; headerTitle = "My Info"; ObjectID = "mku-m6-TKH";</note>
-      </trans-unit>
-      <trans-unit id="pVE-Mb-oUK.text">
-        <source>Email (work)</source>
-        <target>Email (work)</target>
-        <note>Class = "IBUILabel"; text = "Email (work)"; ObjectID = "pVE-Mb-oUK";</note>
-      </trans-unit>
-      <trans-unit id="pXW-P1-4j3.text">
-        <source>Device Token</source>
-        <target>Device Token</target>
-        <note>Class = "IBUILabel"; text = "Device Token"; ObjectID = "pXW-P1-4j3";</note>
-      </trans-unit>
-      <trans-unit id="rX9-Eo-Lpa.title">
-        <source>More</source>
-        <target>More</target>
-        <note>Class = "IBUITabBarItem"; title = "More"; ObjectID = "rX9-Eo-Lpa";</note>
-      </trans-unit>
-      <trans-unit id="rn4-nF-ndN.text">
-        <source>Label</source>
-        <target>Label</target>
-        <note>Class = "IBUILabel"; text = "Label"; ObjectID = "rn4-nF-ndN";</note>
-      </trans-unit>
-      <trans-unit id="vD2-Ar-uls.title">
-        <source>People</source>
-        <target>People</target>
-        <note>Class = "IBUITabBarItem"; title = "People"; ObjectID = "vD2-Ar-uls";</note>
-      </trans-unit>
-      <trans-unit id="y0L-HK-caB.placeholder">
+      <trans-unit id="6Lg-gi-Ebj.placeholder">
         <source>password</source>
         <target>password</target>
-        <note>Class = "IBUITextField"; placeholder = "password"; ObjectID = "y0L-HK-caB";</note>
+        <note>Class = "UITextField"; placeholder = "password"; ObjectID = "6Lg-gi-Ebj";</note>
       </trans-unit>
-      <trans-unit id="z0p-w7-fdZ.title">
-        <source>Poll</source>
-        <target>Poll</target>
-        <note>Class = "IBUIBarButtonItem"; title = "Poll"; ObjectID = "z0p-w7-fdZ";</note>
+      <trans-unit id="Rjl-m9-p92.normalTitle">
+        <source>Done</source>
+        <target>Done</target>
+        <note>Class = "UIButton"; normalTitle = "Done"; ObjectID = "Rjl-m9-p92";</note>
       </trans-unit>
-      <trans-unit id="ztU-uu-sgE.text">
-        <source>my.email@jive.com</source>
-        <target>my.email@jive.com</target>
-        <note>Class = "IBUILabel"; text = "my.email@jive.com"; ObjectID = "ztU-uu-sgE";</note>
+      <trans-unit id="RmQ-bW-WSU.accessibilityLabel">
+        <source>emailTextField</source>
+        <note>Class = "UITextField"; accessibilityLabel = "emailTextField"; ObjectID = "RmQ-bW-WSU";</note>
+      </trans-unit>
+      <trans-unit id="RmQ-bW-WSU.placeholder">
+        <source>user name</source>
+        <target>user name</target>
+        <note>Class = "UITextField"; placeholder = "user name"; ObjectID = "RmQ-bW-WSU";</note>
+      </trans-unit>
+      <trans-unit id="Rsq-9f-ILa.text">
+        <source>Select a line extension to continue</source>
+        <target>Select a line extension to continue</target>
+        <note>Class = "UILabel"; text = "Select a line extension to continue"; ObjectID = "Rsq-9f-ILa";</note>
+      </trans-unit>
+      <trans-unit id="Z3w-nO-T7g.text">
+        <source>Remember me</source>
+        <target>Remember me</target>
+        <note>Class = "UILabel"; text = "Remember me"; ObjectID = "Z3w-nO-T7g";</note>
+      </trans-unit>
+      <trans-unit id="a85-4q-BLA.text">
+        <source>By signing in you agree to our Terms &amp; Conditions.</source>
+        <target>By signing in you agree to our Terms &amp; Conditions.</target>
+        <note>Class = "UILabel"; text = "By signing in you agree to our Terms &amp; Conditions."; ObjectID = "a85-4q-BLA";</note>
+      </trans-unit>
+      <trans-unit id="cuI-dB-ab2.normalTitle">
+        <source>CONTINUE</source>
+        <target>CONTINUE</target>
+        <note>Class = "UIButton"; normalTitle = "CONTINUE"; ObjectID = "cuI-dB-ab2";</note>
+      </trans-unit>
+      <trans-unit id="y6C-sT-Bui.normalTitle">
+        <source>5555 (Polycom)</source>
+        <note>Class = "UIButton"; normalTitle = "5555 (Polycom)"; ObjectID = "y6C-sT-Bui";</note>
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Main_iPhone.storyboard" source-language="en" datatype="plaintext" target-language="pt">
+  <file original="JiveOne/Base.lproj/Main_iPad.storyboard" source-language="en" datatype="plaintext" target-language="Portuguese">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
     <body>
-      <trans-unit id="0BS-eb-qYZ.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "0BS-eb-qYZ";</note>
-      </trans-unit>
-      <trans-unit id="0lo-Rp-1Wd.text">
-        <source>Title</source>
-        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "0lo-Rp-1Wd";</note>
-      </trans-unit>
-      <trans-unit id="1M5-NQ-q2C.text">
-        <source>PBX:</source>
-        <note>Class = "IBUILabel"; text = "PBX:"; ObjectID = "1M5-NQ-q2C";</note>
-      </trans-unit>
-      <trans-unit id="2fs-lR-lrx.accessibilityLabel">
-        <source>Callers Number</source>
-        <target>Callers Number</target>
-        <note>Class = "IBUILabel"; accessibilityLabel = "Callers Number"; ObjectID = "2fs-lR-lrx";</note>
-      </trans-unit>
-      <trans-unit id="2fs-lR-lrx.text">
-        <source>Callers Number</source>
-        <target>Callers Number</target>
-        <note>Class = "IBUILabel"; text = "Callers Number"; ObjectID = "2fs-lR-lrx";</note>
-      </trans-unit>
-      <trans-unit id="3Yg-JI-TXO.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "3Yg-JI-TXO";</note>
-      </trans-unit>
-      <trans-unit id="3hb-FL-acB.text">
-        <source>(801) 349-7643</source>
-        <target>(801) 349-7643</target>
-        <note>Class = "IBUILabel"; text = "(801) 349-7643"; ObjectID = "3hb-FL-acB";</note>
-      </trans-unit>
-      <trans-unit id="4dr-fP-Tr8.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "4dr-fP-Tr8";</note>
-      </trans-unit>
-      <trans-unit id="4gy-wV-lhl.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "IBUIButton"; normalTitle = "Line Picker"; ObjectID = "4gy-wV-lhl";</note>
-      </trans-unit>
-      <trans-unit id="5RR-0w-M0h.text">
-        <source>line configuration:</source>
-        <note>Class = "IBUILabel"; text = "line configuration:"; ObjectID = "5RR-0w-M0h";</note>
-      </trans-unit>
-      <trans-unit id="5Sc-JQ-q86.text">
+      <trans-unit id="0Yw-cp-qoh.text">
         <source>Phone</source>
         <target>Phone</target>
-        <note>Class = "IBUILabel"; text = "Phone"; ObjectID = "5Sc-JQ-q86";</note>
+        <note>Class = "UILabel"; text = "Phone"; ObjectID = "0Yw-cp-qoh";</note>
       </trans-unit>
-      <trans-unit id="5ds-mG-BrS.placeholder">
-        <source>Search</source>
-        <target>Search</target>
-        <note>Class = "IBUISearchBar"; placeholder = "Search"; ObjectID = "5ds-mG-BrS";</note>
+      <trans-unit id="CYZ-qM-fMy.title">
+        <source>My Jive</source>
+        <target>My Jive</target>
+        <note>Class = "UINavigationItem"; title = "My Jive"; ObjectID = "CYZ-qM-fMy";</note>
       </trans-unit>
-      <trans-unit id="5fa-fd-uoX.text">
-        <source>Title</source>
-        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "5fa-fd-uoX";</note>
+      <trans-unit id="Efb-Rw-Jvr.text">
+        <source>Voicemail Cell</source>
+        <note>Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "Efb-Rw-Jvr";</note>
       </trans-unit>
-      <trans-unit id="6ic-0i-SVi.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "6ic-0i-SVi";</note>
+      <trans-unit id="FzV-4I-xde.text">
+        <source>Messages</source>
+        <target>Messages</target>
+        <note>Class = "UILabel"; text = "Messages"; ObjectID = "FzV-4I-xde";</note>
       </trans-unit>
-      <trans-unit id="7Kp-Io-fyp.text">
-        <source>Mute</source>
-        <target>Mute</target>
-        <note>Class = "IBUILabel"; text = "Mute"; ObjectID = "7Kp-Io-fyp";</note>
-      </trans-unit>
-      <trans-unit id="7RL-so-6fF.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "7RL-so-6fF";</note>
-      </trans-unit>
-      <trans-unit id="7bn-xL-lXt.headerTitle">
-        <source>Attributes</source>
-        <note>Class = "IBUITableViewSection"; headerTitle = "Attributes"; ObjectID = "7bn-xL-lXt";</note>
-      </trans-unit>
-      <trans-unit id="7nu-7k-t4d.text">
+      <trans-unit id="O4y-f4-bpa.text">
         <source>Contacts</source>
-        <note>Class = "IBUILabel"; text = "Contacts"; ObjectID = "7nu-7k-t4d";</note>
+        <target>Contacts</target>
+        <note>Class = "UILabel"; text = "Contacts"; ObjectID = "O4y-f4-bpa";</note>
+      </trans-unit>
+      <trans-unit id="P9B-5h-Y99.text">
+        <source>Call History Cell</source>
+        <note>Class = "UILabel"; text = "Call History Cell"; ObjectID = "P9B-5h-Y99";</note>
+      </trans-unit>
+      <trans-unit id="TBm-gd-ohV.text">
+        <source>3:03 PM</source>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "TBm-gd-ohV";</note>
+      </trans-unit>
+      <trans-unit id="WD8-EL-jx5.text">
+        <source>Settings</source>
+        <target>Settings</target>
+        <note>Class = "UILabel"; text = "Settings"; ObjectID = "WD8-EL-jx5";</note>
+      </trans-unit>
+      <trans-unit id="WhU-DR-46L.text">
+        <source>3:03 PM</source>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "WhU-DR-46L";</note>
+      </trans-unit>
+      <trans-unit id="YC5-vQ-Pj8.text">
+        <source>Contact Name</source>
+        <note>Class = "UILabel"; text = "Contact Name"; ObjectID = "YC5-vQ-Pj8";</note>
+      </trans-unit>
+      <trans-unit id="c77-32-Ths.text">
+        <source>817-343-9239</source>
+        <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "c77-32-Ths";</note>
+      </trans-unit>
+      <trans-unit id="cih-dr-Rgb.text">
+        <source>817-343-9239</source>
+        <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "cih-dr-Rgb";</note>
+      </trans-unit>
+      <trans-unit id="gNr-PU-cQt.title">
+        <source>My Jive</source>
+        <target>My Jive</target>
+        <note>Class = "UINavigationItem"; title = "My Jive"; ObjectID = "gNr-PU-cQt";</note>
+      </trans-unit>
+      <trans-unit id="ov4-fe-haF.text">
+        <source>3:03 PM</source>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "ov4-fe-haF";</note>
+      </trans-unit>
+      <trans-unit id="rLL-vy-8cs.text">
+        <source>0.05</source>
+        <note>Class = "UILabel"; text = "0.05"; ObjectID = "rLL-vy-8cs";</note>
+      </trans-unit>
+      <trans-unit id="ttc-Pa-ekv.text">
+        <source>Last Message</source>
+        <note>Class = "UILabel"; text = "Last Message"; ObjectID = "ttc-Pa-ekv";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/Main_iPhone.storyboard" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="4sy-b5-AC6.title">
+        <source>Settings</source>
+        <target>Definições</target>
+        <note>Class = "UITabBarItem"; title = "Settings"; ObjectID = "4sy-b5-AC6";</note>
       </trans-unit>
       <trans-unit id="8Re-eZ-aiX.text">
         <source>Title</source>
-        <target>Title</target>
-        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "8Re-eZ-aiX";</note>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "8Re-eZ-aiX";</note>
       </trans-unit>
-      <trans-unit id="30a-yD-tba.title">
-        <source>Settings</source>
-        <target>Settings</target>
-        <note>Class = "IBUITabBarItem"; title = "Settings"; ObjectID = "30a-yD-tba";</note>
-      </trans-unit>
-      <trans-unit id="44p-Vq-15w.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "44p-Vq-15w";</note>
-      </trans-unit>
-      <trans-unit id="53q-MK-pw7.normalTitle">
-        <source>Call Voicemail</source>
-        <target>Call Voicemail</target>
-        <note>Class = "IBUIButton"; normalTitle = "Call Voicemail"; ObjectID = "53q-MK-pw7";</note>
-      </trans-unit>
-      <trans-unit id="ALp-8Y-kom.text">
-        <source>Select a line extension to continue</source>
-        <note>Class = "IBUILabel"; text = "Select a line extension to continue"; ObjectID = "ALp-8Y-kom";</note>
-      </trans-unit>
-      <trans-unit id="AOP-ZF-EfS.text">
-        <source>Lines:</source>
-        <note>Class = "IBUILabel"; text = "Lines:"; ObjectID = "AOP-ZF-EfS";</note>
-      </trans-unit>
-      <trans-unit id="BF1-XV-Z7b.text">
-        <source>Cancel</source>
-        <target>Cancel</target>
-        <note>Class = "IBUILabel"; text = "Cancel"; ObjectID = "BF1-XV-Z7b";</note>
+      <trans-unit id="9yC-Om-1a7.title">
+        <source>Contacts</source>
+        <target>Contatos</target>
+        <note>Class = "UITabBarItem"; title = "Contacts"; ObjectID = "9yC-Om-1a7";</note>
       </trans-unit>
       <trans-unit id="BhM-7z-evk.text">
         <source>Voicemail:</source>
         <target>Voicemail:</target>
-        <note>Class = "IBUILabel"; text = "Voicemail:"; ObjectID = "BhM-7z-evk";</note>
+        <note>Class = "UILabel"; text = "Voicemail:"; ObjectID = "BhM-7z-evk";</note>
       </trans-unit>
-      <trans-unit id="C17-8W-dR3.text">
-        <source>Merge Calls</source>
-        <target>Merge Calls</target>
-        <note>Class = "IBUILabel"; text = "Merge Calls"; ObjectID = "C17-8W-dR3";</note>
-      </trans-unit>
-      <trans-unit id="CK1-kx-O9B.title">
-        <source>PBXs</source>
-        <note>Class = "IBUINavigationItem"; title = "PBXs"; ObjectID = "CK1-kx-O9B";</note>
-      </trans-unit>
-      <trans-unit id="Dq7-oS-hNz.text">
-        <source>0:00</source>
-        <target>0:00</target>
-        <note>Class = "IBUILabel"; text = "0:00"; ObjectID = "Dq7-oS-hNz";</note>
-      </trans-unit>
-      <trans-unit id="EN4-dU-16e.text">
-        <source>name:</source>
-        <note>Class = "IBUILabel"; text = "name:"; ObjectID = "EN4-dU-16e";</note>
-      </trans-unit>
-      <trans-unit id="Eaq-EZ-Cd0.text">
-        <source>Lines</source>
-        <note>Class = "IBUILabel"; text = "Lines"; ObjectID = "Eaq-EZ-Cd0";</note>
-      </trans-unit>
-      <trans-unit id="FaG-4W-nqO.text">
-        <source>PBXs:</source>
-        <note>Class = "IBUILabel"; text = "PBXs:"; ObjectID = "FaG-4W-nqO";</note>
-      </trans-unit>
-      <trans-unit id="GB4-e7-w5Y.text">
-        <source>Title</source>
-        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "GB4-e7-w5Y";</note>
-      </trans-unit>
-      <trans-unit id="GKd-Ca-PWO.text">
-        <source>Current Caller's Name</source>
-        <target>Current Caller's Name</target>
-        <note>Class = "IBUILabel"; text = "Current Caller's Name"; ObjectID = "GKd-Ca-PWO";</note>
-      </trans-unit>
-      <trans-unit id="GL0-QI-CnK.title">
-        <source>Lines</source>
-        <note>Class = "IBUINavigationItem"; title = "Lines"; ObjectID = "GL0-QI-CnK";</note>
-      </trans-unit>
-      <trans-unit id="Ha4-sQ-nx4.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "Ha4-sQ-nx4";</note>
-      </trans-unit>
-      <trans-unit id="Hcz-jb-6dn.title">
-        <source>PBX</source>
-        <note>Class = "IBUINavigationItem"; title = "PBX"; ObjectID = "Hcz-jb-6dn";</note>
-      </trans-unit>
-      <trans-unit id="HlT-GQ-JCc.text">
-        <source>Remember me</source>
-        <target>Remember me</target>
-        <note>Class = "IBUILabel"; text = "Remember me"; ObjectID = "HlT-GQ-JCc";</note>
-      </trans-unit>
-      <trans-unit id="Hvu-aR-OOp.text">
-        <source>Add Call</source>
-        <target>Add Call</target>
-        <note>Class = "IBUILabel"; text = "Add Call"; ObjectID = "Hvu-aR-OOp";</note>
-      </trans-unit>
-      <trans-unit id="Im7-gb-8fG.text">
-        <source>mailbox jrn:</source>
-        <note>Class = "IBUILabel"; text = "mailbox jrn:"; ObjectID = "Im7-gb-8fG";</note>
-      </trans-unit>
-      <trans-unit id="JJI-0C-20p.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "JJI-0C-20p";</note>
+      <trans-unit id="CoS-1p-0WQ.title">
+        <source>Phone</source>
+        <target>Telefone</target>
+        <note>Class = "UITabBarItem"; title = "Phone"; ObjectID = "CoS-1p-0WQ";</note>
       </trans-unit>
       <trans-unit id="JYv-VQ-bNP.title">
         <source>Recent Activity</source>
-        <target>Recent Activity</target>
-        <note>Class = "IBUINavigationItem"; title = "Recent Activity"; ObjectID = "JYv-VQ-bNP";</note>
-      </trans-unit>
-      <trans-unit id="Jca-Th-Lgp.text">
-        <source>User</source>
-        <note>Class = "IBUILabel"; text = "User"; ObjectID = "Jca-Th-Lgp";</note>
-      </trans-unit>
-      <trans-unit id="Jhp-k4-hWJ.title">
-        <source>Transfer</source>
-        <target>Transfer</target>
-        <note>Class = "IBUIViewController"; title = "Transfer"; ObjectID = "Jhp-k4-hWJ";</note>
+        <target>Atividade Recente</target>
+        <note>Class = "UINavigationItem"; title = "Recent Activity"; ObjectID = "JYv-VQ-bNP";</note>
       </trans-unit>
       <trans-unit id="JyO-Cf-e0j.title">
-        <source>Apps</source>
-        <target>Apps</target>
-        <note>Class = "IBUINavigationItem"; title = "Apps"; ObjectID = "JyO-Cf-e0j";</note>
-      </trans-unit>
-      <trans-unit id="K0b-DH-0nY.title">
-        <source>Debug</source>
-        <note>Class = "IBUIBarButtonItem"; title = "Debug"; ObjectID = "K0b-DH-0nY";</note>
-      </trans-unit>
-      <trans-unit id="K0c-El-0hB.title">
-        <source>Select Line</source>
-        <note>Class = "IBUINavigationItem"; title = "Select Line"; ObjectID = "K0c-El-0hB";</note>
+        <source>My Jive</source>
+        <target>Meu Jive</target>
+        <note>Class = "UINavigationItem"; title = "My Jive"; ObjectID = "JyO-Cf-e0j";</note>
       </trans-unit>
       <trans-unit id="KVp-sT-UM5.text">
         <source>Phone</source>
-        <target>Phone</target>
-        <note>Class = "IBUILabel"; text = "Phone"; ObjectID = "KVp-sT-UM5";</note>
+        <target>Telefone</target>
+        <note>Class = "UILabel"; text = "Phone"; ObjectID = "KVp-sT-UM5";</note>
       </trans-unit>
-      <trans-unit id="Kbp-js-aK1.text">
-        <source>name</source>
-        <target>name</target>
-        <note>Class = "IBUILabel"; text = "name"; ObjectID = "Kbp-js-aK1";</note>
-      </trans-unit>
-      <trans-unit id="LA4-gt-zUJ.title">
-        <source>Voicemail</source>
-        <target>Voicemail</target>
-        <note>Class = "IBUINavigationItem"; title = "Voicemail"; ObjectID = "LA4-gt-zUJ";</note>
-      </trans-unit>
-      <trans-unit id="LP1-U3-wbS.accessibilityLabel">
-        <source>Cancel Button</source>
-        <target>Cancel Button</target>
-        <note>Class = "IBUIButton"; accessibilityLabel = "Cancel Button"; ObjectID = "LP1-U3-wbS";</note>
-      </trans-unit>
-      <trans-unit id="LdI-cv-Q0n.text">
-        <source>Title</source>
-        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "LdI-cv-Q0n";</note>
-      </trans-unit>
-      <trans-unit id="Lhi-Ie-TBG.title">
-        <source>Call History</source>
-        <target>Call History</target>
-        <note>Class = "IBUINavigationItem"; title = "Call History"; ObjectID = "Lhi-Ie-TBG";</note>
+      <trans-unit id="LQG-gb-DpY.text">
+        <source>Last Message</source>
+        <note>Class = "UILabel"; text = "Last Message"; ObjectID = "LQG-gb-DpY";</note>
       </trans-unit>
       <trans-unit id="Lsq-5H-Udv.text">
         <source>Voicemail Cell</source>
-        <target>Voicemail Cell</target>
-        <note>Class = "IBUILabel"; text = "Voicemail Cell"; ObjectID = "Lsq-5H-Udv";</note>
-      </trans-unit>
-      <trans-unit id="MPB-jF-gYC.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "MPB-jF-gYC";</note>
-      </trans-unit>
-      <trans-unit id="Ngt-9V-IXb.title">
-        <source>Settings</source>
-        <note>Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "Ngt-9V-IXb";</note>
-      </trans-unit>
-      <trans-unit id="OwV-S4-lMz.text">
-        <source>name</source>
-        <note>Class = "IBUILabel"; text = "name"; ObjectID = "OwV-S4-lMz";</note>
-      </trans-unit>
-      <trans-unit id="OzV-9h-pmX.accessibilityLabel">
-        <source>emailTextField</source>
-        <target>emailTextField</target>
-        <note>Class = "IBUITextField"; accessibilityLabel = "emailTextField"; ObjectID = "OzV-9h-pmX";</note>
-      </trans-unit>
-      <trans-unit id="OzV-9h-pmX.placeholder">
-        <source>email</source>
-        <target>email</target>
-        <note>Class = "IBUITextField"; placeholder = "email"; ObjectID = "OzV-9h-pmX";</note>
-      </trans-unit>
-      <trans-unit id="P7L-EJ-UPG.headerTitle">
-        <source>Account</source>
-        <note>Class = "IBUITableViewSection"; headerTitle = "Account"; ObjectID = "P7L-EJ-UPG";</note>
-      </trans-unit>
-      <trans-unit id="PLC-2m-6mE.text">
-        <source>Transfer</source>
-        <target>Transfer</target>
-        <note>Class = "IBUILabel"; text = "Transfer"; ObjectID = "PLC-2m-6mE";</note>
-      </trans-unit>
-      <trans-unit id="Pt8-Iw-P7v.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "IBUIButton"; normalTitle = "Line Picker"; ObjectID = "Pt8-Iw-P7v";</note>
-      </trans-unit>
-      <trans-unit id="QMQ-Qw-Dkd.text">
-        <source>Speaker</source>
-        <target>Speaker</target>
-        <note>Class = "IBUILabel"; text = "Speaker"; ObjectID = "QMQ-Qw-Dkd";</note>
-      </trans-unit>
-      <trans-unit id="Qdf-Sn-kf8.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "Qdf-Sn-kf8";</note>
-      </trans-unit>
-      <trans-unit id="RNm-Vm-m5D.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "IBUIButton"; normalTitle = "Line Picker"; ObjectID = "RNm-Vm-m5D";</note>
-      </trans-unit>
-      <trans-unit id="RiQ-i7-NIb.text">
-        <source>ContactGroups:</source>
-        <note>Class = "IBUILabel"; text = "ContactGroups:"; ObjectID = "RiQ-i7-NIb";</note>
-      </trans-unit>
-      <trans-unit id="RsO-7H-9PB.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "RsO-7H-9PB";</note>
-      </trans-unit>
-      <trans-unit id="Rzz-Tf-qPQ.text">
-        <source>Subtitle</source>
-        <note>Class = "IBUILabel"; text = "Subtitle"; ObjectID = "Rzz-Tf-qPQ";</note>
-      </trans-unit>
-      <trans-unit id="SCG-SS-mwf.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "SCG-SS-mwf";</note>
-      </trans-unit>
-      <trans-unit id="SOB-aA-7Rz.text">
-        <source>Logout</source>
-        <note>Class = "IBUILabel"; text = "Logout"; ObjectID = "SOB-aA-7Rz";</note>
-      </trans-unit>
-      <trans-unit id="TBH-my-sze.text">
-        <source>Label</source>
-        <target>Label</target>
-        <note>Class = "IBUILabel"; text = "Label"; ObjectID = "TBH-my-sze";</note>
-      </trans-unit>
-      <trans-unit id="Tj6-BS-QA2.text">
-        <source>Extension:</source>
-        <note>Class = "IBUILabel"; text = "Extension:"; ObjectID = "Tj6-BS-QA2";</note>
-      </trans-unit>
-      <trans-unit id="TmI-c8-kkS.text">
-        <source>Dan Leonard</source>
-        <target>Dan Leonard</target>
-        <note>Class = "IBUILabel"; text = "Dan Leonard"; ObjectID = "TmI-c8-kkS";</note>
-      </trans-unit>
-      <trans-unit id="Trv-py-X4f.text">
-        <source>Logout</source>
-      </trans-unit>
-      <trans-unit id="UjK-HA-EeS.text">
-        <source>Build  Label</source>
-        <note>Class = "IBUILabel"; text = "Build  Label"; ObjectID = "UjK-HA-EeS";</note>
-      </trans-unit>
-      <trans-unit id="VOs-kP-Qid.text">
-        <source>3:03 PM</source>
-        <target>3:03 PM</target>
-        <note>Class = "IBUILabel"; text = "3:03 PM"; ObjectID = "VOs-kP-Qid";</note>
-      </trans-unit>
-      <trans-unit id="VVg-d2-m3M.text">
-        <source>Title</source>
-        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "VVg-d2-m3M";</note>
-      </trans-unit>
-      <trans-unit id="VXy-JP-34P.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "VXy-JP-34P";</note>
-      </trans-unit>
-      <trans-unit id="W9Q-fu-t2u.text">
-        <source>Transferd Number</source>
-        <target>Transferd Number</target>
-        <note>Class = "IBUILabel"; text = "Transferd Number"; ObjectID = "W9Q-fu-t2u";</note>
-      </trans-unit>
-      <trans-unit id="WMY-2m-tJl.normalTitle">
-        <source>★</source>
-        <note>Class = "IBUIButton"; normalTitle = "★"; ObjectID = "WMY-2m-tJl";</note>
-      </trans-unit>
-      <trans-unit id="XMX-qK-sSJ.text">
-        <source>Contacts:</source>
-        <note>Class = "IBUILabel"; text = "Contacts:"; ObjectID = "XMX-qK-sSJ";</note>
+        <note>Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "Lsq-5H-Udv";</note>
       </trans-unit>
       <trans-unit id="Xd1-F6-dWo.text">
         <source>0.05</source>
-        <target>0.05</target>
-        <note>Class = "IBUILabel"; text = "0.05"; ObjectID = "Xd1-F6-dWo";</note>
-      </trans-unit>
-      <trans-unit id="Xdu-kb-3Tx.title">
-        <source>User</source>
-        <note>Class = "IBUINavigationItem"; title = "User"; ObjectID = "Xdu-kb-3Tx";</note>
+        <note>Class = "UILabel"; text = "0.05"; ObjectID = "Xd1-F6-dWo";</note>
       </trans-unit>
       <trans-unit id="XiM-TR-LPH.text">
         <source>Missed:</source>
-        <target>Missed:</target>
-        <note>Class = "IBUILabel"; text = "Missed:"; ObjectID = "XiM-TR-LPH";</note>
+        <target>Faltou:</target>
+        <note>Class = "UILabel"; text = "Missed:"; ObjectID = "XiM-TR-LPH";</note>
       </trans-unit>
-      <trans-unit id="YkC-FT-3rj.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "YkC-FT-3rj";</note>
+      <trans-unit id="Zmu-2B-dTw.text">
+        <source>3:03 PM</source>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "Zmu-2B-dTw";</note>
       </trans-unit>
-      <trans-unit id="ZUf-yY-biO.text">
-        <source>pbx:</source>
-        <note>Class = "IBUILabel"; text = "pbx:"; ObjectID = "ZUf-yY-biO";</note>
+      <trans-unit id="akK-mD-dtz.title">
+        <source>Messages</source>
+        <target>Mensagens</target>
+        <note>Class = "UITabBarItem"; title = "Messages"; ObjectID = "akK-mD-dtz";</note>
       </trans-unit>
-      <trans-unit id="Zey-Qd-g8J.text">
-        <source>TRANSFERRED TO</source>
-        <target>TRANSFERRED TO</target>
-        <note>Class = "IBUILabel"; text = "TRANSFERRED TO"; ObjectID = "Zey-Qd-g8J";</note>
+      <trans-unit id="dAo-Ua-oC3.text">
+        <source>Contact Name</source>
+        <note>Class = "UILabel"; text = "Contact Name"; ObjectID = "dAo-Ua-oC3";</note>
       </trans-unit>
-      <trans-unit id="ZhL-2w-2Q2.normalTitle">
-        <source>Done</source>
-        <note>Class = "IBUIButton"; normalTitle = "Done"; ObjectID = "ZhL-2w-2Q2";</note>
-      </trans-unit>
-      <trans-unit id="aSD-9F-7Ze.headerTitle">
-        <source>Application</source>
-        <note>Class = "IBUITableViewSection"; headerTitle = "Application"; ObjectID = "aSD-9F-7Ze";</note>
-      </trans-unit>
-      <trans-unit id="aTR-Bp-dDz.text">
-        <source>Swap Calls</source>
-        <target>Swap Calls</target>
-        <note>Class = "IBUILabel"; text = "Swap Calls"; ObjectID = "aTR-Bp-dDz";</note>
-      </trans-unit>
-      <trans-unit id="bso-cm-GH5.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "bso-cm-GH5";</note>
-      </trans-unit>
-      <trans-unit id="bw0-5L-SgE.headerTitle">
-        <source>Account</source>
-        <note>Class = "IBUITableViewSection"; headerTitle = "Account"; ObjectID = "bw0-5L-SgE";</note>
-      </trans-unit>
-      <trans-unit id="bxS-qG-c0L.text">
-        <source>By signing in you agree to our Terms &amp; Conditions.</source>
-        <target>By signing in you agree to our</target>
-        <note>Class = "IBUILabel"; text = "By signing in you agree to our Terms &amp; Conditions."; ObjectID = "bxS-qG-c0L";</note>
-      </trans-unit>
-      <trans-unit id="cIE-ip-pRf.title">
-        <source>History</source>
-        <target>History</target>
-        <note>Class = "IBUINavigationController"; title = "History"; ObjectID = "cIE-ip-pRf";</note>
-      </trans-unit>
-      <trans-unit id="caX-mv-WKC.text">
-        <source>extension:</source>
-        <note>Class = "IBUILabel"; text = "extension:"; ObjectID = "caX-mv-WKC";</note>
-      </trans-unit>
-      <trans-unit id="dD6-su-8pK.title">
-        <source>Line</source>
-        <note>Class = "IBUINavigationItem"; title = "Line"; ObjectID = "dD6-su-8pK";</note>
-      </trans-unit>
-      <trans-unit id="dp8-7e-BVH.segmentTitles[0]">
-        <source>All</source>
-        <target>All</target>
-        <note>Class = "IBUISegmentedControl"; dp8-7e-BVH.segmentTitles[0] = "All"; ObjectID = "dp8-7e-BVH";</note>
-      </trans-unit>
-      <trans-unit id="dp8-7e-BVH.segmentTitles[1]">
-        <source>Missed</source>
-        <target>Missed</target>
-        <note>Class = "IBUISegmentedControl"; dp8-7e-BVH.segmentTitles[1] = "Missed"; ObjectID = "dp8-7e-BVH";</note>
-      </trans-unit>
-      <trans-unit id="dvD-nl-dwM.title">
-        <source>History</source>
-        <target>History</target>
-        <note>Class = "IBUITabBarItem"; title = "History"; ObjectID = "dvD-nl-dwM";</note>
-      </trans-unit>
-      <trans-unit id="dzg-Dh-pCO.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "dzg-Dh-pCO";</note>
-      </trans-unit>
-      <trans-unit id="fCM-G3-oYg.text">
-        <source>Events:</source>
-        <note>Class = "IBUILabel"; text = "Events:"; ObjectID = "fCM-G3-oYg";</note>
+      <trans-unit id="dcG-34-Idc.text">
+        <source>SMS:</source>
+        <target>SMS:</target>
+        <note>Class = "UILabel"; text = "SMS:"; ObjectID = "dcG-34-Idc";</note>
       </trans-unit>
       <trans-unit id="fEO-AB-gx9.text">
         <source>817-343-9239</source>
-        <target>817-343-9239</target>
-        <note>Class = "IBUILabel"; text = "817-343-9239"; ObjectID = "fEO-AB-gx9";</note>
-      </trans-unit>
-      <trans-unit id="fK3-L1-cSS.text">
-        <source>accessToken</source>
-        <note>Class = "IBUILabel"; text = "accessToken"; ObjectID = "fK3-L1-cSS";</note>
-      </trans-unit>
-      <trans-unit id="fbo-cf-77R.text">
-        <source>JiveUserId:</source>
-        <note>Class = "IBUILabel"; text = "JiveUserId:"; ObjectID = "fbo-cf-77R";</note>
-      </trans-unit>
-      <trans-unit id="fhB-Vd-U5R.headerTitle">
-        <source>Relationships</source>
-        <note>Class = "IBUITableViewSection"; headerTitle = "Relationships"; ObjectID = "fhB-Vd-U5R";</note>
-      </trans-unit>
-      <trans-unit id="fpX-p1-9pC.normalTitle">
-        <source>★</source>
-        <target>★</target>
-        <note>Class = "IBUIButton"; normalTitle = "★"; ObjectID = "fpX-p1-9pC";</note>
+        <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "fEO-AB-gx9";</note>
       </trans-unit>
       <trans-unit id="gQB-DU-RKy.text">
         <source>Call History Cell</source>
-        <target>Call History Cell</target>
-        <note>Class = "IBUILabel"; text = "Call History Cell"; ObjectID = "gQB-DU-RKy";</note>
-      </trans-unit>
-      <trans-unit id="gRx-8z-M5N.normalTitle">
-        <source>5555 (Polycom)</source>
-        <note>Class = "IBUIButton"; normalTitle = "5555 (Polycom)"; ObjectID = "gRx-8z-M5N";</note>
-      </trans-unit>
-      <trans-unit id="gU9-Ry-bGH.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "gU9-Ry-bGH";</note>
+        <note>Class = "UILabel"; text = "Call History Cell"; ObjectID = "gQB-DU-RKy";</note>
       </trans-unit>
       <trans-unit id="gtd-8g-MGS.text">
         <source>3:03 PM</source>
-        <target>3:03 PM</target>
-        <note>Class = "IBUILabel"; text = "3:03 PM"; ObjectID = "gtd-8g-MGS";</note>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "gtd-8g-MGS";</note>
       </trans-unit>
-      <trans-unit id="h9G-CI-v9C.text">
-        <source>Today, 10:57 PM</source>
-        <target>Today, 10:57 PM</target>
-        <note>Class = "IBUILabel"; text = "Today, 10:57 PM"; ObjectID = "h9G-CI-v9C";</note>
-      </trans-unit>
-      <trans-unit id="hCx-lr-KsW.text">
-        <source>Line Configurations:</source>
-        <note>Class = "IBUILabel"; text = "Line Configurations:"; ObjectID = "hCx-lr-KsW";</note>
-      </trans-unit>
-      <trans-unit id="hhq-s3-oQT.normalTitle">
-        <source>CONTINUE</source>
-        <note>Class = "IBUIButton"; normalTitle = "CONTINUE"; ObjectID = "hhq-s3-oQT";</note>
-      </trans-unit>
-      <trans-unit id="hjO-33-08L.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "hjO-33-08L";</note>
-      </trans-unit>
-      <trans-unit id="hn5-ub-HBZ.title">
-        <source>Phone</source>
-        <target>Phone</target>
-        <note>Class = "IBUITabBarItem"; title = "Phone"; ObjectID = "hn5-ub-HBZ";</note>
-      </trans-unit>
-      <trans-unit id="hoV-Az-hVc.text">
-        <source>Warm Transfer</source>
-        <target>Warm Transfer</target>
-        <note>Class = "IBUILabel"; text = "Warm Transfer"; ObjectID = "hoV-Az-hVc";</note>
-      </trans-unit>
-      <trans-unit id="i1A-sz-Qdg.text">
-        <source>User:</source>
-        <note>Class = "IBUILabel"; text = "User:"; ObjectID = "i1A-sz-Qdg";</note>
-      </trans-unit>
-      <trans-unit id="idj-mu-viK.title">
-        <source>Keypad</source>
-        <target>Keypad</target>
-        <note>Class = "IBUITabBarItem"; title = "Keypad"; ObjectID = "idj-mu-viK";</note>
-      </trans-unit>
-      <trans-unit id="iut-I0-S4b.headerTitle">
-        <source>Core Data</source>
-        <note>Class = "IBUITableViewSection"; headerTitle = "Core Data"; ObjectID = "iut-I0-S4b";</note>
-      </trans-unit>
-      <trans-unit id="j3y-6c-YEc.title">
-        <source>Contacts</source>
-        <target>Contacts</target>
-        <note>Class = "IBUITabBarItem"; title = "Contacts"; ObjectID = "j3y-6c-YEc";</note>
-      </trans-unit>
-      <trans-unit id="k5B-9E-t78.accessibilityLabel">
-        <source>passwordTextField</source>
-        <target>passwordTextField</target>
-        <note>Class = "IBUITextField"; accessibilityLabel = "passwordTextField"; ObjectID = "k5B-9E-t78";</note>
-      </trans-unit>
-      <trans-unit id="k5B-9E-t78.placeholder">
-        <source>password</source>
-        <target>password</target>
-        <note>Class = "IBUITextField"; placeholder = "password"; ObjectID = "k5B-9E-t78";</note>
-      </trans-unit>
-      <trans-unit id="k9u-JK-Ejv.title">
-        <source>Transfer</source>
-        <target>Transfer</target>
-        <note>Class = "IBUIViewController"; title = "Transfer"; ObjectID = "k9u-JK-Ejv";</note>
-      </trans-unit>
-      <trans-unit id="kIb-eP-P8e.text">
-        <source>Users:</source>
-        <note>Class = "IBUILabel"; text = "Users:"; ObjectID = "kIb-eP-P8e";</note>
-      </trans-unit>
-      <trans-unit id="kaR-bY-yza.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "kaR-bY-yza";</note>
-      </trans-unit>
-      <trans-unit id="kwW-Qp-UuE.title">
-        <source>Voicemail</source>
-        <target>Voicemail</target>
-        <note>Class = "IBUINavigationItem"; title = "Voicemail"; ObjectID = "kwW-Qp-UuE";</note>
-      </trans-unit>
-      <trans-unit id="lS3-iw-nlZ.accessibilityLabel">
-        <source>Another Callers </source>
-        <target>Another Callers </target>
-        <note>Class = "IBUILabel"; accessibilityLabel = "Another Callers "; ObjectID = "lS3-iw-nlZ";</note>
-      </trans-unit>
-      <trans-unit id="lS3-iw-nlZ.text">
-        <source>Callers Number</source>
-        <target>Callers Number</target>
-        <note>Class = "IBUILabel"; text = "Callers Number"; ObjectID = "lS3-iw-nlZ";</note>
-      </trans-unit>
-      <trans-unit id="nNw-aj-1ph.text">
-        <source>End User License Agreement</source>
-        <note>Class = "IBUILabel"; text = "End User License Agreement"; ObjectID = "nNw-aj-1ph";</note>
-      </trans-unit>
-      <trans-unit id="oEe-KQ-NpU.title">
-        <source>Contacts</source>
-        <target>Contacts</target>
-        <note>Class = "IBUINavigationItem"; title = "Contacts"; ObjectID = "oEe-KQ-NpU";</note>
-      </trans-unit>
-      <trans-unit id="oJu-kp-uaF.text">
-        <source>jrn:</source>
-        <note>Class = "IBUILabel"; text = "jrn:"; ObjectID = "oJu-kp-uaF";</note>
-      </trans-unit>
-      <trans-unit id="oWD-fA-wIb.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "oWD-fA-wIb";</note>
+      <trans-unit id="nGt-aj-HX8.text">
+        <source>Messages</source>
+        <target>Mensagens</target>
+        <note>Class = "UILabel"; text = "Messages"; ObjectID = "nGt-aj-HX8";</note>
       </trans-unit>
       <trans-unit id="oiS-bx-elM.text">
         <source>3:03 PM</source>
-        <target>3:03 PM</target>
-        <note>Class = "IBUILabel"; text = "3:03 PM"; ObjectID = "oiS-bx-elM";</note>
-      </trans-unit>
-      <trans-unit id="pGt-gR-ef8.text">
-        <source>jiveUserId</source>
-        <note>Class = "IBUILabel"; text = "jiveUserId"; ObjectID = "pGt-gR-ef8";</note>
-      </trans-unit>
-      <trans-unit id="qG7-eu-aoo.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "IBUIButton"; normalTitle = "Line Picker"; ObjectID = "qG7-eu-aoo";</note>
-      </trans-unit>
-      <trans-unit id="qTo-LN-C26.text">
-        <source>1006</source>
-        <target>1006</target>
-        <note>Class = "IBUILabel"; text = "1006"; ObjectID = "qTo-LN-C26";</note>
-      </trans-unit>
-      <trans-unit id="qgE-Wi-v1i.text">
-        <source>Bob Seger</source>
-        <target>Bob Seger</target>
-        <note>Class = "IBUILabel"; text = "Bob Seger"; ObjectID = "qgE-Wi-v1i";</note>
-      </trans-unit>
-      <trans-unit id="qr5-fZ-Kx4.title">
-        <source>Item</source>
-        <target>Item</target>
-        <note>Class = "IBUITabBarItem"; title = "Item"; ObjectID = "qr5-fZ-Kx4";</note>
-      </trans-unit>
-      <trans-unit id="r0V-Ez-6Bj.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "r0V-Ez-6Bj";</note>
-      </trans-unit>
-      <trans-unit id="r0i-CD-OoY.text">
-        <source>App Label</source>
-        <note>Class = "IBUILabel"; text = "App Label"; ObjectID = "r0i-CD-OoY";</note>
-      </trans-unit>
-      <trans-unit id="rSu-ju-Krc.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "rSu-ju-Krc";</note>
-      </trans-unit>
-      <trans-unit id="rcZ-gm-7j5.title">
-        <source>Debug</source>
-        <note>Class = "IBUINavigationItem"; title = "Debug"; ObjectID = "rcZ-gm-7j5";</note>
-      </trans-unit>
-      <trans-unit id="rv7-ds-TZe.text">
-        <source>Pbxs</source>
-        <note>Class = "IBUILabel"; text = "Pbxs"; ObjectID = "rv7-ds-TZe";</note>
-      </trans-unit>
-      <trans-unit id="sUF-Ow-zVA.text">
-        <source>Title</source>
-        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "sUF-Ow-zVA";</note>
-      </trans-unit>
-      <trans-unit id="tmr-h2-d5h.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "tmr-h2-d5h";</note>
-      </trans-unit>
-      <trans-unit id="tpx-qk-Eby.text">
-        <source>Label</source>
-        <note>Class = "IBUILabel"; text = "Label"; ObjectID = "tpx-qk-Eby";</note>
-      </trans-unit>
-      <trans-unit id="unk-sI-EzS.text">
-        <source>Allow Intercom:</source>
-        <note>Class = "IBUILabel"; text = "Allow Intercom:"; ObjectID = "unk-sI-EzS";</note>
-      </trans-unit>
-      <trans-unit id="vEc-HQ-Xnf.title">
-        <source>Users</source>
-        <note>Class = "IBUINavigationItem"; title = "Users"; ObjectID = "vEc-HQ-Xnf";</note>
-      </trans-unit>
-      <trans-unit id="vqB-Nx-EVk.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "IBUIButton"; normalTitle = "Line Picker"; ObjectID = "vqB-Nx-EVk";</note>
-      </trans-unit>
-      <trans-unit id="vrQ-kc-2ec.title">
-        <source>Keypad</source>
-        <target>Keypad</target>
-        <note>Class = "IBUINavigationController"; title = "Keypad"; ObjectID = "vrQ-kc-2ec";</note>
-      </trans-unit>
-      <trans-unit id="vvf-7y-EoN.text">
-        <source>mailbox url:</source>
-        <note>Class = "IBUILabel"; text = "mailbox url:"; ObjectID = "vvf-7y-EoN";</note>
-      </trans-unit>
-      <trans-unit id="wLV-k9-4Pz.title">
-        <source>Voicemail</source>
-        <target>Voicemail</target>
-        <note>Class = "IBUINavigationController"; title = "Voicemail"; ObjectID = "wLV-k9-4Pz";</note>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "oiS-bx-elM";</note>
       </trans-unit>
       <trans-unit id="wy5-2x-2pe.text">
         <source>817-343-9239</source>
-        <target>817-343-9239</target>
-        <note>Class = "IBUILabel"; text = "817-343-9239"; ObjectID = "wy5-2x-2pe";</note>
-      </trans-unit>
-      <trans-unit id="xbE-Wj-ANr.text">
-        <source>817-343-9239</source>
-        <target>817-343-9239</target>
-        <note>Class = "IBUILabel"; text = "817-343-9239"; ObjectID = "xbE-Wj-ANr";</note>
-      </trans-unit>
-      <trans-unit id="ya5-Sj-oDI.text">
-        <source>Leave Feedback</source>
-        <note>Class = "IBUILabel"; text = "Leave Feedback"; ObjectID = "ya5-Sj-oDI";</note>
-      </trans-unit>
-      <trans-unit id="yfS-ds-xyB.title">
-        <source>Voicemail</source>
-        <target>Voicemail</target>
-        <note>Class = "IBUITabBarItem"; title = "Voicemail"; ObjectID = "yfS-ds-xyB";</note>
-      </trans-unit>
-      <trans-unit id="yqu-Rh-YHg.title">
-        <source>Contacts</source>
-        <target>Contacts</target>
-        <note>Class = "IBUITabBarItem"; title = "Contacts"; ObjectID = "yqu-Rh-YHg";</note>
-      </trans-unit>
-      <trans-unit id="ytQ-py-sga.text">
-        <source>Detail</source>
-        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "ytQ-py-sga";</note>
-      </trans-unit>
-      <trans-unit id="zcs-la-vSZ.text">
-        <source>Keypad</source>
-        <target>Keypad</target>
-        <note>Class = "IBUILabel"; text = "Keypad"; ObjectID = "zcs-la-vSZ";</note>
-      </trans-unit>
-      <trans-unit id="zpq-3o-7Gs.text">
-        <source>Finish Transfer</source>
-        <target>Finish Transfer</target>
-        <note>Class = "IBUILabel"; text = "Finish Transfer"; ObjectID = "zpq-3o-7Gs";</note>
+        <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "wy5-2x-2pe";</note>
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/JiveOne-Info.plist" source-language="en" datatype="plaintext" target-language="pt">
+  <file original="JiveOne/Base.lproj/Phone.storyboard" source-language="en" datatype="plaintext" target-language="Portuguese">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="1N8-3J-2Ms.text">
+        <source>0.05</source>
+        <note>Class = "UILabel"; text = "0.05"; ObjectID = "1N8-3J-2Ms";</note>
+      </trans-unit>
+      <trans-unit id="2ww-bz-7HY.text">
+        <source>817-343-9239</source>
+        <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "2ww-bz-7HY";</note>
+      </trans-unit>
+      <trans-unit id="6Dg-Eu-qpr.text">
+        <source>Dan Leonard</source>
+        <note>Class = "UILabel"; text = "Dan Leonard"; ObjectID = "6Dg-Eu-qpr";</note>
+      </trans-unit>
+      <trans-unit id="G3s-tk-XlH.title">
+        <source>Keypad</source>
+        <target>Keypad</target>
+        <note>Class = "UINavigationController"; title = "Keypad"; ObjectID = "G3s-tk-XlH";</note>
+      </trans-unit>
+      <trans-unit id="G4E-uV-P1d.normalTitle">
+        <source>Line Picker</source>
+        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "G4E-uV-P1d";</note>
+      </trans-unit>
+      <trans-unit id="Kdj-bb-J0Z.text">
+        <source>817-343-9239</source>
+        <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "Kdj-bb-J0Z";</note>
+      </trans-unit>
+      <trans-unit id="LGG-G6-Qgm.title">
+        <source>History</source>
+        <target>History</target>
+        <note>Class = "UINavigationController"; title = "History"; ObjectID = "LGG-G6-Qgm";</note>
+      </trans-unit>
+      <trans-unit id="M6i-Nu-fpj.text">
+        <source>3:03 PM</source>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "M6i-Nu-fpj";</note>
+      </trans-unit>
+      <trans-unit id="Nvt-uK-WzZ.text">
+        <source>0.05</source>
+        <note>Class = "UILabel"; text = "0.05"; ObjectID = "Nvt-uK-WzZ";</note>
+      </trans-unit>
+      <trans-unit id="RN6-p8-PVT.title">
+        <source>Voicemail</source>
+        <target>Voicemail</target>
+        <note>Class = "UITabBarItem"; title = "Voicemail"; ObjectID = "RN6-p8-PVT";</note>
+      </trans-unit>
+      <trans-unit id="TQG-yI-VWH.normalTitle">
+        <source>Line Picker</source>
+        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "TQG-yI-VWH";</note>
+      </trans-unit>
+      <trans-unit id="UHR-O3-J6m.segmentTitles[0]">
+        <source>All</source>
+        <target>All</target>
+        <note>Class = "UISegmentedControl"; UHR-O3-J6m.segmentTitles[0] = "All"; ObjectID = "UHR-O3-J6m";</note>
+      </trans-unit>
+      <trans-unit id="UHR-O3-J6m.segmentTitles[1]">
+        <source>Missed</source>
+        <target>Missed</target>
+        <note>Class = "UISegmentedControl"; UHR-O3-J6m.segmentTitles[1] = "Missed"; ObjectID = "UHR-O3-J6m";</note>
+      </trans-unit>
+      <trans-unit id="UHm-eu-MVg.text">
+        <source>Confidence: %@</source>
+        <target>Confiance: %@</target>
+        <note>Class = "UILabel"; text = "Confidence: %@"; ObjectID = "UHm-eu-MVg";</note>
+      </trans-unit>
+      <trans-unit id="VMi-W8-6Ys.text">
+        <source>Word count: %i</source>
+        <target>Word count: %i</target>
+        <note>Class = "UILabel"; text = "Word count: %i"; ObjectID = "VMi-W8-6Ys";</note>
+      </trans-unit>
+      <trans-unit id="WRq-PA-NpD.title">
+        <source>History</source>
+        <target>History</target>
+        <note>Class = "UITabBarItem"; title = "History"; ObjectID = "WRq-PA-NpD";</note>
+      </trans-unit>
+      <trans-unit id="XXV-Pa-tfR.text">
+        <source>Phone</source>
+        <target>Phone</target>
+        <note>Class = "UILabel"; text = "Phone"; ObjectID = "XXV-Pa-tfR";</note>
+      </trans-unit>
+      <trans-unit id="YtU-b8-5sz.title">
+        <source>DialerView</source>
+        <note>Class = "UIViewController"; title = "DialerView"; ObjectID = "YtU-b8-5sz";</note>
+      </trans-unit>
+      <trans-unit id="Z7Z-Gy-oE8.title">
+        <source>Voicemail</source>
+        <target>Voicemail</target>
+        <note>Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "Z7Z-Gy-oE8";</note>
+      </trans-unit>
+      <trans-unit id="aJF-xB-iIc.title">
+        <source>Voicemail</source>
+        <target>Voicemail</target>
+        <note>Class = "UINavigationController"; title = "Voicemail"; ObjectID = "aJF-xB-iIc";</note>
+      </trans-unit>
+      <trans-unit id="bsn-3T-LYb.title">
+        <source>Keypad</source>
+        <target>Keypad</target>
+        <note>Class = "UITabBarItem"; title = "Keypad"; ObjectID = "bsn-3T-LYb";</note>
+      </trans-unit>
+      <trans-unit id="bwK-e7-eQb.normalTitle">
+        <source>Line Picker</source>
+        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "bwK-e7-eQb";</note>
+      </trans-unit>
+      <trans-unit id="eFd-Wl-GUh.title">
+        <source>Phone</source>
+        <target>Phone</target>
+        <note>Class = "UITabBarItem"; title = "Phone"; ObjectID = "eFd-Wl-GUh";</note>
+      </trans-unit>
+      <trans-unit id="f8E-Ze-iMO.normalTitle">
+        <source>Line Picker</source>
+        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "f8E-Ze-iMO";</note>
+      </trans-unit>
+      <trans-unit id="fw1-N6-Rq7.text">
+        <source>817-343-9239</source>
+        <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "fw1-N6-Rq7";</note>
+      </trans-unit>
+      <trans-unit id="gtg-0d-joM.text">
+        <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
+        <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "gtg-0d-joM";</note>
+      </trans-unit>
+      <trans-unit id="k2g-vl-Yo3.title">
+        <source>Call History</source>
+        <target>Call History</target>
+        <note>Class = "UINavigationItem"; title = "Call History"; ObjectID = "k2g-vl-Yo3";</note>
+      </trans-unit>
+      <trans-unit id="n60-3y-fJd.text">
+        <source>3:03 PM</source>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "n60-3y-fJd";</note>
+      </trans-unit>
+      <trans-unit id="nwZ-xB-2hO.text">
+        <source>Voicemail Cell</source>
+        <note>Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "nwZ-xB-2hO";</note>
+      </trans-unit>
+      <trans-unit id="oSn-F9-0WR.text">
+        <source>0:00</source>
+        <note>Class = "UILabel"; text = "0:00"; ObjectID = "oSn-F9-0WR";</note>
+      </trans-unit>
+      <trans-unit id="uNm-pu-7W1.normalTitle">
+        <source>Line Picker</source>
+        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "uNm-pu-7W1";</note>
+      </trans-unit>
+      <trans-unit id="v6c-w0-dHK.text">
+        <source>3:03 PM</source>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "v6c-w0-dHK";</note>
+      </trans-unit>
+      <trans-unit id="wFS-rk-8O8.text">
+        <source>Voicemail Cell</source>
+        <note>Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "wFS-rk-8O8";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/PhoneManager.storyboard" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="0Yw-OW-isY.title">
+        <source>Transfer</source>
+        <target>Transfer</target>
+        <note>Class = "UIViewController"; title = "Transfer"; ObjectID = "0Yw-OW-isY";</note>
+      </trans-unit>
+      <trans-unit id="4S2-H7-xRN.text">
+        <source>Speaker</source>
+        <target>Speaker</target>
+        <note>Class = "UILabel"; text = "Speaker"; ObjectID = "4S2-H7-xRN";</note>
+      </trans-unit>
+      <trans-unit id="7gw-EZ-yNz.text">
+        <source>Add Call</source>
+        <target>Add Call</target>
+        <note>Class = "UILabel"; text = "Add Call"; ObjectID = "7gw-EZ-yNz";</note>
+      </trans-unit>
+      <trans-unit id="87W-qj-u4T.text">
+        <source>Transferd Number</source>
+        <note>Class = "UILabel"; text = "Transferd Number"; ObjectID = "87W-qj-u4T";</note>
+      </trans-unit>
+      <trans-unit id="Bcm-TB-mqA.text">
+        <source>Swap Calls</source>
+        <target>Swap Calls</target>
+        <note>Class = "UILabel"; text = "Swap Calls"; ObjectID = "Bcm-TB-mqA";</note>
+      </trans-unit>
+      <trans-unit id="EwG-2I-Wja.text">
+        <source>Current Caller's Name</source>
+        <note>Class = "UILabel"; text = "Current Caller's Name"; ObjectID = "EwG-2I-Wja";</note>
+      </trans-unit>
+      <trans-unit id="Q2z-kh-jIP.text">
+        <source>Finish Transfer</source>
+        <target>Finish Transfer</target>
+        <note>Class = "UILabel"; text = "Finish Transfer"; ObjectID = "Q2z-kh-jIP";</note>
+      </trans-unit>
+      <trans-unit id="UVV-07-6qc.text">
+        <source>Merge Calls</source>
+        <target>Merge Calls</target>
+        <note>Class = "UILabel"; text = "Merge Calls"; ObjectID = "UVV-07-6qc";</note>
+      </trans-unit>
+      <trans-unit id="X2r-4X-bhX.text">
+        <source>TRANSFERRED TO</source>
+        <target>TRANSFERRED TO</target>
+        <note>Class = "UILabel"; text = "TRANSFERRED TO"; ObjectID = "X2r-4X-bhX";</note>
+      </trans-unit>
+      <trans-unit id="Zoo-r0-Qec.text">
+        <source>Keypad</source>
+        <target>Keypad</target>
+        <note>Class = "UILabel"; text = "Keypad"; ObjectID = "Zoo-r0-Qec";</note>
+      </trans-unit>
+      <trans-unit id="juX-eR-Hiv.text">
+        <source>Callers Number</source>
+        <note>Class = "UILabel"; text = "Callers Number"; ObjectID = "juX-eR-Hiv";</note>
+      </trans-unit>
+      <trans-unit id="lmW-vI-lq5.text">
+        <source>Mute</source>
+        <target>Mute</target>
+        <note>Class = "UILabel"; text = "Mute"; ObjectID = "lmW-vI-lq5";</note>
+      </trans-unit>
+      <trans-unit id="mpL-vU-197.accessibilityLabel">
+        <source>Callers Number</source>
+        <note>Class = "UILabel"; accessibilityLabel = "Callers Number"; ObjectID = "mpL-vU-197";</note>
+      </trans-unit>
+      <trans-unit id="mpL-vU-197.text">
+        <source>Callers Number</source>
+        <note>Class = "UILabel"; text = "Callers Number"; ObjectID = "mpL-vU-197";</note>
+      </trans-unit>
+      <trans-unit id="mv1-cF-rXS.text">
+        <source>Warm Transfer</source>
+        <target>Warm Transfer</target>
+        <note>Class = "UILabel"; text = "Warm Transfer"; ObjectID = "mv1-cF-rXS";</note>
+      </trans-unit>
+      <trans-unit id="tWV-rw-XMj.text">
+        <source>Transfer</source>
+        <target>Transfer</target>
+        <note>Class = "UILabel"; text = "Transfer"; ObjectID = "tWV-rw-XMj";</note>
+      </trans-unit>
+      <trans-unit id="trw-eH-oa2.title">
+        <source>Transfer</source>
+        <target>Transfer</target>
+        <note>Class = "UIViewController"; title = "Transfer"; ObjectID = "trw-eH-oa2";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/Phone_iPad.storyboard" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="0E0-Ga-yKj.text">
+        <source>MNO</source>
+        <target>MNO</target>
+        <note>Class = "UILabel"; text = "MNO"; ObjectID = "0E0-Ga-yKj";</note>
+      </trans-unit>
+      <trans-unit id="3hD-2T-xYG.text">
+        <source>Word count: %i</source>
+        <target>Word Count: %i</target>
+        <note>Class = "UILabel"; text = "Word count: %i"; ObjectID = "3hD-2T-xYG";</note>
+      </trans-unit>
+      <trans-unit id="8Ra-dK-mWX.text">
+        <source>+</source>
+        <target>+</target>
+        <note>Class = "UILabel"; text = "+"; ObjectID = "8Ra-dK-mWX";</note>
+      </trans-unit>
+      <trans-unit id="8Wk-uq-aXj.text">
+        <source>0:00</source>
+        <note>Class = "UILabel"; text = "0:00"; ObjectID = "8Wk-uq-aXj";</note>
+      </trans-unit>
+      <trans-unit id="A5J-Bt-Bbh.title">
+        <source>DialerView</source>
+        <note>Class = "UIViewController"; title = "DialerView"; ObjectID = "A5J-Bt-Bbh";</note>
+      </trans-unit>
+      <trans-unit id="A5Z-Jv-4XP.title">
+        <source>Voicemail</source>
+        <note>Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "A5Z-Jv-4XP";</note>
+      </trans-unit>
+      <trans-unit id="AEl-R2-Jqz.text">
+        <source>(801) 349-7643</source>
+        <note>Class = "UILabel"; text = "(801) 349-7643"; ObjectID = "AEl-R2-Jqz";</note>
+      </trans-unit>
+      <trans-unit id="Amh-2F-CRy.text">
+        <source>TUV</source>
+        <target>TUV</target>
+        <note>Class = "UILabel"; text = "TUV"; ObjectID = "Amh-2F-CRy";</note>
+      </trans-unit>
+      <trans-unit id="C1I-IP-hpm.text">
+        <source>WXYZ</source>
+        <target>WXYZ</target>
+        <note>Class = "UILabel"; text = "WXYZ"; ObjectID = "C1I-IP-hpm";</note>
+      </trans-unit>
+      <trans-unit id="CQZ-eU-dLa.text">
+        <source>Today, 10:57 PM</source>
+        <note>Class = "UILabel"; text = "Today, 10:57 PM"; ObjectID = "CQZ-eU-dLa";</note>
+      </trans-unit>
+      <trans-unit id="EMe-MP-2GH.segmentTitles[0]">
+        <source>All</source>
+        <target>All</target>
+        <note>Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[0] = "All"; ObjectID = "EMe-MP-2GH";</note>
+      </trans-unit>
+      <trans-unit id="EMe-MP-2GH.segmentTitles[1]">
+        <source>Missed</source>
+        <target>Missed</target>
+        <note>Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[1] = "Missed"; ObjectID = "EMe-MP-2GH";</note>
+      </trans-unit>
+      <trans-unit id="EMe-MP-2GH.segmentTitles[2]">
+        <source>Voicemail</source>
+        <target>Voicemail</target>
+        <note>Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[2] = "Voicemail"; ObjectID = "EMe-MP-2GH";</note>
+      </trans-unit>
+      <trans-unit id="F9q-cd-yQV.text">
+        <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulloccaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
+        <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulloccaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "F9q-cd-yQV";</note>
+      </trans-unit>
+      <trans-unit id="NMf-MW-Ar6.text">
+        <source>3:03 PM</source>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "NMf-MW-Ar6";</note>
+      </trans-unit>
+      <trans-unit id="Omy-IO-SfF.text">
+        <source>0.05</source>
+        <note>Class = "UILabel"; text = "0.05"; ObjectID = "Omy-IO-SfF";</note>
+      </trans-unit>
+      <trans-unit id="PKM-zV-Ygr.text">
+        <source>Dan Leonard</source>
+        <note>Class = "UILabel"; text = "Dan Leonard"; ObjectID = "PKM-zV-Ygr";</note>
+      </trans-unit>
+      <trans-unit id="QCh-kZ-Oh6.text">
+        <source>817-343-9239</source>
+        <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "QCh-kZ-Oh6";</note>
+      </trans-unit>
+      <trans-unit id="SHb-cE-gV6.text">
+        <source>Voicemail Cell</source>
+        <note>Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "SHb-cE-gV6";</note>
+      </trans-unit>
+      <trans-unit id="SgS-W2-AKQ.text">
+        <source>JKL</source>
+        <target>JKL</target>
+        <note>Class = "UILabel"; text = "JKL"; ObjectID = "SgS-W2-AKQ";</note>
+      </trans-unit>
+      <trans-unit id="Six-TQ-o0K.text">
+        <source>ABC</source>
+        <target>ABC</target>
+        <note>Class = "UILabel"; text = "ABC"; ObjectID = "Six-TQ-o0K";</note>
+      </trans-unit>
+      <trans-unit id="YCw-kb-mRe.text">
+        <source>PQRS</source>
+        <target>PQRS</target>
+        <note>Class = "UILabel"; text = "PQRS"; ObjectID = "YCw-kb-mRe";</note>
+      </trans-unit>
+      <trans-unit id="ddr-iV-54q.text">
+        <source>Bob Seger</source>
+        <note>Class = "UILabel"; text = "Bob Seger"; ObjectID = "ddr-iV-54q";</note>
+      </trans-unit>
+      <trans-unit id="kF5-dn-WTA.text">
+        <source>3:03 PM</source>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "kF5-dn-WTA";</note>
+      </trans-unit>
+      <trans-unit id="oWf-2d-u0f.text">
+        <source>817-343-9239</source>
+        <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "oWf-2d-u0f";</note>
+      </trans-unit>
+      <trans-unit id="utJ-wf-z8v.text">
+        <source>DEF</source>
+        <target>DEF</target>
+        <note>Class = "UILabel"; text = "DEF"; ObjectID = "utJ-wf-z8v";</note>
+      </trans-unit>
+      <trans-unit id="zDJ-eE-vfh.text">
+        <source>Confidence: %@</source>
+        <target>Confidence: %@</target>
+        <note>Class = "UILabel"; text = "Confidence: %@"; ObjectID = "zDJ-eE-vfh";</note>
+      </trans-unit>
+      <trans-unit id="zzd-cv-BlF.text">
+        <source>GHI</source>
+        <target>GHI</target>
+        <note>Class = "UILabel"; text = "GHI"; ObjectID = "zzd-cv-BlF";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/Settings.storyboard" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="7d4-HB-7qj.text">
+        <source>Default Did for sending SMS</source>
+        <target>Default Did for sending SMS</target>
+        <note>Class = "UILabel"; text = "Default Did for sending SMS"; ObjectID = "7d4-HB-7qj";</note>
+      </trans-unit>
+      <trans-unit id="9mr-zh-J8Q.text">
+        <source>Mute Microphone</source>
+        <target>Mute Microphone</target>
+        <note>Class = "UILabel"; text = "Mute Microphone"; ObjectID = "9mr-zh-J8Q";</note>
+      </trans-unit>
+      <trans-unit id="DXx-lH-VMg.text">
+        <source>Make/Receive calls via Wi-Fi only</source>
+        <target>Make/Receive calls via Wi-Fi only</target>
+        <note>Class = "UILabel"; text = "Make/Receive calls via Wi-Fi only"; ObjectID = "DXx-lH-VMg";</note>
+      </trans-unit>
+      <trans-unit id="F6R-j9-aOO.text">
+        <source>Logout</source>
+        <target>Logout</target>
+        <note>Class = "UILabel"; text = "Logout"; ObjectID = "F6R-j9-aOO";</note>
+      </trans-unit>
+      <trans-unit id="FEf-a1-jnp.footerTitle">
+        <source>Mutes your phone when someone calls you through the intercom. Requires you to unmute to talk to them.</source>
+        <target>Mutes your phone when someone calls you through the intercom. Requires you to unmute to talk to them.</target>
+        <note>Class = "UITableViewSection"; footerTitle = "Mutes your phone when someone calls you through the intercom. Requires you to unmute to talk to them."; ObjectID = "FEf-a1-jnp";</note>
+      </trans-unit>
+      <trans-unit id="FiV-Hw-tUc.title">
+        <source>Default DID</source>
+        <target>Default DID</target>
+        <note>Class = "UINavigationItem"; title = "Default DID"; ObjectID = "FiV-Hw-tUc";</note>
+      </trans-unit>
+      <trans-unit id="Krx-xe-7BT.text">
+        <source>Blocked Numbers</source>
+        <target>Blocked Numbers</target>
+        <note>Class = "UILabel"; text = "Blocked Numbers"; ObjectID = "Krx-xe-7BT";</note>
+      </trans-unit>
+      <trans-unit id="NbB-XZ-rca.title">
+        <source>Debug</source>
+        <target>Debug</target>
+        <note>Class = "UIBarButtonItem"; title = "Debug"; ObjectID = "NbB-XZ-rca";</note>
+      </trans-unit>
+      <trans-unit id="Qv8-xZ-A0F.title">
+        <source>Blocked Numbers</source>
+        <target>Blocked Numbers</target>
+        <note>Class = "UINavigationItem"; title = "Blocked Numbers"; ObjectID = "Qv8-xZ-A0F";</note>
+      </trans-unit>
+      <trans-unit id="S1V-c3-O7g.headerTitle">
+        <source>Account</source>
+        <target>Account</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Account"; ObjectID = "S1V-c3-O7g";</note>
+      </trans-unit>
+      <trans-unit id="TuP-tT-lh1.text">
+        <source>Allow Intercom</source>
+        <target>Allow Intercom</target>
+        <note>Class = "UILabel"; text = "Allow Intercom"; ObjectID = "TuP-tT-lh1";</note>
+      </trans-unit>
+      <trans-unit id="W8s-nF-Vea.text">
+        <source>Leave Feedback</source>
+        <target>Leave Feedback</target>
+        <note>Class = "UILabel"; text = "Leave Feedback"; ObjectID = "W8s-nF-Vea";</note>
+      </trans-unit>
+      <trans-unit id="ZFd-rf-5RO.text">
+        <source>Intercom</source>
+        <target>Intercom</target>
+        <note>Class = "UILabel"; text = "Intercom"; ObjectID = "ZFd-rf-5RO";</note>
+      </trans-unit>
+      <trans-unit id="biz-br-QA0.headerTitle">
+        <source>General</source>
+        <target>General</target>
+        <note>Class = "UITableViewSection"; headerTitle = "General"; ObjectID = "biz-br-QA0";</note>
+      </trans-unit>
+      <trans-unit id="cQM-kO-QJN.title">
+        <source>Settings</source>
+        <target>Settings</target>
+        <note>Class = "UINavigationItem"; title = "Settings"; ObjectID = "cQM-kO-QJN";</note>
+      </trans-unit>
+      <trans-unit id="f1Z-xV-kuN.title">
+        <source>Back</source>
+        <target>Back</target>
+        <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "f1Z-xV-kuN";</note>
+      </trans-unit>
+      <trans-unit id="hq8-aR-4hN.text">
+        <source>App Label</source>
+        <target>App Label</target>
+        <note>Class = "UILabel"; text = "App Label"; ObjectID = "hq8-aR-4hN";</note>
+      </trans-unit>
+      <trans-unit id="iuF-Pi-BxI.title">
+        <source>Intercom</source>
+        <target>Intercom</target>
+        <note>Class = "UINavigationItem"; title = "Intercom"; ObjectID = "iuF-Pi-BxI";</note>
+      </trans-unit>
+      <trans-unit id="jhL-Fu-sxw.title">
+        <source>Settings</source>
+        <target>Settings</target>
+        <note>Class = "UITabBarItem"; title = "Settings"; ObjectID = "jhL-Fu-sxw";</note>
+      </trans-unit>
+      <trans-unit id="kEZ-fz-XUn.text">
+        <source>Build  Label</source>
+        <target>Build  Label</target>
+        <note>Class = "UILabel"; text = "Build  Label"; ObjectID = "kEZ-fz-XUn";</note>
+      </trans-unit>
+      <trans-unit id="kU4-aW-3vj.text">
+        <source>User</source>
+        <target>User</target>
+        <note>Class = "UILabel"; text = "User"; ObjectID = "kU4-aW-3vj";</note>
+      </trans-unit>
+      <trans-unit id="lZS-QW-xga.headerTitle">
+        <source>Calling</source>
+        <target>Calling</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Calling"; ObjectID = "lZS-QW-xga";</note>
+      </trans-unit>
+      <trans-unit id="qWk-EZ-l9T.title">
+        <source>Select Line</source>
+        <target>Select Line</target>
+        <note>Class = "UINavigationItem"; title = "Select Line"; ObjectID = "qWk-EZ-l9T";</note>
+      </trans-unit>
+      <trans-unit id="sra-ba-8Uy.footerTitle">
+        <source>When enabled, people can dial *%@ and start talking to you.</source>
+        <target>When enabled, people can dial *%@ and start talking to you.</target>
+        <note>Class = "UITableViewSection"; footerTitle = "When enabled, people can dial *%@ and start talking to you."; ObjectID = "sra-ba-8Uy";</note>
+      </trans-unit>
+      <trans-unit id="teJ-Rq-6NK.headerTitle">
+        <source>SMS</source>
+        <target>SMS</target>
+        <note>Class = "UITableViewSection"; headerTitle = "SMS"; ObjectID = "teJ-Rq-6NK";</note>
+      </trans-unit>
+      <trans-unit id="urK-HX-F87.text">
+        <source>End User License Agreement</source>
+        <target>End User License Agreement</target>
+        <note>Class = "UILabel"; text = "End User License Agreement"; ObjectID = "urK-HX-F87";</note>
+      </trans-unit>
+      <trans-unit id="yl8-b8-1UC.text">
+        <source>Show other people's availability</source>
+        <target>Show other people's availability</target>
+        <note>Class = "UILabel"; text = "Show other people's availability"; ObjectID = "yl8-b8-1UC";</note>
+      </trans-unit>
+      <trans-unit id="zOl-KB-sdE.text">
+        <source>Extension</source>
+        <target>Extension</target>
+        <note>Class = "UILabel"; text = "Extension"; ObjectID = "zOl-KB-sdE";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/Settings_iPad.storyboard" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="2h8-Ie-UJ7.title">
+        <source>Blocked Numbers</source>
+        <target>Blocked Numbers</target>
+        <note>Class = "UINavigationItem"; title = "Blocked Numbers"; ObjectID = "2h8-Ie-UJ7";</note>
+      </trans-unit>
+      <trans-unit id="2sr-Lt-Rn4.text">
+        <source>Default SMS Number</source>
+        <target>Default SMS Number</target>
+        <note>Class = "UILabel"; text = "Default SMS Number"; ObjectID = "2sr-Lt-Rn4";</note>
+      </trans-unit>
+      <trans-unit id="7tm-mE-fMU.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "7tm-mE-fMU";</note>
+      </trans-unit>
+      <trans-unit id="8lc-FR-WyW.title">
+        <source>Debug</source>
+        <note>Class = "UIViewController"; title = "Debug"; ObjectID = "8lc-FR-WyW";</note>
+      </trans-unit>
+      <trans-unit id="9gS-cp-gEd.footerTitle">
+        <source>When enabled, people can dial *%@ and start talking to you.</source>
+        <target>When enabled, people can dial *%@ and start talking to you.</target>
+        <note>Class = "UITableViewSection"; footerTitle = "When enabled, people can dial *%@ and start talking to you."; ObjectID = "9gS-cp-gEd";</note>
+      </trans-unit>
+      <trans-unit id="99b-dA-8Mk.headerTitle">
+        <source>Calling</source>
+        <target>Calling</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Calling"; ObjectID = "99b-dA-8Mk";</note>
+      </trans-unit>
+      <trans-unit id="A0o-6u-f06.text">
+        <source>Network</source>
+        <target>Network</target>
+        <note>Class = "UILabel"; text = "Network"; ObjectID = "A0o-6u-f06";</note>
+      </trans-unit>
+      <trans-unit id="FMQ-p8-zCp.title">
+        <source>About</source>
+        <target>About</target>
+        <note>Class = "UINavigationItem"; title = "About"; ObjectID = "FMQ-p8-zCp";</note>
+      </trans-unit>
+      <trans-unit id="G8f-jt-7Vj.text">
+        <source>Mute Microphone</source>
+        <target>Mute Microphone</target>
+        <note>Class = "UILabel"; text = "Mute Microphone"; ObjectID = "G8f-jt-7Vj";</note>
+      </trans-unit>
+      <trans-unit id="IJd-MH-GKu.text">
+        <source>Debug</source>
+        <note>Class = "UILabel"; text = "Debug"; ObjectID = "IJd-MH-GKu";</note>
+      </trans-unit>
+      <trans-unit id="JKy-bL-axo.title">
+        <source>Network</source>
+        <target>Network</target>
+        <note>Class = "UINavigationItem"; title = "Network"; ObjectID = "JKy-bL-axo";</note>
+      </trans-unit>
+      <trans-unit id="LF8-Vv-Zwl.text">
+        <source>About</source>
+        <target>About</target>
+        <note>Class = "UILabel"; text = "About"; ObjectID = "LF8-Vv-Zwl";</note>
+      </trans-unit>
+      <trans-unit id="N1D-t7-zLF.text">
+        <source>build label</source>
+        <note>Class = "UILabel"; text = "build label"; ObjectID = "N1D-t7-zLF";</note>
+      </trans-unit>
+      <trans-unit id="NCS-71-YpF.footerTitle">
+        <source>Mutes your phone when someone calls you through the intercom. Requires you to unmute to talk to them.</source>
+        <target>Mutes your phone when someone calls you through the intercom. Requires you to unmute to talk to them.</target>
+        <note>Class = "UITableViewSection"; footerTitle = "Mutes your phone when someone calls you through the intercom. Requires you to unmute to talk to them."; ObjectID = "NCS-71-YpF";</note>
+      </trans-unit>
+      <trans-unit id="O9q-yv-7D9.title">
+        <source>Debug</source>
+        <note>Class = "UINavigationItem"; title = "Debug"; ObjectID = "O9q-yv-7D9";</note>
+      </trans-unit>
+      <trans-unit id="R7K-ih-8g1.text">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "R7K-ih-8g1";</note>
+      </trans-unit>
+      <trans-unit id="SD3-M8-VN8.text">
+        <source>Installation Id</source>
+        <target>Installation Id</target>
+        <note>Class = "UILabel"; text = "Installation Id"; ObjectID = "SD3-M8-VN8";</note>
+      </trans-unit>
+      <trans-unit id="XtU-6m-RWQ.text">
+        <source>Blocked Numbers</source>
+        <target>Blocked Numbers</target>
+        <note>Class = "UILabel"; text = "Blocked Numbers"; ObjectID = "XtU-6m-RWQ";</note>
+      </trans-unit>
+      <trans-unit id="Y7Z-2w-WvV.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "Y7Z-2w-WvV";</note>
+      </trans-unit>
+      <trans-unit id="aP5-Db-WW6.title">
+        <source>Intercom</source>
+        <target>Intercom</target>
+        <note>Class = "UINavigationItem"; title = "Intercom"; ObjectID = "aP5-Db-WW6";</note>
+      </trans-unit>
+      <trans-unit id="axJ-EB-B5c.text">
+        <source>Make/Receive calls via Wi-Fi only</source>
+        <target>Make/Receive calls via Wi-Fi only</target>
+        <note>Class = "UILabel"; text = "Make/Receive calls via Wi-Fi only"; ObjectID = "axJ-EB-B5c";</note>
+      </trans-unit>
+      <trans-unit id="bCr-bN-IuJ.text">
+        <source>EULA</source>
+        <target>EULA</target>
+        <note>Class = "UILabel"; text = "EULA"; ObjectID = "bCr-bN-IuJ";</note>
+      </trans-unit>
+      <trans-unit id="cq8-ct-GGR.text">
+        <source>Account</source>
+        <target>Account</target>
+        <note>Class = "UILabel"; text = "Account"; ObjectID = "cq8-ct-GGR";</note>
+      </trans-unit>
+      <trans-unit id="d6T-OY-mUC.text">
+        <source>User</source>
+        <target>User</target>
+        <note>Class = "UILabel"; text = "User"; ObjectID = "d6T-OY-mUC";</note>
+      </trans-unit>
+      <trans-unit id="f4V-07-9mr.text">
+        <source>Intercom</source>
+        <target>Intercom</target>
+        <note>Class = "UILabel"; text = "Intercom"; ObjectID = "f4V-07-9mr";</note>
+      </trans-unit>
+      <trans-unit id="fdV-Zu-hqO.title">
+        <source>Logout</source>
+        <target>Logout</target>
+        <note>Class = "UIBarButtonItem"; title = "Logout"; ObjectID = "fdV-Zu-hqO";</note>
+      </trans-unit>
+      <trans-unit id="gSR-1b-nJh.text">
+        <source>User Id</source>
+        <target>User Id</target>
+        <note>Class = "UILabel"; text = "User Id"; ObjectID = "gSR-1b-nJh";</note>
+      </trans-unit>
+      <trans-unit id="gvY-o6-J0k.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "gvY-o6-J0k";</note>
+      </trans-unit>
+      <trans-unit id="hYY-U9-bgs.text">
+        <source>Extension</source>
+        <target>Extension</target>
+        <note>Class = "UILabel"; text = "Extension"; ObjectID = "hYY-U9-bgs";</note>
+      </trans-unit>
+      <trans-unit id="hbe-eW-O9k.title">
+        <source>Change Default SMS Number</source>
+        <target>Change Default SMS Number</target>
+        <note>Class = "UINavigationItem"; title = "Change Default SMS Number"; ObjectID = "hbe-eW-O9k";</note>
+      </trans-unit>
+      <trans-unit id="hbi-ci-aVr.title">
+        <source>Account</source>
+        <target>Account</target>
+        <note>Class = "UINavigationItem"; title = "Account"; ObjectID = "hbi-ci-aVr";</note>
+      </trans-unit>
+      <trans-unit id="hgZ-Q1-2MM.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "hgZ-Q1-2MM";</note>
+      </trans-unit>
+      <trans-unit id="iKo-rY-a54.text">
+        <source>Show other people's availability</source>
+        <target>Show other people's availability</target>
+        <note>Class = "UILabel"; text = "Show other people's availability"; ObjectID = "iKo-rY-a54";</note>
+      </trans-unit>
+      <trans-unit id="kWD-jn-eCz.title">
+        <source>Settings</source>
+        <target>Settings</target>
+        <note>Class = "UINavigationItem"; title = "Settings"; ObjectID = "kWD-jn-eCz";</note>
+      </trans-unit>
+      <trans-unit id="l1y-XU-h7g.headerTitle">
+        <source>SMS</source>
+        <target>SMS</target>
+        <note>Class = "UITableViewSection"; headerTitle = "SMS"; ObjectID = "l1y-XU-h7g";</note>
+      </trans-unit>
+      <trans-unit id="lzL-3Z-bTD.title">
+        <source>Select a Line</source>
+        <target>Select a Line</target>
+        <note>Class = "UINavigationItem"; title = "Select a Line"; ObjectID = "lzL-3Z-bTD";</note>
+      </trans-unit>
+      <trans-unit id="mtR-S3-xtq.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "mtR-S3-xtq";</note>
+      </trans-unit>
+      <trans-unit id="rkO-Oi-jBt.text">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "rkO-Oi-jBt";</note>
+      </trans-unit>
+      <trans-unit id="rp4-J5-nkk.text">
+        <source>app label</source>
+        <note>Class = "UILabel"; text = "app label"; ObjectID = "rp4-J5-nkk";</note>
+      </trans-unit>
+      <trans-unit id="xWY-6d-dO8.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "xWY-6d-dO8";</note>
+      </trans-unit>
+      <trans-unit id="xy6-CT-mZ7.text">
+        <source>Leave Feeback</source>
+        <target>Leave Feeback</target>
+        <note>Class = "UILabel"; text = "Leave Feeback"; ObjectID = "xy6-CT-mZ7";</note>
+      </trans-unit>
+      <trans-unit id="ya1-cS-0UJ.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "ya1-cS-0UJ";</note>
+      </trans-unit>
+      <trans-unit id="zf8-zH-ZBO.text">
+        <source>Allow Intercom</source>
+        <target>Allow Intercom</target>
+        <note>Class = "UILabel"; text = "Allow Intercom"; ObjectID = "zf8-zH-ZBO";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Chat.strings" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="Send SMS">
+        <source>Send SMS</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Set as default">
+        <source>Set as default</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Set this phone number as default phone number for all sms messages">
+        <source>Set this phone number as default phone number for all sms messages</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Which number would you like to send from">
+        <source>Which number would you like to send from</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/JiveOne-Info.plist" source-language="en" datatype="plaintext" target-language="Portuguese">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName">
@@ -1096,110 +1447,1164 @@
         <source>${PRODUCT_NAME}</source>
       </trans-unit>
       <trans-unit id="CFBundleShortVersionString">
-        <source>1.0.2</source>
+        <source>1.2.4</source>
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/en.lproj/Localizable.strings" source-language="en" datatype="plaintext" target-language="pt">
+  <file original="JiveOne/Localizable.strings" source-language="en" datatype="plaintext" target-language="Portuguese">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
     <body>
-      <trans-unit id="Blind Transfer failed">
-        <source>Blind Transfer failed</source>
+      <trans-unit id="Add TCP Transport Failure">
+        <source>Add TCP Transport Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Add TLS Transport Failure">
+        <source>Add TLS Transport Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Add UDP Transport Failure">
+        <source>Add UDP Transport Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Address Incomplete">
+        <source>Address Incomplete</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Address Incomplete. Request - URI incomplete.">
+        <source>Address Incomplete. Request - URI incomplete.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Already Initialized">
+        <source>Already Initialized</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Already Registered">
+        <source>Already Registered</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Ambiguous">
+        <source>Ambiguous</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Ambiguous. Request - URI is ambiguous.">
+        <source>Ambiguous. Request - URI is ambiguous.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="An Error has occurred. An unknown error has occured.">
+        <source>An Error has occurred. An unknown error has occured.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="An unknown error has occured. If this problem persists, please contact support.">
+        <source>An unknown error has occured. If this problem persists, please contact support.</source>
+        <note>Phone Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Anonymity Disallowed">
+        <source>Anonymity Disallowed</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Anonymity Disallowed. The request has been rejected because it was anonymous.">
+        <source>Anonymity Disallowed. The request has been rejected because it was anonymous.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Argument is Null">
+        <source>Argument is Null</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Argument too long">
+        <source>Argument too long</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Channel not found">
+        <source>Audio Channel not found</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Codec Empty but Audio is enabled">
+        <source>Audio Codec Empty but Audio is enabled</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Codec not supported">
+        <source>Audio Codec not supported</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio File Name is empty">
+        <source>Audio File Name is empty</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Handle is NULL">
+        <source>Audio Handle is NULL</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Open Play File Failure">
+        <source>Audio Open Play File Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Play File Already Enabled">
+        <source>Audio Play File Already Enabled</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Play File Format not supported">
+        <source>Audio Play File Format not supported</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Play File Get Position Failure">
+        <source>Audio Play File Get Position Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Play File Mode not supported">
+        <source>Audio Play File Mode not supported</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Play File Not enabled">
+        <source>Audio Play File Not enabled</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Play Object does not Exit">
+        <source>Audio Play Object does not Exit</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Play stram not enabled">
+        <source>Audio Play stram not enabled</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Play stream already enabled">
+        <source>Audio Play stream already enabled</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Register Callback Failure">
+        <source>Audio Register Callback Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Register Playback Failure">
+        <source>Audio Register Playback Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Register Recording Failure">
+        <source>Audio Register Recording Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Sample Out of Range (10-60)">
+        <source>Audio Sample Out of Range (10-60)</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Sample is not multiple of 10">
+        <source>Audio Sample is not multiple of 10</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Video Codec is empty">
+        <source>Audio Video Codec is empty</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio Volume out of range">
+        <source>Audio Volume out of range</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio and Video Port Overlapped">
+        <source>Audio and Video Port Overlapped</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio and Video Port Range to Small">
+        <source>Audio and Video Port Range to Small</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Audio start recording failure">
+        <source>Audio start recording failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Bad Event">
+        <source>Bad Event</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Bad Event. The server did not understand an event package specified in an Event header field.">
+        <source>Bad Event. The server did not understand an event package specified in an Event header field.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Bad Extension">
+        <source>Bad Extension</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Bad Extension. Bad SIP Protocol Extension used, not understood by the server.">
+        <source>Bad Extension. Bad SIP Protocol Extension used, not understood by the server.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Bad Gateway">
+        <source>Bad Gateway</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Bad Gateway. The server is acting as a gateway or proxy, and received an invalid response from a downstream server while attempting to fulfill the request.">
+        <source>Bad Gateway. The server is acting as a gateway or proxy, and received an invalid response from a downstream server while attempting to fulfill the request.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Bad Identity -Info. The request has an Identity -Info header, and the URI scheme in that header cannot be dereferenced.">
+        <source>Bad Identity -Info. The request has an Identity -Info header, and the URI scheme in that header cannot be dereferenced.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Bad Identity-Info">
+        <source>Bad Identity-Info</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Bad Location Information">
+        <source>Bad Location Information</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Bad Location Information. The request's location content was malformed or otherwise unsatisfactory.">
+        <source>Bad Location Information. The request's location content was malformed or otherwise unsatisfactory.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Bad Request">
+        <source>Bad Request</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Bad Request. The request could not be understood due to malformed syntax.">
+        <source>Bad Request. The request could not be understood due to malformed syntax.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Buffer is to Small">
+        <source>Buffer is to Small</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Busy Everywhere">
+        <source>Busy Everywhere</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Busy Everywhere. All possible destinations are busy. Destination knows there are no alternative destinations (such as a voicemail server) able to accept the call.">
+        <source>Busy Everywhere. All possible destinations are busy. Destination knows there are no alternative destinations (such as a voicemail server) able to accept the call.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Busy Here">
+        <source>Busy Here</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Busy Here. Callee is busy.">
+        <source>Busy Here. Callee is busy.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="COde Type Invalid">
+        <source>COde Type Invalid</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Call Not on Hold">
+        <source>Call Not on Hold</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Call from %@ :%@">
+        <source>Call from %1$@ :%2$@</source>
+        <note>Local notification text</note>
+      </trans-unit>
+      <trans-unit id="Call id not found.">
+        <source>Call id not found.</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Call is Already on Hold">
+        <source>Call is Already on Hold</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Call is Closed">
+        <source>Call is Closed</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Call is in hold">
+        <source>Call is in hold</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Call is not Established">
+        <source>Call is not Established</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Call/Transaction Does Not Exist">
+        <source>Call/Transaction Does Not Exist</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Call/Transaction Does Not Exist. Server received a request that does not match any dialog or transaction.">
+        <source>Call/Transaction Does Not Exist. Server received a request that does not match any dialog or transaction.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Callee is empty">
+        <source>Callee is empty</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Can't set Audio Device Id During Call">
+        <source>Can't set Audio Device Id During Call</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Can't set device id durring call">
+        <source>Can't set device id durring call</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Cancel">
+        <source>Cancel</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="CANCELED">
-        <source>CANCELED</source>
+      <trans-unit id="Codec Not Supported">
+        <source>Codec Not Supported</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Codec already exits">
+        <source>Codec already exits</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Codec parameter not supported">
+        <source>Codec parameter not supported</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Conditional Request Failed">
+        <source>Conditional Request Failed</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Conditional Request Failed. The given precondition has not been met.">
+        <source>Conditional Request Failed. The given precondition has not been met.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Conference Call already exists">
+        <source>Conference Call already exists</source>
+        <note>Phone Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Conference call already ended">
+        <source>Conference call already ended</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Conference call already started">
+        <source>Conference call already started</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Conflict">
+        <source>Conflict</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Conflict. User already registered.">
+        <source>Conflict. User already registered.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Consent Needed">
+        <source>Consent Needed</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Consent Needed. The source of the request did not have the permission of the recipient to make such a request.">
+        <source>Consent Needed. The source of the request did not have the permission of the recipient to make such a request.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Create Audio Channel Failed">
+        <source>Create Audio Channel Failed</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Create Audio Conference Failure">
+        <source>Create Audio Conference Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Create Audio Recording Failure">
+        <source>Create Audio Recording Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Create Media Engine Failre">
+        <source>Create Media Engine Failre</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Data Size is too large">
+        <source>Data Size is too large</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Decline">
+        <source>Decline</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Decline. The destination does not wish to participate in the call">
+        <source>Decline. The destination does not wish to participate in the call</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Does Not Exist Anywhere">
+        <source>Does Not Exist Anywhere</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Does Not Exist Anywhere. The server has authoritative information that the requested user does not exist anywhere.">
+        <source>Does Not Exist Anywhere. The server has authoritative information that the requested user does not exist anywhere.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Downloading...">
+        <source>Downloading...</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Call Failed">
-        <source>Call Failed</source>
-        <note>No comment provided by engineer.</note>
+      <trans-unit id="Error Creating Conference">
+        <source>Error Creating Conference</source>
+        <note>Sip Manager Error</note>
       </trans-unit>
-      <trans-unit id="Conference">
-        <source>Conference</source>
-        <note>No comment provided by engineer.</note>
+      <trans-unit id="Error Joining line session to conference">
+        <source>Error Joining line session to conference</source>
+        <note>Sip Manager Error</note>
       </trans-unit>
-      <trans-unit id="Could not check for voicemails at this moment. Please try again.">
-        <source>Could not check for voicemails at this moment. Please try again.</source>
-        <note>No comment provided by engineer.</note>
+      <trans-unit id="Error Trying to Hang up">
+        <source>Error Trying to Hang up</source>
+        <note>Sip Manager Error</note>
       </trans-unit>
-      <trans-unit id="Failed to Create Conference">
-        <source>Failed to Create Conference</source>
-        <note>No comment provided by engineer.</note>
+      <trans-unit id="Error holding the line sessions">
+        <source>Error holding the line sessions</source>
+        <note>Sip Manager Error</note>
       </trans-unit>
-      <trans-unit id="Failed to finish transfer">
-        <source>Failed to finish transfer</source>
-        <note>No comment provided by engineer.</note>
+      <trans-unit id="Error placing calls on hold">
+        <source>Error placing calls on hold</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Error placing calls on hold after ending a conference">
+        <source>Error placing calls on hold after ending a conference</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Error trying to manually reject incomming call">
+        <source>Error trying to manually reject incomming call</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Error unholding the line session while after joing the conference">
+        <source>Error unholding the line session while after joing the conference</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Expires Value is to small.">
+        <source>Expires Value is to small.</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Extension Required">
+        <source>Extension Required</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Extension Required. The server needs a specific extension not listed in the Supported header.">
+        <source>Extension Required. The server needs a specific extension not listed in the Supported header.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Failed ending conference call">
+        <source>Failed ending conference call</source>
+        <note>Phone Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Failed to create conference call">
+        <source>Failed to create conference call</source>
+        <note>Phone Manager Error</note>
+      </trans-unit>
+      <trans-unit id="First Hop Lacks Outbound Support">
+        <source>First Hop Lacks Outbound Support</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="First Hop Lacks Outbound Support. The first outbound proxy the user is attempting to register through does not support the 'outbound' feature of RFC 5626, although the registrar does.">
+        <source>First Hop Lacks Outbound Support. The first outbound proxy the user is attempting to register through does not support the 'outbound' feature of RFC 5626, although the registrar does.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Fix Payload can't change">
+        <source>Fix Payload can't change</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Flow Failed">
+        <source>Flow Failed</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Flow Failed. A specific flow to a user agent has failed, although other flows may succeed.">
+        <source>Flow Failed. A specific flow to a user agent has failed, although other flows may succeed.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Forbidden">
+        <source>Forbidden</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Forbidden. The server understood the request, but is refusing to fulfil it.">
+        <source>Forbidden. The server understood the request, but is refusing to fulfil it.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Get Audio Statistics Failure">
+        <source>Get Audio Statistics Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Get Device Name Failure">
+        <source>Get Device Name Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Get Statistics Failure">
+        <source>Get Statistics Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Gone">
+        <source>Gone</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Gone. The user existed once, but is not available here any more.">
+        <source>Gone. The user existed once, but is not available here any more.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Header Value List is empty">
+        <source>Header Value List is empty</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="IVR Index is out of range">
+        <source>IVR Index is out of range</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="IVR Object is Null">
+        <source>IVR Object is Null</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="IVR Refer Failure">
+        <source>IVR Refer Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="IVR Waiting Timeout">
+        <source>IVR Waiting Timeout</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Initialize Stack Failure">
+        <source>Initialize Stack Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Initialize Winsock Failure">
+        <source>Initialize Winsock Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Interval Too Brief">
+        <source>Interval Too Brief</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Interval Too Brief. Expiration time of the resource is too short.">
+        <source>Interval Too Brief. Expiration time of the resource is too short.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Invalid Identity Header">
+        <source>Invalid Identity Header</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Invalid Identity Header. The server obtained a valid certificate that the request claimed was used to sign the request, but was unable to verify that signature.">
+        <source>Invalid Identity Header. The server obtained a valid certificate that the request claimed was used to sign the request, but was unable to verify that signature.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Invalid Session Id">
+        <source>Invalid Session Id</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Invalid URI">
+        <source>Invalid URI</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Invide Session not found">
+        <source>Invide Session not found</source>
+        <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Jive Mobile EULA">
         <source>Jive Mobile EULA</source>
         <note>Terms and Conditions EULA title</note>
       </trans-unit>
-      <trans-unit id="MBContactPickerPrompt">
-        <source>MBContactPickerPrompt</source>
-        <note>Prompt text shown in the prompt cell</note>
+      <trans-unit id="Length Required">
+        <source>Length Required</source>
+        <note>Sip Error</note>
       </trans-unit>
-      <trans-unit id="Merge Calls">
-        <source>Merge Calls</source>
+      <trans-unit id="Length Required. The server will not accept the request without a valid Content - Length.">
+        <source>Length Required. The server will not accept the request without a valid Content - Length.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Line Configuration is Empty">
+        <source>Line Configuration is Empty</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Line Session in empty">
+        <source>Line Session in empty</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Line is empty">
+        <source>Line is empty</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Loop Detected">
+        <source>Loop Detected</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Loop Detected. Server has detected a loop.">
+        <source>Loop Detected. Server has detected a loop.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Max Audio Port Not Even Number">
+        <source>Max Audio Port Not Even Number</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Max Audio Port out of range">
+        <source>Max Audio Port out of range</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Max Video Port Not Event Number">
+        <source>Max Video Port Not Event Number</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Max Video Port out of range">
+        <source>Max Video Port out of range</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Message Too Large">
+        <source>Message Too Large</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Message Too Large. The request message length is longer than the server can process.">
+        <source>Message Too Large. The request message length is longer than the server can process.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Method Not Allowed">
+        <source>Method Not Allowed</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Method Not Allowed. The method specified in the Request -Line is understood, but not allowed for the address identified by the Request-URI.">
+        <source>Method Not Allowed. The method specified in the Request -Line is understood, but not allowed for the address identified by the Request-URI.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Mime Type Unknown">
+        <source>Mime Type Unknown</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Mini Audio Port out of range">
+        <source>Mini Audio Port out of range</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Mini RTP Port is not even number">
+        <source>Mini RTP Port is not even number</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Mini Video Port Not Even Number">
+        <source>Mini Video Port Not Even Number</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Mini Video Port out of range">
+        <source>Mini Video Port out of range</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Network Interface is unavialable">
+        <source>Network Interface is unavialable</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="New Message from %@ \n%@">
+        <source>New Message from %1$@ 
+%2$@</source>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="No">
+        <source>No</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="No Active Line">
+        <source>No Active Line</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="No Conference call to end">
+        <source>No Conference call to end</source>
+        <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="No Connection">
         <source>No Connection</source>
         <note>No Connection</note>
       </trans-unit>
+      <trans-unit id="No Free Dialog Session">
+        <source>No Free Dialog Session</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="No Idle Line">
+        <source>No Idle Line</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="No Referral line">
+        <source>No Referral line</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Not Acceptable">
+        <source>Not Acceptable</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Not Acceptable Here">
+        <source>Not Acceptable Here</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Not Acceptable Here. Some aspect of the session description or the Request - URI is not acceptable.">
+        <source>Not Acceptable Here. Some aspect of the session description or the Request - URI is not acceptable.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Not Acceptable. The resource identified by the request is only capable of generating response entities that have content characteristics but not acceptable according to the Accept header field sent in the request.">
+        <source>Not Acceptable. The resource identified by the request is only capable of generating response entities that have content characteristics but not acceptable according to the Accept header field sent in the request.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Not Acceptable. The user's agent was contacted successfully but some aspects of the session description such as the requested media, bandwidth, or addressing style were not acceptable.">
+        <source>Not Acceptable. The user's agent was contacted successfully but some aspects of the session description such as the requested media, bandwidth, or addressing style were not acceptable.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Not Found">
+        <source>Not Found</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Not Found Subscribe Id">
+        <source>Not Found Subscribe Id</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Not Found. The server has definitive information that the user does not exist at the domain specified in the Request-URI.">
+        <source>Not Found. The server has definitive information that the user does not exist at the domain specified in the Request-URI.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Not Implemented">
+        <source>Not Implemented</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Not Implemented. The server does not have the ability to fulfill the request, such as because it does not recognize the request method.">
+        <source>Not Implemented. The server does not have the ability to fulfill the request, such as because it does not recognize the request method.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Not Initialized">
+        <source>Not Initialized</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Not Registered">
+        <source>Not Registered</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Not an Incomming Call">
+        <source>Not an Incomming Call</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Not supported callback mode">
+        <source>Not supported callback mode</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Number">
+        <source>Number</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="OK">
         <source>OK</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Oh-oh">
-        <source>Oh-oh</source>
+      <trans-unit id="Outgoing Audio is muted">
+        <source>Outgoing Audio is muted</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Outgoing Video is nuted">
+        <source>Outgoing Video is nuted</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Password is empty">
+        <source>Password is empty</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Payload Type invalid">
+        <source>Payload Type invalid</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Payload already exists. Duplicate payload values are not allowed">
+        <source>Payload already exists. Duplicate payload values are not allowed</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Payload is out of range (96-127)">
+        <source>Payload is out of range (96-127)</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Payment Required">
+        <source>Payment Required</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Payment Required.">
+        <source>Payment Required.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Phone could not be initialized">
+        <source>Phone could not be initialized</source>
+        <note>Phone Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Phone is already attempting to register">
+        <source>Phone is already attempting to register</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Phone is set to be Wifi Only">
+        <source>Phone is set to be Wifi Only</source>
+        <note>Phone Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Phone registration is unable to register at this time. Please check your network connection and try again. If problem persists, restart the application.">
+        <source>Phone registration is unable to register at this time. Please check your network connection and try again. If problem persists, restart the application.</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Please try again. If the problem persists, please contact support.">
+        <source>Please try again. If the problem persists, please contact support.</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Poor Network Quality">
+        <source>Poor Network Quality</source>
+        <note>Network Quality Indicator Popover Text</note>
+      </trans-unit>
+      <trans-unit id="Port out of range">
+        <source>Port out of range</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Precondition Failure">
+        <source>Precondition Failure</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Precondition Failure. The server is unable or unwilling to meet some constraints specified in the offer.">
+        <source>Precondition Failure. The server is unable or unwilling to meet some constraints specified in the offer.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Provide Referrer Identity">
+        <source>Provide Referrer Identity</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Provide Referrer Identity. The server did not receive a valid Referred-By token on the request.">
+        <source>Provide Referrer Identity. The server did not receive a valid Referred-By token on the request.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Proxy Authentication Required">
+        <source>Proxy Authentication Required</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Proxy Authentication Required. The request requires user authentication.">
+        <source>Proxy Authentication Required. The request requires user authentication.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Registering...">
+        <source>Registering...</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="RINGING">
-        <source>RINGING</source>
+      <trans-unit id="Registration Failure">
+        <source>Registration Failure</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Send">
-        <source>Send</source>
+      <trans-unit id="Request - URI Too Long. The server is refusing to service the request because the Request - URI is longer than the server is willing to interpret.">
+        <source>Request - URI Too Long. The server is refusing to service the request because the Request - URI is longer than the server is willing to interpret.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Request Entity Too Large">
+        <source>Request Entity Too Large</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Request Entity Too Large. Request body too large.">
+        <source>Request Entity Too Large. Request body too large.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Request Pending">
+        <source>Request Pending</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Request Pending. Server has some pending request from the same dialog.">
+        <source>Request Pending. Server has some pending request from the same dialog.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Request Terminated">
+        <source>Request Terminated</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Request Terminated. Request has terminated by bye or cancel.">
+        <source>Request Terminated. Request has terminated by bye or cancel.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Request Timeout">
+        <source>Request Timeout</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Request Timeout. Couldn't find the user in time. The server could not produce a response within a suitable amount of time, for example, if it could not determine the location of the user in time.">
+        <source>Request Timeout. Couldn't find the user in time. The server could not produce a response within a suitable amount of time, for example, if it could not determine the location of the user in time.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Request-URI Too Long">
+        <source>Request-URI Too Long</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="SDK Object is Null">
+        <source>SDK Object is Null</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="SMS on %@">
+        <source>SMS on %@</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Server Not Reachable">
-        <source>Server Not Reachable</source>
+      <trans-unit id="Security Agreement Required">
+        <source>Security Agreement Required</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Security Agreement Required.">
+        <source>Security Agreement Required.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Selecting Line...">
+        <source>Selecting Line...</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Split Calls">
-        <source>Split Calls</source>
+      <trans-unit id="Send Avi File Failure">
+        <source>Send Avi File Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Server Internal Error">
+        <source>Server Internal Error</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Server Internal Error. The server could not fulfill the request due to some unexpected condition.">
+        <source>Server Internal Error. The server could not fulfill the request due to some unexpected condition.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Server Time-out">
+        <source>Server Time-out</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Server Time-out. The server attempted to access another server in attempting to process the request, and did not receive a prompt response.">
+        <source>Server Time-out. The server attempted to access another server in attempting to process the request, and did not receive a prompt response.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Server is empty">
+        <source>Server is empty</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Service Unavailable">
+        <source>Service Unavailable</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Service Unavailable. The server is undergoing maintenance or is temporarily overloaded and so cannot process the request.">
+        <source>Service Unavailable. The server is undergoing maintenance or is temporarily overloaded and so cannot process the request.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Session Interval Too Small">
+        <source>Session Interval Too Small</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Session Interval Too Small. The received request contains a Session-Expires header field with a duration below the minimum timer.">
+        <source>Session Interval Too Small. The received request contains a Session-Expires header field with a duration below the minimum timer.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Session Timer Value is to small">
+        <source>Session Timer Value is to small</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Session numbers out of range">
+        <source>Session numbers out of range</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Sip Header Parser is empty">
+        <source>Sip Header Parser is empty</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Sip Header does not exist">
+        <source>Sip Header does not exist</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Sip Header is badly formed">
+        <source>Sip Header is badly formed</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Sip Header name is empty">
+        <source>Sip Header name is empty</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Sip Header value is empty">
+        <source>Sip Header value is empty</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Sip Header value list is NULL">
+        <source>Sip Header value list is NULL</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Sip Message is Empty">
+        <source>Sip Message is Empty</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Sip Server Path is Empty">
+        <source>Sip Server Path is Empty</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Stack Exception">
+        <source>Stack Exception</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Start Play AVI Failure">
+        <source>Start Play AVI Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Start Send Failure">
+        <source>Start Send Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Start Video Capture Failure">
+        <source>Start Video Capture Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Temporarily Unavailable">
+        <source>Temporarily Unavailable</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Temporarily Unavailable. Callee currently unavailable.">
+        <source>Temporarily Unavailable. Callee currently unavailable.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Too Many Hops">
+        <source>Too Many Hops</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Too Many Hops. Max - Forwards header has reached the value '0'.">
+        <source>Too Many Hops. Max - Forwards header has reached the value '0'.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Transfering...">
+        <source>Transfering...</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Unable make transfer">
-        <source>Unable make transfer</source>
+      <trans-unit id="Trial Version License Key">
+        <source>Trial Version License Key</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Unable to answer the call">
+        <source>Unable to answer the call</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Unable to connect to the\n network at this time.">
+        <source>Unable to connect to the
+ network at this time.</source>
+        <note>Phone Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Unable to connect to this line at this time. Please Try again.">
+        <source>Unable to connect to this line at this time. Please Try again.</source>
+        <note>Phone Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Unable to make a call">
+        <source>Unable to make a call</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Unable to perform transfer at this time. Please Try Again.">
+        <source>Unable to perform transfer at this time. Please Try Again.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Unable to create call">
-        <source>Unable to create call</source>
+      <trans-unit id="Unable to select line. Please call Customer Care. You may not have a device associated with this account.">
+        <source>Unable to select line. Please call Customer Care. You may not have a device associated with this account.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Unable to make blind transfer">
-        <source>Unable to make blind transfer</source>
+      <trans-unit id="Unauthorized">
+        <source>Unauthorized</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Unauthorized. The request requires user authentication.">
+        <source>Unauthorized. The request requires user authentication.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Undecipherable">
+        <source>Undecipherable</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Undecipherable. Request contains an encrypted MIME body, which recipient can not decrypt.">
+        <source>Undecipherable. Request contains an encrypted MIME body, which recipient can not decrypt.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Unknown">
+        <source>Unknown</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Unregistered">
-        <source>Unregistered</source>
-        <note>No comment provided by engineer.</note>
+      <trans-unit id="Unknown Error Has Occured">
+        <source>Unknown Error Has Occured</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Unknown Resource -Priority. There was a resource - priority option tag, but no Resource-Priority header.">
+        <source>Unknown Resource -Priority. There was a resource - priority option tag, but no Resource-Priority header.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Unknown Resource-Priority">
+        <source>Unknown Resource-Priority</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Unknown Video Record Codec">
+        <source>Unknown Video Record Codec</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Unsupported Certificate">
+        <source>Unsupported Certificate</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Unsupported Certificate. The server was unable to validate a certificate for the domain that signed the request.">
+        <source>Unsupported Certificate. The server was unable to validate a certificate for the domain that signed the request.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Unsupported Media Type">
+        <source>Unsupported Media Type</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Unsupported Media Type. Request body in a format not supported.">
+        <source>Unsupported Media Type. Request body in a format not supported.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Unsupported URI Scheme">
+        <source>Unsupported URI Scheme</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Unsupported URI Scheme. Request - URI is unknown to the server.">
+        <source>Unsupported URI Scheme. Request - URI is unknown to the server.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Unsupported Video Capture Resolution">
+        <source>Unsupported Video Capture Resolution</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Unsupported Video Capture Rotation">
+        <source>Unsupported Video Capture Rotation</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Use Identity Header">
+        <source>Use Identity Header</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Use Identity Header. The server policy requires an Identity header, and one has not been provided.">
+        <source>Use Identity Header. The server policy requires an Identity header, and one has not been provided.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="User Name Auth Name is Empty">
+        <source>User Name Auth Name is Empty</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="User is Empty">
+        <source>User is Empty</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
+      <trans-unit id="Version Not Supported">
+        <source>Version Not Supported</source>
+        <note>Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Version Not Supported. The SIP protocol version in the request is not supported by the server.">
+        <source>Version Not Supported. The SIP protocol version in the request is not supported by the server.</source>
+        <note>Sip Error Description</note>
+      </trans-unit>
+      <trans-unit id="Video Channel Not Found">
+        <source>Video Channel Not Found</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Video Code is Empty but video is enabled">
+        <source>Video Code is Empty but video is enabled</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Video File Name Empty">
+        <source>Video File Name Empty</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Video Get Device Id Failure">
+        <source>Video Get Device Id Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Video Get Device Name Failure">
+        <source>Video Get Device Name Failure</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Video Handle is NULL">
+        <source>Video Handle is NULL</source>
+        <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Voicemail">
         <source>Voicemail</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Warm Transfer failed">
-        <source>Warm Transfer failed</source>
+      <trans-unit id="Warning">
+        <source>Warning</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Wrong DTMF Tone">
+        <source>Wrong DTMF Tone</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Wrong License Key">
+        <source>Wrong License Key</source>
+        <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Yes">
+        <source>Yes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Yesterday">
         <source>Yesterday</source>
         <note>Yesterday</note>
+      </trans-unit>
+      <trans-unit id="me">
+        <source>me</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="please verify your internet connection">
         <source>please verify your internet connection</source>
@@ -1207,13 +2612,42 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOneTests/JiveOneTests-Info.plist" source-language="en" datatype="plaintext" target-language="pt">
+  <file original="JiveOne/Phone.strings" source-language="en" datatype="plaintext" target-language="Portuguese">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
     <body>
-      <trans-unit id="CFBundleShortVersionString">
-        <source>1.0</source>
+      <trans-unit id="CANCELED">
+        <source>CANCELED</source>
+        <note>Call Status Display</note>
+      </trans-unit>
+      <trans-unit id="Conference">
+        <source>Conference</source>
+        <note>Conference Caller id.</note>
+      </trans-unit>
+      <trans-unit id="Connecting">
+        <source>Connecting</source>
+        <note>Registration Status Display</note>
+      </trans-unit>
+      <trans-unit id="Disabled">
+        <source>Disabled</source>
+        <note>Registration Status Display</note>
+      </trans-unit>
+      <trans-unit id="Merge Calls">
+        <source>Merge Calls</source>
+        <note>Merge Call Display Button</note>
+      </trans-unit>
+      <trans-unit id="RINGING">
+        <source>RINGING</source>
+        <note>Call Status Display</note>
+      </trans-unit>
+      <trans-unit id="Split Calls">
+        <source>Split Calls</source>
+        <note>Merge Call Display Button</note>
+      </trans-unit>
+      <trans-unit id="Unregistered">
+        <source>Unregistered</source>
+        <note>Registration Status Display</note>
       </trans-unit>
     </body>
   </file>
