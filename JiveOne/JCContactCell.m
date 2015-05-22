@@ -10,16 +10,16 @@
 
 @implementation JCContactCell
 
-NSString *const kJCContactCellFavoritButtonText = @"★";
+NSString *const kJCContactCellFavoriteButtonText = @"★";
 
 -(void)awakeFromNib
 {
     //selected star should be yellow unselected star should be gray
     UIColor *selectedStarColor = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
-    NSMutableAttributedString *selectedAttributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:kJCContactCellFavoritButtonText attributes:@{NSForegroundColorAttributeName : selectedStarColor}];
+    NSMutableAttributedString *selectedAttributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:kJCContactCellFavoriteButtonText attributes:@{NSForegroundColorAttributeName : selectedStarColor}];
     UIColor *unselectedStarColor = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
     
-    NSMutableAttributedString *unselectedAttributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:kJCContactCellFavoritButtonText attributes:@{NSForegroundColorAttributeName : unselectedStarColor}];
+    NSMutableAttributedString *unselectedAttributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:kJCContactCellFavoriteButtonText attributes:@{NSForegroundColorAttributeName : unselectedStarColor}];
     [self.favoriteBtn setAttributedTitle:selectedAttributedStarSelectedState forState:UIControlStateSelected];
     [self.favoriteBtn setAttributedTitle:unselectedAttributedStarSelectedState forState:UIControlStateNormal];
 }

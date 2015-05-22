@@ -15,9 +15,6 @@
 // Clients
 #import "Voicemail+V5Client.h"
 
-NSString *const  kConfidenceLabelPreText = @"Confidence";
-NSString *const kWordCountLabelPreText = @"Word count";
-
 @interface JCVoicemailDetailViewController () <JCVoicemailAudioPlayerDelegate>
 {
     JCVoicemailAudioPlayer *_player;
@@ -46,8 +43,8 @@ NSString *const kWordCountLabelPreText = @"Word count";
     [percent setNumberStyle:NSNumberFormatterPercentStyle];
     [percent setMaximumFractionDigits:2];
    
-    self.transcriptionConfidence.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(kConfidenceLabelPreText, nil), [percent stringFromNumber:[NSNumber numberWithFloat:transcription.confidence]]];
-    self.transcriptionWordCount.text  = [NSString stringWithFormat:@"%@: %i", NSLocalizedString(kWordCountLabelPreText, nil), transcription.wordCount];
+    self.transcriptionConfidence.text = [NSString stringWithFormat:self.transcriptionConfidence.text, [percent stringFromNumber:[NSNumber numberWithFloat:transcription.confidence]]];
+    self.transcriptionWordCount.text  = [NSString stringWithFormat:self.transcriptionWordCount.text, transcription.wordCount];
     
     // If we have the voicemail data, load the player and prepare for playback.
     if (voicemail.data.length > 0) {
@@ -58,7 +55,7 @@ NSString *const kWordCountLabelPreText = @"Word count";
     // If we do not have voicemail data, use the v5 client to download the voicemail data. Disable
     // parts of the UI to show user it is unavailable for playback until downloaded.
     self.playPauseButton.enabled = FALSE;
-    [self showStatus:@"Downloading..."];
+    [self showStatus:NSLocalizedString(@"Downloading...", nil)];
     [voicemail downloadVoicemailAudio:^(BOOL success, NSError *error) {
         if (success) {
             [self hideStatus];

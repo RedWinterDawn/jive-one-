@@ -1,0 +1,75 @@
+
+/* Class = "UILabel"; text = "Default Did for sending SMS"; ObjectID = "7d4-HB-7qj"; */
+"7d4-HB-7qj.text" = "Par défaut le numéro de téléphone pour envoyer des SMS";
+
+/* Class = "UILabel"; text = "Mute Microphone"; ObjectID = "9mr-zh-J8Q"; */
+"9mr-zh-J8Q.text" = "Muet Microphone";
+
+/* Class = "UILabel"; text = "Make/Receive calls via Wi-Fi only"; ObjectID = "DXx-lH-VMg"; */
+"DXx-lH-VMg.text" = "Faire/Recevoir des appels via une connexion Wi-Fi uniquement";
+
+/* Class = "UILabel"; text = "Logout"; ObjectID = "F6R-j9-aOO"; */
+"F6R-j9-aOO.text" = "Déconnexion";
+
+/* Class = "UITableViewSection"; footerTitle = "Mutes your phone when someone calls you through the intercom. Requires you to unmute to talk to them."; ObjectID = "FEf-a1-jnp"; */
+"FEf-a1-jnp.footerTitle" = "Permet de couper votre téléphone lorsque quelqu'un vous appelle grâce à l'interphone. Vous oblige à réactiver leur parler.";
+
+/* Class = "UINavigationItem"; title = "Default DID"; ObjectID = "FiV-Hw-tUc"; */
+"FiV-Hw-tUc.title" = "Par défaut Nombre de SMS";
+
+/* Class = "UILabel"; text = "Blocked Numbers"; ObjectID = "Krx-xe-7BT"; */
+"Krx-xe-7BT.text" = "Numéros bloqués";
+
+/* Class = "UINavigationItem"; title = "Blocked Numbers"; ObjectID = "Qv8-xZ-A0F"; */
+"Qv8-xZ-A0F.title" = "Numéros bloqués";
+
+/* Class = "UITableViewSection"; headerTitle = "Account"; ObjectID = "S1V-c3-O7g"; */
+"S1V-c3-O7g.headerTitle" = "Compte";
+
+/* Class = "UILabel"; text = "Allow Intercom"; ObjectID = "TuP-tT-lh1"; */
+"TuP-tT-lh1.text" = "Autoriser Interphone";
+
+/* Class = "UILabel"; text = "Leave Feedback"; ObjectID = "W8s-nF-Vea"; */
+"W8s-nF-Vea.text" = "Laisser Les Commentaires";
+
+/* Class = "UILabel"; text = "Intercom"; ObjectID = "ZFd-rf-5RO"; */
+"ZFd-rf-5RO.text" = "Interphone";
+
+/* Class = "UITableViewSection"; headerTitle = "General"; ObjectID = "biz-br-QA0"; */
+"biz-br-QA0.headerTitle" = "Général";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "cQM-kO-QJN"; */
+"cQM-kO-QJN.title" = "Réglages";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "f1Z-xV-kuN"; */
+"f1Z-xV-kuN.title" = "Dos";
+
+/* Class = "UINavigationItem"; title = "Intercom"; ObjectID = "iuF-Pi-BxI"; */
+"iuF-Pi-BxI.title" = "Interphone";
+
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "jhL-Fu-sxw"; */
+"jhL-Fu-sxw.title" = "Réglages";
+
+/* Class = "UILabel"; text = "User"; ObjectID = "kU4-aW-3vj"; */
+"kU4-aW-3vj.text" = "Utilisateur";
+
+/* Class = "UITableViewSection"; headerTitle = "Calling"; ObjectID = "lZS-QW-xga"; */
+"lZS-QW-xga.headerTitle" = "Téléphone";
+
+/* Class = "UINavigationItem"; title = "Select Line"; ObjectID = "qWk-EZ-l9T"; */
+"qWk-EZ-l9T.title" = "Sélectionnez Extension";
+
+/* Class = "UITableViewSection"; footerTitle = "When enabled, people can dial *%@ and start talking to you."; ObjectID = "sra-ba-8Uy"; */
+"sra-ba-8Uy.footerTitle" = "Lorsqu'elle est activée, les gens peuvent composer le *%@ et commencer à parler de vous.";
+
+/* Class = "UITableViewSection"; headerTitle = "SMS"; ObjectID = "teJ-Rq-6NK"; */
+"teJ-Rq-6NK.headerTitle" = "SMS";
+
+/* Class = "UILabel"; text = "End User License Agreement"; ObjectID = "urK-HX-F87"; */
+"urK-HX-F87.text" = "Contrat de licence de l'utilisateur";
+
+/* Class = "UILabel"; text = "Show other people's availability"; ObjectID = "yl8-b8-1UC"; */
+"yl8-b8-1UC.text" = "Afficher la disponibilité d'autres personnes";
+
+/* Class = "UILabel"; text = "Extension"; ObjectID = "zOl-KB-sdE"; */
+"zOl-KB-sdE.text" = "Extension";

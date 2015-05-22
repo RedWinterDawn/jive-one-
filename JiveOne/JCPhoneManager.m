@@ -13,9 +13,9 @@
 
 #define MAX_LINES 2
 #define DEFAULT_PHONE_MANAGER_STORYBOARD_NAME @"PhoneManager"
+#define PHONE_STRINGS_NAME @"Phone"
 
 #import "JCPhoneManager.h"
-#import "JCPhoneManagerError.h"
 
 // Managers
 #import "JCSipManager.h"
@@ -132,12 +132,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
                                   dismissed:^(NSInteger buttonIndex) {
                                       [weakSelf disconnect];
                                   }
-                          cancelButtonTitle:@"OK"
+                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
                           otherButtonTitles:nil];
             }
             
             else if (error.code == JC_SIP_REGISTRATION_FAILURE) {
-                [JCAlertView alertWithTitle:@"Registration Failure" error:error];
+                [JCAlertView alertWithTitle:NSLocalizedStringFromTable(@"Registration Failure", PHONE_STRINGS_NAME, nil) error:error];
             }
             
             // If we get a no network error, show an alert.
@@ -187,7 +187,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
    
     // If we made it here, we do not have a line configuration, we need to request it. If the
     // request was successfull, we try to register.
-    [UIApplication showStatus:@"Selecting Line..."];
+    [UIApplication showStatus:NSLocalizedStringFromTable(@"Selecting Line...", PHONE_STRINGS_NAME, nil)];
     [LineConfiguration downloadLineConfigurationForLine:line completion:^(BOOL success, NSError *error) {
         if (success) {
             [self registerWithLine:line];
@@ -200,7 +200,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 -(void)registerWithLine:(Line *)line
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegisteringNotification object:self];
-    [UIApplication showStatus:@"Registering..."];
+    [UIApplication showStatus:NSLocalizedStringFromTable(@"Registering...", PHONE_STRINGS_NAME, nil)];
     [self.sipManager registerToProvisioning:line];
 }
 
@@ -360,13 +360,16 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 -(void)blindTransferToNumber:(id<JCPhoneNumberDataSource>)number completion:(CompletionHandler)completion
 {
-    [UIApplication showStatus:@"Transfering..."];
+    [UIApplication showStatus:NSLocalizedStringFromTable(@"Transfering...", PHONE_STRINGS_NAME, nil)];
     __autoreleasing NSError *error;
     BOOL success = [self.sipManager startBlindTransferToNumber:number error:&error];
     if (completion) {
         if (!success) {
             [UIApplication hideStatus];
-            completion(NO, [JCPhoneManagerError errorWithCode:JC_PHONE_BLIND_TRANSFER_FAILED reason:@"Unable to perform transfer at this time. Please Try Again." underlyingError:error]);
+            completion(NO, [JCPhoneManagerError
+                            errorWithCode:JC_PHONE_BLIND_TRANSFER_FAILED
+                            reason:NSLocalizedStringFromTable( @"Unable to perform transfer at this time. Please Try Again.", PHONE_STRINGS_NAME, nil)
+                            underlyingError:error]);
         } else {
             completion(YES, nil);
         }
@@ -651,7 +654,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
         if (localNotif){
-            localNotif.alertBody =[NSString  stringWithFormat:@"Call from %@ :%@", lineSession.number.titleText, lineSession.number.detailText];
+            localNotif.alertBody =[NSString  stringWithFormat:NSLocalizedStringFromTable(@"Call from %@ :%@", PHONE_STRINGS_NAME, @"Local notification text"), lineSession.number.titleText, lineSession.number.detailText];
             localNotif.soundName = UILocalNotificationDefaultSoundName;
             localNotif.applicationIconBadgeNumber = 1;
             [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
@@ -1011,6 +1014,60 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
                                ((UITableView *)sender).userInteractionEnabled = TRUE;
                            }
                        }];
+}
+
+@end
+
+NSString *const kJCPhoneManagerErrorDomain = @"PhoneManagerDomain";
+
+@implementation JCPhoneManagerError
+
++(instancetype)errorWithCode:(NSInteger)code userInfo:(NSDictionary *)userInfo
+{
+    return [self errorWithDomain:kJCPhoneManagerErrorDomain code:code userInfo:userInfo];
+}
+
++(instancetype)errorWithCode:(NSInteger)code reason:(NSString *)reason underlyingError:(NSError *)error
+{
+    return [self errorWithDomain:kJCPhoneManagerErrorDomain code:code reason:reason underlyingError:error];
+}
+
++(NSString *)failureReasonFromCode:(NSInteger)code
+{
+    switch (code) {
+            
+            // Initialization
+        case JC_PHONE_SIP_NOT_INITIALIZED:
+            return NSLocalizedStringFromTable(@"Phone could not be initialized", PHONE_STRINGS_NAME, @"Phone Manager Error");
+            
+            // Registration
+        case JC_PHONE_WIFI_DISABLED:
+            return NSLocalizedStringFromTable(@"Phone is set to be Wifi Only", PHONE_STRINGS_NAME, @"Phone Manager Error");
+            
+        case JC_PHONE_MANAGER_NO_NETWORK:
+            return NSLocalizedStringFromTable(@"Unable to connect to the\n network at this time.", PHONE_STRINGS_NAME, @"Phone Manager Error");
+            
+        case JC_PHONE_LINE_CONFIGURATION_REQUEST_ERROR:
+            return NSLocalizedStringFromTable(@"Unable to connect to this line at this time. Please Try again.", PHONE_STRINGS_NAME, @"Phone Manager Error");
+            
+            // Conference Calls
+        case JC_PHONE_CONFERENCE_CALL_ALREADY_EXISTS:
+            return NSLocalizedStringFromTable(@"Conference Call already exists", PHONE_STRINGS_NAME, @"Phone Manager Error");
+            
+        case JC_PHONE_FAILED_TO_CREATE_CONFERENCE_CALL:
+            return NSLocalizedStringFromTable(@"Failed to create conference call", PHONE_STRINGS_NAME, @"Phone Manager Error");
+            
+        case JC_PHONE_NO_CONFERENCE_CALL_TO_END:
+            return NSLocalizedStringFromTable(@"No Conference call to end", PHONE_STRINGS_NAME, @"Phone Manager Error");
+            
+        case JC_PHONE_FAILED_ENDING_CONFERENCE_CALL:
+            return NSLocalizedStringFromTable(@"Failed ending conference call", PHONE_STRINGS_NAME, @"Phone Manager Error");
+            
+        default:
+            return NSLocalizedStringFromTable(@"An unknown error has occured. If this problem persists, please contact support.", PHONE_STRINGS_NAME, @"Phone Manager Error");
+            
+    }
+    return nil;
 }
 
 @end

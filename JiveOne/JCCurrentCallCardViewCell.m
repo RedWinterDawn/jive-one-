@@ -196,7 +196,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
         case JCCallCanceled:
         {
             [self hideHoldButton:NO];
-            self.elapsedTimeLabel.text = NSLocalizedString(@"CANCELED", nil);
+            self.elapsedTimeLabel.text = NSLocalizedStringFromTable(@"CANCELED", @"Phone", @"Call Status Display");
             break;
         }
         case JCCallConnected:
@@ -213,7 +213,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
         case JCCallRinging:
         case JCCallAnswered:
             [self hideHoldButton:NO];
-            self.elapsedTimeLabel.text = NSLocalizedString(@"RINGING", nil);
+            self.elapsedTimeLabel.text = NSLocalizedStringFromTable(@"RINGING", @"Phone", @"Call Status Display");
             break;
         default:
             break;

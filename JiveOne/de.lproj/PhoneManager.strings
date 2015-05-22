@@ -6,19 +6,19 @@
 "4S2-H7-xRN.text" = "Lautsprecher";
 
 /* Class = "IBUILabel"; text = "Add Call"; ObjectID = "7gw-EZ-yNz"; */
-"7gw-EZ-yNz.text" = "Add Call";
+"7gw-EZ-yNz.text" = "Hinzufügen";
 
 /* Class = "IBUILabel"; text = "Swap Calls"; ObjectID = "Bcm-TB-mqA"; */
-"Bcm-TB-mqA.text" = "Swap Calls";
+"Bcm-TB-mqA.text" = "Tausch";
 
 /* Class = "IBUILabel"; text = "Finish Transfer"; ObjectID = "Q2z-kh-jIP"; */
 "Q2z-kh-jIP.text" = "Finish Transfer";
 
 /* Class = "IBUILabel"; text = "Merge Calls"; ObjectID = "UVV-07-6qc"; */
-"UVV-07-6qc.text" = "Merge Calls";
+"UVV-07-6qc.text" = "Verschmelzen";
 
 /* Class = "IBUILabel"; text = "TRANSFERRED TO"; ObjectID = "X2r-4X-bhX"; */
-"X2r-4X-bhX.text" = "TRANSFERRED TO";
+"X2r-4X-bhX.text" = "ZU ÜBERTRAGEN";
 
 /* Class = "IBUILabel"; text = "Keypad"; ObjectID = "Zoo-r0-Qec"; */
 "Zoo-r0-Qec.text" = "Ziffernblock";
@@ -27,7 +27,7 @@
 "lmW-vI-lq5.text" = "Stumm";
 
 /* Class = "IBUILabel"; text = "Warm Transfer"; ObjectID = "mv1-cF-rXS"; */
-"mv1-cF-rXS.text" = "Warm Transfer";
+"mv1-cF-rXS.text" = "Verweisen";
 
 /* Class = "IBUILabel"; text = "Transfer"; ObjectID = "tWV-rw-XMj"; */
 "tWV-rw-XMj.text" = "Transfer";

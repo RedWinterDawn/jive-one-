@@ -1,249 +1,33 @@
 
-/* Class = "IBUILabel"; text = "Label"; ObjectID = "0xL-3Y-RhU"; */
-"0xL-3Y-RhU.text" = "Label";
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "4sy-b5-AC6"; */
+"4sy-b5-AC6.title" = "Definições";
 
-/* Class = "IBUIView"; accessibilityLabel = "End User License Agreement"; ObjectID = "1xp-K8-Zse"; */
-"1xp-K8-Zse.accessibilityLabel" = "End User License Agreement";
+/* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "9yC-Om-1a7"; */
+"9yC-Om-1a7.title" = "Contatos";
 
-/* Class = "IBUILabel"; accessibilityLabel = "Callers Number"; ObjectID = "2fs-lR-lrx"; */
-"2fs-lR-lrx.accessibilityLabel" = "Callers Number";
-
-/* Class = "IBUILabel"; text = "Callers Number"; ObjectID = "2fs-lR-lrx"; */
-"2fs-lR-lrx.text" = "Callers Number";
-
-/* Class = "IBUITabBarItem"; title = "Settings"; ObjectID = "30a-yD-tba"; */
-"30a-yD-tba.title" = "Settings";
-
-/* Class = "IBUIButton"; normalTitle = "Terms and Conditions."; ObjectID = "3bm-z6-yMp"; */
-"3bm-z6-yMp.normalTitle" = "Terms and Conditions.";
-
-/* Class = "IBUILabel"; text = "(801) 349-7643"; ObjectID = "3hb-FL-acB"; */
-"3hb-FL-acB.text" = "(801) 349-7643";
-
-/* Class = "IBUIButton"; normalTitle = "Call Voicemail"; ObjectID = "53q-MK-pw7"; */
-"53q-MK-pw7.normalTitle" = "Call Voicemail";
-
-/* Class = "IBUILabel"; text = "Phone"; ObjectID = "5Sc-JQ-q86"; */
-"5Sc-JQ-q86.text" = "Phone";
-
-/* Class = "IBUISearchBar"; placeholder = "Search"; ObjectID = "5ds-mG-BrS"; */
-"5ds-mG-BrS.placeholder" = "Search";
-
-/* Class = "IBUILabel"; text = "Mute"; ObjectID = "7Kp-Io-fyp"; */
-"7Kp-Io-fyp.text" = "Mute";
-
-/* Class = "IBUILabel"; text = "Title"; ObjectID = "8Re-eZ-aiX"; */
-"8Re-eZ-aiX.text" = "Title";
-
-/* Class = "IBUILabel"; text = "Cancel"; ObjectID = "BF1-XV-Z7b"; */
-"BF1-XV-Z7b.text" = "Cancel";
-
-/* Class = "IBUILabel"; text = "Voicemail:"; ObjectID = "BhM-7z-evk"; */
+/* Class = "UILabel"; text = "Voicemail:"; ObjectID = "BhM-7z-evk"; */
 "BhM-7z-evk.text" = "Voicemail:";
 
-/* Class = "IBUILabel"; text = "Merge Calls"; ObjectID = "C17-8W-dR3"; */
-"C17-8W-dR3.text" = "Merge Calls";
+/* Class = "UITabBarItem"; title = "Phone"; ObjectID = "CoS-1p-0WQ"; */
+"CoS-1p-0WQ.title" = "Telefone";
 
-/* Class = "IBUILabel"; text = "Label"; ObjectID = "De6-51-GXi"; */
-"De6-51-GXi.text" = "Label";
+/* Class = "UINavigationItem"; title = "Recent Activity"; ObjectID = "JYv-VQ-bNP"; */
+"JYv-VQ-bNP.title" = "Atividade Recente";
 
-/* Class = "IBUILabel"; text = "0:00"; ObjectID = "Dq7-oS-hNz"; */
-"Dq7-oS-hNz.text" = "0:00";
+/* Class = "UINavigationItem"; title = "My Jive"; ObjectID = "JyO-Cf-e0j"; */
+"JyO-Cf-e0j.title" = "Meu Jive";
 
-/* Class = "IBUILabel"; text = "3302/Jive Communications, Inc"; ObjectID = "Efw-Qd-mHZ"; */
-"Efw-Qd-mHZ.text" = "3302/Jive Communications, Inc";
+/* Class = "UILabel"; text = "Phone"; ObjectID = "KVp-sT-UM5"; */
+"KVp-sT-UM5.text" = "Telefone";
 
-/* Class = "IBUILabel"; text = "Current Caller's Name"; ObjectID = "GKd-Ca-PWO"; */
-"GKd-Ca-PWO.text" = "Current Caller's Name";
+/* Class = "UILabel"; text = "Missed:"; ObjectID = "XiM-TR-LPH"; */
+"XiM-TR-LPH.text" = "Faltou:";
 
-/* Class = "IBUILabel"; text = "Remember me"; ObjectID = "HlT-GQ-JCc"; */
-"HlT-GQ-JCc.text" = "Remember me";
+/* Class = "UITabBarItem"; title = "Messages"; ObjectID = "akK-mD-dtz"; */
+"akK-mD-dtz.title" = "Mensagens";
 
-/* Class = "IBUILabel"; text = "Add Call"; ObjectID = "Hvu-aR-OOp"; */
-"Hvu-aR-OOp.text" = "Add Call";
+/* Class = "UILabel"; text = "SMS"; ObjectID = "dcG-34-Idc"; */
+"dcG-34-Idc.text" = "SMS:";
 
-/* Class = "IBUINavigationItem"; title = "Recent Activity"; ObjectID = "JYv-VQ-bNP"; */
-"JYv-VQ-bNP.title" = "Recent Activity";
-
-/* Class = "IBUIViewController"; title = "Transfer"; ObjectID = "Jhp-k4-hWJ"; */
-"Jhp-k4-hWJ.title" = "Transfer";
-
-/* Class = "IBUINavigationItem"; title = "Apps"; ObjectID = "JyO-Cf-e0j"; */
-"JyO-Cf-e0j.title" = "Apps";
-
-/* Class = "IBUILabel"; text = "Phone"; ObjectID = "KVp-sT-UM5"; */
-"KVp-sT-UM5.text" = "Phone";
-
-/* Class = "IBUILabel"; text = "name"; ObjectID = "Kbp-js-aK1"; */
-"Kbp-js-aK1.text" = "name";
-
-/* Class = "IBUINavigationItem"; title = "Voicemail"; ObjectID = "LA4-gt-zUJ"; */
-"LA4-gt-zUJ.title" = "Voicemail";
-
-/* Class = "IBUIButton"; accessibilityLabel = "Cancel Button"; ObjectID = "LP1-U3-wbS"; */
-"LP1-U3-wbS.accessibilityLabel" = "Cancel Button";
-
-/* Class = "IBUINavigationItem"; title = "Call History"; ObjectID = "Lhi-Ie-TBG"; */
-"Lhi-Ie-TBG.title" = "Call History";
-
-/* Class = "IBUILabel"; text = "Voicemail Cell"; ObjectID = "Lsq-5H-Udv"; */
-"Lsq-5H-Udv.text" = "Voicemail Cell";
-
-/* Class = "IBUITextField"; accessibilityLabel = "emailTextField"; ObjectID = "OzV-9h-pmX"; */
-"OzV-9h-pmX.accessibilityLabel" = "emailTextField";
-
-/* Class = "IBUITextField"; placeholder = "email"; ObjectID = "OzV-9h-pmX"; */
-"OzV-9h-pmX.placeholder" = "email";
-
-/* Class = "IBUILabel"; text = "Transfer"; ObjectID = "PLC-2m-6mE"; */
-"PLC-2m-6mE.text" = "Transfer";
-
-/* Class = "IBUILabel"; text = "Speaker"; ObjectID = "QMQ-Qw-Dkd"; */
-"QMQ-Qw-Dkd.text" = "Speaker";
-
-/* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "QcP-Te-2pB"; */
-"QcP-Te-2pB.title" = "Settings";
-
-/* Class = "IBUILabel"; text = "Label"; ObjectID = "TBH-my-sze"; */
-"TBH-my-sze.text" = "Label";
-
-/* Class = "IBUILabel"; text = "Dan Leonard"; ObjectID = "TmI-c8-kkS"; */
-"TmI-c8-kkS.text" = "Dan Leonard";
-
-/* Class = "IBUILabel"; text = "3:03 PM"; ObjectID = "VOs-kP-Qid"; */
-"VOs-kP-Qid.text" = "3:03 PM";
-
-/* Class = "IBUILabel"; text = "Transferd Number"; ObjectID = "W9Q-fu-t2u"; */
-"W9Q-fu-t2u.text" = "Transferd Number";
-
-/* Class = "IBUILabel"; text = "0.05"; ObjectID = "Xd1-F6-dWo"; */
-"Xd1-F6-dWo.text" = "0.05";
-
-/* Class = "IBUILabel"; text = "Missed:"; ObjectID = "XiM-TR-LPH"; */
-"XiM-TR-LPH.text" = "Missed:";
-
-/* Class = "IBUILabel"; text = "TRANSFERRED TO"; ObjectID = "Zey-Qd-g8J"; */
-"Zey-Qd-g8J.text" = "TRANSFERRED TO";
-
-/* Class = "IBUILabel"; text = "Swap Calls"; ObjectID = "aTR-Bp-dDz"; */
-"aTR-Bp-dDz.text" = "Swap Calls";
-
-/* Class = "IBUILabel"; text = "By signing in you agree to our"; ObjectID = "bxS-qG-c0L"; */
-"bxS-qG-c0L.text" = "By signing in you agree to our";
-
-/* Class = "IBUINavigationController"; title = "History"; ObjectID = "cIE-ip-pRf"; */
-"cIE-ip-pRf.title" = "History";
-
-/* Class = "IBUILabel"; text = "Label"; ObjectID = "dMe-0K-zEu"; */
-"dMe-0K-zEu.text" = "Label";
-
-/* Class = "IBUISegmentedControl"; dp8-7e-BVH.segmentTitles[0] = "All"; ObjectID = "dp8-7e-BVH"; */
-"dp8-7e-BVH.segmentTitles[0]" = "All";
-
-/* Class = "IBUISegmentedControl"; dp8-7e-BVH.segmentTitles[1] = "Missed"; ObjectID = "dp8-7e-BVH"; */
-"dp8-7e-BVH.segmentTitles[1]" = "Missed";
-
-/* Class = "IBUITabBarItem"; title = "History"; ObjectID = "dvD-nl-dwM"; */
-"dvD-nl-dwM.title" = "History";
-
-/* Class = "IBUITableViewCell"; accessibilityLabel = "My Info"; ObjectID = "ex3-5e-QG2"; */
-"ex3-5e-QG2.accessibilityLabel" = "My Info";
-
-/* Class = "IBUILabel"; text = "817-343-9239"; ObjectID = "fEO-AB-gx9"; */
-"fEO-AB-gx9.text" = "817-343-9239";
-
-/* Class = "IBUIButton"; normalTitle = "★"; ObjectID = "fpX-p1-9pC"; */
-"fpX-p1-9pC.normalTitle" = "★";
-
-/* Class = "IBUILabel"; text = "Call History Cell"; ObjectID = "gQB-DU-RKy"; */
-"gQB-DU-RKy.text" = "Call History Cell";
-
-/* Class = "IBUILabel"; text = "3:03 PM"; ObjectID = "gtd-8g-MGS"; */
-"gtd-8g-MGS.text" = "3:03 PM";
-
-/* Class = "IBUILabel"; text = "Today, 10:57 PM"; ObjectID = "h9G-CI-v9C"; */
-"h9G-CI-v9C.text" = "Today, 10:57 PM";
-
-/* Class = "IBUIView"; accessibilityLabel = "Leave Feedback"; ObjectID = "hYm-sc-hSA"; */
-"hYm-sc-hSA.accessibilityLabel" = "Leave Feedback";
-
-/* Class = "IBUITabBarItem"; title = "Phone"; ObjectID = "hn5-ub-HBZ"; */
-"hn5-ub-HBZ.title" = "Phone";
-
-/* Class = "IBUILabel"; text = "Warm Transfer"; ObjectID = "hoV-Az-hVc"; */
-"hoV-Az-hVc.text" = "Warm Transfer";
-
-/* Class = "IBUIView"; accessibilityLabel = "Sign Out"; ObjectID = "iY3-3e-PXh"; */
-"iY3-3e-PXh.accessibilityLabel" = "Sign Out";
-
-/* Class = "IBUITabBarItem"; title = "Keypad"; ObjectID = "idj-mu-viK"; */
-"idj-mu-viK.title" = "Keypad";
-
-/* Class = "IBUITabBarItem"; title = "Contacts"; ObjectID = "j3y-6c-YEc"; */
-"j3y-6c-YEc.title" = "Contacts";
-
-/* Class = "IBUITextField"; accessibilityLabel = "passwordTextField"; ObjectID = "k5B-9E-t78"; */
-"k5B-9E-t78.accessibilityLabel" = "passwordTextField";
-
-/* Class = "IBUITextField"; placeholder = "password"; ObjectID = "k5B-9E-t78"; */
-"k5B-9E-t78.placeholder" = "password";
-
-/* Class = "IBUIViewController"; title = "Transfer"; ObjectID = "k9u-JK-Ejv"; */
-"k9u-JK-Ejv.title" = "Transfer";
-
-/* Class = "IBUINavigationItem"; title = "Voicemail"; ObjectID = "kwW-Qp-UuE"; */
-"kwW-Qp-UuE.title" = "Voicemail";
-
-/* Class = "IBUILabel"; accessibilityLabel = "Another Callers "; ObjectID = "lS3-iw-nlZ"; */
-"lS3-iw-nlZ.accessibilityLabel" = "Another Callers ";
-
-/* Class = "IBUILabel"; text = "Callers Number"; ObjectID = "lS3-iw-nlZ"; */
-"lS3-iw-nlZ.text" = "Callers Number";
-
-/* Class = "IBUILabel"; text = "Label"; ObjectID = "mJH-zG-lwm"; */
-"mJH-zG-lwm.text" = "Label";
-
-/* Class = "IBUILabel"; text = "Selected Line"; ObjectID = "mn4-Dh-Ebu"; */
-"mn4-Dh-Ebu.text" = "Selected Line";
-
-/* Class = "IBUILabel"; text = "Build Number is"; ObjectID = "mox-PU-WhR"; */
-"mox-PU-WhR.text" = "Build Number is";
-
-/* Class = "IBUINavigationItem"; title = "Contacts"; ObjectID = "oEe-KQ-NpU"; */
-"oEe-KQ-NpU.title" = "Contacts";
-
-/* Class = "IBUILabel"; text = "3:03 PM"; ObjectID = "oiS-bx-elM"; */
-"oiS-bx-elM.text" = "3:03 PM";
-
-/* Class = "IBUILabel"; text = "1006"; ObjectID = "qTo-LN-C26"; */
-"qTo-LN-C26.text" = "1006";
-
-/* Class = "IBUILabel"; text = "Bob Seger"; ObjectID = "qgE-Wi-v1i"; */
-"qgE-Wi-v1i.text" = "Bob Seger";
-
-/* Class = "IBUITabBarItem"; title = "Item"; ObjectID = "qr5-fZ-Kx4"; */
-"qr5-fZ-Kx4.title" = "Item";
-
-/* Class = "IBUINavigationController"; title = "Keypad"; ObjectID = "vrQ-kc-2ec"; */
-"vrQ-kc-2ec.title" = "Keypad";
-
-/* Class = "IBUINavigationController"; title = "Voicemail"; ObjectID = "wLV-k9-4Pz"; */
-"wLV-k9-4Pz.title" = "Voicemail";
-
-/* Class = "IBUILabel"; text = "817-343-9239"; ObjectID = "wy5-2x-2pe"; */
-"wy5-2x-2pe.text" = "817-343-9239";
-
-/* Class = "IBUILabel"; text = "817-343-9239"; ObjectID = "xbE-Wj-ANr"; */
-"xbE-Wj-ANr.text" = "817-343-9239";
-
-/* Class = "IBUITabBarItem"; title = "Voicemail"; ObjectID = "yfS-ds-xyB"; */
-"yfS-ds-xyB.title" = "Voicemail";
-
-/* Class = "IBUITabBarItem"; title = "Contacts"; ObjectID = "yqu-Rh-YHg"; */
-"yqu-Rh-YHg.title" = "Contacts";
-
-/* Class = "IBUILabel"; text = "Keypad"; ObjectID = "zcs-la-vSZ"; */
-"zcs-la-vSZ.text" = "Keypad";
-
-/* Class = "IBUILabel"; text = "Finish Transfer"; ObjectID = "zpq-3o-7Gs"; */
-"zpq-3o-7Gs.text" = "Finish Transfer";
+/* Class = "UILabel"; text = "Messages"; ObjectID = "nGt-aj-HX8"; */
+"nGt-aj-HX8.text" = "Mensagens";

@@ -1,0 +1,42 @@
+
+/* Class = "UINavigationController"; title = "Keypad"; ObjectID = "G3s-tk-XlH"; */
+"G3s-tk-XlH.title" = "Clavier";
+
+/* Class = "UINavigationController"; title = "History"; ObjectID = "LGG-G6-Qgm"; */
+"LGG-G6-Qgm.title" = "Historique";
+
+/* Class = "UITabBarItem"; title = "Voicemail"; ObjectID = "RN6-p8-PVT"; */
+"RN6-p8-PVT.title" = "Message vocal";
+
+/* Class = "UISegmentedControl"; UHR-O3-J6m.segmentTitles[0] = "All"; ObjectID = "UHR-O3-J6m"; */
+"UHR-O3-J6m.segmentTitles[0]" = "Tous";
+
+/* Class = "UISegmentedControl"; UHR-O3-J6m.segmentTitles[1] = "Missed"; ObjectID = "UHR-O3-J6m"; */
+"UHR-O3-J6m.segmentTitles[1]" = "Manqués";
+
+/* Class = "UILabel"; text = "Confidence: %@"; ObjectID = "UHm-eu-MVg"; */
+"UHm-eu-MVg.text" = "Confiance: %@";
+
+/* Class = "UILabel"; text = "Word count: %i"; ObjectID = "VMi-W8-6Ys"; */
+"VMi-W8-6Ys.text" = "Mot Compter: %i";
+
+/* Class = "UITabBarItem"; title = "History"; ObjectID = "WRq-PA-NpD"; */
+"WRq-PA-NpD.title" = "Historique";
+
+/* Class = "UILabel"; text = "Phone"; ObjectID = "XXV-Pa-tfR"; */
+"XXV-Pa-tfR.text" = "Téléphone";
+
+/* Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "Z7Z-Gy-oE8"; */
+"Z7Z-Gy-oE8.title" = "Message vocal";
+
+/* Class = "UINavigationController"; title = "Voicemail"; ObjectID = "aJF-xB-iIc"; */
+"aJF-xB-iIc.title" = "Message vocal";
+
+/* Class = "UITabBarItem"; title = "Keypad"; ObjectID = "bsn-3T-LYb"; */
+"bsn-3T-LYb.title" = "Clavier";
+
+/* Class = "UITabBarItem"; title = "Phone"; ObjectID = "eFd-Wl-GUh"; */
+"eFd-Wl-GUh.title" = "Téléphone";
+
+/* Class = "UINavigationItem"; title = "Call History"; ObjectID = "k2g-vl-Yo3"; */
+"k2g-vl-Yo3.title" = "Historique";

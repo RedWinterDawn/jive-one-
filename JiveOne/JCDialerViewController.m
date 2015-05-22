@@ -235,7 +235,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     JCAppSettings *appSettings = self.appSettings;
     AFNetworkReachabilityManager *reachabilityManager = self.networkingReachabilityManager;
     
-    NSString *prompt = NSLocalizedString(@"Unregistered", nil);
+    NSString *prompt = NSLocalizedStringFromTable(@"Unregistered", @"Phone", @"Registration Status Display");
     if (phoneManager.isRegistered) {
         self.callButton.selected = false;
         if (self.registrationStatusLabel) {
@@ -247,10 +247,10 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         }
     }
     else if (appSettings.wifiOnly && reachabilityManager.isReachableViaWWAN){
-        prompt = NSLocalizedString(@"Disabled", nil);
+        prompt = NSLocalizedStringFromTable(@"Disabled", @"Phone", @"Registration Status Display");
     }
     else if (phoneManager.isRegistering) {
-        prompt = NSLocalizedString(@"Connecting", nil);
+        prompt = NSLocalizedStringFromTable(@"Connecting", @"Phone", @"Registration Status Display");
     }
     else {
         self.callButton.selected = true;

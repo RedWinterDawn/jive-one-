@@ -50,7 +50,7 @@
                                             <action selector="mute:" destination="XUz-9T-jwv" eventType="touchUpInside" id="sla-mY-bBR"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="252" text="Mute" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lmW-vI-lq5" userLabel="Mute Label">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="252" text="Mute" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="lmW-vI-lq5" userLabel="Mute Label">
                                         <rect key="frame" x="32" y="85" width="60" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="2Mt-Gs-Yza"/>
@@ -74,11 +74,11 @@
                                             <action selector="keypad:" destination="XUz-9T-jwv" eventType="touchUpInside" id="GBh-H4-qCS"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keypad" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zoo-r0-Qec" userLabel="Keypad Label">
-                                        <rect key="frame" x="130" y="85" width="60" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keypad" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Zoo-r0-Qec" userLabel="Keypad Label">
+                                        <rect key="frame" x="117" y="85" width="85" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="U9o-4n-5zO"/>
-                                            <constraint firstAttribute="width" constant="60" id="ozR-Ks-3MR"/>
+                                            <constraint firstAttribute="width" constant="85" id="ozR-Ks-3MR"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -98,20 +98,20 @@
                                             <action selector="speaker:" destination="XUz-9T-jwv" eventType="touchUpInside" id="9Ic-J2-7Se"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Speaker" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4S2-H7-xRN" userLabel="Speaker Label">
-                                        <rect key="frame" x="228" y="85" width="60" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Speaker" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="4S2-H7-xRN" userLabel="Speaker Label">
+                                        <rect key="frame" x="213" y="85" width="90" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="76R-e2-D7W"/>
-                                            <constraint firstAttribute="width" constant="60" id="dH4-zZ-TIf"/>
+                                            <constraint firstAttribute="width" constant="90" id="dH4-zZ-TIf"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWV-rw-XMj" userLabel="Blind Transfer Label">
-                                        <rect key="frame" x="32" y="192" width="60" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="tWV-rw-XMj" userLabel="Blind Transfer Label">
+                                        <rect key="frame" x="19" y="192" width="86" height="21"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="Ktg-UX-qgV"/>
+                                            <constraint firstAttribute="width" constant="86" id="Ktg-UX-qgV"/>
                                             <constraint firstAttribute="height" constant="21" id="uhA-E4-hPs"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -134,7 +134,7 @@
                                             <action selector="warmTransfer:" destination="XUz-9T-jwv" eventType="touchUpInside" id="b5R-8m-YDs"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Warm Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mv1-cF-rXS" userLabel="Warm Transfer Label">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Warm Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="mv1-cF-rXS" userLabel="Warm Transfer Label">
                                         <rect key="frame" x="111" y="192" width="99" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="99" id="26R-75-gA7"/>
@@ -159,10 +159,10 @@
                                             <action selector="addCall:" destination="XUz-9T-jwv" eventType="touchUpInside" id="yLS-8z-gc1"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Call" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gw-EZ-yNz" userLabel="Add Call Label">
-                                        <rect key="frame" x="228" y="192" width="60" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Call" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="7gw-EZ-yNz" userLabel="Add Call Label">
+                                        <rect key="frame" x="218" y="192" width="81" height="21"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="PsG-VS-wzG"/>
+                                            <constraint firstAttribute="width" constant="81" id="PsG-VS-wzG"/>
                                             <constraint firstAttribute="height" constant="21" id="Zeq-VL-w51"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>

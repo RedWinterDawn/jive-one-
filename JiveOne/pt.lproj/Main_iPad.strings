@@ -1,0 +1,18 @@
+
+/* Class = "UILabel"; text = "Phone"; ObjectID = "0Yw-cp-qoh"; */
+"0Yw-cp-qoh.text" = "Phone";
+
+/* Class = "UINavigationItem"; title = "My Jive"; ObjectID = "CYZ-qM-fMy"; */
+"CYZ-qM-fMy.title" = "My Jive";
+
+/* Class = "UILabel"; text = "Messages"; ObjectID = "FzV-4I-xde"; */
+"FzV-4I-xde.text" = "Messages";
+
+/* Class = "UILabel"; text = "Contacts"; ObjectID = "O4y-f4-bpa"; */
+"O4y-f4-bpa.text" = "Contacts";
+
+/* Class = "UILabel"; text = "Settings"; ObjectID = "WD8-EL-jx5"; */
+"WD8-EL-jx5.text" = "Settings";
+
+/* Class = "UINavigationItem"; title = "My Jive"; ObjectID = "gNr-PU-cQt"; */
+"gNr-PU-cQt.title" = "My Jive";

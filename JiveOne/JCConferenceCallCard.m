@@ -45,7 +45,7 @@
 }
 
 -(NSString *)callerId {
-    return NSLocalizedString(@"Conference", null) ;
+    return NSLocalizedStringFromTable(@"Conference", @"Phone", @"Conference Caller id.");
 }
 
 -(NSString *)dialNumber {
