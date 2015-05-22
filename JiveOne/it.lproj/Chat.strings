@@ -20,5 +20,8 @@
 /* Class = "UITableViewSection"; footerTitle = "Blocks this number from sending or recieving an SMS message on your PBX for all users."; ObjectID = "Z3S-aR-6oR"; */
 "Z3S-aR-6oR.footerTitle" = "Blocchi questo numero di invio o la ricezione di un messaggio SMS sul vostro centralino per tutti gli utenti.";
 
+/* Class = "UIBarButtonItem"; title = "Details"; ObjectID = "hea-0j-GeP"; */
+"hea-0j-GeP.title" = "Dettagli";
+
 /* Class = "UINavigationItem"; title = "Details"; ObjectID = "mgM-GJ-Hkr"; */
 "mgM-GJ-Hkr.title" = "Dettagli";

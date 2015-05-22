@@ -110,7 +110,7 @@
                 <viewController automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" id="AI2-cb-WiH" customClass="JCConversationViewController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="9b6-df-Xjz">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" title="Details" id="hea-0j-GeP">
+                        <barButtonItem key="rightBarButtonItem" title="Details" id="hea-0j-GeP" propertyAccessControl="localizable">
                             <connections>
                                 <segue destination="d4e-oz-V7H" kind="push" id="4YM-N5-Ho1"/>
                             </connections>
