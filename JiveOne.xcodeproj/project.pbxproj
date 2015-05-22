@@ -97,13 +97,6 @@
 		5D25F8441AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8431AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m */; };
 		5D2B2C081A30D8AE00938D76 /* JCVisualEffectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */; };
 		5D2B2C091A30D8AE00938D76 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C071A30D8AE00938D76 /* FXBlurView.m */; };
-		5D2D73CC1ACF97AE00B98BDF /* de.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73C51ACF97AE00B98BDF /* de.xliff */; };
-		5D2D73CD1ACF97AE00B98BDF /* en-GB.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73C61ACF97AE00B98BDF /* en-GB.xliff */; };
-		5D2D73CE1ACF97AE00B98BDF /* es-MX.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73C71ACF97AE00B98BDF /* es-MX.xliff */; };
-		5D2D73CF1ACF97AE00B98BDF /* es.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73C81ACF97AE00B98BDF /* es.xliff */; };
-		5D2D73D01ACF97AE00B98BDF /* fr.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73C91ACF97AE00B98BDF /* fr.xliff */; };
-		5D2D73D11ACF97AE00B98BDF /* it.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73CA1ACF97AE00B98BDF /* it.xliff */; };
-		5D2D73D21ACF97AE00B98BDF /* pt.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D73CB1ACF97AE00B98BDF /* pt.xliff */; };
 		5D2D74301ACFB48500B98BDF /* JCPhoneBookTestDataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D741F1ACFB48500B98BDF /* JCPhoneBookTestDataFactory.m */; };
 		5D2D74311ACFB48500B98BDF /* JCAddressBookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D74201ACFB48500B98BDF /* JCAddressBookTests.m */; };
 		5D2D74341ACFB48500B98BDF /* JCBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D74251ACFB48500B98BDF /* JCBaseTestCase.m */; };
@@ -481,8 +474,6 @@
 		5D2B2C061A30D8AE00938D76 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		5D2B2C071A30D8AE00938D76 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		5D2D73C51ACF97AE00B98BDF /* de.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = de.xliff; sourceTree = "<group>"; };
-		5D2D73C61ACF97AE00B98BDF /* en-GB.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "en-GB.xliff"; sourceTree = "<group>"; };
-		5D2D73C71ACF97AE00B98BDF /* es-MX.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "es-MX.xliff"; sourceTree = "<group>"; };
 		5D2D73C81ACF97AE00B98BDF /* es.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = es.xliff; sourceTree = "<group>"; };
 		5D2D73C91ACF97AE00B98BDF /* fr.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fr.xliff; sourceTree = "<group>"; };
 		5D2D73CA1ACF97AE00B98BDF /* it.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = it.xliff; sourceTree = "<group>"; };
@@ -1405,8 +1396,6 @@
 			isa = PBXGroup;
 			children = (
 				5D2D73C51ACF97AE00B98BDF /* de.xliff */,
-				5D2D73C61ACF97AE00B98BDF /* en-GB.xliff */,
-				5D2D73C71ACF97AE00B98BDF /* es-MX.xliff */,
 				5D2D73C81ACF97AE00B98BDF /* es.xliff */,
 				5D2D73C91ACF97AE00B98BDF /* fr.xliff */,
 				5D2D73CA1ACF97AE00B98BDF /* it.xliff */,
@@ -2057,24 +2046,17 @@
 				5D8E340C1B0A84AA00FD8AE1 /* Settings_iPad.storyboard in Resources */,
 				5D0199C21A1BBC0500F4CF13 /* IncomingCallViewCell.xib in Resources */,
 				5D25F8201AE5895E00981DB6 /* Main_iPad.storyboard in Resources */,
-				5D2D73D01ACF97AE00B98BDF /* fr.xliff in Resources */,
 				5DEC492A1B0EDF6000361499 /* Phone.strings in Resources */,
-				5D2D73CF1ACF97AE00B98BDF /* es.xliff in Resources */,
 				5D5449091B0E52A000F44D8F /* Contacts.storyboard in Resources */,
 				F202433D18B2CF4A006DB2EF /* README.md in Resources */,
 				5D8E33FC1B0A5D7000FD8AE1 /* Login.storyboard in Resources */,
 				5D0199B81A1BBBAC00F4CF13 /* Main_iPhone.storyboard in Resources */,
 				5D8E33DC1B0A4F3100FD8AE1 /* Phone_iPad.storyboard in Resources */,
 				5D8198ED1AC1D7520057FDDA /* Debug.storyboard in Resources */,
-				5D2D73CD1ACF97AE00B98BDF /* en-GB.xliff in Resources */,
 				5D8E33ED1B0A560500FD8AE1 /* Contacts_iPad.storyboard in Resources */,
 				5D5448C51B0D3BF500F44D8F /* Phone.storyboard in Resources */,
-				5D2D73D21ACF97AE00B98BDF /* pt.xliff in Resources */,
-				5D2D73D11ACF97AE00B98BDF /* it.xliff in Resources */,
 				271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */,
-				5D2D73CC1ACF97AE00B98BDF /* de.xliff in Resources */,
 				5D5448E51B0E312A00F44D8F /* Chat_iPad.storyboard in Resources */,
-				5D2D73CE1ACF97AE00B98BDF /* es-MX.xliff in Resources */,
 				9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */,
 				5D1175901AA0D82600D2B03A /* PhoneManager.storyboard in Resources */,
 				275F4A7018AD0FBC00D2F069 /* Images.xcassets in Resources */,
