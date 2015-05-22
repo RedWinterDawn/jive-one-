@@ -52,7 +52,7 @@
 {
     [super viewDidLoad];
     
-    self.inputToolbar.contentView.textView.placeHolder = NSLocalizedString(@"Send SMS", nil);
+    self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send SMS", @"Chat", nil);
     self.inputToolbar.contentView.leftBarButtonItem = nil;
 }
 
@@ -116,14 +116,14 @@
             [titles addObject:did.titleText];
         }
             
-        JCActionSheet *didOptions = [[JCActionSheet alloc] initWithTitle:@"Which number would you like to send from"
+        JCActionSheet *didOptions = [[JCActionSheet alloc] initWithTitle:NSLocalizedStringFromTable(@"Which number would you like to send from", @"Chat", nil)
                                                                dismissed:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
                                                                    if (buttonIndex != actionSheet.cancelButtonIndex) {
                                                                        DID *did = [dids objectAtIndex:buttonIndex];
                                                                        [self sendMessageWithSelectedDID:text toConversationGroup:conversationGroup fromDid:did];
                                                                     }
                                                                }
-                                                       cancelButtonTitle:@"Cancel"
+                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                             otherButtons:titles];
         [didOptions show:self.view];
     } else {
@@ -141,8 +141,8 @@
         }
     }];
     
-    [JCAlertView alertWithTitle:@"Set as default"
-                        message:@"Set this phone number as default phone number for all sms messages"
+    [JCAlertView alertWithTitle:NSLocalizedStringFromTable(@"Set as default", @"Chat", nil)
+                        message:NSLocalizedStringFromTable(@"Set this phone number as default phone number for all sms messages", @"Chat", nil)
                       dismissed:^(NSInteger buttonIndex) {
                           if (buttonIndex == 0) {
                               self.authenticationManager.did = self.did;
@@ -161,8 +161,8 @@
                               
                           }
                       }
-              cancelButtonTitle:@"No"
-              otherButtonTitles:@"Yes", nil];
+              cancelButtonTitle:NSLocalizedString(@"No", nil)
+              otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
 }
 
 #pragma mark - Setters -

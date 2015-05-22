@@ -55,7 +55,7 @@
     // If we do not have voicemail data, use the v5 client to download the voicemail data. Disable
     // parts of the UI to show user it is unavailable for playback until downloaded.
     self.playPauseButton.enabled = FALSE;
-    [self showStatus:@"Downloading..."];
+    [self showStatus:NSLocalizedString(@"Downloading...", nil)];
     [voicemail downloadVoicemailAudio:^(BOOL success, NSError *error) {
         if (success) {
             [self hideStatus];

@@ -234,7 +234,7 @@ CGFloat *_callOptionsWidth;
         if (phoneManager.isConferenceCall) {
             [phoneManager splitCalls:^(BOOL success, NSError *error) {
                 if (success) {
-                    self.mergeLabel.text = NSLocalizedString(@"Merge Calls", nil);
+                    self.mergeLabel.text = NSLocalizedStringFromTable(@"Merge Calls", @"Phone", @"Merge Call Display Button");
                     button.selected = FALSE;
                 }
                 button.enabled = TRUE;
@@ -242,7 +242,7 @@ CGFloat *_callOptionsWidth;
         } else {
             [phoneManager mergeCalls:^(BOOL success, NSError *error) {
 				if (success) {
-					self.mergeLabel.text = NSLocalizedString(@"Split Calls", nil);
+					self.mergeLabel.text = NSLocalizedStringFromTable(@"Split Calls", @"Phone", @"Merge Call Display Button");
                     button.selected = TRUE;
 				}
                 button.enabled = TRUE;
@@ -341,7 +341,7 @@ CGFloat *_callOptionsWidth;
     
     [UIView animateWithDuration:animated ? 0.1 : 0
                      animations:^{
-                         [self.view layoutIfNeeded];
+                         
                      } completion:^(BOOL finished) {
                          _showingCallOptions = false;
                          [_callCardCollectionViewController.collectionViewLayout invalidateLayout];

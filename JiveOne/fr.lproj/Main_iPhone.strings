@@ -15,10 +15,10 @@
 "JYv-VQ-bNP.title" = "Activité Récente";
 
 /* Class = "UINavigationItem"; title = "My Jive"; ObjectID = "JyO-Cf-e0j"; */
-"JyO-Cf-e0j.title" = "My Jive";
+"JyO-Cf-e0j.title" = "Mon Jive";
 
 /* Class = "UILabel"; text = "Phone"; ObjectID = "KVp-sT-UM5"; */
-"KVp-sT-UM5.text" = "Phone";
+"KVp-sT-UM5.text" = "Téléphone";
 
 /* Class = "UILabel"; text = "Missed:"; ObjectID = "XiM-TR-LPH"; */
 "XiM-TR-LPH.text" = "Manqués:";

@@ -9,9 +9,6 @@
 
 #import "JCAlertView.h"
 
-NSString *const kJCAlertViewOk          = @"OK";
-NSString *const kJCAlertViewCancel      = @"Cancel";
-
 static const NSMutableArray *alerts;
 
 @interface JCAlertView () <UIAlertViewDelegate> {
@@ -43,10 +40,10 @@ static const NSMutableArray *alerts;
         _dismissBlock = dismissBlock;
         
         // make an alert view, wiring ourselves up as the delegate
-        _alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(title,nil)
-                                                message:NSLocalizedString(message,nil)
+        _alertView = [[UIAlertView alloc] initWithTitle:title
+                                                message:message
                                                delegate:self
-                                      cancelButtonTitle:NSLocalizedString(cancelButtonTitle,nil)
+                                      cancelButtonTitle:cancelButtonTitle
                                       otherButtonTitles:nil];
         
         // go through the va_arg list and add any optional buttons
@@ -78,7 +75,7 @@ static const NSMutableArray *alerts;
 
 - (NSInteger)addButtonWithTitle:(NSString *)title
 {
-    return [_alertView addButtonWithTitle:NSLocalizedString(title, nil)];
+    return [_alertView addButtonWithTitle:title];
 }
 
 - (NSString *)buttonTitleAtIndex:(NSInteger)buttonIndex
@@ -100,12 +97,12 @@ static const NSMutableArray *alerts;
 
 - (void)setTitle:(NSString *)title
 {
-    _alertView.title = NSLocalizedString(title,nil);
+    _alertView.title = title;
 }
 
 - (void)setMessage:(NSString *)message
 {
-    _alertView.message = NSLocalizedString(message,nil);
+    _alertView.message = message;
 }
 
 - (void)setCancelButtonIndex:(NSInteger)cancelButtonIndex
@@ -176,7 +173,8 @@ static const NSMutableArray *alerts;
 
 + (JCAlertView *)alertWithError:(NSError *)error
 {
-    return [JCAlertView alertWithTitle:@"Warning" error:error];
+    return [JCAlertView alertWithTitle:NSLocalizedString(@"Warning", nil)
+                                 error:error];
 }
 
 + (JCAlertView *)alertWithError:(NSError *)error dismissed:(JCAlertViewDismissBlock)dismissBlock cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...
@@ -189,12 +187,16 @@ static const NSMutableArray *alerts;
     NSError *underlyingError = [self underlyingErrorForError:error];
     NSString *underlyingFailureReason = [underlyingError localizedFailureReason];
     if(underlyingFailureReason && ![underlyingFailureReason isEqualToString:message]) {
-        message = [NSString stringWithFormat:@"%@\n(%li: %@)", NSLocalizedString(message, nil), (long)underlyingError.code, underlyingFailureReason];
+        message = [NSString stringWithFormat:@"%@\n(%li: %@)", message, (long)underlyingError.code, underlyingFailureReason];
     }
     else {
-        message = [NSString stringWithFormat:@"%@\n(%li)", NSLocalizedString(message, nil), (long)underlyingError.code];
+        message = [NSString stringWithFormat:@"%@\n(%li)", message, (long)underlyingError.code];
     }
-    JCAlertView *alertView = [[JCAlertView alloc] initWithTitle:@"Warning" message:message dismissed:dismissBlock cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
+    JCAlertView *alertView = [[JCAlertView alloc] initWithTitle:NSLocalizedString(@"Warning", nil)
+                                                        message:message
+                                                      dismissed:dismissBlock
+                                              cancelButtonTitle:cancelButtonTitle
+                                              otherButtonTitles:nil];
     if (alertView)
     {
         va_list argumentList;
@@ -216,17 +218,17 @@ static const NSMutableArray *alerts;
     NSError *underlyingError = [self underlyingErrorForError:error];
     NSString *underlyingFailureReason = [underlyingError localizedFailureReason];
     if(underlyingFailureReason && ![underlyingFailureReason isEqualToString:message]) {
-        message = [NSString stringWithFormat:@"%@\n(%li: %@)", NSLocalizedString(message, nil), (long)underlyingError.code, underlyingFailureReason];
+        message = [NSString stringWithFormat:@"%@\n(%li: %@)", message, (long)underlyingError.code, underlyingFailureReason];
     }
     else {
-        message = [NSString stringWithFormat:@"%@\n(%li)", NSLocalizedString(message, nil), (long)underlyingError.code];
+        message = [NSString stringWithFormat:@"%@\n(%li)", message, (long)underlyingError.code];
     }
     return [JCAlertView alertWithTitle:title message:message showImmediately:YES];
 }
 
 +(JCAlertView *)alertWithTitle:(NSString *)title message:(NSString *)message code:(NSInteger)code
 {
-    message = [NSString stringWithFormat:@"%@\n(%li)", NSLocalizedString(message, nil), (long)code];
+    message = [NSString stringWithFormat:@"%@\n(%li)", message, (long)code];
     return [JCAlertView alertWithTitle:title message:message showImmediately:YES];
 }
 
@@ -237,7 +239,10 @@ static const NSMutableArray *alerts;
 
 +(JCAlertView *)alertWithTitle:(NSString *)title message:(NSString *)message showImmediately:(BOOL)showImmediately
 {
-    JCAlertView *alertView = [JCAlertView alertWithTitle:title message:message dismissed:NULL cancelButtonTitle:kJCAlertViewOk otherButtonTitles:nil];
+    JCAlertView *alertView = [JCAlertView alertWithTitle:title
+                                                 message:message
+                                               dismissed:NULL
+                                       cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
     if (showImmediately)
         [alertView show];
     return alertView;
@@ -245,13 +250,19 @@ static const NSMutableArray *alerts;
 
 +(JCAlertView *)alertWithTitle:(NSString *)title message:(NSString *)message dismissed:(JCAlertViewDismissBlock)dismissBlock
 {
-    JCAlertView *alertView = [JCAlertView alertWithTitle:title message:message dismissed:dismissBlock showImmediately:YES];
+    JCAlertView *alertView = [JCAlertView alertWithTitle:title
+                                                 message:message
+                                               dismissed:dismissBlock
+                                         showImmediately:YES];
     return alertView;
 }
 
 +(JCAlertView *)alertWithTitle:(NSString *)title message:(NSString *)message dismissed:(JCAlertViewDismissBlock)dismissBlock showImmediately:(BOOL)showImmediately
 {
-    JCAlertView *alertView = [JCAlertView alertWithTitle:title message:message dismissed:dismissBlock cancelButtonTitle:kJCAlertViewCancel otherButtonTitles:kJCAlertViewOk,nil];
+    JCAlertView *alertView = [JCAlertView alertWithTitle:title message:message
+                                               dismissed:dismissBlock
+                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                       otherButtonTitles:NSLocalizedString(@"OK", nil),nil];
     
     if (showImmediately)
         [alertView show];

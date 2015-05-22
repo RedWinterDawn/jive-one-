@@ -28,6 +28,7 @@
 #import "JCVoicemailDetailViewController.h"
 #import "JCStoryboardLoaderViewController.h"
 #import "JCContactDetailTableViewController.h"
+#import "UIDevice+Additions.h"
 
 NSString *const kJCHistoryCellReuseIdentifier = @"HistoryCell";
 NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
@@ -203,10 +204,11 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 {
     _viewFilter = viewFilter;
     self.fetchedResultsController = nil;
-    [self.tableView reloadData];
-    
-    [self.view setNeedsLayout];
-    [self.view layoutIfNeeded];
+    if ([UIDevice currentDevice].iOS8) {
+        [self.tableView reloadData];
+        [self.view setNeedsLayout];
+        [self.view layoutIfNeeded];
+    }
 }
 
 #pragma mark - Getters -

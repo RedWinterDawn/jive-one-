@@ -8,9 +8,6 @@
 /* Class = "UINavigationItem"; title = "Messages"; ObjectID = "Dd8-pv-4JB"; */
 "Dd8-pv-4JB.title" = "Nachrichten";
 
-/* Class = "UILabel"; text = "Detail"; ObjectID = "PST-Th-8YM"; */
-"PST-Th-8YM.text" = "Details";
-
 /* Class = "UITabBarItem"; title = "Messages"; ObjectID = "QlF-7C-Iq3"; */
 "QlF-7C-Iq3.title" = "Nachrichten";
 
@@ -19,6 +16,9 @@
 
 /* Class = "UITableViewSection"; footerTitle = "Blocks this number from sending or recieving an SMS message on your PBX for all users."; ObjectID = "Z3S-aR-6oR"; */
 "Z3S-aR-6oR.footerTitle" = "Blocks diese Nummer von dem Senden oder Empfangen einer SMS-Nachricht auf Ihre Telefonanlage für alle Benutzer.";
+
+/* Class = "UIBarButtonItem"; title = "Details"; ObjectID = "hea-0j-GeP"; */
+"hea-0j-GeP.title" = "Details";
 
 /* Class = "UINavigationItem"; title = "Details"; ObjectID = "mgM-GJ-Hkr"; */
 "mgM-GJ-Hkr.title" = "Details";

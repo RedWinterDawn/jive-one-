@@ -12,7 +12,7 @@
 
 NSString *const kJCActionSheetCancel      = @"Cancel";
 
-static const NSMutableArray *DIDNumbers;
+static const NSMutableArray *ActionSheets;
 
 @interface JCActionSheet () <UIActionSheetDelegate> {
     UIActionSheet *_actionSheet;
@@ -33,7 +33,7 @@ static const NSMutableArray *DIDNumbers;
     // about releasing it.
     static dispatch_once_t once;
     dispatch_once(&once, ^{
-        DIDNumbers = [NSMutableArray new];
+        ActionSheets = [NSMutableArray new];
     });
     
     if ((self = [super init]))
@@ -42,9 +42,9 @@ static const NSMutableArray *DIDNumbers;
         _dismissBlock = dismissBlock;
         
         // make an alert view, wiring ourselves up as the delegate
-        _actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(title, nil)
+        _actionSheet = [[UIActionSheet alloc] initWithTitle:title
                                                    delegate:self
-                                          cancelButtonTitle:NSLocalizedString(cancelButtonTitle, nil)
+                                          cancelButtonTitle:cancelButtonTitle
                                      destructiveButtonTitle:nil
                                           otherButtonTitles:nil];
         
@@ -68,7 +68,7 @@ static const NSMutableArray *DIDNumbers;
     // about releasing it.
     static dispatch_once_t once;
     dispatch_once(&once, ^{
-        DIDNumbers = [NSMutableArray new];
+        ActionSheets = [NSMutableArray new];
     });
     
     if ((self = [super init]))
@@ -77,7 +77,7 @@ static const NSMutableArray *DIDNumbers;
         _dismissBlock = dismissBlock;
         
         // make an alert view, wiring ourselves up as the delegate
-        _actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(title, nil)
+        _actionSheet = [[UIActionSheet alloc] initWithTitle:title
                                                    delegate:self
                                           cancelButtonTitle:nil
                                      destructiveButtonTitle:nil
@@ -95,7 +95,7 @@ static const NSMutableArray *DIDNumbers;
  */
 -(void)show:(UIView*)currentView
 {
-    [DIDNumbers addObject:self];
+    [ActionSheets addObject:self];
     
     if (![NSThread isMainThread]) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -109,7 +109,7 @@ static const NSMutableArray *DIDNumbers;
 
 - (NSInteger)addButtonWithTitle:(NSString *)title
 {
-    return [_actionSheet addButtonWithTitle:NSLocalizedString(title, nil)];
+    return [_actionSheet addButtonWithTitle:title];
 }
 
 - (NSString *)buttonTitleAtIndex:(NSInteger)buttonIndex
@@ -131,7 +131,7 @@ static const NSMutableArray *DIDNumbers;
 
 - (void)setTitle:(NSString *)title
 {
-    _actionSheet.title = NSLocalizedString(title,nil);
+    _actionSheet.title = title;
 }
 
 - (void)setCancelButtonIndex:(NSInteger)cancelButtonIndex
@@ -187,7 +187,7 @@ static const NSMutableArray *DIDNumbers;
 {
     if (_dismissBlock)
         _dismissBlock (actionSheet, buttonIndex);
-    [DIDNumbers removeObject:self];
+    [ActionSheets removeObject:self];
 }
 
 @end

@@ -340,7 +340,8 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     JCAuthenticationManager *authenticationManager = notification.object;
     Line *line = authenticationManager.line;
     if (!line) {
-        [JCAlertView alertWithTitle:@"Warning" message:@"Unable to select line. Please call Customer Care. You may not have a device associated with this account."];
+        [JCAlertView alertWithTitle:NSLocalizedString(@"Warning", nil)
+                            message:NSLocalizedString(@"Unable to select line. Please call Customer Care. You may not have a device associated with this account.", nil)];
         return;
     }
     
@@ -598,7 +599,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
                     SMSMessage *message = [SMSMessage MR_findFirstByAttribute:NSStringFromSelector(@selector(eventId)) withValue:uid inContext:context];
                     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
                     if (localNotif){
-                        localNotif.alertBody =[NSString  stringWithFormat:@"New Message from %@ \n%@", fromNumber.numericStringValue, message.text ];
+                        localNotif.alertBody =[NSString  stringWithFormat:NSLocalizedString(@"New Message from %@ \n%@", nil), fromNumber.numericStringValue, message.text ];
                         localNotif.soundName = UILocalNotificationDefaultSoundName;
                         localNotif.applicationIconBadgeNumber = 1;
                         [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
