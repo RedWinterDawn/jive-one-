@@ -341,7 +341,7 @@ CGFloat *_callOptionsWidth;
     
     [UIView animateWithDuration:animated ? 0.1 : 0
                      animations:^{
-                         [self.view layoutIfNeeded];
+                         
                      } completion:^(BOOL finished) {
                          _showingCallOptions = false;
                          [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
