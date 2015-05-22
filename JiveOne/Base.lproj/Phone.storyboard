@@ -949,8 +949,8 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="ZNL-P2-PLW"/>
                                         <exclude reference="6dz-LN-joY"/>
+                                        <exclude reference="ZNL-P2-PLW"/>
                                     </mask>
                                 </variation>
                             </slider>

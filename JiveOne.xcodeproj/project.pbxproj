@@ -254,6 +254,7 @@
 		5DDDA5481A4B08AD00E31AA3 /* JCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5471A4B08AD00E31AA3 /* JCSocket.m */; };
 		5DDDA54B1A4B238300E31AA3 /* JCLinePresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA54A1A4B238300E31AA3 /* JCLinePresence.m */; };
 		5DE0F1B519F6D47E000469D0 /* JCRoundedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0F1B419F6D47E000469D0 /* JCRoundedView.m */; };
+		5DEC492A1B0EDF6000361499 /* Phone.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DEC49291B0EDF6000361499 /* Phone.strings */; };
 		5DF4C99B1AB8B6CB00BA4F8C /* JCSocketManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF4C99A1AB8B6CB00BA4F8C /* JCSocketManager.m */; };
 		5DFFF3DA1AF90BD60091F479 /* BlockedNumber+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFFF3D91AF90BD60091F479 /* BlockedNumber+V5Client.m */; };
 		5DFFF3DD1AF90DD30091F479 /* BlockedNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFFF3DC1AF90DD30091F479 /* BlockedNumber.m */; };
@@ -738,11 +739,7 @@
 		5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCard.m; sourceTree = "<group>"; };
 		5DBCB93719FE9300001C7157 /* JCConferenceCallCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCConferenceCallCard.h; sourceTree = "<group>"; };
 		5DBCB93819FE9300001C7157 /* JCConferenceCallCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCConferenceCallCard.m; sourceTree = "<group>"; };
-		5DBD9F1D1A1D00A200F967B6 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DBD9F1E1A1D00A300F967B6 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5DBD9F1F1A1D00A300F967B6 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5DBD9F201A1D00A400F967B6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5DBD9F211A1D00A500F967B6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DBF6F391ADC2788004B53F5 /* JCMultiPersonPhoneNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMultiPersonPhoneNumber.h; sourceTree = "<group>"; };
 		5DBF6F3A1ADC2788004B53F5 /* JCMultiPersonPhoneNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMultiPersonPhoneNumber.m; sourceTree = "<group>"; };
 		5DBF6F3C1ADC3ADA004B53F5 /* JCPhoneBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneBook.h; sourceTree = "<group>"; };
@@ -773,6 +770,9 @@
 		5DDDA54A1A4B238300E31AA3 /* JCLinePresence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLinePresence.m; sourceTree = "<group>"; };
 		5DE0F1B319F6D47E000469D0 /* JCRoundedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRoundedView.h; sourceTree = "<group>"; };
 		5DE0F1B419F6D47E000469D0 /* JCRoundedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRoundedView.m; sourceTree = "<group>"; };
+		5DE68EF71B0EC2EF00914C7F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Settings.strings; sourceTree = "<group>"; };
+		5DE68EF81B0EC51800914C7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5DEC49291B0EDF6000361499 /* Phone.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Phone.strings; sourceTree = "<group>"; };
 		5DF4680F1A5B9BF600E5826A /* JCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCClient.m; sourceTree = "<group>"; };
 		5DF4C9991AB8B6CB00BA4F8C /* JCSocketManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocketManager.h; sourceTree = "<group>"; };
 		5DF4C99A1AB8B6CB00BA4F8C /* JCSocketManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSocketManager.m; sourceTree = "<group>"; };
@@ -840,7 +840,6 @@
 		F81EA8AD1A925EE400081C81 /* SMSMessage+V5Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMSMessage+V5Client.m"; sourceTree = "<group>"; };
 		F84A087719DF38C8003476E6 /* JCTransferConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTransferConfirmationViewController.h; sourceTree = "<group>"; };
 		F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTransferConfirmationViewController.m; sourceTree = "<group>"; };
-		F84FAF771A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F84FAF781A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		F84FAF7A1A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF7B1A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
@@ -849,22 +848,18 @@
 		F84FAF801A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF811A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF821A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
-		F84FAF831A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F84FAF851A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		F84FAF871A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF881A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF891A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
-		F84FAF8A1A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F84FAF8C1A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		F84FAF8E1A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF8F1A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF901A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
-		F84FAF911A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F84FAF9A1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		F84FAF9C1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF9D1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF9E1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
-		F84FAF9F1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F85DAD0719EF07D30075AAA2 /* JCCallHistoryViewController_iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallHistoryViewController_iPhone.h; sourceTree = "<group>"; };
 		F85DAD0819EF07D30075AAA2 /* JCCallHistoryViewController_iPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallHistoryViewController_iPhone.m; sourceTree = "<group>"; };
 		F8910FCF1A71EC590040B8C7 /* LoggerClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerClient.h; sourceTree = "<group>"; };
@@ -1868,6 +1863,7 @@
 			children = (
 				5D5448C71B0D3BF500F44D8F /* Phone.storyboard */,
 				5D8E33DE1B0A4F3100FD8AE1 /* Phone_iPad.storyboard */,
+				5DEC49291B0EDF6000361499 /* Phone.strings */,
 				5D1175921AA0D82600D2B03A /* PhoneManager.storyboard */,
 				5D0199C41A1BBC0500F4CF13 /* IncomingCallViewCell.xib */,
 				5D0199BF1A1BBBF400F4CF13 /* CurrentCallViewCell.xib */,
@@ -2063,6 +2059,7 @@
 				5D0199C21A1BBC0500F4CF13 /* IncomingCallViewCell.xib in Resources */,
 				5D25F8201AE5895E00981DB6 /* Main_iPad.storyboard in Resources */,
 				5D2D73D01ACF97AE00B98BDF /* fr.xliff in Resources */,
+				5DEC492A1B0EDF6000361499 /* Phone.strings in Resources */,
 				5D2D73CF1ACF97AE00B98BDF /* es.xliff in Resources */,
 				5D5449091B0E52A000F44D8F /* Contacts.storyboard in Resources */,
 				F202433D18B2CF4A006DB2EF /* README.md in Resources */,
@@ -2453,11 +2450,7 @@
 		275F4A5A18AD0FBC00D2F069 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F84FAF771A1BEC61003BC143 /* fr */,
-				F84FAF831A1BF064003BC143 /* de */,
-				F84FAF8A1A1BF0ED003BC143 /* pt */,
-				F84FAF911A1BF1A2003BC143 /* es */,
-				F84FAF9F1A1BF36F003BC143 /* it */,
+				5DE68EF81B0EC51800914C7F /* Base */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -2517,11 +2510,7 @@
 		5D0199EE1A1BF4BC00F4CF13 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5DBD9F1D1A1D00A200F967B6 /* it */,
 				5DBD9F1E1A1D00A300F967B6 /* es */,
-				5DBD9F1F1A1D00A300F967B6 /* pt */,
-				5DBD9F201A1D00A400F967B6 /* de */,
-				5DBD9F211A1D00A500F967B6 /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2561,6 +2550,7 @@
 				5D5448BE1B0CF8EA00F44D8F /* de */,
 				5D5448C01B0D0F7800F44D8F /* es */,
 				5D5448C21B0D0F7B00F44D8F /* it */,
+				5DE68EF71B0EC2EF00914C7F /* pt */,
 			);
 			name = Settings.storyboard;
 			sourceTree = "<group>";

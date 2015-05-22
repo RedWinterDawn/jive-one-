@@ -38,14 +38,13 @@
 #endif
 
 #define DEFAULT_PHONE_REGISTRATION_TIMEOUT_INTERVAL 15
+#define PHONE_STRINGS_NAME @"Phone"
 
 NSString *const kSipHandlerAutoAnswerModeAutoHeader = @"Answer-Mode: auto";
 NSString *const kSipHandlerAutoAnswerInfoIntercomHeader = @"Alert-Info: Intercom";
 NSString *const kSipHandlerAutoAnswerAfterIntervalHeader = @"answer-after=0";
 
 NSString *const kSipHandlerServerAgentname = @"Jive iOS Client";
-NSString *const kSipHandlerLineErrorMessage = @"Unable to fetch the line configuration";
-NSString *const kSipHandlerFetchPBXErrorMessage = @"Unable to fetch the line configuration";
 NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @interface JCSipManager() <PortSIPEventDelegate, JCPhoneAudioManagerDelegate>
@@ -148,7 +147,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         _mPortSIPSDK = nil;
         _lineSessions = nil;
         if (error != NULL) {
-            *error = [JCSipManagerError errorWithCode:errorCode reason:@"Error initializing port sip sdk"];
+            *error = [JCSipManagerError errorWithCode:errorCode];
         }
         return FALSE;
     }
@@ -160,7 +159,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         _mPortSIPSDK = nil;
         _lineSessions = nil;
         if(error != NULL) {
-            *error = [JCSipManagerError errorWithCode:errorCode reason:@"Port Sip License Key Failure"];
+            *error = [JCSipManagerError errorWithCode:errorCode];
         }
         return FALSE;
     }
@@ -212,7 +211,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     // Check if we are already registering.
     if (_registering) {
         if (error) {
-            *error = [JCSipManagerError errorWithCode:JC_SIP_ALREADY_REGISTERING reason:@"Already Registering"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_ALREADY_REGISTERING];
         }
         return FALSE;
     }
@@ -223,7 +222,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     if (self.isActive) {
         _reregisterAfterActiveCallEnds = TRUE;
         if (error) {
-            *error = [JCSipManagerError errorWithCode:JC_SIP_ALREADY_REGISTERING reason:@"Already Registering"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_ALREADY_REGISTERING];
         }
         return FALSE;
     }
@@ -240,14 +239,14 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     if (!provisioning) {
         if (error) {
-            *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_LINE_IS_EMPTY reason:@"Line is empty"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_LINE_IS_EMPTY];
         }
         return FALSE;
     }
     
     if (!provisioning.isProvisioned) {
         if (error) {
-            *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_LINE_CONFIGURATION_IS_EMPTY reason:@"Line Configuration is empty"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_LINE_CONFIGURATION_IS_EMPTY];
         }
         return FALSE;
     }
@@ -255,7 +254,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSString *userName = provisioning.username;
     if (!userName) {
         if (error) {
-            *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_USER_IS_EMPTY reason:@"User is empty"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_USER_IS_EMPTY];
         }
         return FALSE;
     }
@@ -263,7 +262,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSString *server = provisioning.server;
     if (!server) {
         if (error) {
-            *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_SERVER_IS_EMPTY reason:@"Server is empty"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_SERVER_IS_EMPTY];
         }
         return FALSE;
     }
@@ -271,7 +270,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSString *password = provisioning.password;
     if (!password) {
         if (error) {
-            *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_PASSWORD_IS_EMPTY reason:@"Password is empty"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_REGISTER_PASSWORD_IS_EMPTY];
         }
         return FALSE;
     }
@@ -292,7 +291,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     if(errorCode) {
         if (error) {
-            *error = [JCSipManagerError errorWithCode:errorCode reason:@"Error Setting the User"];
+            *error = [JCSipManagerError errorWithCode:errorCode];
         }
         return FALSE;
     }
@@ -301,7 +300,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     errorCode = [_mPortSIPSDK registerServer:3600 retryTimes:9];
     if(errorCode) {
         if (error) {
-            *error = [JCSipManagerError errorWithCode:errorCode reason:@"Error starting Registration"];
+            *error = [JCSipManagerError errorWithCode:errorCode];
         }
         return FALSE;
     }
@@ -392,7 +391,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSInteger result = [_mPortSIPSDK call:number.dialableNumber sendSdp:TRUE videoCall:videoCall];
     if(result <= 0) {
         if (error != NULL) {
-            *error = [JCSipManagerError errorWithCode:result reason:@"Unable to create call"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_MAKE_CALL_ERROR
+                                      underlyingError:[JCSipManagerError errorWithCode:result]];
         }
         [self setSessionState:JCCallFailed forSession:lineSession event:@"makeCall:" error:nil];
         return NO;
@@ -410,7 +410,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     if (!lineSession) {
         if (error != NULL) {
-            *error = [JCSipManagerError errorWithCode:JC_SIP_LINE_SESSION_IS_EMPTY reason:@"Line Session in empty"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_LINE_SESSION_IS_EMPTY];
         }
         return NO;
     }
@@ -431,7 +431,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSInteger errorCode = [_mPortSIPSDK answerCall:lineSession.sessionId videoCall:lineSession.isVideo];
     if (errorCode) {
         if (error != NULL) {
-            *error = [JCSipManagerError errorWithCode:errorCode reason:@"Unable to answer the call"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_ANSWER_CALL_ERROR
+                                      underlyingError:[JCSipManagerError errorWithCode:errorCode]];
         }
         [self setSessionState:JCCallFailed forSession:lineSession event:nil error:nil];
         return NO;
@@ -469,7 +470,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         int errorCode = [_mPortSIPSDK rejectCall:lineSession.sessionId code:486];
         if (errorCode) {
             if(error != NULL) {
-                *error = [JCSipManagerError errorWithCode:errorCode reason:@"Error trying to manually reject incomming call"];
+                *error = [JCSipManagerError errorWithCode:JC_SIP_REJECT_CALL_ERROR
+                                          underlyingError:[JCSipManagerError errorWithCode:errorCode]];
             }
             return NO;
         }
@@ -481,7 +483,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSInteger errorCode = [_mPortSIPSDK hangUp:lineSession.sessionId];
     if (errorCode) {
         if (error != NULL) {
-            *error = [JCSipManagerError errorWithCode:errorCode reason:@"Error Trying to Hang up"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_HANGUP_CALL_ERROR
+                                      underlyingError:[JCSipManagerError errorWithCode:errorCode]];
         }
         return NO;
     }
@@ -510,7 +513,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     if (holdError) {
         if (error != NULL) {
-            *error = [JCSipManagerError errorWithCode:holdError.code reason:@"Error holding the line sessions" underlyingError:holdError];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_HOLD_CALLS_ERROR
+                                      underlyingError:holdError];
         }
         return false;
     }
@@ -526,7 +530,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSInteger errorCode = [_mPortSIPSDK hold:lineSession.sessionId];
     if (errorCode) {
         if (error != NULL) {
-            *error = [JCSipManagerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_HOLD_CALL_ERROR
+                                      underlyingError:[JCSipManagerError errorWithCode:errorCode]];
         }
         return NO;
     }
@@ -552,7 +557,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     if (holdError) {
         if (error != NULL) {
-            *error = [JCSipManagerError errorWithCode:holdError.code reason:@"Error unholding the line session while after joing the conference" underlyingError:holdError];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_UNHOLD_CALLS_ERROR
+                                      underlyingError:holdError];
         }
         return FALSE;
     }
@@ -568,7 +574,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSInteger errorCode = [_mPortSIPSDK unHold:lineSession.sessionId];
     if (errorCode) {
         if (error != NULL) {
-            *error = [JCSipManagerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_UNHOLD_CALL_ERROR
+                                      underlyingError:[JCSipManagerError errorWithCode:errorCode]];
         }
         return NO;
     }
@@ -587,7 +594,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     if (_conferenceCall) {
         if (error != NULL) {
-            *error = [JCSipManagerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_STARTED reason:@"Conference call already started"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_STARTED];
         }
         return FALSE;
     }
@@ -595,7 +602,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSInteger errorCode = [_mPortSIPSDK createConference:[UIView new] videoResolution:VIDEO_NONE displayLocalVideo:NO];
     if (errorCode) {
         if (error != NULL) {
-            *error = [JCSipManagerError errorWithCode:errorCode reason:@"Error Creating Conference"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_CONFERENCE_CALL_CREATION_ERROR
+                                      underlyingError:[JCSipManagerError errorWithCode:errorCode]];
         }
         return false;
     }
@@ -607,7 +615,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             __autoreleasing NSError *holdError;
             if (![self unholdLineSession:lineSession error:&holdError]) {
                 if (error != NULL) {
-                    *error = [JCSipManagerError errorWithCode:holdError.code reason:@"Error unholding the line session while after joing the conference" underlyingError:holdError];
+                    *error = [JCSipManagerError errorWithCode:JC_SIP_CONFERENCE_CALL_UNHOLD_CALL_START_ERROR
+                                              underlyingError:holdError];
                 }
                 break;
             }
@@ -616,7 +625,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         errorCode = [_mPortSIPSDK joinToConference:lineSession.sessionId];
         if (errorCode) {
             if (error != NULL) {
-                *error = [JCSipManagerError errorWithCode:errorCode reason:@"Error Joining line session to conference"];
+                *error = [JCSipManagerError errorWithCode:JC_SIP_CONFERENCE_CALL_ADD_CALL_ERROR
+                                          underlyingError:[JCSipManagerError errorWithCode:errorCode]];
             }
             break;
         }
@@ -644,7 +654,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     if (!_conferenceCall) {
         if (error != NULL) {
-            *error = [JCSipManagerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_ENDED reason:@"Conference call already started"];
+            *error = [JCSipManagerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_ENDED];
         }
         return FALSE;
     }
@@ -656,7 +666,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                 __autoreleasing NSError *holdError;
                 if(![self holdLineSession:lineSession error:&holdError]) {
                     if (error != NULL) {
-                        *error = [JCSipManagerError errorWithCode:holdError.code reason:@"Error placing calls on hold after ending a conference" underlyingError:holdError];
+                        *error = [JCSipManagerError errorWithCode:JC_SIP_CONFERENCE_CALL_END_CALL_HOLD_ERROR
+                                                  underlyingError:holdError];
                     }
                     return false;
                 }
@@ -1194,7 +1205,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     operation.completionBlock = ^{
         
         if (weakOperation.isBelowNetworkThreshold) {
-            [UIApplication showInfo:@"Poor Network Quality" duration:5.5];
+            [UIApplication showInfo:NSLocalizedStringFromTable(@"Poor Network Quality", PHONE_STRINGS_NAME, @"Network Quality Indicator Popover Text")
+                           duration:5.5];
         }
 
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC));
@@ -1767,372 +1779,444 @@ NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
     
     switch (code) {
         case INVALID_SESSION_ID:
-            return @"Invalid Session Id";
+            return NSLocalizedStringFromTable(@"Invalid Session Id", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreAlreadyInitialized:
-            return @"Already Initialized";
+            return NSLocalizedStringFromTable(@"Already Initialized", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreNotInitialized:
-            return @"Not Initialized";
+            return NSLocalizedStringFromTable(@"Not Initialized", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreSDKObjectNull:
-            return @"SDK Object is Null";
+            return NSLocalizedStringFromTable(@"SDK Object is Null", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreArgumentNull:
-            return @"Argument is Null";
+            return NSLocalizedStringFromTable(@"Argument is Null", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreInitializeWinsockFailure:
-            return @"Initialize Winsock Failure";
+            return NSLocalizedStringFromTable(@"Initialize Winsock Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreUserNameAuthNameEmpty:
-            return @"User Name Auth Name is Empty";
+            return NSLocalizedStringFromTable(@"User Name Auth Name is Empty", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreInitiazeStackFailure:
-            return @"Initialize Stack Failure";
+            return NSLocalizedStringFromTable(@"Initialize Stack Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECorePortOutOfRange:
-            return @"Port out of range";
+            return NSLocalizedStringFromTable(@"Port out of range", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreAddTcpTransportFailure:
-            return @"Add TCP Transport Failure";
+            return NSLocalizedStringFromTable(@"Add TCP Transport Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreAddTlsTransportFailure:
-            return @"Add TLS Transport Failure";
+            return NSLocalizedStringFromTable(@"Add TLS Transport Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreAddUdpTransportFailure:
-            return @"Add UDP Transport Failure";
+            return NSLocalizedStringFromTable(@"Add UDP Transport Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreMiniAudioPortOutOfRange:
-            return @"Mini Audio Port out of range";
+            return NSLocalizedStringFromTable(@"Mini Audio Port out of range", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreMaxAudioPortOutOfRange:
-            return @"Max Audio Port out of range";
+            return NSLocalizedStringFromTable(@"Max Audio Port out of range", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreMiniVideoPortOutOfRange:
-            return @"Mini Video Port out of range";
+            return NSLocalizedStringFromTable(@"Mini Video Port out of range", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreMaxVideoPortOutOfRange:
-            return @"Max Video Port out of range";
+            return NSLocalizedStringFromTable(@"Max Video Port out of range", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreMiniAudioPortNotEvenNumber:
-            return @"Mini Audio Port out of range";
+            return NSLocalizedStringFromTable(@"Mini Audio Port out of range", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreMaxAudioPortNotEvenNumber:
-            return @"Max Audio Port Not Even Number";
+            return NSLocalizedStringFromTable(@"Max Audio Port Not Even Number", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreMiniVideoPortNotEvenNumber:
-            return @"Mini Video Port Not Even Number";
+            return NSLocalizedStringFromTable(@"Mini Video Port Not Even Number", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreMaxVideoPortNotEvenNumber:
-            return @"Max Video Port Not Event Number";
+            return NSLocalizedStringFromTable(@"Max Video Port Not Event Number", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreAudioVideoPortOverlapped:
-            return @"Audio and Video Port Overlapped";
+            return NSLocalizedStringFromTable(@"Audio and Video Port Overlapped", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreAudioVideoPortRangeTooSmall:
-            return @"Audio and Video Port Range to Small";
+            return NSLocalizedStringFromTable(@"Audio and Video Port Range to Small", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreAlreadyRegistered:
-            return @"Already Registered";
+            return NSLocalizedStringFromTable(@"Already Registered", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreSIPServerEmpty:
-            return @"Sip Server Path is Empty";
+            return NSLocalizedStringFromTable(@"Sip Server Path is Empty", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreExpiresValueTooSmall:
-            return @"Expires Value is to small.";
+            return NSLocalizedStringFromTable(@"Expires Value is to small.", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreCallIdNotFound:
-            return @"Call id not found.";
+            return NSLocalizedStringFromTable(@"Call id not found.", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreNotRegistered:
-            return @"Not Registered";
+            return NSLocalizedStringFromTable(@"Not Registered", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreCalleeEmpty:
-            return @"Callee is empty";
+            return NSLocalizedStringFromTable(@"Callee is empty", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreInvalidUri:
-            return @"Invalid URI";
+            return NSLocalizedStringFromTable(@"Invalid URI", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreAudioVideoCodecEmpty:
-            return @"Audio Video Codec is empty";
+            return NSLocalizedStringFromTable(@"Audio Video Codec is empty", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreNoFreeDialogSession:
-            return @"No Free Dialog Session";
+            return NSLocalizedStringFromTable(@"No Free Dialog Session", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreCreateAudioChannelFailed:
-            return @"Create Audio Channel Failed";
+            return NSLocalizedStringFromTable(@"Create Audio Channel Failed", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreSessionTimerValueTooSmall:
-            return @"Session Timer Value is to small";
+            return NSLocalizedStringFromTable(@"Session Timer Value is to small", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreAudioHandleNull:
-            return @"Audio Handle is NULL";
+            return NSLocalizedStringFromTable(@"Audio Handle is NULL", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreVideoHandleNull:
-            return @"Video Handle is NULL";
+            return NSLocalizedStringFromTable(@"Video Handle is NULL", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreCallIsClosed:
-            return @"Call is Closed";
+            return NSLocalizedStringFromTable(@"Call is Closed", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreCallAlreadyHold:
-            return @"Call is Already on Hold";
+            return NSLocalizedStringFromTable(@"Call is Already on Hold", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreCallNotEstablished:
-            return @"Call is not Established";
+            return NSLocalizedStringFromTable(@"Call is not Established", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreCallNotHold:
-            return @"Call Not on Hold";
+            return NSLocalizedStringFromTable(@"Call Not on Hold", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreSipMessaegEmpty:
-            return @"Sip Message is Empty";
+            return NSLocalizedStringFromTable(@"Sip Message is Empty", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreSipHeaderNotExist:
-            return @"Sip Header does not exist";
+            return NSLocalizedStringFromTable(@"Sip Header does not exist", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreSipHeaderValueEmpty:
-            return @"Sip Header value is empty";
+            return NSLocalizedStringFromTable(@"Sip Header value is empty", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreSipHeaderBadFormed:
-            return @"Sip Header is badly formed";
+            return NSLocalizedStringFromTable(@"Sip Header is badly formed", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreBufferTooSmall:
-            return @"Buffer is to Small";
+            return NSLocalizedStringFromTable(@"Buffer is to Small", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreSipHeaderValueListEmpty:
-            return @"Header Value List is empty";
+            return NSLocalizedStringFromTable(@"Header Value List is empty", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreSipHeaderParserEmpty:
-            return @"Sip Header Parser is empty";
+            return NSLocalizedStringFromTable(@"Sip Header Parser is empty", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreSipHeaderValueListNull:
-            return @"Sip Header value list is NULL";
+            return NSLocalizedStringFromTable(@"Sip Header value list is NULL", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreSipHeaderNameEmpty:
-            return @"Sip Header name is empty";
+            return NSLocalizedStringFromTable(@"Sip Header name is empty", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreAudioSampleNotmultiple:
-            return @"Audio Sample is not multiple of 10";	//	The audio sample should be multiple of 10
+            return NSLocalizedStringFromTable(@"Audio Sample is not multiple of 10", PHONE_STRINGS_NAME, @"Port Sip Error");	//	The audio sample should be multiple of 10
             
         case ECoreAudioSampleOutOfRange:
-            return @"Audio Sample Out of Range (10-60)";	//	The audio sample range is 10 - 60
+            return NSLocalizedStringFromTable(@"Audio Sample Out of Range (10-60)", PHONE_STRINGS_NAME, @"Port Sip Error");	//	The audio sample range is 10 - 60
             
         case ECoreInviteSessionNotFound:
-            return @"Invide Session not found";
+            return NSLocalizedStringFromTable(@"Invide Session not found", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreStackException:
-            return @"Stack Exception";
+            return NSLocalizedStringFromTable(@"Stack Exception", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreMimeTypeUnknown:
-            return @"Mime Type Unknowen";
+            return NSLocalizedStringFromTable(@"Mime Type Unknown", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreDataSizeTooLarge:
-            return @"Data Size is too large";
+            return NSLocalizedStringFromTable(@"Data Size is too large", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreSessionNumsOutOfRange:
-            return @"Session numbers out of range";
+            return NSLocalizedStringFromTable(@"Session numbers out of range", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreNotSupportCallbackMode:
-            return @"Not supported callback mode";
+            return NSLocalizedStringFromTable(@"Not supported callback mode", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreNotFoundSubscribeId:
-            return @"Not Found Subscribe Id";
+            return NSLocalizedStringFromTable(@"Not Found Subscribe Id", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreCodecNotSupport:
-            return @"Codec Not Supported";
+            return NSLocalizedStringFromTable(@"Codec Not Supported", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreCodecParameterNotSupport:
-            return @"Codec parameter not supported";
+            return NSLocalizedStringFromTable(@"Codec parameter not supported", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECorePayloadOutofRange:
-            return @"Payload is out of range (96-127)";	//  Dynamic Payload range is 96 - 127
+            return NSLocalizedStringFromTable(@"Payload is out of range (96-127)", PHONE_STRINGS_NAME, @"Port Sip Error");	//  Dynamic Payload range is 96 - 127
             
         case ECorePayloadHasExist:
-            return @"Payload already exists. Duplicate payload values are not allowed";	//  Duplicate Payload values are not allowed.
+            return NSLocalizedStringFromTable(@"Payload already exists. Duplicate payload values are not allowed", PHONE_STRINGS_NAME, @"Port Sip Error");	//  Duplicate Payload values are not allowed.
             
         case ECoreFixPayloadCantChange:
-            return @"Fix Payload can't change";
+            return NSLocalizedStringFromTable(@"Fix Payload can't change", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreCodecTypeInvalid:
-            return @"COde Type Invalid";
+            return NSLocalizedStringFromTable(@"COde Type Invalid", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreCodecWasExist:
-            return @"Codec already exits";
+            return NSLocalizedStringFromTable(@"Codec already exits", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECorePayloadTypeInvalid:
-            return @"Payload Type invalid";
+            return NSLocalizedStringFromTable(@"Payload Type invalid", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreArgumentTooLong:
-            return @"Argument too long";
+            return NSLocalizedStringFromTable(@"Argument too long", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreMiniRtpPortMustIsEvenNum:
-            return @"Mini RTP Port is not even number";
+            return NSLocalizedStringFromTable(@"Mini RTP Port is not even number", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreCallInHold:
-            return @"Call is in hold";
+            return NSLocalizedStringFromTable(@"Call is in hold", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreNotIncomingCall:
-            return @"Not an Incomming Call";
+            return NSLocalizedStringFromTable(@"Not an Incomming Call", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreCreateMediaEngineFailure:
-            return @"Create Media Engine Failre";
+            return NSLocalizedStringFromTable(@"Create Media Engine Failre", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreAudioCodecEmptyButAudioEnabled:
-            return @"Audio Codec Empty but Audio is enabled";
+            return NSLocalizedStringFromTable(@"Audio Codec Empty but Audio is enabled", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreVideoCodecEmptyButVideoEnabled:
-            return @"Video Code is Empty but video is enabled";
+            return NSLocalizedStringFromTable(@"Video Code is Empty but video is enabled", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreNetworkInterfaceUnavailable:
-            return @"Network Interface is unavialable";
+            return NSLocalizedStringFromTable(@"Network Interface is unavialable", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreWrongDTMFTone:
-            return @"Wrong DTMF Tone";
+            return NSLocalizedStringFromTable(@"Wrong DTMF Tone", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreWrongLicenseKey:
-            return @"Wrong License Key";
+            return NSLocalizedStringFromTable(@"Wrong License Key", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreTrialVersionLicenseKey:
-            return @"Trial Version License Key";
+            return NSLocalizedStringFromTable(@"Trial Version License Key", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreOutgoingAudioMuted:
-            return @"Outgoing Audio is muted";
+            return NSLocalizedStringFromTable(@"Outgoing Audio is muted", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreOutgoingVideoMuted:
-            return @"Outgoing Video is nuted";
+            return NSLocalizedStringFromTable(@"Outgoing Video is nuted", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         // IVR
         case ECoreIVRObjectNull:
-            return @"IVR Object is Null";
+            return NSLocalizedStringFromTable(@"IVR Object is Null", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreIVRIndexOutOfRange:
-            return @"IVR Index is out of range";
+            return NSLocalizedStringFromTable(@"IVR Index is out of range", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreIVRReferFailure:
-            return @"IVR Refer Failure";
+            return NSLocalizedStringFromTable(@"IVR Refer Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case ECoreIVRWaitingTimeOut:
-            return @"IVR Waiting Timeout";
+            return NSLocalizedStringFromTable(@"IVR Waiting Timeout", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         // audio
         case EAudioFileNameEmpty:
-            return @"Audio File Name is empty";
+            return NSLocalizedStringFromTable(@"Audio File Name is empty", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioChannelNotFound:
-            return @"Audio Channel not found";
+            return NSLocalizedStringFromTable(@"Audio Channel not found", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioStartRecordFailure:
-            return @"Audio start recording failure";
+            return NSLocalizedStringFromTable(@"Audio start recording failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioRegisterRecodingFailure:
-            return @"Audio Register Recording Failure";
+            return NSLocalizedStringFromTable(@"Audio Register Recording Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioRegisterPlaybackFailure:
-            return @"Audio Register Playback Failure";
+            return NSLocalizedStringFromTable(@"Audio Register Playback Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioGetStatisticsFailure:
-            return @"Get Audio Statistics Failure";
+            return NSLocalizedStringFromTable(@"Get Audio Statistics Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioPlayFileAlreadyEnable:
-            return @"Audio Play File Already Enabled";
+            return NSLocalizedStringFromTable(@"Audio Play File Already Enabled", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioPlayObjectNotExist:
-            return @"Audio Play Object does not Exit";
+            return NSLocalizedStringFromTable(@"Audio Play Object does not Exit", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioPlaySteamNotEnabled:
-            return @"Audio Play stram not enabled";;
+            return NSLocalizedStringFromTable(@"Audio Play stram not enabled", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioRegisterCallbackFailure:
-            return @"Audio Register Callback Failure";
+            return NSLocalizedStringFromTable(@"Audio Register Callback Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioCreateAudioConferenceFailure:
-            return @"Create Audio Conference Failure";
+            return NSLocalizedStringFromTable(@"Create Audio Conference Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioOpenPlayFileFailure:
-            return @"Audio Open Play File Failure";
+            return NSLocalizedStringFromTable(@"Audio Open Play File Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioPlayFileModeNotSupport:
-            return @"Audio Play File Mode not supported";
+            return NSLocalizedStringFromTable(@"Audio Play File Mode not supported", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioPlayFileFormatNotSupport:
-            return @"Audio Play File Format not supported";
+            return NSLocalizedStringFromTable(@"Audio Play File Format not supported", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioPlaySteamAlreadyEnabled:
-            return @"Audio Play stream already enabled";
+            return NSLocalizedStringFromTable(@"Audio Play stream already enabled", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioCreateRecordFileFailure:
-            return @"Create Audio Recording Failure";
+            return NSLocalizedStringFromTable(@"Create Audio Recording Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioCodecNotSupport:
-            return @"Audio Codec not supported";
+            return NSLocalizedStringFromTable(@"Audio Codec not supported", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioPlayFileNotEnabled:
-            return @"Audio Play File Not enabled";
+            return NSLocalizedStringFromTable(@"Audio Play File Not enabled", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioPlayFileGetPositionFailure:
-            return @"Audio Play File Get Position Failure";
+            return NSLocalizedStringFromTable(@"Audio Play File Get Position Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioCantSetDeviceIdDuringCall:
-            return @"Can't set Audio Device Id During Call";
+            return NSLocalizedStringFromTable(@"Can't set Audio Device Id During Call", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EAudioVolumeOutOfRange:
-            return @"Audio Volume out of range";
+            return NSLocalizedStringFromTable(@"Audio Volume out of range", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         // video
         case EVideoFileNameEmpty:
-            return @"Video File Name Empty";
+            return NSLocalizedStringFromTable(@"Video File Name Empty", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EVideoGetDeviceNameFailure:
-            return @"Video Get Device Name Failure";
+            return NSLocalizedStringFromTable(@"Video Get Device Name Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EVideoGetDeviceIdFailure:
-            return @"Video Get Device Id Failure";
+            return NSLocalizedStringFromTable(@"Video Get Device Id Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EVideoStartCaptureFailure:
-            return @"Start Video Capture Failure";
+            return NSLocalizedStringFromTable(@"Start Video Capture Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EVideoChannelNotFound:
-            return @"Video Channel Not Found";
+            return NSLocalizedStringFromTable(@"Video Channel Not Found", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EVideoStartSendFailure:
-            return @"Start Send Failure";
+            return NSLocalizedStringFromTable(@"Start Send Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EVideoGetStatisticsFailure:
-            return @"Get Statistics Failure";
+            return NSLocalizedStringFromTable(@"Get Statistics Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EVideoStartPlayAviFailure:
-            return @"Start Play AVI Failure";
+            return NSLocalizedStringFromTable(@"Start Play AVI Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EVideoSendAviFileFailure:
-            return @"Send Avi File Failure";
+            return NSLocalizedStringFromTable(@"Send Avi File Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EVideoRecordUnknowCodec:
-            return @"Unknown Video Record Codec";
+            return NSLocalizedStringFromTable(@"Unknown Video Record Codec", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EVideoCantSetDeviceIdDuringCall:
-            return @"Can't set device id durring call";
+            return NSLocalizedStringFromTable(@"Can't set device id durring call", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EVideoUnsupportCaptureRotate:
-            return @"Unsupported Video Capture Rotation";
+            return NSLocalizedStringFromTable(@"Unsupported Video Capture Rotation", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         case EVideoUnsupportCaptureResolution:
-            return @"Unsupported Video Capture Resolution";
+            return NSLocalizedStringFromTable(@"Unsupported Video Capture Resolution", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         // Device
         case EDeviceGetDeviceNameFailure:
-            return @"Get Device Name Failure";
+            return NSLocalizedStringFromTable(@"Get Device Name Failure", PHONE_STRINGS_NAME, @"Port Sip Error");
             
         // Manager Errors
         case JC_SIP_ALREADY_REGISTERING:
-            return @"Phone is already attempting to register";
+            return NSLocalizedStringFromTable(@"Phone is already attempting to register", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_REGISTER_LINE_IS_EMPTY:
+            return NSLocalizedStringFromTable(@"Line is empty", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_REGISTER_LINE_CONFIGURATION_IS_EMPTY:
+            return NSLocalizedStringFromTable(@"Line Configuration is Empty", PHONE_STRINGS_NAME, @"Sip Manager Error");
+         
+        case JC_SIP_REGISTER_USER_IS_EMPTY:
+            return NSLocalizedStringFromTable(@"User is Empty", PHONE_STRINGS_NAME, @"Sip Manager Error");
+         
+        case JC_SIP_REGISTER_SERVER_IS_EMPTY:
+            return NSLocalizedStringFromTable(@"Server is empty", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_REGISTER_PASSWORD_IS_EMPTY:
+            return NSLocalizedStringFromTable(@"Password is empty", PHONE_STRINGS_NAME, @"Sip Manager Error");
             
         case JC_SIP_REGISTRATION_TIMEOUT:
-            return @"Phone registration is unable to register at this time. Please check your network connection and try again. If problem persists, restart the application.";
+            return NSLocalizedStringFromTable(@"Phone registration is unable to register at this time. Please check your network connection and try again. If problem persists, restart the application.", PHONE_STRINGS_NAME, @"Sip Manager Error");
             
         case JC_SIP_REGISTRATION_FAILURE:
-            return @"Please try again. If the problem persists, please contact support.";
+            return NSLocalizedStringFromTable(@"Please try again. If the problem persists, please contact support.", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_CALL_NO_IDLE_LINE:
+            return NSLocalizedStringFromTable(@"No Idle Line", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_CALL_NO_ACTIVE_LINE:
+            return NSLocalizedStringFromTable(@"No Active Line", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_LINE_SESSION_IS_EMPTY:
+            return NSLocalizedStringFromTable(@"Line Session in empty", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_CALL_NO_REFERRAL_LINE:
+            return NSLocalizedStringFromTable(@"No Referral line", PHONE_STRINGS_NAME, @"Sip Manager Error");
+        
+            
+        case JC_SIP_MAKE_CALL_ERROR:
+            return NSLocalizedStringFromTable(@"Unable to make a call", PHONE_STRINGS_NAME, @"Sip Manager Error");
+    
+        case JC_SIP_ANSWER_CALL_ERROR:
+            return NSLocalizedStringFromTable(@"Unable to answer the call", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_REJECT_CALL_ERROR:
+            return NSLocalizedStringFromTable(@"Error trying to manually reject incomming call", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_HANGUP_CALL_ERROR:
+            return NSLocalizedStringFromTable(@"Error Trying to Hang up", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_HOLD_CALLS_ERROR:
+            return NSLocalizedStringFromTable(@"Error holding the line sessions", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_HOLD_CALL_ERROR:
+            return NSLocalizedStringFromTable(@"Error placing calls on hold", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_UNHOLD_CALLS_ERROR:
+            return NSLocalizedStringFromTable(@"Error unholding the line session while after joing the conference", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_UNHOLD_CALL_ERROR:
+            return NSLocalizedStringFromTable(@"Error placing calls on hold", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        // Conference calls
+            
+        case JC_SIP_CONFERENCE_CALL_ALREADY_STARTED:
+            return NSLocalizedStringFromTable(@"Conference call already started", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_CONFERENCE_CALL_ALREADY_ENDED:
+            return NSLocalizedStringFromTable(@"Conference call already ended", PHONE_STRINGS_NAME, @"Sip Manager Error");
+         
+        case JC_SIP_CONFERENCE_CALL_CREATION_ERROR:
+            return NSLocalizedStringFromTable(@"Error Creating Conference", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_CONFERENCE_CALL_UNHOLD_CALL_START_ERROR:
+            return NSLocalizedStringFromTable(@"Error unholding the line session while after joing the conference", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_CONFERENCE_CALL_ADD_CALL_ERROR:
+            return NSLocalizedStringFromTable(@"Error Joining line session to conference", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            
+        case JC_SIP_CONFERENCE_CALL_END_CALL_HOLD_ERROR:
+            return NSLocalizedStringFromTable(@"Error placing calls on hold after ending a conference", PHONE_STRINGS_NAME, @"Sip Manager Error");
             
         default:
-            return @"Unknown Error Has Occured";
+            return NSLocalizedStringFromTable(@"Unknown Error Has Occured", PHONE_STRINGS_NAME, @"Sip Manager Error");
             
     }
     return nil;
@@ -2141,123 +2225,123 @@ NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
 +(NSString *)sipProtocolFailureReasonFromCode:(NSInteger)code {
     switch (code) {
         case 400:
-            return @"Bad Request";
+            return NSLocalizedStringFromTable(@"Bad Request", PHONE_STRINGS_NAME, @"Sip Error");
         case 401:
-            return @"Unauthorized";
+            return NSLocalizedStringFromTable(@"Unauthorized", PHONE_STRINGS_NAME, @"Sip Error");
         case 402:
-            return @"Payment Required";
+            return NSLocalizedStringFromTable(@"Payment Required", PHONE_STRINGS_NAME, @"Sip Error");
         case 403:
-            return @"Forbidden";
+            return NSLocalizedStringFromTable(@"Forbidden", PHONE_STRINGS_NAME, @"Sip Error");
         case 404:
-            return @"Not Found";
+            return NSLocalizedStringFromTable(@"Not Found", PHONE_STRINGS_NAME, @"Sip Error");
         case 405:
-            return @"Method Not Allowed";
+            return NSLocalizedStringFromTable(@"Method Not Allowed", PHONE_STRINGS_NAME, @"Sip Error");
         case 406:
-            return @"Not Acceptable";
+            return NSLocalizedStringFromTable(@"Not Acceptable", PHONE_STRINGS_NAME, @"Sip Error");
         case 407:
-            return @"Proxy Authentication Required";
+            return NSLocalizedStringFromTable(@"Proxy Authentication Required", PHONE_STRINGS_NAME, @"Sip Error");
         case 408:
-            return @"Request Timeout";
+            return NSLocalizedStringFromTable(@"Request Timeout", PHONE_STRINGS_NAME, @"Sip Error");
         case 409:
-            return @"Conflict";
+            return NSLocalizedStringFromTable(@"Conflict", PHONE_STRINGS_NAME, @"Sip Error");
         case 410:
-            return @"Gone";
+            return NSLocalizedStringFromTable(@"Gone", PHONE_STRINGS_NAME, @"Sip Error");
         case 411:
-            return @"Length Required";
+            return NSLocalizedStringFromTable(@"Length Required", PHONE_STRINGS_NAME, @"Sip Error");
         case 412:
-            return @"Conditional Request Failed";
+            return NSLocalizedStringFromTable(@"Conditional Request Failed", PHONE_STRINGS_NAME, @"Sip Error");
         case 413:
-            return @"Request Entity Too Large";
+            return NSLocalizedStringFromTable(@"Request Entity Too Large", PHONE_STRINGS_NAME, @"Sip Error");
         case 414:
-            return @"Request-URI Too Long";
+            return NSLocalizedStringFromTable(@"Request-URI Too Long", PHONE_STRINGS_NAME, @"Sip Error");
         case 415:
-            return @"Unsupported Media Type";
+            return NSLocalizedStringFromTable(@"Unsupported Media Type", PHONE_STRINGS_NAME, @"Sip Error");
         case 416:
-            return @"Unsupported URI Scheme";
+            return NSLocalizedStringFromTable(@"Unsupported URI Scheme", PHONE_STRINGS_NAME, @"Sip Error");
         case 417:
-            return @"Unknown Resource-Priority";
+            return NSLocalizedStringFromTable(@"Unknown Resource-Priority", PHONE_STRINGS_NAME, @"Sip Error");
         case 420:
-            return @"Bad Extension";
+            return NSLocalizedStringFromTable(@"Bad Extension", PHONE_STRINGS_NAME, @"Sip Error");
         case 421:
-            return @"Extension Required";
+            return NSLocalizedStringFromTable(@"Extension Required", PHONE_STRINGS_NAME, @"Sip Error");
         case 422:
-            return @"Session Interval Too Small";
+            return NSLocalizedStringFromTable(@"Session Interval Too Small", PHONE_STRINGS_NAME, @"Sip Error");
         case 423:
-            return @"Interval Too Brief";
+            return NSLocalizedStringFromTable(@"Interval Too Brief", PHONE_STRINGS_NAME, @"Sip Error");
         case 424:
-            return @"Bad Location Information";
+            return NSLocalizedStringFromTable(@"Bad Location Information", PHONE_STRINGS_NAME, @"Sip Error");
         case 428:
-            return @"Use Identity Header";
+            return NSLocalizedStringFromTable(@"Use Identity Header", PHONE_STRINGS_NAME, @"Sip Error");
         case 429:
-            return @"Provide Referrer Identity";
+            return NSLocalizedStringFromTable(@"Provide Referrer Identity", PHONE_STRINGS_NAME, @"Sip Error");
         case 430:
-            return @"Flow Failed";
+            return NSLocalizedStringFromTable(@"Flow Failed", PHONE_STRINGS_NAME, @"Sip Error");
         case 433:
-            return @"Anonymity Disallowed";
+            return NSLocalizedStringFromTable(@"Anonymity Disallowed", PHONE_STRINGS_NAME, @"Sip Error");
         case 436:
-            return @"Bad Identity-Info";
+            return NSLocalizedStringFromTable(@"Bad Identity-Info", PHONE_STRINGS_NAME, @"Sip Error");
         case 437:
-            return @"Unsupported Certificate";
+            return NSLocalizedStringFromTable(@"Unsupported Certificate", PHONE_STRINGS_NAME, @"Sip Error");
         case 438:
-            return @"Invalid Identity Header";
+            return NSLocalizedStringFromTable(@"Invalid Identity Header", PHONE_STRINGS_NAME, @"Sip Error");
         case 439:
-            return @"First Hop Lacks Outbound Support";
+            return NSLocalizedStringFromTable(@"First Hop Lacks Outbound Support", PHONE_STRINGS_NAME, @"Sip Error");
         case 470:
-            return @"Consent Needed";
+            return NSLocalizedStringFromTable(@"Consent Needed", PHONE_STRINGS_NAME, @"Sip Error");
         case 480:
-            return @"Temporarily Unavailable";
+            return NSLocalizedStringFromTable(@"Temporarily Unavailable", PHONE_STRINGS_NAME, @"Sip Error");
         case 481:
-            return @"Call/Transaction Does Not Exist";
+            return NSLocalizedStringFromTable(@"Call/Transaction Does Not Exist", PHONE_STRINGS_NAME, @"Sip Error");
         case 482:
-            return @"Loop Detected";
+            return NSLocalizedStringFromTable(@"Loop Detected", PHONE_STRINGS_NAME, @"Sip Error");
         case 483:
-            return @"Too Many Hops";
+            return NSLocalizedStringFromTable(@"Too Many Hops", PHONE_STRINGS_NAME, @"Sip Error");
         case 484:
-            return @"Address Incomplete";
+            return NSLocalizedStringFromTable(@"Address Incomplete", PHONE_STRINGS_NAME, @"Sip Error");
         case 485:
-            return @"Ambiguous";
+            return NSLocalizedStringFromTable(@"Ambiguous", PHONE_STRINGS_NAME, @"Sip Error");
         case 486:
-            return @"Busy Here";
+            return NSLocalizedStringFromTable(@"Busy Here", PHONE_STRINGS_NAME, @"Sip Error");
         case 487:
-            return @"Request Terminated";
+            return NSLocalizedStringFromTable(@"Request Terminated", PHONE_STRINGS_NAME, @"Sip Error");
         case 488:
-            return @"Not Acceptable Here";
+            return NSLocalizedStringFromTable(@"Not Acceptable Here", PHONE_STRINGS_NAME, @"Sip Error");
         case 489:
-            return @"Bad Event";
+            return NSLocalizedStringFromTable(@"Bad Event", PHONE_STRINGS_NAME, @"Sip Error");
         case 491:
-            return @"Request Pending";
+            return NSLocalizedStringFromTable(@"Request Pending", PHONE_STRINGS_NAME, @"Sip Error");
         case 493:
-            return @"Undecipherable";
+            return NSLocalizedStringFromTable(@"Undecipherable", PHONE_STRINGS_NAME, @"Sip Error");
         case 494:
-            return @"Security Agreement Required";
+            return NSLocalizedStringFromTable(@"Security Agreement Required", PHONE_STRINGS_NAME, @"Sip Error");
             
         // 5xx - Server Failure Responses */
         case 500:
-            return @"Server Internal Error";
+            return NSLocalizedStringFromTable(@"Server Internal Error", PHONE_STRINGS_NAME, @"Sip Error");
         case 501:
-            return @"Not Implemented";
+            return NSLocalizedStringFromTable(@"Not Implemented", PHONE_STRINGS_NAME, @"Sip Error");
         case 502:
-            return @"Bad Gateway";
+            return NSLocalizedStringFromTable(@"Bad Gateway", PHONE_STRINGS_NAME, @"Sip Error");
         case 503:
-            return @"Service Unavailable";
+            return NSLocalizedStringFromTable(@"Service Unavailable", PHONE_STRINGS_NAME, @"Sip Error");
         case 504:
-            return @"Server Time-out";
+            return NSLocalizedStringFromTable(@"Server Time-out", PHONE_STRINGS_NAME, @"Sip Error");
         case 505:
-            return @"Version Not Supported";
+            return NSLocalizedStringFromTable(@"Version Not Supported", PHONE_STRINGS_NAME, @"Sip Error");
         case 513:
-            return @"Message Too Large";
+            return NSLocalizedStringFromTable(@"Message Too Large", PHONE_STRINGS_NAME, @"Sip Error");
         case 580:
-            return @"Precondition Failure";
+            return NSLocalizedStringFromTable(@"Precondition Failure", PHONE_STRINGS_NAME, @"Sip Error");
             
         // 6xx - Global Failure Responses
         case 600:
-            return @"Busy Everywhere";
+            return NSLocalizedStringFromTable(@"Busy Everywhere", PHONE_STRINGS_NAME, @"Sip Error");
         case 603:
-            return @"Decline";
+            return NSLocalizedStringFromTable(@"Decline", PHONE_STRINGS_NAME, @"Sip Error");
         case 604:
-            return @"Does Not Exist Anywhere";
+            return NSLocalizedStringFromTable(@"Does Not Exist Anywhere", PHONE_STRINGS_NAME, @"Sip Error");
         case 606:
-            return @"Not Acceptable";
+            return NSLocalizedStringFromTable(@"Not Acceptable", PHONE_STRINGS_NAME, @"Sip Error");
             
         default:
             return nil;
@@ -2270,125 +2354,125 @@ NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
             
         // 4xx - Client Failure Responses
         case 400:
-            return @"Bad Request. The request could not be understood due to malformed syntax.";
+            return NSLocalizedStringFromTable(@"Bad Request. The request could not be understood due to malformed syntax.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 401:
-            return @"Unauthorized. The request requires user authentication.";
+            return NSLocalizedStringFromTable(@"Unauthorized. The request requires user authentication.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 402:
-            return @"Payment Required.";
+            return NSLocalizedStringFromTable(@"Payment Required.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 403:
-            return @"Forbidden. The server understood the request, but is refusing to fulfil it.";
+            return NSLocalizedStringFromTable(@"Forbidden. The server understood the request, but is refusing to fulfil it.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 404:
-            return @"Not Found. The server has definitive information that the user does not exist at the domain specified in the Request-URI.";
+            return NSLocalizedStringFromTable(@"Not Found. The server has definitive information that the user does not exist at the domain specified in the Request-URI.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 405:
-            return @"Method Not Allowed. The method specified in the Request -Line is understood, but not allowed for the address identified by the Request-URI.";
+            return NSLocalizedStringFromTable(@"Method Not Allowed. The method specified in the Request -Line is understood, but not allowed for the address identified by the Request-URI.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 406:
-            return @"Not Acceptable. The resource identified by the request is only capable of generating response entities that have content characteristics but not acceptable according to the Accept header field sent in the request.";
+            return NSLocalizedStringFromTable(@"Not Acceptable. The resource identified by the request is only capable of generating response entities that have content characteristics but not acceptable according to the Accept header field sent in the request.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 407:
-            return @"Proxy Authentication Required. The request requires user authentication.";
+            return NSLocalizedStringFromTable(@"Proxy Authentication Required. The request requires user authentication.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 408:
-            return @"Request Timeout. Couldn't find the user in time. The server could not produce a response within a suitable amount of time, for example, if it could not determine the location of the user in time.";
+            return NSLocalizedStringFromTable(@"Request Timeout. Couldn't find the user in time. The server could not produce a response within a suitable amount of time, for example, if it could not determine the location of the user in time.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 409:
-            return @"Conflict. User already registered.";
+            return NSLocalizedStringFromTable(@"Conflict. User already registered.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 410:
-            return @"Gone. The user existed once, but is not available here any more.";
+            return NSLocalizedStringFromTable(@"Gone. The user existed once, but is not available here any more.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 411:
-            return @"Length Required. The server will not accept the request without a valid Content - Length.";
+            return NSLocalizedStringFromTable(@"Length Required. The server will not accept the request without a valid Content - Length.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 412:
-            return @"Conditional Request Failed. The given precondition has not been met.";
+            return NSLocalizedStringFromTable(@"Conditional Request Failed. The given precondition has not been met.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 413:
-            return @"Request Entity Too Large. Request body too large.";
+            return NSLocalizedStringFromTable(@"Request Entity Too Large. Request body too large.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 414:
-            return @"Request - URI Too Long. The server is refusing to service the request because the Request - URI is longer than the server is willing to interpret.";
+            return NSLocalizedStringFromTable(@"Request - URI Too Long. The server is refusing to service the request because the Request - URI is longer than the server is willing to interpret.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 415:
-            return @"Unsupported Media Type. Request body in a format not supported.";
+            return NSLocalizedStringFromTable(@"Unsupported Media Type. Request body in a format not supported.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 416:
-            return @"Unsupported URI Scheme. Request - URI is unknown to the server.";
+            return NSLocalizedStringFromTable(@"Unsupported URI Scheme. Request - URI is unknown to the server.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 417:
-            return @"Unknown Resource -Priority. There was a resource - priority option tag, but no Resource-Priority header.";
+            return NSLocalizedStringFromTable(@"Unknown Resource -Priority. There was a resource - priority option tag, but no Resource-Priority header.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 420:
-            return @"Bad Extension. Bad SIP Protocol Extension used, not understood by the server.";
+            return NSLocalizedStringFromTable(@"Bad Extension. Bad SIP Protocol Extension used, not understood by the server.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 421:
-            return @"Extension Required. The server needs a specific extension not listed in the Supported header.";
+            return NSLocalizedStringFromTable(@"Extension Required. The server needs a specific extension not listed in the Supported header.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 422:
-            return @"Session Interval Too Small. The received request contains a Session-Expires header field with a duration below the minimum timer.";
+            return NSLocalizedStringFromTable(@"Session Interval Too Small. The received request contains a Session-Expires header field with a duration below the minimum timer.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 423:
-            return @"Interval Too Brief. Expiration time of the resource is too short.";
+            return NSLocalizedStringFromTable(@"Interval Too Brief. Expiration time of the resource is too short.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 424:
-            return @"Bad Location Information. The request's location content was malformed or otherwise unsatisfactory.";
+            return NSLocalizedStringFromTable(@"Bad Location Information. The request's location content was malformed or otherwise unsatisfactory.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 428:
-            return @"Use Identity Header. The server policy requires an Identity header, and one has not been provided.";
+            return NSLocalizedStringFromTable(@"Use Identity Header. The server policy requires an Identity header, and one has not been provided.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 429:
-            return @"Provide Referrer Identity. The server did not receive a valid Referred-By token on the request.";
+            return NSLocalizedStringFromTable(@"Provide Referrer Identity. The server did not receive a valid Referred-By token on the request.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 430:
-            return @"Flow Failed. A specific flow to a user agent has failed, although other flows may succeed.";
+            return NSLocalizedStringFromTable(@"Flow Failed. A specific flow to a user agent has failed, although other flows may succeed.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 433:
-            return @"Anonymity Disallowed. The request has been rejected because it was anonymous.";
+            return NSLocalizedStringFromTable(@"Anonymity Disallowed. The request has been rejected because it was anonymous.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 436:
-            return @"Bad Identity -Info. The request has an Identity -Info header, and the URI scheme in that header cannot be dereferenced.";
+            return NSLocalizedStringFromTable(@"Bad Identity -Info. The request has an Identity -Info header, and the URI scheme in that header cannot be dereferenced.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 437:
-            return @"Unsupported Certificate. The server was unable to validate a certificate for the domain that signed the request.";
+            return NSLocalizedStringFromTable(@"Unsupported Certificate. The server was unable to validate a certificate for the domain that signed the request.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 438:
-            return @"Invalid Identity Header. The server obtained a valid certificate that the request claimed was used to sign the request, but was unable to verify that signature.";
+            return NSLocalizedStringFromTable(@"Invalid Identity Header. The server obtained a valid certificate that the request claimed was used to sign the request, but was unable to verify that signature.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 439:
-            return @"First Hop Lacks Outbound Support. The first outbound proxy the user is attempting to register through does not support the 'outbound' feature of RFC 5626, although the registrar does.";
+            return NSLocalizedStringFromTable(@"First Hop Lacks Outbound Support. The first outbound proxy the user is attempting to register through does not support the 'outbound' feature of RFC 5626, although the registrar does.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 470:
-            return @"Consent Needed. The source of the request did not have the permission of the recipient to make such a request.";
+            return NSLocalizedStringFromTable(@"Consent Needed. The source of the request did not have the permission of the recipient to make such a request.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 480:
-            return @"Temporarily Unavailable. Callee currently unavailable.";
+            return NSLocalizedStringFromTable(@"Temporarily Unavailable. Callee currently unavailable.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 481:
-            return @"Call/Transaction Does Not Exist. Server received a request that does not match any dialog or transaction.";
+            return NSLocalizedStringFromTable(@"Call/Transaction Does Not Exist. Server received a request that does not match any dialog or transaction.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 482:
-            return @"Loop Detected. Server has detected a loop.";
+            return NSLocalizedStringFromTable(@"Loop Detected. Server has detected a loop.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 483:
-            return @"Too Many Hops. Max - Forwards header has reached the value '0'.";
+            return NSLocalizedStringFromTable(@"Too Many Hops. Max - Forwards header has reached the value '0'.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 484:
-            return @"Address Incomplete. Request - URI incomplete.";
+            return NSLocalizedStringFromTable(@"Address Incomplete. Request - URI incomplete.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 485:
-            return @"Ambiguous. Request - URI is ambiguous.";
+            return NSLocalizedStringFromTable(@"Ambiguous. Request - URI is ambiguous.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 486:
-            return @"Busy Here. Callee is busy.";
+            return NSLocalizedStringFromTable(@"Busy Here. Callee is busy.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 487:
-            return @"Request Terminated. Request has terminated by bye or cancel.";
+            return NSLocalizedStringFromTable(@"Request Terminated. Request has terminated by bye or cancel.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 488:
-            return @"Not Acceptable Here. Some aspect of the session description or the Request - URI is not acceptable.";
+            return NSLocalizedStringFromTable(@"Not Acceptable Here. Some aspect of the session description or the Request - URI is not acceptable.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 489:
-            return @"Bad Event. The server did not understand an event package specified in an Event header field.";
+            return NSLocalizedStringFromTable(@"Bad Event. The server did not understand an event package specified in an Event header field.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 491:
-            return @"Request Pending. Server has some pending request from the same dialog.";
+            return NSLocalizedStringFromTable(@"Request Pending. Server has some pending request from the same dialog.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 493:
-            return @"Undecipherable. Request contains an encrypted MIME body, which recipient can not decrypt.";
+            return NSLocalizedStringFromTable(@"Undecipherable. Request contains an encrypted MIME body, which recipient can not decrypt.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 494:
-            return @"Security Agreement Required.";
+            return NSLocalizedStringFromTable(@"Security Agreement Required.", PHONE_STRINGS_NAME, @"Sip Error Description");
             
         // 5xx - Server Failure Responses
         case 500:
-            return @"Server Internal Error. The server could not fulfill the request due to some unexpected condition.";
+            return NSLocalizedStringFromTable(@"Server Internal Error. The server could not fulfill the request due to some unexpected condition.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 501:
-            return @"Not Implemented. The server does not have the ability to fulfill the request, such as because it does not recognize the request method.";
+            return NSLocalizedStringFromTable(@"Not Implemented. The server does not have the ability to fulfill the request, such as because it does not recognize the request method.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 502:
-            return @"Bad Gateway. The server is acting as a gateway or proxy, and received an invalid response from a downstream server while attempting to fulfill the request.";
+            return NSLocalizedStringFromTable(@"Bad Gateway. The server is acting as a gateway or proxy, and received an invalid response from a downstream server while attempting to fulfill the request.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 503:
-            return @"Service Unavailable. The server is undergoing maintenance or is temporarily overloaded and so cannot process the request.";
+            return NSLocalizedStringFromTable(@"Service Unavailable. The server is undergoing maintenance or is temporarily overloaded and so cannot process the request.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 504:
-            return @"Server Time-out. The server attempted to access another server in attempting to process the request, and did not receive a prompt response.";
+            return NSLocalizedStringFromTable(@"Server Time-out. The server attempted to access another server in attempting to process the request, and did not receive a prompt response.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 505:
-            return @"Version Not Supported. The SIP protocol version in the request is not supported by the server.";
+            return NSLocalizedStringFromTable(@"Version Not Supported. The SIP protocol version in the request is not supported by the server.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 513:
-            return @"Message Too Large. The request message length is longer than the server can process.";
+            return NSLocalizedStringFromTable(@"Message Too Large. The request message length is longer than the server can process.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 580:
-            return @"Precondition Failure. The server is unable or unwilling to meet some constraints specified in the offer.";
+            return NSLocalizedStringFromTable(@"Precondition Failure. The server is unable or unwilling to meet some constraints specified in the offer.", PHONE_STRINGS_NAME, @"Sip Error Description");
             
         // 6xx - Global Failure Responses
         case 600:
-            return @"Busy Everywhere. All possible destinations are busy. Destination knows there are no alternative destinations (such as a voicemail server) able to accept the call.";
+            return NSLocalizedStringFromTable(@"Busy Everywhere. All possible destinations are busy. Destination knows there are no alternative destinations (such as a voicemail server) able to accept the call.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 603:
-            return @"Decline. The destination does not wish to participate in the call";
+            return NSLocalizedStringFromTable(@"Decline. The destination does not wish to participate in the call", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 604:
-            return @"Does Not Exist Anywhere. The server has authoritative information that the requested user does not exist anywhere.";
+            return NSLocalizedStringFromTable(@"Does Not Exist Anywhere. The server has authoritative information that the requested user does not exist anywhere.", PHONE_STRINGS_NAME, @"Sip Error Description");
         case 606:
-            return @"Not Acceptable. The user's agent was contacted successfully but some aspects of the session description such as the requested media, bandwidth, or addressing style were not acceptable.";
+            return NSLocalizedStringFromTable(@"Not Acceptable. The user's agent was contacted successfully but some aspects of the session description such as the requested media, bandwidth, or addressing style were not acceptable.", PHONE_STRINGS_NAME, @"Sip Error Description");
         default:
-            return @"An Error has occurred. An unknown error has occured. ";
+            return NSLocalizedStringFromTable(@"An Error has occurred. An unknown error has occured.", PHONE_STRINGS_NAME, @"Sip Error Description");
     }
     
 }

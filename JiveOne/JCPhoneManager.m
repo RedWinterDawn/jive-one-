@@ -13,6 +13,7 @@
 
 #define MAX_LINES 2
 #define DEFAULT_PHONE_MANAGER_STORYBOARD_NAME @"PhoneManager"
+#define PHONE_STRINGS_NAME @"Phone"
 
 #import "JCPhoneManager.h"
 #import "JCPhoneManagerError.h"
@@ -132,12 +133,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
                                   dismissed:^(NSInteger buttonIndex) {
                                       [weakSelf disconnect];
                                   }
-                          cancelButtonTitle:@"OK"
+                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
                           otherButtonTitles:nil];
             }
             
             else if (error.code == JC_SIP_REGISTRATION_FAILURE) {
-                [JCAlertView alertWithTitle:@"Registration Failure" error:error];
+                [JCAlertView alertWithTitle:NSLocalizedStringFromTable(@"Registration Failure", PHONE_STRINGS_NAME, nil) error:error];
             }
             
             // If we get a no network error, show an alert.
@@ -187,7 +188,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
    
     // If we made it here, we do not have a line configuration, we need to request it. If the
     // request was successfull, we try to register.
-    [UIApplication showStatus:@"Selecting Line..."];
+    [UIApplication showStatus:NSLocalizedStringFromTable(@"Selecting Line...", PHONE_STRINGS_NAME, nil)];
     [LineConfiguration downloadLineConfigurationForLine:line completion:^(BOOL success, NSError *error) {
         if (success) {
             [self registerWithLine:line];
@@ -200,7 +201,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 -(void)registerWithLine:(Line *)line
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegisteringNotification object:self];
-    [UIApplication showStatus:@"Registering..."];
+    [UIApplication showStatus:NSLocalizedStringFromTable(@"Registering...", PHONE_STRINGS_NAME, nil)];
     [self.sipManager registerToProvisioning:line];
 }
 
@@ -360,13 +361,16 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 -(void)blindTransferToNumber:(id<JCPhoneNumberDataSource>)number completion:(CompletionHandler)completion
 {
-    [UIApplication showStatus:@"Transfering..."];
+    [UIApplication showStatus:NSLocalizedStringFromTable(@"Transfering...", PHONE_STRINGS_NAME, nil)];
     __autoreleasing NSError *error;
     BOOL success = [self.sipManager startBlindTransferToNumber:number error:&error];
     if (completion) {
         if (!success) {
             [UIApplication hideStatus];
-            completion(NO, [JCPhoneManagerError errorWithCode:JC_PHONE_BLIND_TRANSFER_FAILED reason:@"Unable to perform transfer at this time. Please Try Again." underlyingError:error]);
+            completion(NO, [JCPhoneManagerError
+                            errorWithCode:JC_PHONE_BLIND_TRANSFER_FAILED
+                            reason:NSLocalizedStringFromTable( @"Unable to perform transfer at this time. Please Try Again.", PHONE_STRINGS_NAME, nil)
+                            underlyingError:error]);
         } else {
             completion(YES, nil);
         }
@@ -651,7 +655,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
         if (localNotif){
-            localNotif.alertBody =[NSString  stringWithFormat:@"Call from %@ :%@", lineSession.number.titleText, lineSession.number.detailText];
+            localNotif.alertBody =[NSString  stringWithFormat:NSLocalizedStringFromTable(@"Call from %@ :%@", PHONE_STRINGS_NAME, @"Local notification text"), lineSession.number.titleText, lineSession.number.detailText];
             localNotif.soundName = UILocalNotificationDefaultSoundName;
             localNotif.applicationIconBadgeNumber = 1;
             [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];

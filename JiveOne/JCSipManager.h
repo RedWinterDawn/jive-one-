@@ -127,8 +127,21 @@
 #define JC_SIP_CALL_NO_REFERRAL_LINE                    -5103
 #define JC_SIP_CALL_POOR_NETWORK_QUALITY                -5104
 
+#define JC_SIP_MAKE_CALL_ERROR                          -5110
+#define JC_SIP_ANSWER_CALL_ERROR                        -5111
+#define JC_SIP_REJECT_CALL_ERROR                        -5112
+#define JC_SIP_HANGUP_CALL_ERROR                        -5113
+#define JC_SIP_HOLD_CALLS_ERROR                         -5114
+#define JC_SIP_HOLD_CALL_ERROR                          -5115
+#define JC_SIP_UNHOLD_CALLS_ERROR                       -5116
+#define JC_SIP_UNHOLD_CALL_ERROR                        -5117
+
 #define JC_SIP_CONFERENCE_CALL_ALREADY_STARTED          -5201
 #define JC_SIP_CONFERENCE_CALL_ALREADY_ENDED            -5202
+#define JC_SIP_CONFERENCE_CALL_CREATION_ERROR           -5203
+#define JC_SIP_CONFERENCE_CALL_UNHOLD_CALL_START_ERROR  -5204
+#define JC_SIP_CONFERENCE_CALL_ADD_CALL_ERROR           -5205
+#define JC_SIP_CONFERENCE_CALL_END_CALL_HOLD_ERROR      -5206
 
 
 
