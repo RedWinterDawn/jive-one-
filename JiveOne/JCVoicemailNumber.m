@@ -8,14 +8,13 @@
 
 #import "JCVoicemailNumber.h"
 
-NSString *const kJCVoicemailNumberNameString = @"Voicemail";
 NSString *const kJCVoicemailNumberString = @"*99";
 
 @implementation JCVoicemailNumber
 
 -(instancetype)init
 {
-    NSString *name = NSLocalizedString(kJCVoicemailNumberNameString, nil);
+    NSString *name = NSLocalizedString(@"Voicemail", nil);
     return [super initWithName:name number:kJCVoicemailNumberString];
 }
 

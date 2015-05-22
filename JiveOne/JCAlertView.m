@@ -40,10 +40,10 @@ static const NSMutableArray *alerts;
         _dismissBlock = dismissBlock;
         
         // make an alert view, wiring ourselves up as the delegate
-        _alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(title,nil)
-                                                message:NSLocalizedString(message,nil)
+        _alertView = [[UIAlertView alloc] initWithTitle:title
+                                                message:message
                                                delegate:self
-                                      cancelButtonTitle:NSLocalizedString(cancelButtonTitle,nil)
+                                      cancelButtonTitle:cancelButtonTitle
                                       otherButtonTitles:nil];
         
         // go through the va_arg list and add any optional buttons
@@ -75,7 +75,7 @@ static const NSMutableArray *alerts;
 
 - (NSInteger)addButtonWithTitle:(NSString *)title
 {
-    return [_alertView addButtonWithTitle:NSLocalizedString(title, nil)];
+    return [_alertView addButtonWithTitle:title];
 }
 
 - (NSString *)buttonTitleAtIndex:(NSInteger)buttonIndex
@@ -97,12 +97,12 @@ static const NSMutableArray *alerts;
 
 - (void)setTitle:(NSString *)title
 {
-    _alertView.title = NSLocalizedString(title,nil);
+    _alertView.title = title;
 }
 
 - (void)setMessage:(NSString *)message
 {
-    _alertView.message = NSLocalizedString(message,nil);
+    _alertView.message = message;
 }
 
 - (void)setCancelButtonIndex:(NSInteger)cancelButtonIndex
