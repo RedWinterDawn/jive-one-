@@ -21,7 +21,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Phone~iPad"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="PhoneiPad"/>
                     </userDefinedRuntimeAttributes>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3oo-pP-1LC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -399,10 +399,10 @@
             </objects>
             <point key="canvasLocation" x="481" y="940"/>
         </scene>
-        <!--My Jive-->
+        <!--I-->
         <scene sceneID="OjX-AQ-owA">
             <objects>
-                <viewController id="tyI-26-Tl6" customClass="JCAppMenuViewController" sceneMemberID="viewController">
+                <viewController title="I" id="tyI-26-Tl6" customClass="JCAppMenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="i05-8G-yLx"/>
                         <viewControllerLayoutGuide type="bottom" id="iQU-dB-uo4"/>
@@ -461,10 +461,11 @@
             <objects>
                 <navigationController id="0xH-aP-rUx" sceneMemberID="viewController">
                     <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="trn-on-nMu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="trn-on-nMu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </textAttributes>
@@ -504,7 +505,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Chat~iPad"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="ChatiPad"/>
                     </userDefinedRuntimeAttributes>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ioX-7Y-JcH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -767,7 +768,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Settings~iPad"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="SettingsiPad"/>
                     </userDefinedRuntimeAttributes>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vEB-T6-FCt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -788,7 +789,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Contacts~iPad"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="ContactsiPad"/>
                     </userDefinedRuntimeAttributes>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nf4-eR-r0Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -808,7 +809,7 @@
         <image name="settings_white" width="25" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="rER-Yg-Mxz"/>
+        <segue reference="kmu-gD-Rdf"/>
         <segue reference="A4u-Kc-AqH"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

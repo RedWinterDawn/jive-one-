@@ -169,7 +169,7 @@
 		5D5448B61B0CF02400F44D8F /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D5448B81B0CF02400F44D8F /* Settings.storyboard */; };
 		5D5448C51B0D3BF500F44D8F /* Phone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D5448C71B0D3BF500F44D8F /* Phone.storyboard */; };
 		5D5448D61B0E2EAC00F44D8F /* JCNonVisualVoicemailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D5448D81B0E2EAC00F44D8F /* JCNonVisualVoicemailViewController.xib */; };
-		5D5448E51B0E312A00F44D8F /* Chat~iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D5448E71B0E312A00F44D8F /* Chat~iPad.storyboard */; };
+		5D5448E51B0E312A00F44D8F /* ChatiPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D5448E71B0E312A00F44D8F /* ChatiPad.storyboard */; };
 		5D5448F61B0E3B2B00F44D8F /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D5448F81B0E3B2B00F44D8F /* Chat.storyboard */; };
 		5D5449091B0E52A000F44D8F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D54490B1B0E52A000F44D8F /* Contacts.storyboard */; };
 		5D55236C1A7AB7B400CA8A6D /* calling.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5D55236B1A7AB7B400CA8A6D /* calling.mp3 */; };
@@ -206,10 +206,10 @@
 		5D895EB21A0AC66B0015368D /* JCBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D895EB11A0AC66B0015368D /* JCBadgeView.m */; };
 		5D895EB51A0B230F0015368D /* JCPresenceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D895EB41A0B230F0015368D /* JCPresenceCell.m */; };
 		5D8A35761AB76120009BD5E6 /* JCVoicemailManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A35751AB76120009BD5E6 /* JCVoicemailManager.m */; };
-		5D8E33DC1B0A4F3100FD8AE1 /* Phone~iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33DE1B0A4F3100FD8AE1 /* Phone~iPad.storyboard */; };
-		5D8E33ED1B0A560500FD8AE1 /* Contacts~iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33EF1B0A560500FD8AE1 /* Contacts~iPad.storyboard */; };
+		5D8E33DC1B0A4F3100FD8AE1 /* PhoneiPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33DE1B0A4F3100FD8AE1 /* PhoneiPad.storyboard */; };
+		5D8E33ED1B0A560500FD8AE1 /* ContactsiPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33EF1B0A560500FD8AE1 /* ContactsiPad.storyboard */; };
 		5D8E33FC1B0A5D7000FD8AE1 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33FE1B0A5D7000FD8AE1 /* Login.storyboard */; };
-		5D8E340C1B0A84AA00FD8AE1 /* Settings~iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E340E1B0A84AA00FD8AE1 /* Settings~iPad.storyboard */; };
+		5D8E340C1B0A84AA00FD8AE1 /* SettingsiPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E340E1B0A84AA00FD8AE1 /* SettingsiPad.storyboard */; };
 		5D97A7FF1A828B4700A4434D /* JCIntercomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */; };
 		5D9A5E221A24E30A00E8274C /* JCPhoneAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */; };
 		5D9F72101AC34F8000B9D0F8 /* JCAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */; };
@@ -581,12 +581,12 @@
 		5D5448E01B0E2F0500F44D8F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/JCNonVisualVoicemailViewController.strings; sourceTree = "<group>"; };
 		5D5448E21B0E2F0600F44D8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/JCNonVisualVoicemailViewController.strings; sourceTree = "<group>"; };
 		5D5448E41B0E2F0700F44D8F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/JCNonVisualVoicemailViewController.strings; sourceTree = "<group>"; };
-		5D5448E61B0E312A00F44D8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Chat~iPad.storyboard"; sourceTree = "<group>"; };
-		5D5448EB1B0E326100F44D8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "fr.lproj/Chat~iPad.strings"; sourceTree = "<group>"; };
-		5D5448ED1B0E326400F44D8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "de.lproj/Chat~iPad.strings"; sourceTree = "<group>"; };
-		5D5448EF1B0E326500F44D8F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = "pt.lproj/Chat~iPad.strings"; sourceTree = "<group>"; };
-		5D5448F11B0E326600F44D8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = "es.lproj/Chat~iPad.strings"; sourceTree = "<group>"; };
-		5D5448F31B0E326700F44D8F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = "it.lproj/Chat~iPad.strings"; sourceTree = "<group>"; };
+		5D5448E61B0E312A00F44D8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ChatiPad.storyboard; sourceTree = "<group>"; };
+		5D5448EB1B0E326100F44D8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/ChatiPad.strings; sourceTree = "<group>"; };
+		5D5448ED1B0E326400F44D8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ChatiPad.strings; sourceTree = "<group>"; };
+		5D5448EF1B0E326500F44D8F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/ChatiPad.strings; sourceTree = "<group>"; };
+		5D5448F11B0E326600F44D8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ChatiPad.strings; sourceTree = "<group>"; };
+		5D5448F31B0E326700F44D8F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/ChatiPad.strings; sourceTree = "<group>"; };
 		5D5448F71B0E3B2B00F44D8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Chat.storyboard; sourceTree = "<group>"; };
 		5D5448FC1B0E3B9E00F44D8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Chat.strings; sourceTree = "<group>"; };
 		5D5448FE1B0E3BA000F44D8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Chat.strings; sourceTree = "<group>"; };
@@ -666,30 +666,30 @@
 		5D8E33D71B0A4ABB00FD8AE1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		5D8E33D91B0A4ABD00FD8AE1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		5D8E33DB1B0A4ABF00FD8AE1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main_iPad.strings; sourceTree = "<group>"; };
-		5D8E33DD1B0A4F3100FD8AE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Phone~iPad.storyboard"; sourceTree = "<group>"; };
-		5D8E33E41B0A4F3B00FD8AE1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "fr.lproj/Phone~iPad.strings"; sourceTree = "<group>"; };
-		5D8E33E61B0A4F3D00FD8AE1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "de.lproj/Phone~iPad.strings"; sourceTree = "<group>"; };
-		5D8E33E81B0A4F4000FD8AE1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = "pt.lproj/Phone~iPad.strings"; sourceTree = "<group>"; };
-		5D8E33EA1B0A4F4200FD8AE1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = "es.lproj/Phone~iPad.strings"; sourceTree = "<group>"; };
-		5D8E33EC1B0A4F4600FD8AE1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = "it.lproj/Phone~iPad.strings"; sourceTree = "<group>"; };
-		5D8E33EE1B0A560500FD8AE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Contacts~iPad.storyboard"; sourceTree = "<group>"; };
-		5D8E33F31B0A562000FD8AE1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "fr.lproj/Contacts~iPad.strings"; sourceTree = "<group>"; };
-		5D8E33F51B0A562200FD8AE1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "de.lproj/Contacts~iPad.strings"; sourceTree = "<group>"; };
-		5D8E33F71B0A562400FD8AE1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = "pt.lproj/Contacts~iPad.strings"; sourceTree = "<group>"; };
-		5D8E33F91B0A562600FD8AE1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = "es.lproj/Contacts~iPad.strings"; sourceTree = "<group>"; };
-		5D8E33FB1B0A562800FD8AE1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = "it.lproj/Contacts~iPad.strings"; sourceTree = "<group>"; };
+		5D8E33DD1B0A4F3100FD8AE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PhoneiPad.storyboard; sourceTree = "<group>"; };
+		5D8E33E41B0A4F3B00FD8AE1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/PhoneiPad.strings; sourceTree = "<group>"; };
+		5D8E33E61B0A4F3D00FD8AE1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/PhoneiPad.strings; sourceTree = "<group>"; };
+		5D8E33E81B0A4F4000FD8AE1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/PhoneiPad.strings; sourceTree = "<group>"; };
+		5D8E33EA1B0A4F4200FD8AE1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/PhoneiPad.strings; sourceTree = "<group>"; };
+		5D8E33EC1B0A4F4600FD8AE1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/PhoneiPad.strings; sourceTree = "<group>"; };
+		5D8E33EE1B0A560500FD8AE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ContactsiPad.storyboard; sourceTree = "<group>"; };
+		5D8E33F31B0A562000FD8AE1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/ContactsiPad.strings; sourceTree = "<group>"; };
+		5D8E33F51B0A562200FD8AE1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ContactsiPad.strings; sourceTree = "<group>"; };
+		5D8E33F71B0A562400FD8AE1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/ContactsiPad.strings; sourceTree = "<group>"; };
+		5D8E33F91B0A562600FD8AE1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ContactsiPad.strings; sourceTree = "<group>"; };
+		5D8E33FB1B0A562800FD8AE1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/ContactsiPad.strings; sourceTree = "<group>"; };
 		5D8E33FD1B0A5D7000FD8AE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		5D8E34021B0A5D7800FD8AE1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Login.strings; sourceTree = "<group>"; };
 		5D8E34041B0A5D7A00FD8AE1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Login.strings; sourceTree = "<group>"; };
 		5D8E34061B0A5D7C00FD8AE1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Login.strings; sourceTree = "<group>"; };
 		5D8E34081B0A5D7D00FD8AE1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Login.strings; sourceTree = "<group>"; };
 		5D8E340A1B0A5D8000FD8AE1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Login.strings; sourceTree = "<group>"; };
-		5D8E340D1B0A84AA00FD8AE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Settings~iPad.storyboard"; sourceTree = "<group>"; };
-		5D8E34101B0A84BC00FD8AE1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "fr.lproj/Settings~iPad.strings"; sourceTree = "<group>"; };
-		5D8E34121B0A84C100FD8AE1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "de.lproj/Settings~iPad.strings"; sourceTree = "<group>"; };
-		5D8E34141B0A84C500FD8AE1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = "pt.lproj/Settings~iPad.strings"; sourceTree = "<group>"; };
-		5D8E34161B0A84C700FD8AE1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = "es.lproj/Settings~iPad.strings"; sourceTree = "<group>"; };
-		5D8E34181B0A84C900FD8AE1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = "it.lproj/Settings~iPad.strings"; sourceTree = "<group>"; };
+		5D8E340D1B0A84AA00FD8AE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SettingsiPad.storyboard; sourceTree = "<group>"; };
+		5D8E34101B0A84BC00FD8AE1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/SettingsiPad.strings; sourceTree = "<group>"; };
+		5D8E34121B0A84C100FD8AE1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SettingsiPad.strings; sourceTree = "<group>"; };
+		5D8E34141B0A84C500FD8AE1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/SettingsiPad.strings; sourceTree = "<group>"; };
+		5D8E34161B0A84C700FD8AE1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SettingsiPad.strings; sourceTree = "<group>"; };
+		5D8E34181B0A84C900FD8AE1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/SettingsiPad.strings; sourceTree = "<group>"; };
 		5D97A7FD1A828B4700A4434D /* JCIntercomTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCIntercomTableViewController.h; sourceTree = "<group>"; };
 		5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCIntercomTableViewController.m; sourceTree = "<group>"; };
 		5D9A5E201A24E30A00E8274C /* JCPhoneAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneAudioManager.h; sourceTree = "<group>"; };
@@ -1191,7 +1191,7 @@
 			isa = PBXGroup;
 			children = (
 				5D54490B1B0E52A000F44D8F /* Contacts.storyboard */,
-				5D8E33EF1B0A560500FD8AE1 /* Contacts~iPad.storyboard */,
+				5D8E33EF1B0A560500FD8AE1 /* ContactsiPad.storyboard */,
 				5D5329951AD4EFB600C6AAC6 /* Views */,
 				5D5329941AD4EFA400C6AAC6 /* Controllers */,
 			);
@@ -1213,7 +1213,7 @@
 			isa = PBXGroup;
 			children = (
 				5D5448B81B0CF02400F44D8F /* Settings.storyboard */,
-				5D8E340E1B0A84AA00FD8AE1 /* Settings~iPad.storyboard */,
+				5D8E340E1B0A84AA00FD8AE1 /* SettingsiPad.storyboard */,
 				5D241FD51A38313F008B498A /* Debug */,
 				5DA566421A1D454D00286BA5 /* JCSettingsTableViewController.h */,
 				5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */,
@@ -1625,7 +1625,7 @@
 			isa = PBXGroup;
 			children = (
 				5D5448F81B0E3B2B00F44D8F /* Chat.storyboard */,
-				5D5448E71B0E312A00F44D8F /* Chat~iPad.storyboard */,
+				5D5448E71B0E312A00F44D8F /* ChatiPad.storyboard */,
 				5D87FCD21AB2822700AE1CA5 /* JCConversationViewController.xib */,
 				5DB81B5D1AEFFFB900D707DF /* Protocols */,
 				5D5329911AD4EE1000C6AAC6 /* Models */,
@@ -1867,7 +1867,7 @@
 			isa = PBXGroup;
 			children = (
 				5D5448C71B0D3BF500F44D8F /* Phone.storyboard */,
-				5D8E33DE1B0A4F3100FD8AE1 /* Phone~iPad.storyboard */,
+				5D8E33DE1B0A4F3100FD8AE1 /* PhoneiPad.storyboard */,
 				5D1175921AA0D82600D2B03A /* PhoneManager.storyboard */,
 				5D0199C41A1BBC0500F4CF13 /* IncomingCallViewCell.xib */,
 				5D0199BF1A1BBBF400F4CF13 /* CurrentCallViewCell.xib */,
@@ -2059,7 +2059,7 @@
 				5D5448B61B0CF02400F44D8F /* Settings.storyboard in Resources */,
 				5D0199EC1A1BF4BC00F4CF13 /* Localizable.strings in Resources */,
 				5D5448F61B0E3B2B00F44D8F /* Chat.storyboard in Resources */,
-				5D8E340C1B0A84AA00FD8AE1 /* Settings~iPad.storyboard in Resources */,
+				5D8E340C1B0A84AA00FD8AE1 /* SettingsiPad.storyboard in Resources */,
 				5D0199C21A1BBC0500F4CF13 /* IncomingCallViewCell.xib in Resources */,
 				5D25F8201AE5895E00981DB6 /* Main_iPad.storyboard in Resources */,
 				5D2D73D01ACF97AE00B98BDF /* fr.xliff in Resources */,
@@ -2068,16 +2068,16 @@
 				F202433D18B2CF4A006DB2EF /* README.md in Resources */,
 				5D8E33FC1B0A5D7000FD8AE1 /* Login.storyboard in Resources */,
 				5D0199B81A1BBBAC00F4CF13 /* Main_iPhone.storyboard in Resources */,
-				5D8E33DC1B0A4F3100FD8AE1 /* Phone~iPad.storyboard in Resources */,
+				5D8E33DC1B0A4F3100FD8AE1 /* PhoneiPad.storyboard in Resources */,
 				5D8198ED1AC1D7520057FDDA /* Debug.storyboard in Resources */,
 				5D2D73CD1ACF97AE00B98BDF /* en-GB.xliff in Resources */,
-				5D8E33ED1B0A560500FD8AE1 /* Contacts~iPad.storyboard in Resources */,
+				5D8E33ED1B0A560500FD8AE1 /* ContactsiPad.storyboard in Resources */,
 				5D5448C51B0D3BF500F44D8F /* Phone.storyboard in Resources */,
 				5D2D73D21ACF97AE00B98BDF /* pt.xliff in Resources */,
 				5D2D73D11ACF97AE00B98BDF /* it.xliff in Resources */,
 				271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */,
 				5D2D73CC1ACF97AE00B98BDF /* de.xliff in Resources */,
-				5D5448E51B0E312A00F44D8F /* Chat~iPad.storyboard in Resources */,
+				5D5448E51B0E312A00F44D8F /* ChatiPad.storyboard in Resources */,
 				5D2D73CE1ACF97AE00B98BDF /* es-MX.xliff in Resources */,
 				9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */,
 				5D1175901AA0D82600D2B03A /* PhoneManager.storyboard in Resources */,
@@ -2591,7 +2591,7 @@
 			name = JCNonVisualVoicemailViewController.xib;
 			sourceTree = "<group>";
 		};
-		5D5448E71B0E312A00F44D8F /* Chat~iPad.storyboard */ = {
+		5D5448E71B0E312A00F44D8F /* ChatiPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				5D5448E61B0E312A00F44D8F /* Base */,
@@ -2601,7 +2601,7 @@
 				5D5448F11B0E326600F44D8F /* es */,
 				5D5448F31B0E326700F44D8F /* it */,
 			);
-			name = "Chat~iPad.storyboard";
+			name = ChatiPad.storyboard;
 			sourceTree = "<group>";
 		};
 		5D5448F81B0E3B2B00F44D8F /* Chat.storyboard */ = {
@@ -2631,7 +2631,7 @@
 			name = Contacts.storyboard;
 			sourceTree = "<group>";
 		};
-		5D8E33DE1B0A4F3100FD8AE1 /* Phone~iPad.storyboard */ = {
+		5D8E33DE1B0A4F3100FD8AE1 /* PhoneiPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				5D8E33DD1B0A4F3100FD8AE1 /* Base */,
@@ -2641,10 +2641,10 @@
 				5D8E33EA1B0A4F4200FD8AE1 /* es */,
 				5D8E33EC1B0A4F4600FD8AE1 /* it */,
 			);
-			name = "Phone~iPad.storyboard";
+			name = PhoneiPad.storyboard;
 			sourceTree = "<group>";
 		};
-		5D8E33EF1B0A560500FD8AE1 /* Contacts~iPad.storyboard */ = {
+		5D8E33EF1B0A560500FD8AE1 /* ContactsiPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				5D8E33EE1B0A560500FD8AE1 /* Base */,
@@ -2654,7 +2654,7 @@
 				5D8E33F91B0A562600FD8AE1 /* es */,
 				5D8E33FB1B0A562800FD8AE1 /* it */,
 			);
-			name = "Contacts~iPad.storyboard";
+			name = ContactsiPad.storyboard;
 			sourceTree = "<group>";
 		};
 		5D8E33FE1B0A5D7000FD8AE1 /* Login.storyboard */ = {
@@ -2670,7 +2670,7 @@
 			name = Login.storyboard;
 			sourceTree = "<group>";
 		};
-		5D8E340E1B0A84AA00FD8AE1 /* Settings~iPad.storyboard */ = {
+		5D8E340E1B0A84AA00FD8AE1 /* SettingsiPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				5D8E340D1B0A84AA00FD8AE1 /* Base */,
@@ -2680,7 +2680,7 @@
 				5D8E34161B0A84C700FD8AE1 /* es */,
 				5D8E34181B0A84C900FD8AE1 /* it */,
 			);
-			name = "Settings~iPad.storyboard";
+			name = SettingsiPad.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
