@@ -32,9 +32,6 @@
 
 typedef void (^JCAlertViewDismissBlock)(NSInteger buttonIndex);
 
-extern NSString *const kJCAlertViewOk;
-extern NSString *const kJCAlertViewCancel;
-
 @interface JCAlertView : NSObject
 
 // Class constructor
