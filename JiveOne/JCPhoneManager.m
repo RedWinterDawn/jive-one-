@@ -741,6 +741,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
             } else  {
                 [self dismissCallViewControllerAnimated:YES];
             }
+            [_sipManager muteCall:NO];
         } else {
             [_callViewController reload];
         }
