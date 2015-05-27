@@ -612,7 +612,8 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 -(void)sipHandler:(JCSipManager *)sipHandler receivedIntercomLineSession:(JCLineSession *)session
 {
-    if(![JCAppSettings sharedSettings].isIntercomEnabled) {
+    JCAppSettings *appSettings = self.appSettings;
+    if(!appSettings.isIntercomEnabled) {
         return;
     }
     
@@ -631,9 +632,9 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
                 shouldTurnOnSpeaker = TRUE;
             }
             sipHandler.loudSpeakerEnabled = shouldTurnOnSpeaker;
-            BOOL mute = [JCAppSettings sharedSettings].isIntercomMicrophoneMuteEnabled;
-            [sipHandler muteCall:mute];
             
+            BOOL mute = appSettings.isIntercomMicrophoneMuteEnabled;
+            [sipHandler muteCall:mute];
             if (_callViewController) {
                 _callViewController.muteBtn.selected = sipHandler.isMuted;
             }
