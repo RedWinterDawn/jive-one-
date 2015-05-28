@@ -128,7 +128,7 @@
                                             <action selector="numPadPressed:" destination="YtU-b8-5sz" eventType="touchUpInside" id="mZE-3k-n2V"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vmQ-dX-adP">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vmQ-dX-adP">
                                         <rect key="frame" x="123" y="0.0" width="84" height="83"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="vmQ-dX-adP" secondAttribute="height" multiplier="1:1" id="red-V6-RB3"/>
@@ -198,7 +198,7 @@
                                             <action selector="numPadPressed:" destination="YtU-b8-5sz" eventType="touchUpInside" id="SQb-wY-Cwx"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hcn-aw-fjr">
+                                    <button opaque="NO" tag="6" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hcn-aw-fjr">
                                         <rect key="frame" x="247" y="83" width="83" height="84"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="hcn-aw-fjr" secondAttribute="height" multiplier="1:1" id="wQx-eF-OIe"/>
@@ -289,7 +289,7 @@
                                             <action selector="numPadPressed:" destination="YtU-b8-5sz" eventType="touchUpInside" id="rcZ-dp-2YP"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hAx-NP-dGb">
+                                    <button opaque="NO" tag="8" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hAx-NP-dGb">
                                         <rect key="frame" x="123" y="167" width="84" height="83"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="hAx-NP-dGb" secondAttribute="height" multiplier="1:1" id="9uK-RH-eZi"/>
@@ -324,7 +324,7 @@
                                             <action selector="numPadPressed:" destination="YtU-b8-5sz" eventType="touchUpInside" id="cBI-Yu-yBJ"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jCV-0I-Cpj">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jCV-0I-Cpj">
                                         <rect key="frame" x="123" y="250" width="84" height="83"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -431,7 +431,7 @@
                                             <action selector="numPadPressed:" destination="YtU-b8-5sz" eventType="touchUpInside" id="01s-xb-ap2"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="5" contentMode="scaleToFill" verticalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YqX-Ad-hp0">
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" verticalCompressionResistancePriority="250" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YqX-Ad-hp0">
                                         <rect key="frame" x="123" y="83" width="84" height="84"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="YqX-Ad-hp0" secondAttribute="height" multiplier="1:1" id="VYJ-s2-DTA"/>
@@ -466,7 +466,7 @@
                                             <action selector="numPadPressed:" destination="YtU-b8-5sz" eventType="touchUpInside" id="pGX-Hd-5Dw"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XKC-pc-bZK">
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XKC-pc-bZK">
                                         <rect key="frame" x="0.0" y="83" width="83" height="84"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="XKC-pc-bZK" secondAttribute="height" multiplier="1:1" id="Tct-21-NtK"/>
@@ -631,7 +631,7 @@
                     <navigationItem key="navigationItem" id="Sbw-vq-2y5">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="RCN-k2-SM4" userLabel="Phone">
-                            <rect key="frame" x="236" y="6" width="128" height="33"/>
+                            <rect key="frame" x="236" y="5.5" width="128" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zzF-fD-tSS" userLabel="Status">
@@ -1237,41 +1237,6 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tLx-kA-CiO" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bwK-e7-eQb">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Line Picker">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="f8E-Ze-iMO">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="59"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Line Picker">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="uNm-pu-7W1">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="59"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Line Picker">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="TQG-yI-VWH">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="59"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Line Picker">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="G4E-uV-P1d">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="59"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Line Picker">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
             </objects>
             <point key="canvasLocation" x="1872" y="-2535"/>
         </scene>
