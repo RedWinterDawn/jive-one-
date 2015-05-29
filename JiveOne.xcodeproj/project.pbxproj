@@ -258,7 +258,6 @@
 		9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD5B19192A1500481B01 /* UserDefaults.plist */; };
 		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsViewController.m */; };
 		919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
-		919DD2A11922E3570039205E /* JCPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD2A01922E3570039205E /* JCPopoverView.m */; };
 		B70EAB3D1AD32B1E00305F43 /* JCDidTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */; };
 		B70EAB3F1AD3302000305F43 /* JCAuthenticationManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */; };
 		B71506DF1B0122EC00C0E72C /* JCVoicemailAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B71506DE1B0122EC00C0E72C /* JCVoicemailAudioPlayer.m */; };
@@ -784,8 +783,6 @@
 		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsViewController.m; sourceTree = "<group>"; };
 		919DD29B1922E2C90039205E /* JCPopoverSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPopoverSlider.h; sourceTree = "<group>"; };
 		919DD29C1922E2C90039205E /* JCPopoverSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPopoverSlider.m; sourceTree = "<group>"; };
-		919DD29F1922E3570039205E /* JCPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPopoverView.h; sourceTree = "<group>"; };
-		919DD2A01922E3570039205E /* JCPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPopoverView.m; sourceTree = "<group>"; };
 		91B4A53319427A9C00DC7459 /* JiveOneEnterprise-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "JiveOneEnterprise-Info.plist"; sourceTree = "<group>"; };
 		91F6DFAA192A702F001C54FB /* Shared.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 		91F6DFAE192A7053001C54FB /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
@@ -1670,8 +1667,6 @@
 				5DB0BFCC1A00BAB3006737D7 /* JCVoicemailCell.m */,
 				919DD29B1922E2C90039205E /* JCPopoverSlider.h */,
 				919DD29C1922E2C90039205E /* JCPopoverSlider.m */,
-				919DD29F1922E3570039205E /* JCPopoverView.h */,
-				919DD2A01922E3570039205E /* JCPopoverView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2234,7 +2229,6 @@
 				5D241FDE1A383837008B498A /* JCDebugLineTableViewController.m in Sources */,
 				27F64D6219772D6A00F772AA /* Voicemail.m in Sources */,
 				274493CE18D13538002744CB /* Common.m in Sources */,
-				919DD2A11922E3570039205E /* JCPopoverView.m in Sources */,
 				5D3F1ADD1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m in Sources */,
 				5D0275131A3F836A0077A37B /* JCStringEncryptionTransformer.m in Sources */,
 				5D241FE11A38B4EB008B498A /* JCPersonManagedObject.m in Sources */,

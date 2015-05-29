@@ -136,7 +136,6 @@
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didUpdateProgress:(NSTimeInterval)currentTime duration:(NSTimeInterval)duration
 {
     self.slider.value = currentTime;
-    [self.slider updateThumbWithCurrentProgress];
 }
 
 #pragma mark - Private -
