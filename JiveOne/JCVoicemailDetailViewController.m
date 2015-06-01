@@ -37,8 +37,14 @@
     self.date.text = voicemail.formattedLongDate;
     self.duration.text = [self formatSeconds:voicemail.duration];
     
+    
+    
     VoicemailTranscription *transcription = self.voicemail.transcription;
+  
+  
+
     self.voicemailTranscription.text = transcription.text;
+    self.voicemailTranscription.font = [UIFont systemFontOfSize:18.0];
     
     NSNumberFormatter *percent = [[NSNumberFormatter alloc] init];
     [percent setNumberStyle:NSNumberFormatterPercentStyle];
