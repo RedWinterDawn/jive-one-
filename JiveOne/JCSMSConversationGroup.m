@@ -34,7 +34,12 @@
         }
     }
     
-    self = [super initWithName:name number:smsMessage.messageGroupId];
+    NSString *number = smsMessage.messageGroupId;
+    if (!number) {
+        number = phoneNumber.dialableNumber;
+    }
+    
+    self = [super initWithName:name number:number];
     if (self) {
         if (smsMessage)
         {
