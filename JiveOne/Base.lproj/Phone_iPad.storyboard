@@ -20,7 +20,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0fY-vT-dKH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="q1N-pU-KrT" customClass="JCModuleSplitViewControllerDelegate"/>
             </objects>
-            <point key="canvasLocation" x="919" y="908"/>
+            <point key="canvasLocation" x="1043" y="-246"/>
         </scene>
         <!--Call History Table View Controller-->
         <scene sceneID="dsz-A0-Cfd">
@@ -204,10 +204,13 @@
                             <action selector="refreshData:" destination="OTa-m3-HwH" eventType="valueChanged" id="c7b-LB-jAB"/>
                         </connections>
                     </refreshControl>
+                    <connections>
+                        <segue destination="WhA-Bu-xlD" kind="showDetail" identifier="Dialer" id="05J-vq-9gY"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fqi-8b-4ba" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2748" y="-526"/>
+            <point key="canvasLocation" x="2740" y="-742"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sTM-xW-0Ib">
@@ -224,7 +227,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P3A-mS-nB7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2023" y="-526"/>
+            <point key="canvasLocation" x="2015" y="-742"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="P5t-vr-TOR">
@@ -241,7 +244,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2mp-pq-NFa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4687" y="1082"/>
+            <point key="canvasLocation" x="3863" y="-246"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fUW-GX-Kka">
@@ -258,7 +261,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hVo-Ru-GU5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2743" y="500"/>
+            <point key="canvasLocation" x="3861" y="-1024"/>
         </scene>
         <!--Voicemail-->
         <scene sceneID="d2e-vV-ms1">
@@ -269,7 +272,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jf6-Fw-iBw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3476" y="500"/>
+            <point key="canvasLocation" x="4626" y="-1016"/>
         </scene>
         <!--Dialer-->
         <scene sceneID="Klv-fG-5td">
@@ -1215,7 +1218,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="5450" y="1082"/>
+            <point key="canvasLocation" x="4626" y="-246"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vR4-Mr-zh6">
@@ -1232,7 +1235,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kt6-g3-aSR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3497" y="-518"/>
+            <point key="canvasLocation" x="3861" y="-1722"/>
         </scene>
         <!--Storyboard Loader View Controller-->
         <scene sceneID="yWq-Jq-Ghf">
@@ -1255,7 +1258,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WXX-BR-YIl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4169" y="-518"/>
+            <point key="canvasLocation" x="4626" y="-1722"/>
         </scene>
     </scenes>
     <resources>
@@ -1264,5 +1267,8 @@
         <image name="gray-callbutton" width="58" height="58"/>
         <image name="nav-voicemail-black" width="33" height="16"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="05J-vq-9gY"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

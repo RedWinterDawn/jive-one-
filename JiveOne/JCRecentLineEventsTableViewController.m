@@ -172,7 +172,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
         Line *line = self.authenticationManager.line;
         [Voicemail downloadVoicemailsForLine:line completion:^(BOOL success, NSError *error) {
             [((UIRefreshControl *)sender) endRefreshing];
-            if (!success) {
+            if (error) {
                 [self showError:error];
             }
         }];
@@ -303,7 +303,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 - (void)voicemailDetailViewControllerDidDeleteVoicemail:(JCVoicemailDetailViewController *)controller
 {
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-        
+        [self performSegueWithIdentifier:@"Dialer" sender:self];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
     }

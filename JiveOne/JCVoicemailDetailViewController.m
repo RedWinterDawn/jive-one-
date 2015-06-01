@@ -99,13 +99,13 @@
 
 -(IBAction)deleteVoicemail:(id)sender
 {
+    if (_delegate && [_delegate respondsToSelector:@selector(voicemailDetailViewControllerDidDeleteVoicemail:)]) {
+        [_delegate voicemailDetailViewControllerDidDeleteVoicemail:self];
+    }
+    
     [self.voicemail markForDeletion:^(BOOL success, NSError *error) {
-        if (!error) {
+        if (error) {
             [self showError:error];
-        }
-        
-        if (_delegate && [_delegate respondsToSelector:@selector(voicemailDetailViewControllerDidDeleteVoicemail:)]) {
-            [_delegate voicemailDetailViewControllerDidDeleteVoicemail:self];
         }
     }];
 }
