@@ -10,6 +10,7 @@
 
 #import "Voicemail.h"
 #import "JCPopoverSlider.h"
+#import "JCPlayPauseButton.h"
 
 @interface JCVoicemailDetailViewController : UIViewController
 
@@ -23,9 +24,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *transcriptionConfidence;
 @property (weak, nonatomic) IBOutlet UITextView *voicemailTranscription;
 
-@property (weak, nonatomic) IBOutlet UIButton *playPauseButton;
+@property (weak, nonatomic) IBOutlet JCPlayPauseButton *playPauseButton;
 @property (weak, nonatomic) IBOutlet UIButton *speakerButton;
 @property (weak, nonatomic) IBOutlet JCPopoverSlider *slider;
+@property (weak, nonatomic) IBOutlet UILabel *playerDuration;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
 - (IBAction)playPauseButtonTapped:(id)sender;
 - (IBAction)progressSliderMoved:(id)sender;

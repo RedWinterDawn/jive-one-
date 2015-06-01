@@ -7,6 +7,7 @@
 //
 
 #import "JCVoicemailDetailViewController.h"
+#import "JCDrawing.h"
 
 // Models
 #import "JCVoicemailAudioPlayer.h"
@@ -112,12 +113,15 @@
     self.slider.enabled = TRUE;
     self.slider.minimumValue = 0.0f;
     self.slider.maximumValue = duration;
-    self.duration.text = [self formatSeconds:duration];
+    
+    NSString *durationText = [self formatSeconds:duration];
+    self.duration.text = durationText;
+    self.playerDuration.text = durationText;
 }
 
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didChangePlaybackState:(BOOL)playing
 {
-    self.playPauseButton.selected = playing;
+    self.playPauseButton.paused = !playing;
 }
 
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didFailWithError:(NSError *)error
@@ -147,6 +151,5 @@
     NSInteger remainingSeconds = (NSInteger)seconds % 60;
     return [NSString stringWithFormat:@"%.1ld:%.2ld",(long)minutes,(long)remainingSeconds];
 }
-
 
 @end

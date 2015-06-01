@@ -43,9 +43,8 @@
         
         
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-        [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:audioSession];
-        [center addObserver:self selector:@selector(audioSessionInteruptionSelector:) name:AVAudioSessionInterruptionNotification object:audioSession];
+        [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
+        [center addObserver:self selector:@selector(audioSessionInteruptionSelector:) name:AVAudioSessionInterruptionNotification object:nil];
     }
     return self;
 }

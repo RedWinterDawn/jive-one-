@@ -141,6 +141,9 @@
 		5D35479819FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479719FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m */; };
 		5D35479B19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */; };
 		5D36B7AB19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */; };
+		5D3970D51B18DD0B009EADD6 /* JCVoicemailDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D3970D41B18DD0B009EADD6 /* JCVoicemailDetailViewController.xib */; };
+		5D3970D81B18FDA5009EADD6 /* JCMaskedRoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3970D71B18FDA5009EADD6 /* JCMaskedRoundedButton.m */; };
+		5D3970DB1B1906C1009EADD6 /* JCPlayPauseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3970DA1B1906C1009EADD6 /* JCPlayPauseButton.m */; };
 		5D3F1ADD1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1ADC1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m */; };
 		5D3F1AE01AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1ADF1AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.m */; };
 		5D3F1AE41AE7FEE200C59A63 /* JCAppMenuSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1AE31AE7FEE200C59A63 /* JCAppMenuSplitViewController.m */; };
@@ -515,6 +518,11 @@
 		5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMenuBarButtonItem.m; sourceTree = "<group>"; };
 		5D36B7A919F8674E0024A0E7 /* JCFetchedResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCFetchedResultsTableViewController.h; sourceTree = "<group>"; };
 		5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCFetchedResultsTableViewController.m; sourceTree = "<group>"; };
+		5D3970D41B18DD0B009EADD6 /* JCVoicemailDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCVoicemailDetailViewController.xib; sourceTree = "<group>"; };
+		5D3970D61B18FDA5009EADD6 /* JCMaskedRoundedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMaskedRoundedButton.h; sourceTree = "<group>"; };
+		5D3970D71B18FDA5009EADD6 /* JCMaskedRoundedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMaskedRoundedButton.m; sourceTree = "<group>"; };
+		5D3970D91B1906C1009EADD6 /* JCPlayPauseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPlayPauseButton.h; sourceTree = "<group>"; };
+		5D3970DA1B1906C1009EADD6 /* JCPlayPauseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPlayPauseButton.m; sourceTree = "<group>"; };
 		5D3F1ADB1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppMenuSplitViewControllerDelegate.h; sourceTree = "<group>"; };
 		5D3F1ADC1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppMenuSplitViewControllerDelegate.m; sourceTree = "<group>"; };
 		5D3F1ADE1AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCModuleSplitViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -975,6 +983,8 @@
 				27B8152518D93F1A00516BF6 /* NotificationView.m */,
 				B7AEDD561ABA08670063033E /* JCActionSheet.h */,
 				B7AEDD571ABA08670063033E /* JCActionSheet.m */,
+				5D3970D61B18FDA5009EADD6 /* JCMaskedRoundedButton.h */,
+				5D3970D71B18FDA5009EADD6 /* JCMaskedRoundedButton.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1184,6 +1194,7 @@
 			isa = PBXGroup;
 			children = (
 				5D5448D81B0E2EAC00F44D8F /* JCNonVisualVoicemailViewController.xib */,
+				5D3970D41B18DD0B009EADD6 /* JCVoicemailDetailViewController.xib */,
 				5DE570871B024A20003F095F /* Models */,
 				5D5329921AD4EF3900C6AAC6 /* Controllers */,
 				5D5329931AD4EF7B00C6AAC6 /* Views */,
@@ -1667,6 +1678,8 @@
 				5DB0BFCC1A00BAB3006737D7 /* JCVoicemailCell.m */,
 				919DD29B1922E2C90039205E /* JCPopoverSlider.h */,
 				919DD29C1922E2C90039205E /* JCPopoverSlider.m */,
+				5D3970D91B1906C1009EADD6 /* JCPlayPauseButton.h */,
+				5D3970DA1B1906C1009EADD6 /* JCPlayPauseButton.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2049,6 +2062,7 @@
 				5D8E33DC1B0A4F3100FD8AE1 /* Phone_iPad.storyboard in Resources */,
 				5D8198ED1AC1D7520057FDDA /* Debug.storyboard in Resources */,
 				5D8E33ED1B0A560500FD8AE1 /* Contacts_iPad.storyboard in Resources */,
+				5D3970D51B18DD0B009EADD6 /* JCVoicemailDetailViewController.xib in Resources */,
 				5D5448C51B0D3BF500F44D8F /* Phone.storyboard in Resources */,
 				271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */,
 				5D5448E51B0E312A00F44D8F /* Chat_iPad.storyboard in Resources */,
@@ -2231,6 +2245,7 @@
 				274493CE18D13538002744CB /* Common.m in Sources */,
 				5D3F1ADD1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m in Sources */,
 				5D0275131A3F836A0077A37B /* JCStringEncryptionTransformer.m in Sources */,
+				5D3970D81B18FDA5009EADD6 /* JCMaskedRoundedButton.m in Sources */,
 				5D241FE11A38B4EB008B498A /* JCPersonManagedObject.m in Sources */,
 				5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */,
 				B7FCA5AA1AD2E74E0034C5EC /* JCDIDSelectorViewController.m in Sources */,
@@ -2336,6 +2351,7 @@
 				5DC518151AD2E24B007CEA71 /* JCStyleKit.m in Sources */,
 				27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */,
 				5DA566491A20543500286BA5 /* JCAuthenticationManagerError.m in Sources */,
+				5D3970DB1B1906C1009EADD6 /* JCPlayPauseButton.m in Sources */,
 				5D490E5A1A8AEF7E004B62C0 /* JCAddressBook.m in Sources */,
 				27BE503D19DCF6A800B725ED /* JCLineSession.m in Sources */,
 				5D2EDB7E1A3ADFAF0031F7AD /* Contact+V5Client.m in Sources */,

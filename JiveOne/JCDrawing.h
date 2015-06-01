@@ -30,3 +30,6 @@ void JCDrawingContextDrawLineAtPoints(CGContextRef context, JCDrawingLine line, 
 // CA Layer Drawing
 CALayer *JCDrawingLayerCreateLineBorderAtPosition(JCDrawingLinePosition position, CGRect rect, JCDrawingLine line);
 void JCDrawingLayerDrawLineAtPoints(CALayer *layer, JCDrawingLine line, CGPoint startPoint, CGPoint endPoint);
+
+UIImage *JCDrawingCreateMaskedImageFromImageMask(UIImage *image, CGColorRef color);
+CGContextRef JCDrawingContextCreateWithSize(CGSize size);

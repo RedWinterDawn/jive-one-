@@ -9,6 +9,7 @@
 #import "JCRoundedButton.h"
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
+#import "JCDrawing.h"
 
 #define DEFAULT_SELECTED_BACKGROUND_COLOR [UIColor whiteColor]
 #define DEFAULT_ROUNDED_BUTTON_BORDER_WIDTH 0
@@ -39,7 +40,6 @@
     if (_cornerRadius == 0 ) {
         self.cornerRadius = self.bounds.size.width/2;
     }
-//    self.selected = self.selected;
 }
 -(void)setEnabled:(BOOL)enabled{
     [super setEnabled:enabled];
