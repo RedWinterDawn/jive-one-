@@ -50,5 +50,6 @@
 @property (nonatomic, readonly) NSString *rawInput;
 @property (nonatomic, readonly) NSNumber *countryCodeSource;
 @property (nonatomic, readonly) NSString *preferredDomesticCarrierCode;
+@property (nonatomic, readonly) NSString *internationalNumber;
 
 @end
