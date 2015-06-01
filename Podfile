@@ -9,7 +9,7 @@ pod 'SocketRocket', :git => 'https://github.com/jive/SocketRocket.git', :commit 
 pod 'JCMessagesViewController', :git => 'git@github.com:jive/JCMessagesViewController.git'
 pod 'ELFixSecureTextFieldFont', :git => 'https://github.com/elegion/ELFixSecureTextFieldFont.git'
 pod 'libPhoneNumber-iOS', '~> 0.7'
-
+pod 'Appsee'
 pod 'XMLDictionary', '~> 1.4'
 pod 'SVProgressHUD'
 pod 'StaticDataTableViewController'
