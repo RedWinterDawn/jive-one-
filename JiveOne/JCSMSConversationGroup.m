@@ -35,15 +35,15 @@
     }
     
     NSString *number = smsMessage.messageGroupId;
-    if (!number) {
-        number = phoneNumber.dialableNumber;
+    if (!number && [phoneNumber respondsToSelector:@selector(internationalNumber)]) {
+        number = phoneNumber.internationalNumber;
     }
     
     self = [super initWithName:name number:number];
     if (self) {
         if (smsMessage)
         {
-            _read           = [self readStateForConversationGroupId:smsMessage.messageGroupId context:smsMessage.managedObjectContext];
+            _read           = [self readStateForConversationGroupId:number context:smsMessage.managedObjectContext];
             _lastMessageId  = smsMessage.eventId;
             _lastMessage    = smsMessage.text;
             _date           = smsMessage.date;
