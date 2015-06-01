@@ -126,7 +126,7 @@
         cell.textLabel.text = phoneNumber.name;
         cell.detailTextLabel.text = phoneNumber.detailText;
     } else {
-        cell.textLabel.text = phoneNumber.detailText;
+        cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Send SMS to %@", @"Send SMS to new participant's phone number."), phoneNumber.detailText];
     }
     return cell;
 }
