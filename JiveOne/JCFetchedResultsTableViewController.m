@@ -7,7 +7,6 @@
 //
 
 #import "JCFetchedResultsTableViewController.h"
-#import <MagicalRecord/CoreData+MagicalRecord.h>
 #import "JCTableViewCell.h"
 
 @interface JCFetchedResultsTableViewController ()

@@ -376,7 +376,7 @@ NSString *const kVoicemailResponseTranscriptionUrlKey = @"transcription";
     
     VoicemailTranscription *transcription = voicemail.transcription;
     if (!transcription) {
-        transcription = [VoicemailTranscription MR_createInContext:voicemail.managedObjectContext];
+        transcription = [VoicemailTranscription MR_createEntityInContext:voicemail.managedObjectContext];
         transcription.voicemail = voicemail;
     }
     transcription.text = text;
@@ -391,7 +391,7 @@ NSString *const kVoicemailResponseTranscriptionUrlKey = @"transcription";
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@ and jrn = %@", line, identifier];
     Voicemail *voicemail = [Voicemail MR_findFirstWithPredicate:predicate inContext:line.managedObjectContext];
     if (!voicemail) {
-        voicemail = [Voicemail MR_createInContext:line.managedObjectContext];
+        voicemail = [Voicemail MR_createEntityInContext:line.managedObjectContext];
         voicemail.jrn = identifier;
         voicemail.line = line;
     }

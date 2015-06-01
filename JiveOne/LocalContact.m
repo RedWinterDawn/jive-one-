@@ -77,7 +77,7 @@ static NSString *LocalContactPersonIdAttributeKey = @"personId";
     // object, incase the phone was restored, and the number to be unique, so we will create a new
     // local contact to link it too.
     
-    localContact = [LocalContact MR_createInContext:context];
+    localContact = [LocalContact MR_createEntityInContext:context];
     localContact.personId   = phoneNumber.recordId;
     localContact.personHash = hash;
     localContact.name       = phoneNumber.name;

@@ -173,7 +173,7 @@ NSString *const kPBXInfoResponseNumberReceiveSMSKey                 = @"receiveS
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@ and jrn = %@", user, jrn];
     PBX *pbx = [PBX MR_findFirstWithPredicate:predicate inContext:user.managedObjectContext];
     if (!pbx) {
-        pbx = [PBX MR_createInContext:user.managedObjectContext];
+        pbx = [PBX MR_createEntityInContext:user.managedObjectContext];
         pbx.jrn = jrn;
         pbx.user = user;
     }

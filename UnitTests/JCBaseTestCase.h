@@ -12,7 +12,7 @@
 @import CoreData;
 
 #import <OCMock/OCMock.h>
-#import <MagicalRecord/CoreData+MagicalRecord.h>
+#import <MagicalRecord/MagicalRecord.h>
 #import <AFNetworking/AFNetworkReachabilityManager.h>
 #import <UIKit/UIGestureRecognizerSubclass.h>
 

@@ -213,7 +213,7 @@
     Line *line = [Line MR_createInContext:self.context];
     OCMStub([self.vc.authenticationManager line]).andReturn(line);
     
-    OutgoingCall *outgoingCall = [OutgoingCall MR_createInContext:self.context];
+    OutgoingCall *outgoingCall = [OutgoingCall MR_createEntityInContext:self.context];
     outgoingCall.number = @"555555555";
     outgoingCall.line = line;
     outgoingCall.date = [NSDate date];

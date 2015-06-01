@@ -21,7 +21,7 @@
     User *user = [User MR_findFirstByAttribute:NSStringFromSelector(@selector(jiveUserId)) withValue:jiveUserId];
     if (!user) {
         [User MR_truncateAllInContext:context];
-        user = [User MR_createInContext:context];
+        user = [User MR_createEntityInContext:context];
         user.jiveUserId = jiveUserId;
     }
     
