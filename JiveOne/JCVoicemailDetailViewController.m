@@ -91,11 +91,6 @@
     }
 }
 
-- (IBAction)progressSliderTouched:(id)sender
-{
-    [_player pause];
-}
-
 - (IBAction)speakerTouched:(id)sender {
     _player.speaker = !_player.speaker;
 }

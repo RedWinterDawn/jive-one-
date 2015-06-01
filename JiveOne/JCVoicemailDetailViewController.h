@@ -32,7 +32,6 @@
 
 - (IBAction)playPauseButtonTapped:(id)sender;
 - (IBAction)progressSliderMoved:(id)sender;
-- (IBAction)progressSliderTouched:(id)sender;
 - (IBAction)speakerTouched:(id)sender;
 - (IBAction)deleteVoicemail:(id)sender;
 

@@ -9,6 +9,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCVoicemailDetailViewController">
             <connections>
                 <outlet property="date" destination="YYK-uE-J9h" id="NwT-0b-QTg"/>
+                <outlet property="deleteButton" destination="idB-dp-G1h" id="dn8-Ap-07D"/>
                 <outlet property="duration" destination="a4x-6O-jj8" id="CUJ-hO-EhO"/>
                 <outlet property="name" destination="4zV-0G-h0L" id="piI-87-kvY"/>
                 <outlet property="number" destination="0SF-MX-8Bz" id="c6V-O5-C4F"/>
@@ -129,7 +130,6 @@
                     </variation>
                     <connections>
                         <action selector="progressSliderMoved:" destination="-1" eventType="valueChanged" id="mJd-5B-J6W"/>
-                        <action selector="progressSliderTouched:" destination="-1" eventType="touchUpInside" id="VFt-r8-bPb"/>
                     </connections>
                 </slider>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2HS-JZ-xfy">
