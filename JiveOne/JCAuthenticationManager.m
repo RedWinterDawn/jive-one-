@@ -10,8 +10,6 @@
 #import "JCAuthenticationKeychain.h"
 #import <objc/runtime.h>
 
-#import <MagicalRecord/CoreData+MagicalRecord.h>
-
 #import "Common.h"
 
 #import "User.h"

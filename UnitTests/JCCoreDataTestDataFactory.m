@@ -34,7 +34,7 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
     NSAssert(usersData.count > 1, @"Should have at least one user in the list");
     
     for (NSDictionary *userData in usersData) {
-        User *user = [User MR_createInContext:context];
+        User *user = [User MR_createEntityInContext:context];
         user.jiveUserId = [userData stringValueForKey:@"jiveId"];
         NSArray *pbxsData = [userData arrayForKey:@"pbxs"];
         for (NSDictionary *pbxData in pbxsData) {
@@ -48,7 +48,7 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
 
 + (void)processPbxData:(NSDictionary *)pbxData forUser:(User *)user
 {
-    PBX *pbx = [PBX MR_createInContext:user.managedObjectContext];
+    PBX *pbx = [PBX MR_createEntityInContext:user.managedObjectContext];
     pbx.user = user;
     
     pbx.name = [pbxData stringValueForKey:@"name"];
@@ -77,7 +77,7 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
 
 + (void)processLineData:(NSDictionary *)lineData forPbx:(PBX *)pbx
 {
-    Line *line = [Line MR_createInContext:pbx.managedObjectContext];
+    Line *line = [Line MR_createEntityInContext:pbx.managedObjectContext];
     line.pbx = pbx;
     line.pbxId = pbx.pbxId;
     
@@ -89,7 +89,7 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
     line.mailboxUrl = [lineData stringValueForKey:@"mailboxUrl"];
     
     NSDictionary *lineConfigurationData = [lineData dictionaryForKey:@"lineConfiguration"];
-    LineConfiguration *lineConfiguration = [LineConfiguration MR_createInContext:line.managedObjectContext];
+    LineConfiguration *lineConfiguration = [LineConfiguration MR_createEntityInContext:line.managedObjectContext];
     lineConfiguration.line = line;
     
     lineConfiguration.display           = [lineConfigurationData stringValueForKey:@"display"];
@@ -101,7 +101,7 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
 
 + (void)processContactData:(NSDictionary *)contactData forPbx:(PBX *)pbx
 {
-    Contact *contact = [Contact MR_createInContext:pbx.managedObjectContext];
+    Contact *contact = [Contact MR_createEntityInContext:pbx.managedObjectContext];
     contact.pbx = pbx;
     contact.pbxId = pbx.pbxId;
     
@@ -114,7 +114,7 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
 
 + (void)processDidData:(NSDictionary *)didData forPbx:(PBX *)pbx
 {
-    DID *did = [DID MR_createInContext:pbx.managedObjectContext];
+    DID *did = [DID MR_createEntityInContext:pbx.managedObjectContext];
     did.pbx = pbx;
     
     did.jrn = [didData stringValueForKey:@"jrn"];

@@ -59,7 +59,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
     // we create one with the data.
     SMSMessage *message = [SMSMessage MR_findFirstByAttribute:NSStringFromSelector(@selector(eventId)) withValue:eventId inContext:did.managedObjectContext];
     if (!message) {
-        message = [SMSMessage MR_createInContext:did.managedObjectContext];
+        message = [SMSMessage MR_createEntityInContext:did.managedObjectContext];
         message.eventId = eventId;
         [message setNumber:number name:nil];
         message.text = text;

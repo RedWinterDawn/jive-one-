@@ -21,7 +21,7 @@
     // Libraries
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
-    #import <MagicalRecord/CoreData+MagicalRecord.h>
+    #import <MagicalRecord/MagicalRecord.h>
     #import <MobileCoreServices/MobileCoreServices.h>
     #import <AFNetworking/AFNetworking.h>
 
