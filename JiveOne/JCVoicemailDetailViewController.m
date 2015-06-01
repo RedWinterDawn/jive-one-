@@ -99,7 +99,15 @@
 
 -(IBAction)deleteVoicemail:(id)sender
 {
-    [self.voicemail markForDeletion];
+    [self.voicemail markForDeletion:^(BOOL success, NSError *error) {
+        if (success) {
+            if (_delegate && [_delegate respondsToSelector:@selector(voicemailDetailViewControllerDidDeleteVoicemail:)]) {
+                [_delegate voicemailDetailViewControllerDidDeleteVoicemail:self];
+            }
+        } else {
+            [self showError:error];
+        }
+    }];
 }
 
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didLoadWithDuration:(NSTimeInterval)duration

@@ -12,9 +12,13 @@
 #import "JCPopoverSlider.h"
 #import "JCPlayPauseButton.h"
 
+@protocol JCVoicemailDetailViewControllerDelegate;
+
 @interface JCVoicemailDetailViewController : UIViewController
 
 @property (strong, nonatomic) Voicemail *voicemail;
+
+@property (weak, nonatomic) id <JCVoicemailDetailViewControllerDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UILabel *duration;
 @property (weak, nonatomic) IBOutlet UILabel *name;
@@ -34,5 +38,12 @@
 - (IBAction)progressSliderMoved:(id)sender;
 - (IBAction)speakerTouched:(id)sender;
 - (IBAction)deleteVoicemail:(id)sender;
+
+@end
+
+
+@protocol JCVoicemailDetailViewControllerDelegate <NSObject>
+
+-(void)voicemailDetailViewControllerDidDeleteVoicemail:(JCVoicemailDetailViewController *)controller;
 
 @end
