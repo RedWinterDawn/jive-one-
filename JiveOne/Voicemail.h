@@ -18,8 +18,6 @@ extern NSString *const kVoicemailDataAttributeKey;
 @property (nonatomic, strong) NSString * jrn;
 
 @property (nonatomic) NSInteger duration;
-@property (nonatomic) BOOL markForDeletion;
-
 @property (nonatomic, retain) NSString * mailboxUrl;
 @property (nonatomic, retain) NSString * url_changeStatus;
 @property (nonatomic, retain) NSString * url_download;

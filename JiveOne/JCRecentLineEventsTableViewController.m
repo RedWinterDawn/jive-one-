@@ -234,7 +234,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     NSManagedObjectContext *context = self.managedObjectContext;
     
     Line *line = self.authenticationManager.line;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@", line];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@ && markForDeletion = %@", line, @NO];
     
     switch (viewFilter) {
         case JCRecentLineEventsViewMissedCalls:

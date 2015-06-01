@@ -100,12 +100,12 @@
 -(IBAction)deleteVoicemail:(id)sender
 {
     [self.voicemail markForDeletion:^(BOOL success, NSError *error) {
-        if (success) {
-            if (_delegate && [_delegate respondsToSelector:@selector(voicemailDetailViewControllerDidDeleteVoicemail:)]) {
-                [_delegate voicemailDetailViewControllerDidDeleteVoicemail:self];
-            }
-        } else {
+        if (!error) {
             [self showError:error];
+        }
+        
+        if (_delegate && [_delegate respondsToSelector:@selector(voicemailDetailViewControllerDidDeleteVoicemail:)]) {
+            [_delegate voicemailDetailViewControllerDidDeleteVoicemail:self];
         }
     }];
 }
