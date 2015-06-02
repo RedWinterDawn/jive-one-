@@ -86,6 +86,17 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
         return [super tableView:tableView cellForObject:object atIndexPath:indexPath];
 }
 
+-(void)deleteObject:(id<NSObject>)object
+{
+    if ([object isKindOfClass:[Voicemail class]]) {
+        Voicemail *voicemail = (Voicemail *)object;
+        [voicemail markForDeletion:NULL];
+    }
+    else {
+        [super deleteObject:object];
+    }
+}
+
 - (void)configureCell:(JCTableViewCell *)cell withObject:(id<NSObject>)object
 {
     if ([object isKindOfClass:[RecentLineEvent class]] && [cell isKindOfClass:[JCRecentEventCell class]]) {
