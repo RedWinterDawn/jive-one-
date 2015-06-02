@@ -9,7 +9,7 @@
         <scene sceneID="zpO-Ri-nui">
             <objects>
                 <navigationController id="us6-GT-6VE" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="p4B-8D-Nfe">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="p4B-8D-Nfe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -157,7 +157,7 @@
         <scene sceneID="c7u-HX-rzy">
             <objects>
                 <navigationController id="2Hc-En-5i1" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="e8X-0W-Z6w">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="e8X-0W-Z6w">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -484,5 +484,5 @@
         <segue reference="uPT-qT-mCT"/>
         <segue reference="Cvn-0O-gnV"/>
     </inferredMetricsTieBreakers>
-    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
 </document>
