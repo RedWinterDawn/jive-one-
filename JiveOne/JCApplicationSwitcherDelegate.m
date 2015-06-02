@@ -25,6 +25,7 @@
 
 #import "JCAuthenticationManager.h"
 #import "JCAppSettings.h"
+#import "JCStoryboardLoaderViewController.h"
 
 NSString *const kApplicationSwitcherPhoneRestorationIdentifier      = @"PhoneTabBarController";
 NSString *const kApplicationSwitcherMessagesRestorationIdentifier   = @"MessagesNavigationController";
@@ -241,6 +242,10 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 {
     // Default select the Dialer view if the phone controller is selected from the application switcher;
     if ([viewController.restorationIdentifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier]) {
+        if ([viewController isKindOfClass:[JCStoryboardLoaderViewController class]]) {
+            viewController = ((JCStoryboardLoaderViewController *)viewController).embeddedViewController;
+        }
+        
         if ([viewController isKindOfClass:[UITabBarController class]]) {
             UITabBarController *phoneTabBarController = (UITabBarController *)viewController;
             for (UIViewController *controller in phoneTabBarController.viewControllers) {
