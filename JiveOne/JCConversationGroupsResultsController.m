@@ -181,6 +181,8 @@
             }
         }
         
+        [_fetchedObjects sortUsingDescriptors:_fetchRequest.sortDescriptors];
+        
         for (JCFetchedResultsUpdate *movedObject in moved) {
             NSUInteger row = [_fetchedObjects indexOfObject:movedObject.object];
             [self didChangeObject:movedObject.object
@@ -189,7 +191,6 @@
                          newIndex:row];
         }
         
-        [_fetchedObjects sortUsingDescriptors:_fetchRequest.sortDescriptors];
         [_fetchedObjects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             if ([inserted containsObject:obj]) {
                 [self didChangeObject:obj
