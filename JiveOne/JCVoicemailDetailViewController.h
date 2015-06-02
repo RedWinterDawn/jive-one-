@@ -27,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *transcriptionWordCount;
 @property (weak, nonatomic) IBOutlet UILabel *transcriptionConfidence;
 @property (weak, nonatomic) IBOutlet UITextView *voicemailTranscription;
+@property (weak, nonatomic) IBOutlet UIView *transcriptionContainer;
+@property (weak, nonatomic) IBOutlet UIView *shadowbox;
 
 @property (weak, nonatomic) IBOutlet JCPlayPauseButton *playPauseButton;
 @property (weak, nonatomic) IBOutlet UIButton *speakerButton;
