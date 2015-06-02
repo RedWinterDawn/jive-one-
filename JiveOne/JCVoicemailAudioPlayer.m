@@ -25,7 +25,9 @@
     if (self) {
         _delegate = delegate;
         
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
+        [audioSession setActive:YES error:nil];
         
         __autoreleasing NSError *error;
         _player = [[AVAudioPlayer alloc] initWithData:voicemail.data fileTypeHint:AVFileTypeWAVE error:&error];
@@ -43,7 +45,6 @@
         // Notifiy of the initial speaker state
         [_delegate voicemailAudioPlayer:self didChangeToSpeaker:self.speaker];
         
-        
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
         [center addObserver:self selector:@selector(audioSessionInteruptionSelector:) name:AVAudioSessionInterruptionNotification object:nil];
@@ -53,6 +54,7 @@
 
 -(void)dealloc
 {
+    [[AVAudioSession sharedInstance] setActive:NO error:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
