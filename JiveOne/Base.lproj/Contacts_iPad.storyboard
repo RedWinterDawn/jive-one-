@@ -484,5 +484,5 @@
         <segue reference="n6G-bZ-ptt"/>
         <segue reference="Cvn-0O-gnV"/>
     </inferredMetricsTieBreakers>
-    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
 </document>

@@ -216,7 +216,7 @@
         <scene sceneID="sTM-xW-0Ib">
             <objects>
                 <navigationController id="dgo-s9-VKp" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="tGy-OV-uPf">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="tGy-OV-uPf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -233,7 +233,7 @@
         <scene sceneID="P5t-vr-TOR">
             <objects>
                 <navigationController id="WhA-Bu-xlD" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="d0d-OA-7d5">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="d0d-OA-7d5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -250,7 +250,7 @@
         <scene sceneID="fUW-GX-Kka">
             <objects>
                 <navigationController id="b55-mY-pcl" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="AKk-qM-oFd">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AKk-qM-oFd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -1224,7 +1224,7 @@
         <scene sceneID="vR4-Mr-zh6">
             <objects>
                 <navigationController id="P8B-bZ-9QR" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="k82-WE-ECU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="k82-WE-ECU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -1246,7 +1246,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ln9-9f-MEc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xz8-F3-u5O">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1270,5 +1270,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="05J-vq-9gY"/>
     </inferredMetricsTieBreakers>
-    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
 </document>
