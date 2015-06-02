@@ -19,7 +19,7 @@
 {
     if (!_fetchedResultsController)
     {
-        User *user = [JCAuthenticationManager sharedInstance].user;
+        User *user = self.authenticationManager.user;
         if (user)
         {
             NSManagedObjectContext *context = self.managedObjectContext;
@@ -55,7 +55,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Line *line = (Line *)[self objectAtIndexPath:indexPath];
-    [JCAuthenticationManager sharedInstance].line = line;
+    self.authenticationManager.line = line;
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         Line *localLine = (Line *)[localContext objectWithID:line.objectID];
         NSArray *lines = [Line MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];

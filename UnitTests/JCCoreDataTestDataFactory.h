@@ -9,7 +9,7 @@
 @import Foundation;
 @import CoreData;
 
-#import <MagicalRecord/CoreData+MagicalRecord.h>
+#import <MagicalRecord/MagicalRecord.h>
 
 @interface JCCoreDataTestDataFactory : NSObject
 

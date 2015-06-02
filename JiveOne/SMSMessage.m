@@ -78,7 +78,7 @@ NSString *const kSMSMessageInboundAttributeKey = @"inbound";
     
     
     if (!localContact) {
-        localContact = [LocalContact MR_createInContext:self.managedObjectContext];
+        localContact = [LocalContact MR_createEntityInContext:self.managedObjectContext];
         localContact.number = number;
         if (name) {
             localContact.name = name;

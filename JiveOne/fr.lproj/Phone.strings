@@ -14,12 +14,6 @@
 /* Class = "UISegmentedControl"; UHR-O3-J6m.segmentTitles[1] = "Missed"; ObjectID = "UHR-O3-J6m"; */
 "UHR-O3-J6m.segmentTitles[1]" = "Manqués";
 
-/* Class = "UILabel"; text = "Confidence: %@"; ObjectID = "UHm-eu-MVg"; */
-"UHm-eu-MVg.text" = "Confiance: %@";
-
-/* Class = "UILabel"; text = "Word count: %i"; ObjectID = "VMi-W8-6Ys"; */
-"VMi-W8-6Ys.text" = "Mot Compter: %i";
-
 /* Class = "UITabBarItem"; title = "History"; ObjectID = "WRq-PA-NpD"; */
 "WRq-PA-NpD.title" = "Historique";
 

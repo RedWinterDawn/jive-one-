@@ -148,7 +148,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     Contact *contact = [Contact MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
     if(!contact)
     {
-        contact = [Contact MR_createInContext:pbx.managedObjectContext];
+        contact = [Contact MR_createEntityInContext:pbx.managedObjectContext];
         contact.jrn = jrn;
         contact.pbx = pbx;
         contact.pbxId = pbx.pbxId;
@@ -160,7 +160,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
 {
     ContactGroup *group = [ContactGroup MR_findFirstByAttribute:NSStringFromSelector(@selector(groupId)) withValue:identifer inContext:contact.managedObjectContext];
     if (!group) {
-        group = [ContactGroup MR_createInContext:contact.managedObjectContext];
+        group = [ContactGroup MR_createEntityInContext:contact.managedObjectContext];
         group.groupId = identifer;
     }
     

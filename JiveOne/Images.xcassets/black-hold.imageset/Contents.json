@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "black-hold@1x.png"
+      "filename" : "paus-icon.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "black-hold@2x.png"
+      "filename" : "paus-icon@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "black-hold@3x.png"
+      "filename" : "paus-icon@3x.png"
     }
   ],
   "info" : {

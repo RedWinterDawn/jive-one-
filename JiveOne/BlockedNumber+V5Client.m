@@ -159,7 +159,7 @@
 {
     BlockedNumber *blockedNumber = [self blockedNumberForNumber:number forDID:did];
     if (!blockedNumber) {
-        blockedNumber = [BlockedNumber MR_createInContext:did.managedObjectContext];
+        blockedNumber = [BlockedNumber MR_createEntityInContext:did.managedObjectContext];
         blockedNumber.number = number;
         blockedNumber.did = did;
     }

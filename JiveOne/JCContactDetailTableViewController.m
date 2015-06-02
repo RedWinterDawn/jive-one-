@@ -44,6 +44,7 @@
     if (phoneNumber) {
         if (phoneNumber.titleText) {
             self.title = phoneNumber.titleText;
+            self.navigationItem.title = phoneNumber.titleText;
             self.nameCell.detailTextLabel.text  = phoneNumber.titleText;
             [self cell:self.nameCell setHidden:FALSE];
         }

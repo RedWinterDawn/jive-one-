@@ -174,6 +174,7 @@
                                     <outlet property="detailTextLabel" destination="zTc-HM-fDX" id="AqI-ND-MC7"/>
                                     <outlet property="favoriteBtn" destination="AH7-6r-D1F" id="3yK-Xa-x12"/>
                                     <outlet property="textLabel" destination="4Ry-Fo-vlb" id="jEN-x8-CT1"/>
+                                    <segue destination="Ab5-kr-ogH" kind="show" id="mdo-jp-OBU"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LineCell" rowHeight="60" id="z6Z-oo-Gea" customClass="JCLineCell">
@@ -230,6 +231,7 @@
                                 <connections>
                                     <outlet property="detailTextLabel" destination="Pn4-ax-mMz" id="49Q-o5-UHo"/>
                                     <outlet property="textLabel" destination="aBa-fS-FIH" id="B56-0L-TuK"/>
+                                    <segue destination="Ab5-kr-ogH" kind="show" id="AWo-34-YW5"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ContactGroupCell" textLabel="Uwi-GE-t3C" style="IBUITableViewCellStyleDefault" id="tZ1-ib-AvU" customClass="JCTableViewCell">
@@ -314,6 +316,122 @@
             </objects>
             <point key="canvasLocation" x="449" y="1806"/>
         </scene>
+        <!--Contact Detail Table View Controller-->
+        <scene sceneID="gdz-BD-FFF">
+            <objects>
+                <tableViewController storyboardIdentifier="ContactsDetailViewTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ab5-kr-ogH" customClass="JCContactDetailTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Rn4-RK-QR8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="443"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection id="vLx-5C-XDl">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="BKy-rR-Eom" detailTextLabel="0Ib-w3-Hbh" style="IBUITableViewCellStyleValue2" id="pNf-uR-Xjc">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pNf-uR-Xjc" id="W9t-pj-OR1">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BKy-rR-Eom">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    </variation>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0Ib-w3-Hbh">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="uKT-Cv-Vzc" detailTextLabel="c49-Ja-NVS" style="IBUITableViewCellStyleValue2" id="MBL-8v-nmc">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MBL-8v-nmc" id="Y7z-CA-jFy">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Extension" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uKT-Cv-Vzc">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    </variation>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="c49-Ja-NVS">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="AYV-A1-JEv" appends="YES" id="jLS-NC-Aus"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="bRW-Ju-VgO" detailTextLabel="E6a-Vq-RPl" style="IBUITableViewCellStyleValue2" id="ILZ-NP-Eba">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ILZ-NP-Eba" id="RsJ-Gu-FEd">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Jive ID" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bRW-Ju-VgO">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    </variation>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="E6a-Vq-RPl">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="Ab5-kr-ogH" id="qzc-27-JTy"/>
+                            <outlet property="delegate" destination="Ab5-kr-ogH" id="Fts-4r-yIM"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="xlK-I5-OCy"/>
+                    <connections>
+                        <outlet property="extensionCell" destination="MBL-8v-nmc" id="idK-BR-ac8"/>
+                        <outlet property="jiveIdCell" destination="ILZ-NP-Eba" id="XIc-Ni-S5d"/>
+                        <outlet property="nameCell" destination="pNf-uR-Xjc" id="fa7-mF-IDr"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SgG-Zo-neP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="AYV-A1-JEv">
+                    <connections>
+                        <action selector="callExtension:" destination="Ab5-kr-ogH" id="hN7-Y5-3Bw"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="2480" y="1362.5"/>
+        </scene>
     </scenes>
     <resources>
         <image name="black-avatar" width="25" height="25"/>
@@ -321,5 +439,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="VLE-44-Pvd"/>
+        <segue reference="mdo-jp-OBU"/>
     </inferredMetricsTieBreakers>
 </document>

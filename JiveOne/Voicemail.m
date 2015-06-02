@@ -13,7 +13,7 @@
 
 #import "NSManagedObject+Additions.h"
 
-NSString *const kVoicemailDataAttributeKey = @"data";
+NSString *const kVoicemailDurationAttributeKey = @"duration";
 
 @implementation Voicemail
 
@@ -30,24 +30,12 @@ NSString *const kVoicemailDataAttributeKey = @"data";
 
 -(void)setDuration:(NSInteger)duration
 {
-    [self setPrimitiveValueFromIntegerValue:duration forKey:@"duration"];
+    [self setPrimitiveValueFromIntegerValue:duration forKey:kVoicemailDurationAttributeKey];
 }
-
--(void)setMarkForDeletion:(BOOL)markForDeletion
-{
-    [self setPrimitiveValueFromBoolValue:markForDeletion forKey:@"markForDeletion"];
-}
-
-#pragma mark - Getters -
 
 -(NSInteger)duration
 {
-    return [self integerValueFromPrimitiveValueForKey:@"duration"];
-}
-
--(BOOL)markForDeletion
-{
-    return [self boolValueFromPrimitiveValueForKey:@"markForDeletion"];
+    return [self integerValueFromPrimitiveValueForKey:kVoicemailDurationAttributeKey];
 }
 
 -(NSString *)displayExtension

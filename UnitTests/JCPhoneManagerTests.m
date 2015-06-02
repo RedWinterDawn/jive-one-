@@ -107,8 +107,8 @@
 {
     // Given
     NSManagedObjectContext *context = self.context;
-    Line *line = [Line MR_createInContext:context];
-    line.lineConfiguration = [LineConfiguration MR_createInContext:context];
+    Line *line = [Line MR_createEntityInContext:context];
+    line.lineConfiguration = [LineConfiguration MR_createEntityInContext:context];
     AFNetworkReachabilityManager *reachabilityManagerMock = self.reachabilityManagerMock;
     
     OCMStub([self.appSettingsMock isWifiOnly]).andReturn(false);
@@ -130,7 +130,7 @@
 - (void)test_JCPhoneManager_dialPhoneNumber
 {
     // Given
-    Line *line = [Line MR_createInContext:self.context];
+    Line *line = [Line MR_createEntityInContext:self.context];
     NSString *number = @"5555555555";
     JCUnknownNumber *unknownNumber = [JCUnknownNumber unknownNumberWithNumber:number];
     JCPhoneManagerDialType type = JCPhoneManagerSingleDial;

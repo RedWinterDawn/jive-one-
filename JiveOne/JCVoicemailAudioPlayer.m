@@ -7,12 +7,14 @@
 //
 
 #import "JCVoicemailAudioPlayer.h"
+#import "JCAppSettings.h"
 
 @interface JCVoicemailAudioPlayer () <AVAudioPlayerDelegate>
 {
     AVAudioPlayer *_player;
     NSTimer *_playbackTimer;
     id <JCVoicemailAudioPlayerDelegate> _delegate;
+    JCAppSettings *_appSettings;
 }
 
 @end
@@ -21,12 +23,26 @@
 
 -(instancetype)initWithVoicemail:(Voicemail *)voicemail delegate:(id<JCVoicemailAudioPlayerDelegate>)delegate
 {
+    JCAppSettings *appSettings = [JCAppSettings sharedSettings];
+    return [self initWithVoicemail:voicemail delegate:delegate appSettings:appSettings];
+}
+
+
+-(instancetype)initWithVoicemail:(Voicemail *)voicemail delegate:(id<JCVoicemailAudioPlayerDelegate>)delegate appSettings:(JCAppSettings *)appSettings
+{
     self = [super init];
     if (self) {
         _delegate = delegate;
         
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
+        [audioSession setActive:YES error:nil];
+        
         __autoreleasing NSError *error;
         _player = [[AVAudioPlayer alloc] initWithData:voicemail.data fileTypeHint:AVFileTypeWAVE error:&error];
+        
+        _appSettings = appSettings;
+        self.speaker = appSettings.isVoicemailOnSpeaker;
         
         if (error) {
             [_delegate voicemailAudioPlayer:self didFailWithError:error];
@@ -38,20 +54,16 @@
             [_delegate voicemailAudioPlayer:self didLoadWithDuration:_player.duration];
         }
         
-        // Notifiy of the initial speaker state
-        [_delegate voicemailAudioPlayer:self didChangeToSpeaker:self.speaker];
-        
-        
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-        [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:audioSession];
-        [center addObserver:self selector:@selector(audioSessionInteruptionSelector:) name:AVAudioSessionInterruptionNotification object:audioSession];
+        [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
+        [center addObserver:self selector:@selector(audioSessionInteruptionSelector:) name:AVAudioSessionInterruptionNotification object:nil];
     }
     return self;
 }
 
 -(void)dealloc
 {
+    [[AVAudioSession sharedInstance] setActive:NO error:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -59,6 +71,8 @@
 
 -(void)setSpeaker:(BOOL)speaker
 {
+    _appSettings.voicemailOnSpeaker = speaker;
+    
     __autoreleasing NSError *error;
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
@@ -98,18 +112,14 @@
 
 -(void)play {
     [_player play];
-    _playbackTimer = [NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(playbackRefresh) userInfo:nil repeats:YES];
+    _playbackTimer = [NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(progressTimerUpdate) userInfo:nil repeats:YES];
     [_delegate voicemailAudioPlayer:self didChangePlaybackState:_player.isPlaying];
 }
 
 -(void)playAtTime:(NSTimeInterval)timeInterval
 {
     NSTimeInterval time = MIN(MAX(0, timeInterval), _player.duration);
-    
-    NSLog(@"%f %f %f", timeInterval, time, _player.duration);
-    
-    
-    //[_player playAtTime: timeInterval];
+    _player.currentTime = time;
 }
 
 -(void)pause {
@@ -138,11 +148,6 @@
     }
 }
 
--(void)playbackRefresh
-{
-    [_delegate voicemailAudioPlayer:self didUpdateProgress:_player.currentTime duration:_player.duration];
-}
-
 -(void)setSliderValue:(float)position{
     NSTimeInterval startTime =  (MIN(position, 1.0f) * _player.duration);
     [_player playAtTime: startTime];
@@ -150,11 +155,19 @@
 
 #pragma mark - Notification Handlers
 
+/**
+ * Notification when the audio route has changes. This occures the input/output has changed, and is 
+ * an opportunity for use to check to see if the output port contains the speaker to update the UI.
+ */
 -(void)audioSessionRouteChangeSelector:(NSNotification *)notification
 {
     [_delegate voicemailAudioPlayer:self didChangeToSpeaker:self.speaker];
 }
 
+/**
+ * Notification that our audio playback was being interupted by an external audio event, which we 
+ * automatically pause our voicemail playback.
+ */
 -(void)audioSessionInteruptionSelector:(NSNotification *)notification
 {
     [self pause];
@@ -162,14 +175,14 @@
 
 #pragma mark - Delegate Handler -
 
--(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag  {
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
     [_delegate voicemailAudioPlayer:self didChangePlaybackState:_player.isPlaying];
-    [_delegate voicemailAudioPlayer:self didUpdateProgress:_player.currentTime duration:_player.duration];
     [self stopProgressTimer];
 }
 
--(void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error   {
-    [_delegate voicemailAudioPlayer:self didChangePlaybackState:_player.isPlaying];
+-(void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error
+{
     [_delegate voicemailAudioPlayer:self didFailWithError:error];
     [self stopProgressTimer];
 }
@@ -180,6 +193,12 @@
 {
     [_playbackTimer invalidate];
     _playbackTimer = nil;
+    [self progressTimerUpdate];
+}
+
+-(void)progressTimerUpdate
+{
+    [_delegate voicemailAudioPlayer:self didUpdateProgress:_player.currentTime duration:_player.duration];
 }
 
 

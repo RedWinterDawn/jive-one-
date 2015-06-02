@@ -11,7 +11,8 @@
 
 #import "NSManagedObject+Additions.h"
 
-NSString *const kRecentEventReadKey = @"read";
+NSString *const kRecentEventReadAttributeKey = @"read";
+NSString *const kRecentEventMarkForDeletionAttributeKey = @"markForDeletion";
 
 @implementation RecentEvent
 
@@ -20,14 +21,23 @@ NSString *const kRecentEventReadKey = @"read";
 
 -(void)setRead:(bool)read
 {
-    [self setPrimitiveValueFromBoolValue:read forKey:kRecentEventReadKey];
+    [self setPrimitiveValueFromBoolValue:read forKey:kRecentEventReadAttributeKey];
 }
 
 -(bool)isRead
 {
-    return [self boolValueFromPrimitiveValueForKey:kRecentEventReadKey];
+    return [self boolValueFromPrimitiveValueForKey:kRecentEventReadAttributeKey];
 }
 
+-(void)setMarkForDeletion:(BOOL)markForDeletion
+{
+    [self setPrimitiveValueFromBoolValue:markForDeletion forKey:kRecentEventMarkForDeletionAttributeKey];
+}
+
+-(BOOL)isMarkedForDeletion
+{
+    return [self boolValueFromPrimitiveValueForKey:kRecentEventMarkForDeletionAttributeKey];
+}
 
 #pragma mark - Transient Properties -
 

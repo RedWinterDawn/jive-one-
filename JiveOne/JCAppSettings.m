@@ -15,6 +15,7 @@ NSString *const kJCAppSettingsWifiOnlyAttribute = @"wifiOnly";
 NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
 NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
 NSString *const kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute = @"applicationSwitcherLastSelected";
+NSString *const kJCAppSettingsVoicemailOnSpeakerAttribute = @"voicemailOnSpeaker";
 
 @interface JCAppSettings ()
 
@@ -65,6 +66,11 @@ NSString *const kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute = @"app
     [self setSettingBoolValue:vibrateOnRing forKey:kJCAppSettingsVibrateOnRingAttribute];
 }
 
+-(void)setVoicemailOnSpeaker:(BOOL)voicemailOnSpeaker
+{
+    [self setSettingBoolValue:voicemailOnSpeaker forKey:kJCAppSettingsVoicemailOnSpeakerAttribute];
+}
+
 -(void)setAppSwitcherLastSelectedViewControllerIdentifier:(NSString *)lastSelectedViewControllerIdentifier
 {
     [self setSettingStringValue:lastSelectedViewControllerIdentifier forKey:kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute];
@@ -93,6 +99,11 @@ NSString *const kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute = @"app
 -(BOOL)isVibrateOnRing
 {
     return [self.userDefaults boolForKey:kJCAppSettingsVibrateOnRingAttribute];
+}
+
+-(BOOL)isVoicemailOnSpeaker
+{
+    return [self.userDefaults boolForKey:kJCAppSettingsVoicemailOnSpeakerAttribute];
 }
 
 -(NSString *)appSwitcherLastSelectedViewControllerIdentifier

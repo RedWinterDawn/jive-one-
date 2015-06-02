@@ -104,6 +104,9 @@
         [self addChildViewController:scene];
         [self.view addSubview:scene.view];
         [scene didMoveToParentViewController:self];
+        
+        self.title = scene.title;
+        self.navigationItem.title = scene.navigationItem.title;
     }
 }
 

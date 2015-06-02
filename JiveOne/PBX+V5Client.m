@@ -173,7 +173,7 @@ NSString *const kPBXInfoResponseNumberReceiveSMSKey                 = @"receiveS
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@ and jrn = %@", user, jrn];
     PBX *pbx = [PBX MR_findFirstWithPredicate:predicate inContext:user.managedObjectContext];
     if (!pbx) {
-        pbx = [PBX MR_createInContext:user.managedObjectContext];
+        pbx = [PBX MR_createEntityInContext:user.managedObjectContext];
         pbx.jrn = jrn;
         pbx.user = user;
     }
@@ -228,7 +228,7 @@ NSString *const kPBXInfoResponseNumberReceiveSMSKey                 = @"receiveS
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and jrn = %@", pbx, jrn];
     Line *line = [Line MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
     if(!line) {
-        line = [Line MR_createInContext:pbx.managedObjectContext];
+        line = [Line MR_createEntityInContext:pbx.managedObjectContext];
         line.jrn = jrn;
         line.pbx = pbx;
         line.pbxId = pbx.pbxId;
@@ -279,7 +279,7 @@ NSString *const kPBXInfoResponseNumberReceiveSMSKey                 = @"receiveS
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and jrn = %@", pbx, jrn];
     DID *did = [DID MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
     if (!did) {
-        did = [DID MR_createInContext:pbx.managedObjectContext];
+        did = [DID MR_createEntityInContext:pbx.managedObjectContext];
         did.jrn = jrn;
         did.pbx = pbx;
     }

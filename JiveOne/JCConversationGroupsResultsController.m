@@ -50,7 +50,7 @@
         fetchRequest.propertiesToFetch      = @[NSStringFromSelector(@selector(messageGroupId))];
         
         // Observe for notification changes for SMS updates.
-        /*[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:kSMSMessagesDidUpdateNotification object:nil];*/
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:kSMSMessagesDidUpdateNotification object:nil];
     }
     return self;
 }

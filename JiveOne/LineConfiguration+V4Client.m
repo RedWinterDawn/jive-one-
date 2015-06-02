@@ -189,7 +189,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     // attach to the line.
     LineConfiguration *lineConfiguration = line.lineConfiguration;
     if (!lineConfiguration) {
-        lineConfiguration = [LineConfiguration MR_createInContext:line.managedObjectContext];
+        lineConfiguration = [LineConfiguration MR_createEntityInContext:line.managedObjectContext];
         lineConfiguration.line = line;
     }
     
