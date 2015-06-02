@@ -34,7 +34,7 @@ NSString *const kJCHistoryCellReuseIdentifier = @"HistoryCell";
 NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
 NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 
-@interface JCRecentLineEventsTableViewController ()
+@interface JCRecentLineEventsTableViewController () <JCVoicemailDetailViewControllerDelegate>
 {
     UIViewController *_voicemailViewController;
 }
@@ -135,7 +135,9 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     }
     
     if ([viewController isKindOfClass:[JCVoicemailDetailViewController class]] && recentLineEvent && [recentLineEvent isKindOfClass:[Voicemail class]]) {
-        ((JCVoicemailDetailViewController *)viewController).voicemail = (Voicemail *)recentLineEvent;
+        JCVoicemailDetailViewController *voicemailDetailViewController = (JCVoicemailDetailViewController *)viewController;
+        voicemailDetailViewController.voicemail = (Voicemail *)recentLineEvent;
+        voicemailDetailViewController.delegate = self;
     }
     
     else if ([viewController isKindOfClass:[JCContactDetailTableViewController class]] && recentLineEvent){
@@ -170,7 +172,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
         Line *line = self.authenticationManager.line;
         [Voicemail downloadVoicemailsForLine:line completion:^(BOOL success, NSError *error) {
             [((UIRefreshControl *)sender) endRefreshing];
-            if (!success) {
+            if (error) {
                 [self showError:error];
             }
         }];
@@ -232,7 +234,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     NSManagedObjectContext *context = self.managedObjectContext;
     
     Line *line = self.authenticationManager.line;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@", line];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@ && markForDeletion = %@", line, @NO];
     
     switch (viewFilter) {
         case JCRecentLineEventsViewMissedCalls:
@@ -296,6 +298,15 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 {
     self.fetchedResultsController = nil;
     [self.tableView reloadData];
+}
+
+- (void)voicemailDetailViewControllerDidDeleteVoicemail:(JCVoicemailDetailViewController *)controller
+{
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+        [self performSegueWithIdentifier:@"Dialer" sender:self];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end

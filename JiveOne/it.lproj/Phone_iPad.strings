@@ -2,9 +2,6 @@
 /* Class = "UILabel"; text = "MNO"; ObjectID = "0E0-Ga-yKj"; */
 "0E0-Ga-yKj.text" = "MNO";
 
-/* Class = "UILabel"; text = "Word count: %i"; ObjectID = "3hD-2T-xYG"; */
-"3hD-2T-xYG.text" = "Conteggio parole: %i";
-
 /* Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "AkF-KA-69I"; */
 "AkF-KA-69I.title" = "Segreteria";
 
@@ -37,9 +34,6 @@
 
 /* Class = "UILabel"; text = "DEF"; ObjectID = "utJ-wf-z8v"; */
 "utJ-wf-z8v.text" = "DEF";
-
-/* Class = "UILabel"; text = "Confidence: %@"; ObjectID = "zDJ-eE-vfh"; */
-"zDJ-eE-vfh.text" = "Fiducia: %@";
 
 /* Class = "UILabel"; text = "GHI"; ObjectID = "zzd-cv-BlF"; */
 "zzd-cv-BlF.text" = "GHI";

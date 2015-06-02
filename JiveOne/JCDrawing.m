@@ -137,3 +137,39 @@ void JCDrawingLayerDrawLineAtPoints(CALayer *layer, JCDrawingLine line, CGPoint 
     layer.bounds = (CGRect) { {0, 0}, { length + line.width, line.width } };
     layer.transform = CATransform3DMakeRotation(angle, 0, 0, 1);
 }
+
+UIImage *JCDrawingCreateMaskedImageFromImageMask(UIImage *image, CGColorRef color)
+{
+    CGSize size = CGSizeMake(image.size.width *image.scale, image.size.height * image.scale);
+    CGRect frame = CGRectMake(0,0,size.width,size.height);
+    CGContextRef context = JCDrawingContextCreateWithSize(size);
+    
+    CGContextDrawImage(context, frame, image.CGImage);
+    
+    const CGFloat myMaskingColors[6] = { 128, 255, 128, 255, 128, 255 };
+    CGImageRef  maskedImage = CGImageCreateWithMaskingColors (image.CGImage, myMaskingColors);
+    CGContextSetFillColorWithColor(context, color);
+    CGContextSetBlendMode(context, kCGBlendModeSourceAtop);
+    CGContextFillRect(context, frame);
+    CGContextDrawImage(context, frame, maskedImage);
+    CGImageRelease(maskedImage);
+    CGImageRef newImage = CGBitmapContextCreateImage(context);
+    CGContextRelease(context);
+    if (newImage == NULL)
+        return image;
+    
+    UIImage *result = [UIImage imageWithCGImage:newImage scale:image.scale orientation:image.imageOrientation];
+    CGImageRelease(newImage);
+    return result;
+}
+
+CGContextRef JCDrawingContextCreateWithSize(CGSize size)
+{
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    if (colorSpace == NULL)
+        return NULL;
+    
+    CGContextRef context = CGBitmapContextCreate(NULL, size.width, size.height, 8, size.width * 4, colorSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedLast);
+    CGColorSpaceRelease(colorSpace);
+    return context;
+}

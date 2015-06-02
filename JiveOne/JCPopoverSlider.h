@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JCPopoverView.h"
 
 @interface JCPopoverSlider : UISlider
 
-@property (strong, nonatomic) JCPopoverView *popupView;
-@property (strong, nonatomic) UIImageView *sliderView;
-@property (nonatomic, readonly) CGRect thumbRect;
-@property (strong, nonatomic) UILabel *sliderTextLabel;
-- (void)updateThumbWithCurrentProgress;
+// Configurable Properties.
+@property (nonatomic) CGFloat trackHeight;
+@property (nonatomic) CGFloat thumbBorderWidth;
+@property (nonatomic) CGFloat thumbDiameter;
+
+@property (nonatomic, readonly) NSString *formattedValue;
+
 @end

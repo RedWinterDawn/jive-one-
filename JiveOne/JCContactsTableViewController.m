@@ -208,17 +208,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id object = [self objectAtIndexPath:indexPath];
-    Line *line = self.authenticationManager.line;
-	if ([object isKindOfClass:[ContactGroup class]]) {
+    if ([object isKindOfClass:[ContactGroup class]]) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(contactsTableViewController:didSelectContactGroup:)]) {
             [self.delegate contactsTableViewController:self didSelectContactGroup:(ContactGroup *)object];
-        }
-    }
-    else if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)] && object != line) {
-        if ( UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad ) {
-            [self dialPhoneNumber:(id<JCPhoneNumberDataSource>)object
-                        usingLine:line
-                           sender:tableView];
         }
     }
 }

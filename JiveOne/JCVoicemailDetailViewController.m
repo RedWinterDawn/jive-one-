@@ -7,6 +7,7 @@
 //
 
 #import "JCVoicemailDetailViewController.h"
+#import "JCDrawing.h"
 
 // Models
 #import "JCVoicemailAudioPlayer.h"
@@ -36,8 +37,14 @@
     self.date.text = voicemail.formattedLongDate;
     self.duration.text = [self formatSeconds:voicemail.duration];
     
+    
+    
     VoicemailTranscription *transcription = self.voicemail.transcription;
+  
+  
+
     self.voicemailTranscription.text = transcription.text;
+    self.voicemailTranscription.font = [UIFont systemFontOfSize:18.0];
     
     NSNumberFormatter *percent = [[NSNumberFormatter alloc] init];
     [percent setNumberStyle:NSNumberFormatterPercentStyle];
@@ -90,11 +97,6 @@
     }
 }
 
-- (IBAction)progressSliderTouched:(id)sender
-{
-    [_player pause];
-}
-
 - (IBAction)speakerTouched:(id)sender {
     _player.speaker = !_player.speaker;
 }
@@ -103,7 +105,15 @@
 
 -(IBAction)deleteVoicemail:(id)sender
 {
-    [self.voicemail markForDeletion];
+    if (_delegate && [_delegate respondsToSelector:@selector(voicemailDetailViewControllerDidDeleteVoicemail:)]) {
+        [_delegate voicemailDetailViewControllerDidDeleteVoicemail:self];
+    }
+    
+    [self.voicemail markForDeletion:^(BOOL success, NSError *error) {
+        if (error) {
+            [self showError:error];
+        }
+    }];
 }
 
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didLoadWithDuration:(NSTimeInterval)duration
@@ -112,12 +122,15 @@
     self.slider.enabled = TRUE;
     self.slider.minimumValue = 0.0f;
     self.slider.maximumValue = duration;
-    self.duration.text = [self formatSeconds:duration];
+    
+    NSString *durationText = [self formatSeconds:duration];
+    self.duration.text = durationText;
+    self.playerDuration.text = durationText;
 }
 
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didChangePlaybackState:(BOOL)playing
 {
-    self.playPauseButton.selected = playing;
+    self.playPauseButton.paused = !playing;
 }
 
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didFailWithError:(NSError *)error
@@ -136,7 +149,6 @@
 -(void)voicemailAudioPlayer:(JCVoicemailAudioPlayer *)player didUpdateProgress:(NSTimeInterval)currentTime duration:(NSTimeInterval)duration
 {
     self.slider.value = currentTime;
-    [self.slider updateThumbWithCurrentProgress];
 }
 
 #pragma mark - Private -
@@ -148,6 +160,5 @@
     NSInteger remainingSeconds = (NSInteger)seconds % 60;
     return [NSString stringWithFormat:@"%.1ld:%.2ld",(long)minutes,(long)remainingSeconds];
 }
-
 
 @end

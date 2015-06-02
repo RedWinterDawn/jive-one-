@@ -25,6 +25,7 @@
 
 #import "JCAuthenticationManager.h"
 #import "JCAppSettings.h"
+#import "JCStoryboardLoaderViewController.h"
 
 NSString *const kApplicationSwitcherPhoneRestorationIdentifier      = @"PhoneTabBarController";
 NSString *const kApplicationSwitcherMessagesRestorationIdentifier   = @"MessagesNavigationController";
@@ -241,6 +242,10 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 {
     // Default select the Dialer view if the phone controller is selected from the application switcher;
     if ([viewController.restorationIdentifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier]) {
+        if ([viewController isKindOfClass:[JCStoryboardLoaderViewController class]]) {
+            viewController = ((JCStoryboardLoaderViewController *)viewController).embeddedViewController;
+        }
+        
         if ([viewController isKindOfClass:[UITabBarController class]]) {
             UITabBarController *phoneTabBarController = (UITabBarController *)viewController;
             for (UIViewController *controller in phoneTabBarController.viewControllers) {
@@ -269,20 +274,26 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
  *  Delegate method notifying us that the application switcher should respond to a recent event
  *  selection.
  */
--(void)applicationSwitcher:(JCApplicationSwitcherViewController *)controller shouldNavigateToRecentEvent:(id)recentEvent
+-(void)applicationSwitcher:(JCApplicationSwitcherViewController *)appSwitcherController shouldNavigateToRecentEvent:(id)recentEvent
 {
     NSString *restorationIdentifier = [self applicationSwitcherRestorationIdentifierForRecentEvent:recentEvent];
     if (restorationIdentifier) {
-        for (UIViewController *viewController in controller.viewControllers) {
+        for (UIViewController *viewController in appSwitcherController.viewControllers) {
+            UIViewController *controller = viewController;
+            
             if ([viewController.restorationIdentifier isEqualToString:restorationIdentifier]) {
-                controller.selectedViewController = viewController;
+                appSwitcherController.selectedViewController = viewController;
+                
+                if ([controller isKindOfClass:[JCStoryboardLoaderViewController class]]) {
+                    controller = ((JCStoryboardLoaderViewController *)controller).embeddedViewController;
+                }
                 
                 // Logic for Phone Recent Events.
-                if ([restorationIdentifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier] && [viewController isKindOfClass:[UITabBarController class]]){
-                    [self navigatePhoneViewController:(UITabBarController *)viewController forRecentEvent:recentEvent];
+                if ([restorationIdentifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier] && [controller isKindOfClass:[UITabBarController class]]){
+                    [self navigatePhoneViewController:(UITabBarController *)controller forRecentEvent:recentEvent];
                 }
-                else if ([restorationIdentifier isEqualToString:kApplicationSwitcherMessagesRestorationIdentifier] && [viewController isKindOfClass:[UINavigationController class]] && [recentEvent conformsToProtocol:@protocol(JCConversationGroupObject)]) {
-                    UINavigationController *navigationController = (UINavigationController *)viewController;
+                else if ([restorationIdentifier isEqualToString:kApplicationSwitcherMessagesRestorationIdentifier] && [controller isKindOfClass:[UINavigationController class]] && [recentEvent conformsToProtocol:@protocol(JCConversationGroupObject)]) {
+                    UINavigationController *navigationController = (UINavigationController *)controller;
                     [navigationController popToRootViewControllerAnimated:NO];
                     JCConversationsTableViewController *conversationViewController = (JCConversationsTableViewController *)navigationController.topViewController;
                     NSIndexPath *indexPath = [conversationViewController indexPathOfObject:recentEvent];

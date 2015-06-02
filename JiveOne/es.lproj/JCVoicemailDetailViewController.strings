@@ -1,0 +1,6 @@
+
+/* Class = "UILabel"; text = "Confidence: %@"; ObjectID = "CsB-Au-p5f"; */
+"CsB-Au-p5f.text" = "Confianza: %@";
+
+/* Class = "UILabel"; text = "Word count: %i"; ObjectID = "gXq-iW-czr"; */
+"gXq-iW-czr.text" = "Contar Palabras: %i";

@@ -70,6 +70,13 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     [self updateAccountInfo];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self updateAccountInfo];
+}
+
 -(void)awakeFromNib
 {
     [super awakeFromNib];
