@@ -7,14 +7,11 @@
 //
 
 #import "JCPresenceCell.h"
-#import "Person.h"
+#import "JCPersonDataSource.h"
 
 @interface JCPersonCell : JCPresenceCell
 
-@property (nonatomic, weak) IBOutlet UILabel *textLabel;
-@property (nonatomic, weak) IBOutlet UILabel *detailTextLabel;
-
-@property (nonatomic) Person *person;
+@property (nonatomic) id<JCPersonDataSource> person;
 
 @end
 

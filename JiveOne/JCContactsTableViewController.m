@@ -16,6 +16,7 @@
 #import "PBX.h"
 #import "User.h"
 #import "ContactGroup.h"
+#import "Extension.h"
 
 #import "JCPhoneManager.h"
 
@@ -37,7 +38,7 @@
     [super viewDidLoad];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:[JCAuthenticationManager sharedInstance]];
+    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:self.authenticationManager];
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
@@ -88,22 +89,26 @@
 {
     if (!_fetchedResultsController)
     {
-        NSString *sectionKeyPath = @"firstLetter";
+        NSString *sectionKeyPath = @"firstInitial";
         if (_filterType == JCContactFilterGrouped) {
             sectionKeyPath = nil;
         }
-        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:sectionKeyPath cacheName:nil];
+        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest
+                                                                             managedObjectContext:self.managedObjectContext
+                                                                               sectionNameKeyPath:sectionKeyPath
+                                                                                        cacheName:nil];
     }
     return _fetchedResultsController;
 }
 
 - (NSFetchRequest *)fetchRequest
 {
-    if (!_fetchRequest) {
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@", [JCAuthenticationManager sharedInstance].line.pbx.pbxId];
+    if (!_fetchRequest)
+    {
+        Line *line = self.authenticationManager.line;
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@", line.pbx.pbxId];
         if (_searchText && ![_searchText isEqualToString:@""]) {
-            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (extension contains[cd] %@)", _searchText, _searchText];
+            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (number contains[cd] %@)", _searchText, _searchText];
             predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
         }
         
@@ -118,7 +123,7 @@
             _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
         }
         else if (_filterType == JCContactFilterGrouped) {
-            NSPredicate *predicate =[NSPredicate predicateWithFormat:@"contacts.pbx.pbxId CONTAINS[cd] %@", [JCAuthenticationManager sharedInstance].line.pbx.pbxId];
+            NSPredicate *predicate =[NSPredicate predicateWithFormat:@"contacts.pbx.jrn CONTAINS[cd] %@", line.pbx.jrn];
             if (_searchText && ![_searchText isEqualToString:@""]) {
                 NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", _searchText];
                 predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
@@ -132,7 +137,7 @@
                 predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, contactGroupPredicate]];
                 _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
             } else {
-                _fetchRequest = [Person MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+                _fetchRequest = [Extension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
                 _fetchRequest.includesSubentities = TRUE;
             }
         }
@@ -184,18 +189,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id object = [self objectAtIndexPath:indexPath];
+    Line *line = self.authenticationManager.line;
 	if ([object isKindOfClass:[ContactGroup class]]) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(contactsTableViewController:didSelectContactGroup:)]) {
             [self.delegate contactsTableViewController:self didSelectContactGroup:(ContactGroup *)object];
         }
-    }    
-	else if ([object isKindOfClass:[Contact class]]) {
-        Contact *contact = (Contact *)object;
-        [self dialNumber:contact.extension usingLine:[JCAuthenticationManager sharedInstance].line sender:tableView];
     }
-    else if ([object isKindOfClass:[Line class]] && object != [JCAuthenticationManager sharedInstance].line) {
-        Line *line = (Line *)object;
-        [self dialNumber:line.extension usingLine:[JCAuthenticationManager sharedInstance].line sender:tableView];
+    else if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)] && object != line) {
+        [self dialPhoneNumber:(id<JCPhoneNumberDataSource>)object
+                    usingLine:line
+                       sender:tableView];
     }
 }
 

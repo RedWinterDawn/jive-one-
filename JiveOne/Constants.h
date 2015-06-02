@@ -98,8 +98,6 @@
 #define kVoicemailURLOverRide   @"NoDontUseAWSPlaceholderURL"
 //change to @"YesUseAWSPlaceholderURL" to toggle AWS Voicemail wav file
 
-#pragma mark - NSUserDefaults
-#define UDdeviceToken   @"deviceToken"
 
 
 #pragma mark - Misc

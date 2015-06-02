@@ -57,12 +57,12 @@
 
 -(NSString *)callerId
 {
-    return _lineSession.callTitle;
+    return _lineSession.number.titleText;
 }
 
 -(NSString *)dialNumber
 {
-    return _lineSession.callDetail;
+    return _lineSession.number.detailText;
 }
 
 @end

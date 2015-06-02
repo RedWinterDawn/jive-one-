@@ -259,8 +259,8 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
         weakSelf.actionView.backgroundColor = _defaultCallActionsColor;
         weakSelf.endCallButton.alpha = 1;
         weakSelf.elapsedTimeLabel.highlighted = NO;
-        weakSelf.callerIdLabel.highlighted = NO;
-        weakSelf.dialedNumberLabel.highlighted = NO;
+        weakSelf.nameLabel.highlighted = NO;
+        weakSelf.numberLabel.highlighted = NO;
     } copy];
     
     if (animated)
@@ -312,8 +312,8 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
         weakSelf.actionView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.35/2];
         weakSelf.endCallButton.alpha = HOLD_PULSE_OPACITY_TO_VALUE;
         weakSelf.elapsedTimeLabel.highlighted = YES;
-        weakSelf.callerIdLabel.highlighted = YES;
-        weakSelf.dialedNumberLabel.highlighted = YES;
+        weakSelf.nameLabel.highlighted = YES;
+        weakSelf.numberLabel.highlighted = YES;
     } copy];
     
     if (animated)

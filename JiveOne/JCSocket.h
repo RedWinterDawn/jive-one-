@@ -19,6 +19,7 @@ extern NSString *const kJCSocketNotificationResultKey;
 @interface JCSocket : NSObject
 
 @property (nonatomic, readonly) BOOL isReady;
+@property (nonatomic, readonly) BOOL isConnecting;
 
 @end
 
@@ -27,12 +28,8 @@ extern NSString *const kJCSocketNotificationResultKey;
 + (instancetype)sharedSocket;
 
 + (void)connectWithDeviceToken:(NSString *)deviceToken completion:(CompletionHandler)completion;
-+ (void)start;
-+ (void)stop;
++ (void)restart;
 + (void)disconnect;
-
-// destroys any session data. calls disconnect.
-+ (void)reset;
 
 @end
 

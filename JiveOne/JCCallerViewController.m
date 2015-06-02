@@ -25,6 +25,7 @@
 #import "JCCallCardCollectionViewController.h"
 
 #import "JCLineSession.h"
+#import "JCCallCard.h"
 
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3
@@ -60,8 +61,6 @@ CGFloat *_callOptionsWidth;
         _callOptionTransitionAnimationDuration = CALL_OPTIONS_ANIMATION_DURATION;
         _transferAnimationDuration             = TRANSFER_ANIMATION_DURATION;
         _keyboardAnimationDuration             = KEYBOARD_ANIMATION_DURATION;
-        
-        
         
         self.warmTransfer.enabled   = false;
         self.blindTransfer.enabled    = false;
@@ -151,8 +150,8 @@ CGFloat *_callOptionsWidth;
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-        JCPhoneManager *phoneManager = [JCPhoneManager sharedManager];
-        [JCPhoneManager muteCall:!phoneManager.isMuted];
+        JCPhoneManager *phoneManager = self.phoneManager;
+        [phoneManager muteCall:!phoneManager.isMuted];
         button.selected = phoneManager.isMuted;
     }
 }
@@ -176,7 +175,8 @@ CGFloat *_callOptionsWidth;
 
 -(IBAction)speaker:(id)sender
 {
-    [JCPhoneManager setLoudSpeakerEnabled:([JCPhoneManager sharedManager].outputType != JCPhoneAudioManagerOutputSpeaker)];
+    JCPhoneManager *phoneManager = self.phoneManager;
+    [phoneManager setLoudSpeakerEnabled:(phoneManager.outputType != JCPhoneAudioManagerOutputSpeaker)];
 }
 
 -(IBAction)blindTransfer:(id)sender
@@ -221,7 +221,7 @@ CGFloat *_callOptionsWidth;
     if ([sender isKindOfClass:[UIButton class]]) {
         UIButton *button = (UIButton *)sender;
         button.enabled = false;
-        [JCPhoneManager swapCalls:^(BOOL success, NSError *error) {
+        [self.phoneManager swapCalls:^(BOOL success, NSError *error) {
             button.enabled = true;
         }];
     }
@@ -232,8 +232,9 @@ CGFloat *_callOptionsWidth;
     if ([sender isKindOfClass:[UIButton class]]){
         UIButton *button = (UIButton *)sender;
         button.enabled = false;
-        if ([JCPhoneManager sharedManager].isConferenceCall) {
-            [JCPhoneManager splitCalls:^(BOOL success, NSError *error) {
+        JCPhoneManager *phoneManager = self.phoneManager;
+        if (phoneManager.isConferenceCall) {
+            [phoneManager splitCalls:^(BOOL success, NSError *error) {
                 if (success) {
                     self.mergeLabel.text = NSLocalizedString(@"Merge Calls", nil);
                     button.selected = FALSE;
@@ -241,7 +242,7 @@ CGFloat *_callOptionsWidth;
                 button.enabled = TRUE;
             }];
         } else {
-            [JCPhoneManager mergeCalls:^(BOOL success, NSError *error) {
+            [phoneManager mergeCalls:^(BOOL success, NSError *error) {
 				if (success) {
 					self.mergeLabel.text = NSLocalizedString(@"Split Calls", nil);
                     button.selected = TRUE;
@@ -257,7 +258,8 @@ CGFloat *_callOptionsWidth;
     if ([sender isKindOfClass:[UIButton class]]) {
         UIButton *button = (UIButton *)sender;
         button.enabled = NO;
-        [JCPhoneManager finishWarmTransfer:^(BOOL success, NSError *error) {
+        JCPhoneManager *phoneManager = self.phoneManager;
+        [phoneManager finishWarmTransfer:^(BOOL success, NSError *error) {
             if (!success) {
                 [JCAlertView alertWithError:error];
             }
@@ -270,7 +272,7 @@ CGFloat *_callOptionsWidth;
 
 -(BOOL)shouldShowCallOptions
 {
-    NSArray *calls = [JCPhoneManager sharedManager].calls;
+    NSArray *calls = self.phoneManager.calls;
     if (calls.count > 1) {
         BOOL isIncoming = TRUE;
         for (JCCallCard *call in calls) {
@@ -291,14 +293,15 @@ CGFloat *_callOptionsWidth;
 
 -(JCCallOptionViewState)stateForOptionView
 {
+    JCPhoneManager *phoneManager = self.phoneManager;
     JCCallOptionViewState state = JCCallOptionViewSingleCallState;
     if (_showingConferenceCall) {
         state = JCCallOptionViewConferenceCallState;
     }
-    else if ([JCPhoneManager sharedManager].calls.count > 1) {
+    else if (phoneManager.calls.count > 1) {
         
         state = JCCallOptionViewMultipleCallsState;
-        NSArray *calls = [JCPhoneManager sharedManager].calls;
+        NSArray *calls = phoneManager.calls;
        
             for (JCCallCard *call in calls) {
                 if (call.lineSession.isTransfer) {
@@ -451,33 +454,33 @@ CGFloat *_callOptionsWidth;
 
 -(void)keypadViewController:(JCKeypadViewController *)controller didTypeNumber:(NSInteger)number
 {
-    [JCPhoneManager numberPadPressedWithInteger:number];
+    [self.phoneManager numberPadPressedWithInteger:number];
 }
 
 #pragma mark JCTransferViewController
 
--(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
+-(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(id<JCPhoneNumberDataSource>)number
 {
-    [JCPhoneManager dialNumber:dialString
-                     usingLine:[JCAuthenticationManager sharedInstance].line
-                         type:controller.transferCallType
-                   completion:^(BOOL success, NSError *error) {
-                       [self dismissTransferViewControllerAnimated:YES];
-                       if (success) {
-                           switch (controller.transferCallType) {
-                               case JCPhoneManagerSingleDial:
-                                   [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
-                                   break;
+    [self.phoneManager dialPhoneNumber:number
+                        usingLine:self.authenticationManager.line
+                             type:controller.transferCallType
+                       completion:^(BOOL success, NSError *error) {
+                           [self dismissTransferViewControllerAnimated:YES];
+                           if (success) {
+                               switch (controller.transferCallType) {
+                                   case JCPhoneManagerSingleDial:
+                                       [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
+                                       break;
                                
-                               case JCPhoneManagerWarmTransfer:
-                                   [self.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
-                                   break;
+                                   case JCPhoneManagerWarmTransfer:
+                                       [self.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
+                                       break;
                                    
-                                default:
-                                   break;
+                                   default:
+                                       break;
+                               }
                            }
-                       }
-                   }];
+                       }];
 }
 
 -(void)shouldCancelTransferViewController:(JCTransferViewController *)controller

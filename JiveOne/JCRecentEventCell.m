@@ -9,6 +9,9 @@
 #import "JCRecentEventCell.h"
 #import "Contact.h"
 #import "PBX.h"
+#import "Line.h"
+
+#import "RecentLineEvent.h"
 
 @interface JCRecentEventCell(){
     UIFont *_dateFont;
@@ -47,9 +50,16 @@
 {
     [super layoutSubviews];
     
-    self.date.text = self.recentEvent.formattedModifiedShortDate;
-    self.name.text = self.recentEvent.displayName;
-    self.number.text = [NSString stringWithFormat:@"%@ %@ %@", self.recentEvent.displayNumber, NSLocalizedString(@"on", @"on"), self.recentEvent.line.pbx.name];
+    RecentEvent *recentEvent = self.recentEvent;
+    
+    self.date.text = recentEvent.formattedModifiedShortDate;
+    if ([recentEvent isKindOfClass:[RecentLineEvent class]]) {
+        RecentLineEvent *lineEvent = (RecentLineEvent *)recentEvent;
+        self.name.text = lineEvent.titleText;
+        self.number.text = [NSString stringWithFormat:@"%@ %@ %@", lineEvent.detailText, NSLocalizedString(@"on", @"on"), lineEvent.line.pbx.name];
+    }
+    
+    
     
     if (self.recentEvent.isRead)
     {
@@ -105,9 +115,12 @@
     }
     
     _recentEvent = recentEvent;
-    Contact *contact = recentEvent.contact;
-    if (contact) {
-        self.identifier = contact.jrn;
+    if ([recentEvent isKindOfClass:[RecentLineEvent class]]) {
+        RecentLineEvent *lineEvent = (RecentLineEvent *)recentEvent;
+        Contact *contact = lineEvent.contact;
+        if (contact) {
+            self.identifier = contact.jrn;
+        }
     }
     
     if (_recentEvent) {

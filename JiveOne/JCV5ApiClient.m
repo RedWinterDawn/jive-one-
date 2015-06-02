@@ -10,8 +10,10 @@
 #import "Common.h"
 #import "Voicemail.h"
 #import "User.h"
+#import "DID.h"
+#import "JCAuthenticationManager.h"
 
-NSString *const kV5BaseUrl = @"https://api.jive.com/";
+NSString *const kJCV5ApiClientBaseUrl = @"https://api.jive.com/";
 
 @implementation JCV5ApiClient
 
@@ -21,48 +23,24 @@ NSString *const kV5BaseUrl = @"https://api.jive.com/";
 	static JCV5ApiClient *sharedClient = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		sharedClient = [[super alloc] init];
+		sharedClient = [super new];
 	});
 	return sharedClient;
 }
 
--(instancetype)init {
-    self = [super init];
+-(instancetype)init
+{
+    NSURL *url = [NSURL URLWithString:kJCV5ApiClientBaseUrl];
+    return [self initWithBaseURL:url];
+}
+
+-(instancetype)initWithBaseURL:(NSURL *)url {
+    self = [super initWithBaseURL:url];
     if (self) {
-        _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:kV5BaseUrl]];
+        _manager.requestSerializer = [JCAuthenticationJSONRequestSerializer serializer];
         _manager.responseSerializer = [AFJSONResponseSerializer serializer];
-        _manager.requestSerializer = [AFJSONRequestSerializer serializer];
-        #if DEBUG
-        _manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
-        _manager.securityPolicy.allowInvalidCertificates = YES;
-        #endif
     }
     return self;
-}
-
-
-- (void)setRequestAuthHeader:(BOOL) demandsBearer
-{
-	[self clearCookies];
-    
-	_manager.requestSerializer = [AFJSONRequestSerializer serializer];
-	[_manager.requestSerializer clearAuthorizationHeader];
-    
-    NSString *token = [JCAuthenticationManager sharedInstance].authToken;
-	[_manager.requestSerializer setValue:[NSString stringWithFormat:@"%@%@", demandsBearer? @"Bearer " : @"", token] forHTTPHeaderField:@"Authorization"];
-	[_manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-}
-
-- (void)clearCookies {
-	NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-	for (NSHTTPCookie *cookie in [cookieJar cookies]) {
-		[[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
-	}
-}
-
-- (void)stopAllOperations
-{
-	[_manager.operationQueue cancelAllOperations];
 }
 
 - (BOOL)isOperationRunning:(NSString *)operationName
@@ -76,82 +54,232 @@ NSString *const kV5BaseUrl = @"https://api.jive.com/";
 	return NO;
 }
 
-#pragma mark - Socket API Calls
+#pragma mark - PBX Info -
 
-- (void)SubscribeToSocketEvents:(NSString *)subscriptionURL dataDictionary:(NSDictionary *)dataDictionary
+#ifndef PBX_INFO_NUMBER_OF_TRIES
+#define PBX_INFO_SEND_NUMBER_OF_TRIES 1
+#endif
+
+NSString *const kJCV5ApiPBXInfoRequestPath = @"/jif/v3/user/jiveId/%@";
+
++ (void)requestPBXInforForUser:(User *)user competion:(JCV5ApiClientCompletionHandler)completion
 {
-	[self setRequestAuthHeader:NO];
-	
-	if (![Common stringIsNilOrEmpty:subscriptionURL]) {
-		[_manager POST:subscriptionURL parameters:dataDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
-			NSLog(@"Success");
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-			NSLog(@"Error Subscribing %@", error);
-			// boo!
-		}];
-	}
+    if (!user) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"User Is Null"]);
+        }
+        return;
+    }
+    
+    NSString *path = [NSString stringWithFormat:kJCV5ApiPBXInfoRequestPath, user.jiveUserId];
+    [JCV5ApiClient getWithPath:path
+                    parameters:nil
+             requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+                       retries:PBX_INFO_SEND_NUMBER_OF_TRIES
+                    completion:completion];
 }
 
-- (void) RequestSocketSession:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+#pragma mark - SMS Messaging -
+
+#ifndef MESSAGES_SEND_NUMBER_OF_TRIES
+#define MESSAGES_SEND_NUMBER_OF_TRIES 1
+#endif
+
+#ifndef CONVERSATIONS_DOWNLOAD_NUMBER_OF_TRIES
+#define CONVERSATIONS_DOWNLOAD_NUMBER_OF_TRIES 1
+#endif
+
+#ifndef MESSAGES_DOWNLOAD_NUMBER_OF_TRIES
+#define MESSAGES_DOWNLOAD_NUMBER_OF_TRIES 1
+#endif
+
+NSString *const kJCV5ApiSMSMessageSendRequestUrlPath                   = @"sms/send";
+NSString *const kJCV5ApiSMSMessageRequestConversationsDigestURLPath    = @"sms/digest/did/%@/";
+NSString *const kJCV5ApiSMSMessageRequestConversationsURLPath          = @"sms/messages/did/%@";
+NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/messages/did/%@/number/%@";
+
++ (void)sendSMSMessageWithParameters:(NSDictionary *)parameters completion:(JCV5ApiClientCompletionHandler)completion
 {
-	[self setRequestAuthHeader:NO];
-	
-	NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:UDdeviceToken];
-	NSDictionary *params = nil;
-	if (deviceToken) {
-		params = [NSDictionary dictionaryWithObject:deviceToken forKey:UDdeviceToken];
-	}
-	
-	NSString *sessionURL = @"https://realtime.jive.com/session";
-	
-	[_manager POST:sessionURL
-        parameters:params
-           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-               completed(YES, responseObject, operation, nil);
-           }
-           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-               completed(NO, nil, operation, error);
-           }];
+    [JCV5ApiClient postWithPath:kJCV5ApiSMSMessageSendRequestUrlPath
+                     parameters:parameters
+                        retries:MESSAGES_SEND_NUMBER_OF_TRIES
+                     completion:completion];
 }
 
-//update voicemail to read
--(void)updateVoicemailToRead:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed{
++ (void)downloadMessagesDigestForDID:(DID *)did completion:(JCV5ApiClientCompletionHandler)completion
+{
+    if (!did) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"DID Is Null"]);
+        }
+        return;
+    }
     
-    [self setRequestAuthHeader:NO];
+    NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageRequestConversationsDigestURLPath, did.number];
+    [JCV5ApiClient getWithPath:path
+                    parameters:nil
+             requestSerializer:nil
+                       retries:CONVERSATIONS_DOWNLOAD_NUMBER_OF_TRIES
+                    completion:completion];
+}
+
++ (void)downloadMessagesForDID:(DID *)did completion:(JCV5ApiClientCompletionHandler)completion
+{
+    if (!did) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"DID Is Null"]);
+        }
+        return;
+    }
     
-    NSString *url = [NSString stringWithFormat:@"%@", voicemail.url_changeStatus];
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setObject:@"true" forKey:@"read"];
     
-    if (![Common stringIsNilOrEmpty:url]) {
-        [self.manager PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            completed(YES, responseObject, operation, nil);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"%@", error);
-            completed(NO, nil, nil, error);
-        }];
+    NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageRequestConversationsURLPath, did.number];
+    [JCV5ApiClient getWithPath:path
+                    parameters:nil
+             requestSerializer:nil
+                       retries:MESSAGES_DOWNLOAD_NUMBER_OF_TRIES
+                    completion:completion];
+}
+
++ (void)downloadMessagesForDID:(DID *)did toPerson:(id<JCPhoneNumberDataSource>)person completion:(JCV5ApiClientCompletionHandler)completion
+{
+    if (!did) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"DID Is Null"]);
+        }
+        return;
+    }
+    
+    if (!person) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Person Is Null"]);
+        }
+        return;
+    }
+    
+    
+    NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageRequestConversationURLPath, did.number, person.number];
+    [JCV5ApiClient getWithPath:path
+                    parameters:nil
+             requestSerializer:nil
+                       retries:MESSAGES_DOWNLOAD_NUMBER_OF_TRIES
+                    completion:completion];
+}
+
+#pragma - Private -
+
+#pragma Retrying GETs
+
++(void)getWithPath:(NSString *)path
+        parameters:(NSDictionary *)parameters
+ requestSerializer:(AFJSONRequestSerializer *)requestSerializer
+           retries:(NSUInteger)retries
+        completion:(JCV5ApiClientCompletionHandler)completion
+{
+    [JCV5ApiClient getWithPath:path
+                    parameters:parameters
+             requestSerializer:requestSerializer
+                       retries:retries
+                       success:^(id responseObject) {
+                           if (completion) {
+                               completion(YES, responseObject, nil);
+                           };
+                       }
+                       failure:^(NSError *error) {
+                           if (completion) {
+                               completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+                           }
+                       }];
+}
+
++(void)getWithPath:(NSString *)path
+        parameters:(NSDictionary *)parameters
+ requestSerializer:(AFJSONRequestSerializer *)requestSerializer
+           retries:(NSUInteger)retryCount
+           success:(void (^)(id responseObject))success
+           failure:(void (^)(NSError *error))failure
+{
+    if (retryCount <= 0) {
+        if (failure) {
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_TIMEOUT_ERROR reason:@"Request Timeout"];
+            failure(error);
+        }
+    } else {
+        JCV5ApiClient *client = [JCV5ApiClient new];
+        if (requestSerializer) {
+            client.manager.requestSerializer = requestSerializer;
+        }
+        
+        [client.manager GET:path
+                 parameters:parameters
+                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        success(responseObject);
+                    }
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        if (error.code == NSURLErrorTimedOut) {
+                            NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
+                            [self getWithPath:path
+                                   parameters:parameters
+                            requestSerializer:requestSerializer
+                                      retries:(retryCount - 1)
+                                      success:success
+                                      failure:failure];
+                        } else{
+                            failure(error);
+                        }
+                    }];
     }
 }
 
-- (void)deleteVoicemail:(NSString *)url completed:(void (^)(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed {
-    
-    [self setRequestAuthHeader:NO];
-    
-    
-    [_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        completed(YES, responseObject, operation, nil);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completed(NO, nil, operation, error);
-    }];
+#pragma Retrying POSTs
+
++(void)postWithPath:(NSString *)path
+         parameters:(NSDictionary *)parameters
+            retries:(NSUInteger)retries
+         completion:(JCV5ApiClientCompletionHandler)completion
+{
+    [JCV5ApiClient postWithPath:path
+                     parameters:parameters
+                        retries:retries
+                        success:^(id responseObject) {
+                            if (completion) {
+                                completion(YES, responseObject, nil);
+                            };
+                        }
+                        failure:^(NSError *error) {
+                            if (completion) {
+                                completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+                            }
+                        }];
 }
 
-@end
-
-@implementation JCV5ApiClientError
-
-+(instancetype)errorWithCode:(JCV5ApiClientErrorCode)code reason:(NSString *)reason
++(void)postWithPath:(NSString *)path
+         parameters:(NSDictionary *)parameters
+            retries:(NSUInteger)retryCount
+            success:(void (^)(id responseObject))success
+            failure:(void (^)(NSError *error))failure
 {
-    return [JCV5ApiClientError errorWithDomain:@"JCV5ApiClientError" code:code userInfo:@{NSLocalizedDescriptionKey: reason}];
+    if (retryCount <= 0) {
+        if (failure) {
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_TIMEOUT_ERROR reason:@"Request Timeout"];
+            failure(error);
+        }
+    } else {
+        JCV5ApiClient *client = [JCV5ApiClient sharedClient];
+        [client.manager POST:path
+                  parameters:parameters
+                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                         success(responseObject);
+                     }
+                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                         if (error.code == NSURLErrorTimedOut) {
+                             NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
+                             [self postWithPath:path parameters:parameters retries:(retryCount - 1) success:success failure:failure];
+                         } else{
+                             failure(error);
+                         }
+                     }];
+    }
 }
 
 @end

@@ -11,7 +11,7 @@
 #import "PBX.h"
 #import "Common.h"
 
-#import "NSManagedObject+JCCoreDataAdditions.h"
+#import "NSManagedObject+Additions.h"
 
 NSString *const kVoicemailDataAttributeKey = @"data";
 
@@ -57,14 +57,14 @@ NSString *const kVoicemailDataAttributeKey = @"data";
     {
         if (line.pbx) {
             if (!line.pbx.name.isEmpty) {
-                extension = [NSString stringWithFormat:@"%@ on %@", line.extension, line.pbx.name];
+                extension = [NSString stringWithFormat:@"%@ on %@", line.number, line.pbx.name];
             }
             else {
-                extension = line.extension;
+                extension = line.number;
             }
         }
         else {
-            extension = line.extension;
+            extension = line.number;
         }
     }
     

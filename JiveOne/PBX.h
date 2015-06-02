@@ -12,22 +12,29 @@
 @class Contact;
 @class User;
 @class Line;
+@class DID;
 
 @interface PBX : NSManagedObject
 
 // Attributes
 @property (nonatomic, retain) NSString * jrn;
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * pbxId;
-@property (nonatomic, retain) NSString * selfUrl;
+@property (nonatomic, retain) NSString * domain;
 @property (nonatomic, getter=isV5) BOOL v5;
-
-@property (nonatomic, readonly) NSString * displayName;
 
 // Relationships
 @property (nonatomic, retain) NSSet * contacts;
 @property (nonatomic, retain) User * user;
 @property (nonatomic, retain) NSSet * lines;
+@property (nonatomic, retain) NSSet * dids;
+
+// Transient (Readonly)
+@property (nonatomic, readonly) BOOL smsEnabled;
+@property (nonatomic, readonly) BOOL receiveSMSMessages;
+@property (nonatomic, readonly) BOOL sendSMSMessages;
+
+@property (nonatomic, readonly) NSString * displayName;
+@property (nonatomic, readonly) NSString * pbxId;
 
 @end
 
@@ -42,5 +49,10 @@
 - (void)removeLinesObject:(Line *)value;
 - (void)addLines:(NSSet *)values;
 - (void)removeLines:(NSSet *)values;
+
+- (void)addDidsObject:(DID *)value;
+- (void)removeDidsObject:(DID *)value;
+- (void)addDids:(NSSet *)values;
+- (void)removeDids:(NSSet *)values;
 
 @end

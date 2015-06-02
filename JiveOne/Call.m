@@ -8,14 +8,14 @@
 
 #import "Call.h"
 #import "Contact.h"
+#import "Line.h"
+#import "JCPhoneNumberDataSource.h"
+#import "LocalContact.h"
+#import "JCMultiPersonPhoneNumber.h"
 
 NSString *const kCallEntityName = @"Call";
 
 @implementation Call
-
-@dynamic name;
-@dynamic number;
-@dynamic extension;
 
 @end
 
@@ -23,18 +23,47 @@ NSString *const kCallEntityName = @"Call";
 
 +(void)addCallEntity:(NSString *)entityName line:(Line *)line lineSession:(JCLineSession *)session read:(BOOL)read
 {
+    id <JCPhoneNumberDataSource> number = session.number;
+    
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         Line *localLine = (Line *)[localContext objectWithID:line.objectID];
         Call *call = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:localContext];
-        call.date = [NSDate date];
-        call.name = session.callTitle;
-        call.number = session.callDetail;
-        call.read = read;
-        call.line = localLine;
+        call.date   = [NSDate date];
+        call.name   = number.name;
+        call.number = number.dialableNumber;
+        call.read   = read;
+        call.line   = localLine;
         
-        if (session.contact) {
-            call.contact = (Contact *)[localContext objectWithID:session.contact.objectID];
+        if (number && [number isKindOfClass:[Contact class]]) {
+            call.contact = (Contact *)[localContext objectWithID:((Contact *)number).objectID];
         }
+        else if(number && [number isKindOfClass:[LocalContact class]]) {
+            [call addLocalContactsObject:(LocalContact *)[localContext objectWithID:((LocalContact *)number).objectID]];
+        } else {
+//            if ([number isKindOfClass:[JCMultiPersonPhoneNumber class]]) {
+//                NSArray *phoneNumbers = ((JCMultiPersonPhoneNumber *)number).phoneNumbers;
+//                for ( in phoneNumbers) {
+//                    <#statements#>
+//                }
+//                
+//                
+//            }
+//            
+//            
+//            
+//            
+//            if ([number isKindOfClass:[JCPhoneNumber class]]) {
+//                
+//              
+//                
+//                [LocalContact localContactForAddressBookNumber:number context:localContext]
+//                
+//                
+//            }
+            
+            //TODO: We need to find a local contact or jive contact while we are saving.
+        }
+        
     } completion:^(BOOL success, NSError *error) {
         if (error) {
             NSLog(@"%@ Call Event Insert Error:%@", entityName, [error description]);

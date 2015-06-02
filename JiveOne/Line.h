@@ -6,13 +6,14 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "Person.h"
+#import "Extension.h"
+#import "JCSipManagerProvisioningDataSource.h"
 
 @class RecentEvent;
 @class LineConfiguration;
 @class PBX;
 
-@interface Line : Person
+@interface Line : Extension <JCSipManagerProvisioningDataSource>
 
 // Attributes
 @property (nonatomic, retain) NSString * mailboxJrn;

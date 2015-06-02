@@ -15,10 +15,10 @@
 {
     [super viewDidLoad];
     
-    self.currentCallersName.text              = self.transferLineSession.callTitle;
-    self.currentCallersNumber.dialString      = self.transferLineSession.callDetail;
-    self.transferToCallersName.text           = self.receivingLineSession.callTitle;
-    self.transferToCallersNumber.dialString   = self.receivingLineSession.callDetail;
+    self.currentCallersName.text        = self.transferLineSession.number.titleText;
+    self.currentCallersNumber.text      = self.transferLineSession.number.detailText;
+    self.transferToCallersName.text     = self.receivingLineSession.number.titleText;
+    self.transferToCallersNumber.text   = self.receivingLineSession.number.detailText;
 }
 
 @end

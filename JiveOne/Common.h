@@ -6,8 +6,10 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+@import Foundation;
+@import UIKit;
+@import CoreTelephony;
+
 #import "LoggerCommon.h"
 
 #define D_MINUTE	60

@@ -26,6 +26,7 @@
 -(float)floatValueForKey:(NSString *)key;
 -(NSDecimalNumber *)decimalNumberForKey:(NSString *)key;
 
+-(NSDate *)datetimeValueForKey:(NSString *)key;
 -(NSDate *)dateValueForKey:(NSString *)key;
 -(NSDate *)timeValueForKey:(NSString *)key;
 -(NSURL *)urlValueForKey:(NSString *)key;

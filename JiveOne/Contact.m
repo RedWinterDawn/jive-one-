@@ -7,8 +7,7 @@
 //
 
 #import "Contact.h"
-#import "PBX.h"
-#import "NSManagedObject+JCCoreDataAdditions.h"
+#import "NSManagedObject+Additions.h"
 
 NSString *kContacktFavoriteAttribute = @"favorite";
 
@@ -26,33 +25,11 @@ NSString *kContacktFavoriteAttribute = @"favorite";
     return [self boolValueFromPrimitiveValueForKey:kContacktFavoriteAttribute];
 }
 
--(NSString *)detailText
-{
-    NSString * detailText = super.detailText;
-    if (self.pbx) {
-        NSString *name = self.pbx.name;
-        if (name && !name.isEmpty) {
-            detailText = [NSString stringWithFormat:@"%@ on %@", self.extension, name];
-        }
-        else {
-            detailText = [NSString stringWithFormat:@"%@", self.extension];
-        }
-    }
-    return detailText;
-}
+#pragma mark - Relationships
 
-@dynamic events;
+@dynamic lineEvents;
+@dynamic conversations;
 @dynamic pbx;
 @dynamic groups;
-
-@end
-
-@implementation Contact (Search)
-
-+ (Contact *)contactForExtension:(NSString *)extension pbx:(PBX *)pbx
-{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and extension = %@", pbx, extension];
-    return [Contact MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
-}
 
 @end

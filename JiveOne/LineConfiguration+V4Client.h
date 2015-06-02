@@ -7,7 +7,7 @@
 //
 
 #import "LineConfiguration.h"
-#import "JCV4Client.h"
+#import "JCV4ApiClient.h"
 
 @interface LineConfiguration (V4Client)
 
@@ -15,7 +15,7 @@
 
 @end
 
-@interface JCProvisioningXmlRequestSerializer : AFHTTPRequestSerializer
+@interface JCProvisioningXmlRequestSerializer : JCXmlRequestSerializer
 
 @property (nonatomic, readonly) NSString *xml;
 

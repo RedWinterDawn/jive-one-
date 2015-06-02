@@ -6,39 +6,36 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "JCApiClient.h"
+#import "JCPhoneNumberDataSource.h"
 
-#import "JCClient.h"
+typedef void(^JCV5ApiClientCompletionHandler)(BOOL success, id response, NSError *error);
 
-@class Voicemail;
-@class Line;
-@class User;
-
-@interface JCV5ApiClient : NSObject
-
-@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
+@interface JCV5ApiClient : JCApiClient
 
 + (instancetype)sharedClient;
 
-- (void)clearCookies;
-- (void)stopAllOperations;
 - (BOOL)isOperationRunning:(NSString *)operationName;
-- (void)setRequestAuthHeader:(BOOL) demandsBearer;
 
-- (void)updateVoicemailToRead:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
-- (void)deleteVoicemail:(NSString *)url completed:(void (^)(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
+#pragma mark - PBX INFO -
 
-@end
++ (void)requestPBXInforForUser:(User *)user
+                     competion:(JCV5ApiClientCompletionHandler)completion;
 
 
-typedef enum : NSUInteger {
-    JCV5ApiClientInvalidArgumentErrorCode,
-    JCV5ApiClientRequestErrorCode,
-    JCV5ApiClientResponseParseErrorCode,
-} JCV5ApiClientErrorCode;
+#pragma mark - SMS Messaging -
 
-@interface JCV5ApiClientError : NSError
++ (void)sendSMSMessageWithParameters:(NSDictionary *)parameters
+                          completion:(JCV5ApiClientCompletionHandler)completion;
 
-+(instancetype)errorWithCode:(JCV5ApiClientErrorCode)code reason:(NSString *)reason;
++ (void)downloadMessagesDigestForDID:(DID *)did
+                         completion:(JCV5ApiClientCompletionHandler)completion;
+
++ (void)downloadMessagesForDID:(DID *)did
+                    completion:(JCV5ApiClientCompletionHandler)completion;
+
++ (void)downloadMessagesForDID:(DID *)did
+                      toPerson:(id<JCPhoneNumberDataSource>)person
+                    completion:(JCV5ApiClientCompletionHandler)completion;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "JCDebugLineTableViewController.h"
 #import "PBX.h"
+#import "Line.h"
 
 @interface JCDebugLineTableViewController ()
 
@@ -18,12 +19,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.name.text = self.line.name;
-    self.extension.text = self.line.extension;
-    self.jrn.text = self.line.jrn;
-    self.mailbaxJrn.text = self.line.mailboxJrn;
-    self.mailboxUrl.text = self.line.mailboxUrl;
-    self.pbx.text = self.line.pbx.name;
+    Line *line = self.line;
+    self.name.text       = line.name;
+    self.firstName.text  = line.firstName;
+    self.lastName.text   = line.lastName;
+    self.t9.text         = line.t9;
+    self.extension.text  = line.number;
+    self.jrn.text        = line.jrn;
+    self.pbxId.text      = line.pbxId;
+    self.lineId.text     = line.lineId;
+    self.mailbaxJrn.text = line.mailboxJrn;
+    self.mailboxUrl.text = line.mailboxUrl;
+    self.pbx.text        = line.pbx.name;
     
     if (self.line.lineConfiguration) {
         self.lineConfiguration.accessoryType = UITableViewCellAccessoryCheckmark;

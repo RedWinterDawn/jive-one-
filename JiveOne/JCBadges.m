@@ -9,11 +9,17 @@
 #import "JCBadges.h"
 
 #import "RecentEvent.h"
+#import "RecentLineEvent.h"
 #import "MissedCall.h"
 #import "Voicemail.h"
+#import "SMSMessage.h"
+#import "PBX.h"
+#import "Line.h"
+#import "DID.h"
 
 NSString *const kJCBadgesVoicemailsEventTypeKey    = @"voicemails";
 NSString *const kJCBadgesMissedCallsEventTypeKey   = @"missedCalls";
+NSString *const kJCBadgesSMSMessagesEventTypeKey   = @"smsMessages";
 
 @interface JCBadges () {
     NSMutableDictionary *_badgeData;
@@ -27,7 +33,7 @@ NSString *const kJCBadgesMissedCallsEventTypeKey   = @"missedCalls";
 {
     self = [super init];
     if (self) {
-        _badgeData = dictionary.mutableCopy;
+        _badgeData = [NSMutableDictionary dictionaryWithDictionary:dictionary];
     }
     return self;
 }
@@ -43,7 +49,7 @@ NSString *const kJCBadgesMissedCallsEventTypeKey   = @"missedCalls";
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    return [[[self class] allocWithZone:zone] initWithBadgeData:_badgeData];
+    return [[[self class] allocWithZone:zone] initWithBadgeData:_badgeData.copy];
 }
 
 -(void)processRecentEvents:(NSArray *)recentEvents
@@ -75,12 +81,11 @@ NSString *const kJCBadgesMissedCallsEventTypeKey   = @"missedCalls";
         return;
     }
     
-    NSString *key = recentEvent.objectID.URIRepresentation.absoluteString;
-    NSString *jrn = recentEvent.line.jrn;
-    
-    NSMutableDictionary *events = [self eventsForEventType:eventType key:jrn];
-    [events setObject:@NO forKey:key];
-    [self setEvents:events forEventType:eventType key:jrn];
+    NSString *objectId = recentEvent.objectID.URIRepresentation.absoluteString;
+    NSString *key = [self keyForRecentEvent:recentEvent];
+    NSMutableDictionary *events = [self eventsForEventType:eventType key:key];
+    [events setObject:@NO forKey:objectId];
+    [self setEvents:events forEventType:eventType key:key];
 }
 
 -(void)removeRecentEvent:(RecentEvent *)recentEvent
@@ -90,15 +95,51 @@ NSString *const kJCBadgesMissedCallsEventTypeKey   = @"missedCalls";
         return;
     }
     
-    NSString *key = recentEvent.objectID.URIRepresentation.absoluteString;
-    NSString *jrn = recentEvent.line.jrn;
-    
-    NSMutableDictionary *events = [self eventsForEventType:eventType key:jrn];
-    if ([events objectForKey:key]) {
-        [events removeObjectForKey:key];
+    NSString *objectId = recentEvent.objectID.URIRepresentation.absoluteString;
+    NSString *key = [self keyForRecentEvent:recentEvent];
+    if (!key) {
+        return;
     }
-    [self setEvents:events forEventType:eventType key:jrn];
+    
+    NSMutableDictionary *events = [self eventsForEventType:eventType key:key];
+    if ([events objectForKey:objectId]) {
+        [events removeObjectForKey:objectId];
+    }
+    [self setEvents:events forEventType:eventType key:key];
 }
+
+-(NSString *)keyForRecentEvent:(RecentEvent *)recentEvent
+{
+    if ([recentEvent isKindOfClass:[RecentLineEvent class]])
+    {
+        Line *lineObject = ((RecentLineEvent *)recentEvent).line;
+        if (!lineObject) {
+            return nil;
+        }
+        
+        NSString *line = lineObject.jrn;
+        if (!line || line.length == 0) {
+            return nil;
+        }
+        return line;
+        
+    }
+    else if([recentEvent isKindOfClass:[SMSMessage class]])
+    {
+        PBX *pbx = ((SMSMessage *)recentEvent).did.pbx;
+        if (!pbx) {
+            return nil;
+        }
+        
+        NSString *pbxId = pbx.pbxId;
+        if (!pbxId || pbxId.length == 0) {
+            return nil;
+        }
+        return pbxId;
+    }
+    return nil;
+}
+
 
 #pragma mark - Private -
 
@@ -116,14 +157,17 @@ NSString *const kJCBadgesMissedCallsEventTypeKey   = @"missedCalls";
     else if ([recentEvent isKindOfClass:[Voicemail class]]) {
         return kJCBadgesVoicemailsEventTypeKey;
     }
+    else if ([recentEvent isKindOfClass:[SMSMessage class]]) {
+        return kJCBadgesSMSMessagesEventTypeKey;
+    }
     return nil;
 }
 
--(void)setEvents:(NSDictionary *)events forEventType:(NSString *)type key:(NSString *)line
+-(void)setEvents:(NSDictionary *)events forEventType:(NSString *)type key:(NSString *)key
 {
-    NSMutableDictionary *eventTypes = [self eventTypesForKey:line];
+    NSMutableDictionary *eventTypes = [self eventTypesForKey:key];
     [eventTypes setObject:events forKey:type];
-    [self setEventTypes:eventTypes key:line];
+    [self setEventTypes:eventTypes key:key];
 }
 
 -(NSMutableDictionary *)eventsForEventType:(NSString *)type key:(NSString *)key

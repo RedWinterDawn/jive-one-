@@ -10,10 +10,16 @@
 
 @import Foundation;
 
-#import "JCCallCard.h"
-#import "Line.h"
+#import <AFNetworking/AFNetworkReachabilityManager.h>
+
 #import "JCManager.h"
+#import "JCSipManager.h"
+#import "JCAppSettings.h"
 #import "JCPhoneAudioManager.h"
+#import "JCPhoneNumberDataSource.h"
+#import "JCPhoneBook.h"
+
+@class Line;
 
 extern NSString *const kJCPhoneManagerRegisteringNotification;
 extern NSString *const kJCPhoneManagerRegisteredNotification;
@@ -51,54 +57,50 @@ typedef enum : NSInteger {
 @property (nonatomic, readonly) JCPhoneAudioManagerInputType inputType;
 @property (nonatomic, readonly) JCPhoneAudioManagerOutputType outputType;
 
-@end
+- (void)connectToLine:(Line *)line;
+- (void)disconnect;
 
-@interface JCPhoneManager (Singleton)
+- (void)startKeepAlive;
+- (void)stopKeepAlive;
 
-+ (JCPhoneManager *)sharedManager;
+- (JCPhoneManagerNetworkType)networkType;
 
-+ (void)connectToLine:(Line *)line;
-+ (void)disconnect;
-
-+ (void)startKeepAlive;
-+ (void)stopKeepAlive;
-
-+ (JCPhoneManagerNetworkType)networkType;
-
-// Attempts to dial a passed string following the dial type directive. When the dial operation was completed, we are
-// notified. If the dial action resulted in the creation of a dial card, an kJCCallCardManagerAddedCallNotification is
-// broadcasted through the notification center.
-+ (void)dialNumber:(NSString *)dialNumber
+// Attempts to dial a passed string following the dial type directive. When the dial operation was
+// completed, we are notified. If the dial action resulted in the creation of a dial card, an
+// kJCCallCardManagerAddedCallNotification is broadcasted through the notification center.
+- (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number
          usingLine:(Line *)line
               type:(JCPhoneManagerDialType)dialType
         completion:(CompletionHandler)completion;
 
 // Call actions
-+ (void)mergeCalls:(CompletionHandler)completion;
-+ (void)splitCalls:(CompletionHandler)completion;
-+ (void)swapCalls:(CompletionHandler)completion;
-+ (void)finishWarmTransfer:(CompletionHandler)completion;
-+ (void)muteCall:(BOOL)mute;
-+ (void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled;
+- (void)mergeCalls:(CompletionHandler)completion;
+- (void)splitCalls:(CompletionHandler)completion;
+- (void)swapCalls:(CompletionHandler)completion;
+- (void)finishWarmTransfer:(CompletionHandler)completion;
+- (void)muteCall:(BOOL)mute;
+- (void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled;
 
 // NumberPad
-+ (void)numberPadPressedWithInteger:(NSInteger)numberPad;
+- (void)numberPadPressedWithInteger:(NSInteger)numberPad;
 
 @end
 
 @interface UIViewController (PhoneManager)
 
+@property(nonatomic, strong) JCPhoneManager *phoneManager;
+
 // Dials a number. The sender is enabled and disabled while call is being initiated.
-- (void)dialNumber:(NSString *)phoneNumber
-         usingLine:(Line *)line
-            sender:(id)sender;
+- (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number
+              usingLine:(Line *)line
+                 sender:(id)sender;
 
 // Dials a number with a completion block indicating a successfull dial or error, and the specific
 // error. Underlying error presents a hud or alert. The sender is enabled and disabled while call is
 // being initiated.
-- (void)dialNumber:(NSString *)phoneNumber
-         usingLine:(Line *)line
-            sender:(id)sender
-        completion:(CompletionHandler)completion;
+- (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number
+              usingLine:(Line *)line
+                 sender:(id)sender
+             completion:(CompletionHandler)completion;
 
 @end

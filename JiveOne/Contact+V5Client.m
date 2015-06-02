@@ -14,6 +14,8 @@
 // Models
 #import "ContactGroup.h"
 #import "PBX.h"
+#import "Line.h"
+#import "User.h"
 
 NSString *const kContactResponseIdentifierKey   = @"id";
 NSString *const kContactResponseNameKey         = @"displayName";
@@ -31,14 +33,14 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
 {
     if (!line) {
         if (completion) {
-            completion(false, [JCV5ApiClientError errorWithCode:JCV5ApiClientInvalidArgumentErrorCode reason:@"Line Is Null"]);
+            completion(false, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Line Is Null"]);
         }
         return;
     }
     
     // Request using the v5 client.
-    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    [client setRequestAuthHeader:YES];
+    JCV5ApiClient *client = [JCV5ApiClient new];
+    client.manager.requestSerializer = [JCBearerAuthenticationJSONRequestSerializer serializer];
     [client.manager GET:[NSString stringWithFormat:kContactRequestPath, line.pbx.pbxId, line.lineId]
              parameters:nil
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -46,43 +48,37 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     if (completion) {
-                        completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientRequestErrorCode reason:error.localizedDescription]);
+                        completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:error.localizedDescription]);
                     }
                 }];
 }
 
 + (void)processContactResponse:(id)responseObject line:(Line *)line completion:(CompletionHandler)completion
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        @try {
-            if (![responseObject isKindOfClass:[NSArray class]]){
-                [NSException raise:@"v5clientException" format:@"UnexpectedResponse returned"];
-            }
-    
-            [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
-                Line *localLine = (Line *)[localContext objectWithID:line.objectID];
-                [self processContactsData:(NSArray *)responseObject pbx:localLine.pbx];
-            }
-            completion:^(BOOL success, NSError *error) {
-                if (completion) {
-                    if (error) {
-                        completion(NO, error);
-                    }
-                    else {
-                        completion(YES, nil);
-                    }
-                }
-            }];
+    @try {
+        if (![responseObject isKindOfClass:[NSArray class]]){
+            [NSException raise:@"v5clientException" format:@"UnexpectedResponse returned"];
         }
-        @catch (NSException *exception) {
+
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            Line *localLine = (Line *)[localContext objectWithID:line.objectID];
+            [self processContactsData:(NSArray *)responseObject pbx:localLine.pbx];
+        } completion:^(BOOL success, NSError *error) {
             if (completion) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
-                });
+                if (error) {
+                    completion(NO, error);
+                }
+                else {
+                    completion(YES, nil);
+                }
             }
+        }];
+    }
+    @catch (NSException *exception) {
+        if (completion) {
+            completion(NO, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_PARSER_ERROR reason:exception.reason]);
         }
-    });
+    }
 }
 
 + (void)processContactsData:(NSArray *)contactsData pbx:(PBX *)pbx
@@ -124,7 +120,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     
     Contact *contact = [Contact contactForJrn:jrn pbx:pbx];
     contact.name        = [data stringValueForKey:kContactResponseNameKey];
-    contact.extension   = [data stringValueForKey:kContactResponseExtensionKey];
+    contact.number      = [data stringValueForKey:kContactResponseExtensionKey];
     contact.jiveUserId  = jiveUserId;
     
     id object = [data objectForKey:kContactResponseGroupKey];

@@ -10,8 +10,13 @@
 #import "RecentEvent.h"
 #import "JCBadges.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
+
 static const UIUserNotificationType USER_NOTIFICATION_TYPES_REQUIRED = UIRemoteNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
 static const UIRemoteNotificationType REMOTE_NOTIFICATION_TYPES_REQUIRED = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+
+#pragma clang diagnostic pop
 
 NSString *const kJCBadgeManagerBadgesKey        = @"badges";
 NSString *const kJCBadgeManagerVoicemailsKey    = @"voicemails";
@@ -30,6 +35,7 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
 @property (nonatomic, readwrite) JCBadges *badges;
 @property (nonatomic, readwrite) NSUInteger v4_voicemails;
 @property (nonatomic, readwrite) NSString *selectedLine;
+@property (nonatomic, readwrite) NSString *selectedPbx;
 
 @end
 
@@ -40,18 +46,59 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
     self = [super init];
     if (self) {
         UIApplication *application = [UIApplication sharedApplication];
+        #if TARGET_IPHONE_SIMULATOR
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [application.delegate application:application didFailToRegisterForRemoteNotificationsWithError:nil];
+        });
+        
+        #elif TARGET_OS_IPHONE
+        
         if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
             if (![self canSendNotifications]) {
                 UIUserNotificationSettings* requestedSettings = [UIUserNotificationSettings settingsForTypes:USER_NOTIFICATION_TYPES_REQUIRED categories:nil];
                 [application registerUserNotificationSettings:requestedSettings];
+                [application registerForRemoteNotifications];
             }
         }else {
             [application registerForRemoteNotificationTypes:REMOTE_NOTIFICATION_TYPES_REQUIRED];
         }
         
+        #endif
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryNotification:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     }
     return self;
+}
+
++ (void)updateBadgesFromContext:(NSManagedObjectContext *)context
+{
+    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
+    badgeManager.context = context;
+    badgeManager->_badges = nil;
+    [badgeManager update];
+}
+
++ (void)reset
+{
+    [[JCBadgeManager sharedManager] reset];
+}
+
++ (void)setVoicemails:(NSUInteger)voicemails
+{
+    [JCBadgeManager sharedManager].v4_voicemails = voicemails;
+}
+
++ (void)setSelectedLine:(NSString *)line
+{
+    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
+    badgeManager.selectedLine = line;
+}
+
++ (void)setSelectedPBX:(NSString *)pbx
+{
+    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
+    badgeManager.selectedPbx = pbx;
 }
 
 -(void)didReceiveMemoryNotification:(NSNotification *)notification
@@ -91,7 +138,7 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
  */
 - (NSUInteger)missedCalls
 {
-    return [self.badges countForEventType:kJCBadgeManagerMissedCallsKey key:_selectedLine];
+    return [self.badges countForEventType:kJCBadgesMissedCallsEventTypeKey key:_selectedLine];
 }
 
 /**
@@ -100,9 +147,19 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
 - (NSUInteger)voicemails
 {
     NSUInteger total = [self v4_voicemails];
-    total += [self.badges countForEventType:kJCBadgeManagerVoicemailsKey key:_selectedLine];
+    total += [self.badges countForEventType:kJCBadgesVoicemailsEventTypeKey key:_selectedLine];
     return total;
 }
+
+/**
+ * Returns count for unread SMS Messages.
+ */
+- (NSUInteger)smsMessages
+{
+    return [self.badges countForEventType:kJCBadgesSMSMessagesEventTypeKey key:_selectedPbx];;
+}
+
+#pragma mark - Delegate Handlers -
 
 #pragma mark NSFetchedResultsControllerDelegate
 
@@ -124,9 +181,11 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
         
         case NSFetchedResultsChangeUpdate:
             [_batchBadges processRecentEvent:anObject];
+            break;
             
         case NSFetchedResultsChangeDelete:
             [_batchBadges removeRecentEvent:anObject];
+            break;
             
         default:
             break;
@@ -224,6 +283,13 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
     [self didChangeContent];
 }
 
+- (void)setSelectedPbx:(NSString *)selectedPbx
+{
+    [self willChangeContent];
+    _selectedPbx = selectedPbx;
+    [self didChangeContent];
+}
+
 #pragma mark Methods
 
 // Checks the permissions to see if we can sent notifications, including badging.
@@ -239,14 +305,16 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
 
 -(void)willChangeContent
 {
-    [self willChangeValueForKey:kJCBadgeManagerMissedCallsKey];
-    [self willChangeValueForKey:kJCBadgeManagerVoicemailsKey];
+    [self willChangeValueForKey:kJCBadgesMissedCallsEventTypeKey];
+    [self willChangeValueForKey:kJCBadgesVoicemailsEventTypeKey];
+    [self willChangeValueForKey:kJCBadgesSMSMessagesEventTypeKey];
 }
 
 -(void)didChangeContent
 {
-    [self didChangeValueForKey:kJCBadgeManagerMissedCallsKey];
-    [self didChangeValueForKey:kJCBadgeManagerVoicemailsKey];
+    [self didChangeValueForKey:kJCBadgesMissedCallsEventTypeKey];
+    [self didChangeValueForKey:kJCBadgesVoicemailsEventTypeKey];
+    [self didChangeValueForKey:kJCBadgesSMSMessagesEventTypeKey];
     [self update];
 }
 
@@ -268,51 +336,6 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
     if (_badges) {
         self.badges = _badges;
     }
-}
-
-@end
-
-@implementation JCBadgeManager (Singleton)
-
-+(JCBadgeManager *)sharedManager
-{
-    // Makes the startup of this singleton thread safe.
-    static JCBadgeManager *badgeManager = nil;
-    static dispatch_once_t pred;        // Lock
-    dispatch_once(&pred, ^{             // This code is called at most once per app
-        badgeManager = [JCBadgeManager new];
-    });
-    
-    return badgeManager;
-}
-
-+ (id)copyWithZone:(NSZone *)zone
-{
-    return self;
-}
-
-+ (void)updateBadgesFromContext:(NSManagedObjectContext *)context
-{
-    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
-    badgeManager.context = context;
-    badgeManager->_badges = nil;
-    [badgeManager update];
-}
-
-+ (void)reset
-{
-    [[JCBadgeManager sharedManager] reset];
-}
-
-+ (void)setVoicemails:(NSUInteger)voicemails
-{
-    [JCBadgeManager sharedManager].v4_voicemails = voicemails;
-}
-
-+ (void)setSelectedLine:(NSString *)line
-{
-    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
-    badgeManager.selectedLine = line;
 }
 
 @end

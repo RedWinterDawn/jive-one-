@@ -20,8 +20,21 @@
 
 -(IBAction)initiateCall:(id)sender
 {
+    if (_delegate && [_delegate respondsToSelector:@selector(transferViewController:shouldDialNumber:)]){
+        NSString *dialString = self.formattedPhoneNumberLabel.dialString;
+        JCPhoneBook *phoneBook = self.phoneBook;
+        Line *line = self.authenticationManager.line;
+        id <JCPhoneNumberDataSource> phoneNumber = [phoneBook phoneNumberForNumber:dialString forPbx:line.pbx excludingLine:line];
+        [_delegate transferViewController:self shouldDialNumber:phoneNumber];
+    }
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    id <JCPhoneNumberDataSource> phoneNumber = [self objectAtIndexPath:indexPath];
+    self.formattedPhoneNumberLabel.dialString = phoneNumber.dialableNumber;
     if (_delegate && [_delegate respondsToSelector:@selector(transferViewController:shouldDialNumber:)])
-        [_delegate transferViewController:self shouldDialNumber:self.dialStringLabel.dialString];
+        [_delegate transferViewController:self shouldDialNumber:phoneNumber];
 }
 
 @end

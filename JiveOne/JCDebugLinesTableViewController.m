@@ -29,14 +29,14 @@
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCDebugLineTableViewController class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        ((JCDebugLineTableViewController *)viewController).line = [self objectAtIndexPath:indexPath];
+        ((JCDebugLineTableViewController *)viewController).line = (Line *)[self objectAtIndexPath:indexPath];
     }
 }
 
 -(void)configureCell:(UITableViewCell *)cell withObject:(Line *)line
 {
-    cell.textLabel.text = line.name;
-    cell.detailTextLabel.text = line.extension;
+    cell.textLabel.text         = line.titleText;
+    cell.detailTextLabel.text   = line.detailText;
 }
 
 @end

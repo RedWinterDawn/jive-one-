@@ -8,7 +8,9 @@
 
 #import "LineConfiguration+V4Client.h"
 #import "PBX.h"
-#import "JCV4Client.h"
+#import "Line.h"
+#import "User.h"
+#import "JCV4ApiClient.h"
 
 #import "NSDictionary+Validations.h"
 
@@ -51,7 +53,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
 {
     NSDictionary *parameters = @{kJCLineConfigurationRequestUsernameKey:line.pbx.user.jiveUserId,
                                  kJCLineConfigurationRequestPbxIdKey:line.pbx.pbxId,
-                                 kJCLineConfigurationRequestExtensionKey: line.extension};
+                                 kJCLineConfigurationRequestExtensionKey: line.number};
     
     [self downloadLineConfigurationForLine:line
                                    retries:3
@@ -61,7 +63,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
                                    }
                                    failure:^(NSError *error) {
                                        if (completion) {
-                                           completion(NO, [JCClientError errorWithCode:JCClientRequestErrorCode userInfo:error.userInfo]);
+                                           completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
                                        }
                                    }];
 }
@@ -70,12 +72,13 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
 {
     if (retryCount <= 0) {
         if (failure) {
-            NSError *error = [JCClientError errorWithCode:JCClientRequestErrorCode reason:@"Request Timeout"];
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:@"Request Timeout"];
             failure(error);
         }
     } else {
-        JCV4Client *client = [[JCV4Client alloc] init];
+        JCV4ApiClient *client = [[JCV4ApiClient alloc] init];
         client.manager.requestSerializer = [JCProvisioningXmlRequestSerializer serializer];
+        client.manager.requestSerializer.timeoutInterval = LINE_CONFIGURATION_REQUEST_TIMEOUT;
         [client.manager POST:kLineConfigurationRequestPath
                   parameters:parameters
                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -125,18 +128,18 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     }
     @catch (NSException *exception) {
         if (completion) {
-            JCClientErrorCode code;
+            NSUInteger code;
             NSString *name = exception.name;
             if ([name isEqualToString:kLineConfigurationInvalidServerRequestException]) {
-                code = JCClientInvalidRequestParameterErrorCode;
+                code = API_CLIENT_INVALID_REQUEST_PARAMETERS;
             } else if ([name isEqualToString:kLineConfigurationServerErrorException]) {
-                code = JCClientResponseErrorCode;
+                code = API_CLIENT_RESPONSE_ERROR;
             } else if ([name isEqualToString:kLineConfigurationInvalidServerResponseException]) {
-                code = JCClientUnexpectedResponseErrorCode;
+                code = API_CLIENT_UNEXPECTED_RESPONSE_ERROR;
             } else {
-                code = JCClientUnknownErrorCode;
+                code = API_CLIENT_UNKNOWN_ERROR;
             }
-            completion(NO, [JCClientError errorWithCode:code reason:exception.reason]);
+            completion(NO, [JCApiClientError errorWithCode:code reason:exception.reason]);
         }
     }
 }
@@ -165,12 +168,12 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     // If the extension for our line configuration does not match the extentsion from the requested
     // line, find the line that the line configuration does match for the same PBX, and update and
     // attach the line configuration to that line.
-    NSString *extension = [LineConfiguration extensionFromLineConfigurationData:data];
-    if (![extension isEqualToString:line.extension]) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and extension = %@", line.pbx, extension];
+    NSString *number = [LineConfiguration extensionFromLineConfigurationData:data];
+    if (![number isEqualToString:line.number]) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and number = %@", line.pbx, number];
         line = [Line MR_findFirstWithPredicate:predicate inContext:line.managedObjectContext];
         if (!line) {
-            NSLog(@"Did not find other line for extension %@", extension);
+            NSLog(@"Did not find other line for extension %@", number);
             return;
         }
     }
@@ -230,7 +233,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
 {
     if (![object isKindOfClass:[NSDictionary class]]) {
         if (error != NULL) {
-            *error = [JCClientError errorWithCode:JCClientInvalidRequestParameterErrorCode reason:@"Unvalid Parameters dictionary"];
+            *error = [JCApiClientError errorWithCode:API_CLIENT_INVALID_REQUEST_PARAMETERS reason:@"Unvalid Parameters dictionary"];
         }
         return nil;
     }
@@ -239,7 +242,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     NSString *username = [parameters stringValueForKey:kJCLineConfigurationRequestUsernameKey];
     if (!username) {
         if (error != NULL) {
-            *error = [JCClientError errorWithCode:JCClientInvalidRequestParameterErrorCode reason:@"Username is NULL"];
+            *error = [JCApiClientError errorWithCode:API_CLIENT_INVALID_REQUEST_PARAMETERS reason:@"Username is NULL"];
         }
         return nil;
     }
@@ -247,7 +250,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     NSString *pbxId = [parameters stringValueForKey:kJCLineConfigurationRequestPbxIdKey];
     if (!pbxId) {
         if (error != NULL) {
-            *error = [JCClientError errorWithCode:JCClientInvalidRequestParameterErrorCode reason:@"PBX id is NULL"];
+            *error = [JCApiClientError errorWithCode:API_CLIENT_INVALID_REQUEST_PARAMETERS reason:@"PBX id is NULL"];
         }
         return nil;
     }
@@ -255,7 +258,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     NSString *extension = [parameters stringValueForKey:kJCLineConfigurationRequestExtensionKey];
     if (!extension) {
         if (error != NULL) {
-            *error = [JCClientError errorWithCode:JCClientInvalidRequestParameterErrorCode reason:@"Extension is NULL"];
+            *error = [JCApiClientError errorWithCode:API_CLIENT_INVALID_REQUEST_PARAMETERS reason:@"Extension is NULL"];
         }
         return nil;
     }
@@ -276,16 +279,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     
     _xml = [NSString stringWithFormat:kLineConfigurationRequestXMLString, username, token, pbxId, extension, model, os, locale, language, uuid, appBuildString, type];
     NSData *data = [_xml dataUsingEncoding:NSUTF8StringEncoding];
-    
-    NSMutableURLRequest *mutableRequest = request.mutableCopy;
-    [mutableRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)data.length] forHTTPHeaderField:@"Content-Length"];
-    [mutableRequest setHTTPBody:data];
-    
-    mutableRequest.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
-    mutableRequest.HTTPShouldHandleCookies = FALSE;
-    [mutableRequest setValue:@"application/xml" forHTTPHeaderField:@"Content-Type"];
-    mutableRequest.timeoutInterval = LINE_CONFIGURATION_REQUEST_TIMEOUT;
-    
+    NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:data error:error] mutableCopy];
     return mutableRequest;
 }
 @end

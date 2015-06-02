@@ -1,4 +1,4 @@
- //
+//
 //  PBX+V5Client.m
 //  JiveOne
 //
@@ -14,85 +14,104 @@
 // Managed Objects
 #import "Line.h"
 #import "User.h"
+#import "DID.h"
 
+NSString *const kPBXInfoRequestPath             = @"/jif/v3/user/jiveId/%@";
 
-NSString *const kPBXInfoRequestPath             = @"/jif/v1/user/jiveId/%@?depth=1";
-NSString *const kPBXInfoRequestResultKey        = @"userPbxs";
-
-NSString *const kPBXResponseIdentifierKey       = @"pbxId";
-NSString *const kPBXResponseNameKey             = @"name";
-NSString *const kPBXResponseV5Key               = @"v5";
-NSString *const kPBXResponseLinesKey            = @"lines";
-NSString *const kPBXLineResponseIdentifierKey       = @"id";
-NSString *const kPBXLineResponseLineNameKey         = @"lineName";
-NSString *const kPBXLineResponseLineNumberKey       = @"lineNumber";
-NSString *const kPBXLineResponseJrnKey              = @"jrn";
-NSString *const kPBXLineResponseMailboxUrlKey       = @"self_mailbox";
-NSString *const kPBXLineResponseMailboxJrnKey       = @"mailbox_jrn";
-
-NSString *const kPBXResponseException           = @"pbxResponseException";
+NSString *const kPBXInfoResponseDataKey             = @"data";
+NSString *const kPBXInfoResponseUserKey                 = @"user";
+NSString *const kPBXInfoResponseUserJiveIdKey               = @"externalId";
+NSString *const kPBXInfoResponseTenantsKey              = @"tenants";
+NSString *const kPBXInfoResponseKey                         = @"pbxes";
+NSString *const kPBXInfoResponseDomainKey                       = @"domain";
+NSString *const kPBXInfoResponseIdentifierKey                   = @"id";
+NSString *const kPBXInfoResponseNameKey                         = @"name";
+NSString *const kPBXInfoResponseV5Key                           = @"v5";
+NSString *const kPBXInfoResponseExtensionsKey                   = @"extensions";
+NSString *const kPBXInfoResponseExtensionIdentifierKey              = @"id";
+NSString *const kPBXInfoResponseExtensionNameKey                    = @"name";
+NSString *const kPBXInfoResponseExtensionNumberKey                  = @"number";
+NSString *const kPBXInfoResponseExtensionMailboxKey                 = @"mailbox";
+NSString *const kPBXInfoResponseExtensionMailboxIdentiferKey            = @"id";
+NSString *const kPBXInfoResponseExtensionMailboxUrlKey                  = @"self";
+NSString *const kPBXInfoResponseUserInfoKey                     = @"userInfo";
+NSString *const kPBXInfoResponseUserFirstNameKey                    = @"first";
+NSString *const kPBXInfoResponseUserLastNameKey                     = @"last";
+NSString *const kPBXInfoResponseUserNameKey                         = @"fullName";
+NSString *const kPBXInfoResponseNumbersKey                      = @"phoneNumbers";
+NSString *const kPBXInfoResponseNumberIdentifierKey                 = @"id";
+NSString *const kPBXInfoResponseNumberDialStringKey                 = @"dialstring";
+NSString *const kPBXInfoResponseNumberMakeCallsKey                  = @"makeCalls";
+NSString *const kPBXInfoResponseNumberReceiveCallsKey               = @"receiveCalls";
+NSString *const kPBXInfoResponseNumberSendSMSKey                    = @"sendSMS";
+NSString *const kPBXInfoResponseNumberReceiveSMSKey                 = @"receiveSMS";
 
 @implementation PBX (V5Client)
 
-+ (void)downloadPbxInfoForUser:(User *)user completed:(void(^)(BOOL success, NSError *error))completion
++ (void)downloadPbxInfoForUser:(User *)user completed:(CompletionHandler)completion
 {
-    if (!user) {
-        if (completion) {
-            completion(false, [JCV5ApiClientError errorWithCode:JCV5ApiClientInvalidArgumentErrorCode reason:@"User Is Null"]);
+    [JCV5ApiClient requestPBXInforForUser:user competion:^(BOOL success, id responseObject, NSError *error) {
+        if (success) {
+            [self processRequestResponse:responseObject user:user competion:completion];
         }
-        return;
-    }
-    
-    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    [client setRequestAuthHeader:NO];
-    [client.manager GET:[NSString stringWithFormat:kPBXInfoRequestPath, user.jiveUserId]
-             parameters:nil
-                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    [self processRequestResponse:responseObject user:user competion:completion];
-                }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    if (completion) {
-                        completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientRequestErrorCode reason:error.localizedDescription]);
-                    }
-                }];
+        else
+        {
+            if (completion) {
+                completion(NO, error);
+            }
+        }
+    }];
 }
 
 +(void)processRequestResponse:(id)responseObject user:(User *)user competion:(CompletionHandler)completion
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        @try {
-            if (![responseObject isKindOfClass:[NSDictionary class]]) {
-                [NSException raise:kPBXResponseException format:@"Invalid pbxs response object."];
-            }
-            
-            NSArray *pbxsData = [(NSDictionary *)responseObject arrayForKey:kPBXInfoRequestResultKey];
-            if (!pbxsData) {
-                [NSException raise:kPBXResponseException format:@"Invalid pbx response array."];
-            }
-            
-            [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
-                
-                // Process response array to add, update or remove pbxs
-                [self processPbxArrayData:pbxsData user:(User *)[localContext objectWithID:user.objectID]];
-                
-            } completion:^(BOOL success, NSError *error) {
-                if (completion) {
-                    if (error) {
-                        completion(NO, error);
-                    } else {
-                        completion(YES, nil);
-                    }
-                }
-            }];
+    @try {
+        if (![responseObject isKindOfClass:[NSDictionary class]]) {
+            [NSException raise:NSInvalidArgumentException format:@"Invalid pbxs response object."];
         }
-        @catch (NSException *exception) {
+        
+        NSDictionary *data = [(NSDictionary *)responseObject dictionaryForKey:kPBXInfoResponseDataKey];
+        if (!data) {
+            [NSException raise:NSInvalidArgumentException format:@"Invalid pbx response data object."];
+        }
+        
+        NSDictionary *userData = [data dictionaryForKey:kPBXInfoResponseUserKey];
+        if (!userData) {
+            [NSException raise:NSInvalidArgumentException format:@"Invalid pbx response user data object."];
+        }
+        
+        NSString *jiveId = [userData stringValueForKey:kPBXInfoResponseUserJiveIdKey];
+        if (![user.jiveUserId isEqualToString:jiveId]) {
+            [NSException raise:NSInvalidArgumentException format:@"Pbx user does not match requested user id."];
+        }
+        
+        NSDictionary *tenantsData = [data dictionaryForKey:kPBXInfoResponseTenantsKey];
+        if (!tenantsData) {
+            [NSException raise:NSInvalidArgumentException format:@"Invalid pbx response tenants object."];
+        }
+        
+        NSArray *pbxesData = [tenantsData arrayForKey:kPBXInfoResponseKey];
+        if (!pbxesData) {
+            [NSException raise:NSInvalidArgumentException format:@"Invalid pbx response pbx array."];
+        }
+        
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            [self processPbxArrayData:pbxesData user:(User *)[localContext objectWithID:user.objectID]];
+        } completion:^(BOOL success, NSError *error) {
             if (completion) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
-                });
+                if (error) {
+                    completion(NO, error);
+                } else {
+                    completion(YES, nil);
+                }
             }
+        }];
+    }
+    @catch (NSException *exception) {
+        if (completion) {
+            completion(NO, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_ERROR reason:exception.reason]);
         }
-    });
+    }
 }
 
 /**
@@ -124,29 +143,38 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
 
 + (PBX *)processPbxData:(NSDictionary *)data forUser:(User *)user
 {
-    NSString *pbxId = [data stringValueForKey:kPBXResponseIdentifierKey];
-    if (!pbxId) {
+    NSString *jrn = [data stringValueForKey:kPBXInfoResponseIdentifierKey];
+    if (!jrn) {
         return nil;
     }
     
-    PBX *pbx = [PBX pbxForPbxId:pbxId user:user];
-    pbx.name = [data stringValueForKey:kPBXResponseNameKey];
-    pbx.v5   = [data boolValueForKey:kPBXResponseV5Key];
+    // Fetch/update PBX. If does not exit it is created.
+    PBX *pbx = [PBX pbxForJrn:jrn user:user];
+    pbx.name   = [data stringValueForKey:kPBXInfoResponseNameKey];
+    pbx.v5     = [data boolValueForKey:kPBXInfoResponseV5Key];
+    pbx.domain = [data stringValueForKey:kPBXInfoResponseDomainKey];
     
-    NSArray *lines = [data arrayForKey:kPBXResponseLinesKey];
+    // Process Line Extensions
+    NSArray *lines = [data arrayForKey:kPBXInfoResponseExtensionsKey];
     if (lines.count > 0) {
         [self processLines:lines pbx:pbx];
+    }
+    
+    // Process Did Numbers;
+    NSArray *numbers = [data arrayForKey:kPBXInfoResponseNumbersKey];
+    if (numbers.count > 0) {
+        [self processNumbers:numbers pbx:pbx];
     }
     return pbx;
 }
 
-+ (PBX *)pbxForPbxId:(NSString *)pbxId user:(User *)user
++ (PBX *)pbxForJrn:(NSString *)jrn user:(User *)user
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@ and pbxId = %@", user, pbxId];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@ and jrn = %@", user, jrn];
     PBX *pbx = [PBX MR_findFirstWithPredicate:predicate inContext:user.managedObjectContext];
     if (!pbx) {
         pbx = [PBX MR_createInContext:user.managedObjectContext];
-        pbx.pbxId = pbxId;
+        pbx.jrn = jrn;
         pbx.user = user;
     }
     return pbx;
@@ -178,16 +206,20 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
 
 + (Line *)processLine:(NSDictionary *)data pbx:(PBX *)pbx
 {
-    NSString *jrn = [data stringValueForKey:kPBXLineResponseJrnKey];
+    NSString *jrn = [data stringValueForKey:kPBXInfoResponseExtensionIdentifierKey];
     if (!jrn) {
         return nil;
     }
     
     Line *line = [self lineForJrn:jrn pbx:pbx];
-    line.name        = [data stringValueForKey:kPBXLineResponseLineNameKey];
-    line.extension   = [data stringValueForKey:kPBXLineResponseLineNumberKey];
-    line.mailboxUrl  = [data stringValueForKey:kPBXLineResponseMailboxUrlKey];
-    line.mailboxJrn  = [data stringValueForKey:kPBXLineResponseMailboxJrnKey];
+    line.name     = [data stringValueForKey:kPBXInfoResponseExtensionNameKey];
+    line.number   = [data stringValueForKey:kPBXInfoResponseExtensionNumberKey];
+    
+    NSDictionary *mailbox = [data dictionaryForKey:kPBXInfoResponseExtensionMailboxKey];
+    if (mailbox) {
+        line.mailboxJrn = [mailbox stringValueForKey:kPBXInfoResponseExtensionMailboxIdentiferKey];
+        line.mailboxUrl = [mailbox stringValueForKey:kPBXInfoResponseExtensionMailboxUrlKey];
+    }
     return line;
 }
 
@@ -202,6 +234,56 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
         line.pbxId = pbx.pbxId;
     }
     return line;
+}
+
+#pragma mark - Number Info -
+
++ (void)processNumbers:(NSArray *)numbersData pbx:(PBX *)pbx
+{
+    NSMutableSet *dids = pbx.dids.mutableCopy;
+    
+    for (id object in numbersData) {
+        if ([object isKindOfClass:[NSDictionary class]]) {
+            DID *did = [self processNumber:(NSDictionary *)object pbx:pbx];
+            if ([dids containsObject:did]) {
+                [dids removeObject:did];
+            }
+        }
+    }
+    
+    if (dids.count > 0) {
+        for (DID *did in dids) {
+            [pbx.managedObjectContext deleteObject:did];
+        }
+    }
+}
+
++(DID *)processNumber:(NSDictionary *)data pbx:(PBX *)pbx
+{
+    NSString *jrn = [data stringValueForKey:kPBXInfoResponseNumberIdentifierKey];
+    if (!jrn) {
+        return nil;
+    }
+    
+    DID *did = [self didForJrn:jrn pbx:pbx];
+    did.number      = [data stringValueForKey:kPBXInfoResponseNumberDialStringKey];
+    did.makeCall    = [data boolValueForKey:kPBXInfoResponseNumberMakeCallsKey];
+    did.receiveCall = [data boolValueForKey:kPBXInfoResponseNumberReceiveCallsKey];
+    did.sendSMS     = [data boolValueForKey:kPBXInfoResponseNumberSendSMSKey];
+    did.receiveSMS  = [data boolValueForKey:kPBXInfoResponseNumberReceiveSMSKey];
+    return did;
+}
+
++ (DID *)didForJrn:(NSString *)jrn pbx:(PBX *)pbx
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and jrn = %@", pbx, jrn];
+    DID *did = [DID MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
+    if (!did) {
+        did = [DID MR_createInContext:pbx.managedObjectContext];
+        did.jrn = jrn;
+        did.pbx = pbx;
+    }
+    return did;
 }
 
 @end

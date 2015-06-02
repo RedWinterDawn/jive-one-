@@ -16,7 +16,7 @@
 {
     [super layoutSubviews];
     
-    self.extension.text = self.voicemail.number;
+    self.number.text = self.voicemail.number;
     self.duration.text = self.voicemail.displayDuration;
 }
 

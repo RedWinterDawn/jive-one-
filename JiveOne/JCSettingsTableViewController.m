@@ -15,10 +15,15 @@
 #import "JCAppSettings.h"
 
 #import "PBX.h"
+#import "DID.h"
+#import "User.h"
+#import "Line.h"
 
-NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please describe any issues you are experiencing :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@  <br> ";
+NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedback :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@ <br> Domain : %@  <br> Carrier : %@ <br> Connection Type : %@ <br> ";
 
 @interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate>
+
+@property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
 
 @end
 
@@ -31,11 +36,11 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     self.appLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     self.buildLabel.text = [NSString stringWithFormat:@"%@ (%@)", [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
     
-    JCAppSettings *settings = [JCAppSettings sharedSettings];
+    JCAppSettings *settings = self.appSettings;
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
-    
-    [self cell:self.enablePreasenceCell setHidden:![JCAuthenticationManager sharedInstance].line.pbx.isV5];
+    [self cell:self.enablePreasenceCell setHidden:!self.authenticationManager.line.pbx.isV5];
+    [self cell:self.defaultDIDCell setHidden:!self.authenticationManager.pbx.smsEnabled];
     [self reloadDataAnimated:NO];
 }
 
@@ -51,9 +56,13 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.view setNeedsLayout];
+   // [self.view setNeedsLayout];
     
-    [self cell:self.enablePreasenceCell setHidden:![JCAuthenticationManager sharedInstance].line.pbx.isV5];
+     JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    [self cell:self.enablePreasenceCell setHidden:!authenticationManager.line.pbx.isV5];
+    BOOL sendSmsMessages = authenticationManager.pbx.sendSMSMessages;
+    [self cell:self.defaultDIDCell setHidden:!sendSmsMessages];
+
     [self reloadDataAnimated:NO];
 }
 
@@ -66,9 +75,10 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 {
     [super viewWillLayoutSubviews];
     
-    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    JCAuthenticationManager *authenticationManager = self.authenticationManager;
     self.userNameLabel.text     = authenticationManager.line.pbx.user.jiveUserId;
-    self.extensionLabel.text    = authenticationManager.line.extension;
+    self.extensionLabel.text    = authenticationManager.line.number;
+    self.smsUserDefaultNumber.text = authenticationManager.did.number;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -76,6 +86,14 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     if ([controller isKindOfClass:[JCTermsAndConditonsViewController class]]) {
         controller.navigationItem.leftBarButtonItem = nil;
     }
+}
+
+-(AFNetworkReachabilityManager *)networkReachabilityManager
+{
+    if (!_networkReachabilityManager) {
+        _networkReachabilityManager = [AFNetworkReachabilityManager sharedManager];
+    }
+    return _networkReachabilityManager;
 }
 
 #pragma mark - IBActions -
@@ -89,7 +107,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         [mailViewController setSubject:@"Feedback"];
         
         //get device specs
-        JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+        JCAuthenticationManager *authenticationManager = self.authenticationManager;
+       
         NSBundle *bundle            = [NSBundle mainBundle];
         UIDevice *currentDevice     = [UIDevice currentDevice];
         NSString *model             = [currentDevice platformType];
@@ -99,37 +118,65 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         NSString *uuid              = [currentDevice userUniqueIdentiferForUser:authenticationManager.jiveUserId];
         NSString * pbx              = authenticationManager.line.pbx.displayName;
         NSString *user              = authenticationManager.line.pbx.user.jiveUserId;
-        NSString *line              = authenticationManager.line.extension;
+        NSString *line              = authenticationManager.line.number;
+        NSString *domain        = authenticationManager.line.pbx.domain;
+        NSString *carrier          = [currentDevice defaultCarrier];
         
-        NSString *bodyTemplate = [NSString stringWithFormat:kJCSettingsTableViewControllerFeebackMessage, model, systemVersion, appVersion, country, uuid, pbx, user, line];
+        NSString *currentConection =  [self networkType];
+        
+        NSString *bodyTemplate = [NSString stringWithFormat:kJCSettingsTableViewControllerFeebackMessage, model, systemVersion, appVersion, country, uuid, pbx, user, line, domain, carrier, currentConection];
         [mailViewController setMessageBody:bodyTemplate isHTML:YES]; 
         [self presentViewController:mailViewController animated:YES completion:nil];
     }
 }
 
+-(NSString *)networkType
+{
+    AFNetworkReachabilityStatus status = self.networkReachabilityManager.networkReachabilityStatus;
+    switch (status) {
+        case -1:
+            return (@"Unreachable");
+            break;
+        case 1:
+            return (@"WAN");
+            break;
+        case 2:
+            return (@"Wifi");
+            break;
+        default:
+            return (@"Network Unobtainable");
+            break;
+    }
+}
+
 -(IBAction)logout:(id)sender
 {
-    [[JCAuthenticationManager sharedInstance] logout];
+    [self.authenticationManager logout];
 }
 
 -(IBAction)toggleWifiOnly:(id)sender
 {
     if ([sender isKindOfClass:[UISwitch class]]) {
         UISwitch *switchBtn = (UISwitch *)sender;
-        JCAppSettings *settings = [JCAppSettings sharedSettings];
+        JCAppSettings *settings = self.appSettings;
         settings.wifiOnly = !settings.isWifiOnly;
         switchBtn.on = settings.isWifiOnly;
-        [JCPhoneManager connectToLine:[JCAuthenticationManager sharedInstance].line];
+        [self.phoneManager connectToLine:self.authenticationManager.line];
     }
 }
 
 - (IBAction)togglePresenceEnabled:(id)sender {
     if ([sender isKindOfClass:[UISwitch class]]) {
         UISwitch *switchBtn = (UISwitch *)sender;
-        JCAppSettings *settings = [JCAppSettings sharedSettings];
-        settings.presenceEnabled = !settings.isPresenceEnabled;
-        switchBtn.on = settings.isPresenceEnabled;
+        self.appSettings.presenceEnabled = !self.appSettings.isPresenceEnabled;
+        switchBtn.on = self.appSettings.isPresenceEnabled;
     }
+}
+
+-(IBAction)showDebug:(id)sender{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Debug" bundle:[NSBundle mainBundle]];
+    UIViewController *rootViewController = [storyboard instantiateInitialViewController];
+    [self.navigationController pushViewController:rootViewController animated:YES];
 }
 
 #pragma mark - Delegate Handlers -

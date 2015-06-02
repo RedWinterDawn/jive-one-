@@ -11,6 +11,6 @@
 @interface JCTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIColor *seperatorColor;
-@property (nonatomic) bool top;
+@property (nonatomic) BOOL top;
 
 @end

@@ -1,3 +1,4 @@
+
 //
 //  JCAlertView.m
 //  JiveOne
@@ -184,9 +185,15 @@ static const NSMutableArray *alerts;
     if (!message) {
         message = [error localizedFailureReason];
     }
-    NSInteger underlyingErrorCode = [self underlyingErrorCodeForError:error];
-    message = [NSString stringWithFormat:@"%@\n(%li)", NSLocalizedString(message, nil), (long)underlyingErrorCode];
     
+    NSError *underlyingError = [self underlyingErrorForError:error];
+    NSString *underlyingFailureReason = [underlyingError localizedFailureReason];
+    if(underlyingFailureReason) {
+        message = [NSString stringWithFormat:@"%@\n(%li: %@)", NSLocalizedString(message, nil), (long)underlyingError.code, underlyingFailureReason];
+    }
+    else {
+        message = [NSString stringWithFormat:@"%@\n(%li)", NSLocalizedString(message, nil), (long)underlyingError.code];
+    }
     JCAlertView *alertView = [[JCAlertView alloc] initWithTitle:@"Warning" message:message dismissed:dismissBlock cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
     if (alertView)
     {
@@ -206,14 +213,20 @@ static const NSMutableArray *alerts;
     if (!message) {
         message = [error localizedFailureReason];
     }
-    NSInteger underlyingErrorCode = [self underlyingErrorCodeForError:error];
-    message = [NSString stringWithFormat:@"%@ (%li)", NSLocalizedString(message, nil), (long)underlyingErrorCode];
+    NSError *underlyingError = [self underlyingErrorForError:error];
+    NSString *underlyingFailureReason = [underlyingError localizedFailureReason];
+    if(underlyingFailureReason) {
+        message = [NSString stringWithFormat:@"%@\n(%li: %@)", NSLocalizedString(message, nil), (long)underlyingError.code, underlyingFailureReason];
+    }
+    else {
+        message = [NSString stringWithFormat:@"%@\n(%li)", NSLocalizedString(message, nil), (long)underlyingError.code];
+    }
     return [JCAlertView alertWithTitle:title message:message showImmediately:YES];
 }
 
 +(JCAlertView *)alertWithTitle:(NSString *)title message:(NSString *)message code:(NSInteger)code
 {
-    message = [NSString stringWithFormat:@"%@ (%li)", NSLocalizedString(message, nil), (long)code];
+    message = [NSString stringWithFormat:@"%@\n(%li)", NSLocalizedString(message, nil), (long)code];
     return [JCAlertView alertWithTitle:title message:message showImmediately:YES];
 }
 
@@ -259,11 +272,21 @@ static const NSMutableArray *alerts;
     return alertView;
 }
 
-+(NSInteger)underlyingErrorCodeForError:(NSError *)error
++(NSError *)underlyingErrorForError:(NSError *)error
 {
     NSError *underlyingError = [error.userInfo objectForKey:NSUnderlyingErrorKey];
     if (underlyingError) {
-        return [self underlyingErrorCodeForError:underlyingError];
+        return [self underlyingErrorForError:underlyingError];
+    }
+    return error;
+}
+
++(NSInteger)underlyingErrorCodeForError:(NSError *)error
+{
+    error = [self underlyingErrorForError:error];
+    if ([error.domain isEqualToString:AFURLResponseSerializationErrorDomain]) {
+        NSHTTPURLResponse *urlResponse = [error.userInfo valueForKey:AFNetworkingOperationFailingURLResponseErrorKey];
+        return urlResponse.statusCode;
     }
     return error.code;
 }

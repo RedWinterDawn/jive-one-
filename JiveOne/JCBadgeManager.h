@@ -6,23 +6,20 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "JCManager.h"
 
-@interface JCBadgeManager : NSObject
+@interface JCBadgeManager : JCManager
 
 @property (nonatomic, readonly) NSUInteger recentEvents;    // Total Recent Events.
 @property (nonatomic, readonly) NSUInteger voicemails;      // Total Unread Voicemails.
 @property (nonatomic, readonly) NSUInteger missedCalls;     // Total Unread Missed Calls.
+@property (nonatomic, readonly) NSUInteger smsMessages;		// Total Unread SMS Messages.
 
-@end
-
-@interface JCBadgeManager (Singleton)
-
-+ (JCBadgeManager *)sharedManager;
 + (void)updateBadgesFromContext:(NSManagedObjectContext *)context;
 + (void)reset;
 
 + (void)setVoicemails:(NSUInteger)voicemails;
 + (void)setSelectedLine:(NSString *)line;
++ (void)setSelectedPBX:(NSString *)pbx;
 
 @end

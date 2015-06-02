@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCRecentActivityTableViewController.h"
+#import "JCRecentLineEventsTableViewController.h"
 
-@interface JCCallHistoryTableViewController : JCRecentActivityTableViewController
+@interface JCCallHistoryTableViewController : JCRecentLineEventsTableViewController
 
 @property (nonatomic, strong) NSFetchRequest *fetchRequest;
 

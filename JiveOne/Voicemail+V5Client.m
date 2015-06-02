@@ -10,10 +10,12 @@
 
 // Client
 #import "JCV5ApiClient.h"
+#import "JCSocket.h"
 
 // Models
 #import "PBX.h"
 #import "Contact.h"
+#import "Line.h"
 
 NSString *const kVoicemailResponseIdentifierKey         = @"jrn";
 NSString *const kVoicemailResponseDurationKey           = @"duration";
@@ -28,14 +30,71 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
 
 @implementation Voicemail (V5Client)
 
-+ (void)downloadVoicemailsForLine:(Line *)line complete:(CompletionHandler)completion {
-    
-    if (!line.mailboxUrl || line.mailboxUrl.isEmpty || !line.pbx) {
-        if (completion != NULL) {
-            completion(false, [JCV5ApiClientError errorWithCode:JCV5ApiClientInvalidArgumentErrorCode reason:@"Line has no mailbox url."]);
+- (void)downloadVoicemailAudio:(CompletionHandler)completion
+{
+    [Voicemail downloadAudioForVoicemail:self completion:^(BOOL success, NSData *audioData, NSError *error) {
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            if (success) {
+                Voicemail *localVoicemail = (Voicemail *)[localContext objectWithID:self.objectID];
+                localVoicemail.data = audioData;
+            }
+        } completion:^(BOOL saveSuccess, NSError *saveError) {
+            if (completion) {
+                completion(success && saveSuccess, error ? error : saveError);
+            }
+        }];
+    }];
+}
+
+-(void)markAsRead:(CompletionHandler)completion
+{
+    // If we are already read, we do not want to resubmit the query, so we exit.
+    if (self.isRead) {
+        if (completion) {
+            completion(YES, nil);
         }
         return;
     }
+    
+    // Mark as being read and save to context. if we were sucessfull, notify the server that the
+    // voicemail was listened to.
+    self.read = TRUE;
+    [self.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        if (success) {
+            [Voicemail markVoicemailAsRead:self completion:completion];
+        }
+        else if (completion) {
+            self.read = FALSE;
+            completion(NO, error);
+        }
+    }];
+}
+
+-(void)markForDeletion:(CompletionHandler)completion
+{
+    if (self.markForDeletion) {
+        if (completion) {
+            completion(YES, nil);
+        }
+        return;
+    }
+    
+    self.read = TRUE;
+    self.markForDeletion = TRUE;
+    [self.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        if (success){
+            [Voicemail deleteVoicemail:self completion:completion];
+        }
+        else if (completion) {
+            self.read = FALSE;
+            completion(NO, error);
+        }
+    }];
+}
+
+#pragma mark - V5 Client Requests -
+
++ (void)downloadVoicemailsForLine:(Line *)line completion:(CompletionHandler)completion {
     
     // If the pbx is not V5, do not request for visual voicemails.
     if (!line.pbx.isV5) {
@@ -45,8 +104,15 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
         return;
     }
     
+    // Check for required data.
+    if (!line.mailboxUrl || line.mailboxUrl.isEmpty || !line.pbx) {
+        if (completion != NULL) {
+            completion(false, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Line has no mailbox url."]);
+        }
+        return;
+    }
+    
     JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    [client setRequestAuthHeader:NO];
     [client.manager GET:line.mailboxUrl
              parameters:nil
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -54,54 +120,192 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     if (completion) {
-                        completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientRequestErrorCode reason:error.localizedDescription]);
+                        completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:error.localizedDescription]);
                     }
                 }];
 }
 
-#pragma mark - Private -
-
-+ (void)processVoicemailResponseObject:(id)responseObject line:(Line *)line completion:(CompletionHandler)completion
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        @try {
-            if (![responseObject isKindOfClass:[NSDictionary class]]){
-                [NSException raise:@"v5clientException" format:@"Unexpected Voicemail response"];
-            }
-            
-            id object = [responseObject objectForKey:@"voicemails"];
-            if (![object isKindOfClass:[NSArray class]]) {
-                [NSException raise:@"v5clientException" format:@"Unexpected Voicemail response array"];
-            }
-            
-            [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
-                [Voicemail processVoicemailsDataArray:(NSArray *)object line:(Line *)[localContext objectWithID:line.objectID]];
-            }
-            completion:^(BOOL success, NSError *error) {
-                if (completion) {
-                    if (error) {
-                        completion(NO, error);
-                    } else {
-                        completion(YES, nil);
-                    }
-                }
-            }];
++ (void)downloadAudioForVoicemail:(Voicemail *)voicemail completion:(void (^)(BOOL success, NSData *audioData, NSError *error))completion{
+    
+    
+    if (!voicemail || !voicemail.url_download || voicemail.url_download.isEmpty) {
+        if (completion != NULL) {
+            completion(false, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Line has no mailbox download url."]);
         }
-        @catch (NSException *exception) {
+        return;
+    }
+    
+    // Perform request on background thread.
+    NSURL *url = [NSURL URLWithString:voicemail.url_download];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        @autoreleasepool {
+            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+            request.URL = url;
+            request.HTTPMethod = @"GET";
+            [request setValue:[JCAuthenticationManager sharedInstance].authToken forHTTPHeaderField:@"Authorization"];
+            
+            __autoreleasing NSURLResponse *response;
+            __autoreleasing NSError *error;
+            NSData *voiceData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
             if (completion) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
+                    completion((voiceData != nil), voiceData, [JCApiClientError errorWithCode:0 reason:@"Unable to download voicemail"]);
                 });
             }
         }
     });
 }
 
++ (void)deleteAllMarkedVoicemailsForLine:(Line *)line completion:(CompletionHandler)completion {
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@ and markForDeletion == %@", line, @YES];
+    NSArray *voicemails = [Voicemail MR_findAllWithPredicate:predicate inContext:line.managedObjectContext];
+    if (voicemails && voicemails.count > 0) {
+        for (Voicemail *voicemail in voicemails) {
+            [Voicemail deleteVoicemail:voicemail completion:NULL];
+        }
+    }
+}
+
++ (void)markVoicemailAsRead:(Voicemail *)voicemail completion:(CompletionHandler)completion {
+    
+    NSString *urlString = voicemail.url_changeStatus;
+    if (!urlString || urlString.length < 1) {
+        return;
+    }
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    if (!url) {
+        return;
+    }
+    
+    JCV5ApiClient *client = [JCV5ApiClient new];
+    [client.manager PUT:url.absoluteString
+             parameters:@{@"read": @"true"}
+                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    if (completion) {
+                        completion (YES, nil);
+                    }
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    
+                    if (completion) {
+                        completion (NO, error);
+                    }
+                    
+                    NSString *errorMessage = @"Failed Updating Voicemail Read Status On Server, Aborting";
+                    NSLog(@"%@: %@", errorMessage, [error description]);
+                }];
+}
+
++ (void)deleteVoicemail:(Voicemail *)voicemail completion:(CompletionHandler)completion
+{
+    if(!voicemail)
+        return;
+    
+    NSString *urlString = voicemail.url_self;
+    if (!urlString || urlString.length < 1) {
+        return;
+    }
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    if (!url) {
+        return;
+    }
+    
+    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
+    [client.manager DELETE:url.absoluteString
+                parameters:nil
+                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                       [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                           Voicemail *localVoicemail = (Voicemail *)[localContext objectWithID:voicemail.objectID];
+                           if (localVoicemail && !localVoicemail.isDeleted) {
+                               [localContext deleteObject:localVoicemail];
+                           }
+                       } completion:^(BOOL success, NSError *error) {
+                           if (completion) {
+                               completion (NO, error);
+                           }
+                       }];
+                   }
+                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                       if (completion) {
+                           completion (NO, error);
+                       }
+                   }];
+}
+
++ (void)subscribeToLine:(Line *)line
+{
+    [JCSocket subscribeToSocketEventsWithIdentifer:line.jrn entity:line.jrn type:@"mailbox"];
+}
+
+
+
+
+/**
+ 
+ private void SubscribeToVoicemail() {
+ List<Line> voicemailBoxes = Line.listAll(Line.class);
+ for (Line box : voicemailBoxes) {
+ String jrn = box.getMailbox_jrn();
+ final JasmineSubscriptionRequest request = new JasmineSubscriptionRequest();
+ request.setEntity(jrn);
+ request.setId();//use the empty setter. It maintains an id that we send every time so that we have a singleton subscription.
+ request.setType("mailbox");
+ V5Client.getInstance().subscribeToSocketEvent(subscriptionUrl, request, new ClientCallback() {
+ @Override
+ public void completed(boolean success, Object responseObject, Response response, RetrofitError error) {
+ if (success) {
+ //Log.d(ClassTag, "Subscribed to mailbox: "+  subscriptionUrl);
+ }
+ else{
+ //didn't connect, will try again next time onOpen runs.
+ //Log.d(ClassTag, "Could not subscribe to mailbox: "+  subscriptionUrl);
+ Log.d(ClassTag, error.toString());
+ }
+ }
+ });
+ }
+ }
+ 
+ */
+
+#pragma mark - Private -
+
+#pragma mark Response Processing
+
++ (void)processVoicemailResponseObject:(id)responseObject line:(Line *)line completion:(CompletionHandler)completion
+{
+    @try {
+        if (![responseObject isKindOfClass:[NSDictionary class]]){
+            [NSException raise:@"v5clientException" format:@"Unexpected Voicemail response"];
+        }
+        
+        id object = [responseObject objectForKey:@"voicemails"];
+        if (![object isKindOfClass:[NSArray class]]) {
+            [NSException raise:@"v5clientException" format:@"Unexpected Voicemail response array"];
+        }
+        
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            [Voicemail processVoicemailsDataArray:(NSArray *)object line:(Line *)[localContext objectWithID:line.objectID]];
+        } completion:^(BOOL success, NSError *error) {
+            if (completion) {
+                completion((error != nil), error);
+            }
+        }];
+    }
+    @catch (NSException *exception) {
+        if (completion) {
+            completion(NO, [JCApiClientError errorWithCode:API_CLIENT_UNEXPECTED_RESPONSE_ERROR reason:exception.reason]);
+        }
+    }
+}
+
 + (void)processVoicemailsDataArray:(NSArray *)array line:(Line *)line
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@", line];
     NSMutableArray *voicemails = [Voicemail MR_findAllWithPredicate:predicate inContext:line.managedObjectContext].mutableCopy;
-    
     for (NSDictionary *data in array){
         if ([data isKindOfClass:[NSDictionary class]]){
             Voicemail *voicemail =  [self processVoicemailData:data line:line];
@@ -111,8 +315,8 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
         }
     }
     
-    // If there are any contacts left in the array, it means we have more contacts than the server
-    // response, and we need to delete the extra contacts.
+    // If there are any voicemails left in the array, it means we have more contacts than the server
+    // response, and we need to delete the extra voicemails.
     for (Voicemail *voicemail in voicemails) {
         [line.managedObjectContext deleteObject:voicemail];
     }
@@ -137,16 +341,14 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
     voicemail.url_changeStatus  = [data stringValueForKey:kVoicemailResponseSelfChangeStatusKey];
     voicemail.mailboxUrl        = [data stringValueForKey:kVoicemailResponseSelfMailboxKey];
     voicemail.unixTimestamp     = [data integerValueForKey:kVoicemailResponseTimestampKey];
-    voicemail.contact           = [Contact contactForExtension:voicemail.number pbx:line.pbx];
-    
-    // Removing. Should not be used as is without fixing the concurrency problems.
-    if (!voicemail.data) {
-        dispatch_async(dispatch_queue_create("load_voicemail", NULL), ^{
-            Voicemail *localVoicemail = (Voicemail *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:voicemail.objectID];
-            [localVoicemail fetchData];
-        });
+    Extension *extension = [Extension extensionForNumber:voicemail.number onPbx:line.pbx excludingLine:line];
+    if ([extension isKindOfClass:[Contact class]]) {
+        voicemail.contact = (Contact *)extension;
     }
     
+    if (!voicemail.data) {
+        [voicemail downloadVoicemailAudio:NULL];
+    }
     return voicemail;
 }
 
@@ -160,141 +362,6 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
         voicemail.line = line;
     }
     return voicemail;
-}
-
-- (void)fetchData
-{
-    @try {
-        
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        request.URL = [NSURL URLWithString:self.url_download];
-        request.HTTPMethod = @"GET";
-        [request setValue:[JCAuthenticationManager sharedInstance].authToken forHTTPHeaderField:@"Authorization"];
-        
-        __autoreleasing NSURLResponse *response;
-        __autoreleasing NSError *error;
-        NSData *voiceData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        if (voiceData) {
-            self.data = voiceData;
-            if (![self.managedObjectContext save:&error]) {
-                NSLog(@"%@", error.description);
-            }
-        } else {
-            NSLog(@"%@", error.description);
-        }
-    }
-    @catch (NSException *exception) {
-        NSLog(@"%@", exception);
-    }
-}
-
-#pragma mark - Read -
-
--(void)markAsRead
-{
-    if (self.isRead) {
-        return;
-    }
-    
-    self.read = TRUE;
-    [self.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-        if (success)
-        {
-            // now send update to server
-            [[JCV5ApiClient sharedClient] updateVoicemailToRead:self completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-                if(error)
-                {
-                    NSString *errorMessage = @"Failed Updating Voicemail Read Status On Server, Aborting";
-                    NSLog(@"%@", errorMessage);
-                   }
-            }];
-        }
-    }];
-}
-
-#pragma mark - Deletion -
-
-+ (void)deleteVoicemailsInBackground
-{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:YES]];
-    NSArray *deletedVoicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllWithPredicate:predicate]];
-    
-    if (deletedVoicemails.count > 0) {
-        for (Voicemail *voice in deletedVoicemails) {
-            if(voice.url_self){
-                [[JCV5ApiClient sharedClient] deleteVoicemail:voice.url_self completed:^(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-                    if (succeeded) {
-                        [Voicemail deleteVoicemail:voice.jrn managedContext:nil];
-                    }
-                    else {
-                        NSLog(@"Error Deleting Voicemail: %@", error);
-                    }
-                }];
-            }
-            else{
-            }
-        }
-    }
-}
-
-+ (Voicemail *)markVoicemailForDeletion:(NSString*)voicemailId managedContext:(NSManagedObjectContext*)context
-{
-    if (!context) {
-        context = [NSManagedObjectContext MR_contextForCurrentThread];
-    }
-    
-    Voicemail *voicemail = [Voicemail MR_findFirstByAttribute:@"jrn" withValue:voicemailId];
-    
-    if (voicemail) {
-        voicemail.markForDeletion = YES;
-        [context MR_saveToPersistentStoreAndWait];
-        
-        //save to deleted voicemail storage
-        NSArray * deletedArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"kDeletedVoicemail"];
-        NSMutableArray *deletedList = nil;
-        if (deletedArray) {
-            deletedList = [NSMutableArray arrayWithArray:deletedArray];
-        }
-        else {
-            deletedList = [NSMutableArray array];
-        }
-        
-        [deletedList addObject:voicemailId];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithArray:deletedList] forKey:@"kDeletedVoicemail"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
-    return voicemail;
-}
-
-+ (BOOL)deleteVoicemail:(NSString*)voicemailId managedContext:(NSManagedObjectContext*)context
-{
-    if (!context) {
-        context = [NSManagedObjectContext MR_contextForCurrentThread];
-    }
-    
-    //delete from Core data
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"jrn == %@", voicemailId];
-    BOOL deleted = [Voicemail MR_deleteAllMatchingPredicate:pred];
-    if (deleted) {
-        [context MR_saveToPersistentStoreAndWait];
-        
-        
-    }
-    return deleted;
-}
-
-+ (BOOL)isVoicemailInDeletedList:(NSString*)voicemailId
-{
-    NSArray * deletedArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"kDeletedVoicemail"];
-    NSMutableArray *deletedList = nil;
-    if (deletedArray) {
-        deletedList = [NSMutableArray arrayWithArray:deletedArray];
-        
-        return [deletedList containsObject:voicemailId];
-    }
-    
-    return NO;
 }
 
 @end

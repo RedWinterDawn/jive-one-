@@ -10,20 +10,29 @@
 
 @interface Voicemail (V5Client)
 
+// Downloads the voicemails audio file.
+- (void)downloadVoicemailAudio:(CompletionHandler)completion;
+
+// Marks the voicemail as having been read. Attempts to notify server of read status.
+- (void)markAsRead:(CompletionHandler)completion;
+
+// Marks the voicemail for deletion. Attempts to notify server of deletion.
+- (void)markForDeletion:(CompletionHandler)completion;
+
 // Retrives all voicemails for a line.
-+ (void)downloadVoicemailsForLine:(Line *)line complete:(CompletionHandler)completed;
++ (void)downloadVoicemailsForLine:(Line *)line completion:(CompletionHandler)completion;
 
-// Synchronous Requests the Voicmail data using the download url.
-- (void)fetchData;
+// Deletes all voicemails for a line.
++ (void)deleteAllMarkedVoicemailsForLine:(Line *)line completion:(CompletionHandler)completion;
 
-// Marks the Voicemail as read, notifying the server. It marks the voicmail as read if it was able to successfully
-// update the server.
-- (void)markAsRead;
+// Marks voicemail as read on server using V5Client. Called by instance method markAsRead:
++ (void)markVoicemailAsRead:(Voicemail *)voicemail completion:(CompletionHandler)completion;
 
-+ (void)deleteVoicemailsInBackground;
-+ (BOOL)isVoicemailInDeletedList:(NSString*)voicemailId;
-+ (BOOL)deleteVoicemail:(NSString*)voicemailId managedContext:(NSManagedObjectContext*)context;
-+ (Voicemail *)markVoicemailForDeletion:(NSString*)voicemailId managedContext:(NSManagedObjectContext*)context;
+// Deletes voicemail on server using V5Client. Called by instance menthod markForDeletion:
++ (void)deleteVoicemail:(Voicemail *)voicemail completion:(CompletionHandler)completion;
+
+// Subscribe to a line for voicemail events.
++ (void)subscribeToLine:(Line *)line;
 
 @end
 

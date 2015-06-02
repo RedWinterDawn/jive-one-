@@ -9,13 +9,19 @@
 #import "JCPresenceManager.h"
 #import "JCSocket.h"
 #import "JCAppSettings.h"
+#import "Line.h"
 
 NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
+
+NSString *const kJCPresenceManagerTypeWithdraw      = @"withdraw";
+NSString *const kJCPresenceManagerStateConfirmed    = @"confirmed";
+NSString *const kJCPresenceManagerStateKey          = @"state";
+NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
+
 
 @interface JCPresenceManager ()
 {
     NSMutableArray *_lines;
-    JCSocket *_socket;
     PBX *_pbx;
 }
 
@@ -31,63 +37,11 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
 {
     self = [super init];
     if (self) {
-        _socket = [JCSocket sharedSocket];
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(socketDidReceiveMessageSelector:) name:kJCSocketReceivedDataNotification object:_socket];
         [ [JCAppSettings sharedSettings] addObserver:self forKeyPath:kJCAppSettingsPresenceAttribute options:0 context:NULL];
     }
     return self;
-    
 }
 
-/**
- * Loops through the PBX's contacts and subscribe to presence events for each of them. Creates a 
- * line presence object to represent that contact.
- */
--(void)subscribeToPbx:(PBX *)pbx
-{
-    
-    _pbx = pbx;
-    
-    if (!_pbx) {
-        return;
-    }
-    
-    if (![JCAppSettings sharedSettings].isPresenceEnabled) {
-        return;
-    }
-
-    // Create a line presence object to represent the contact.
-    NSSet *contacts = pbx.contacts;
-    _lines = [NSMutableArray arrayWithCapacity:contacts.count];
-    for (Contact *contact in contacts) {
-        [_lines addObject:[[JCLinePresence alloc] initWithLineIdentifer:contact.jrn]];
-        [JCSocket subscribeToSocketEventsWithIdentifer:contact.jrn entity:contact.jrn type:@"dialog"];
-    }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPresenceManagerLinesChangedNotification object:self userInfo:nil];
-}
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:kJCAppSettingsPresenceAttribute]) {
-        JCAppSettings *settings = (JCAppSettings *)object;
-        if([JCSocket sharedSocket].isReady) {
-            if (settings.isPresenceEnabled) {
-                [self subscribeToPbx:_pbx];
-            } else {
-                [self unsubscribeFromPbx:_pbx];
-            }
-        }
-    }
-}
-
--(void)unsubscribeFromPbx:(PBX *)pbx
-{
-    [JCSocket unsubscribeToSocketEvents:NULL];
-    _lines = nil;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPresenceManagerLinesChangedNotification object:self userInfo:nil];
-}
 
 -(JCLinePresence *)linePresenceForContact:(Contact *)contact
 {
@@ -108,41 +62,35 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
     return nil;
 }
 
-#pragma mark - Notification Handlers -
-
-NSString *const kJCPresenceManagerTypeKey       = @"type";
-NSString *const kJCPresenceManagerTypeWithdraw  = @"withdraw";
-NSString *const kJCPresenceManagerTypeConfirmed = @"confirmed";
-NSString *const kJCPresenceManagerDataKey       = @"data";
-NSString *const kJCPresenceManagerStateKey      = @"state";
-NSString *const kJCPresenceManagerIdentifierKey = @"subId";
-
--(void)socketDidReceiveMessageSelector:(NSNotification *)notification
++ (void)subscribeToPbx:(PBX *)pbx
 {
-    NSDictionary *userInfo = notification.userInfo;
-    NSDictionary *results = [userInfo objectForKey:kJCSocketNotificationResultKey];
-    if (!results) {
-        NSError *error = [userInfo objectForKey:kJCSocketNotificationErrorKey];
-        NSLog(@"%@", [error description]);
+    if (!pbx.v5) {
         return;
     }
     
-    // Right now we only care about withdraws and confirms
-    NSString *type = [results stringValueForKey:kJCPresenceManagerTypeKey];
+    [[JCPresenceManager sharedManager] subscribeToPbx:pbx];
+}
 
-    NSString *state = nil;
-    id object = [results objectForKey:kJCPresenceManagerDataKey];
-    if (object && [object isKindOfClass:[NSDictionary class]]) {
-        NSDictionary *data = (NSDictionary *)object;
-        state = [data stringValueForKey:kJCPresenceManagerStateKey];
++(void)unsubscribeFromPbx:(PBX *)pbx
+{
+    if (!pbx.v5) {
+        return;
     }
     
-    if (![type isEqualToString:kJCPresenceManagerTypeWithdraw] && !(state && [state isEqualToString:kJCPresenceManagerTypeConfirmed])) {
+    [[JCPresenceManager sharedManager] unsubscribeFromPbx:pbx];
+}
+
+#pragma mark - Public Overides -
+
+-(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data {
+    
+    NSString *state = [data stringValueForKey:kJCPresenceManagerStateKey];
+    if (![type isEqualToString:kJCPresenceManagerTypeWithdraw] && !(state && [state isEqualToString:kJCPresenceManagerStateConfirmed])) {
         return;
     }
     
     // Get identifer.
-    NSString *identifier = [results stringValueForKey:kJCPresenceManagerIdentifierKey];
+    NSString *identifier = [result stringValueForKey:kJCPresenceManagerIdentifierKey];
     if (!identifier || identifier.length < 1) {
         return;
     }
@@ -155,39 +103,69 @@ NSString *const kJCPresenceManagerIdentifierKey = @"subId";
     if ([type isEqualToString:kJCPresenceManagerTypeWithdraw]) {
         linePresence.state = JCLinePresenceTypeAvailable;
     }
-    else if ([state isEqualToString:kJCPresenceManagerTypeConfirmed]) {
+    else if ([state isEqualToString:kJCPresenceManagerStateConfirmed]) {
         linePresence.state = JCLinePresenceTypeDoNotDisturb;
     }
 }
 
-@end
-
-
-@implementation JCPresenceManager (Singleton)
-
-+(instancetype)sharedManager
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    static JCPresenceManager *presenceManagerSingleton = nil;
-    static dispatch_once_t presenceManagerLoaded;
-    dispatch_once(&presenceManagerLoaded, ^{
-        presenceManagerSingleton = [[JCPresenceManager alloc] init];
-    });
-    return presenceManagerSingleton;
+    if ([keyPath isEqualToString:kJCAppSettingsPresenceAttribute]) {
+        JCAppSettings *settings = (JCAppSettings *)object;
+        if([JCSocket sharedSocket].isReady) {
+            if (settings.isPresenceEnabled) {
+                [self subscribeToPbx:_pbx];
+            } else {
+                [self unsubscribeFromPbx:_pbx];
+            }
+        }
+    }
 }
 
-+ (id)copyWithZone:(NSZone *)zone
+#pragma mark - Private
+
+/**
+ * Loops through the PBX's contacts and subscribe to presence events for each of them. Creates a 
+ * line presence object to represent that contact.
+ */
+-(void)subscribeToPbx:(PBX *)pbx
 {
-    return self;
+    
+    _pbx = pbx;
+    
+    if (!_pbx) {
+        return;
+    }
+    
+    if (![JCAppSettings sharedSettings].isPresenceEnabled) {
+        return;
+    }
+
+    NSSet *lines = pbx.lines;
+    for (Line *line in lines) {
+        [_lines addObject:[[JCLinePresence alloc] initWithLineIdentifer:line.jrn]];
+        [JCSocket subscribeToSocketEventsWithIdentifer:line.jrn entity:line.jrn type:@"dialog"];
+    }
+    
+    // Create a line presence object to represent the contact.
+    NSSet *contacts = pbx.contacts;
+    _lines = [NSMutableArray arrayWithCapacity:contacts.count];
+    for (Contact *contact in contacts) {
+        [_lines addObject:[[JCLinePresence alloc] initWithLineIdentifer:contact.jrn]];
+        [JCSocket subscribeToSocketEventsWithIdentifer:contact.jrn entity:contact.jrn type:@"dialog"];
+    }
+    
+    [self postNotificationNamed:kJCPresenceManagerLinesChangedNotification];
 }
 
-+ (void)subscribeToPbx:(PBX *)pbx
+-(void)unsubscribeFromPbx:(PBX *)pbx
 {
-    [[JCPresenceManager sharedManager] subscribeToPbx:pbx];
-}
-
-+(void)unsubscribeFromPbx:(PBX *)pbx
-{
-    [[JCPresenceManager sharedManager] unsubscribeFromPbx:pbx];
+    [JCSocket unsubscribeToSocketEvents:^(BOOL success, NSError *error) {
+        if (success) {
+            _lines = nil;
+            [self postNotificationNamed:kJCPresenceManagerLinesChangedNotification];
+        }
+    }];
 }
 
 @end

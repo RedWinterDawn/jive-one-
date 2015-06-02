@@ -37,6 +37,21 @@ Testing login
 username: jivetesting12@gmail.com
 password: testing12
 
+TESTING
+===============
+There are many different types of tests. Here at jive we would like to have tests so that we can verify our code is robust and verify services are up.
+Here are the different types of tests we can have:
+
+Unit Tests- These test a single pice of code. These are required for a story to be passed off and accepted.
+
+
+Integration tests - Tests anything that makes a call to an api or external service. These should be created when a portion of the app is complete in a general were we want it to be. 
+
+UITests - the testing of the visual elements on a view similar to units tests but for the visual elements and their connections to the app. They should be created once a view has been added to the app. 
+
+Automation tests - will be excited by the continues integration server. A story should be added and created once a feature is “Done” to create a Automated visual continues integration test. That way when new code is being added to the project we can know early on that it has crashed. 
+
+
 TESTING AND USING OCMOCK
 ==============
 Check out: http://en.wikipedia.org/wiki/Mock_object for a detailed explination of Mock objects and why we use them.

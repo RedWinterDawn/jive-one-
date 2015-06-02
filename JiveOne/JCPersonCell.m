@@ -8,26 +8,28 @@
 
 #import "JCPersonCell.h"
 
-@implementation JCPersonCell
+#import "Extension.h"
 
-@synthesize textLabel;
-@synthesize detailTextLabel;
+@implementation JCPersonCell
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     
-    Person *person = self.person;
-    self.textLabel.text = person.name;
+    id <JCPersonDataSource> person = self.person;
+    self.textLabel.text = person.titleText;
     self.detailTextLabel.text = person.detailText;
 }
 
 #pragma mark - Setters -
 
-- (void)setPerson:(Person *)person
+- (void)setPerson:(id<JCPersonDataSource>)person
 {
     _person = person;
-    self.identifier = person.jrn;
+    if ([person isKindOfClass:[Extension class]]) {
+        Extension *jiveContact = (Extension *)person;
+        self.identifier = jiveContact.jrn;
+    }
 }
 
 @end
