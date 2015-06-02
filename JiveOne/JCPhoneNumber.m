@@ -92,6 +92,11 @@
     return [JCPhoneNumberDataSourceUtils t9StringForPhoneNumber:self];
 }
 
+-(NSString *)internationalNumber
+{
+    return [NSString stringWithFormat:@"+%@%@", self.countryCode, self.nationalNumber];
+}
+
 -(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
 {
     return [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword

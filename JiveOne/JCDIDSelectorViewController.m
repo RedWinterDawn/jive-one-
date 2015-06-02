@@ -21,11 +21,11 @@
 {
     if (!_fetchedResultsController)
     {
-        PBX *pbx = [JCAuthenticationManager sharedInstance].pbx;
+        PBX *pbx = self.authenticationManager.pbx;
         if (pbx)
         {
             NSManagedObjectContext *context = self.managedObjectContext;
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ AND receiveSMS = %@", pbx, @YES];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ AND receiveSMS = %@ && sendSMS = %@", pbx, @YES, @YES];
             NSFetchRequest *fetchRequest = [DID MR_requestAllSortedBy:@"number" ascending:YES withPredicate:predicate inContext:context];
             super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                  managedObjectContext:context
@@ -41,15 +41,12 @@
     if ([object isKindOfClass:[DID class]])
     {
         DID *did = (DID *)object;
-        if (did.sendSMS || did.receiveSMS) {
-            
         cell.textLabel.text = did.formattedNumber;
-        if ([did isEqual:[JCAuthenticationManager sharedInstance].did]) {
+        if ([did isEqual:self.authenticationManager.did]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
         else {
             cell.accessoryType = UITableViewCellAccessoryNone;
-            }
         }
     }
 }
@@ -73,6 +70,7 @@
             }
         }
     } completion:^(BOOL success, NSError *error) {
+        [self.tableView reloadData];
         if (_delegate && [_delegate respondsToSelector:@selector(didUpdateDIDSelectorViewController:)]) {
             [_delegate didUpdateDIDSelectorViewController:self];
         }

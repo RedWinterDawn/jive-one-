@@ -171,12 +171,14 @@
 {
     _conversationGroup = conversationGroup;
     self.title = conversationGroup.titleText;
-//       self.navigationController.navigationItem.rightBarButtonItem = _blockBtn;
     if (conversationGroup.isSMS) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", conversationGroup.conversationGroupId];
         SMSMessage *message = [SMSMessage MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
         [SMSMessage downloadMessagesForDID:message.did toConversationGroup:conversationGroup completion:NULL];
     }
+    
+    self.fetchedResultsController = nil;
+    [self.collectionView reloadData];
 }
 
 #pragma mark - Getters -
