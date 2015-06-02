@@ -7,12 +7,14 @@
 //
 
 #import "JCVoicemailAudioPlayer.h"
+#import "JCAppSettings.h"
 
 @interface JCVoicemailAudioPlayer () <AVAudioPlayerDelegate>
 {
     AVAudioPlayer *_player;
     NSTimer *_playbackTimer;
     id <JCVoicemailAudioPlayerDelegate> _delegate;
+    JCAppSettings *_appSettings;
 }
 
 @end
@@ -20,6 +22,13 @@
 @implementation JCVoicemailAudioPlayer
 
 -(instancetype)initWithVoicemail:(Voicemail *)voicemail delegate:(id<JCVoicemailAudioPlayerDelegate>)delegate
+{
+    JCAppSettings *appSettings = [JCAppSettings sharedSettings];
+    return [self initWithVoicemail:voicemail delegate:delegate appSettings:appSettings];
+}
+
+
+-(instancetype)initWithVoicemail:(Voicemail *)voicemail delegate:(id<JCVoicemailAudioPlayerDelegate>)delegate appSettings:(JCAppSettings *)appSettings
 {
     self = [super init];
     if (self) {
@@ -32,6 +41,9 @@
         __autoreleasing NSError *error;
         _player = [[AVAudioPlayer alloc] initWithData:voicemail.data fileTypeHint:AVFileTypeWAVE error:&error];
         
+        _appSettings = appSettings;
+        self.speaker = appSettings.isVoicemailOnSpeaker;
+        
         if (error) {
             [_delegate voicemailAudioPlayer:self didFailWithError:error];
         }
@@ -41,9 +53,6 @@
         if (result) {
             [_delegate voicemailAudioPlayer:self didLoadWithDuration:_player.duration];
         }
-        
-        // Notifiy of the initial speaker state
-        [_delegate voicemailAudioPlayer:self didChangeToSpeaker:self.speaker];
         
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
@@ -62,6 +71,8 @@
 
 -(void)setSpeaker:(BOOL)speaker
 {
+    _appSettings.voicemailOnSpeaker = speaker;
+    
     __autoreleasing NSError *error;
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
