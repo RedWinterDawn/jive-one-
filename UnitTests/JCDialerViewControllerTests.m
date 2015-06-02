@@ -210,7 +210,7 @@
 -(void)test_dial_withoutPhoneNumber
 {
     // Given
-    Line *line = [Line MR_createInContext:self.context];
+    Line *line = [Line MR_createEntityInContext:self.context];
     OCMStub([self.vc.authenticationManager line]).andReturn(line);
     
     OutgoingCall *outgoingCall = [OutgoingCall MR_createEntityInContext:self.context];
