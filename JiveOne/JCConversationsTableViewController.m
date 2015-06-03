@@ -26,6 +26,9 @@
 NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
 @interface JCConversationsTableViewController () <JCConversationGroupsResultsControllerDelegate, JCConversationTableViewCellDelegate>
+{
+    id<JCConversationGroupObject> _selectedConversationGroup;
+}
 
 @property (nonatomic, strong) JCConversationGroupsResultsController *conversationGroupsResultsController;
 
@@ -121,6 +124,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
         if ([viewController isKindOfClass:[JCConversationViewController class]]) {
             JCConversationViewController *messagesViewController = (JCConversationViewController *)viewController;
             id<JCConversationGroupObject> conversationGroup = (id<JCConversationGroupObject>)[self objectAtIndexPath:[self.tableView indexPathForCell:sender]];
+//            _conversationGroupsResultsController = conversationGroup;
             messagesViewController.conversationGroup = conversationGroup;
         }
     }
@@ -159,6 +163,16 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 -(void)conversationGroupResultsControllerWillChangeContent:(JCConversationGroupsResultsController *)controller
 {
     [self.tableView beginUpdates];
+    _selectedConversationGroup = [self objectAtIndexPath:(NSIndexPath *)self.tableView.indexPathForSelectedRow];
+    
+    
+    // get from the table view the sleected index path.
+    // use index path to get the selected conversation group object and save into ivar.
+}
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"row %ld", (long)indexPath);
+    
+    
 }
 
 -(void)conversationGroupResultsController:(JCConversationGroupsResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(JCConversationGroupsResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
@@ -190,6 +204,11 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 -(void)conversationGroupResultsControllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView endUpdates];
+    
+     NSIndexPath * selectedObject = [self indexPathOfObject:_selectedConversationGroup];
+    [self.tableView selectRowAtIndexPath:selectedObject animated:NO scrollPosition:UITableViewScrollPositionNone];
+    // find the new index path of the selected conversation group ivar.
+    // select that in the table view.
 }
 
 -(void)didBlockConverastionTableViewCell:(JCConversationTableViewCell *)cell
