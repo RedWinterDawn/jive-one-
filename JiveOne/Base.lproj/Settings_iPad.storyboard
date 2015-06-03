@@ -185,6 +185,24 @@
                                             <outletCollection property="gestureRecognizers" destination="QCN-jP-O4P" appends="YES" id="Z63-fK-jTj"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="iel-Aw-Us5" style="IBUITableViewCellStyleDefault" id="Xd8-TU-4tR">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xd8-TU-4tR" id="Mry-bR-ubN">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="User Voice" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iel-Aw-Us5">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="scq-5X-Y41" kind="showDetail" id="Kqc-nj-fsE"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="bCr-bN-IuJ" style="IBUITableViewCellStyleDefault" id="AUi-2X-cGA">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AUi-2X-cGA" id="tfH-B6-DLL">
@@ -990,6 +1008,22 @@
             <point key="canvasLocation" x="4011" y="3351"/>
         </scene>
         <!--Navigation Controller-->
+        <scene sceneID="cFM-Ce-sqm">
+            <objects>
+                <navigationController id="scq-5X-Y41" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="del-mu-QSS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="gzg-A9-pOq" kind="showDetail" id="sjI-iG-Lbj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SDV-al-Csa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1870" y="1233"/>
+        </scene>
+        <!--Navigation Controller-->
         <scene sceneID="sAS-Qt-B2h">
             <objects>
                 <navigationController id="Cc8-8H-shj" sceneMemberID="viewController">
@@ -1005,6 +1039,76 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UUN-5U-iFq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3187.5" y="2548"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="SPy-qE-myt">
+            <objects>
+                <viewController id="gzg-A9-pOq" customClass="UVViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8pN-p9-IO6"/>
+                        <viewControllerLayoutGuide type="bottom" id="emT-Sq-o5l"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uSx-ES-CfK">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a7S-Mx-wS9">
+                                <rect key="frame" x="255" y="131" width="90" height="30"/>
+                                <state key="normal" title="UserVoice">
+                                    <color key="titleColor" red="0.0" green="0.46666666670000001" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="launchUserVoice:" destination="gzg-A9-pOq" eventType="touchUpInside" id="SP6-VV-ILZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zpp-sE-96k">
+                                <rect key="frame" x="265" y="207" width="70" height="30"/>
+                                <state key="normal" title="Idea Form">
+                                    <color key="titleColor" red="0.0" green="0.46666666670000001" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="launchIdeaForm:" destination="gzg-A9-pOq" eventType="touchUpInside" id="5Yu-yy-wri"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ydw-Xj-TpL">
+                                <rect key="frame" x="278" y="169" width="45" height="30"/>
+                                <state key="normal" title="Forum">
+                                    <color key="titleColor" red="0.0" green="0.46666666670000001" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="launchForum:" destination="gzg-A9-pOq" eventType="touchUpInside" id="1vD-CF-cjl"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JBJ-aM-FaK">
+                                <rect key="frame" x="259" y="245" width="82" height="30"/>
+                                <state key="normal" title="Ticket Form">
+                                    <color key="titleColor" red="0.0" green="0.46666666670000001" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="launchTicketForm:" destination="gzg-A9-pOq" eventType="touchUpInside" id="64I-rj-4Ht"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="a7S-Mx-wS9" secondAttribute="centerX" id="4MG-V5-VUp"/>
+                            <constraint firstAttribute="centerY" secondItem="Ydw-Xj-TpL" secondAttribute="centerY" constant="116" id="GfS-uv-dqh"/>
+                            <constraint firstAttribute="centerX" secondItem="zpp-sE-96k" secondAttribute="centerX" id="Kx7-3G-3wU"/>
+                            <constraint firstItem="Ydw-Xj-TpL" firstAttribute="top" secondItem="a7S-Mx-wS9" secondAttribute="bottom" constant="8" id="kpb-K0-cBh"/>
+                            <constraint firstItem="zpp-sE-96k" firstAttribute="top" secondItem="Ydw-Xj-TpL" secondAttribute="bottom" constant="8" id="owW-31-NpB"/>
+                            <constraint firstItem="a7S-Mx-wS9" firstAttribute="top" secondItem="8pN-p9-IO6" secondAttribute="bottom" constant="111" id="tMI-TX-6wM"/>
+                            <constraint firstItem="JBJ-aM-FaK" firstAttribute="top" secondItem="zpp-sE-96k" secondAttribute="bottom" constant="8" id="tvP-x8-l2F"/>
+                            <constraint firstAttribute="centerX" secondItem="JBJ-aM-FaK" secondAttribute="centerX" id="uX2-QC-tpg"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E4h-Hi-yWw" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1819" y="2095"/>
         </scene>
     </scenes>
     <resources>
