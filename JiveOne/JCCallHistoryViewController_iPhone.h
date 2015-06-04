@@ -10,6 +10,7 @@
 #import "JCCallHistoryTableViewController.h"
 
 @interface JCCallHistoryViewController_iPhone : UIViewController
+- (IBAction)clearHistBtn:(id)sender;
 
 @property (nonatomic, readonly) JCCallHistoryTableViewController *callHistoryTableViewController;
 

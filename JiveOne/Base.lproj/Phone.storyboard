@@ -938,7 +938,20 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="Call History" id="k2g-vl-Yo3"/>
+                    <navigationItem key="navigationItem" title="Call History" id="k2g-vl-Yo3">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="RsE-Gm-oEp">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BWY-9O-1aq">
+                                <rect key="frame" x="-23" y="-15" width="133" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Clear">
+                                    <color key="titleColor" red="0.34901960780000002" green="0.64313725489999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearHistBtn:" destination="BJr-Wp-k04" eventType="touchUpInside" id="UJQ-za-5k6"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zDx-kG-XzS" userLabel="First Responder" sceneMemberID="firstResponder"/>
