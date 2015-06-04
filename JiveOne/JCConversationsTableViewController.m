@@ -26,6 +26,10 @@
 NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
 @interface JCConversationsTableViewController () <JCConversationGroupsResultsControllerDelegate, JCConversationTableViewCellDelegate>
+{
+    id<JCConversationGroupObject> _selectedConversationGroup;
+    NSIndexPath *_selectedIndexPath;
+}
 
 @property (nonatomic, strong) JCConversationGroupsResultsController *conversationGroupsResultsController;
 
@@ -86,7 +90,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     cell.detail.text = object.detailText;
     cell.date.text   = object.formattedModifiedShortDate;
     cell.read        = object.isRead;
-//    cell.imageView.image = [UIImage imageNamed:@"avatar"];
+    //cell.imageView.image = [UIImage imageNamed:@"avatar"];
 }
 
 - (IBAction)refreshTable:(id)sender {
@@ -159,6 +163,8 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 -(void)conversationGroupResultsControllerWillChangeContent:(JCConversationGroupsResultsController *)controller
 {
     [self.tableView beginUpdates];
+    _selectedIndexPath = self.tableView.indexPathForSelectedRow;
+    _selectedConversationGroup = [self objectAtIndexPath:_selectedIndexPath];
 }
 
 -(void)conversationGroupResultsController:(JCConversationGroupsResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(JCConversationGroupsResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
@@ -190,6 +196,12 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 -(void)conversationGroupResultsControllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView endUpdates];
+    
+    NSIndexPath *indexPath = [self indexPathOfObject:_selectedConversationGroup];
+    UITableViewScrollPosition scrollPosition = ![_selectedIndexPath isEqual:indexPath] ? UITableViewScrollPositionTop : UITableViewScrollPositionNone;
+    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:scrollPosition];
+    _selectedIndexPath = nil;
+    _selectedConversationGroup = nil;
 }
 
 -(void)didBlockConverastionTableViewCell:(JCConversationTableViewCell *)cell
