@@ -19,7 +19,7 @@
 #import "Extension.h"
 
 #import "JCPhoneManager.h"
-#import "JCContactDetailTableViewController.h"
+#import "JCContactDetailController.h"
 
 @interface JCContactsTableViewController()
 {
@@ -83,12 +83,12 @@
         viewController = ((UINavigationController *)viewController).topViewController;
     }
     
-    if ([viewController isKindOfClass:[JCContactDetailTableViewController class]]) {
+    if ([viewController isKindOfClass:[JCContactDetailController class]]) {
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
             JCPersonManagedObject *person = (JCPersonManagedObject *)[self objectAtIndexPath:indexPath];
-            JCContactDetailTableViewController *detailViewController = (JCContactDetailTableViewController *)viewController;
+            JCContactDetailController *detailViewController = (JCContactDetailController *)viewController;
             detailViewController.phoneNumber = person;
         }
     }

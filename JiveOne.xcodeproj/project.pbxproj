@@ -146,7 +146,7 @@
 		5D3F1ADD1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1ADC1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m */; };
 		5D3F1AE01AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1ADF1AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.m */; };
 		5D3F1AE41AE7FEE200C59A63 /* JCAppMenuSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1AE31AE7FEE200C59A63 /* JCAppMenuSplitViewController.m */; };
-		5D3F1AEA1AE8154E00C59A63 /* JCContactDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1AE91AE8154E00C59A63 /* JCContactDetailTableViewController.m */; };
+		5D3F1AEA1AE8154E00C59A63 /* JCContactDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1AE91AE8154E00C59A63 /* JCContactDetailController.m */; };
 		5D490E431A89751F004B62C0 /* JCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E421A89751F004B62C0 /* JCNavigationController.m */; };
 		5D490E461A89774C004B62C0 /* JCMessageParticipantTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E451A89774C004B62C0 /* JCMessageParticipantTableViewController.m */; };
 		5D490E571A8AD0A1004B62C0 /* JCUnknownNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E561A8AD0A1004B62C0 /* JCUnknownNumber.m */; };
@@ -205,6 +205,7 @@
 		5D8E33ED1B0A560500FD8AE1 /* Contacts_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33EF1B0A560500FD8AE1 /* Contacts_iPad.storyboard */; };
 		5D8E33FC1B0A5D7000FD8AE1 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33FE1B0A5D7000FD8AE1 /* Login.storyboard */; };
 		5D8E340C1B0A84AA00FD8AE1 /* Settings_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E340E1B0A84AA00FD8AE1 /* Settings_iPad.storyboard */; };
+		5D8FE40B1B220AB0004FD594 /* JCEditableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE40A1B220AB0004FD594 /* JCEditableTableViewCell.m */; };
 		5D9382C01B0F94F800C5CEA0 /* Chat.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D9382BF1B0F94F800C5CEA0 /* Chat.strings */; };
 		5D97A7FF1A828B4700A4434D /* JCIntercomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */; };
 		5D9A5E221A24E30A00E8274C /* JCPhoneAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */; };
@@ -530,8 +531,8 @@
 		5D3F1AE31AE7FEE200C59A63 /* JCAppMenuSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppMenuSplitViewController.m; sourceTree = "<group>"; };
 		5D3F1AE51AE806A400C59A63 /* JCSMSMessageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSMSMessageManager.h; sourceTree = "<group>"; };
 		5D3F1AE61AE806A400C59A63 /* JCSMSMessageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSMSMessageManager.m; sourceTree = "<group>"; };
-		5D3F1AE81AE8154E00C59A63 /* JCContactDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactDetailTableViewController.h; sourceTree = "<group>"; };
-		5D3F1AE91AE8154E00C59A63 /* JCContactDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactDetailTableViewController.m; sourceTree = "<group>"; };
+		5D3F1AE81AE8154E00C59A63 /* JCContactDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactDetailController.h; sourceTree = "<group>"; };
+		5D3F1AE91AE8154E00C59A63 /* JCContactDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactDetailController.m; sourceTree = "<group>"; };
 		5D490E411A89751F004B62C0 /* JCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNavigationController.h; sourceTree = "<group>"; };
 		5D490E421A89751F004B62C0 /* JCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNavigationController.m; sourceTree = "<group>"; };
 		5D490E441A89774C004B62C0 /* JCMessageParticipantTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessageParticipantTableViewController.h; sourceTree = "<group>"; };
@@ -692,6 +693,8 @@
 		5D8E34141B0A84C500FD8AE1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Settings_iPad.strings; sourceTree = "<group>"; };
 		5D8E34161B0A84C700FD8AE1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Settings_iPad.strings; sourceTree = "<group>"; };
 		5D8E34181B0A84C900FD8AE1 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Settings_iPad.strings; sourceTree = "<group>"; };
+		5D8FE4091B220AB0004FD594 /* JCEditableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCEditableTableViewCell.h; sourceTree = "<group>"; };
+		5D8FE40A1B220AB0004FD594 /* JCEditableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCEditableTableViewCell.m; sourceTree = "<group>"; };
 		5D9382BF1B0F94F800C5CEA0 /* Chat.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Chat.strings; sourceTree = "<group>"; };
 		5D97A7FD1A828B4700A4434D /* JCIntercomTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCIntercomTableViewController.h; sourceTree = "<group>"; };
 		5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCIntercomTableViewController.m; sourceTree = "<group>"; };
@@ -990,6 +993,8 @@
 				B7AEDD571ABA08670063033E /* JCActionSheet.m */,
 				5D3970D61B18FDA5009EADD6 /* JCMaskedRoundedButton.h */,
 				5D3970D71B18FDA5009EADD6 /* JCMaskedRoundedButton.m */,
+				5D8FE4091B220AB0004FD594 /* JCEditableTableViewCell.h */,
+				5D8FE40A1B220AB0004FD594 /* JCEditableTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1687,8 +1692,8 @@
 				2747F1651A07E0F300E3FE73 /* JCContactsViewController.m */,
 				276E06781A0293BC00CD2827 /* JCContactsTableViewController.h */,
 				276E06791A0293BC00CD2827 /* JCContactsTableViewController.m */,
-				5D3F1AE81AE8154E00C59A63 /* JCContactDetailTableViewController.h */,
-				5D3F1AE91AE8154E00C59A63 /* JCContactDetailTableViewController.m */,
+				5D3F1AE81AE8154E00C59A63 /* JCContactDetailController.h */,
+				5D3F1AE91AE8154E00C59A63 /* JCContactDetailController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2262,7 +2267,7 @@
 				5D6AE3671A094A9C002BDAAF /* NSDictionary+Validations.m in Sources */,
 				279A4E2C19DA91E100E8AB7B /* JCSipManager.m in Sources */,
 				5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */,
-				5D3F1AEA1AE8154E00C59A63 /* JCContactDetailTableViewController.m in Sources */,
+				5D3F1AEA1AE8154E00C59A63 /* JCContactDetailController.m in Sources */,
 				27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */,
 				5D490E731A93A85F004B62C0 /* JCAlertView.m in Sources */,
 				5D2EDB871A3CEBE80031F7AD /* JCDebugUsersTableViewController.m in Sources */,
@@ -2308,6 +2313,7 @@
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				F8C9A7EC19EC691C0049A715 /* JCCallHistoryCell.m in Sources */,
 				5D241FEA1A38C4CE008B498A /* JCLineCell.m in Sources */,
+				5D8FE40B1B220AB0004FD594 /* JCEditableTableViewCell.m in Sources */,
 				5D25F81D1AE0381600981DB6 /* JCPhoneNumberManagedObject.m in Sources */,
 				5D1BBE5B19EDC9EF006526B2 /* JCMergeButton.m in Sources */,
 				5D9A5E221A24E30A00E8274C /* JCPhoneAudioManager.m in Sources */,
