@@ -11,7 +11,7 @@
 
 @class InternalExtension;
 
-@interface ContactGroup : NSManagedObject
+@interface InternalExtensionGroup : NSManagedObject
 
 @property (nonatomic, retain) NSString * groupId;
 @property (nonatomic, retain) NSString * name;
@@ -20,7 +20,7 @@
 
 @end
 
-@interface ContactGroup (CoreDataGeneratedAccessors)
+@interface InternalExtensionGroup (CoreDataGeneratedAccessors)
 
 - (void)addInternalExtensionsObject:(InternalExtension *)value;
 - (void)removeInternalExtensionsObject:(InternalExtension *)value;

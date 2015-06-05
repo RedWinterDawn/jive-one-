@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "ContactGroup.h"
+#import "InternalExtensionGroup.h"
 
 
-@implementation ContactGroup
+@implementation InternalExtensionGroup
 
 @dynamic groupId;
 @dynamic name;

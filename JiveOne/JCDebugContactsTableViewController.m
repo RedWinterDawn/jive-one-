@@ -8,7 +8,7 @@
 
 #import "JCDebugContactsTableViewController.h"
 #import "InternalExtension.h"
-#import "ContactGroup.h"
+#import "InternalExtensionGroup.h"
 
 @implementation JCDebugContactsTableViewController
 

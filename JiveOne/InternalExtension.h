@@ -9,7 +9,7 @@
 #import "Extension.h"
 
 @class PBX;
-@class ContactGroup;
+@class InternalExtensionGroup;
 @class RecentLineEvent;
 @class Conversation;
 
@@ -39,8 +39,8 @@
 - (void)addConversations:(NSSet *)values;
 - (void)removeConversations:(NSSet *)values;
 
-- (void)addGroupsObject:(ContactGroup *)value;
-- (void)removeGroupsObject:(ContactGroup *)value;
+- (void)addGroupsObject:(InternalExtensionGroup *)value;
+- (void)removeGroupsObject:(InternalExtensionGroup *)value;
 - (void)addGroups:(NSSet *)values;
 - (void)removeGroups:(NSSet *)values;
 

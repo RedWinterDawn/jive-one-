@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		270559A5196DD11700A7AF35 /* ContactGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 270559A4196DD11700A7AF35 /* ContactGroup.m */; };
+		270559A5196DD11700A7AF35 /* InternalExtensionGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 270559A4196DD11700A7AF35 /* InternalExtensionGroup.m */; };
 		271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */; };
 		272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736698118BD441D0069B4B3 /* JCPersonCell.m */; };
@@ -318,8 +318,8 @@
 
 /* Begin PBXFileReference section */
 		1B209FFD8576BB760529B3CA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		270559A3196DD11700A7AF35 /* ContactGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactGroup.h; sourceTree = "<group>"; };
-		270559A4196DD11700A7AF35 /* ContactGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactGroup.m; sourceTree = "<group>"; };
+		270559A3196DD11700A7AF35 /* InternalExtensionGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternalExtensionGroup.h; sourceTree = "<group>"; };
+		270559A4196DD11700A7AF35 /* InternalExtensionGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InternalExtensionGroup.m; sourceTree = "<group>"; };
 		271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = GTalkNotify.aiff; sourceTree = "<group>"; };
 		272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSMonitor.h; sourceTree = "<group>"; };
 		272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSMonitor.m; sourceTree = "<group>"; };
@@ -1051,8 +1051,8 @@
 				5D490E631A8D29BD004B62C0 /* Extension.m */,
 				5D241FE21A38BAD5008B498A /* InternalExtension.h */,
 				5D241FE31A38BAD5008B498A /* InternalExtension.m */,
-				270559A3196DD11700A7AF35 /* ContactGroup.h */,
-				270559A4196DD11700A7AF35 /* ContactGroup.m */,
+				270559A3196DD11700A7AF35 /* InternalExtensionGroup.h */,
+				270559A4196DD11700A7AF35 /* InternalExtensionGroup.m */,
 				F8C9A7E319EC36340049A715 /* RecentEvent.h */,
 				F8C9A7E419EC36340049A715 /* RecentEvent.m */,
 				5D490E5F1A8D1FF1004B62C0 /* RecentLineEvent.h */,
@@ -2208,7 +2208,7 @@
 				5D2B2C081A30D8AE00938D76 /* JCVisualEffectsView.m in Sources */,
 				F84A087919DF38C8003476E6 /* JCTransferConfirmationViewController.m in Sources */,
 				5DE0F1B519F6D47E000469D0 /* JCRoundedView.m in Sources */,
-				270559A5196DD11700A7AF35 /* ContactGroup.m in Sources */,
+				270559A5196DD11700A7AF35 /* InternalExtensionGroup.m in Sources */,
 				27F64D5919772CCE00F772AA /* PBX.m in Sources */,
 				5DFFF3E01AF9178A0091F479 /* JCDebugBlockedContactsTableViewController.m in Sources */,
 				5D35479519FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m in Sources */,

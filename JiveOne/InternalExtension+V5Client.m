@@ -12,7 +12,7 @@
 #import "JCV5ApiClient.h"
 
 // Models
-#import "ContactGroup.h"
+#import "InternalExtensionGroup.h"
 #import "PBX.h"
 #import "Line.h"
 #import "User.h"
@@ -136,7 +136,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
         if ([object isKindOfClass:[NSDictionary class]]){
             NSDictionary *groupData = (NSDictionary *)object;
             NSString *identifer = [groupData stringValueForKey:kContactResponseGroupIdKey];
-            ContactGroup *group = [self contactGroupForIdentifier:identifer contact:contact];
+            InternalExtensionGroup *group = [self contactGroupForIdentifier:identifer contact:contact];
             group.name = [groupData stringValueForKey:kContactResponseGroupNameKey];
         }
     }
@@ -156,11 +156,11 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     return contact;
 }
 
-+ (ContactGroup *)contactGroupForIdentifier:(NSString *)identifer contact:(InternalExtension *)contact
++ (InternalExtensionGroup *)contactGroupForIdentifier:(NSString *)identifer contact:(InternalExtension *)contact
 {
-    ContactGroup *group = [ContactGroup MR_findFirstByAttribute:NSStringFromSelector(@selector(groupId)) withValue:identifer inContext:contact.managedObjectContext];
+    InternalExtensionGroup *group = [InternalExtensionGroup MR_findFirstByAttribute:NSStringFromSelector(@selector(groupId)) withValue:identifer inContext:contact.managedObjectContext];
     if (!group) {
-        group = [ContactGroup MR_createEntityInContext:contact.managedObjectContext];
+        group = [InternalExtensionGroup MR_createEntityInContext:contact.managedObjectContext];
         group.groupId = identifer;
     }
     

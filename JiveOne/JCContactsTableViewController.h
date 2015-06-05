@@ -9,11 +9,11 @@
 #import "JCFetchedResultsTableViewController.h"
 
 @class JCContactsTableViewController;
-@class ContactGroup;
+@class InternalExtensionGroup;
 
 @protocol JCContactsTableViewControllerDelegate <NSObject>
 
--(void)contactsTableViewController:(JCContactsTableViewController *)contactsViewController didSelectContactGroup:(ContactGroup *)contactGroup;
+-(void)contactsTableViewController:(JCContactsTableViewController *)contactsViewController didSelectContactGroup:(InternalExtensionGroup *)contactGroup;
 
 @end
 
@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, JCContactFilter) {
 
 @property (nonatomic, weak) IBOutlet id<JCContactsTableViewControllerDelegate> delegate;
 
-@property (nonatomic, strong) ContactGroup *contactGroup;
+@property (nonatomic, strong) InternalExtensionGroup *contactGroup;
 @property (nonatomic) JCContactFilter filterType;
 
 @end

@@ -8,10 +8,10 @@
 
 #import "JCFetchedResultsTableViewController.h"
 
-@class ContactGroup;
+@class InternalExtensionGroup;
 
 @interface JCDebugContactsTableViewController : JCFetchedResultsTableViewController
 
-@property (nonatomic, strong) ContactGroup *contactGroup;
+@property (nonatomic, strong) InternalExtensionGroup *contactGroup;
 
 @end

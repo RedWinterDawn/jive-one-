@@ -12,7 +12,7 @@
 #import "JCContactsViewController.h"
 #import "JCContactsTableViewController.h"
 #import "JCPhoneManager.h"
-#import "ContactGroup.h"
+#import "InternalExtensionGroup.h"
 #import "JCUnknownNumber.h"
 #import "JCAddressBookNumber.h"
 #import "JCAddressBookPerson.h"
@@ -34,7 +34,7 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
     [super viewDidLoad];
     self.tabBar.selectedItem = [self.tabBar.items objectAtIndex:0];
     
-    ContactGroup *contactGroup = self.contactGroup;
+    InternalExtensionGroup *contactGroup = self.contactGroup;
     if (contactGroup) {
         self.title = contactGroup.name;
     }
@@ -69,8 +69,8 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
         JCContactsViewController *contacts = (JCContactsViewController *)viewController;
         NSIndexPath *indexPath = [_contactsTableViewController.tableView indexPathForSelectedRow];
         id object = [_contactsTableViewController objectAtIndexPath:indexPath];
-        if ([object isKindOfClass:[ContactGroup class]]) {
-            contacts.contactGroup = (ContactGroup *)object;
+        if ([object isKindOfClass:[InternalExtensionGroup class]]) {
+            contacts.contactGroup = (InternalExtensionGroup *)object;
         }
     }
 }
@@ -179,7 +179,7 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 
 #pragma mark JCContactsTableViewControllerDelegate
 
--(void)contactsTableViewController:(JCContactsTableViewController *)contactsViewController didSelectContactGroup:(ContactGroup *)contactGroup
+-(void)contactsTableViewController:(JCContactsTableViewController *)contactsViewController didSelectContactGroup:(InternalExtensionGroup *)contactGroup
 {
     [self performSegueWithIdentifier:kJCContactsViewControllerContactGroupSegueIdentifier sender:self];
 }

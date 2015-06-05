@@ -15,7 +15,7 @@
 #import "Line.h"
 #import "PBX.h"
 #import "User.h"
-#import "ContactGroup.h"
+#import "InternalExtensionGroup.h"
 #import "Extension.h"
 
 #import "JCPhoneManager.h"
@@ -50,8 +50,8 @@
     else if ([object isKindOfClass:[Line class]] && [cell isKindOfClass:[JCLineCell class]]) {
         ((JCLineCell *)cell).line = (Line *)object;
     }
-    else if ([object isKindOfClass:[ContactGroup class]]) {
-        cell.textLabel.text = ((ContactGroup *)object).name;
+    else if ([object isKindOfClass:[InternalExtensionGroup class]]) {
+        cell.textLabel.text = ((InternalExtensionGroup *)object).name;
     }
 }
 
@@ -67,7 +67,7 @@
         [self configureCell:cell withObject:object];
         return cell;
     }
-    else if ([object isKindOfClass:[ContactGroup class]])
+    else if ([object isKindOfClass:[InternalExtensionGroup class]])
     {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactGroupCell"];
         [self configureCell:cell withObject:object];
@@ -147,10 +147,10 @@
                 NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", _searchText];
                 predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
             }
-            _fetchRequest = [ContactGroup MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+            _fetchRequest = [InternalExtensionGroup MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
         }
         else {
-            ContactGroup *contactGroup = self.contactGroup;
+            InternalExtensionGroup *contactGroup = self.contactGroup;
             if (contactGroup) {
                 NSPredicate *contactGroupPredicate =[NSPredicate predicateWithFormat:@"groups CONTAINS[cd] %@", contactGroup];
                 predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, contactGroupPredicate]];
@@ -208,9 +208,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id object = [self objectAtIndexPath:indexPath];
-    if ([object isKindOfClass:[ContactGroup class]]) {
+    if ([object isKindOfClass:[InternalExtensionGroup class]]) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(contactsTableViewController:didSelectContactGroup:)]) {
-            [self.delegate contactsTableViewController:self didSelectContactGroup:(ContactGroup *)object];
+            [self.delegate contactsTableViewController:self didSelectContactGroup:(InternalExtensionGroup *)object];
         }
     }
 }
