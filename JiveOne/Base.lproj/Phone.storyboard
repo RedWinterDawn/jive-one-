@@ -814,7 +814,14 @@
                             <outlet property="delegate" destination="EQ3-5x-TEg" id="ChX-wF-xRD"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Voicemail" id="Z7Z-Gy-oE8"/>
+                    <navigationItem key="navigationItem" title="Voicemail" id="Z7Z-Gy-oE8">
+                        <barButtonItem key="rightBarButtonItem" title="Clear" id="cHI-JS-mn5">
+                            <color key="tintColor" red="0.34901960780000002" green="0.64313725489999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="clear:" destination="EQ3-5x-TEg" id="53z-s3-LBT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Il0-ie-CSF">
                         <autoresizingMask key="autoresizingMask"/>
                         <connections>
@@ -870,7 +877,7 @@
         <!--Call History-->
         <scene sceneID="3kr-cV-t0G">
             <objects>
-                <viewController storyboardIdentifier="JCHistroyContainerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BJr-Wp-k04" customClass="JCCallHistoryViewController_iPhone" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JCHistroyContainerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BJr-Wp-k04" customClass="JCCallHistoryViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VaU-TE-FUZ"/>
                         <viewControllerLayoutGuide type="bottom" id="pBy-Oi-cax"/>
@@ -942,7 +949,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Clear" id="Kji-Db-lbK">
                             <color key="tintColor" red="0.34901960780000002" green="0.64313725489999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <action selector="clearHistBtn:" destination="BJr-Wp-k04" id="SW4-ca-tLl"/>
+                                <action selector="clear:" destination="BJr-Wp-k04" id="0Gs-wa-a0d"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1044,7 +1051,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tLx-kA-CiO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1872" y="-2535"/>
+            <point key="canvasLocation" x="1861" y="-2523"/>
         </scene>
         <!--Storyboard Loader View Controller-->
         <scene sceneID="Q4B-cG-aMk">

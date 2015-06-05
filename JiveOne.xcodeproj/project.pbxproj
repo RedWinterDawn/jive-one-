@@ -288,7 +288,7 @@
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
 		F81EA8AE1A925EE400081C81 /* SMSMessage+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = F81EA8AD1A925EE400081C81 /* SMSMessage+V5Client.m */; };
 		F84A087919DF38C8003476E6 /* JCTransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */; };
-		F85DAD0919EF07D30075AAA2 /* JCCallHistoryViewController_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = F85DAD0819EF07D30075AAA2 /* JCCallHistoryViewController_iPhone.m */; };
+		F85DAD0919EF07D30075AAA2 /* JCCallHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F85DAD0819EF07D30075AAA2 /* JCCallHistoryViewController.m */; };
 		F8910FD21A71EC590040B8C7 /* LoggerClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F8910FD01A71EC590040B8C7 /* LoggerClient.m */; };
 		F8A2BC0B19DB5B3C00251310 /* JCCallOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A2BC0A19DB5B3C00251310 /* JCCallOptionsView.m */; };
 		F8B62E5B19DB091500AF98D3 /* JCRoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */; };
@@ -860,8 +860,8 @@
 		F84FAF9C1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF9D1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF9E1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
-		F85DAD0719EF07D30075AAA2 /* JCCallHistoryViewController_iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallHistoryViewController_iPhone.h; sourceTree = "<group>"; };
-		F85DAD0819EF07D30075AAA2 /* JCCallHistoryViewController_iPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallHistoryViewController_iPhone.m; sourceTree = "<group>"; };
+		F85DAD0719EF07D30075AAA2 /* JCCallHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallHistoryViewController.h; sourceTree = "<group>"; };
+		F85DAD0819EF07D30075AAA2 /* JCCallHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallHistoryViewController.m; sourceTree = "<group>"; };
 		F8910FCF1A71EC590040B8C7 /* LoggerClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerClient.h; sourceTree = "<group>"; };
 		F8910FD01A71EC590040B8C7 /* LoggerClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoggerClient.m; sourceTree = "<group>"; };
 		F8910FD11A71EC590040B8C7 /* LoggerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerCommon.h; sourceTree = "<group>"; };
@@ -1388,15 +1388,6 @@
 			name = iPad;
 			sourceTree = "<group>";
 		};
-		5D25F84C1AE6E84C00981DB6 /* iPhone */ = {
-			isa = PBXGroup;
-			children = (
-				F85DAD0719EF07D30075AAA2 /* JCCallHistoryViewController_iPhone.h */,
-				F85DAD0819EF07D30075AAA2 /* JCCallHistoryViewController_iPhone.m */,
-			);
-			name = iPhone;
-			sourceTree = "<group>";
-		};
 		5D2D73C31ACF97AE00B98BDF /* Translations */ = {
 			isa = PBXGroup;
 			children = (
@@ -1764,9 +1755,10 @@
 		5DA30DCC1AD7068D008856DC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F85DAD0719EF07D30075AAA2 /* JCCallHistoryViewController.h */,
+				F85DAD0819EF07D30075AAA2 /* JCCallHistoryViewController.m */,
 				F8C9A7E719EC5F4C0049A715 /* JCCallHistoryTableViewController.h */,
 				F8C9A7E819EC5F4C0049A715 /* JCCallHistoryTableViewController.m */,
-				5D25F84C1AE6E84C00981DB6 /* iPhone */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2200,7 +2192,7 @@
 				F8C9A7E919EC5F4C0049A715 /* JCCallHistoryTableViewController.m in Sources */,
 				5D490E701A8E81AF004B62C0 /* JCConversationTableViewCell.m in Sources */,
 				5D62436F1A65B7DF001DF88E /* JCManager.m in Sources */,
-				F85DAD0919EF07D30075AAA2 /* JCCallHistoryViewController_iPhone.m in Sources */,
+				F85DAD0919EF07D30075AAA2 /* JCCallHistoryViewController.m in Sources */,
 				F8C9A7D719E884D30049A715 /* MissedCall.m in Sources */,
 				5D62FAC91AC9EA5500C6DE05 /* JCContactCollectionViewCell.m in Sources */,
 				F8C9A7D419E884D20049A715 /* OutgoingCall.m in Sources */,

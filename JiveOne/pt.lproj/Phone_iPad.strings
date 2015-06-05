@@ -44,11 +44,14 @@
 /* Class = "UILabel"; text = "PQRS"; ObjectID = "YCw-kb-mRe"; */
 "YCw-kb-mRe.text" = "PQRS";
 
+/* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "dp5-3A-4aJ"; */
+"dp5-3A-4aJ.title" = "Claro";
+
+/* Class = "UINavigationItem"; title = "History"; ObjectID = "eVx-Ji-0H8"; */
+"eVx-Ji-0H8.title" = "History";
+
 /* Class = "UILabel"; text = "DEF"; ObjectID = "utJ-wf-z8v"; */
 "utJ-wf-z8v.text" = "DEF";
-
-/* Class = "UILabel"; text = "Confidence: %@"; ObjectID = "zDJ-eE-vfh"; */
-"zDJ-eE-vfh.text" = "Confidence: %@";
 
 /* Class = "UILabel"; text = "GHI"; ObjectID = "zzd-cv-BlF"; */
 "zzd-cv-BlF.text" = "GHI";

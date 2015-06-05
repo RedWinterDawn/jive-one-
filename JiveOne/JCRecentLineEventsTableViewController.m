@@ -224,6 +224,35 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     }
 }
 
+- (IBAction)clear:(id)sender
+{
+    NSPredicate *predicate = self.fetchedResultsController.fetchRequest.predicate;
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        NSArray *eventsToDelete = nil;
+        
+        switch (self.viewFilter) {
+            case JCRecentLineEventsViewAllCalls:
+                eventsToDelete = [Call MR_findAllWithPredicate:predicate inContext:localContext];
+                break;
+                
+            case JCRecentLineEventsViewMissedCalls:
+                eventsToDelete = [MissedCall MR_findAllWithPredicate:predicate inContext:localContext];
+                break;
+                
+            case JCRecentLineEventsViewVoicemails:
+                eventsToDelete = [Voicemail MR_findAllWithPredicate:predicate inContext:localContext];
+                break;
+                
+            default:
+                break;
+        }
+        
+        for (MissedCall *event in eventsToDelete) {
+            [event markForDeletion:NULL];
+        }
+    }];
+}
+
 #pragma mark - Getters -
 
 -(NSFetchedResultsController *)fetchedResultsController

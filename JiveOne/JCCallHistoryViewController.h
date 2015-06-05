@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "JCCallHistoryTableViewController.h"
 
-@interface JCCallHistoryViewController_iPhone : UIViewController
-- (IBAction)clearHistBtn:(id)sender;
+@interface JCCallHistoryViewController : UIViewController
 
 @property (nonatomic, readonly) JCCallHistoryTableViewController *callHistoryTableViewController;
 
--(IBAction)toggleFilterState:(id)sender;
+- (IBAction)toggleFilterState:(id)sender;
+- (IBAction)clear:(id)sender;
 
 @end

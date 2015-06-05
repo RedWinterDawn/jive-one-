@@ -6,10 +6,11 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCallHistoryViewController_iPhone.h"
+#import "JCCallHistoryViewController.h"
 #import "MissedCall.h"
+#import "Voicemail.h"
 
-@implementation JCCallHistoryViewController_iPhone
+@implementation JCCallHistoryViewController
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -28,13 +29,16 @@
                 filter = JCRecentLineEventsViewMissedCalls;
                 break;
                 
+            case 2:
+                filter = JCRecentLineEventsViewVoicemails;
+                break;
+                
             default:
                 filter = JCRecentLineEventsViewAllCalls;
                 break;
         }
         
         _callHistoryTableViewController.viewFilter = filter;
-        
     }
 }
 
@@ -50,29 +54,6 @@
     }];
 }
 
--(void)clearAllEvents{
-    
-    NSPredicate *predicate = _callHistoryTableViewController.fetchedResultsController.fetchRequest.predicate;
-    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-        NSArray *eventsToDelete = nil;
-        switch (_callHistoryTableViewController.viewFilter) {
-            case JCRecentLineEventsViewAllCalls:
-                eventsToDelete = [Call MR_findAllWithPredicate:predicate inContext:localContext];
-                break;
-                
-        case JCRecentLineEventsViewMissedCalls:
-                eventsToDelete = [MissedCall MR_findAllWithPredicate:predicate inContext:localContext];
-                break;
-                
-            default:
-                break;
-        }
-        for (MissedCall *event in eventsToDelete) {
-            [event markForDeletion:NULL];
-        }
-    }];
-}
-
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -84,7 +65,8 @@
 }
 
 #pragma mark - Actions
-- (IBAction)clearHistBtn:(id)sender {
-    [self clearAllEvents];
+- (IBAction)clear:(id)sender
+{
+    [_callHistoryTableViewController clear:sender];
 }
 @end
