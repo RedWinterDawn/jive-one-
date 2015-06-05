@@ -32,6 +32,9 @@
 /* Class = "UITabBarItem"; title = "Keypad"; ObjectID = "bsn-3T-LYb"; */
 "bsn-3T-LYb.title" = "Ziffernblock";
 
+/* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "cHI-JS-mn5"; */
+"cHI-JS-mn5.title" = "Klar";
+
 /* Class = "UITabBarItem"; title = "Phone"; ObjectID = "eFd-Wl-GUh"; */
 "eFd-Wl-GUh.title" = "Telefon";
 
