@@ -12,7 +12,7 @@
 #import "JCAuthenticationManager.h"
 
 #import "Extension.h"
-#import "Contact.h"
+#import "InternalExtension.h"
 #import "Line.h"
 #import "PBX.h"
 #import "User.h"
@@ -182,8 +182,8 @@
     
     self.extensionCell.detailTextLabel.text = extension.number;
     [self cell:self.extensionCell setHidden:NO];
-    if ([extension isKindOfClass:[Contact class]]) {
-        NSString *jiveId = ((Contact *)extension).jiveUserId;
+    if ([extension isKindOfClass:[InternalExtension class]]) {
+        NSString *jiveId = ((InternalExtension *)extension).jiveUserId;
         if (jiveId) {
             self.jiveIdCell.detailTextLabel.text = jiveId;
             [self cell:self.jiveIdCell setHidden:NO];

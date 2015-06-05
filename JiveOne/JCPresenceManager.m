@@ -43,7 +43,7 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
 }
 
 
--(JCLinePresence *)linePresenceForContact:(Contact *)contact
+-(JCLinePresence *)linePresenceForContact:(InternalExtension *)contact
 {
     return [self linePresenceForIdentifier:contact.jrn];
 }
@@ -150,7 +150,7 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
     // Create a line presence object to represent the contact.
     NSSet *contacts = pbx.contacts;
     _lines = [NSMutableArray arrayWithCapacity:contacts.count];
-    for (Contact *contact in contacts) {
+    for (InternalExtension *contact in contacts) {
         [_lines addObject:[[JCLinePresence alloc] initWithLineIdentifer:contact.jrn]];
         [JCSocket subscribeToSocketEventsWithIdentifer:contact.jrn entity:contact.jrn type:@"dialog"];
     }

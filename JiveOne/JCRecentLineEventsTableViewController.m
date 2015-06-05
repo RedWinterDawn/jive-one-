@@ -106,9 +106,9 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
         recentEventCell.name.text     = recentLineEvent.titleText;
         recentEventCell.number.text   = recentLineEvent.detailText;
         recentEventCell.read          = recentLineEvent.isRead;
-        Contact *contact = recentLineEvent.contact;
-        if (contact) {
-            recentEventCell.identifier = contact.jrn;
+        InternalExtension *internalExtension = recentLineEvent.internalExtension;
+        if (internalExtension) {
+            recentEventCell.identifier = internalExtension.jrn;
         }
     }
     
@@ -152,11 +152,11 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     }
     
     else if ([viewController isKindOfClass:[JCContactDetailController class]] && recentLineEvent){
-        Contact *contact = recentLineEvent.contact;
+        InternalExtension *internalExtension = recentLineEvent.internalExtension;
         NSArray *localContacts = recentLineEvent.phoneNumbers.allObjects;
         id<JCPhoneNumberDataSource> phoneNumber;
-        if (contact) {
-            phoneNumber = contact;
+        if (internalExtension) {
+            phoneNumber = internalExtension;
         }
         else if (localContacts.count > 0) {
             if (localContacts.count > 1) {

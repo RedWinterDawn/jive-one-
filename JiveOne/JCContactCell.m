@@ -33,7 +33,7 @@ NSString *const kJCContactCellFavoriteButtonText = @"★";
 
 #pragma mark - Setters -
 
--(void)setContact:(Contact *)contact
+-(void)setContact:(InternalExtension *)contact
 {
     _contact = contact;
     self.person = contact;

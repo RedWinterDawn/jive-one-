@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "Contact.h"
+#import "InternalExtension.h"
 
-@interface Contact (V5Client)
+@interface InternalExtension (V5Client)
 
 // Retrives all contacts for a line.
 + (void)downloadContactsForLine:(Line *)line complete:(CompletionHandler)completed;

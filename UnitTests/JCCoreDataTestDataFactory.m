@@ -16,7 +16,7 @@
 #import "Line.h"
 #import "LineConfiguration.h"
 #import "DID.h"
-#import "Contact.h"
+#import "InternalExtension.h"
 
 NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plist";
 
@@ -101,7 +101,7 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
 
 + (void)processContactData:(NSDictionary *)contactData forPbx:(PBX *)pbx
 {
-    Contact *contact = [Contact MR_createEntityInContext:pbx.managedObjectContext];
+    InternalExtension *contact = [InternalExtension MR_createEntityInContext:pbx.managedObjectContext];
     contact.pbx = pbx;
     contact.pbxId = pbx.pbxId;
     

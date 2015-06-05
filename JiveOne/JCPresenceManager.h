@@ -11,13 +11,13 @@
 #import "JCSocketManager.h"
 #import "JCLinePresence.h"
 #import "PBX.h"
-#import "Contact.h"
+#import "InternalExtension.h"
 
 extern NSString *const kJCPresenceManagerLinesChangedNotification;
 
 @interface JCPresenceManager : JCSocketManager
 
--(JCLinePresence *)linePresenceForContact:(Contact *)contact;
+-(JCLinePresence *)linePresenceForContact:(InternalExtension *)contact;
 -(JCLinePresence *)linePresenceForIdentifier:(NSString *)identifier;
 
 +(void)subscribeToPbx:(PBX *)pbx;

@@ -13,7 +13,7 @@
 @class RecentLineEvent;
 @class Conversation;
 
-@interface Contact : Extension
+@interface InternalExtension : Extension
 
 // Attributes
 @property (nonatomic, retain) NSString *jiveUserId;
@@ -27,7 +27,7 @@
 
 @end
 
-@interface Contact (CoreDataGeneratedAccessors)
+@interface InternalExtension (CoreDataGeneratedAccessors)
 
 - (void)addLineEventsObject:(RecentLineEvent *)value;
 - (void)removeLineEventsObject:(RecentLineEvent *)value;

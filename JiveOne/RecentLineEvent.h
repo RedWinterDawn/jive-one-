@@ -12,7 +12,7 @@
 
 #import "JCPhoneNumberDataSource.h"
 
-@class Contact, Line, PhoneNumber;
+@class InternalExtension, Line, PhoneNumber;
 
 @interface RecentLineEvent : RecentEvent <JCPhoneNumberDataSource>
 
@@ -23,7 +23,7 @@
 @property (nonatomic, readwrite, strong) NSString *number;
 
 // Relationships
-@property (nonatomic, strong) Contact *contact;
+@property (nonatomic, strong) InternalExtension *internalExtension;
 @property (nonatomic, strong) Line *line;
 @property (nonatomic, strong) NSSet *phoneNumbers;
 

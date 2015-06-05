@@ -9,22 +9,22 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Contact;
+@class InternalExtension;
 
 @interface ContactGroup : NSManagedObject
 
 @property (nonatomic, retain) NSString * groupId;
 @property (nonatomic, retain) NSString * name;
 
-@property (nonatomic, retain) NSSet *contacts;
+@property (nonatomic, retain) NSSet *internalExtensions;
 
 @end
 
 @interface ContactGroup (CoreDataGeneratedAccessors)
 
-- (void)addContactsObject:(Contact *)value;
-- (void)removeContactsObject:(Contact *)value;
-- (void)addContacts:(NSSet *)values;
-- (void)removeContacts:(NSSet *)values;
+- (void)addInternalExtensionsObject:(InternalExtension *)value;
+- (void)removeInternalExtensionsObject:(InternalExtension *)value;
+- (void)addInternalExtensions:(NSSet *)values;
+- (void)removeInternalExtensions:(NSSet *)values;
 
 @end

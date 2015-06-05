@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "Contact.h"
+#import "InternalExtension.h"
 #import "NSManagedObject+Additions.h"
 
 NSString *kContacktFavoriteAttribute = @"favorite";
 
-@implementation Contact
+@implementation InternalExtension
 
 @dynamic jiveUserId;
 

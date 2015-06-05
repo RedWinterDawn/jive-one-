@@ -7,7 +7,7 @@
 //
 
 #import "RecentLineEvent.h"
-#import "Contact.h"
+#import "InternalExtension.h"
 #import "Line.h"
 
 #import "JCPhoneNumberDataSourceUtils.h"
@@ -20,7 +20,7 @@
 
 #pragma mark - Relationships -
 
-@dynamic contact;
+@dynamic internalExtension;
 @dynamic line;
 @dynamic phoneNumbers;
 
@@ -30,10 +30,10 @@
 {
     NSString *name = self.name;
     if (!name) {
-        Contact *contact = self.contact;
+        InternalExtension *internalExtension = self.internalExtension;
         NSArray *localContacts = self.phoneNumbers.allObjects;
-        if (contact) {
-            name = contact.titleText;
+        if (internalExtension) {
+            name = internalExtension.titleText;
         } else if (localContacts.count > 0) {
             name = [JCMultiPersonPhoneNumber multiPersonPhoneNumberWithPhoneNumbers:localContacts].name;
         } else {

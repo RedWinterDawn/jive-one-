@@ -29,13 +29,13 @@
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCDebugContactsTableViewController class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        ((JCDebugContactsTableViewController *)viewController).contactGroup = [self objectAtIndexPath:indexPath];
+        ((JCDebugContactsTableViewController *)viewController).contactGroup = (ContactGroup *)[self objectAtIndexPath:indexPath];
     }
 }
 
 -(void)configureCell:(UITableViewCell *)cell withObject:(ContactGroup *)contactGroup
 {
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%lu)", contactGroup.name, (unsigned long)contactGroup.contacts.count];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%lu)", contactGroup.name, (unsigned long)contactGroup.internalExtensions.count];
     cell.detailTextLabel.text = contactGroup.groupId;
 }
 

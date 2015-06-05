@@ -7,7 +7,7 @@
 //
 
 #import "Call.h"
-#import "Contact.h"
+#import "InternalExtension.h"
 #import "Line.h"
 #import "JCPhoneNumberDataSource.h"
 #import "PhoneNumber.h"
@@ -34,8 +34,8 @@ NSString *const kCallEntityName = @"Call";
         call.read   = read;
         call.line   = localLine;
         
-        if (number && [number isKindOfClass:[Contact class]]) {
-            call.contact = (Contact *)[localContext objectWithID:((Contact *)number).objectID];
+        if (number && [number isKindOfClass:[InternalExtension class]]) {
+            call.internalExtension = (InternalExtension *)[localContext objectWithID:((InternalExtension *)number).objectID];
         }
         else if(number && [number isKindOfClass:[PhoneNumber class]]) {
             [call addPhoneNumbersObject:(PhoneNumber *)[localContext objectWithID:((PhoneNumber *)number).objectID]];

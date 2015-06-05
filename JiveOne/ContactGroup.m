@@ -14,6 +14,6 @@
 @dynamic groupId;
 @dynamic name;
 
-@dynamic contacts;
+@dynamic internalExtensions;
 
 @end

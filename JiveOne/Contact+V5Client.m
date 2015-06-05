@@ -27,7 +27,7 @@ NSString *const kContactResponseGroupNameKey        = @"name";
 
 NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
 
-@implementation Contact (V5Client)
+@implementation InternalExtension (V5Client)
 
 + (void)downloadContactsForLine:(Line *)line complete:(CompletionHandler)completion
 {
@@ -88,7 +88,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     for (id object in contactsData)
     {
         if ([object isKindOfClass:[NSDictionary class]]) {
-            Contact *contact = [self processContactData:(NSDictionary *)object pbx:pbx];
+            InternalExtension *contact = [self processContactData:(NSDictionary *)object pbx:pbx];
             if ([contacts containsObject:contact]) {
                 [contacts removeObject:contact];
             }
@@ -97,12 +97,12 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     
     // If there are any contacts left in the array, it means we have more contacts than the server
     // response, and we need to delete the extra contacts.
-    for (Contact *contact in contacts) {
+    for (InternalExtension *contact in contacts) {
         [pbx.managedObjectContext deleteObject:contact];
     }
 }
 
-+ (Contact *)processContactData:(NSDictionary *)data pbx:(PBX *)pbx
++ (InternalExtension *)processContactData:(NSDictionary *)data pbx:(PBX *)pbx
 {
     // If we do not have a jrn, we do not have its primary key, so we cannot match it to a entity,
     // so we ignore it as being a non valid response.
@@ -118,7 +118,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
         return nil;
     }
     
-    Contact *contact = [Contact contactForJrn:jrn pbx:pbx];
+    InternalExtension *contact = [InternalExtension contactForJrn:jrn pbx:pbx];
     contact.name        = [data stringValueForKey:kContactResponseNameKey];
     contact.number      = [data stringValueForKey:kContactResponseExtensionKey];
     contact.jiveUserId  = jiveUserId;
@@ -130,7 +130,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     return contact;
 }
 
-+(void)updateContactGroupsForContact:(Contact *)contact data:(NSArray *)data
++(void)updateContactGroupsForContact:(InternalExtension *)contact data:(NSArray *)data
 {
     for(id object in data) {
         if ([object isKindOfClass:[NSDictionary class]]){
@@ -142,13 +142,13 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     }
 }
 
-+ (Contact *)contactForJrn:(NSString *)jrn pbx:(PBX *)pbx
++ (InternalExtension *)contactForJrn:(NSString *)jrn pbx:(PBX *)pbx
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and jrn = %@", pbx, jrn];
-    Contact *contact = [Contact MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
+    InternalExtension *contact = [InternalExtension MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
     if(!contact)
     {
-        contact = [Contact MR_createEntityInContext:pbx.managedObjectContext];
+        contact = [InternalExtension MR_createEntityInContext:pbx.managedObjectContext];
         contact.jrn = jrn;
         contact.pbx = pbx;
         contact.pbxId = pbx.pbxId;
@@ -156,7 +156,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     return contact;
 }
 
-+ (ContactGroup *)contactGroupForIdentifier:(NSString *)identifer contact:(Contact *)contact
++ (ContactGroup *)contactGroupForIdentifier:(NSString *)identifer contact:(InternalExtension *)contact
 {
     ContactGroup *group = [ContactGroup MR_findFirstByAttribute:NSStringFromSelector(@selector(groupId)) withValue:identifer inContext:contact.managedObjectContext];
     if (!group) {
@@ -164,8 +164,8 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
         group.groupId = identifer;
     }
     
-    if (![group.contacts containsObject:contact]) {
-        [group addContactsObject:contact];
+    if (![group.internalExtensions containsObject:contact]) {
+        [group addInternalExtensionsObject:contact];
     }
     return group;
 }

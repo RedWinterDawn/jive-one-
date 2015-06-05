@@ -7,13 +7,13 @@
 //
 
 #import "JCPersonCell.h"
-#import "Contact.h"
+#import "InternalExtension.h"
 
 @interface JCContactCell : JCPersonCell
 
 @property (nonatomic, weak) IBOutlet UIButton *favoriteBtn;
 
-@property (nonatomic, strong) Contact *contact;
+@property (nonatomic, strong) InternalExtension *contact;
 
 - (IBAction)toggleFavoriteStatus:(id)sender;
 

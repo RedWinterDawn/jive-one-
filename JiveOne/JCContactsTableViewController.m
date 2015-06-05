@@ -11,7 +11,7 @@
 #import "JCContactCell.h"
 #import "JCLineCell.h"
 
-#import "Contact.h"
+#import "InternalExtension.h"
 #import "Line.h"
 #import "PBX.h"
 #import "User.h"
@@ -44,8 +44,8 @@
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
-    if ([object isKindOfClass:[Contact class]] && [cell isKindOfClass:[JCContactCell class]]) {
-        ((JCContactCell *)cell).contact = (Contact *)object;
+    if ([object isKindOfClass:[InternalExtension class]] && [cell isKindOfClass:[JCContactCell class]]) {
+        ((JCContactCell *)cell).contact = (InternalExtension *)object;
     }
     else if ([object isKindOfClass:[Line class]] && [cell isKindOfClass:[JCLineCell class]]) {
         ((JCLineCell *)cell).line = (Line *)object;
@@ -57,7 +57,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath
 {
-    if ([object isKindOfClass:[Contact class]]) {
+    if ([object isKindOfClass:[InternalExtension class]]) {
         JCContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell"];
         [self configureCell:cell withObject:object];
         return cell;
@@ -139,7 +139,7 @@
             else {
                 predicate = favoritePredicate;
             }
-            _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+            _fetchRequest = [InternalExtension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
         }
         else if (_filterType == JCContactFilterGrouped) {
             NSPredicate *predicate =[NSPredicate predicateWithFormat:@"contacts.pbx.jrn CONTAINS[cd] %@", line.pbx.jrn];
@@ -154,7 +154,7 @@
             if (contactGroup) {
                 NSPredicate *contactGroupPredicate =[NSPredicate predicateWithFormat:@"groups CONTAINS[cd] %@", contactGroup];
                 predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, contactGroupPredicate]];
-                _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+                _fetchRequest = [InternalExtension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
             } else {
                 _fetchRequest = [Extension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
                 _fetchRequest.includesSubentities = TRUE;

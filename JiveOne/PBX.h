@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Contact;
+@class InternalExtension;
 @class User;
 @class Line;
 @class DID;
@@ -40,8 +40,8 @@
 
 @interface PBX (CoreDataGeneratedAccessors)
 
-- (void)addContactsObject:(Contact *)value;
-- (void)removeContactsObject:(Contact *)value;
+- (void)addContactsObject:(InternalExtension *)value;
+- (void)removeContactsObject:(InternalExtension *)value;
 - (void)addContacts:(NSSet *)values;
 - (void)removeContacts:(NSSet *)values;
 
