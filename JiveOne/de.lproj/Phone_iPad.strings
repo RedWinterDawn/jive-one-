@@ -32,6 +32,12 @@
 /* Class = "UILabel"; text = "PQRS"; ObjectID = "YCw-kb-mRe"; */
 "YCw-kb-mRe.text" = "PQRS";
 
+/* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "dp5-3A-4aJ"; */
+"dp5-3A-4aJ.title" = "Klar";
+
+/* Class = "UINavigationItem"; title = "History"; ObjectID = "eVx-Ji-0H8"; */
+"eVx-Ji-0H8.title" = "Anrufliste";
+
 /* Class = "UILabel"; text = "DEF"; ObjectID = "utJ-wf-z8v"; */
 "utJ-wf-z8v.text" = "DEF";
 

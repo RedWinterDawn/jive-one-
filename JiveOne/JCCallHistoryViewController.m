@@ -6,10 +6,11 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCallHistoryViewController_iPhone.h"
+#import "JCCallHistoryViewController.h"
 #import "MissedCall.h"
+#import "Voicemail.h"
 
-@implementation JCCallHistoryViewController_iPhone
+@implementation JCCallHistoryViewController
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -28,13 +29,16 @@
                 filter = JCRecentLineEventsViewMissedCalls;
                 break;
                 
+            case 2:
+                filter = JCRecentLineEventsViewVoicemails;
+                break;
+                
             default:
                 filter = JCRecentLineEventsViewAllCalls;
                 break;
         }
         
         _callHistoryTableViewController.viewFilter = filter;
-        
     }
 }
 
@@ -60,5 +64,9 @@
     }
 }
 
-
+#pragma mark - Actions
+- (IBAction)clear:(id)sender
+{
+    [_callHistoryTableViewController clear:sender];
+}
 @end
