@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "Contact+V5Client.h"
+#import "InternalExtension+V5Client.h"
 
 // Client
 #import "JCV5ApiClient.h"

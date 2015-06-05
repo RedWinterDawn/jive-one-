@@ -36,7 +36,7 @@
 #import "Line.h"
 #import "User.h"
 
-#import "Contact+V5Client.h"
+#import "InternalExtension+V5Client.h"
 #import "Voicemail+V5Client.h"
 #import "SMSMessage+V5Client.h"
 #import "BlockedNumber+V5Client.h"

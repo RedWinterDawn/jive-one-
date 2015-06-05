@@ -131,7 +131,7 @@
 		5D2D74691ACFC4CB00B98BDF /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493CD18D13538002744CB /* Common.m */; };
 		5D2D746A1ACFC4D300B98BDF /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		5D2D75511AD08DBA00B98BDF /* OsgiData.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */; };
-		5D2EDB7E1A3ADFAF0031F7AD /* Contact+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB7D1A3ADFAF0031F7AD /* Contact+V5Client.m */; };
+		5D2EDB7E1A3ADFAF0031F7AD /* InternalExtension+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB7D1A3ADFAF0031F7AD /* InternalExtension+V5Client.m */; };
 		5D2EDB811A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB801A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.m */; };
 		5D2EDB841A3BAA800031F7AD /* JCDebugContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB831A3BAA800031F7AD /* JCDebugContactsTableViewController.m */; };
 		5D2EDB871A3CEBE80031F7AD /* JCDebugUsersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB861A3CEBE80031F7AD /* JCDebugUsersTableViewController.m */; };
@@ -499,8 +499,8 @@
 		5D2D74491ACFBDA400B98BDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D2D74501ACFBDEF00B98BDF /* JCAuthClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthClientTests.m; sourceTree = "<group>"; };
 		5D2D74511ACFBDEF00B98BDF /* JCV5ClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV5ClientTest.m; sourceTree = "<group>"; };
-		5D2EDB7C1A3ADFAF0031F7AD /* Contact+V5Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Contact+V5Client.h"; sourceTree = "<group>"; };
-		5D2EDB7D1A3ADFAF0031F7AD /* Contact+V5Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Contact+V5Client.m"; sourceTree = "<group>"; };
+		5D2EDB7C1A3ADFAF0031F7AD /* InternalExtension+V5Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "InternalExtension+V5Client.h"; sourceTree = "<group>"; };
+		5D2EDB7D1A3ADFAF0031F7AD /* InternalExtension+V5Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "InternalExtension+V5Client.m"; sourceTree = "<group>"; };
 		5D2EDB7F1A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDebugContactGroupsTableViewController.h; sourceTree = "<group>"; };
 		5D2EDB801A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDebugContactGroupsTableViewController.m; sourceTree = "<group>"; };
 		5D2EDB821A3BAA800031F7AD /* JCDebugContactsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDebugContactsTableViewController.h; sourceTree = "<group>"; };
@@ -1893,8 +1893,8 @@
 				27997573195A12C5001425CC /* PBX+V5Client.m */,
 				DD3BD9F218DCB1740080318E /* Voicemail+V5Client.h */,
 				DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */,
-				5D2EDB7C1A3ADFAF0031F7AD /* Contact+V5Client.h */,
-				5D2EDB7D1A3ADFAF0031F7AD /* Contact+V5Client.m */,
+				5D2EDB7C1A3ADFAF0031F7AD /* InternalExtension+V5Client.h */,
+				5D2EDB7D1A3ADFAF0031F7AD /* InternalExtension+V5Client.m */,
 				F81EA8AC1A925EE400081C81 /* SMSMessage+V5Client.h */,
 				F81EA8AD1A925EE400081C81 /* SMSMessage+V5Client.m */,
 				5DFFF3D81AF90BD60091F479 /* BlockedNumber+V5Client.h */,
@@ -2357,7 +2357,7 @@
 				5D3970DB1B1906C1009EADD6 /* JCPlayPauseButton.m in Sources */,
 				5D490E5A1A8AEF7E004B62C0 /* JCAddressBook.m in Sources */,
 				27BE503D19DCF6A800B725ED /* JCLineSession.m in Sources */,
-				5D2EDB7E1A3ADFAF0031F7AD /* Contact+V5Client.m in Sources */,
+				5D2EDB7E1A3ADFAF0031F7AD /* InternalExtension+V5Client.m in Sources */,
 				278E858619EC6B6E0087649D /* VideoViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
