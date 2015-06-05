@@ -15,4 +15,6 @@
 @property (nonatomic, strong) NSString *number;
 @property (nonatomic, strong) NSString *t9;
 
+@property (nonatomic, readonly) NSString *firstInitial;
+
 @end

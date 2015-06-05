@@ -56,7 +56,6 @@ NSString *const kCallEntityName = @"Call";
 //                
 //              
 //                
-//                [LocalContact localContactForAddressBookNumber:number context:localContext]
 //                
 //                
 //            }

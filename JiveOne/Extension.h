@@ -6,14 +6,14 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCPersonManagedObject.h"
+#import "JCPhoneNumberManagedObject.h"
 
 @class Line, PBX;
 
-@interface Extension : JCPersonManagedObject
+@interface Extension : JCPhoneNumberManagedObject
 
-@property (nonatomic, retain) NSString * jrn;
-@property (nonatomic, retain) NSString * pbxId;
+@property (nonatomic, retain) NSString *jrn;
+@property (nonatomic, retain) NSString *pbxId;
 
 @end
 

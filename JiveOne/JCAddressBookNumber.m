@@ -63,19 +63,6 @@
     return [NSString stringWithFormat:@"%@: %@", self.type, super.detailText];
 }
 
-- (BOOL)isEqual:(id)object
-{
-    // Check to see if object is local contact, and compare to see if the are equivalient.
-    if ([object isKindOfClass:[PhoneNumber class]]) {
-        PhoneNumber *localContact = (PhoneNumber *)object;
-        NSInteger personId = localContact.personId;
-        if (self.recordId == personId && [localContact.personHash isEqualToString:self.personHash]) {
-            return true;
-        }
-    }
-    return [super isEqual:object];
-}
-
 #pragma mark - Private -
 
 + (JCAddressBookNumber *)addressBookNumberFromMultValueRef:(ABMultiValueRef)phones atIndex:(CFIndex)index record:(ABRecordRef)record
