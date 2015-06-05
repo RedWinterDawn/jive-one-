@@ -10,7 +10,7 @@
 #import "Contact.h"
 #import "Line.h"
 #import "JCPhoneNumberDataSource.h"
-#import "LocalContact.h"
+#import "PhoneNumber.h"
 #import "JCMultiPersonPhoneNumber.h"
 
 NSString *const kCallEntityName = @"Call";
@@ -37,8 +37,8 @@ NSString *const kCallEntityName = @"Call";
         if (number && [number isKindOfClass:[Contact class]]) {
             call.contact = (Contact *)[localContext objectWithID:((Contact *)number).objectID];
         }
-        else if(number && [number isKindOfClass:[LocalContact class]]) {
-            [call addLocalContactsObject:(LocalContact *)[localContext objectWithID:((LocalContact *)number).objectID]];
+        else if(number && [number isKindOfClass:[PhoneNumber class]]) {
+            [call addPhoneNumbersObject:(PhoneNumber *)[localContext objectWithID:((PhoneNumber *)number).objectID]];
         } else {
 //            if ([number isKindOfClass:[JCMultiPersonPhoneNumber class]]) {
 //                NSArray *phoneNumbers = ((JCMultiPersonPhoneNumber *)number).phoneNumbers;

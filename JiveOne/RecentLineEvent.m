@@ -22,7 +22,7 @@
 
 @dynamic contact;
 @dynamic line;
-@dynamic localContacts;
+@dynamic phoneNumbers;
 
 #pragma mark - Transient Properties -
 
@@ -31,7 +31,7 @@
     NSString *name = self.name;
     if (!name) {
         Contact *contact = self.contact;
-        NSArray *localContacts = self.localContacts.allObjects;
+        NSArray *localContacts = self.phoneNumbers.allObjects;
         if (contact) {
             name = contact.titleText;
         } else if (localContacts.count > 0) {

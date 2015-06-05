@@ -153,7 +153,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     
     else if ([viewController isKindOfClass:[JCContactDetailController class]] && recentLineEvent){
         Contact *contact = recentLineEvent.contact;
-        NSArray *localContacts = recentLineEvent.localContacts.allObjects;
+        NSArray *localContacts = recentLineEvent.phoneNumbers.allObjects;
         id<JCPhoneNumberDataSource> phoneNumber;
         if (contact) {
             phoneNumber = contact;

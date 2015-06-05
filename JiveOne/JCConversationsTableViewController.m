@@ -14,7 +14,7 @@
 #import "JCNavigationController.h"
 #import "JCConversationTableViewCell.h"
 #import "SMSMessage+V5Client.h"
-#import "LocalContact.h"
+#import "PhoneNumber.h"
 
 #import "Line.h"
 #import "PBX.h"

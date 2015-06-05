@@ -10,7 +10,7 @@
 
 #import "JCAddressBook.h"
 #import "JCAddressBookNumber.h"
-#import "LocalContact.h"
+#import "PhoneNumber.h"
 
 NSString *const kJCAddressBookPeople    = @"JCAddressBookPeople";
 NSString *const kJCAddressBookNumbers   = @"JCAddressBookNumbers";

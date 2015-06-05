@@ -13,7 +13,7 @@
 @class SMSMessage;
 @class RecentLineEvent;
 
-@interface LocalContact : JCPersonManagedObject
+@interface PhoneNumber : JCPersonManagedObject
 
 // Attributes
 @property (nonatomic, strong) NSString *personHash;
@@ -27,7 +27,7 @@
 
 @end
 
-@interface LocalContact (CoreDataGeneratedAccessors)
+@interface PhoneNumber (CoreDataGeneratedAccessors)
 
 - (void)addSmsMessagesObject:(SMSMessage *)value;
 - (void)removeSmsMessagesObject:(SMSMessage *)value;
@@ -41,8 +41,8 @@
 
 @end
 
-@interface LocalContact (JCAddressBook)
+@interface PhoneNumber (JCAddressBook)
 
-+(LocalContact *)localContactForAddressBookNumber:(JCAddressBookNumber *)addressBookNumber context:(NSManagedObjectContext *)context;
++(PhoneNumber *)localContactForAddressBookNumber:(JCAddressBookNumber *)addressBookNumber context:(NSManagedObjectContext *)context;
 
 @end

@@ -14,7 +14,7 @@
 #import "SMSMessage.h"
 #import "Conversation.h"
 #import "JCUnknownNumber.h"
-#import "LocalContact.h"
+#import "PhoneNumber.h"
 #import "SMSMessage+V5Client.h"
 #import "BlockedNumber+V5Client.h"
 #import "PBX.h"

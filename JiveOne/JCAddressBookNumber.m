@@ -10,7 +10,7 @@
 
 #import "JCAddressBookNumber.h"
 #import "NSString+Additions.h"
-#import "LocalContact.h"
+#import "PhoneNumber.h"
 
 @implementation JCAddressBookNumber
 
@@ -66,8 +66,8 @@
 - (BOOL)isEqual:(id)object
 {
     // Check to see if object is local contact, and compare to see if the are equivalient.
-    if ([object isKindOfClass:[LocalContact class]]) {
-        LocalContact *localContact = (LocalContact *)object;
+    if ([object isKindOfClass:[PhoneNumber class]]) {
+        PhoneNumber *localContact = (PhoneNumber *)object;
         NSInteger personId = localContact.personId;
         if (self.recordId == personId && [localContact.personHash isEqualToString:self.personHash]) {
             return true;
