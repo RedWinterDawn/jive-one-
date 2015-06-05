@@ -1,0 +1,66 @@
+
+/* Class = "UILabel"; text = "0.05"; ObjectID = "1N8-3J-2Ms"; */
+"1N8-3J-2Ms.text" = "0.05";
+
+/* Class = "UILabel"; text = "817-343-9239"; ObjectID = "2ww-bz-7HY"; */
+"2ww-bz-7HY.text" = "817-343-9239";
+
+/* Class = "UILabel"; text = "Dan Leonard"; ObjectID = "6Dg-Eu-qpr"; */
+"6Dg-Eu-qpr.text" = "Dan Leonard";
+
+/* Class = "UINavigationController"; title = "Keypad"; ObjectID = "G3s-tk-XlH"; */
+"G3s-tk-XlH.title" = "Keypad";
+
+/* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "Kji-Db-lbK"; */
+"Kji-Db-lbK.title" = "Clear";
+
+/* Class = "UINavigationController"; title = "History"; ObjectID = "LGG-G6-Qgm"; */
+"LGG-G6-Qgm.title" = "History";
+
+/* Class = "UILabel"; text = "3:03 PM"; ObjectID = "M6i-Nu-fpj"; */
+"M6i-Nu-fpj.text" = "3:03 PM";
+
+/* Class = "UITabBarItem"; title = "Voicemail"; ObjectID = "RN6-p8-PVT"; */
+"RN6-p8-PVT.title" = "Voicemail";
+
+/* Class = "UISegmentedControl"; UHR-O3-J6m.segmentTitles[0] = "All"; ObjectID = "UHR-O3-J6m"; */
+"UHR-O3-J6m.segmentTitles[0]" = "All";
+
+/* Class = "UISegmentedControl"; UHR-O3-J6m.segmentTitles[1] = "Missed"; ObjectID = "UHR-O3-J6m"; */
+"UHR-O3-J6m.segmentTitles[1]" = "Missed";
+
+/* Class = "UITabBarItem"; title = "History"; ObjectID = "WRq-PA-NpD"; */
+"WRq-PA-NpD.title" = "History";
+
+/* Class = "UILabel"; text = "Phone"; ObjectID = "XXV-Pa-tfR"; */
+"XXV-Pa-tfR.text" = "Phone";
+
+/* Class = "UIViewController"; title = "DialerView"; ObjectID = "YtU-b8-5sz"; */
+"YtU-b8-5sz.title" = "DialerView";
+
+/* Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "Z7Z-Gy-oE8"; */
+"Z7Z-Gy-oE8.title" = "Voicemail";
+
+/* Class = "UINavigationController"; title = "Voicemail"; ObjectID = "aJF-xB-iIc"; */
+"aJF-xB-iIc.title" = "Voicemail";
+
+/* Class = "UITabBarItem"; title = "Keypad"; ObjectID = "bsn-3T-LYb"; */
+"bsn-3T-LYb.title" = "Keypad";
+
+/* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "cHI-JS-mn5"; */
+"cHI-JS-mn5.title" = "Clear";
+
+/* Class = "UITabBarItem"; title = "Phone"; ObjectID = "eFd-Wl-GUh"; */
+"eFd-Wl-GUh.title" = "Phone";
+
+/* Class = "UILabel"; text = "817-343-9239"; ObjectID = "fw1-N6-Rq7"; */
+"fw1-N6-Rq7.text" = "817-343-9239";
+
+/* Class = "UINavigationItem"; title = "Call History"; ObjectID = "k2g-vl-Yo3"; */
+"k2g-vl-Yo3.title" = "Call History";
+
+/* Class = "UILabel"; text = "3:03 PM"; ObjectID = "n60-3y-fJd"; */
+"n60-3y-fJd.text" = "3:03 PM";
+
+/* Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "nwZ-xB-2hO"; */
+"nwZ-xB-2hO.text" = "Voicemail Cell";

@@ -1,0 +1,18 @@
+
+/* Class = "UILabel"; text = "ON HOLD"; ObjectID = "4Oj-D7-F4v"; */
+"4Oj-D7-F4v.text" = "ON HOLD";
+
+/* Class = "UILabel"; text = "Katerina Illiov"; ObjectID = "H4z-0p-bTI"; */
+"H4z-0p-bTI.text" = "Katerina Illiov";
+
+/* Class = "UILabel"; accessibilityLabel = "Callers Number"; ObjectID = "ijK-Po-99E"; */
+"ijK-Po-99E.accessibilityLabel" = "Callers Number";
+
+/* Class = "UIView"; accessibilityHint = "callStateView"; ObjectID = "rkJ-cf-ec6"; */
+"rkJ-cf-ec6.accessibilityHint" = "callStateView";
+
+/* Class = "UIView"; accessibilityLabel = "callStateView"; ObjectID = "rkJ-cf-ec6"; */
+"rkJ-cf-ec6.accessibilityLabel" = "callStateView";
+
+/* Class = "UILabel"; text = "1:03"; ObjectID = "vAI-dZ-8vN"; */
+"vAI-dZ-8vN.text" = "1:03";

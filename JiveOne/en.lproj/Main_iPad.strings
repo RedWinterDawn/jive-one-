@@ -1,0 +1,48 @@
+
+/* Class = "UILabel"; text = "Phone"; ObjectID = "0Yw-cp-qoh"; */
+"0Yw-cp-qoh.text" = "Phone";
+
+/* Class = "UINavigationItem"; title = "My Jive"; ObjectID = "CYZ-qM-fMy"; */
+"CYZ-qM-fMy.title" = "My Jive";
+
+/* Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "Efb-Rw-Jvr"; */
+"Efb-Rw-Jvr.text" = "Voicemail Cell";
+
+/* Class = "UILabel"; text = "Messages"; ObjectID = "FzV-4I-xde"; */
+"FzV-4I-xde.text" = "Messages";
+
+/* Class = "UILabel"; text = "Contacts"; ObjectID = "O4y-f4-bpa"; */
+"O4y-f4-bpa.text" = "Contacts";
+
+/* Class = "UILabel"; text = "Call History Cell"; ObjectID = "P9B-5h-Y99"; */
+"P9B-5h-Y99.text" = "Call History Cell";
+
+/* Class = "UILabel"; text = "3:03 PM"; ObjectID = "TBm-gd-ohV"; */
+"TBm-gd-ohV.text" = "3:03 PM";
+
+/* Class = "UILabel"; text = "Settings"; ObjectID = "WD8-EL-jx5"; */
+"WD8-EL-jx5.text" = "Settings";
+
+/* Class = "UILabel"; text = "3:03 PM"; ObjectID = "WhU-DR-46L"; */
+"WhU-DR-46L.text" = "3:03 PM";
+
+/* Class = "UILabel"; text = "Contact Name"; ObjectID = "YC5-vQ-Pj8"; */
+"YC5-vQ-Pj8.text" = "Contact Name";
+
+/* Class = "UILabel"; text = "817-343-9239"; ObjectID = "c77-32-Ths"; */
+"c77-32-Ths.text" = "817-343-9239";
+
+/* Class = "UILabel"; text = "817-343-9239"; ObjectID = "cih-dr-Rgb"; */
+"cih-dr-Rgb.text" = "817-343-9239";
+
+/* Class = "UINavigationItem"; title = "My Jive"; ObjectID = "gNr-PU-cQt"; */
+"gNr-PU-cQt.title" = "My Jive";
+
+/* Class = "UILabel"; text = "3:03 PM"; ObjectID = "ov4-fe-haF"; */
+"ov4-fe-haF.text" = "3:03 PM";
+
+/* Class = "UILabel"; text = "0.05"; ObjectID = "rLL-vy-8cs"; */
+"rLL-vy-8cs.text" = "0.05";
+
+/* Class = "UILabel"; text = "Last Message"; ObjectID = "ttc-Pa-ekv"; */
+"ttc-Pa-ekv.text" = "Last Message";
