@@ -278,8 +278,8 @@
 -(void)layoutNumberSection:(id<JCPhoneNumberDataSource>)phoneNumber
 {
     [self cells:_numberSectionCells setHidden:YES];
-    
     self.numberCell.detailTextLabel.text = phoneNumber.formattedNumber;
+    self.numberCell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"phone-green"]];
     [self cell:self.numberCell setHidden:NO];
 }
 
