@@ -8,26 +8,25 @@
 
 #import "JCFetchedResultsTableViewController.h"
 
-@class JCContactsTableViewController;
+@protocol JCContactsTableViewControllerDelegate;
 @class InternalExtensionGroup;
-
-@protocol JCContactsTableViewControllerDelegate <NSObject>
-
--(void)contactsTableViewController:(JCContactsTableViewController *)contactsViewController didSelectContactGroup:(InternalExtensionGroup *)contactGroup;
-
-@end
 
 typedef NS_ENUM(NSInteger, JCContactFilter) {
     JCContactFilterAll,
-    JCContactFilterFavorites,
     JCContactFilterGrouped
 };
 
 @interface JCContactsTableViewController : JCFetchedResultsTableViewController <UISearchBarDelegate>
 
-@property (nonatomic, weak) IBOutlet id<JCContactsTableViewControllerDelegate> delegate;
+@property (weak, nonatomic) IBOutlet id<JCContactsTableViewControllerDelegate> delegate;
 
-@property (nonatomic, strong) InternalExtensionGroup *contactGroup;
+@property (strong, nonatomic) InternalExtensionGroup *contactGroup;
 @property (nonatomic) JCContactFilter filterType;
+
+@end
+
+@protocol JCContactsTableViewControllerDelegate <NSObject>
+
+-(void)contactsTableViewController:(JCContactsTableViewController *)contactsViewController didSelectContactGroup:(InternalExtensionGroup *)contactGroup;
 
 @end

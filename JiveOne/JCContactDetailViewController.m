@@ -74,11 +74,20 @@
     }
 }
 
+-(IBAction)cancel:(id)sender
+{
+    [self.managedObjectContext reset];
+    self.editing = FALSE;
+}
+
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     if (!editing) {
         [self saveContact];
+        self.navigationItem.leftBarButtonItem = nil;
     } else {
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+        self.navigationItem.leftBarButtonItem = item;
         [self convertContact];
     }
     
@@ -89,7 +98,10 @@
 {
     if (!editing) {
         [self saveContact];
+        self.navigationItem.leftBarButtonItem = nil;
     } else {
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+        self.navigationItem.leftBarButtonItem = item;
         [self convertContact];
     }
     
@@ -170,11 +182,7 @@
 -(void)saveContact
 {
     [self.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
-        
         NSLog(@"%@", [error description]);
-        
-        
-        [self.navigationController popViewControllerAnimated:YES];
     }];
 }
 

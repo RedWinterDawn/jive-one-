@@ -8,29 +8,23 @@
 
 #import "JCContactsTableViewController.h"
 
-#import "JCContactCell.h"
-#import "JCLineCell.h"
-
-#import "InternalExtension.h"
-#import "Line.h"
-#import "PBX.h"
-#import "User.h"
+// Models
 #import "InternalExtensionGroup.h"
 #import "Extension.h"
+#import "Line.h"
 #import "Contact.h"
 
-#import "JCPhoneManager.h"
+// Views
+#import "JCContactCell.h"
+
+// Controllers
 #import "JCContactDetailViewController.h"
 #import "JCContactsFetchedResultsController.h"
 
 @interface JCContactsTableViewController() <JCContactCellDelegate>
 {
     NSString *_searchText;
-    NSMutableDictionary *lineSubcription;
 }
-
-@property (nonatomic, strong) NSFetchRequest *fetchRequest;
-@property (nonatomic, strong) NSPredicate *predicate;
 
 @end
 
@@ -44,53 +38,6 @@
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:self.authenticationManager];
 }
 
-- (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
-{
-    if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
-        id<JCPhoneNumberDataSource> phoneNumber = (id<JCPhoneNumberDataSource>)object;
-        cell.textLabel.text = phoneNumber.titleText;
-        cell.detailTextLabel.text = phoneNumber.detailText;
-        
-        // Setup Presence for Internal Extensions.
-        if ([phoneNumber isKindOfClass:[Extension class]] && [cell isKindOfClass:[JCPresenceCell class]]) {
-            ((JCPresenceCell *)cell).identifier = ((Extension *)phoneNumber).jrn;
-        }
-        
-        // TODO: Favorites;
-    }
-    else if ([object isKindOfClass:[InternalExtensionGroup class]]) {
-        cell.textLabel.text = ((InternalExtensionGroup *)object).name;
-    }
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath
-{
-    if ([object isKindOfClass:[InternalExtension class]]) {
-        JCContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InternalExtensionCell"];
-        cell.delegate = self;
-        [self configureCell:cell withObject:object];
-        return cell;
-    }
-    if ([object isKindOfClass:[Contact class]]) {
-        JCContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell"];
-        cell.delegate = self;
-        [self configureCell:cell withObject:object];
-        return cell;
-    }
-    else if ([object isKindOfClass:[Line class]]) {
-        JCLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LineCell"];
-        [self configureCell:cell withObject:object];
-        return cell;
-    }
-    else if ([object isKindOfClass:[InternalExtensionGroup class]])
-    {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactGroupCell"];
-        [self configureCell:cell withObject:object];
-        return cell;
-    }
-    return nil;
-}
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *viewController = segue.destinationViewController;
@@ -101,16 +48,46 @@
     if ([viewController isKindOfClass:[JCContactDetailViewController class]]) {
         JCContactDetailViewController *detailViewController = (JCContactDetailViewController *)viewController;
         NSManagedObjectContext *context = [NSManagedObjectContext MR_contextWithParent:self.managedObjectContext];
-        if ([sender isKindOfClass:[UITableViewCell class]]) {
+        detailViewController.managedObjectContext = context;
+        if ([sender isKindOfClass:[UITableViewCell class]])
+        {
             UITableViewCell *cell = (UITableViewCell *)sender;
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
             NSManagedObject *managedObject = (NSManagedObject *)[self objectAtIndexPath:indexPath];
             id object = [context existingObjectWithID:managedObject.objectID error:nil];
-            if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
+            if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]){
                 detailViewController.phoneNumber = (id<JCPhoneNumberDataSource>)object;
             }
         }
-        detailViewController.managedObjectContext = context;
+    }
+}
+
+- (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
+{
+    if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
+        id <JCPhoneNumberDataSource> phoneNumber = (id<JCPhoneNumberDataSource>)object;
+        cell.textLabel.text = phoneNumber.titleText;
+        cell.detailTextLabel.text = phoneNumber.detailText;
+        
+        // Setup Presence for Extensions.
+        if ([phoneNumber isKindOfClass:[Extension class]] && [cell isKindOfClass:[JCPresenceCell class]]) {
+            ((JCPresenceCell *)cell).identifier = ((Extension *)phoneNumber).jrn;
+        }
+        
+        // Configure Favorites.
+        if ([cell isKindOfClass:[JCContactCell class]])
+        {
+            JCContactCell *contactCell = (JCContactCell *)cell;
+            UIButton *favoriteButton = contactCell.favoriteBtn;
+            if ([phoneNumber isKindOfClass:[Line class]]) {
+                favoriteButton.hidden = TRUE;
+            } else {
+                favoriteButton.hidden = FALSE;
+            }
+        }
+    }
+    else if ([object isKindOfClass:[InternalExtensionGroup class]]) {
+        cell.textLabel.text = ((InternalExtensionGroup *)object).name;
     }
 }
 
@@ -128,24 +105,37 @@
 {
     if (!_fetchedResultsController)
     {
-        NSPredicate *predicate;
-        if (_searchText && ![_searchText isEqualToString:@""]) {
-            predicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (number contains[cd] %@)", _searchText, _searchText];
-        }
-        
-        NSFetchRequest *fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
-        fetchRequest.includesSubentities = TRUE;
-        fetchRequest.resultType = NSManagedObjectResultType;
-        fetchRequest.fetchBatchSize = 10;
-        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
-        
-        
-        PBX *pbx = self.authenticationManager.pbx;
-        _fetchedResultsController = [[JCContactsFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+        switch (_filterType) {
+            case JCContactFilterGrouped:
+            {
+                // TODO: Grouped Messages.
+                
+                break;
+            }
+                
+            default:
+            {
+                NSPredicate *predicate;
+                if (_searchText && ![_searchText isEqualToString:@""]) {
+                    predicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (number contains[cd] %@)", _searchText, _searchText];
+                }
+                
+                NSFetchRequest *fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+                fetchRequest.includesSubentities = TRUE;
+                fetchRequest.resultType = NSManagedObjectResultType;
+                fetchRequest.fetchBatchSize = 10;
+                fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+                
+                
+                PBX *pbx = self.authenticationManager.pbx;
+                _fetchedResultsController = [[JCContactsFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                          pbx:pbx
                                                                                           sectionNameKeyPath:@"firstInitial"];
-        _fetchedResultsController.delegate = self;
+                break;
+            }
+        }
         
+        _fetchedResultsController.delegate = self;
         __autoreleasing NSError *error = nil;
         if ([_fetchedResultsController performFetch:&error])
             [self.tableView reloadData];
@@ -158,25 +148,26 @@
 -(void)reloadTable
 {
     _fetchedResultsController = nil;
-    _fetchRequest = nil;
     [self.tableView reloadData];
 }
 
-#pragma mark - Notification handlers -
-
-#pragma mark JCAuthenticationManager
+#pragma mark - Notification Handlers -
 
 -(void)lineChanged:(NSNotification *)notification
 {
     [self reloadTable];
 }
 
+#pragma mark - Delegate Handlers -
+
+#pragma mark JCContactsCellDelegate
+
 - (void)contactCell:(JCContactCell *)cell didMarkAsFavorite:(BOOL)favorite
 {
     // TODO: Finish Favorites.
 }
 
-#pragma mark - Table view data source
+#pragma mark UITableViewDataSource
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
@@ -194,6 +185,32 @@
     return [self.fetchedResultsController sectionIndexTitles][section];
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath
+{
+    if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
+        JCContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell"];
+        cell.delegate = self;
+        [self configureCell:cell withObject:object];
+        return cell;
+    }
+    else if ([object isKindOfClass:[InternalExtensionGroup class]])
+    {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactGroupCell"];
+        [self configureCell:cell withObject:object];
+        return cell;
+    }
+    return nil;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id<JCPhoneNumberDataSource> phoneNumber = (id<JCPhoneNumberDataSource>)[self objectAtIndexPath:indexPath];
+    if ([phoneNumber isKindOfClass:[Extension class]]) {
+        return FALSE;
+    }
+    return TRUE;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id object = [self objectAtIndexPath:indexPath];
@@ -204,7 +221,7 @@
     }
 }
 
-#pragma mark - Search Bar Delegate
+#pragma mark UISearchBarDelegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {

@@ -142,7 +142,6 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 {
     switch (tabBar.selectedItem.tag) {
         case 1:
-            _contactsTableViewController.filterType = JCContactFilterFavorites;
             break;
             
         case 2:
