@@ -22,6 +22,7 @@
 
 #import "JCDialerViewController.h"
 #import "JCStoryboardLoaderViewController.h"
+#import "JCPhoneTypeSelectorTableController.h"
 
 @interface JCContactDetailViewController () {
     BOOL _addingContact;
@@ -60,7 +61,8 @@
             [self setEditing:YES animated:NO];
         }
     }
-    
+    self.numberType.userInteractionEnabled = NO;
+    self.numberType.titleLabel.text = @"nimber";
     [self layoutForPhoneNumber:self.phoneNumber animated:NO];
 }
 
@@ -278,7 +280,9 @@
 -(void)layoutNumberSection:(id<JCPhoneNumberDataSource>)phoneNumber
 {
     [self cells:_numberSectionCells setHidden:YES];
-    self.numberCell.detailTextLabel.text = phoneNumber.formattedNumber;
+    self.numberType.userInteractionEnabled = YES;
+    self.numberType.titleLabel.text = @"select";
+    self.numberDetail.text = phoneNumber.formattedNumber;
     self.numberCell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"phone-green"]];
     [self cell:self.numberCell setHidden:NO];
 }

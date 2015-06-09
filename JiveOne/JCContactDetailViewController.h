@@ -8,8 +8,9 @@
 
 #import "StaticDataTableViewController.h"
 #import "JCPhoneNumberDataSource.h"
-
+#import "JCPhoneTypeSelectorTableController.h"
 #import "JCEditableTableViewCell.h"
+
 
 @interface JCContactDetailViewController : StaticDataTableViewController <UITextFieldDelegate>
 
@@ -31,6 +32,9 @@
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *extensionCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *numberCell;
+@property (weak, nonatomic) IBOutlet UIButton *numberType;
+@property (weak, nonatomic) IBOutlet UILabel *numberDetail;
+
 @property (weak, nonatomic) IBOutlet UITableViewCell *jiveIdCell;
 
 @end
