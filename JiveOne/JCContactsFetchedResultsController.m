@@ -16,12 +16,15 @@
 @interface JCContactsSectionInfo : NSObject <NSFetchedResultsSectionInfo> {
     NSMutableArray *_objects;
     NSString *_name;
+    
 }
 
--(instancetype)initWithName:(NSString *)name;
--(void)addObject:(id)object;
--(BOOL)containsObject:(id)object;
--(void)deleteObject:(id)object;
+- (instancetype)initWithName:(NSString *)name;
+- (void)addObject:(id)object;
+- (void)addObject:(id)object sortUsingDescriptors:(NSArray *)sortDescriptors;
+
+- (BOOL)containsObject:(id)object;
+- (void)deleteObject:(id)object;
 
 @end
 
@@ -37,11 +40,15 @@
     NSFetchedResultsController *_contactsFetchedResultsController;
     NSFetchedResultsController *_extensionsFetchedResultsController;
     JCAddressBook *_addressBook;
+    
+    BOOL _updatingContent;
 }
 
 @end
 
 @implementation JCContactsFetchedResultsController
+
+@dynamic delegate;
 
 - (instancetype)initWithFetchRequest:(NSFetchRequest *)fetchRequest
                                  pbx:(PBX *)pbx
@@ -57,15 +64,12 @@
                   sectionNameKeyPath:(NSString *)sectionNameKeyPath
                          addressBook:(JCAddressBook *)addressBook
 {
-    self = [super init];
+    self = [super initWithFetchRequest:fetchRequest managedObjectContext:pbx.managedObjectContext sectionNameKeyPath:sectionNameKeyPath cacheName:nil];
     if (self) {
-        _fetchRequest = fetchRequest;
         _pbx = pbx;
-        _managedObjectContext = pbx.managedObjectContext;
-        _sectionNameKeyPath = sectionNameKeyPath;
         
         // Contacts are tied to the user. We only want contacts that are tied to the current user.
-        NSFetchRequest *request = [Contact MR_requestAllInContext:_managedObjectContext];
+        NSFetchRequest *request = [Contact MR_requestAllInContext:self.managedObjectContext];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@", pbx.user];
         if (fetchRequest.predicate) {
             predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, fetchRequest.predicate]];
@@ -74,13 +78,13 @@
         request.sortDescriptors = fetchRequest.sortDescriptors;
         request.fetchBatchSize = fetchRequest.fetchBatchSize;
         _contactsFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                                                managedObjectContext:_managedObjectContext
+                                                                                managedObjectContext:self.managedObjectContext
                                                                                   sectionNameKeyPath:nil
                                                                                            cacheName:nil];
         _contactsFetchedResultsController.delegate = self;
         
         // Extensions. We only want extensions that are part of our pbx and are not hidden.
-        request = [Extension MR_requestAllInContext:_managedObjectContext];
+        request = [Extension MR_requestAllInContext:self.managedObjectContext];
         predicate = [NSPredicate predicateWithFormat:@"pbxId = %@ && hidden = %@", pbx.pbxId, @NO];
         if (fetchRequest.predicate) {
             predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, fetchRequest.predicate]];
@@ -89,7 +93,7 @@
         request.sortDescriptors = fetchRequest.sortDescriptors;
         request.fetchBatchSize = fetchRequest.fetchBatchSize;
         _extensionsFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                                                  managedObjectContext:_managedObjectContext
+                                                                                  managedObjectContext:self.managedObjectContext
                                                                                     sectionNameKeyPath:nil
                                                                                              cacheName:nil];
         _contactsFetchedResultsController.delegate = self;
@@ -113,7 +117,7 @@
     _fetchedObjects = [NSMutableArray new];
     [_fetchedObjects addObjectsFromArray:_contactsFetchedResultsController.fetchedObjects];
     [_fetchedObjects addObjectsFromArray:_extensionsFetchedResultsController.fetchedObjects];
-    [_fetchedObjects sortUsingDescriptors:_fetchRequest.sortDescriptors];
+    [_fetchedObjects sortUsingDescriptors:self.fetchRequest.sortDescriptors];
     
     _sections = [NSMutableArray new];
     for (id<JCPhoneNumberDataSource> contact in _fetchedObjects)
@@ -123,11 +127,11 @@
         if ([contact isKindOfClass:[NSManagedObject class]])
         {
             NSManagedObject *object = (NSManagedObject *)contact;
-            sectionName = [object valueForKeyPath:_sectionNameKeyPath];
+            sectionName = [object valueForKeyPath:self.sectionNameKeyPath];
         }
         else
         {
-            SEL sectionNameKeyPath = NSSelectorFromString(_sectionNameKeyPath);
+            SEL sectionNameKeyPath = NSSelectorFromString(self.sectionNameKeyPath);
             if ([contact respondsToSelector:sectionNameKeyPath]) {
                 id object = [contact performSelector:sectionNameKeyPath];
                 if ([object isKindOfClass:[NSString class]]) {
@@ -189,11 +193,27 @@
     return section;
 }
 
+-(NSArray *)fetchedObjects
+{
+    return _fetchedObjects;
+}
+
+-(NSArray *)sections
+{
+    return _sections;
+}
+
 #pragma mark - Delegate Handlers -
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
+    // If we are already updating the content, end the earlier update batch before we start the next
+    if (_updatingContent) {
+        [self.delegate controllerDidChangeContent:self];
+    }
     
+    _updatingContent = TRUE;
+    [self.delegate controllerWillChangeContent:self];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller
@@ -210,12 +230,70 @@
     forChangeType:(NSFetchedResultsChangeType)type
      newIndexPath:(NSIndexPath *)newIndexPath
 {
+    if (![anObject isKindOfClass:[NSManagedObject class]]) {
+        return;
+    }
     
+    // Get the section for the managed object. Determine if we have a section.
+    NSManagedObject *managedObject = (NSManagedObject *)anObject;
+    NSString *sectionName = [managedObject valueForKeyPath:self.sectionNameKeyPath];
+    NSInteger section;
+    JCContactsSectionInfo *sectionInfo = [self sectionForName:sectionName];
+    if (!sectionInfo) {
+        sectionInfo = [[JCContactsSectionInfo alloc] initWithName:sectionName];
+        [_sections addObject:sectionInfo];
+        [_sections sortUsingDescriptors:self.fetchRequest.sortDescriptors];
+        section = [_sections indexOfObject:sectionInfo];
+        [self.delegate controller:self didChangeSection:sectionInfo atIndex:section forChangeType:NSFetchedResultsChangeInsert];
+    } else {
+        section = [_sections indexOfObject:sectionInfo];
+    }
+    
+    NSInteger row;
+    switch (type) {
+        case NSFetchedResultsChangeInsert:
+        {
+            [sectionInfo addObject:managedObject sortUsingDescriptors:self.fetchRequest.sortDescriptors];
+            row = [sectionInfo.objects indexOfObject:managedObject];
+            indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+            [self.delegate controller:self didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:indexPath];
+            break;
+        }
+        case NSFetchedResultsChangeUpdate:
+        {
+            row = [sectionInfo.objects indexOfObject:managedObject];
+            indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+            [self.delegate controller:self didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:indexPath];
+            break;
+        }
+        case NSFetchedResultsChangeDelete:
+        {
+            row = [sectionInfo.objects indexOfObject:managedObject];
+            [sectionInfo deleteObject:managedObject];
+            if (sectionInfo.numberOfObjects == 0) {
+                [_sections removeObject:sectionInfo];
+                [self.delegate controller:self didChangeSection:sectionInfo atIndex:section forChangeType:type];
+            } else {
+                indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+                [self.delegate controller:self didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:indexPath];
+            }
+            break;
+        }
+        case NSFetchedResultsChangeMove:
+        {
+            
+        }
+        default:
+            break;
+    }
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    
+    if (_updatingContent) {
+        [self.delegate controllerDidChangeContent:self];
+        _updatingContent = FALSE;
+    }
 }
 
 #pragma mark - Private -
@@ -273,6 +351,12 @@
     if (![self containsObject:object]) {
         [_objects addObject:object];
     }
+}
+
+- (void)addObject:(id)object sortUsingDescriptors:(NSArray *)sortDescriptors
+{
+    [self addObject:object];
+    [_objects sortUsingDescriptors:sortDescriptors];
 }
 
 - (BOOL)containsObject:(id)object

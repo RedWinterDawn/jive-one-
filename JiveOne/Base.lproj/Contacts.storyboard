@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Jhe-AU-Yz3">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -179,7 +180,7 @@
                                     <outlet property="detailTextLabel" destination="zTc-HM-fDX" id="AqI-ND-MC7"/>
                                     <outlet property="favoriteBtn" destination="AH7-6r-D1F" id="3yK-Xa-x12"/>
                                     <outlet property="textLabel" destination="4Ry-Fo-vlb" id="jEN-x8-CT1"/>
-                                    <segue destination="Ab5-kr-ogH" kind="show" id="mdo-jp-OBU"/>
+                                    <segue destination="Ab5-kr-ogH" kind="show" id="P4j-a8-NqD"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="60" id="ft1-kY-TmV" userLabel="ContactCell" customClass="JCContactCell">
@@ -251,6 +252,7 @@
                                     <outlet property="detailTextLabel" destination="Q8G-Hc-pqY" id="53u-ZB-fB2"/>
                                     <outlet property="favoriteBtn" destination="yiZ-yx-VZZ" id="R3y-pO-zBW"/>
                                     <outlet property="textLabel" destination="T7O-mG-H2C" id="HnN-Ol-7cW"/>
+                                    <segue destination="Ab5-kr-ogH" kind="show" id="ba0-6s-b7n"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LineCell" rowHeight="60" id="z6Z-oo-Gea" customClass="JCLineCell">
@@ -666,7 +668,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2601" y="996.5"/>
+            <point key="canvasLocation" x="2591" y="1044.5"/>
         </scene>
     </scenes>
     <resources>
@@ -674,7 +676,7 @@
         <image name="local_contacts" width="24" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="ba0-6s-b7n"/>
         <segue reference="VLE-44-Pvd"/>
-        <segue reference="mdo-jp-OBU"/>
     </inferredMetricsTieBreakers>
 </document>

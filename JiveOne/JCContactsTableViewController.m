@@ -21,17 +21,12 @@
 
 #import "JCPhoneManager.h"
 #import "JCContactDetailViewController.h"
-
 #import "JCContactsFetchedResultsController.h"
-
-
 
 @interface JCContactsTableViewController() <JCContactCellDelegate>
 {
     NSString *_searchText;
     NSMutableDictionary *lineSubcription;
-    
-    JCContactsFetchedResultsController *_contactsFetchedResultsController;
 }
 
 @property (nonatomic, strong) NSFetchRequest *fetchRequest;
@@ -129,74 +124,40 @@
 
 #pragma mark - Getters -
 
-- (JCContactsFetchedResultsController *)fetchedResultsController
+- (NSFetchedResultsController *)fetchedResultsController
 {
-    if (!_contactsFetchedResultsController)
-    {
-        PBX *pbx = self.authenticationManager.pbx;
-        _contactsFetchedResultsController = [[JCContactsFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest
-                                                                                                         pbx:pbx
-                                                                                          sectionNameKeyPath:@"firstInitial"];
-        
-        __autoreleasing NSError *error = nil;
-        if ([_contactsFetchedResultsController performFetch:&error])
-            [self.tableView reloadData];
-    }
-    return _contactsFetchedResultsController;
-}
-
-- (NSFetchRequest *)fetchRequest
-{
-    if (!_fetchRequest)
+    if (!_fetchedResultsController)
     {
         NSPredicate *predicate;
         if (_searchText && ![_searchText isEqualToString:@""]) {
             predicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (number contains[cd] %@)", _searchText, _searchText];
         }
         
-//        if (_filterType == JCContactFilterFavorites) {
-//            NSPredicate *favoritePredicate =[NSPredicate predicateWithFormat:@"favorite == 1"];
-//            if (predicate) {
-//                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, favoritePredicate]];
-//            }
-//            else {
-//                predicate = favoritePredicate;
-//            }
-//            _fetchRequest = [InternalExtension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
-//        }
-//        else if (_filterType == JCContactFilterGrouped) {
-//            NSPredicate *predicate =[NSPredicate predicateWithFormat:@"contacts.pbx.jrn CONTAINS[cd] %@", line.pbx.jrn];
-//            if (_searchText && ![_searchText isEqualToString:@""]) {
-//                NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", _searchText];
-//                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
-//            }
-//            _fetchRequest = [InternalExtensionGroup MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
-//        }
-//        else {
-//            InternalExtensionGroup *contactGroup = self.contactGroup;
-//            if (contactGroup) {
-//                NSPredicate *contactGroupPredicate =[NSPredicate predicateWithFormat:@"groups CONTAINS[cd] %@", contactGroup];
-//                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, contactGroupPredicate]];
-//                _fetchRequest = [InternalExtension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
-//            } else {
-                _fetchRequest = [Extension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
-                _fetchRequest.includesSubentities = TRUE;
-//            }
-//        }
-        _fetchRequest.resultType = NSManagedObjectResultType;
-        _fetchRequest.fetchBatchSize = 10;
-        _fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+        NSFetchRequest *fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+        fetchRequest.includesSubentities = TRUE;
+        fetchRequest.resultType = NSManagedObjectResultType;
+        fetchRequest.fetchBatchSize = 10;
+        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+        
+        
+        PBX *pbx = self.authenticationManager.pbx;
+        _fetchedResultsController = [[JCContactsFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                                                         pbx:pbx
+                                                                                          sectionNameKeyPath:@"firstInitial"];
+        _fetchedResultsController.delegate = self;
+        
+        __autoreleasing NSError *error = nil;
+        if ([_fetchedResultsController performFetch:&error])
+            [self.tableView reloadData];
     }
-    return _fetchRequest;
+    return _fetchedResultsController;
 }
-
-
 
 #pragma mark - Private -
 
 -(void)reloadTable
 {
-    _contactsFetchedResultsController = nil;
+    _fetchedResultsController = nil;
     _fetchRequest = nil;
     [self.tableView reloadData];
 }
