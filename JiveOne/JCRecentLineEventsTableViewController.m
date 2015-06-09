@@ -27,7 +27,7 @@
 #import "JCNonVisualVoicemailViewController.h"
 #import "JCVoicemailDetailViewController.h"
 #import "JCStoryboardLoaderViewController.h"
-#import "JCContactDetailController.h"
+#import "JCContactDetailViewController.h"
 #import "UIDevice+Additions.h"
 
 NSString *const kJCHistoryCellReuseIdentifier = @"HistoryCell";
@@ -151,7 +151,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
         voicemailDetailViewController.delegate = self;
     }
     
-    else if ([viewController isKindOfClass:[JCContactDetailController class]] && recentLineEvent){
+    else if ([viewController isKindOfClass:[JCContactDetailViewController class]] && recentLineEvent){
         InternalExtension *internalExtension = recentLineEvent.internalExtension;
         NSArray *localContacts = recentLineEvent.phoneNumbers.allObjects;
         id<JCPhoneNumberDataSource> phoneNumber;
@@ -171,7 +171,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
                                                             forPbx:recentLineEvent.line.pbx
                                                      excludingLine:recentLineEvent.line];
         }
-        ((JCContactDetailController *)viewController).phoneNumber = phoneNumber;
+        ((JCContactDetailViewController *)viewController).phoneNumber = phoneNumber;
     }
 }
 

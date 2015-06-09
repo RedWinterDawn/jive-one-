@@ -17,7 +17,7 @@
 #import "JCAddressBookNumber.h"
 #import "JCAddressBookPerson.h"
 
-#import "JCContactDetailController.h"
+#import "JCContactDetailViewController.h"
 
 NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"ContactGroupViewController";
 
@@ -75,9 +75,9 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
             contacts.contactGroup = (InternalExtensionGroup *)object;
         }
     }
-    else if ([viewController isKindOfClass:[JCContactDetailController class]])
+    else if ([viewController isKindOfClass:[JCContactDetailViewController class]])
     {
-        JCContactDetailController *detailViewController = (JCContactDetailController *)viewController;
+        JCContactDetailViewController *detailViewController = (JCContactDetailViewController *)viewController;
         detailViewController.managedObjectContext = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_defaultContext]];
     }
 }

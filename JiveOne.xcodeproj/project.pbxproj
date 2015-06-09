@@ -144,7 +144,7 @@
 		5D3F1ADD1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1ADC1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m */; };
 		5D3F1AE01AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1ADF1AE7F56B00C59A63 /* JCModuleSplitViewControllerDelegate.m */; };
 		5D3F1AE41AE7FEE200C59A63 /* JCAppMenuSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1AE31AE7FEE200C59A63 /* JCAppMenuSplitViewController.m */; };
-		5D3F1AEA1AE8154E00C59A63 /* JCContactDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1AE91AE8154E00C59A63 /* JCContactDetailController.m */; };
+		5D3F1AEA1AE8154E00C59A63 /* JCContactDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1AE91AE8154E00C59A63 /* JCContactDetailViewController.m */; };
 		5D490E431A89751F004B62C0 /* JCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E421A89751F004B62C0 /* JCNavigationController.m */; };
 		5D490E461A89774C004B62C0 /* JCMessageParticipantTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E451A89774C004B62C0 /* JCMessageParticipantTableViewController.m */; };
 		5D490E571A8AD0A1004B62C0 /* JCUnknownNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E561A8AD0A1004B62C0 /* JCUnknownNumber.m */; };
@@ -530,8 +530,8 @@
 		5D3F1AE31AE7FEE200C59A63 /* JCAppMenuSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppMenuSplitViewController.m; sourceTree = "<group>"; };
 		5D3F1AE51AE806A400C59A63 /* JCSMSMessageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSMSMessageManager.h; sourceTree = "<group>"; };
 		5D3F1AE61AE806A400C59A63 /* JCSMSMessageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSMSMessageManager.m; sourceTree = "<group>"; };
-		5D3F1AE81AE8154E00C59A63 /* JCContactDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactDetailController.h; sourceTree = "<group>"; };
-		5D3F1AE91AE8154E00C59A63 /* JCContactDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactDetailController.m; sourceTree = "<group>"; };
+		5D3F1AE81AE8154E00C59A63 /* JCContactDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactDetailViewController.h; sourceTree = "<group>"; };
+		5D3F1AE91AE8154E00C59A63 /* JCContactDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactDetailViewController.m; sourceTree = "<group>"; };
 		5D490E411A89751F004B62C0 /* JCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNavigationController.h; sourceTree = "<group>"; };
 		5D490E421A89751F004B62C0 /* JCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNavigationController.m; sourceTree = "<group>"; };
 		5D490E441A89774C004B62C0 /* JCMessageParticipantTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessageParticipantTableViewController.h; sourceTree = "<group>"; };
@@ -1700,8 +1700,8 @@
 				2747F1651A07E0F300E3FE73 /* JCContactsViewController.m */,
 				276E06781A0293BC00CD2827 /* JCContactsTableViewController.h */,
 				276E06791A0293BC00CD2827 /* JCContactsTableViewController.m */,
-				5D3F1AE81AE8154E00C59A63 /* JCContactDetailController.h */,
-				5D3F1AE91AE8154E00C59A63 /* JCContactDetailController.m */,
+				5D3F1AE81AE8154E00C59A63 /* JCContactDetailViewController.h */,
+				5D3F1AE91AE8154E00C59A63 /* JCContactDetailViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2285,7 +2285,7 @@
 				5D6AE3671A094A9C002BDAAF /* NSDictionary+Validations.m in Sources */,
 				279A4E2C19DA91E100E8AB7B /* JCSipManager.m in Sources */,
 				5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */,
-				5D3F1AEA1AE8154E00C59A63 /* JCContactDetailController.m in Sources */,
+				5D3F1AEA1AE8154E00C59A63 /* JCContactDetailViewController.m in Sources */,
 				27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */,
 				5D490E731A93A85F004B62C0 /* JCAlertView.m in Sources */,
 				5D2EDB871A3CEBE80031F7AD /* JCDebugUsersTableViewController.m in Sources */,

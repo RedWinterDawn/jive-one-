@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCContactDetailController.h"
+#import "JCContactDetailViewController.h"
 
 #import "JCPhoneManager.h"
 #import "JCAuthenticationManager.h"
@@ -24,7 +24,7 @@
 #import "JCStoryboardLoaderViewController.h"
 
 
-@implementation JCContactDetailController
+@implementation JCContactDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

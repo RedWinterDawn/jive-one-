@@ -20,7 +20,7 @@
 #import "Contact.h"
 
 #import "JCPhoneManager.h"
-#import "JCContactDetailController.h"
+#import "JCContactDetailViewController.h"
 
 #import "JCContactsFetchedResultsController.h"
 
@@ -103,8 +103,8 @@
         viewController = ((UINavigationController *)viewController).topViewController;
     }
     
-    if ([viewController isKindOfClass:[JCContactDetailController class]]) {
-        JCContactDetailController *detailViewController = (JCContactDetailController *)viewController;
+    if ([viewController isKindOfClass:[JCContactDetailViewController class]]) {
+        JCContactDetailViewController *detailViewController = (JCContactDetailViewController *)viewController;
         NSManagedObjectContext *context = [NSManagedObjectContext MR_contextWithParent:self.managedObjectContext];
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;
