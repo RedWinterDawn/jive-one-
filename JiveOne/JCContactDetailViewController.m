@@ -238,9 +238,12 @@
         return;
     }
     
+    // Name Section
     [self layoutNameSection:phoneNumber];
-    self.numberCell.detailTextLabel.text = phoneNumber.formattedNumber;
-    [self cell:self.numberCell setHidden:NO];
+    
+    // Number Section
+    [self layoutNumberSection:phoneNumber];
+    
     
     [self reloadDataAnimated:animated];
 }
@@ -272,14 +275,29 @@
     [self cell:_lastNameCell setHidden:NO];
 }
 
+-(void)layoutNumberSection:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    [self cells:_numberSectionCells setHidden:YES];
+    
+    self.numberCell.detailTextLabel.text = phoneNumber.formattedNumber;
+    [self cell:self.numberCell setHidden:NO];
+}
+
 -(void)layoutForExtension:(Extension *)extension
 {
     [self updateTitle];
+    
+    // Name Section. Extensions only have a name.
     self.nameCell.textField.text  = extension.titleText;
     [self cells:_nameSectionCells setHidden:YES];
     [self cell:_nameCell setHidden:NO];
     
+    // Numbers Section
+    [self cells:_numberSectionCells setHidden:YES];
     self.extensionCell.detailTextLabel.text = extension.number;
+    self.extensionCell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"phone-green"]];
+    
+    
     [self cell:self.extensionCell setHidden:NO];
     if ([extension isKindOfClass:[InternalExtension class]]) {
         NSString *jiveId = ((InternalExtension *)extension).jiveUserId;

@@ -408,7 +408,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Contact Info" id="vDp-Zj-BYa">
+                            <tableViewSection headerTitle="" id="vDp-Zj-BYa">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="mko-OR-Bj5" detailTextLabel="Tyc-oW-Pmm" style="IBUITableViewCellStyleValue2" id="7A5-dH-vMT">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -435,6 +435,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="AYV-A1-JEv" appends="YES" id="oiA-wX-hhg"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="83W-7E-8bb" detailTextLabel="MXs-p4-itQ" style="IBUITableViewCellStyleValue2" id="JFz-I9-A3t">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -461,6 +464,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="AYV-A1-JEv" appends="YES" id="Sy0-kJ-7Kg"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="HMt-sO-cMs" detailTextLabel="AKt-Qv-pOA" style="IBUITableViewCellStyleValue2" id="3bl-Ff-KbF">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -498,18 +504,24 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="xlK-I5-OCy"/>
                     <connections>
+                        <outlet property="extensionCell" destination="7A5-dH-vMT" id="gZG-BP-EXi"/>
                         <outlet property="firstNameCell" destination="eaw-pQ-Kb3" id="Qx1-Zc-Z4M"/>
+                        <outlet property="jiveIdCell" destination="3bl-Ff-KbF" id="DIJ-PR-VXa"/>
                         <outlet property="lastNameCell" destination="0zZ-CX-x0W" id="GVr-NW-rhX"/>
                         <outlet property="nameCell" destination="lL3-3z-a46" id="JfJ-Yc-QKC"/>
+                        <outlet property="numberCell" destination="JFz-I9-A3t" id="Fix-Kl-zCj"/>
                         <outletCollection property="nameSectionCells" destination="lL3-3z-a46" id="qyx-pV-U69"/>
                         <outletCollection property="nameSectionCells" destination="eaw-pQ-Kb3" id="gJw-Iu-xO3"/>
                         <outletCollection property="nameSectionCells" destination="0zZ-CX-x0W" id="MW0-S3-QwW"/>
+                        <outletCollection property="numberSectionCells" destination="7A5-dH-vMT" id="oja-9J-upL"/>
+                        <outletCollection property="numberSectionCells" destination="JFz-I9-A3t" id="BoU-Gb-CG5"/>
+                        <outletCollection property="numberSectionCells" destination="3bl-Ff-KbF" id="DXU-Dx-gZf"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SgG-Zo-neP" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="AYV-A1-JEv">
+                <tapGestureRecognizer id="AYV-A1-JEv" userLabel="Extension Tap Gesture Recognizer">
                     <connections>
-                        <action selector="callExtension:" destination="Ab5-kr-ogH" id="hN7-Y5-3Bw"/>
+                        <action selector="callExtension:" destination="Ab5-kr-ogH" id="xHQ-B0-D9s"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
