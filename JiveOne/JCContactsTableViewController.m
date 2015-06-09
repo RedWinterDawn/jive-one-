@@ -13,6 +13,7 @@
 #import "Extension.h"
 #import "Line.h"
 #import "Contact.h"
+#import "JCAddressBookPerson.h"
 
 // Views
 #import "JCPresenceCell.h"
@@ -36,6 +37,8 @@
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:self.authenticationManager];
+    
+    self.clearsSelectionOnViewWillAppear = TRUE;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -190,6 +193,8 @@
 {
     id<JCPhoneNumberDataSource> phoneNumber = (id<JCPhoneNumberDataSource>)[self objectAtIndexPath:indexPath];
     if ([phoneNumber isKindOfClass:[Extension class]]) {
+        return FALSE;
+    } else if ([phoneNumber isKindOfClass:[JCAddressBookPerson class]]) {
         return FALSE;
     }
     return TRUE;

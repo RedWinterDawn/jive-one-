@@ -120,7 +120,7 @@
     [_fetchedObjects addObjectsFromArray:_extensionsFetchedResultsController.fetchedObjects];
     
     NSFetchRequest *fetchRequest = self.fetchRequest;
-    NSArray *people = [_addressBook fetchPeopleWithPredicate:self.fetchRequest.predicate sortDescriptors:fetchRequest.sortDescriptors];
+    NSArray *people = [_addressBook fetchPeopleWithPredicate:fetchRequest.predicate sortDescriptors:fetchRequest.sortDescriptors];
     [_fetchedObjects addObjectsFromArray:people];
     
     [_fetchedObjects sortUsingDescriptors:self.fetchRequest.sortDescriptors];
@@ -128,31 +128,12 @@
     _sections = [NSMutableArray new];
     for (id<JCPhoneNumberDataSource> contact in _fetchedObjects)
     {
-        // Fetch the section name from the object.
-        NSString *sectionName;
-        if ([contact isKindOfClass:[NSManagedObject class]])
-        {
-            NSManagedObject *object = (NSManagedObject *)contact;
-            sectionName = [object valueForKeyPath:self.sectionNameKeyPath];
-        }
-        else
-        {
-            SEL sectionNameKeyPath = NSSelectorFromString(self.sectionNameKeyPath);
-            if ([contact respondsToSelector:sectionNameKeyPath]) {
-                id object = [contact performSelector:sectionNameKeyPath];
-                if ([object isKindOfClass:[NSString class]]) {
-                    sectionName = object;
-                }
-            }
-        }
-        
-        // Get the section for the give named section.
+        NSString *sectionName = [self sectionNameForObject:contact];
         JCContactsSectionInfo *sectionInfo = [self sectionForName:sectionName];
         if (!sectionInfo) {
             sectionInfo = [[JCContactsSectionInfo alloc] initWithName:sectionName];
             [_sections addObject:sectionInfo];
         }
-        
         [sectionInfo addObject:contact];
     }
     return YES;
@@ -165,7 +146,23 @@
 
 - (NSIndexPath *)indexPathForObject:(id<JCPhoneNumberDataSource>)object
 {
-    return nil;
+    NSString *sectionName = [self sectionNameForObject:object];
+    if (!sectionName) {
+        return nil;
+    }
+    
+    JCContactsSectionInfo *sectionInfo = [self sectionForName:sectionName];
+    if (!sectionInfo) {
+        return nil;
+    }
+    
+    NSInteger section = [_sections indexOfObject:sectionInfo];
+    if (![sectionInfo containsObject:object]) {
+        return nil;
+    }
+    
+    NSInteger row = [sectionInfo.objects indexOfObject:object];
+    return [NSIndexPath indexPathForRow:row inSection:section];
 }
 
 - (NSArray *)sectionIndexTitles
@@ -261,14 +258,7 @@
             [sectionInfo addObject:managedObject sortUsingDescriptors:self.fetchRequest.sortDescriptors];
             row = [sectionInfo.objects indexOfObject:managedObject];
             indexPath = [NSIndexPath indexPathForRow:row inSection:section];
-            [self.delegate controller:self didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:indexPath];
-            break;
-        }
-        case NSFetchedResultsChangeUpdate:
-        {
-            row = [sectionInfo.objects indexOfObject:managedObject];
-            indexPath = [NSIndexPath indexPathForRow:row inSection:section];
-            [self.delegate controller:self didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:indexPath];
+            [self.delegate controller:self didChangeObject:anObject atIndexPath:nil forChangeType:type newIndexPath:indexPath];
             break;
         }
         case NSFetchedResultsChangeDelete:
@@ -280,13 +270,37 @@
                 [self.delegate controller:self didChangeSection:sectionInfo atIndex:section forChangeType:type];
             } else {
                 indexPath = [NSIndexPath indexPathForRow:row inSection:section];
-                [self.delegate controller:self didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:indexPath];
+                [self.delegate controller:self didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:nil];
             }
             break;
         }
+        case NSFetchedResultsChangeUpdate:
+        {
+            row = [sectionInfo.objects indexOfObject:managedObject];
+            indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+            [self.delegate controller:self didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:indexPath];
+            break;
+        }
+        
         case NSFetchedResultsChangeMove:
         {
+            indexPath = [self indexPathForObject:anObject]; // Get the old indexPath.
             
+            // Check to see if we changed sections, if so, we need to remove it from the old
+            // section, and add it to the new section.
+            if (indexPath.section != section) {
+                JCContactsSectionInfo *oldSectionInfo = [_sections objectAtIndex:indexPath.section];
+                [oldSectionInfo deleteObject:anObject];
+                if (oldSectionInfo.numberOfObjects == 0) {
+                    [_sections removeObject:sectionInfo];
+                    [self.delegate controller:self didChangeSection:sectionInfo atIndex:section forChangeType:type];
+                } else {
+                    [sectionInfo addObject:anObject];
+                }
+            }
+            row = [sectionInfo.objects indexOfObject:anObject];
+            newIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
+            [self.delegate controller:self didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
         }
         default:
             break;
@@ -308,6 +322,22 @@
     for (JCContactsSectionInfo *sectionInfo in _sections) {
         if ([sectionInfo.name isEqualToString:name]) {
             return sectionInfo;
+        }
+    }
+    return nil;
+}
+
+-(NSString *)sectionNameForObject:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    if ([phoneNumber isKindOfClass:[NSManagedObject class]]) {
+        return [(NSManagedObject *)phoneNumber valueForKeyPath:self.sectionNameKeyPath];
+    }
+    
+    SEL sectionNameKeyPath = NSSelectorFromString(self.sectionNameKeyPath);
+    if ([phoneNumber respondsToSelector:sectionNameKeyPath]) {
+        id object = [phoneNumber performSelector:sectionNameKeyPath];
+        if ([object isKindOfClass:[NSString class]]) {
+            return object;
         }
     }
     return nil;
@@ -379,13 +409,6 @@
 - (id)objectAtIndex:(NSUInteger)index
 {
     return [_objects objectAtIndex:index];
-}
-
-- (NSString *)description
-{
-    NSMutableString *string = [NSMutableString stringWithFormat:@"Section Name: %@", _name];
-    [string appendFormat:@"%@", [_objects description]];
-    return string;
 }
 
 @end

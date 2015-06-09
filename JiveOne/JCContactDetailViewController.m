@@ -23,6 +23,12 @@
 #import "JCDialerViewController.h"
 #import "JCStoryboardLoaderViewController.h"
 
+@interface JCContactDetailViewController () {
+    BOOL _addingContact;
+}
+
+@end
+
 
 @implementation JCContactDetailViewController
 
@@ -50,6 +56,7 @@
             User *user = self.authenticationManager.user;
             contact.user = (User *)[context existingObjectWithID:user.objectID error:nil];
             self.phoneNumber = contact;
+            _addingContact = TRUE;
             [self setEditing:YES animated:NO];
         }
     }
@@ -77,6 +84,9 @@
 -(IBAction)cancel:(id)sender
 {
     [self.managedObjectContext reset];
+    if (_addingContact) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     self.editing = FALSE;
 }
 
@@ -159,12 +169,44 @@
     Contact *contact = (Contact *)phoneNumber;
     if (textField == self.firstNameCell.textField) {
         contact.firstName = textField.text;
+        [self updateTitle];
     } else if (textField == self.lastNameCell.textField) {
         contact.lastName = textField.text;
+        [self updateTitle];
+    }
+}
+
+-(IBAction)valueChanged:(id)sender
+{
+    if ([sender isKindOfClass:[UITextField class]]) {
+        UITextField *textField = (UITextField *)sender;
+        id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
+        if (![phoneNumber isKindOfClass:[Contact class]]) {
+            return;
+        }
+        
+        Contact *contact = (Contact *)phoneNumber;
+        if (textField == self.firstNameCell.textField) {
+            contact.firstName = textField.text;
+            [self updateTitle];
+        }
+        else if (textField == self.lastNameCell.textField) {
+            contact.lastName = textField.text;
+            [self updateTitle];
+        }
+
     }
 }
 
 #pragma mark - Private -
+
+-(void)updateTitle
+{
+    id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
+    self.title = phoneNumber.titleText;
+    self.navigationItem.title = phoneNumber.titleText;
+}
+
 
 -(void)convertContact
 {
@@ -210,8 +252,7 @@
     [self cells:_nameSectionCells setHidden:YES];
     
     NSString *name = phoneNumber.titleText;
-    self.title = name;
-    self.navigationItem.title = name;
+    [self updateTitle];
     if (phoneNumber && ![phoneNumber conformsToProtocol:@protocol(JCPersonDataSource)]) {
         self.nameCell.textField.text  = name;
         [self cell:_nameCell setHidden:NO];
@@ -233,6 +274,7 @@
 
 -(void)layoutForExtension:(Extension *)extension
 {
+    [self updateTitle];
     self.nameCell.textField.text  = extension.titleText;
     [self cells:_nameSectionCells setHidden:YES];
     [self cell:_nameCell setHidden:NO];
