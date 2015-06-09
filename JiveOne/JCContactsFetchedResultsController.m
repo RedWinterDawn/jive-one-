@@ -67,6 +67,7 @@
     self = [super initWithFetchRequest:fetchRequest managedObjectContext:pbx.managedObjectContext sectionNameKeyPath:sectionNameKeyPath cacheName:nil];
     if (self) {
         _pbx = pbx;
+        _addressBook = addressBook;
         
         // Contacts are tied to the user. We only want contacts that are tied to the current user.
         NSFetchRequest *request = [Contact MR_requestAllInContext:self.managedObjectContext];
@@ -117,6 +118,11 @@
     _fetchedObjects = [NSMutableArray new];
     [_fetchedObjects addObjectsFromArray:_contactsFetchedResultsController.fetchedObjects];
     [_fetchedObjects addObjectsFromArray:_extensionsFetchedResultsController.fetchedObjects];
+    
+    NSFetchRequest *fetchRequest = self.fetchRequest;
+    NSArray *people = [_addressBook fetchPeopleWithPredicate:self.fetchRequest.predicate sortDescriptors:fetchRequest.sortDescriptors];
+    [_fetchedObjects addObjectsFromArray:people];
+    
     [_fetchedObjects sortUsingDescriptors:self.fetchRequest.sortDescriptors];
     
     _sections = [NSMutableArray new];
@@ -146,7 +152,6 @@
             sectionInfo = [[JCContactsSectionInfo alloc] initWithName:sectionName];
             [_sections addObject:sectionInfo];
         }
-        
         
         [sectionInfo addObject:contact];
     }

@@ -106,8 +106,27 @@ NSString *const kJCAddressBookFailedToLoadNotification = @"AddressBookFailedToLo
 
 #pragma mark People Requests
 
+- (NSArray *)fetchPeopleWithPredicate:(NSPredicate *)predicate sortedByKey:(NSString *)sortedByKey ascending:(BOOL)ascending;
+{
+    NSArray *sortDescriptors;
+    if (sortedByKey) {
+        sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:sortedByKey ascending:ascending]];
+        
+    }
+    return [self fetchPeopleWithPredicate:predicate sortDescriptors:sortDescriptors];
+}
 
-
+- (NSArray *)fetchPeopleWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sorteDescriptors;
+{
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:kJCAddressBookPeople];
+    if (sorteDescriptors) {
+        fetchRequest.sortDescriptors = sorteDescriptors;
+    }
+    if (predicate) {
+        fetchRequest.predicate = predicate;
+    }
+    return [self fetchWithFetchRequest:fetchRequest];
+}
 
 #pragma mark General Requests
 

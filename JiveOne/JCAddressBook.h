@@ -31,6 +31,9 @@ extern NSString *const kJCAddressBookFailedToLoadNotification;
 - (NSArray *)fetchNumbersWithPredicate:(NSPredicate *)predicate sortedByKey:(NSString *)sortedByKey ascending:(BOOL)ascending;
 
 // People Requests
+- (NSArray *)fetchAllPeopleAscending:(BOOL)ascending;
+- (NSArray *)fetchPeopleWithPredicate:(NSPredicate *)predicate sortedByKey:(NSString *)sortedByKey ascending:(BOOL)ascending;
+- (NSArray *)fetchPeopleWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sorteDescriptors;
 
 // General requests
 - (NSArray *)fetchWithFetchRequest:(NSFetchRequest *)request;

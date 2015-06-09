@@ -109,78 +109,6 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="60" id="ft1-kY-TmV" userLabel="ContactCell" customClass="JCContactCell">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ft1-kY-TmV" id="SpG-Y8-wjI">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VLb-0v-doj">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="contact" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T7O-mG-H2C">
-                                                    <rect key="frame" x="33" y="8" width="502" height="22"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="8pl-sR-K1U"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q8G-Hc-pqY">
-                                                    <rect key="frame" x="33" y="30" width="502" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="ad4-qv-520"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yiZ-yx-VZZ">
-                                                    <rect key="frame" x="540" y="8" width="44" height="45"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="44" id="NeB-2i-gNV"/>
-                                                        <constraint firstAttribute="height" constant="45" id="cpn-Oz-a24"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                    <state key="normal" title="★"/>
-                                                    <connections>
-                                                        <action selector="toggleFavoriteStatus:" destination="ft1-kY-TmV" eventType="touchUpInside" id="FDY-ZI-3mh"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstItem="yiZ-yx-VZZ" firstAttribute="leading" secondItem="T7O-mG-H2C" secondAttribute="trailing" constant="5" id="D4T-JJ-BGk"/>
-                                                <constraint firstItem="yiZ-yx-VZZ" firstAttribute="top" secondItem="VLb-0v-doj" secondAttribute="top" constant="8" id="ImD-4D-zAa"/>
-                                                <constraint firstAttribute="trailing" secondItem="yiZ-yx-VZZ" secondAttribute="trailing" constant="16" id="VJz-T8-Kpe"/>
-                                                <constraint firstItem="yiZ-yx-VZZ" firstAttribute="leading" secondItem="Q8G-Hc-pqY" secondAttribute="trailing" constant="5" id="g7S-oR-Hj6"/>
-                                                <constraint firstAttribute="bottom" secondItem="Q8G-Hc-pqY" secondAttribute="bottom" constant="9" id="raU-V8-faC"/>
-                                                <constraint firstItem="T7O-mG-H2C" firstAttribute="top" secondItem="VLb-0v-doj" secondAttribute="top" constant="8" id="rbk-Vy-ZDq"/>
-                                                <constraint firstItem="Q8G-Hc-pqY" firstAttribute="leading" secondItem="VLb-0v-doj" secondAttribute="leading" constant="33" id="u4d-7j-e7Z"/>
-                                                <constraint firstItem="T7O-mG-H2C" firstAttribute="leading" secondItem="VLb-0v-doj" secondAttribute="leading" constant="33" id="vxT-Ht-5Ff"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="VLb-0v-doj" secondAttribute="bottom" constant="-0.5" id="DHr-jQ-mjo"/>
-                                        <constraint firstAttribute="trailing" secondItem="VLb-0v-doj" secondAttribute="trailing" id="E0T-y9-70s"/>
-                                        <constraint firstItem="VLb-0v-doj" firstAttribute="leading" secondItem="SpG-Y8-wjI" secondAttribute="leading" id="GeL-Eo-tMn"/>
-                                        <constraint firstItem="VLb-0v-doj" firstAttribute="top" secondItem="SpG-Y8-wjI" secondAttribute="top" id="te3-FE-QW8"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="seperatorColor">
-                                        <color key="value" red="0.6588235294" green="0.66274509800000003" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="detailTextLabel" destination="Q8G-Hc-pqY" id="53u-ZB-fB2"/>
-                                    <outlet property="favoriteBtn" destination="yiZ-yx-VZZ" id="R3y-pO-zBW"/>
-                                    <outlet property="textLabel" destination="T7O-mG-H2C" id="HnN-Ol-7cW"/>
-                                    <segue destination="Ab5-kr-ogH" kind="show" id="ba0-6s-b7n"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ContactGroupCell" textLabel="Uwi-GE-t3C" style="IBUITableViewCellStyleDefault" id="tZ1-ib-AvU" customClass="JCTableViewCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -200,6 +128,51 @@
                                         <color key="value" red="0.6588235294" green="0.66274509800000003" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="60" id="ft1-kY-TmV" userLabel="ContactCell" customClass="JCPresenceCell">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ft1-kY-TmV" id="SpG-Y8-wjI">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="contact" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T7O-mG-H2C">
+                                            <rect key="frame" x="33" y="8" width="560" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="22" id="8pl-sR-K1U"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q8G-Hc-pqY">
+                                            <rect key="frame" x="33" y="30" width="560" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="ad4-qv-520"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Q8G-Hc-pqY" firstAttribute="top" secondItem="T7O-mG-H2C" secondAttribute="bottom" id="1xY-Xx-nj2"/>
+                                        <constraint firstItem="Q8G-Hc-pqY" firstAttribute="leading" secondItem="SpG-Y8-wjI" secondAttribute="leading" constant="33" id="2Fr-9B-zOi"/>
+                                        <constraint firstItem="T7O-mG-H2C" firstAttribute="top" secondItem="SpG-Y8-wjI" secondAttribute="top" constant="8" id="QgR-cS-gqm"/>
+                                        <constraint firstItem="T7O-mG-H2C" firstAttribute="leading" secondItem="SpG-Y8-wjI" secondAttribute="leading" constant="33" id="f6A-tG-7me"/>
+                                        <constraint firstAttribute="trailing" secondItem="Q8G-Hc-pqY" secondAttribute="trailing" constant="7" id="iHZ-9m-bZF"/>
+                                        <constraint firstAttribute="trailing" secondItem="T7O-mG-H2C" secondAttribute="trailing" constant="7" id="nVq-eX-MAe"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="seperatorColor">
+                                        <color key="value" red="0.6588235294" green="0.66274509800000003" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="detailTextLabel" destination="Q8G-Hc-pqY" id="53u-ZB-fB2"/>
+                                    <outlet property="textLabel" destination="T7O-mG-H2C" id="HnN-Ol-7cW"/>
+                                    <segue destination="Ab5-kr-ogH" kind="show" id="ba0-6s-b7n"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -268,7 +241,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="ContactsDetailViewTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ab5-kr-ogH" customClass="JCContactDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Rn4-RK-QR8">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="443"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
@@ -545,7 +518,7 @@
         <image name="local_contacts" width="24" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ah7-Qa-OMa"/>
+        <segue reference="ba0-6s-b7n"/>
         <segue reference="VLE-44-Pvd"/>
     </inferredMetricsTieBreakers>
 </document>

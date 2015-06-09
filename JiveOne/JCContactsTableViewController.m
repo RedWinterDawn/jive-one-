@@ -15,13 +15,13 @@
 #import "Contact.h"
 
 // Views
-#import "JCContactCell.h"
+#import "JCPresenceCell.h"
 
 // Controllers
 #import "JCContactDetailViewController.h"
 #import "JCContactsFetchedResultsController.h"
 
-@interface JCContactsTableViewController() <JCContactCellDelegate>
+@interface JCContactsTableViewController()
 {
     NSString *_searchText;
 }
@@ -53,9 +53,14 @@
         {
             UITableViewCell *cell = (UITableViewCell *)sender;
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            NSManagedObject *managedObject = (NSManagedObject *)[self objectAtIndexPath:indexPath];
-            id object = [context existingObjectWithID:managedObject.objectID error:nil];
-            if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]){
+            id object = [self objectAtIndexPath:indexPath];
+            if ([object isKindOfClass:[NSManagedObject class]]) {
+                NSManagedObject *managedObject = (NSManagedObject *)[self objectAtIndexPath:indexPath];
+                id object = [context existingObjectWithID:managedObject.objectID error:nil];
+                if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]){
+                    detailViewController.phoneNumber = (id<JCPhoneNumberDataSource>)object;
+                }
+            } else if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]){
                 detailViewController.phoneNumber = (id<JCPhoneNumberDataSource>)object;
             }
         }
@@ -69,21 +74,8 @@
         cell.textLabel.text = phoneNumber.titleText;
         cell.detailTextLabel.text = phoneNumber.detailText;
         
-        // Setup Presence for Extensions.
         if ([phoneNumber isKindOfClass:[Extension class]] && [cell isKindOfClass:[JCPresenceCell class]]) {
             ((JCPresenceCell *)cell).identifier = ((Extension *)phoneNumber).jrn;
-        }
-        
-        // Configure Favorites.
-        if ([cell isKindOfClass:[JCContactCell class]])
-        {
-            JCContactCell *contactCell = (JCContactCell *)cell;
-            UIButton *favoriteButton = contactCell.favoriteBtn;
-            if ([phoneNumber isKindOfClass:[Line class]]) {
-                favoriteButton.hidden = TRUE;
-            } else {
-                favoriteButton.hidden = FALSE;
-            }
         }
     }
     else if ([object isKindOfClass:[InternalExtensionGroup class]]) {
@@ -160,13 +152,6 @@
 
 #pragma mark - Delegate Handlers -
 
-#pragma mark JCContactsCellDelegate
-
-- (void)contactCell:(JCContactCell *)cell didMarkAsFavorite:(BOOL)favorite
-{
-    // TODO: Finish Favorites.
-}
-
 #pragma mark UITableViewDataSource
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
@@ -188,8 +173,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath
 {
     if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
-        JCContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell"];
-        cell.delegate = self;
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell"];
         [self configureCell:cell withObject:object];
         return cell;
     }
