@@ -680,10 +680,8 @@
                             <outlet property="delegate" destination="wCP-M4-bk8" id="kpU-34-hd7"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="k45-nl-uVW"/>
-                    <connections>
-                        <outlet property="phoneTypes" destination="JpW-ib-JcC" id="cs8-ZL-aqG"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vWy-IB-EB2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -8,7 +8,9 @@
 
 #import "JCPhoneTypeSelectorTableController.h"
 
-@interface JCPhoneTypeSelectorTableController ()
+@interface JCPhoneTypeSelectorTableController (){
+    NSArray *phoneTypes;
+}
 
 @end
 
@@ -16,7 +18,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView = _phoneTypes;
+    phoneTypes = @[NSLocalizedString(@"home", @"PhoneTypeSelector"), NSLocalizedString(@"work", @"PhoneTypeSelector"), NSLocalizedString(@"iPhone", @"PhoneTypeSelector"), NSLocalizedString(@"mobile", @"PhoneTypeSelector"), NSLocalizedString(@"main", @"PhoneTypeSelector"), NSLocalizedString(@"home fax", @"PhoneTypeSelector"), NSLocalizedString(@"work fax", @"PhoneTypeSelector"), NSLocalizedString(@"pager", @"PhoneTypeSelector"),];
+    
+    
   }
 
 - (void)didReceiveMemoryWarning {
@@ -28,19 +32,18 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 9.;
+    return phoneTypes.count ;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
-    _selectedType = cell.textLabel.text;
-    NSLog(@"%@",_selectedType);
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [_delegate phoneTypeSelectorController:self didSelectPhoneType:cell.textLabel.text];
+    
 }
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
