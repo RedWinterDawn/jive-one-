@@ -8,16 +8,30 @@
 
 #import "Contact.h"
 #import "PhoneNumber.h"
-
+#import "JCPhoneNumberDataSourceUtils.h"
 
 @implementation Contact
 
+// Attributes
+
+@dynamic etag;
 @dynamic data;
-@dynamic firstName;
-@dynamic lastName;
-@dynamic name;
-@dynamic number;
-@dynamic t9;
+
+// Relationships
+
+@dynamic user;
 @dynamic phoneNumbers;
+
+
+// Overides
+-(NSString *)number
+{
+    NSSet *phoneNumbers = self.phoneNumbers;
+    if (phoneNumbers && phoneNumbers.count > 0) {
+        PhoneNumber *phoneNumber = phoneNumbers.allObjects.firstObject;
+        return phoneNumber.number;
+    }
+    return nil;
+}
 
 @end

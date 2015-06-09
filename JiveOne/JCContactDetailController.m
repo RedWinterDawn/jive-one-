@@ -16,11 +16,13 @@
 #import "Line.h"
 #import "PBX.h"
 #import "User.h"
+#import "Contact.h"
 #import "JCVoicemailNumber.h"
 #import "JCPersonDataSource.h"
 
 #import "JCDialerViewController.h"
 #import "JCStoryboardLoaderViewController.h"
+
 
 @implementation JCContactDetailController
 
@@ -37,11 +39,17 @@
             [self onActiveCall];
         }
     }
-    
+   
+    // Determine display mode. Extensions do not support editing. If we are adding a contact, we
     id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
     if (![phoneNumber isKindOfClass:[Extension class]]) {
         self.navigationItem.rightBarButtonItem =  self.editButtonItem;
         if (!phoneNumber) {
+            NSManagedObjectContext *context = self.managedObjectContext;
+            Contact *contact = [Contact MR_createEntityInContext:context];
+            User *user = self.authenticationManager.user;
+            contact.user = (User *)[context existingObjectWithID:user.objectID error:nil];
+            self.phoneNumber = contact;
             [self setEditing:YES animated:NO];
         }
     }
@@ -53,6 +61,42 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+-(IBAction)callExtension:(id)sender
+{
+    if ([sender isKindOfClass:[UITapGestureRecognizer class]]) {
+        UITableViewCell *cell = (UITableViewCell *)((UITapGestureRecognizer *)sender).view;
+        if (cell == self.extensionCell) {
+            [self dialPhoneNumber:self.phoneNumber
+                        usingLine:self.authenticationManager.line
+                           sender:sender];
+        }
+    }
+}
+
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    if (!editing) {
+        [self saveContact];
+    } else {
+        [self convertContact];
+    }
+    
+    [super setEditing:editing animated:animated];
+}
+
+-(void)setEditing:(BOOL)editing
+{
+    if (!editing) {
+        [self saveContact];
+    } else {
+        [self convertContact];
+    }
+    
+    [super setEditing:editing];
+}
+
+#pragma mark - Notification Handlers -
 
 -(void)onActiveCall
 {
@@ -81,51 +125,57 @@
     }
 }
 
--(IBAction)callExtension:(id)sender
-{
-    if ([sender isKindOfClass:[UITapGestureRecognizer class]]) {
-        UITableViewCell *cell = (UITableViewCell *)((UITapGestureRecognizer *)sender).view;
-        if (cell == self.extensionCell) {
-            [self dialPhoneNumber:self.phoneNumber
-                        usingLine:self.authenticationManager.line
-                           sender:sender];
-        }
-    }
-}
+#pragma mark - Delegate Handlers -
 
--(void)setEditing:(BOOL)editing animated:(BOOL)animated
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
-    if (!editing) {
-        [self save];
+    id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
+    if (![phoneNumber isKindOfClass:[Contact class]]) {
+        return NO;
     }
     
-    [super setEditing:editing animated:animated];
+    return YES;
 }
 
--(void)setEditing:(BOOL)editing
+-(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if (!editing) {
-        [self save];
+    id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
+    if (![phoneNumber isKindOfClass:[Contact class]]) {
+        return;
     }
     
-    [super setEditing:editing];
+    Contact *contact = (Contact *)phoneNumber;
+    if (textField == self.firstNameCell.textField) {
+        contact.firstName = textField.text;
+    } else if (textField == self.lastNameCell.textField) {
+        contact.lastName = textField.text;
+    }
 }
 
 #pragma mark - Private -
 
--(void)save
+-(void)convertContact
 {
-    NSLog(@"Save Sent");
-    
     id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
-    if ([phoneNumber isKindOfClass:[NSManagedObjectContext class]]) {
-        
-    } else {
-        
+    if (![self.phoneNumber isKindOfClass:[Contact class]]) {
+        Contact *contact = [Contact MR_createEntityInContext:self.managedObjectContext];
+        if ([phoneNumber conformsToProtocol:@protocol(JCPersonDataSource)]) {
+            id<JCPersonDataSource> person = (id<JCPersonDataSource>) phoneNumber;
+            contact.firstName = person.firstName;
+            contact.lastName = person.lastName;
+        }
     }
-    
-    
-    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)saveContact
+{
+    [self.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
+        
+        NSLog(@"%@", [error description]);
+        
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
 }
 
 -(void)layoutForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber animated:(BOOL)animated
@@ -175,7 +225,6 @@
 
 -(void)layoutForExtension:(Extension *)extension
 {
-    
     self.nameCell.textField.text  = extension.titleText;
     [self cells:_nameSectionCells setHidden:YES];
     [self cell:_nameCell setHidden:NO];

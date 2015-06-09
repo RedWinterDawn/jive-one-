@@ -24,29 +24,23 @@ NSString *const kJCContactCellFavoriteButtonText = @"★";
     [self.favoriteBtn setAttributedTitle:unselectedAttributedStarSelectedState forState:UIControlStateNormal];
 }
 
--(void)layoutSubviews
+#pragma mark - Properties -
+
+-(void)setFavorite:(BOOL)favorite
 {
-    [super layoutSubviews];
-    
-    self.favoriteBtn.selected = self.contact.isFavorite;
+    self.favoriteBtn.selected = favorite;
 }
 
-#pragma mark - Setters -
-
--(void)setContact:(InternalExtension *)contact
+-(BOOL)isFavorite
 {
-    _contact = contact;
-    self.person = contact;
+    return self.favoriteBtn.selected;
 }
 
 #pragma mark - IBActions -
 
 - (IBAction)toggleFavoriteStatus:(id)sender {
-    
-    self.contact.favorite = !self.contact.isFavorite;
-    [self.contact.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-        [self setNeedsLayout];
-    }];
+    self.favorite = !self.isFavorite;
+    [_delegate contactCell:self didMarkAsFavorite:self.isFavorite];
 }
 
 @end

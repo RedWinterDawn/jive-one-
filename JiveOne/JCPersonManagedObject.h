@@ -7,12 +7,16 @@
 //
 
 #import "JCPersonDataSource.h"
-#import "JCPhoneNumberManagedObject.h"
 
-@interface JCPersonManagedObject : JCPhoneNumberManagedObject <JCPersonDataSource>
+@import CoreData;
+@import Foundation;
+
+@interface JCPersonManagedObject : NSManagedObject <JCPersonDataSource>
 
 // Attributes
+@property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *firstName;
 @property (nonatomic, retain) NSString *lastName;
+@property (nonatomic, retain) NSString *t9;
 
 @end

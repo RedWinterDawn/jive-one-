@@ -15,6 +15,8 @@
 @property (nonatomic, retain) NSString *jrn;
 @property (nonatomic, retain) NSString *pbxId;
 
+@property (nonatomic) BOOL hidden;
+
 @end
 
 @interface Extension (Search)

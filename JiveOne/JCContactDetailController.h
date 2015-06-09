@@ -7,16 +7,20 @@
 //
 
 #import "StaticDataTableViewController.h"
-#import "JCPersonManagedObject.h"
+#import "JCPhoneNumberDataSource.h"
 
 #import "JCEditableTableViewCell.h"
 
-@interface JCContactDetailController : StaticDataTableViewController
+@interface JCContactDetailController : StaticDataTableViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) id<JCPhoneNumberDataSource> phoneNumber;
 
 // Name Section
 @property (strong, nonatomic) IBOutletCollection(UITableViewCell) NSArray *nameSectionCells;
+
+// Managed Object Context
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @property (weak, nonatomic) IBOutlet JCEditableTableViewCell *nameCell;
 @property (weak, nonatomic) IBOutlet JCEditableTableViewCell *firstNameCell;
 @property (weak, nonatomic) IBOutlet JCEditableTableViewCell *lastNameCell;

@@ -15,9 +15,9 @@
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="phoneNumbers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PhoneNumber" inverseName="contact" inverseEntity="PhoneNumber" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="contacts" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Conversation" representedClassName="Conversation" parentEntity="Message" syncable="YES">
         <relationship name="internalExtension" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="InternalExtension" inverseName="conversations" inverseEntity="InternalExtension" syncable="YES"/>
@@ -39,6 +39,7 @@
         <relationship name="smsMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SMSMessage" inverseName="did" inverseEntity="SMSMessage" syncable="YES"/>
     </entity>
     <entity name="Extension" representedClassName="Extension" isAbstract="YES" syncable="YES">
+        <attribute name="hidden" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="jrn" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
@@ -120,6 +121,7 @@
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="jiveUserId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Contact" inverseName="user" inverseEntity="Contact" syncable="YES"/>
         <relationship name="conversations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Conversation" inverseName="user" inverseEntity="Conversation" syncable="YES"/>
         <relationship name="pbxs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PBX" inverseName="user" inverseEntity="PBX" syncable="YES"/>
     </entity>
@@ -144,24 +146,24 @@
     <elements>
         <element name="BlockedNumber" positionX="-171" positionY="702" width="128" height="133"/>
         <element name="Call" positionX="538" positionY="-360" width="128" height="45"/>
-        <element name="Contact" positionX="-387" positionY="315" width="128" height="163"/>
+        <element name="Contact" positionX="-234" positionY="299" width="128" height="163"/>
         <element name="Conversation" positionX="342" positionY="171" width="128" height="73"/>
         <element name="DID" positionX="-398" positionY="698" width="128" height="238"/>
-        <element name="Extension" positionX="-425" positionY="-198" width="128" height="118"/>
+        <element name="Extension" positionX="-459" positionY="-154" width="128" height="133"/>
         <element name="IncomingCall" positionX="700" positionY="-288" width="128" height="45"/>
-        <element name="InternalExtension" positionX="-243" positionY="-72" width="128" height="133"/>
+        <element name="InternalExtension" positionX="-200" positionY="-90" width="128" height="133"/>
         <element name="InternalExtensionGroup" positionX="-45" positionY="81" width="128" height="88"/>
-        <element name="Line" positionX="-245" positionY="-360" width="128" height="135"/>
+        <element name="Line" positionX="-333" positionY="-378" width="128" height="135"/>
         <element name="LineConfiguration" positionX="-45" positionY="-252" width="128" height="135"/>
         <element name="Message" positionX="529" positionY="162" width="128" height="73"/>
         <element name="MissedCall" positionX="709" positionY="-360" width="128" height="45"/>
         <element name="OutgoingCall" positionX="711" positionY="-432" width="128" height="45"/>
-        <element name="PBX" positionX="-783" positionY="288" width="128" height="178"/>
-        <element name="PhoneNumber" positionX="-81" positionY="441" width="128" height="133"/>
+        <element name="PBX" positionX="-846" positionY="540" width="128" height="178"/>
+        <element name="PhoneNumber" positionX="-20" positionY="488" width="128" height="133"/>
         <element name="RecentEvent" positionX="331" positionY="11" width="128" height="103"/>
         <element name="RecentLineEvent" positionX="412" positionY="-196" width="128" height="118"/>
         <element name="SMSMessage" positionX="628" positionY="702" width="128" height="88"/>
-        <element name="User" positionX="-1134" positionY="207" width="128" height="90"/>
+        <element name="User" positionX="-1134" positionY="198" width="128" height="103"/>
         <element name="Voicemail" positionX="711" positionY="-189" width="128" height="178"/>
         <element name="VoicemailTranscription" positionX="945" positionY="-162" width="128" height="118"/>
     </elements>

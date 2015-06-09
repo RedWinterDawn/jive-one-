@@ -9,12 +9,21 @@
 #import "JCPersonCell.h"
 #import "InternalExtension.h"
 
-@interface JCContactCell : JCPersonCell
+@protocol JCContactCellDelegate;
 
-@property (nonatomic, weak) IBOutlet UIButton *favoriteBtn;
+@interface JCContactCell : JCPresenceCell
 
-@property (nonatomic, strong) InternalExtension *contact;
+@property (weak, nonatomic) id<JCContactCellDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteBtn;
+@property (nonatomic, getter=isFavorite) BOOL favorite;
 
 - (IBAction)toggleFavoriteStatus:(id)sender;
+
+@end
+
+
+@protocol JCContactCellDelegate <NSObject>
+
+-(void)contactCell:(JCContactCell *)cell didMarkAsFavorite:(BOOL)favorite;
 
 @end

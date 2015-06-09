@@ -17,14 +17,21 @@
 #import "User.h"
 #import "InternalExtensionGroup.h"
 #import "Extension.h"
+#import "Contact.h"
 
 #import "JCPhoneManager.h"
 #import "JCContactDetailController.h"
 
-@interface JCContactsTableViewController()
+#import "JCContactsFetchedResultsController.h"
+
+
+
+@interface JCContactsTableViewController() <JCContactCellDelegate>
 {
     NSString *_searchText;
     NSMutableDictionary *lineSubcription;
+    
+    JCContactsFetchedResultsController *_contactsFetchedResultsController;
 }
 
 @property (nonatomic, strong) NSFetchRequest *fetchRequest;
@@ -44,11 +51,17 @@
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
-    if ([object isKindOfClass:[InternalExtension class]] && [cell isKindOfClass:[JCContactCell class]]) {
-        ((JCContactCell *)cell).contact = (InternalExtension *)object;
-    }
-    else if ([object isKindOfClass:[Line class]] && [cell isKindOfClass:[JCLineCell class]]) {
-        ((JCLineCell *)cell).line = (Line *)object;
+    if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
+        id<JCPhoneNumberDataSource> phoneNumber = (id<JCPhoneNumberDataSource>)object;
+        cell.textLabel.text = phoneNumber.titleText;
+        cell.detailTextLabel.text = phoneNumber.detailText;
+        
+        // Setup Presence for Internal Extensions.
+        if ([phoneNumber isKindOfClass:[Extension class]] && [cell isKindOfClass:[JCPresenceCell class]]) {
+            ((JCPresenceCell *)cell).identifier = ((Extension *)phoneNumber).jrn;
+        }
+        
+        // TODO: Favorites;
     }
     else if ([object isKindOfClass:[InternalExtensionGroup class]]) {
         cell.textLabel.text = ((InternalExtensionGroup *)object).name;
@@ -58,7 +71,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath
 {
     if ([object isKindOfClass:[InternalExtension class]]) {
+        JCContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InternalExtensionCell"];
+        cell.delegate = self;
+        [self configureCell:cell withObject:object];
+        return cell;
+    }
+    if ([object isKindOfClass:[Contact class]]) {
         JCContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell"];
+        cell.delegate = self;
         [self configureCell:cell withObject:object];
         return cell;
     }
@@ -84,13 +104,18 @@
     }
     
     if ([viewController isKindOfClass:[JCContactDetailController class]]) {
+        JCContactDetailController *detailViewController = (JCContactDetailController *)viewController;
+        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextWithParent:self.managedObjectContext];
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            JCPersonManagedObject *person = (JCPersonManagedObject *)[self objectAtIndexPath:indexPath];
-            JCContactDetailController *detailViewController = (JCContactDetailController *)viewController;
-            detailViewController.phoneNumber = person;
+            NSManagedObject *managedObject = (NSManagedObject *)[self objectAtIndexPath:indexPath];
+            id object = [context existingObjectWithID:managedObject.objectID error:nil];
+            if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource)]) {
+                detailViewController.phoneNumber = (id<JCPhoneNumberDataSource>)object;
+            }
         }
+        detailViewController.managedObjectContext = context;
     }
 }
 
@@ -104,62 +129,60 @@
 
 #pragma mark - Getters -
 
-- (NSFetchedResultsController *)fetchedResultsController
+- (JCContactsFetchedResultsController *)fetchedResultsController
 {
-    if (!_fetchedResultsController)
+    if (!_contactsFetchedResultsController)
     {
-        NSString *sectionKeyPath = @"firstInitial";
-        if (_filterType == JCContactFilterGrouped) {
-            sectionKeyPath = nil;
-        }
-        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest
-                                                                             managedObjectContext:self.managedObjectContext
-                                                                               sectionNameKeyPath:sectionKeyPath
-                                                                                        cacheName:nil];
+        PBX *pbx = self.authenticationManager.pbx;
+        _contactsFetchedResultsController = [[JCContactsFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest
+                                                                                                         pbx:pbx
+                                                                                          sectionNameKeyPath:@"firstInitial"];
+        
+        __autoreleasing NSError *error = nil;
+        if ([_contactsFetchedResultsController performFetch:&error])
+            [self.tableView reloadData];
     }
-    return _fetchedResultsController;
+    return _contactsFetchedResultsController;
 }
 
 - (NSFetchRequest *)fetchRequest
 {
     if (!_fetchRequest)
     {
-        Line *line = self.authenticationManager.line;
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@", line.pbxId];
+        NSPredicate *predicate;
         if (_searchText && ![_searchText isEqualToString:@""]) {
-            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (number contains[cd] %@)", _searchText, _searchText];
-            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
+            predicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (number contains[cd] %@)", _searchText, _searchText];
         }
         
-        if (_filterType == JCContactFilterFavorites) {
-            NSPredicate *favoritePredicate =[NSPredicate predicateWithFormat:@"favorite == 1"];
-            if (predicate) {
-                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, favoritePredicate]];
-            }
-            else {
-                predicate = favoritePredicate;
-            }
-            _fetchRequest = [InternalExtension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
-        }
-        else if (_filterType == JCContactFilterGrouped) {
-            NSPredicate *predicate =[NSPredicate predicateWithFormat:@"contacts.pbx.jrn CONTAINS[cd] %@", line.pbx.jrn];
-            if (_searchText && ![_searchText isEqualToString:@""]) {
-                NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", _searchText];
-                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
-            }
-            _fetchRequest = [InternalExtensionGroup MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
-        }
-        else {
-            InternalExtensionGroup *contactGroup = self.contactGroup;
-            if (contactGroup) {
-                NSPredicate *contactGroupPredicate =[NSPredicate predicateWithFormat:@"groups CONTAINS[cd] %@", contactGroup];
-                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, contactGroupPredicate]];
-                _fetchRequest = [InternalExtension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
-            } else {
+//        if (_filterType == JCContactFilterFavorites) {
+//            NSPredicate *favoritePredicate =[NSPredicate predicateWithFormat:@"favorite == 1"];
+//            if (predicate) {
+//                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, favoritePredicate]];
+//            }
+//            else {
+//                predicate = favoritePredicate;
+//            }
+//            _fetchRequest = [InternalExtension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+//        }
+//        else if (_filterType == JCContactFilterGrouped) {
+//            NSPredicate *predicate =[NSPredicate predicateWithFormat:@"contacts.pbx.jrn CONTAINS[cd] %@", line.pbx.jrn];
+//            if (_searchText && ![_searchText isEqualToString:@""]) {
+//                NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", _searchText];
+//                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
+//            }
+//            _fetchRequest = [InternalExtensionGroup MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+//        }
+//        else {
+//            InternalExtensionGroup *contactGroup = self.contactGroup;
+//            if (contactGroup) {
+//                NSPredicate *contactGroupPredicate =[NSPredicate predicateWithFormat:@"groups CONTAINS[cd] %@", contactGroup];
+//                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, contactGroupPredicate]];
+//                _fetchRequest = [InternalExtension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+//            } else {
                 _fetchRequest = [Extension MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
                 _fetchRequest.includesSubentities = TRUE;
-            }
-        }
+//            }
+//        }
         _fetchRequest.resultType = NSManagedObjectResultType;
         _fetchRequest.fetchBatchSize = 10;
         _fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
@@ -173,7 +196,7 @@
 
 -(void)reloadTable
 {
-    _fetchedResultsController = nil;
+    _contactsFetchedResultsController = nil;
     _fetchRequest = nil;
     [self.tableView reloadData];
 }
@@ -185,6 +208,11 @@
 -(void)lineChanged:(NSNotification *)notification
 {
     [self reloadTable];
+}
+
+- (void)contactCell:(JCContactCell *)cell didMarkAsFavorite:(BOOL)favorite
+{
+    // TODO: Finish Favorites.
 }
 
 #pragma mark - Table view data source
