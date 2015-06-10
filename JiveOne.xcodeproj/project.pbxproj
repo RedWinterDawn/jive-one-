@@ -205,6 +205,10 @@
 		5D8FE40E1B225A4C004FD594 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE40D1B225A4C004FD594 /* Contact.m */; };
 		5D8FE4121B2263EB004FD594 /* JCContactsFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4111B2263EB004FD594 /* JCContactsFetchedResultsController.m */; };
 		5D8FE4151B265034004FD594 /* JCPersonManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4141B265034004FD594 /* JCPersonManagedObject.m */; };
+		5D8FE4181B2783CA004FD594 /* JCStaticTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4171B2783CA004FD594 /* JCStaticTableViewController.m */; };
+		5D8FE41C1B27A769004FD594 /* JCStaticRowData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE41B1B27A769004FD594 /* JCStaticRowData.m */; };
+		5D8FE41F1B27A898004FD594 /* JCStaticSectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE41E1B27A898004FD594 /* JCStaticSectionInfo.m */; };
+		5D8FE4221B27A9EC004FD594 /* JCStaticTableData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4211B27A9EC004FD594 /* JCStaticTableData.m */; };
 		5D9382C01B0F94F800C5CEA0 /* Chat.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D9382BF1B0F94F800C5CEA0 /* Chat.strings */; };
 		5D97A7FF1A828B4700A4434D /* JCIntercomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */; };
 		5D9A5E221A24E30A00E8274C /* JCPhoneAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */; };
@@ -694,6 +698,14 @@
 		5D8FE4111B2263EB004FD594 /* JCContactsFetchedResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsFetchedResultsController.m; sourceTree = "<group>"; };
 		5D8FE4131B265034004FD594 /* JCPersonManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPersonManagedObject.h; sourceTree = "<group>"; };
 		5D8FE4141B265034004FD594 /* JCPersonManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPersonManagedObject.m; sourceTree = "<group>"; };
+		5D8FE4161B2783CA004FD594 /* JCStaticTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStaticTableViewController.h; sourceTree = "<group>"; };
+		5D8FE4171B2783CA004FD594 /* JCStaticTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStaticTableViewController.m; sourceTree = "<group>"; };
+		5D8FE41A1B27A769004FD594 /* JCStaticRowData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStaticRowData.h; sourceTree = "<group>"; };
+		5D8FE41B1B27A769004FD594 /* JCStaticRowData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStaticRowData.m; sourceTree = "<group>"; };
+		5D8FE41D1B27A898004FD594 /* JCStaticSectionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStaticSectionInfo.h; sourceTree = "<group>"; };
+		5D8FE41E1B27A898004FD594 /* JCStaticSectionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStaticSectionInfo.m; sourceTree = "<group>"; };
+		5D8FE4201B27A9EC004FD594 /* JCStaticTableData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStaticTableData.h; sourceTree = "<group>"; };
+		5D8FE4211B27A9EC004FD594 /* JCStaticTableData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStaticTableData.m; sourceTree = "<group>"; };
 		5D9382BF1B0F94F800C5CEA0 /* Chat.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Chat.strings; sourceTree = "<group>"; };
 		5D97A7FD1A828B4700A4434D /* JCIntercomTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCIntercomTableViewController.h; sourceTree = "<group>"; };
 		5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCIntercomTableViewController.m; sourceTree = "<group>"; };
@@ -1009,6 +1021,14 @@
 				5D25F8331AE5B92D00981DB6 /* iPad */,
 				5D25F8421AE6A81F00981DB6 /* JCStoryboardLoaderViewController.h */,
 				5D25F8431AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m */,
+				5D8FE4161B2783CA004FD594 /* JCStaticTableViewController.h */,
+				5D8FE4171B2783CA004FD594 /* JCStaticTableViewController.m */,
+				5D8FE41A1B27A769004FD594 /* JCStaticRowData.h */,
+				5D8FE41B1B27A769004FD594 /* JCStaticRowData.m */,
+				5D8FE41D1B27A898004FD594 /* JCStaticSectionInfo.h */,
+				5D8FE41E1B27A898004FD594 /* JCStaticSectionInfo.m */,
+				5D8FE4201B27A9EC004FD594 /* JCStaticTableData.h */,
+				5D8FE4211B27A9EC004FD594 /* JCStaticTableData.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2201,6 +2221,7 @@
 				F8C9A7D719E884D30049A715 /* MissedCall.m in Sources */,
 				5D62FAC91AC9EA5500C6DE05 /* JCContactCollectionViewCell.m in Sources */,
 				F8C9A7D419E884D20049A715 /* OutgoingCall.m in Sources */,
+				5D8FE4181B2783CA004FD594 /* JCStaticTableViewController.m in Sources */,
 				5DB0BFC419FFF97A006737D7 /* JCDrawing.m in Sources */,
 				5D241FE41A38BAD5008B498A /* InternalExtension.m in Sources */,
 				5DBF6F461ADEF477004B53F5 /* JCAddressBookEntity.m in Sources */,
@@ -2238,6 +2259,7 @@
 				5D112DDA1A4094340097223C /* JCAuthenticationKeychain.m in Sources */,
 				5D8FE4121B2263EB004FD594 /* JCContactsFetchedResultsController.m in Sources */,
 				5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */,
+				5D8FE41F1B27A898004FD594 /* JCStaticSectionInfo.m in Sources */,
 				5D8A35761AB76120009BD5E6 /* JCVoicemailManager.m in Sources */,
 				275F4A5E18AD0FBC00D2F069 /* main.m in Sources */,
 				5DFFF3DD1AF90DD30091F479 /* BlockedNumber.m in Sources */,
@@ -2281,6 +2303,7 @@
 				B744DE321AF920F500A72682 /* JCBlockedNumbersViewController.m in Sources */,
 				5DB0BFC71A0033B5006737D7 /* JCView.m in Sources */,
 				5D6243781A678B6F001DF88E /* JCError.m in Sources */,
+				5D8FE4221B27A9EC004FD594 /* JCStaticTableData.m in Sources */,
 				27F64D5C19772CCF00F772AA /* Line.m in Sources */,
 				5DB0BFC119FFF3FE006737D7 /* JCTableViewCell.m in Sources */,
 				5D490E5E1A8AF364004B62C0 /* JCAddressBookPerson.m in Sources */,
@@ -2290,6 +2313,7 @@
 				2762151E1912AA2500CFBCC8 /* NSDictionary+QueryString.m in Sources */,
 				5DA566441A1D454D00286BA5 /* JCSettingsTableViewController.m in Sources */,
 				5D35479B19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m in Sources */,
+				5D8FE41C1B27A769004FD594 /* JCStaticRowData.m in Sources */,
 				5DBABCD41A283DA500B09783 /* NSString+Additions.m in Sources */,
 				F8BC82C319E44A2E00340BA1 /* JCKeypadOverlayView.m in Sources */,
 				5D8FE4151B265034004FD594 /* JCPersonManagedObject.m in Sources */,

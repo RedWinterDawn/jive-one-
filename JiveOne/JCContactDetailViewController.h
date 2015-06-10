@@ -6,12 +6,13 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "StaticDataTableViewController.h"
+#import "JCStaticTableViewController.h"
+
 #import "JCPhoneNumberDataSource.h"
 
 #import "JCEditableTableViewCell.h"
 
-@interface JCContactDetailViewController : StaticDataTableViewController <UITextFieldDelegate>
+@interface JCContactDetailViewController : JCStaticTableViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) id<JCPhoneNumberDataSource> phoneNumber;
 

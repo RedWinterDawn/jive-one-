@@ -230,11 +230,12 @@
 
 -(void)layoutForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber animated:(BOOL)animated
 {
+    [self startUpdates];
+    
     // We can not edit Extensions.
     if ([phoneNumber isKindOfClass:[Extension class]])
     {
         [self layoutForExtension:(Extension *)phoneNumber];
-        [self reloadDataAnimated:animated];
         return;
     }
     
@@ -244,21 +245,18 @@
     // Number Section
     [self layoutNumberSection:phoneNumber];
     
-    
-    [self reloadDataAnimated:animated];
+    [self endUpdates];
 }
 
 -(void)layoutNameSection:(id<JCPhoneNumberDataSource>)phoneNumber
 {
-    // Hide all name section cells first, then determine base on class introspection and protocol
-    // Which one to do first.
-    [self cells:_nameSectionCells setHidden:YES];
+    [self setCells:_nameSectionCells hidden:YES];
     
     NSString *name = phoneNumber.titleText;
     [self updateTitle];
     if (phoneNumber && ![phoneNumber conformsToProtocol:@protocol(JCPersonDataSource)]) {
         self.nameCell.textField.text  = name;
-        [self cell:_nameCell setHidden:NO];
+        [self setCell:_nameCell hidden:NO];
         return;
     }
     
@@ -271,16 +269,16 @@
         self.lastNameCell.textField.text = person.lastName;
     }
     
-    [self cell:_firstNameCell setHidden:NO];
-    [self cell:_lastNameCell setHidden:NO];
+    [self setCell:_firstNameCell hidden:NO];
+    [self setCell:_lastNameCell hidden:NO];
 }
 
 -(void)layoutNumberSection:(id<JCPhoneNumberDataSource>)phoneNumber
 {
-    [self cells:_numberSectionCells setHidden:YES];
+    [self setCells:_numberSectionCells hidden:YES];
     self.numberCell.detailTextLabel.text = phoneNumber.formattedNumber;
     self.numberCell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"phone-green"]];
-    [self cell:self.numberCell setHidden:NO];
+    [self setCell:_numberCell hidden:NO];
 }
 
 -(void)layoutForExtension:(Extension *)extension
@@ -289,26 +287,25 @@
     
     // Name Section. Extensions only have a name.
     self.nameCell.textField.text  = extension.titleText;
-    [self cells:_nameSectionCells setHidden:YES];
-    [self cell:_nameCell setHidden:NO];
+    [self setCells:_nameSectionCells hidden:YES];
+    [self setCell:_nameCell hidden:YES];
     
     // Numbers Section
-    [self cells:_numberSectionCells setHidden:YES];
+    [self setCells:_numberSectionCells hidden:YES];
     self.extensionCell.detailTextLabel.text = extension.number;
     self.extensionCell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"phone-green"]];
     
-    
-    [self cell:self.extensionCell setHidden:NO];
+    [self setCell:_extensionCell hidden:NO];
     if ([extension isKindOfClass:[InternalExtension class]]) {
         NSString *jiveId = ((InternalExtension *)extension).jiveUserId;
         if (jiveId) {
             self.jiveIdCell.detailTextLabel.text = jiveId;
-            [self cell:self.jiveIdCell setHidden:NO];
+            [self setCell:_jiveIdCell hidden:NO];
         }
     }
     else if([extension isKindOfClass:[Line class]]) {
         self.jiveIdCell.detailTextLabel.text = ((Line *)extension).pbx.user.jiveUserId;
-        [self cell:self.jiveIdCell setHidden:NO];
+        [self setCell:_jiveIdCell hidden:NO];
     }
 }
 
