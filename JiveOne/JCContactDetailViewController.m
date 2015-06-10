@@ -22,9 +22,9 @@
 
 #import "JCDialerViewController.h"
 #import "JCStoryboardLoaderViewController.h"
-#import "JCPhoneTypeSelectorTableController.h"
+#import "JCPhoneTypeSelectorViewController.h"
 
-#import "JCPhoneTypeSelectorTableController.h"
+#import "JCPhoneTypeSelectorViewController.h"
 
 @interface JCContactDetailViewController () <JCPhoneTypeSelectorTableControllerDelegate> {
     BOOL _addingContact;
@@ -72,8 +72,8 @@
 {
     UIViewController *viewController = segue.destinationViewController;
     
-    if ([viewController isKindOfClass:[JCPhoneTypeSelectorTableController class]]) {
-        JCPhoneTypeSelectorTableController *phoneTypeSelectorViewController = (JCPhoneTypeSelectorTableController *)viewController;
+    if ([viewController isKindOfClass:[JCPhoneTypeSelectorViewController class]]) {
+        JCPhoneTypeSelectorViewController *phoneTypeSelectorViewController = (JCPhoneTypeSelectorViewController *)viewController;
         phoneTypeSelectorViewController.sender = sender;
         phoneTypeSelectorViewController.delegate = self;
     }
@@ -216,7 +216,7 @@
 
 #pragma mark JCPhoneTypeSelectorTableViewControllerDelegate
 
--(void)phoneTypeSelectorController:(JCPhoneTypeSelectorTableController *)controller didSelectPhoneType:(NSString *)phoneType
+-(void)phoneTypeSelectorController:(JCPhoneTypeSelectorViewController *)controller didSelectPhoneType:(NSString *)phoneType
 {
     id sender = controller.sender;
     

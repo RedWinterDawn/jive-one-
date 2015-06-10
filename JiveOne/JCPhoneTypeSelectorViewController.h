@@ -10,7 +10,7 @@
 
 @protocol JCPhoneTypeSelectorTableControllerDelegate;
 
-@interface JCPhoneTypeSelectorTableController : UITableViewController
+@interface JCPhoneTypeSelectorViewController : UITableViewController
 
 @property (nonatomic, weak) id<JCPhoneTypeSelectorTableControllerDelegate> delegate;
 
@@ -21,6 +21,6 @@
 
 @protocol JCPhoneTypeSelectorTableControllerDelegate <NSObject>
 
--(void)phoneTypeSelectorController:(JCPhoneTypeSelectorTableController *)controller didSelectPhoneType:(NSString *)phoneType;
+-(void)phoneTypeSelectorController:(JCPhoneTypeSelectorViewController *)controller didSelectPhoneType:(NSString *)phoneType;
 
 @end

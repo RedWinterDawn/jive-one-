@@ -6,15 +6,15 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCPhoneTypeSelectorTableController.h"
+#import "JCPhoneTypeSelectorViewController.h"
 
-@interface JCPhoneTypeSelectorTableController (){
+@interface JCPhoneTypeSelectorViewController (){
     NSArray *_phoneTypes;
 }
 
 @end
 
-@implementation JCPhoneTypeSelectorTableController
+@implementation JCPhoneTypeSelectorViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
