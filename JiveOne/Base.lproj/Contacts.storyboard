@@ -105,7 +105,7 @@
             <objects>
                 <tableViewController id="p2g-D4-iQF" customClass="JCContactsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="jcM-J2-uwV">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="443"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -240,8 +240,8 @@
         <scene sceneID="gdz-BD-FFF">
             <objects>
                 <tableViewController storyboardIdentifier="ContactsDetailViewTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ab5-kr-ogH" customClass="JCContactDetailViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Rn4-RK-QR8">
-                        <rect key="frame" x="0.0" y="64" width="600" height="443"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Rn4-RK-QR8">
+                        <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
@@ -439,22 +439,13 @@
                                             <outletCollection property="gestureRecognizers" destination="AYV-A1-JEv" appends="YES" id="oiA-wX-hhg"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="83W-7E-8bb" detailTextLabel="MXs-p4-itQ" style="IBUITableViewCellStyleValue2" id="JFz-I9-A3t">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="JFz-I9-A3t">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JFz-I9-A3t" id="HnT-pU-h56">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Number" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="83W-7E-8bb">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    </variation>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MXs-p4-itQ">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5wb-FI-5ei">
+                                                    <rect key="frame" x="112" y="11" width="447" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -462,6 +453,20 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     </variation>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JBo-f7-Xy5">
+                                                    <rect key="frame" x="17" y="7" width="86" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <state key="normal" title="Number">
+                                                        <color key="titleColor" red="0.45797613079999999" green="0.45797613079999999" blue="0.45797613079999999" alpha="0.5" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="disabled">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="wCP-M4-bk8" kind="show" identifier="PhoneTypeSelector" id="f8C-9B-OCy"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
@@ -510,6 +515,8 @@
                         <outlet property="lastNameCell" destination="0zZ-CX-x0W" id="GVr-NW-rhX"/>
                         <outlet property="nameCell" destination="lL3-3z-a46" id="JfJ-Yc-QKC"/>
                         <outlet property="numberCell" destination="JFz-I9-A3t" id="Fix-Kl-zCj"/>
+                        <outlet property="numberDetail" destination="5wb-FI-5ei" id="9oz-0Y-83V"/>
+                        <outlet property="numberType" destination="JBo-f7-Xy5" id="gq0-Lp-SLy"/>
                         <outletCollection property="nameSectionCells" destination="lL3-3z-a46" id="qyx-pV-U69"/>
                         <outletCollection property="nameSectionCells" destination="eaw-pQ-Kb3" id="gJw-Iu-xO3"/>
                         <outletCollection property="nameSectionCells" destination="0zZ-CX-x0W" id="MW0-S3-QwW"/>
@@ -525,7 +532,45 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2411" y="1004.5"/>
+            <point key="canvasLocation" x="2411" y="1004"/>
+        </scene>
+        <!--Phone Type Selector-->
+        <scene sceneID="WPC-oe-52h">
+            <objects>
+                <tableViewController title="Phone Type Selector" id="wCP-M4-bk8" customClass="JCPhoneTypeSelectorViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="JpW-ib-JcC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="sectionIndexColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="cC6-N1-7TW" style="IBUITableViewCellStyleDefault" id="q2m-xy-Ati">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q2m-xy-Ati" id="RoK-o0-rdL">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cC6-N1-7TW">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="wCP-M4-bk8" id="gdr-Gk-OYo"/>
+                            <outlet property="delegate" destination="wCP-M4-bk8" id="kpU-34-hd7"/>
+                        </connections>
+                    </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="k45-nl-uVW"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vWy-IB-EB2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3160" y="1013"/>
         </scene>
     </scenes>
     <resources>
@@ -533,7 +578,7 @@
         <image name="local_contacts" width="24" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="0Zw-9y-sBe"/>
         <segue reference="ba0-6s-b7n"/>
-        <segue reference="VLE-44-Pvd"/>
     </inferredMetricsTieBreakers>
 </document>
