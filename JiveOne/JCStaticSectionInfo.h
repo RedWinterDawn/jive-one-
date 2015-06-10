@@ -7,13 +7,14 @@
 //
 
 @import Foundation;
+
 @class JCStaticRowData;
 
-@interface JCStaticSectionInfo : NSObject <NSFetchedResultsSectionInfo> {
-    NSMutableArray *_objects;
-}
+@interface JCStaticSectionInfo : NSObject 
 
-@property (nonatomic) NSUInteger visibleRows;
+@property (nonatomic, readonly) NSArray *objects;
+@property (nonatomic, readonly) NSUInteger numberOfObjects;
+@property (nonatomic, readonly) NSUInteger visibleRows;
 
 -(void)addRow:(JCStaticRowData *)row;
 -(void)removeRow:(JCStaticRowData *)row;

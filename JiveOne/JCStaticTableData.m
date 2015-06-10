@@ -41,7 +41,6 @@
                 UITableViewCell *cell = [tableView.dataSource tableView:tableView cellForRowAtIndexPath:indexPath];
                 [_cells addObject:cell];
                 rowData.cell = cell;
-//                rowData.originalIndexPath = indexPath;
                 [sectionInfo addRow:rowData];
             }
             [_sections addObject:sectionInfo];

@@ -49,6 +49,12 @@
     [_tableData setCells:cells hidden:hidden];
 }
 
+-(BOOL)cellIsHidden:(UITableViewCell *)cell
+{
+    JCStaticRowData *rowData = [_tableData rowForCell:cell];
+    return rowData.isHidden;
+}
+
 -(void)startUpdates
 {
     [_tableData beginUpdates];

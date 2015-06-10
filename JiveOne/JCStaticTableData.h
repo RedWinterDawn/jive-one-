@@ -31,12 +31,13 @@
 
 - (JCStaticRowData *)visibleRowForIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathForRow:(JCStaticRowData *)row;
+- (JCStaticRowData *)rowForCell:(UITableViewCell *)cell;
 
 
 //- (JCStaticRowData *)rowForIndexPath:(NSIndexPath *)indexPath;
 //
 //
-//- (JCStaticRowData *)rowForCell:(UITableViewCell *)cell;
+//
 //- (JCStaticRowData *)visibleRowForIndexPath:(NSIndexPath *)indexPath;
 
 

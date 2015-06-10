@@ -9,20 +9,23 @@
 #import "JCStaticSectionInfo.h"
 #import "JCStaticRowData.h"
 
+@interface JCStaticSectionInfo () {
+    NSMutableArray *_objects;
+}
+
+@end
+
 @implementation JCStaticSectionInfo
 
-@synthesize name = _name;
-@synthesize indexTitle = _indexTitle;
-@synthesize objects = _objects;
-
--(instancetype)initWithName:(NSString *)name;
+-(instancetype)init
 {
-    if (self = [super init]) {
-        _name = name;
+    if (self = [super init]){
         _objects = [NSMutableArray new];
     }
     return self;
 }
+
+#pragma mark - Getters -
 
 -(NSUInteger)numberOfObjects
 {
@@ -33,13 +36,27 @@
 {
     NSInteger count = 0;
     for (JCStaticRowData *row in _objects) {
-        if (row.isHidden) {
+        if (!row.isHidden) {
             ++count;
         }
     }
     return count;
 }
 
+
+#pragma mark - Methods -
+
+-(void)addRow:(JCStaticRowData *)row
+{
+    [_objects addObject:row];
+}
+
+-(void)removeRow:(JCStaticRowData *)row
+{
+    [_objects removeObject:row];
+}
+
+/*
 - (NSInteger)visibleRowIndexWithTableViewCell:(UITableViewCell *)cell {
     
     NSInteger i = 0;
@@ -52,18 +69,8 @@
             ++i;
         }
     }
-    
     return -1;
 }
-
--(void)addRow:(JCStaticRowData *)row
-{
-    [_objects addObject:row];
-}
-
--(void)removeRow:(JCStaticRowData *)row
-{
-    [_objects removeObject:row];
-}
+ */
 
 @end
