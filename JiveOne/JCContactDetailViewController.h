@@ -11,7 +11,6 @@
 #import "JCPhoneTypeSelectorTableController.h"
 #import "JCEditableTableViewCell.h"
 
-
 @interface JCContactDetailViewController : StaticDataTableViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) id<JCPhoneNumberDataSource> phoneNumber;

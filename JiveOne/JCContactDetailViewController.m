@@ -24,7 +24,9 @@
 #import "JCStoryboardLoaderViewController.h"
 #import "JCPhoneTypeSelectorTableController.h"
 
-@interface JCContactDetailViewController () {
+#import "JCPhoneTypeSelectorTableController.h"
+
+@interface JCContactDetailViewController () <JCPhoneTypeSelectorTableControllerDelegate> {
     BOOL _addingContact;
 }
 
@@ -65,6 +67,18 @@
     self.numberType.titleLabel.text = @"nimber";
     [self layoutForPhoneNumber:self.phoneNumber animated:NO];
 }
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UIViewController *viewController = segue.destinationViewController;
+    
+    if ([viewController isKindOfClass:[JCPhoneTypeSelectorTableController class]]) {
+        JCPhoneTypeSelectorTableController *phoneTypeSelectorViewController = (JCPhoneTypeSelectorTableController *)viewController;
+        phoneTypeSelectorViewController.sender = sender;
+        phoneTypeSelectorViewController.delegate = self;
+    }
+}
+
 
 -(void)dealloc
 {
@@ -199,6 +213,19 @@
 
     }
 }
+
+#pragma mark JCPhoneTypeSelectorTableViewControllerDelegate
+
+-(void)phoneTypeSelectorController:(JCPhoneTypeSelectorTableController *)controller didSelectPhoneType:(NSString *)phoneType
+{
+    id sender = controller.sender;
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    NSLog(@"%@ %@", sender, phoneType);
+    
+}
+
 
 #pragma mark - Private -
 
