@@ -37,11 +37,12 @@
             for (NSInteger row = 0; row < numberOfRows; ++row)
             {
                 JCStaticRowData *rowData = [JCStaticRowData new];
+                [sectionInfo addRow:rowData];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
                 UITableViewCell *cell = [tableView.dataSource tableView:tableView cellForRowAtIndexPath:indexPath];
                 [_cells addObject:cell];
                 rowData.cell = cell;
-                [sectionInfo addRow:rowData];
+                
             }
             [_sections addObject:sectionInfo];
         }
@@ -93,6 +94,59 @@
     }
 }
 
+- (BOOL)cellIsHidden:(UITableViewCell *)cell
+{
+    JCStaticRowData *rowData = [self rowForCell:cell];
+    return rowData.isHidden;
+}
+
+-(NSInteger)numberOfRowsInSection:(NSInteger)section
+{
+    JCStaticSectionInfo *sectionInfo = [_sections objectAtIndex:section];
+    return sectionInfo.visibleRows;
+}
+
+- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    JCStaticRowData *rowData = [self visibleRowForIndexPath:indexPath];
+    return rowData.cell;
+}
+
+- (NSIndexPath *)indexPathForVisibleIndexPath:(NSIndexPath *)indexPath
+{
+    JCStaticRowData *rowData = [self visibleRowForIndexPath:indexPath];
+    return [self indexPathForRow:rowData];
+}
+
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    JCStaticRowData *rowData = [self visibleRowForIndexPath:indexPath];
+    CGFloat height = rowData.height;
+    
+    NSLog(@"%f", height);
+    
+    return height;
+}
+
+
+#pragma mark - Private -
+
+- (JCStaticRowData *)visibleRowForIndexPath:(NSIndexPath *)indexPath
+{
+    JCStaticSectionInfo *sectionInfo = [_sections objectAtIndex:indexPath.section];
+    NSUInteger visibleCount = -1;
+    for (JCStaticRowData *rowData in sectionInfo.objects) {
+        if (!rowData.isHidden) {
+            ++visibleCount;
+        }
+        
+        if (indexPath.row == visibleCount) {
+            return rowData;
+        }
+    }
+    return nil;
+}
+
 - (void)internal_setCell:(UITableViewCell *)cell hidden:(BOOL)hidden
 {
     JCStaticRowData *row = [self rowForCell:cell];
@@ -120,24 +174,25 @@
             newIndexPath:newIndexPath];
 }
 
-- (JCStaticRowData *)visibleRowForIndexPath:(NSIndexPath *)indexPath
-{
-//    JCStaticRowData *row = [self rowForIndexPath:indexPath];
-//    if(!row.isHidden) {
-//        return row;
-//    }
-//    return nil;
-    return nil;
-}
-
-#pragma mark - Private -
-
 -(NSIndexPath *)indexPathForRow:(JCStaticRowData *)row
 {
     for (int section = 0; section < _sections.count; section++) {
         JCStaticSectionInfo *sectionInfo = [_sections objectAtIndex:section];
         if ([sectionInfo.objects containsObject:row]) {
             return [NSIndexPath indexPathForRow:[sectionInfo.objects indexOfObject:row] inSection:section];
+        }
+    }
+    return nil;
+}
+
+- (JCStaticRowData *)rowForCell:(UITableViewCell *)cell
+{
+    for (JCStaticSectionInfo *sectionInfo in _sections) {
+        NSArray *objects = sectionInfo.objects;
+        for (JCStaticRowData *row in objects) {
+            if (row.cell == cell) {
+                return row;
+            }
         }
     }
     return nil;
@@ -164,18 +219,7 @@
 //}
 
 
-- (JCStaticRowData *)rowForCell:(UITableViewCell *)cell
-{
-    for (JCStaticSectionInfo *sectionInfo in _sections) {
-        NSArray *objects = sectionInfo.objects;
-        for (JCStaticRowData *row in objects) {
-            if (row.cell == cell) {
-                return row;
-            }
-        }
-    }
-    return nil;
-}
+
 
 //- (NSIndexPath *)indexPathForInsertingOriginalRow:(JCStaticRowData *)row {
 //    

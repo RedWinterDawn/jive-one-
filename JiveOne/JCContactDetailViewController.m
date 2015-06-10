@@ -236,6 +236,7 @@
     if ([phoneNumber isKindOfClass:[Extension class]])
     {
         [self layoutForExtension:(Extension *)phoneNumber];
+        [self endUpdates];
         return;
     }
     
@@ -288,7 +289,7 @@
     // Name Section. Extensions only have a name.
     self.nameCell.textField.text  = extension.titleText;
     [self setCells:_nameSectionCells hidden:YES];
-    [self setCell:_nameCell hidden:YES];
+    [self setCell:_nameCell hidden:NO];
     
     // Numbers Section
     [self setCells:_numberSectionCells hidden:YES];

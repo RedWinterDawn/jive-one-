@@ -29,18 +29,13 @@
 - (void)setCell:(UITableViewCell *)cell hidden:(BOOL)hidden;
 - (void)setCells:(NSArray *)cells hidden:(BOOL)hidden;
 
-- (JCStaticRowData *)visibleRowForIndexPath:(NSIndexPath *)indexPath;
-- (NSIndexPath *)indexPathForRow:(JCStaticRowData *)row;
-- (JCStaticRowData *)rowForCell:(UITableViewCell *)cell;
+- (BOOL)cellIsHidden:(UITableViewCell *)cell;
 
-
-//- (JCStaticRowData *)rowForIndexPath:(NSIndexPath *)indexPath;
-//
-//
-//
-//- (JCStaticRowData *)visibleRowForIndexPath:(NSIndexPath *)indexPath;
-
-
+// Display
+- (NSInteger)numberOfRowsInSection:(NSInteger)section;
+- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)indexPathForVisibleIndexPath:(NSIndexPath *)indexPath;
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
 

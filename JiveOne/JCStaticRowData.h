@@ -11,6 +11,8 @@
 @interface JCStaticRowData : NSObject
 
 @property (nonatomic, getter=isHidden) BOOL hidden;
-@property (nonatomic) UITableViewCell *cell;
+
+@property (nonatomic, strong) UITableViewCell *cell;
+@property (nonatomic) CGFloat height;
 
 @end

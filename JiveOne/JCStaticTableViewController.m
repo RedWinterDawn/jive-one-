@@ -13,6 +13,8 @@
 @interface JCStaticTableViewController () <JCStaticTableDataDelegate>
 {
     JCStaticTableData *_tableData;
+    
+    BOOL _animated;
 }
 
 @end
@@ -51,8 +53,7 @@
 
 -(BOOL)cellIsHidden:(UITableViewCell *)cell
 {
-    JCStaticRowData *rowData = [_tableData rowForCell:cell];
-    return rowData.isHidden;
+    return [_tableData cellIsHidden:cell];
 }
 
 -(void)startUpdates
@@ -78,8 +79,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_tableData) {
-        JCStaticSectionInfo *sectionInfo = [_tableData.sections objectAtIndex:section];
-        return sectionInfo.visibleRows;
+        return [_tableData numberOfRowsInSection:section];
     }
     return [super tableView:tableView numberOfRowsInSection:section];
 }
@@ -87,30 +87,27 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_tableData) {
-        JCStaticRowData *row = [_tableData visibleRowForIndexPath:indexPath];
-        return row.cell;
+        return [_tableData cellForRowAtIndexPath:indexPath];
     }
     return [super tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_tableData != nil) {
-        JCStaticRowData *row = [_tableData visibleRowForIndexPath:indexPath];
-        indexPath = [_tableData indexPathForRow:row];
+    if (_tableData) {
+        indexPath = [_tableData indexPathForVisibleIndexPath:indexPath];
     }
     return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    
     CGFloat height = [super tableView:tableView heightForHeaderInSection:section];
     if (!_tableData) {
         return height;  // Return Original Section Header Height;
     }
     
-    JCStaticSectionInfo *sectionInfo = [_tableData.sections objectAtIndex:section];
-    if (sectionInfo.visibleRows != 0) {
+    NSUInteger numberOfRows = [_tableData numberOfRowsInSection:section];
+    if (numberOfRows != 0) {
         return height;
     }
     return CGFLOAT_MIN;
@@ -152,6 +149,9 @@
 
 -(void)tableDataWillChangeContent:(JCStaticTableData *)tableData
 {
+    if (!_animated) {
+        return;
+    }
     [self.tableView beginUpdates];
 }
 
@@ -160,7 +160,24 @@
           atIndex:(NSUInteger)sectionIndex
     forChangeType:(JCStaticTableDataChangeType)type
 {
+    if (!_animated) {
+        return;
+    }
     
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:sectionIndex];
+    switch(type)
+    {
+        case JCStaticTableDataInsert:
+            [self.tableView insertSections:indexSet withRowAnimation:_animated ? _insertTableViewRowAnimation : UITableViewRowAnimationFade];
+            break;
+            
+        case JCStaticTableDataDelete:
+            [self.tableView deleteSections:indexSet withRowAnimation:_animated ? _deleteTableViewRowAnimation : UITableViewRowAnimationFade];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)tableData:(JCStaticTableData *)tableData
@@ -169,12 +186,38 @@
     forChangeType:(JCStaticTableDataChangeType)type
      newIndexPath:(NSIndexPath *)newIndexPath
 {
+    if (!_animated) {
+        return;
+    }
     
+    UITableView *tableView = self.tableView;
+    switch(type)
+    {
+        case JCStaticTableDataInsert:
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:_animated ? _insertTableViewRowAnimation : UITableViewRowAnimationFade];
+            break;
+            
+        case JCStaticTableDataDelete:
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:_animated ? _deleteTableViewRowAnimation : UITableViewRowAnimationFade];
+            break;
+            
+        case JCStaticTableDataUpdate:
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:_animated ? _reloadTableViewRowAnimation : UITableViewRowAnimationFade];
+            break;
+            
+        case JCStaticTableDataMove:
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:_animated ? _deleteTableViewRowAnimation : UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:_animated ? _insertTableViewRowAnimation : UITableViewRowAnimationFade];
+            break;
+    }
 }
 
 -(void)tableDataDidChangeContent:(JCStaticTableData *)tableData
 {
-    [self.tableView endUpdates];
+    if (_animated) {
+        [self.tableView endUpdates];
+    }
+    [self.tableView reloadData];
 }
 
 @end
