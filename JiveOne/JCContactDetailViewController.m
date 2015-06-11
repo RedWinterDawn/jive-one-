@@ -51,9 +51,11 @@
    
     // Determine display mode. Extensions do not support editing. If we are adding a contact, we
     id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
-    if (![phoneNumber isKindOfClass:[Extension class]]) {
+    if ([phoneNumber isKindOfClass:[Contact class]] || !phoneNumber)
+    {
         self.navigationItem.rightBarButtonItem =  self.editButtonItem;
         if (!phoneNumber) {
+            
             NSManagedObjectContext *context = self.managedObjectContext;
             Contact *contact = [Contact MR_createEntityInContext:context];
             User *user = self.authenticationManager.user;
@@ -64,8 +66,10 @@
         }
         else
         {
-            [self setCell:_addNumberCell hidden:YES];
+            [self setCells:_editingCells hidden:YES];
         }
+    } else {
+        [self setCells:_editingCells hidden:YES];
     }
     [self layoutForPhoneNumber:self.phoneNumber animated:NO];
 }
@@ -112,16 +116,11 @@
 {
     if (!editing) {
         [self saveContact];
-        self.navigationItem.leftBarButtonItem = nil;
-        
-        [self setCell:_addNumberCell hidden:YES];
     } else {
-        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
-        self.navigationItem.leftBarButtonItem = item;
         [self convertContact];
-        
-        [self setCell:_addNumberCell hidden:NO];
     }
+    
+    [self layoutForEditing:editing animated:YES];
     
     [super setEditing:editing animated:animated];
 }
@@ -130,20 +129,16 @@
 {
     if (!editing) {
         [self saveContact];
-        self.navigationItem.leftBarButtonItem = nil;
-        
-        [self setCell:_addNumberCell hidden:YES];
-        
     } else {
-        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
-        self.navigationItem.leftBarButtonItem = item;
         [self convertContact];
-        
-        [self setCell:_addNumberCell hidden:NO];
     }
+    
+    [self layoutForEditing:editing animated:NO];
     
     [super setEditing:editing];
 }
+
+
 
 #pragma mark - Notification Handlers -
 
@@ -206,10 +201,11 @@
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self cellAtIndexPath:indexPath];
-    if (cell == _addNumberCell) {
+    if (cell == _addNumberCell || cell == _addAddressCell || cell == _addOtherCell) {
         return UITableViewCellEditingStyleInsert;
-    }
-    else {
+    } else if (cell == _deleteCell) {
+        return UITableViewCellEditingStyleNone;
+    } else {
         return UITableViewCellEditingStyleDelete;
     }
 }
@@ -217,10 +213,19 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self cellAtIndexPath:indexPath];
-    
     switch (editingStyle) {
         case UITableViewCellEditingStyleInsert:
         {
+            NSIndexPath *actualIndexPath = [self indexPathForCell:cell];
+            if (cell == _addNumberCell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"NumberCell"];
+            } else if (cell == _addAddressCell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"AddressCell"];
+            } else {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"OtherCell"];
+            }
+            
+            [self addCell:cell atIndexPath:actualIndexPath];
             break;
         }
         
@@ -232,6 +237,16 @@
             break;
     }
 }
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [self cellAtIndexPath:indexPath];
+    if (cell == _deleteCell) {
+        return NO;
+    }
+    return YES;
+}
+
 
 -(IBAction)valueChanged:(id)sender
 {
@@ -254,11 +269,9 @@
     }
 }
 
--(IBAction)addNumber:(id)sender
+-(IBAction)deleteContact:(id)sender
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"NumberCell"];
-    NSIndexPath *indexPath = [self indexPathForCell:_addNumberCell];
-    [self addCell:cell atIndexPath:indexPath];
+    [self deleteContact];
 }
 
 #pragma mark JCPhoneTypeSelectorTableViewControllerDelegate
@@ -293,12 +306,50 @@
 
 -(void)saveContact
 {
+    
+    
     [self.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
         NSLog(@"%@", [error description]);
+        
+        _addingContact = FALSE;
+    }];
+}
+
+-(void)deleteContact
+{
+    id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
+    if (![phoneNumber isKindOfClass:[Contact class]]) {
+        return;
+    }
+    
+    Contact *contact = (Contact *)phoneNumber;
+    [self.managedObjectContext deleteObject:contact];
+    [self.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
+        [self.navigationController popViewControllerAnimated:YES];
     }];
 }
 
 #pragma Layout
+
+-(void)layoutForEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [self startUpdates];
+    
+    if (!editing) {
+        self.navigationItem.leftBarButtonItem = nil;
+        [self setCells:_editingCells hidden:YES];
+        
+    } else {
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+        self.navigationItem.leftBarButtonItem = item;
+        [self setCells:_editingCells hidden:NO];
+        if (_addingContact) {
+            [self setCell:_deleteCell hidden:YES];
+        }
+    }
+    
+    [self endUpdates];
+}
 
 -(void)layoutForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber animated:(BOOL)animated
 {

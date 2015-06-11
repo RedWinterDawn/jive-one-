@@ -465,66 +465,6 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NumberCell" id="hRc-Y4-Yal" customClass="JCContactPhoneNumberViewCell">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hRc-Y4-Yal" id="aY0-Y5-E8O">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="N0i-xE-6d2">
-                                                    <rect key="frame" x="112" y="7" width="480" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="Ywz-XY-Bzv"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                    <connections>
-                                                        <action selector="valueChanged:" destination="Ab5-kr-ogH" eventType="editingChanged" id="pqB-1x-aoN"/>
-                                                        <outlet property="delegate" destination="Ab5-kr-ogH" id="G3y-3V-DRU"/>
-                                                    </connections>
-                                                </textField>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Number" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0pL-yN-WGZ">
-                                                    <rect key="frame" x="14" y="11" width="91" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="PAD-AI-9wO"/>
-                                                        <constraint firstAttribute="width" constant="91" id="sCz-Yf-zHw"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    </variation>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="76f-HB-JeA">
-                                                    <rect key="frame" x="14" y="7" width="90" height="19"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="N0i-xE-6d2" secondAttribute="bottom" constant="-2" id="3gb-Uy-AH5"/>
-                                                <constraint firstItem="0pL-yN-WGZ" firstAttribute="leading" secondItem="aY0-Y5-E8O" secondAttribute="leading" constant="14" id="B6O-oO-Zu8"/>
-                                                <constraint firstAttribute="trailing" secondItem="N0i-xE-6d2" secondAttribute="trailing" constant="8" id="B8C-jn-8Kh"/>
-                                                <constraint firstItem="N0i-xE-6d2" firstAttribute="top" secondItem="aY0-Y5-E8O" secondAttribute="topMargin" constant="-1" id="H25-Sj-Ktw"/>
-                                                <constraint firstItem="N0i-xE-6d2" firstAttribute="leading" secondItem="0pL-yN-WGZ" secondAttribute="trailing" constant="7" id="XJt-nX-NGx"/>
-                                                <constraint firstAttribute="centerY" secondItem="N0i-xE-6d2" secondAttribute="centerY" id="bnO-8c-7de"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="N0i-xE-6d2" secondAttribute="trailing" constant="-7" id="yha-5D-lGv"/>
-                                                <constraint firstItem="0pL-yN-WGZ" firstAttribute="top" secondItem="aY0-Y5-E8O" secondAttribute="top" constant="11" id="zPr-cS-LBu"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="3gb-Uy-AH5"/>
-                                                    <exclude reference="H25-Sj-Ktw"/>
-                                                    <exclude reference="yha-5D-lGv"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="textField" destination="N0i-xE-6d2" id="eQ9-4b-gdg"/>
-                                            <outlet property="typeSelect" destination="0pL-yN-WGZ" id="aFx-4I-bzK"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="HAb-qW-1pQ" style="IBUITableViewCellStyleDefault" id="act-KL-5FI" userLabel="Add Phone Cell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -539,8 +479,65 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="" id="TtZ-kG-aXK">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="1yb-ND-p7W" style="IBUITableViewCellStyleDefault" id="IP5-fE-rfq" userLabel="Add Address Cell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IP5-fE-rfq" id="wWZ-ig-sVV">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="add address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1yb-ND-p7W">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="" id="ANx-Fh-l2E">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="Wgg-ry-Q1A" style="IBUITableViewCellStyleDefault" id="IJL-IJ-KH7" userLabel="Add Other Cell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IJL-IJ-KH7" id="OBP-bE-bgq">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="add other" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wgg-ry-Q1A">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="" id="JX9-Ba-xb7">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="P39-KB-uQP" style="IBUITableViewCellStyleDefault" id="3Zu-iQ-WVB" userLabel="Add Other Cell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Zu-iQ-WVB" id="yox-i5-od1">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Delete Contact" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="P39-KB-uQP">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
                                         <connections>
-                                            <outletCollection property="gestureRecognizers" destination="tP5-7h-3rp" appends="YES" id="aWq-rP-rcT"/>
+                                            <outletCollection property="gestureRecognizers" destination="bRI-jU-ZWD" appends="YES" id="YAT-Gp-GcA"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -553,19 +550,24 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="xlK-I5-OCy"/>
                     <connections>
+                        <outlet property="addAddressCell" destination="IP5-fE-rfq" id="uMd-1v-VM7"/>
                         <outlet property="addNumberCell" destination="act-KL-5FI" id="fsn-0U-MeZ"/>
+                        <outlet property="addOtherCell" destination="IJL-IJ-KH7" id="gYp-OO-ycn"/>
+                        <outlet property="deleteCell" destination="3Zu-iQ-WVB" id="vpt-cW-wXg"/>
                         <outlet property="extensionCell" destination="7A5-dH-vMT" id="gZG-BP-EXi"/>
                         <outlet property="firstNameCell" destination="eaw-pQ-Kb3" id="Qx1-Zc-Z4M"/>
                         <outlet property="jiveIdCell" destination="3bl-Ff-KbF" id="DIJ-PR-VXa"/>
                         <outlet property="lastNameCell" destination="0zZ-CX-x0W" id="GVr-NW-rhX"/>
                         <outlet property="nameCell" destination="lL3-3z-a46" id="JfJ-Yc-QKC"/>
-                        <outlet property="numberCell" destination="hRc-Y4-Yal" id="cwc-EY-mW5"/>
                         <outletCollection property="nameSectionCells" destination="lL3-3z-a46" id="qyx-pV-U69"/>
                         <outletCollection property="nameSectionCells" destination="eaw-pQ-Kb3" id="gJw-Iu-xO3"/>
                         <outletCollection property="nameSectionCells" destination="0zZ-CX-x0W" id="MW0-S3-QwW"/>
                         <outletCollection property="numberSectionCells" destination="7A5-dH-vMT" id="oja-9J-upL"/>
                         <outletCollection property="numberSectionCells" destination="3bl-Ff-KbF" id="DXU-Dx-gZf"/>
-                        <outletCollection property="numberSectionCells" destination="hRc-Y4-Yal" id="IfK-2k-6cZ"/>
+                        <outletCollection property="editingCells" destination="act-KL-5FI" id="dl1-jh-4Su"/>
+                        <outletCollection property="editingCells" destination="IP5-fE-rfq" id="e6r-C1-cCx"/>
+                        <outletCollection property="editingCells" destination="IJL-IJ-KH7" id="Sf2-dU-asp"/>
+                        <outletCollection property="editingCells" destination="3Zu-iQ-WVB" id="iAM-ke-yzo"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SgG-Zo-neP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -574,9 +576,9 @@
                         <action selector="callExtension:" destination="Ab5-kr-ogH" id="xHQ-B0-D9s"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="tP5-7h-3rp" userLabel="Add Phone Tap Gesture Recognizer">
+                <tapGestureRecognizer id="bRI-jU-ZWD" userLabel="Delete Tap Gesture Recognizer">
                     <connections>
-                        <action selector="addNumber:" destination="Ab5-kr-ogH" id="Z8V-Ag-dxj"/>
+                        <action selector="deleteContact:" destination="Ab5-kr-ogH" id="GiL-qi-sVU"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
