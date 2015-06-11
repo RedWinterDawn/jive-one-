@@ -26,6 +26,10 @@
 
 #import "JCPhoneTypeSelectorViewController.h"
 
+#import "JCContactPhoneNumberTableViewCell.h"
+#import "JCContactAddressTableViewCell.h"
+#import "JCContactOtherFieldTableViewCell.h"
+
 @interface JCContactDetailViewController () <JCPhoneTypeSelectorTableControllerDelegate> {
     BOOL _addingContact;
 }
@@ -138,6 +142,15 @@
     [super setEditing:editing];
 }
 
+-(Contact *)contact
+{
+    id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
+    if (![phoneNumber isKindOfClass:[Contact class]]) {
+        return nil;
+    }
+    
+    return (Contact *)phoneNumber;
+}
 
 
 #pragma mark - Notification Handlers -
@@ -173,22 +186,16 @@
 
 -(BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
-    id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
-    if (![phoneNumber isKindOfClass:[Contact class]]) {
+    Contact *contact = [self contact];
+    if (!contact) {
         return NO;
     }
-    
     return YES;
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
-    if (![phoneNumber isKindOfClass:[Contact class]]) {
-        return;
-    }
-    
-    Contact *contact = (Contact *)phoneNumber;
+    Contact *contact = [self contact];
     if (textField == self.firstNameCell.textField) {
         contact.firstName = textField.text;
         [self updateTitle];
@@ -212,19 +219,19 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    Contact *contact = [self contact];
     UITableViewCell *cell = [self cellAtIndexPath:indexPath];
     switch (editingStyle) {
         case UITableViewCellEditingStyleInsert:
         {
             NSIndexPath *actualIndexPath = [self indexPathForCell:cell];
             if (cell == _addNumberCell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"NumberCell"];
+                cell = [self newPhoneNumberCellForContact:contact];
             } else if (cell == _addAddressCell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"AddressCell"];
+                cell = [self newAddressCellForContact:contact];
             } else {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"OtherCell"];
+                cell = [self newOtherFieldCellForContact:contact];
             }
-            
             [self addCell:cell atIndexPath:actualIndexPath];
             break;
         }
@@ -237,6 +244,35 @@
             break;
     }
 }
+
+
+-(UITableViewCell *)newPhoneNumberCellForContact:(Contact *)contact
+{
+    JCContactPhoneNumberTableViewCell *cell = [JCContactPhoneNumberTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
+    PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
+    phoneNumber.contact = contact;
+    cell.phoneNumber = phoneNumber;
+    return cell;
+}
+
+-(UITableViewCell *)newAddressCellForContact:(Contact *)contact
+{
+    JCContactAddressTableViewCell *cell = [JCContactAddressTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
+//    PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
+//    phoneNumber.contact = contact;
+//    cell.phoneNumber = phoneNumber;
+    return cell;
+}
+
+-(UITableViewCell *)newOtherFieldCellForContact:(Contact *)contact
+{
+    JCContactOtherFieldTableViewCell *cell = [JCContactOtherFieldTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
+    //    PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
+    //    phoneNumber.contact = contact;
+    //    cell.phoneNumber = phoneNumber;
+    return cell;
+}
+
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -306,8 +342,6 @@
 
 -(void)saveContact
 {
-    
-    
     [self.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
         NSLog(@"%@", [error description]);
         

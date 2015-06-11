@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCContactPhoneNumberViewCell.h"
+#import "JCContactPhoneNumberTableViewCell.h"
 
-@implementation JCContactPhoneNumberViewCell
+@implementation JCContactPhoneNumberTableViewCell
 
 static UIFont *firstTextFont = nil;
 static UIFont *lastTextFont = nil;

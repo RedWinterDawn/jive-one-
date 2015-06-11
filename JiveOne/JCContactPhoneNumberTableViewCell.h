@@ -8,7 +8,11 @@
 
 #import "JCCustomCell.h"
 
-@interface JCContactPhoneNumberViewCell : JCCustomCell
+#import "PhoneNumber.h"
+
+@interface JCContactPhoneNumberTableViewCell : JCCustomCell
+
+@property (nonatomic, strong) PhoneNumber *phoneNumber;
 
 @property (nonatomic, weak) IBOutlet UILabel *typeSelect;
 @property (nonatomic, weak) IBOutlet UITextField *textField;

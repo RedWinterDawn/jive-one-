@@ -10,6 +10,8 @@
 
 @interface JCCustomCell : JCTableViewCell
 
++ (instancetype)cellWithParent:(id)parent bundle:(NSBundle *)bundle;
+
 @property (nonatomic, weak) IBOutlet UILabel *textLabel;
 @property (nonatomic, weak) IBOutlet UILabel *detailTextLabel;
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
