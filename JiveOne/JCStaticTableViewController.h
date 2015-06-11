@@ -23,10 +23,12 @@
 // Cell State
 - (BOOL)cellIsHidden:(UITableViewCell *)cell;
 - (NSIndexPath *)indexPathForCell:(UITableViewCell *)cell;
+- (UITableViewCell *)cellAtIndexPath:(NSIndexPath *)indexPath;
 
 - (void)startUpdates;
 - (void)endUpdates;
 
 - (void)addCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)path;
+- (void)removeCell:(UITableViewCell *)cell;
 
 @end

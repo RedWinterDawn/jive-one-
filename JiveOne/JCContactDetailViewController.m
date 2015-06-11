@@ -62,6 +62,10 @@
             _addingContact = TRUE;
             [self setEditing:YES animated:NO];
         }
+        else
+        {
+            [self setCell:_addNumberCell hidden:YES];
+        }
     }
     [self layoutForPhoneNumber:self.phoneNumber animated:NO];
 }
@@ -109,10 +113,14 @@
     if (!editing) {
         [self saveContact];
         self.navigationItem.leftBarButtonItem = nil;
+        
+        [self setCell:_addNumberCell hidden:YES];
     } else {
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
         self.navigationItem.leftBarButtonItem = item;
         [self convertContact];
+        
+        [self setCell:_addNumberCell hidden:NO];
     }
     
     [super setEditing:editing animated:animated];
@@ -123,10 +131,15 @@
     if (!editing) {
         [self saveContact];
         self.navigationItem.leftBarButtonItem = nil;
+        
+        [self setCell:_addNumberCell hidden:YES];
+        
     } else {
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
         self.navigationItem.leftBarButtonItem = item;
         [self convertContact];
+        
+        [self setCell:_addNumberCell hidden:NO];
     }
     
     [super setEditing:editing];
@@ -190,6 +203,36 @@
     }
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [self cellAtIndexPath:indexPath];
+    if (cell == _addNumberCell) {
+        return UITableViewCellEditingStyleInsert;
+    }
+    else {
+        return UITableViewCellEditingStyleDelete;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [self cellAtIndexPath:indexPath];
+    
+    switch (editingStyle) {
+        case UITableViewCellEditingStyleInsert:
+        {
+            break;
+        }
+        
+        case UITableViewCellEditingStyleDelete:
+            [self removeCell:cell];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 -(IBAction)valueChanged:(id)sender
 {
     if ([sender isKindOfClass:[UITextField class]]) {
@@ -209,6 +252,13 @@
             [self updateTitle];
         }
     }
+}
+
+-(IBAction)addNumber:(id)sender
+{
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"NumberCell"];
+    NSIndexPath *indexPath = [self indexPathForCell:_addNumberCell];
+    [self addCell:cell atIndexPath:indexPath];
 }
 
 #pragma mark JCPhoneTypeSelectorTableViewControllerDelegate
@@ -302,13 +352,6 @@
     self.numberCell.detailTextLabel.text = phoneNumber.formattedNumber;
     self.numberCell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"phone-green"]];
     [self setCell:_numberCell hidden:NO];
-    
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NumberCell"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"NumberCell"];
-    }
-    NSIndexPath *indexPath = [self indexPathForCell:_addNumberCell];
-    [self addCell:cell atIndexPath:indexPath];
 }
 
 -(void)layoutForExtension:(Extension *)extension

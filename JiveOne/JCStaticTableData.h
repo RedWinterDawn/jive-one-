@@ -30,7 +30,7 @@
 - (void)setCells:(NSArray *)cells hidden:(BOOL)hidden;
 
 - (void)addCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-- (void)removeCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)removeCell:(UITableViewCell *)cell;
 
 - (BOOL)cellIsHidden:(UITableViewCell *)cell;
 - (NSIndexPath *)indexPathForCell:(UITableViewCell *)cell;

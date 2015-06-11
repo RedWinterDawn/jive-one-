@@ -71,6 +71,11 @@
     [_tableData addCell:cell atIndexPath:indexPath];
 }
 
+- (void)removeCell:(UITableViewCell *)cell
+{
+    [_tableData removeCell:cell];
+}
+
 -(NSIndexPath *)indexPathForCell:(UITableViewCell *)cell
 {
     if (_tableData) {
@@ -78,6 +83,15 @@
     }
     return [self.tableView indexPathForCell:cell];
 }
+
+- (UITableViewCell *)cellAtIndexPath:(NSIndexPath *)indexPath;
+{
+    if (_tableData) {
+        return [_tableData cellForRowAtIndexPath:indexPath];
+    }
+    return [self.tableView cellForRowAtIndexPath:indexPath];
+}
+
 
 #pragma mark - Delegate Handelers -
 
@@ -103,6 +117,14 @@
         return [_tableData cellForRowAtIndexPath:indexPath];
     }
     return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+}
+
+-(NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_tableData) {
+        return 0;
+    }
+    return [super tableView:tableView indentationLevelForRowAtIndexPath:indexPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

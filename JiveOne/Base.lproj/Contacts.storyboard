@@ -525,7 +525,7 @@
                                             <outlet property="typeSelect" destination="0pL-yN-WGZ" id="aFx-4I-bzK"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="HAb-qW-1pQ" style="IBUITableViewCellStyleDefault" id="act-KL-5FI">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="HAb-qW-1pQ" style="IBUITableViewCellStyleDefault" id="act-KL-5FI" userLabel="Add Phone Cell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="act-KL-5FI" id="hND-hz-8uf">
@@ -539,6 +539,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="tP5-7h-3rp" appends="YES" id="aWq-rP-rcT"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -569,6 +572,11 @@
                 <tapGestureRecognizer id="AYV-A1-JEv" userLabel="Extension Tap Gesture Recognizer">
                     <connections>
                         <action selector="callExtension:" destination="Ab5-kr-ogH" id="xHQ-B0-D9s"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="tP5-7h-3rp" userLabel="Add Phone Tap Gesture Recognizer">
+                    <connections>
+                        <action selector="addNumber:" destination="Ab5-kr-ogH" id="Z8V-Ag-dxj"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

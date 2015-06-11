@@ -156,6 +156,27 @@
     [self endUpdates];
 }
 
+- (void)removeCell:(UITableViewCell *)cell
+{
+    for (int section = 0; section < _sections.count; section++)
+    {
+        JCStaticSectionInfo *sectionInfo = [_sections objectAtIndex:section];
+        NSArray *rows = sectionInfo.objects;
+        for (int row = 0; row < rows.count; row++) {
+            JCStaticRowData *rowData = [rows objectAtIndex:row];
+            if (rowData.cell == cell) {
+                [sectionInfo removeRow:rowData];
+                
+                [self beginUpdates];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+                [_delegate tableData:self didChangeCell:cell atIndexPath:nil forChangeType:JCStaticTableDataInsert newIndexPath:indexPath];
+                [self endUpdates];
+                return;
+            }
+        }
+    }
+}
+
 #pragma mark - Private -
 
 - (JCStaticRowData *)visibleRowForIndexPath:(NSIndexPath *)indexPath
