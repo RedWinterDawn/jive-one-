@@ -63,8 +63,6 @@
             [self setEditing:YES animated:NO];
         }
     }
-    self.numberType.userInteractionEnabled = NO;
-    self.numberType.titleLabel.text = @"nimber";
     [self layoutForPhoneNumber:self.phoneNumber animated:NO];
 }
 
@@ -210,7 +208,6 @@
             contact.lastName = textField.text;
             [self updateTitle];
         }
-
     }
 }
 
@@ -218,32 +215,26 @@
 
 -(void)phoneTypeSelectorController:(JCPhoneTypeSelectorViewController *)controller didSelectPhoneType:(NSString *)phoneType
 {
-    id sender = controller.sender;
-    
+    //id sender = controller.sender;
     [self.navigationController popViewControllerAnimated:YES];
-    
-    NSLog(@"%@ %@", sender, phoneType);
-    
 }
-
 
 #pragma mark - Private -
 
 -(void)updateTitle
 {
-    id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
+    id <JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
     self.title = phoneNumber.titleText;
     self.navigationItem.title = phoneNumber.titleText;
 }
 
-
 -(void)convertContact
 {
-    id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
-    if (![self.phoneNumber isKindOfClass:[Contact class]]) {
+    id <JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
+    if (![phoneNumber isKindOfClass:[Contact class]]) {
         Contact *contact = [Contact MR_createEntityInContext:self.managedObjectContext];
         if ([phoneNumber conformsToProtocol:@protocol(JCPersonDataSource)]) {
-            id<JCPersonDataSource> person = (id<JCPersonDataSource>) phoneNumber;
+            id <JCPersonDataSource> person = (id<JCPersonDataSource>) phoneNumber;
             contact.firstName = person.firstName;
             contact.lastName = person.lastName;
         }
@@ -256,6 +247,8 @@
         NSLog(@"%@", [error description]);
     }];
 }
+
+#pragma Layout
 
 -(void)layoutForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber animated:(BOOL)animated
 {
@@ -309,6 +302,13 @@
     self.numberCell.detailTextLabel.text = phoneNumber.formattedNumber;
     self.numberCell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"phone-green"]];
     [self setCell:_numberCell hidden:NO];
+    
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NumberCell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"NumberCell"];
+    }
+    NSIndexPath *indexPath = [self indexPathForCell:_addNumberCell];
+    [self addCell:cell atIndexPath:indexPath];
 }
 
 -(void)layoutForExtension:(Extension *)extension
@@ -338,7 +338,5 @@
         [self setCell:_jiveIdCell hidden:NO];
     }
 }
-
-
 
 @end

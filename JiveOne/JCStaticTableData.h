@@ -29,7 +29,11 @@
 - (void)setCell:(UITableViewCell *)cell hidden:(BOOL)hidden;
 - (void)setCells:(NSArray *)cells hidden:(BOOL)hidden;
 
+- (void)addCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)removeCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+
 - (BOOL)cellIsHidden:(UITableViewCell *)cell;
+- (NSIndexPath *)indexPathForCell:(UITableViewCell *)cell;
 
 // Display
 - (NSInteger)numberOfRowsInSection:(NSInteger)section;

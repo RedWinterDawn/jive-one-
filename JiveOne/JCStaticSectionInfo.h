@@ -17,6 +17,8 @@
 @property (nonatomic, readonly) NSUInteger visibleRows;
 
 -(void)addRow:(JCStaticRowData *)row;
+-(void)addRow:(JCStaticRowData *)row atIndexPath:(NSIndexPath *)indexPath;
+
 -(void)removeRow:(JCStaticRowData *)row;
 
 @end

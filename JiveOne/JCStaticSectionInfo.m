@@ -48,7 +48,16 @@
 
 -(void)addRow:(JCStaticRowData *)row
 {
-    [_objects addObject:row];
+    if (![_objects containsObject:row]) {
+        [_objects addObject:row];
+    }
+}
+
+-(void)addRow:(JCStaticRowData *)row atIndexPath:(NSIndexPath *)indexPath
+{
+    if (![_objects containsObject:row] && _objects.count >= indexPath.row) {
+        [_objects insertObject:row atIndex:indexPath.row];
+    }
 }
 
 -(void)removeRow:(JCStaticRowData *)row

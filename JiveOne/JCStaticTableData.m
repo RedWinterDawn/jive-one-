@@ -112,6 +112,21 @@
     return rowData.cell;
 }
 
+- (NSIndexPath *)indexPathForCell:(UITableViewCell *)cell
+{
+    for (int section = 0; section < _sections.count; section++) {
+        JCStaticSectionInfo *sectionInfo = [_sections objectAtIndex:section];
+        NSArray *rows = sectionInfo.objects;
+        for (int row = 0; row < rows.count; row++) {
+            JCStaticRowData *rowData = [rows objectAtIndex:row];
+            if (rowData.cell == cell) {
+                return [NSIndexPath indexPathForRow:row inSection:section];
+            }
+        }
+    }
+    return nil;
+}
+
 - (NSIndexPath *)indexPathForVisibleIndexPath:(NSIndexPath *)indexPath
 {
     JCStaticRowData *rowData = [self visibleRowForIndexPath:indexPath];
@@ -128,6 +143,18 @@
     return height;
 }
 
+- (void)addCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    [self beginUpdates];
+    
+    JCStaticSectionInfo *sectionInfo = [_sections objectAtIndex:indexPath.section];
+    JCStaticRowData *row = [JCStaticRowData new];
+    row.cell = cell;
+    [sectionInfo addRow:row atIndexPath:indexPath];
+    indexPath = [self indexPathForVisibleIndexPath:indexPath];
+    [_delegate tableData:self didChangeCell:cell atIndexPath:nil forChangeType:JCStaticTableDataInsert newIndexPath:indexPath];
+    [self endUpdates];
+}
 
 #pragma mark - Private -
 

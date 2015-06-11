@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "JCCustomCell.h"
 
-@interface JCEditableTableViewCell : UITableViewCell
+@interface JCEditableTableViewCell : JCCustomCell
 
-@property (nonatomic) IBOutlet UITextField *textField;
+@property (nonatomic, weak) IBOutlet UITextField *textField;
 
 @end

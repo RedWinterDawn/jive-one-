@@ -66,6 +66,19 @@
     [_tableData endUpdates];
 }
 
+- (void)addCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    [_tableData addCell:cell atIndexPath:indexPath];
+}
+
+-(NSIndexPath *)indexPathForCell:(UITableViewCell *)cell
+{
+    if (_tableData) {
+        return [_tableData indexPathForCell:cell];
+    }
+    return [self.tableView indexPathForCell:cell];
+}
+
 #pragma mark - Delegate Handelers -
 
 #pragma mark UITableViewDataSource
@@ -95,7 +108,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_tableData) {
-        indexPath = [_tableData indexPathForVisibleIndexPath:indexPath];
+        //
+        return self.tableView.rowHeight;
     }
     return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }

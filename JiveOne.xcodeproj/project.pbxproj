@@ -209,6 +209,8 @@
 		5D8FE41C1B27A769004FD594 /* JCStaticRowData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE41B1B27A769004FD594 /* JCStaticRowData.m */; };
 		5D8FE41F1B27A898004FD594 /* JCStaticSectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE41E1B27A898004FD594 /* JCStaticSectionInfo.m */; };
 		5D8FE4221B27A9EC004FD594 /* JCStaticTableData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4211B27A9EC004FD594 /* JCStaticTableData.m */; };
+		5D8FE4251B28F271004FD594 /* JCContactPhoneNumberViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4241B28F271004FD594 /* JCContactPhoneNumberViewCell.m */; };
+		5D8FE4281B28F65A004FD594 /* JCContactPhoneNumberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE4271B28F65A004FD594 /* JCContactPhoneNumberTableViewCell.xib */; };
 		5D9382C01B0F94F800C5CEA0 /* Chat.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D9382BF1B0F94F800C5CEA0 /* Chat.strings */; };
 		5D97A7FF1A828B4700A4434D /* JCIntercomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */; };
 		5D9A5E221A24E30A00E8274C /* JCPhoneAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */; };
@@ -706,6 +708,9 @@
 		5D8FE41E1B27A898004FD594 /* JCStaticSectionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStaticSectionInfo.m; sourceTree = "<group>"; };
 		5D8FE4201B27A9EC004FD594 /* JCStaticTableData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStaticTableData.h; sourceTree = "<group>"; };
 		5D8FE4211B27A9EC004FD594 /* JCStaticTableData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStaticTableData.m; sourceTree = "<group>"; };
+		5D8FE4231B28F271004FD594 /* JCContactPhoneNumberViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactPhoneNumberViewCell.h; sourceTree = "<group>"; };
+		5D8FE4241B28F271004FD594 /* JCContactPhoneNumberViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactPhoneNumberViewCell.m; sourceTree = "<group>"; };
+		5D8FE4271B28F65A004FD594 /* JCContactPhoneNumberTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCContactPhoneNumberTableViewCell.xib; sourceTree = "<group>"; };
 		5D9382BF1B0F94F800C5CEA0 /* Chat.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Chat.strings; sourceTree = "<group>"; };
 		5D97A7FD1A828B4700A4434D /* JCIntercomTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCIntercomTableViewController.h; sourceTree = "<group>"; };
 		5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCIntercomTableViewController.m; sourceTree = "<group>"; };
@@ -1217,7 +1222,9 @@
 			children = (
 				5D54490B1B0E52A000F44D8F /* Contacts.storyboard */,
 				5D8E33EF1B0A560500FD8AE1 /* Contacts_iPad.storyboard */,
+				5D8FE4271B28F65A004FD594 /* JCContactPhoneNumberTableViewCell.xib */,
 				5D8FE40F1B22638C004FD594 /* Models */,
+				5D8FE4261B28F278004FD594 /* Views */,
 				5D5329941AD4EFA400C6AAC6 /* Controllers */,
 			);
 			name = Contacts;
@@ -1732,6 +1739,15 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		5D8FE4261B28F278004FD594 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5D8FE4231B28F271004FD594 /* JCContactPhoneNumberViewCell.h */,
+				5D8FE4241B28F271004FD594 /* JCContactPhoneNumberViewCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		5D9F720B1AC34F6A00B9D0F8 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -2085,6 +2101,7 @@
 				5D8E33FC1B0A5D7000FD8AE1 /* Login.storyboard in Resources */,
 				5D0199B81A1BBBAC00F4CF13 /* Main_iPhone.storyboard in Resources */,
 				5D8E33DC1B0A4F3100FD8AE1 /* Phone_iPad.storyboard in Resources */,
+				5D8FE4281B28F65A004FD594 /* JCContactPhoneNumberTableViewCell.xib in Resources */,
 				5D8198ED1AC1D7520057FDDA /* Debug.storyboard in Resources */,
 				5D8E33ED1B0A560500FD8AE1 /* Contacts_iPad.storyboard in Resources */,
 				5D7007181B1CAE630036E72F /* JCVoicemailDetailViewController.xib in Resources */,
@@ -2364,6 +2381,7 @@
 				276215211912AA7400CFBCC8 /* NSString+URLEncoding.m in Sources */,
 				5D6742A11A2D19AA00E1A60D /* UIDevice+Additions.m in Sources */,
 				5D895EB51A0B230F0015368D /* JCPresenceCell.m in Sources */,
+				5D8FE4251B28F271004FD594 /* JCContactPhoneNumberViewCell.m in Sources */,
 				5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */,
 				5DA30DD81AD791D3008856DC /* JCPhoneNumber.m in Sources */,
 				5D1FAC6519DF376B00899915 /* JCKeypadViewController.m in Sources */,
