@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
-  <file original="IntegrationTests/Info.plist" source-language="en" datatype="plaintext" target-language="French">
+  <file original="IntegrationTests/Info.plist" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -13,7 +13,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="IntegrationTests/Localizable.strings" source-language="en" datatype="plaintext" target-language="French">
+  <file original="IntegrationTests/Localizable.strings" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -36,7 +36,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Chat.storyboard" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/Chat.storyboard" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -77,10 +77,6 @@
         <source>Title</source>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "Qvq-as-cHg";</note>
       </trans-unit>
-      <trans-unit id="SR8-Vw-dmU.text">
-        <source>Title</source>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "SR8-Vw-dmU";</note>
-      </trans-unit>
       <trans-unit id="XfF-8X-6TV.title">
         <source>New Message</source>
         <target>Nouveau Message</target>
@@ -90,10 +86,6 @@
         <source>Blocks this number from sending or recieving an SMS message on your PBX for all users.</source>
         <target>Blocs ce numéro auprès de l'envoi ou la réception d'un message SMS sur votre PBX pour tous les utilisateurs.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Blocks this number from sending or recieving an SMS message on your PBX for all users."; ObjectID = "Z3S-aR-6oR";</note>
-      </trans-unit>
-      <trans-unit id="hIn-Yb-LXh.text">
-        <source>Subtitle</source>
-        <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "hIn-Yb-LXh";</note>
       </trans-unit>
       <trans-unit id="hea-0j-GeP.title">
         <source>Details</source>
@@ -109,13 +101,9 @@
         <source>3:03 PM</source>
         <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "vWD-lg-8BW";</note>
       </trans-unit>
-      <trans-unit id="yAa-hQ-2ec.text">
-        <source>Title</source>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "yAa-hQ-2ec";</note>
-      </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Chat_iPad.storyboard" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/Chat_iPad.storyboard" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -124,17 +112,9 @@
         <source>3:03 PM</source>
         <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "5pa-Vh-mNq";</note>
       </trans-unit>
-      <trans-unit id="DqX-YJ-qdu.text">
-        <source>Title</source>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "DqX-YJ-qdu";</note>
-      </trans-unit>
       <trans-unit id="J8I-zG-k2G.text">
         <source>Detail</source>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "J8I-zG-k2G";</note>
-      </trans-unit>
-      <trans-unit id="LUT-Vk-JWR.text">
-        <source>Subtitle</source>
-        <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "LUT-Vk-JWR";</note>
       </trans-unit>
       <trans-unit id="Thw-n3-ffm.title">
         <source>Messages</source>
@@ -159,10 +139,6 @@
       <trans-unit id="hYA-nm-SF2.text">
         <source>Contact Name</source>
         <note>Class = "UILabel"; text = "Contact Name"; ObjectID = "hYA-nm-SF2";</note>
-      </trans-unit>
-      <trans-unit id="jS0-2t-nJ7.text">
-        <source>Title</source>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "jS0-2t-nJ7";</note>
       </trans-unit>
       <trans-unit id="jld-WF-yRr.text">
         <source>Title</source>
@@ -189,7 +165,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/ConferenceCallViewCell.xib" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/ConferenceCallViewCell.xib" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -218,11 +194,15 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Contacts.storyboard" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/Contacts.storyboard" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
     <body>
+      <trans-unit id="0Ib-w3-Hbh.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "0Ib-w3-Hbh";</note>
+      </trans-unit>
       <trans-unit id="4Ry-Fo-vlb.text">
         <source>name</source>
         <note>Class = "UILabel"; text = "name"; ObjectID = "4Ry-Fo-vlb";</note>
@@ -235,14 +215,18 @@
         <source>★</source>
         <note>Class = "UIButton"; normalTitle = "★"; ObjectID = "AH7-6r-D1F";</note>
       </trans-unit>
+      <trans-unit id="BKy-rR-Eom.text">
+        <source>Name</source>
+        <note>Class = "UILabel"; text = "Name"; ObjectID = "BKy-rR-Eom";</note>
+      </trans-unit>
       <trans-unit id="DUL-Wa-VNC.title">
         <source>Local Contacts</source>
         <target>Contacts locaux</target>
         <note>Class = "UITabBarItem"; title = "Local Contacts"; ObjectID = "DUL-Wa-VNC";</note>
       </trans-unit>
-      <trans-unit id="DqX-dl-Ngq.title">
-        <source>Contacts</source>
-        <target>Contacts</target>
+      <trans-unit id="E6a-Vq-RPl.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "E6a-Vq-RPl";</note>
       </trans-unit>
       <trans-unit id="KBK-ek-azj.placeholder">
         <source>Search</source>
@@ -266,6 +250,14 @@
         <source>name</source>
         <note>Class = "UILabel"; text = "name"; ObjectID = "aBa-fS-FIH";</note>
       </trans-unit>
+      <trans-unit id="bRW-Ju-VgO.text">
+        <source>Jive ID</source>
+        <note>Class = "UILabel"; text = "Jive ID"; ObjectID = "bRW-Ju-VgO";</note>
+      </trans-unit>
+      <trans-unit id="c49-Ja-NVS.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "c49-Ja-NVS";</note>
+      </trans-unit>
       <trans-unit id="pOW-HV-x3k.title">
         <source>Contacts</source>
         <target>Contacts</target>
@@ -274,6 +266,10 @@
       <trans-unit id="pPi-nu-wYj.title">
         <source>Contact Group</source>
         <note>Class = "UINavigationItem"; title = "Contact Group"; ObjectID = "pPi-nu-wYj";</note>
+      </trans-unit>
+      <trans-unit id="uKT-Cv-Vzc.text">
+        <source>Extension</source>
+        <note>Class = "UILabel"; text = "Extension"; ObjectID = "uKT-Cv-Vzc";</note>
       </trans-unit>
       <trans-unit id="z2I-cm-BpM.title">
         <source>Groups</source>
@@ -286,7 +282,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Contacts_iPad.storyboard" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/Contacts_iPad.storyboard" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -379,7 +375,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/CurrentCallViewCell.xib" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/CurrentCallViewCell.xib" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -411,7 +407,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/IncomingCallViewCell.xib" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/IncomingCallViewCell.xib" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -435,7 +431,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/JCNonVisualVoicemailViewController.xib" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/JCNonVisualVoicemailViewController.xib" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -447,7 +443,40 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Login.storyboard" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/JCVoicemailDetailViewController.xib" source-language="en" datatype="plaintext" target-language="fr">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="0SF-MX-8Bz.text">
+        <source>817-343-9239</source>
+        <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "0SF-MX-8Bz";</note>
+      </trans-unit>
+      <trans-unit id="4zV-0G-h0L.text">
+        <source>Voicemail Cell</source>
+        <note>Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "4zV-0G-h0L";</note>
+      </trans-unit>
+      <trans-unit id="CsB-Au-p5f.text">
+        <source>Confidence: %@</source>
+        <target>Confiance: %@</target>
+        <note>Class = "UILabel"; text = "Confidence: %@"; ObjectID = "CsB-Au-p5f";</note>
+      </trans-unit>
+      <trans-unit id="YYK-uE-J9h.text">
+        <source>3:03 PM</source>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "YYK-uE-J9h";</note>
+      </trans-unit>
+      <trans-unit id="gXq-iW-czr.text">
+        <source>Word count: %i</source>
+        <target>Mot Compter: %i</target>
+        <note>Class = "UILabel"; text = "Word count: %i"; ObjectID = "gXq-iW-czr";</note>
+      </trans-unit>
+      <trans-unit id="uIh-4N-1Qj.text">
+        <source>0:00</source>
+        <note>Class = "UILabel"; text = "0:00"; ObjectID = "uIh-4N-1Qj";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/Login.storyboard" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -501,7 +530,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Main_iPad.storyboard" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/Main_iPad.storyboard" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -578,7 +607,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Main_iPhone.storyboard" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/Main_iPhone.storyboard" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -683,7 +712,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Phone.storyboard" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/Phone.storyboard" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -705,13 +734,10 @@
         <target>Clavier</target>
         <note>Class = "UINavigationController"; title = "Keypad"; ObjectID = "G3s-tk-XlH";</note>
       </trans-unit>
-      <trans-unit id="G4E-uV-P1d.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "G4E-uV-P1d";</note>
-      </trans-unit>
-      <trans-unit id="Kdj-bb-J0Z.text">
-        <source>817-343-9239</source>
-        <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "Kdj-bb-J0Z";</note>
+      <trans-unit id="Kji-Db-lbK.title">
+        <source>Clear</source>
+        <target>Clair</target>
+        <note>Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "Kji-Db-lbK";</note>
       </trans-unit>
       <trans-unit id="LGG-G6-Qgm.title">
         <source>History</source>
@@ -722,18 +748,10 @@
         <source>3:03 PM</source>
         <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "M6i-Nu-fpj";</note>
       </trans-unit>
-      <trans-unit id="Nvt-uK-WzZ.text">
-        <source>0.05</source>
-        <note>Class = "UILabel"; text = "0.05"; ObjectID = "Nvt-uK-WzZ";</note>
-      </trans-unit>
       <trans-unit id="RN6-p8-PVT.title">
         <source>Voicemail</source>
         <target>Message vocal</target>
         <note>Class = "UITabBarItem"; title = "Voicemail"; ObjectID = "RN6-p8-PVT";</note>
-      </trans-unit>
-      <trans-unit id="TQG-yI-VWH.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "TQG-yI-VWH";</note>
       </trans-unit>
       <trans-unit id="UHR-O3-J6m.segmentTitles[0]">
         <source>All</source>
@@ -744,16 +762,6 @@
         <source>Missed</source>
         <target>Manqués</target>
         <note>Class = "UISegmentedControl"; UHR-O3-J6m.segmentTitles[1] = "Missed"; ObjectID = "UHR-O3-J6m";</note>
-      </trans-unit>
-      <trans-unit id="UHm-eu-MVg.text">
-        <source>Confidence: %@</source>
-        <target>Confiance: %@</target>
-        <note>Class = "UILabel"; text = "Confidence: %@"; ObjectID = "UHm-eu-MVg";</note>
-      </trans-unit>
-      <trans-unit id="VMi-W8-6Ys.text">
-        <source>Word count: %i</source>
-        <target>Mot Compter: %i</target>
-        <note>Class = "UILabel"; text = "Word count: %i"; ObjectID = "VMi-W8-6Ys";</note>
       </trans-unit>
       <trans-unit id="WRq-PA-NpD.title">
         <source>History</source>
@@ -784,26 +792,19 @@
         <target>Clavier</target>
         <note>Class = "UITabBarItem"; title = "Keypad"; ObjectID = "bsn-3T-LYb";</note>
       </trans-unit>
-      <trans-unit id="bwK-e7-eQb.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "bwK-e7-eQb";</note>
+      <trans-unit id="cHI-JS-mn5.title">
+        <source>Clear</source>
+        <target>Clair</target>
+        <note>Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "cHI-JS-mn5";</note>
       </trans-unit>
       <trans-unit id="eFd-Wl-GUh.title">
         <source>Phone</source>
         <target>Téléphone</target>
         <note>Class = "UITabBarItem"; title = "Phone"; ObjectID = "eFd-Wl-GUh";</note>
       </trans-unit>
-      <trans-unit id="f8E-Ze-iMO.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "f8E-Ze-iMO";</note>
-      </trans-unit>
       <trans-unit id="fw1-N6-Rq7.text">
         <source>817-343-9239</source>
         <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "fw1-N6-Rq7";</note>
-      </trans-unit>
-      <trans-unit id="gtg-0d-joM.text">
-        <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
-        <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "gtg-0d-joM";</note>
       </trans-unit>
       <trans-unit id="k2g-vl-Yo3.title">
         <source>Call History</source>
@@ -818,25 +819,9 @@
         <source>Voicemail Cell</source>
         <note>Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "nwZ-xB-2hO";</note>
       </trans-unit>
-      <trans-unit id="oSn-F9-0WR.text">
-        <source>0:00</source>
-        <note>Class = "UILabel"; text = "0:00"; ObjectID = "oSn-F9-0WR";</note>
-      </trans-unit>
-      <trans-unit id="uNm-pu-7W1.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "uNm-pu-7W1";</note>
-      </trans-unit>
-      <trans-unit id="v6c-w0-dHK.text">
-        <source>3:03 PM</source>
-        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "v6c-w0-dHK";</note>
-      </trans-unit>
-      <trans-unit id="wFS-rk-8O8.text">
-        <source>Voicemail Cell</source>
-        <note>Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "wFS-rk-8O8";</note>
-      </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/PhoneManager.storyboard" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/PhoneManager.storyboard" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -923,7 +908,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Phone_iPad.storyboard" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/Phone_iPad.storyboard" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -933,18 +918,9 @@
         <target>MNO</target>
         <note>Class = "UILabel"; text = "MNO"; ObjectID = "0E0-Ga-yKj";</note>
       </trans-unit>
-      <trans-unit id="3hD-2T-xYG.text">
-        <source>Word count: %i</source>
-        <target>Mot Compter: %i</target>
-        <note>Class = "UILabel"; text = "Word count: %i"; ObjectID = "3hD-2T-xYG";</note>
-      </trans-unit>
       <trans-unit id="8Ra-dK-mWX.text">
         <source>+</source>
         <note>Class = "UILabel"; text = "+"; ObjectID = "8Ra-dK-mWX";</note>
-      </trans-unit>
-      <trans-unit id="8Wk-uq-aXj.text">
-        <source>0:00</source>
-        <note>Class = "UILabel"; text = "0:00"; ObjectID = "8Wk-uq-aXj";</note>
       </trans-unit>
       <trans-unit id="A5J-Bt-Bbh.title">
         <source>DialerView</source>
@@ -953,10 +929,6 @@
       <trans-unit id="A5Z-Jv-4XP.title">
         <source>Voicemail</source>
         <note>Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "A5Z-Jv-4XP";</note>
-      </trans-unit>
-      <trans-unit id="AEl-R2-Jqz.text">
-        <source>(801) 349-7643</source>
-        <note>Class = "UILabel"; text = "(801) 349-7643"; ObjectID = "AEl-R2-Jqz";</note>
       </trans-unit>
       <trans-unit id="Amh-2F-CRy.text">
         <source>TUV</source>
@@ -967,10 +939,6 @@
         <source>WXYZ</source>
         <target>WXYZ</target>
         <note>Class = "UILabel"; text = "WXYZ"; ObjectID = "C1I-IP-hpm";</note>
-      </trans-unit>
-      <trans-unit id="CQZ-eU-dLa.text">
-        <source>Today, 10:57 PM</source>
-        <note>Class = "UILabel"; text = "Today, 10:57 PM"; ObjectID = "CQZ-eU-dLa";</note>
       </trans-unit>
       <trans-unit id="EMe-MP-2GH.segmentTitles[0]">
         <source>All</source>
@@ -986,10 +954,6 @@
         <source>Voicemail</source>
         <target>Message vocal</target>
         <note>Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[2] = "Voicemail"; ObjectID = "EMe-MP-2GH";</note>
-      </trans-unit>
-      <trans-unit id="F9q-cd-yQV.text">
-        <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulloccaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
-        <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulloccaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "F9q-cd-yQV";</note>
       </trans-unit>
       <trans-unit id="NMf-MW-Ar6.text">
         <source>3:03 PM</source>
@@ -1026,9 +990,15 @@
         <target>PQRS</target>
         <note>Class = "UILabel"; text = "PQRS"; ObjectID = "YCw-kb-mRe";</note>
       </trans-unit>
-      <trans-unit id="ddr-iV-54q.text">
-        <source>Bob Seger</source>
-        <note>Class = "UILabel"; text = "Bob Seger"; ObjectID = "ddr-iV-54q";</note>
+      <trans-unit id="dp5-3A-4aJ.title">
+        <source>Clear</source>
+        <target>Clair</target>
+        <note>Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "dp5-3A-4aJ";</note>
+      </trans-unit>
+      <trans-unit id="eVx-Ji-0H8.title">
+        <source>History</source>
+        <target>Historique</target>
+        <note>Class = "UINavigationItem"; title = "History"; ObjectID = "eVx-Ji-0H8";</note>
       </trans-unit>
       <trans-unit id="kF5-dn-WTA.text">
         <source>3:03 PM</source>
@@ -1043,11 +1013,6 @@
         <target>DEF</target>
         <note>Class = "UILabel"; text = "DEF"; ObjectID = "utJ-wf-z8v";</note>
       </trans-unit>
-      <trans-unit id="zDJ-eE-vfh.text">
-        <source>Confidence: %@</source>
-        <target>Confiance: %@</target>
-        <note>Class = "UILabel"; text = "Confidence: %@"; ObjectID = "zDJ-eE-vfh";</note>
-      </trans-unit>
       <trans-unit id="zzd-cv-BlF.text">
         <source>GHI</source>
         <target>GHI</target>
@@ -1055,7 +1020,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Settings.storyboard" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/Settings.storyboard" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -1199,7 +1164,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Settings_iPad.storyboard" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Base.lproj/Settings_iPad.storyboard" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -1407,7 +1372,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Chat.strings" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Chat.strings" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -1430,7 +1395,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/JiveOne-Info.plist" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/JiveOne-Info.plist" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -1442,11 +1407,11 @@
         <source>${PRODUCT_NAME}</source>
       </trans-unit>
       <trans-unit id="CFBundleShortVersionString">
-        <source>1.2.4</source>
+        <source>1.2.5</source>
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Localizable.strings" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Localizable.strings" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -2204,12 +2169,8 @@
         <source>Phone is set to be Wifi Only</source>
         <note>Phone Manager Error</note>
       </trans-unit>
-      <trans-unit id="Phone registration is unable to register at this time. Please check your network connection and try again. If problem persists, restart the application.">
-        <source>Phone registration is unable to register at this time. Please check your network connection and try again. If problem persists, restart the application.</source>
-        <note>Sip Manager Error</note>
-      </trans-unit>
-      <trans-unit id="Please try again. If the problem persists, please contact support.">
-        <source>Please try again. If the problem persists, please contact support.</source>
+      <trans-unit id="Phone registration is unable to register at this time. You may not be on an Approved network. If problem persists, contact your System Administrator to add your network.">
+        <source>Phone registration is unable to register at this time. You may not be on an Approved network. If problem persists, contact your System Administrator to add your network.</source>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Poor Network Quality">
@@ -2315,6 +2276,10 @@
       <trans-unit id="Send Avi File Failure">
         <source>Send Avi File Failure</source>
         <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Send SMS to %@">
+        <source>Send SMS to %@</source>
+        <note>Send SMS to new participant's phone number.</note>
       </trans-unit>
       <trans-unit id="Server Internal Error">
         <source>Server Internal Error</source>
@@ -2597,6 +2562,10 @@
         <source>Yesterday</source>
         <note>Yesterday</note>
       </trans-unit>
+      <trans-unit id="You may not be on an Approved network. If the problem persists, please contact your System Administrator to add your current network to the list of approved networks.">
+        <source>You may not be on an Approved network. If the problem persists, please contact your System Administrator to add your current network to the list of approved networks.</source>
+        <note>Sip Manager Error</note>
+      </trans-unit>
       <trans-unit id="me">
         <source>me</source>
         <note>No comment provided by engineer.</note>
@@ -2607,7 +2576,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Phone.strings" source-language="en" datatype="plaintext" target-language="French">
+  <file original="JiveOne/Phone.strings" source-language="en" datatype="plaintext" target-language="fr">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
