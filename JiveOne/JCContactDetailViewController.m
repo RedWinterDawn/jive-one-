@@ -279,6 +279,13 @@
     [self performSegueWithIdentifier:@"SelectPhoneType" sender:cell];
 }
 
+-(void)contactPhoneNumberCell:(JCContactPhoneNumberTableViewCell *)cell dialPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    [self dialPhoneNumber:phoneNumber
+                usingLine:self.authenticationManager.line
+                   sender:cell];
+}
+
 #pragma mark JCPhoneTypeSelectorTableViewControllerDelegate
 
 -(void)phoneTypeSelectorController:(JCPhoneTypeSelectorViewController *)controller didSelectPhoneType:(NSString *)phoneType
@@ -459,19 +466,19 @@
         Contact *contact = (Contact *)phoneNumber;
         for (PhoneNumber *number in contact.phoneNumbers) {
             UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:number];
-            NSIndexPath *actualIndexPath = [self indexPathForCell:_addAddressCell];
+            NSIndexPath *actualIndexPath = [self indexPathForCell:_addNumberCell];
             [self addCell:cell atIndexPath:actualIndexPath];
         }
     } else if ([phoneNumber isKindOfClass:[JCAddressBookPerson class]]) {
         JCAddressBookPerson *person = (JCAddressBookPerson *)phoneNumber;
         for (JCAddressBookNumber *number in person.phoneNumbers) {
             UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:number];
-            NSIndexPath *actualIndexPath = [self indexPathForCell:_addAddressCell];
+            NSIndexPath *actualIndexPath = [self indexPathForCell:_addNumberCell];
             [self addCell:cell atIndexPath:actualIndexPath];
         }
     } else {
         UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:phoneNumber];
-        NSIndexPath *actualIndexPath = [self indexPathForCell:_addAddressCell];
+        NSIndexPath *actualIndexPath = [self indexPathForCell:_addOtherCell];
         [self addCell:cell atIndexPath:actualIndexPath];
     }
 }

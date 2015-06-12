@@ -24,6 +24,7 @@
 @property (nonatomic, weak) IBOutlet UITextField *textField;
 
 -(IBAction)selectType:(id)sender;
+-(IBAction)dial:(id)sender;
 
 -(void)setType:(NSString *)type;
 
@@ -32,5 +33,6 @@
 @protocol JCContactPhoneNumberTableViewCellDelegate <NSObject>
 
 -(void)selectTypeForContactPhoneNumberCell:(JCContactPhoneNumberTableViewCell *)cell;
+-(void)contactPhoneNumberCell:(JCContactPhoneNumberTableViewCell *)cell dialPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber;
 
 @end

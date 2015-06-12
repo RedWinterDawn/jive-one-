@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qxF-ca-CTn">
-                        <rect key="frame" x="13" y="8" width="299" height="17"/>
+                        <rect key="frame" x="13" y="8" width="241" height="17"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="S60-SP-DJ1"/>
@@ -23,23 +24,50 @@
                         <color key="textColor" red="0.0" green="0.46666666670000001" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXC-zw-90Y">
-                        <rect key="frame" x="13" y="24" width="299" height="23"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXC-zw-90Y">
+                        <rect key="frame" x="13" y="24" width="241" height="23"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-1N-H6m">
+                        <rect key="frame" x="254" y="8" width="58" height="39"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cmF-Jd-jFj">
+                                <rect key="frame" x="23" y="5" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="RKF-Wo-fsq"/>
+                                    <constraint firstAttribute="height" constant="30" id="hjs-W4-2Ql"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="green-phone">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dial:" destination="pCE-hA-Rs3" eventType="touchUpInside" id="RfW-bs-pKI"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cmF-Jd-jFj" firstAttribute="top" secondItem="W5Y-1N-H6m" secondAttribute="top" constant="5" id="U0G-1c-1VY"/>
+                            <constraint firstAttribute="trailing" secondItem="cmF-Jd-jFj" secondAttribute="trailing" constant="5" id="eVi-Ig-wcU"/>
+                            <constraint firstAttribute="width" constant="58" id="liE-j4-J2z"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="EXC-zw-90Y" firstAttribute="leading" secondItem="H63-Lq-Qpo" secondAttribute="leading" constant="13" id="4Ea-i2-Qsv"/>
-                    <constraint firstAttribute="trailing" secondItem="EXC-zw-90Y" secondAttribute="trailing" constant="8" id="72Y-tY-hUs"/>
+                    <constraint firstAttribute="trailing" secondItem="EXC-zw-90Y" secondAttribute="trailing" constant="66" id="72Y-tY-hUs"/>
                     <constraint firstItem="EXC-zw-90Y" firstAttribute="top" secondItem="H63-Lq-Qpo" secondAttribute="top" constant="24" id="8L8-CS-kZR"/>
-                    <constraint firstAttribute="trailing" secondItem="qxF-ca-CTn" secondAttribute="trailing" constant="8" id="JBf-8J-kzt"/>
+                    <constraint firstItem="W5Y-1N-H6m" firstAttribute="trailing" secondItem="H63-Lq-Qpo" secondAttribute="trailingMargin" id="Fbm-90-AHq"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="W5Y-1N-H6m" secondAttribute="bottom" constant="4" id="FeR-wh-3uD"/>
+                    <constraint firstAttribute="trailing" secondItem="qxF-ca-CTn" secondAttribute="trailing" constant="66" id="JBf-8J-kzt"/>
                     <constraint firstItem="qxF-ca-CTn" firstAttribute="leading" secondItem="H63-Lq-Qpo" secondAttribute="leading" constant="13" id="Wcw-TH-G8o"/>
                     <constraint firstItem="qxF-ca-CTn" firstAttribute="top" secondItem="H63-Lq-Qpo" secondAttribute="top" constant="8" id="Yha-h7-ogB"/>
-                    <constraint firstAttribute="bottom" secondItem="EXC-zw-90Y" secondAttribute="bottom" constant="2" id="wVp-hS-V8H"/>
+                    <constraint firstAttribute="bottom" secondItem="EXC-zw-90Y" secondAttribute="bottom" constant="12" id="wVp-hS-V8H"/>
+                    <constraint firstItem="W5Y-1N-H6m" firstAttribute="top" secondItem="H63-Lq-Qpo" secondAttribute="topMargin" id="ykr-Gy-peB"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -100,5 +128,18 @@
                 <action selector="selectType:" destination="pCE-hA-Rs3" id="2Mf-gq-dSI"/>
             </connections>
         </tapGestureRecognizer>
+        <view contentMode="scaleToFill" id="9MT-dy-Gy3">
+            <rect key="frame" x="0.0" y="0.0" width="65" height="46"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="559.5" y="463"/>
+        </view>
     </objects>
+    <resources>
+        <image name="green-phone" width="30" height="30"/>
+    </resources>
 </document>

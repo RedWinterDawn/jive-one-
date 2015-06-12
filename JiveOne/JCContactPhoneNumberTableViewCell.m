@@ -76,4 +76,9 @@
     [_delegate selectTypeForContactPhoneNumberCell:self];
 }
 
+-(IBAction)dial:(id)sender
+{
+    [_delegate contactPhoneNumberCell:self dialPhoneNumber:_phoneNumber];
+}
+
 @end
