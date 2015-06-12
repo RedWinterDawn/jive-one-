@@ -2142,7 +2142,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run dd3685563712dc20cfb83957dedcfbe78fbb2be4 3db37eb4f8adc25e3a968d17d6b92daaa2afa2e77db0b7089c54b7f7a5bef8d7";
+			shellScript = "";
+			showEnvVarsInLog = 0;
 		};
 		F917AE6DB1E89C27EF2B2073 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
