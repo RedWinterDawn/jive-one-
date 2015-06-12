@@ -808,7 +808,7 @@
         <image name="settings_white" width="25" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="rER-Yg-Mxz"/>
+        <segue reference="kmu-gD-Rdf"/>
         <segue reference="A4u-Kc-AqH"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
