@@ -803,7 +803,7 @@
         <image name="nav-voicemail-black" width="33" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="rER-Yg-Mxz"/>
+        <segue reference="kmu-gD-Rdf"/>
         <segue reference="A4u-Kc-AqH"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
