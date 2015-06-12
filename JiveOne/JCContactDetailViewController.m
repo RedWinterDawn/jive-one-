@@ -92,7 +92,6 @@
             phoneTypeSelectorViewController.title = phoneNumber.titleText;
             phoneTypeSelectorViewController.navigationItem.title = phoneNumber.titleText;
         }
-        
     }
 }
 
@@ -390,12 +389,19 @@
     return cell;
 }
 
+-(UITableViewCell *)contactInfoCellForContactInfo:(ContactInfo *)contactInfo
+{
+    JCContactOtherFieldTableViewCell *cell = [JCContactOtherFieldTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
+    cell.info = contactInfo;
+    return cell;
+}
+
 -(UITableViewCell *)newOtherFieldCellForContact:(Contact *)contact
 {
     JCContactOtherFieldTableViewCell *cell = [JCContactOtherFieldTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
-    //    PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
-    //    phoneNumber.contact = contact;
-    //    cell.phoneNumber = phoneNumber;
+    ContactInfo *info = [ContactInfo MR_createEntityInContext:self.managedObjectContext];
+    info.contact = contact;
+    cell.info = info;
     return cell;
 }
 
@@ -439,6 +445,9 @@
     // Number Section
     [self layoutNumberSection:phoneNumber];
     
+    // Info section
+    [self layoutInfoSection:phoneNumber];
+    
     [self endUpdates];
 }
 
@@ -465,6 +474,18 @@
     
     [self setCell:_firstNameCell hidden:NO];
     [self setCell:_lastNameCell hidden:NO];
+}
+
+-(void)layoutInfoSection:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    if ([phoneNumber isKindOfClass:[Contact class]]) {
+        Contact *contact = (Contact *)phoneNumber;
+        for (ContactInfo *info in contact.info) {
+            UITableViewCell *cell = [self contactInfoCellForContactInfo:info];
+            NSIndexPath *actualIndexPath = [self indexPathForCell:_addOtherCell];
+            [self addCell:cell atIndexPath:actualIndexPath];
+        }
+    }
 }
 
 -(void)layoutNumberSection:(id<JCPhoneNumberDataSource>)phoneNumber

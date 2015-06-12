@@ -20,6 +20,8 @@
 // Relationships
 @property (nonatomic, retain) User *user;
 @property (nonatomic, retain) NSSet *phoneNumbers;
+@property (nonatomic, retain) NSSet *addresses;
+@property (nonatomic, retain) NSSet *info;
 
 @end
 
@@ -29,5 +31,15 @@
 - (void)removePhoneNumbersObject:(PhoneNumber *)value;
 - (void)addPhoneNumbers:(NSSet *)values;
 - (void)removePhoneNumbers:(NSSet *)values;
+
+- (void)addAddressesObject:(PhoneNumber *)value;
+- (void)removeAddressesObject:(PhoneNumber *)value;
+- (void)addAddresses:(NSSet *)values;
+- (void)removeAddresses:(NSSet *)values;
+
+- (void)addInfoObject:(PhoneNumber *)value;
+- (void)removeInfoObject:(PhoneNumber *)value;
+- (void)addInfo:(NSSet *)values;
+- (void)removeInfo:(NSSet *)values;
 
 @end

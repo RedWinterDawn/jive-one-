@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Address" syncable="YES">
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="postalCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="region" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thoroughfare" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="addresses" inverseEntity="Contact" syncable="YES"/>
+    </entity>
     <entity name="BlockedNumber" representedClassName="BlockedNumber" syncable="YES">
         <attribute name="markForDeletion" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -16,8 +26,15 @@
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="addresses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Address" inverseName="contact" inverseEntity="Address" syncable="YES"/>
+        <relationship name="info" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ContactInfo" inverseName="contact" inverseEntity="ContactInfo" syncable="YES"/>
         <relationship name="phoneNumbers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PhoneNumber" inverseName="contact" inverseEntity="PhoneNumber" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="contacts" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="ContactInfo" representedClassName="ContactInfo" syncable="YES">
+        <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="info" inverseEntity="Contact" syncable="YES"/>
     </entity>
     <entity name="Conversation" representedClassName="Conversation" parentEntity="Message" syncable="YES">
         <relationship name="internalExtension" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="InternalExtension" inverseName="conversations" inverseEntity="InternalExtension" syncable="YES"/>
@@ -147,7 +164,7 @@
     <elements>
         <element name="BlockedNumber" positionX="-171" positionY="702" width="128" height="133"/>
         <element name="Call" positionX="538" positionY="-360" width="128" height="45"/>
-        <element name="Contact" positionX="-234" positionY="299" width="128" height="163"/>
+        <element name="Contact" positionX="-342" positionY="333" width="128" height="193"/>
         <element name="Conversation" positionX="342" positionY="171" width="128" height="73"/>
         <element name="DID" positionX="-398" positionY="698" width="128" height="238"/>
         <element name="Extension" positionX="-459" positionY="-154" width="128" height="133"/>
@@ -160,12 +177,14 @@
         <element name="MissedCall" positionX="709" positionY="-360" width="128" height="45"/>
         <element name="OutgoingCall" positionX="711" positionY="-432" width="128" height="45"/>
         <element name="PBX" positionX="-846" positionY="540" width="128" height="178"/>
-        <element name="PhoneNumber" positionX="-20" positionY="488" width="128" height="148"/>
+        <element name="PhoneNumber" positionX="-9" positionY="459" width="128" height="148"/>
         <element name="RecentEvent" positionX="331" positionY="11" width="128" height="103"/>
         <element name="RecentLineEvent" positionX="412" positionY="-196" width="128" height="118"/>
         <element name="SMSMessage" positionX="628" positionY="702" width="128" height="88"/>
         <element name="User" positionX="-1134" positionY="198" width="128" height="103"/>
         <element name="Voicemail" positionX="711" positionY="-189" width="128" height="178"/>
         <element name="VoicemailTranscription" positionX="945" positionY="-162" width="128" height="118"/>
+        <element name="Address" positionX="-90" positionY="243" width="128" height="163"/>
+        <element name="ContactInfo" positionX="108" positionY="344" width="128" height="88"/>
     </elements>
 </model>

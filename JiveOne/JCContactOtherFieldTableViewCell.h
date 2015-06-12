@@ -8,6 +8,10 @@
 
 #import "JCCustomCell.h"
 
+#import "ContactInfo.h"
+
 @interface JCContactOtherFieldTableViewCell : JCCustomCell
+
+@property (nonatomic, strong) ContactInfo *info;
 
 @end

@@ -21,6 +21,8 @@
 
 @dynamic user;
 @dynamic phoneNumbers;
+@dynamic info;
+@dynamic addresses;
 
 
 // Overides

@@ -215,6 +215,7 @@
 		5D8FE42D1B2A4C78004FD594 /* JCContactAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE42B1B2A4C78004FD594 /* JCContactAddressTableViewCell.xib */; };
 		5D8FE4311B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE42F1B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.m */; };
 		5D8FE4321B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE4301B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib */; };
+		5D8FE4351B2B5B21004FD594 /* ContactInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4341B2B5B21004FD594 /* ContactInfo.m */; };
 		5D9382C01B0F94F800C5CEA0 /* Chat.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D9382BF1B0F94F800C5CEA0 /* Chat.strings */; };
 		5D97A7FF1A828B4700A4434D /* JCIntercomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */; };
 		5D9A5E221A24E30A00E8274C /* JCPhoneAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */; };
@@ -721,6 +722,8 @@
 		5D8FE42E1B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactOtherFieldTableViewCell.h; sourceTree = "<group>"; };
 		5D8FE42F1B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactOtherFieldTableViewCell.m; sourceTree = "<group>"; };
 		5D8FE4301B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCContactOtherFieldTableViewCell.xib; sourceTree = "<group>"; };
+		5D8FE4331B2B5B21004FD594 /* ContactInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactInfo.h; sourceTree = "<group>"; };
+		5D8FE4341B2B5B21004FD594 /* ContactInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactInfo.m; sourceTree = "<group>"; };
 		5D9382BF1B0F94F800C5CEA0 /* Chat.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Chat.strings; sourceTree = "<group>"; };
 		5D97A7FD1A828B4700A4434D /* JCIntercomTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCIntercomTableViewController.h; sourceTree = "<group>"; };
 		5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCIntercomTableViewController.m; sourceTree = "<group>"; };
@@ -1119,6 +1122,8 @@
 				5DFFF3DC1AF90DD30091F479 /* BlockedNumber.m */,
 				B77EFA2B1B03E51700D94AE9 /* VoicemailTranscription.h */,
 				B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */,
+				5D8FE4331B2B5B21004FD594 /* ContactInfo.h */,
+				5D8FE4341B2B5B21004FD594 /* ContactInfo.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -2250,6 +2255,7 @@
 				5D25F8441AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m in Sources */,
 				5D87FF341A7FF576001B8BB2 /* JCConversationViewController.m in Sources */,
 				F8A2BC0B19DB5B3C00251310 /* JCCallOptionsView.m in Sources */,
+				5D8FE4351B2B5B21004FD594 /* ContactInfo.m in Sources */,
 				B77EFA2D1B03E51700D94AE9 /* VoicemailTranscription.m in Sources */,
 				5D490E671A8D4C01004B62C0 /* DID.m in Sources */,
 				F8C9A7E919EC5F4C0049A715 /* JCCallHistoryTableViewController.m in Sources */,
