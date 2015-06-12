@@ -260,7 +260,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="valueChanged:" destination="Ab5-kr-ogH" eventType="editingChanged" id="IS8-rl-4Jr"/>
+                                                        <action selector="nameChanged:" destination="Ab5-kr-ogH" eventType="editingChanged" id="qkr-tV-M24"/>
                                                         <outlet property="delegate" destination="Ab5-kr-ogH" id="yfa-bf-8bl"/>
                                                     </connections>
                                                 </textField>
@@ -313,7 +313,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="valueChanged:" destination="Ab5-kr-ogH" eventType="editingChanged" id="Wcy-ZV-HI5"/>
+                                                        <action selector="nameChanged:" destination="Ab5-kr-ogH" eventType="editingChanged" id="MIX-cs-HWM"/>
                                                         <outlet property="delegate" destination="Ab5-kr-ogH" id="8mA-y6-dGA"/>
                                                     </connections>
                                                 </textField>
@@ -366,7 +366,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="valueChanged:" destination="Ab5-kr-ogH" eventType="editingChanged" id="9mh-CX-kdZ"/>
+                                                        <action selector="nameChanged:" destination="Ab5-kr-ogH" eventType="editingChanged" id="KGc-UW-T6m"/>
                                                         <outlet property="delegate" destination="Ab5-kr-ogH" id="Oa9-Qc-D1Z"/>
                                                     </connections>
                                                 </textField>

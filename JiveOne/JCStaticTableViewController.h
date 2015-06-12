@@ -31,4 +31,6 @@
 - (void)addCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)path;
 - (void)removeCell:(UITableViewCell *)cell;
 
+- (CGFloat)heightForCell:(UITableViewCell *)cell;
+
 @end

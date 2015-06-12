@@ -97,6 +97,7 @@
         <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="number" attributeType="String" syncable="YES"/>
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="phoneNumbers" inverseEntity="Contact" syncable="YES"/>
         <relationship name="lineEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecentLineEvent" inverseName="phoneNumber" inverseEntity="RecentLineEvent" syncable="YES"/>
         <relationship name="smsMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SMSMessage" inverseName="phoneNumber" inverseEntity="SMSMessage" syncable="YES"/>
@@ -159,7 +160,7 @@
         <element name="MissedCall" positionX="709" positionY="-360" width="128" height="45"/>
         <element name="OutgoingCall" positionX="711" positionY="-432" width="128" height="45"/>
         <element name="PBX" positionX="-846" positionY="540" width="128" height="178"/>
-        <element name="PhoneNumber" positionX="-20" positionY="488" width="128" height="133"/>
+        <element name="PhoneNumber" positionX="-20" positionY="488" width="128" height="148"/>
         <element name="RecentEvent" positionX="331" positionY="11" width="128" height="103"/>
         <element name="RecentLineEvent" positionX="412" positionY="-196" width="128" height="118"/>
         <element name="SMSMessage" positionX="628" positionY="702" width="128" height="88"/>

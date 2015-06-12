@@ -11,6 +11,10 @@
 #import <libPhoneNumber-iOS/NBPhoneNumberUtil.h>
 
 @interface JCPhoneNumber : NSObject <JCPhoneNumberDataSource>
+{
+    NSString *_name;
+    NSString *_type;
+}
 
 +(NBPhoneNumberUtil *)phoneNumberUtilities;
 
@@ -20,6 +24,7 @@
 
 @property (nonatomic, strong) NSString *number;
 @property (nonatomic, strong, readwrite) NSString *name;
+@property (nonatomic, strong, readwrite) NSString *type;
 
 @property (nonatomic, strong) NSString *extension;
 @property (nonatomic, strong) NSNumber *countryCode;

@@ -28,9 +28,9 @@ static NSString *kExtensionHiddenAttribute = @"hidden";
     return [self boolValueFromPrimitiveValueForKey:kExtensionHiddenAttribute];
 }
 
--(NSString *)detailText
+-(NSString *)type
 {
-    return [NSString stringWithFormat:@"ext: %@", super.detailText];
+    return @"ext";
 }
 
 @end

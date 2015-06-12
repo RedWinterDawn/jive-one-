@@ -53,7 +53,12 @@ NSString *const kPersonT9AttributeKey = @"t9";
 
 -(NSString *)detailText
 {
-    return self.formattedNumber;
+    NSString *formattedNumber = self.formattedNumber;
+    NSString *type = self.type;
+    if (type) {
+        return [NSString stringWithFormat:@"%@: %@", type, formattedNumber];
+    }
+    return formattedNumber;
 }
 
 -(NSString *)dialableNumber

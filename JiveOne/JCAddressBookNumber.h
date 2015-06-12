@@ -14,7 +14,4 @@
 
 @property (nonatomic, readonly) NSInteger identifer;
 
-// describes what type of number we are. obtained from the ABAddressBook.
-@property (nonatomic, readonly) NSString *type;
-
 @end

@@ -11,6 +11,7 @@
 
 @implementation PhoneNumber
 
+@dynamic type;
 @dynamic smsMessages;
 @dynamic lineEvents;
 @dynamic contact;

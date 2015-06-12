@@ -10,53 +10,55 @@
 
 @implementation JCContactPhoneNumberTableViewCell
 
-static UIFont *firstTextFont = nil;
-static UIFont *lastTextFont = nil;
-
-+ (void)initialize
-{
-    if(self == [self class])
-    {
-//        firstTextFont = [UIFont systemFontOfSize:20];
-//        lastTextFont = [UIFont boldSystemFontOfSize:20];
-        // this is a good spot to load any graphics you might be drawing in -drawContentView:
-        // just load them and retain them here (ONLY if they're small enough that you don't care about them wasting memory)
-        // the idea is to do as LITTLE work (e.g. allocations) in -drawContentView: as possible
-    }
-}
-
 -(void)awakeFromNib
 {
     self.textField.enabled = self.editing;
 }
 
-- (void)layoutSubviews
+-(void)setPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
-    CGRect b = [self bounds];
-    b.size.height -= 1; // leave room for the separator line
-    b.size.width += 30; // allow extra width to slide for editing
-    b.origin.x -= (self.editing && !self.showingDeleteConfirmation) ? 0 : 30; // start 30px left unless editing
-    
-    [super layoutSubviews];
+    _phoneNumber = phoneNumber;
+    self.textLabel.text         = phoneNumber.formattedNumber;
+    self.detailTextLabel.text   = phoneNumber.type;
+    self.textField.text         = phoneNumber.number;
+    self.typeSelect.text        = phoneNumber.type;
 }
 
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing:editing animated:animated];
-    
     self.textField.enabled = editing;
 }
 
 -(void)setEditing:(BOOL)editing
 {
     [super setEditing:editing];
-    
     self.textField.enabled = editing;
 }
 
--(BOOL)isEditing
+-(void)layoutSubviews
 {
-    return self.textField.enabled;
+    [super layoutSubviews];
+    
+    UIView *editView = self.editView;
+    UIView *contentView = self.contentView;
+    if (self.isEditing) {
+        if (editView.superview == nil) {
+            [contentView addSubview:editView];
+            editView.frame = contentView.bounds;
+        }
+    } else {
+        [editView removeFromSuperview];
+    }
+}
+
+-(IBAction)textFieldValueChanged:(id)sender
+{
+    if ([_phoneNumber isKindOfClass:[PhoneNumber class]]) {
+        PhoneNumber *phoneNumber = (PhoneNumber *)_phoneNumber;
+        phoneNumber.number = self.textField.text;
+        self.textLabel.text = phoneNumber.formattedNumber;
+    }
 }
 
 @end

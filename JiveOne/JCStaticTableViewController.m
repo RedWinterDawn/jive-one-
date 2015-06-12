@@ -92,6 +92,10 @@
     return [self.tableView cellForRowAtIndexPath:indexPath];
 }
 
+- (CGFloat)heightForCell:(UITableViewCell *)cell
+{
+    return self.tableView.rowHeight;
+}
 
 #pragma mark - Delegate Handelers -
 
@@ -130,8 +134,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_tableData) {
-        //
-        return self.tableView.rowHeight;
+        UITableViewCell *cell = [self cellAtIndexPath:indexPath];
+        return [self heightForCell:cell];
     }
     return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }

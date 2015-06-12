@@ -368,7 +368,7 @@
     if (name.length > 0) {
         return [[name substringToIndex:1] uppercaseStringWithLocale:name.locale];
     }
-    return nil;
+    return @"";
 }
 
 - (NSUInteger)numberOfObjects

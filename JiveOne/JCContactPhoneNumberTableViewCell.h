@@ -10,11 +10,21 @@
 
 #import "PhoneNumber.h"
 
-@interface JCContactPhoneNumberTableViewCell : JCCustomCell
+@protocol JCContactPhoneNumberTableViewCellDelegate;
 
-@property (nonatomic, strong) PhoneNumber *phoneNumber;
+@interface JCContactPhoneNumberTableViewCell : JCCustomCell <UITextFieldDelegate>
+
+@property (nonatomic, weak) id<JCContactPhoneNumberTableViewCellDelegate> delegate;
+
+@property (nonatomic, strong) id<JCPhoneNumberDataSource> phoneNumber;
+
+@property (nonatomic, strong) IBOutlet UIView *editView;
 
 @property (nonatomic, weak) IBOutlet UILabel *typeSelect;
 @property (nonatomic, weak) IBOutlet UITextField *textField;
+
+@end
+
+@protocol JCContactPhoneNumberTableViewCellDelegate <NSObject>
 
 @end

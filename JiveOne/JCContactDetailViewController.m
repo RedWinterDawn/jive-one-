@@ -36,10 +36,10 @@
 
 @end
 
-
 @implementation JCContactDetailViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     // Handling calling from the view.
@@ -81,7 +81,6 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *viewController = segue.destinationViewController;
-    
     if ([viewController isKindOfClass:[JCPhoneTypeSelectorViewController class]]) {
         JCPhoneTypeSelectorViewController *phoneTypeSelectorViewController = (JCPhoneTypeSelectorViewController *)viewController;
         phoneTypeSelectorViewController.sender = sender;
@@ -89,10 +88,57 @@
     }
 }
 
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    if (!editing) {
+        [self saveContact];
+    } else {
+        [self convertContact];
+    }
+    
+    [self layoutForEditing:editing animated:YES];
+    [super setEditing:editing animated:animated];
+}
+
+-(void)setEditing:(BOOL)editing
+{
+    [self setEditing:editing animated:NO];
+}
+
+- (CGFloat)heightForCell:(UITableViewCell *)cell
+{
+    if ([cell isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
+        return 60;
+    }
+    return self.tableView.rowHeight;
+}
 
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - IBActions -
+
+-(IBAction)nameChanged:(id)sender
+{
+    if ([sender isKindOfClass:[UITextField class]]) {
+        UITextField *textField = (UITextField *)sender;
+        id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
+        if (![phoneNumber isKindOfClass:[Contact class]]) {
+            return;
+        }
+        
+        Contact *contact = (Contact *)phoneNumber;
+        if (textField == self.firstNameCell.textField) {
+            contact.firstName = textField.text;
+            [self updateTitle];
+        }
+        else if (textField == self.lastNameCell.textField) {
+            contact.lastName = textField.text;
+            [self updateTitle];
+        }
+    }
 }
 
 -(IBAction)callExtension:(id)sender
@@ -107,6 +153,11 @@
     }
 }
 
+-(IBAction)deleteContact:(id)sender
+{
+    [self deleteContact];
+}
+
 -(IBAction)cancel:(id)sender
 {
     [self.managedObjectContext reset];
@@ -115,43 +166,6 @@
     }
     self.editing = FALSE;
 }
-
--(void)setEditing:(BOOL)editing animated:(BOOL)animated
-{
-    if (!editing) {
-        [self saveContact];
-    } else {
-        [self convertContact];
-    }
-    
-    [self layoutForEditing:editing animated:YES];
-    
-    [super setEditing:editing animated:animated];
-}
-
--(void)setEditing:(BOOL)editing
-{
-    if (!editing) {
-        [self saveContact];
-    } else {
-        [self convertContact];
-    }
-    
-    [self layoutForEditing:editing animated:NO];
-    
-    [super setEditing:editing];
-}
-
--(Contact *)contact
-{
-    id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
-    if (![phoneNumber isKindOfClass:[Contact class]]) {
-        return nil;
-    }
-    
-    return (Contact *)phoneNumber;
-}
-
 
 #pragma mark - Notification Handlers -
 
@@ -183,6 +197,8 @@
 }
 
 #pragma mark - Delegate Handlers -
+
+#pragma mark UITextFieldDelegate
 
 -(BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
@@ -217,6 +233,8 @@
     }
 }
 
+#pragma UITableViewDelegate
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Contact *contact = [self contact];
@@ -245,35 +263,6 @@
     }
 }
 
-
--(UITableViewCell *)newPhoneNumberCellForContact:(Contact *)contact
-{
-    JCContactPhoneNumberTableViewCell *cell = [JCContactPhoneNumberTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
-    PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
-    phoneNumber.contact = contact;
-    cell.phoneNumber = phoneNumber;
-    return cell;
-}
-
--(UITableViewCell *)newAddressCellForContact:(Contact *)contact
-{
-    JCContactAddressTableViewCell *cell = [JCContactAddressTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
-//    PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
-//    phoneNumber.contact = contact;
-//    cell.phoneNumber = phoneNumber;
-    return cell;
-}
-
--(UITableViewCell *)newOtherFieldCellForContact:(Contact *)contact
-{
-    JCContactOtherFieldTableViewCell *cell = [JCContactOtherFieldTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
-    //    PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
-    //    phoneNumber.contact = contact;
-    //    cell.phoneNumber = phoneNumber;
-    return cell;
-}
-
-
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self cellAtIndexPath:indexPath];
@@ -281,33 +270,6 @@
         return NO;
     }
     return YES;
-}
-
-
--(IBAction)valueChanged:(id)sender
-{
-    if ([sender isKindOfClass:[UITextField class]]) {
-        UITextField *textField = (UITextField *)sender;
-        id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
-        if (![phoneNumber isKindOfClass:[Contact class]]) {
-            return;
-        }
-        
-        Contact *contact = (Contact *)phoneNumber;
-        if (textField == self.firstNameCell.textField) {
-            contact.firstName = textField.text;
-            [self updateTitle];
-        }
-        else if (textField == self.lastNameCell.textField) {
-            contact.lastName = textField.text;
-            [self updateTitle];
-        }
-    }
-}
-
--(IBAction)deleteContact:(id)sender
-{
-    [self deleteContact];
 }
 
 #pragma mark JCPhoneTypeSelectorTableViewControllerDelegate
@@ -361,6 +323,49 @@
     [self.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
         [self.navigationController popViewControllerAnimated:YES];
     }];
+}
+
+-(Contact *)contact
+{
+    id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
+    if (![phoneNumber isKindOfClass:[Contact class]]) {
+        return nil;
+    }
+    return (Contact *)phoneNumber;
+}
+
+-(UITableViewCell *)phoneNumberCellForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    JCContactPhoneNumberTableViewCell *cell = [JCContactPhoneNumberTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
+    cell.phoneNumber = phoneNumber;
+    return cell;
+}
+
+-(UITableViewCell *)newPhoneNumberCellForContact:(Contact *)contact
+{
+    JCContactPhoneNumberTableViewCell *cell = [JCContactPhoneNumberTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
+    PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
+    phoneNumber.contact = contact;
+    cell.phoneNumber = phoneNumber;
+    return cell;
+}
+
+-(UITableViewCell *)newAddressCellForContact:(Contact *)contact
+{
+    JCContactAddressTableViewCell *cell = [JCContactAddressTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
+    //    PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
+    //    phoneNumber.contact = contact;
+    //    cell.phoneNumber = phoneNumber;
+    return cell;
+}
+
+-(UITableViewCell *)newOtherFieldCellForContact:(Contact *)contact
+{
+    JCContactOtherFieldTableViewCell *cell = [JCContactOtherFieldTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
+    //    PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
+    //    phoneNumber.contact = contact;
+    //    cell.phoneNumber = phoneNumber;
+    return cell;
 }
 
 #pragma Layout
@@ -434,9 +439,25 @@
 -(void)layoutNumberSection:(id<JCPhoneNumberDataSource>)phoneNumber
 {
     [self setCells:_numberSectionCells hidden:YES];
-    self.numberCell.detailTextLabel.text = phoneNumber.formattedNumber;
-    self.numberCell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"phone-green"]];
-    [self setCell:_numberCell hidden:NO];
+    if ([phoneNumber isKindOfClass:[Contact class]]) {
+        Contact *contact = (Contact *)phoneNumber;
+        for (PhoneNumber *number in contact.phoneNumbers) {
+            UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:number];
+            NSIndexPath *actualIndexPath = [self indexPathForCell:_addAddressCell];
+            [self addCell:cell atIndexPath:actualIndexPath];
+        }
+    } else if ([phoneNumber isKindOfClass:[JCAddressBookPerson class]]) {
+        JCAddressBookPerson *person = (JCAddressBookPerson *)phoneNumber;
+        for (JCAddressBookNumber *number in person.phoneNumbers) {
+            UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:number];
+            NSIndexPath *actualIndexPath = [self indexPathForCell:_addAddressCell];
+            [self addCell:cell atIndexPath:actualIndexPath];
+        }
+    } else {
+        UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:phoneNumber];
+        NSIndexPath *actualIndexPath = [self indexPathForCell:_addAddressCell];
+        [self addCell:cell atIndexPath:actualIndexPath];
+    }
 }
 
 -(void)layoutForExtension:(Extension *)extension

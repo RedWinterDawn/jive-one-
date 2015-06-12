@@ -41,6 +41,7 @@
 @property (nonatomic, readonly) NSString *dialableNumber;
 @property (nonatomic, readonly) NSString *formattedNumber;
 @property (nonatomic, readonly) NSString *t9;
+@property (nonatomic, readonly) NSString *type;
 
 @optional;
 @property (nonatomic, readonly) NSNumber *countryCode;

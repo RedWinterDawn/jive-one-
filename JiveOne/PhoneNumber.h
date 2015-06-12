@@ -15,6 +15,8 @@
 
 @interface PhoneNumber : JCPhoneNumberManagedObject
 
+@property (nonatomic, strong) NSString *type;
+
 // Relationships
 @property (nonatomic, retain) NSSet *smsMessages;
 @property (nonatomic, retain) NSSet *lineEvents;
