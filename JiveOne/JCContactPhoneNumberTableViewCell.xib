@@ -80,19 +80,19 @@
             <point key="canvasLocation" x="432" y="347"/>
         </tableViewCell>
         <view contentMode="scaleToFill" id="w25-cD-cIq" userLabel="Edit View">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4wI-hk-irE">
-                    <rect key="frame" x="101" y="0.0" width="219" height="60"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <rect key="frame" x="101" y="0.0" width="219" height="50"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                     <connections>
                         <action selector="textFieldValueChanged:" destination="pCE-hA-Rs3" eventType="editingChanged" id="iuL-fd-OJq"/>
                     </connections>
                 </textField>
                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMM-3R-dza">
-                    <rect key="frame" x="14" y="0.0" width="68" height="60"/>
+                    <rect key="frame" x="14" y="0.0" width="68" height="50"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <gestureRecognizers/>
                     <constraints>
@@ -121,7 +121,7 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="432" y="226"/>
+            <point key="canvasLocation" x="432" y="453"/>
         </view>
         <tapGestureRecognizer id="Eoa-nx-CMe">
             <connections>

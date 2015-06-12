@@ -85,6 +85,14 @@
         JCPhoneTypeSelectorViewController *phoneTypeSelectorViewController = (JCPhoneTypeSelectorViewController *)viewController;
         phoneTypeSelectorViewController.sender = sender;
         phoneTypeSelectorViewController.delegate = self;
+        
+        if ([sender isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
+            JCContactPhoneNumberTableViewCell *cell = (JCContactPhoneNumberTableViewCell *)sender;
+            id<JCPhoneNumberDataSource> phoneNumber = cell.phoneNumber;
+            phoneTypeSelectorViewController.title = phoneNumber.titleText;
+            phoneTypeSelectorViewController.navigationItem.title = phoneNumber.titleText;
+        }
+        
     }
 }
 
