@@ -17,7 +17,6 @@
 #import "JCVersion.h"
 #import "LoggerClient.h"
 #import "JCLinePickerViewController.h"
-#import <Crashlytics/Crashlytics.h>
 
 #import "JCPhoneManager.h"
 #import "JCPresenceManager.h"
@@ -399,9 +398,6 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
-    [Crashlytics startWithAPIKey:@"dd3685563712dc20cfb83957dedcfbe78fbb2be4"];
-    
     [Appsee start:@"a57e92aea6e541529dc5227171341113"];
     
     [Parse setApplicationId:@"bQTDjU0QtxWVpNQp2yJp7d9ycntVZdCXF5QrVH8q"
