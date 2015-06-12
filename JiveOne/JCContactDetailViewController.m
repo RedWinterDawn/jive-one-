@@ -30,7 +30,7 @@
 #import "JCContactAddressTableViewCell.h"
 #import "JCContactOtherFieldTableViewCell.h"
 
-@interface JCContactDetailViewController () <JCPhoneTypeSelectorTableControllerDelegate> {
+@interface JCContactDetailViewController () <JCPhoneTypeSelectorTableControllerDelegate, JCContactPhoneNumberTableViewCellDelegate> {
     BOOL _addingContact;
 }
 
@@ -272,11 +272,25 @@
     return YES;
 }
 
+#pragma mark JCContactPhoneNumberTableViewCellDelegate
+
+-(void)selectTypeForContactPhoneNumberCell:(JCContactPhoneNumberTableViewCell *)cell
+{
+    [self performSegueWithIdentifier:@"SelectPhoneType" sender:cell];
+}
+
 #pragma mark JCPhoneTypeSelectorTableViewControllerDelegate
 
 -(void)phoneTypeSelectorController:(JCPhoneTypeSelectorViewController *)controller didSelectPhoneType:(NSString *)phoneType
 {
-    //id sender = controller.sender;
+    id sender = controller.sender;
+    if (![sender isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
+        return;
+    }
+    
+    JCContactPhoneNumberTableViewCell *cell = (JCContactPhoneNumberTableViewCell *)sender;
+    [cell setType:phoneType];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -338,6 +352,7 @@
 {
     JCContactPhoneNumberTableViewCell *cell = [JCContactPhoneNumberTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
     cell.phoneNumber = phoneNumber;
+    cell.delegate = self;
     return cell;
 }
 
@@ -347,6 +362,7 @@
     PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
     phoneNumber.contact = contact;
     cell.phoneNumber = phoneNumber;
+    cell.delegate = self;
     return cell;
 }
 

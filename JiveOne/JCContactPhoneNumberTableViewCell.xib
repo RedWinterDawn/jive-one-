@@ -63,14 +63,19 @@
                         <action selector="textFieldValueChanged:" destination="pCE-hA-Rs3" eventType="editingChanged" id="iuL-fd-OJq"/>
                     </connections>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMM-3R-dza">
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMM-3R-dza">
                     <rect key="frame" x="14" y="0.0" width="68" height="60"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
                     <constraints>
                         <constraint firstAttribute="width" constant="68" id="Mf6-Tz-0cg"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="Eoa-nx-CMe" appends="YES" id="HjF-7H-j81"/>
+                    </connections>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -90,5 +95,10 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="432" y="226"/>
         </view>
+        <tapGestureRecognizer id="Eoa-nx-CMe">
+            <connections>
+                <action selector="selectType:" destination="pCE-hA-Rs3" id="2Mf-gq-dSI"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>

@@ -52,6 +52,16 @@
     }
 }
 
+-(void)setType:(NSString *)type
+{
+    if ([_phoneNumber isKindOfClass:[PhoneNumber class]]) {
+        PhoneNumber *phoneNumber = (PhoneNumber *)_phoneNumber;
+        phoneNumber.type = type;
+        self.typeSelect.text = type;
+        self.detailTextLabel.text = type;
+    }
+}
+
 -(IBAction)textFieldValueChanged:(id)sender
 {
     if ([_phoneNumber isKindOfClass:[PhoneNumber class]]) {
@@ -59,6 +69,11 @@
         phoneNumber.number = self.textField.text;
         self.textLabel.text = phoneNumber.formattedNumber;
     }
+}
+
+-(IBAction)selectType:(id)sender
+{
+    [_delegate selectTypeForContactPhoneNumberCell:self];
 }
 
 @end

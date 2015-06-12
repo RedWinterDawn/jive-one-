@@ -23,8 +23,14 @@
 @property (nonatomic, weak) IBOutlet UILabel *typeSelect;
 @property (nonatomic, weak) IBOutlet UITextField *textField;
 
+-(IBAction)selectType:(id)sender;
+
+-(void)setType:(NSString *)type;
+
 @end
 
 @protocol JCContactPhoneNumberTableViewCellDelegate <NSObject>
+
+-(void)selectTypeForContactPhoneNumberCell:(JCContactPhoneNumberTableViewCell *)cell;
 
 @end

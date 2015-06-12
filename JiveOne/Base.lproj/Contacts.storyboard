@@ -568,6 +568,7 @@
                         <outletCollection property="editingCells" destination="IP5-fE-rfq" id="e6r-C1-cCx"/>
                         <outletCollection property="editingCells" destination="IJL-IJ-KH7" id="Sf2-dU-asp"/>
                         <outletCollection property="editingCells" destination="3Zu-iQ-WVB" id="iAM-ke-yzo"/>
+                        <segue destination="wCP-M4-bk8" kind="show" identifier="SelectPhoneType" id="DR2-2K-uSy"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SgG-Zo-neP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -589,7 +590,7 @@
             <objects>
                 <tableViewController title="Phone Type Selector" id="wCP-M4-bk8" customClass="JCPhoneTypeSelectorViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="JpW-ib-JcC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -620,7 +621,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vWy-IB-EB2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3160" y="1013"/>
+            <point key="canvasLocation" x="3169" y="1004"/>
         </scene>
     </scenes>
     <resources>
