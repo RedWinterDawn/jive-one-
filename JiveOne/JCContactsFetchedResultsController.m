@@ -42,6 +42,7 @@
     JCAddressBook *_addressBook;
     
     BOOL _updatingContent;
+    NSString *_searchText;
 }
 
 @end
@@ -50,30 +51,38 @@
 
 @dynamic delegate;
 
-- (instancetype)initWithFetchRequest:(NSFetchRequest *)fetchRequest
-                                 pbx:(PBX *)pbx
-                  sectionNameKeyPath:(NSString *)sectionNameKeyPath
+-(instancetype)initWithSearchText:(NSString *)searchText sortDescriptors:(NSArray *)sortDescriptors pbx:(PBX *)pbx sectionNameKeyPath:(NSString *)sectionNameKeyPath
 {
-    return [self initWithFetchRequest:fetchRequest
-                                  pbx:pbx sectionNameKeyPath:sectionNameKeyPath
-                          addressBook:[JCPhoneBook sharedPhoneBook].addressBook];
+    return [self initWithSearchText:searchText
+                    sortDescriptors:sortDescriptors
+                                pbx:pbx
+                 sectionNameKeyPath:sectionNameKeyPath
+                        addressBook:[JCPhoneBook sharedPhoneBook].addressBook];
 }
 
-- (instancetype)initWithFetchRequest:(NSFetchRequest *)fetchRequest
-                                 pbx:(PBX *)pbx
-                  sectionNameKeyPath:(NSString *)sectionNameKeyPath
-                         addressBook:(JCAddressBook *)addressBook
+-(instancetype)initWithSearchText:(NSString *)searchText
+                  sortDescriptors:(NSArray *)sortDescriptors
+                              pbx:(PBX *)pbx sectionNameKeyPath:(NSString *)sectionNameKeyPath
+                      addressBook:(JCAddressBook *)addressBook
 {
+    NSFetchRequest *fetchRequest = [NSFetchRequest new];
+    fetchRequest.includesSubentities = TRUE;
+    fetchRequest.resultType = NSManagedObjectResultType;
+    fetchRequest.fetchBatchSize = 10;
+    fetchRequest.sortDescriptors = sortDescriptors;
+    
     self = [super initWithFetchRequest:fetchRequest managedObjectContext:pbx.managedObjectContext sectionNameKeyPath:sectionNameKeyPath cacheName:nil];
     if (self) {
+        _searchText = searchText;
         _pbx = pbx;
         _addressBook = addressBook;
         
         // Contacts are tied to the user. We only want contacts that are tied to the current user.
         NSFetchRequest *request = [Contact MR_requestAllInContext:self.managedObjectContext];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@", pbx.user];
-        if (fetchRequest.predicate) {
-            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, fetchRequest.predicate]];
+        if (_searchText && _searchText.length > 0) {
+            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"((name contains[cd] %@) OR ( phoneNumbers.number contains[cd] %@))", _searchText, _searchText];
+            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
         }
         request.predicate = predicate;
         request.sortDescriptors = fetchRequest.sortDescriptors;
@@ -87,8 +96,9 @@
         // Extensions. We only want extensions that are part of our pbx and are not hidden.
         request = [Extension MR_requestAllInContext:self.managedObjectContext];
         predicate = [NSPredicate predicateWithFormat:@"pbxId = %@ && hidden = %@", pbx.pbxId, @NO];
-        if (fetchRequest.predicate) {
-            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, fetchRequest.predicate]];
+        if (_searchText && _searchText.length > 0) {
+            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"((name contains[cd] %@) OR ( number contains[cd] %@))", _searchText, _searchText];
+            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
         }
         request.predicate = predicate;
         request.sortDescriptors = fetchRequest.sortDescriptors;
@@ -120,9 +130,28 @@
     [_fetchedObjects addObjectsFromArray:_extensionsFetchedResultsController.fetchedObjects];
     
     NSFetchRequest *fetchRequest = self.fetchRequest;
-    NSArray *people = [_addressBook fetchPeopleWithPredicate:fetchRequest.predicate sortDescriptors:fetchRequest.sortDescriptors];
-    [_fetchedObjects addObjectsFromArray:people];
+    NSPredicate *predicate = nil;
+    if (_searchText) {
+       predicate = [NSPredicate predicateWithBlock:^BOOL(JCAddressBookPerson *evaluatedObject, NSDictionary *bindings) {
+            BOOL found = FALSE;
+            NSString *localizedSearch = [_searchText lowercaseStringWithLocale:_searchText.locale];
+            NSString *localizedName = [evaluatedObject.name lowercaseStringWithLocale:_searchText.locale];
+            if ([localizedName rangeOfString:localizedSearch].location != NSNotFound) {
+                found = TRUE;
+            }
+            
+            NSArray *phoneNumbers = evaluatedObject.phoneNumbers;
+            for (JCAddressBookNumber *phoneNumber in phoneNumbers) {
+                if ([phoneNumber.number rangeOfString:_searchText.numericStringValue].location != NSNotFound) {
+                    found = TRUE;
+                }
+            }
+            return found;
+        }];
+    }
     
+    NSArray *people = [_addressBook fetchPeopleWithPredicate:predicate sortDescriptors:fetchRequest.sortDescriptors];
+    [_fetchedObjects addObjectsFromArray:people];
     [_fetchedObjects sortUsingDescriptors:self.fetchRequest.sortDescriptors];
     
     _sections = [NSMutableArray new];

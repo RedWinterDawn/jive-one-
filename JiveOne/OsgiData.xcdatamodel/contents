@@ -162,9 +162,11 @@
         <relationship name="voicemail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Voicemail" inverseName="transcription" inverseEntity="Voicemail" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Address" positionX="-90" positionY="243" width="128" height="163"/>
         <element name="BlockedNumber" positionX="-171" positionY="702" width="128" height="133"/>
         <element name="Call" positionX="538" positionY="-360" width="128" height="45"/>
         <element name="Contact" positionX="-342" positionY="333" width="128" height="193"/>
+        <element name="ContactInfo" positionX="108" positionY="344" width="128" height="88"/>
         <element name="Conversation" positionX="342" positionY="171" width="128" height="73"/>
         <element name="DID" positionX="-398" positionY="698" width="128" height="238"/>
         <element name="Extension" positionX="-459" positionY="-154" width="128" height="133"/>
@@ -184,7 +186,5 @@
         <element name="User" positionX="-1134" positionY="198" width="128" height="103"/>
         <element name="Voicemail" positionX="711" positionY="-189" width="128" height="178"/>
         <element name="VoicemailTranscription" positionX="945" positionY="-162" width="128" height="118"/>
-        <element name="Address" positionX="-90" positionY="243" width="128" height="163"/>
-        <element name="ContactInfo" positionX="108" positionY="344" width="128" height="88"/>
     </elements>
 </model>

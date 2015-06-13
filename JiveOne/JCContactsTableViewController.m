@@ -110,22 +110,12 @@
                 
             default:
             {
-                NSPredicate *predicate;
-                if (_searchText && ![_searchText isEqualToString:@""]) {
-                    predicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (number contains[cd] %@)", _searchText, _searchText];
-                }
-                
-                NSFetchRequest *fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
-                fetchRequest.includesSubentities = TRUE;
-                fetchRequest.resultType = NSManagedObjectResultType;
-                fetchRequest.fetchBatchSize = 10;
-                fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
-                
-                
+                NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
                 PBX *pbx = self.authenticationManager.pbx;
-                _fetchedResultsController = [[JCContactsFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                                                         pbx:pbx
-                                                                                          sectionNameKeyPath:@"firstInitial"];
+                _fetchedResultsController = [[JCContactsFetchedResultsController alloc] initWithSearchText:_searchText
+                                                                                           sortDescriptors:sortDescriptors
+                                                                                                       pbx:pbx
+                                                                                        sectionNameKeyPath:@"firstInitial"];
                 break;
             }
         }

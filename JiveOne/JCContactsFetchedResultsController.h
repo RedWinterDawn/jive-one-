@@ -17,7 +17,7 @@
 
 @interface JCContactsFetchedResultsController : NSFetchedResultsController
 
-- (instancetype)initWithFetchRequest:(NSFetchRequest *)fetchRequest pbx:(PBX *)pbx sectionNameKeyPath:(NSString *)sectionNameKeyPath;
+-(instancetype)initWithSearchText:(NSString *)searchText sortDescriptors:(NSArray *)sortDescriptors pbx:(PBX *)pbx sectionNameKeyPath:(NSString *)sectionNameKeyPath;
 
 - (id <JCPhoneNumberDataSource> )objectAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathForObject:(id<JCPhoneNumberDataSource>)object;
