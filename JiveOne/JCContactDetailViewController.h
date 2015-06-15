@@ -9,7 +9,7 @@
 #import "JCStaticTableViewController.h"
 
 #import "JCPhoneNumberDataSource.h"
-#import "JCPhoneTypeSelectorViewController.h"
+#import "JCTypeSelectorViewController.h"
 #import "JCEditableTableViewCell.h"
 
 @interface JCContactDetailViewController : JCStaticTableViewController <UITextFieldDelegate>

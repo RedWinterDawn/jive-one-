@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Address" syncable="YES">
+    <entity name="Address" representedClassName="Address" syncable="YES">
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -8,6 +8,7 @@
         <attribute name="postalCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="region" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thoroughfare" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="addresses" inverseEntity="Contact" syncable="YES"/>
     </entity>
     <entity name="BlockedNumber" representedClassName="BlockedNumber" syncable="YES">
@@ -162,7 +163,7 @@
         <relationship name="voicemail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Voicemail" inverseName="transcription" inverseEntity="Voicemail" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Address" positionX="-90" positionY="243" width="128" height="163"/>
+        <element name="Address" positionX="-90" positionY="243" width="128" height="178"/>
         <element name="BlockedNumber" positionX="-171" positionY="702" width="128" height="133"/>
         <element name="Call" positionX="538" positionY="-360" width="128" height="45"/>
         <element name="Contact" positionX="-342" positionY="333" width="128" height="193"/>

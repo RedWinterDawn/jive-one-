@@ -12,6 +12,8 @@
 
 @implementation JCContactPhoneNumberTableViewCell
 
+@dynamic delegate;
+
 -(void)setPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
     _phoneNumber = phoneNumber;
@@ -61,14 +63,9 @@
 
 #pragma mark - IBActions -
 
--(IBAction)editDetail:(id)sender
-{
-    [_delegate selectTypeForContactPhoneNumberCell:self];
-}
-
 -(IBAction)dial:(id)sender
 {
-    [_delegate contactPhoneNumberCell:self dialPhoneNumber:_phoneNumber];
+    [self.delegate contactPhoneNumberCell:self dialPhoneNumber:_phoneNumber];
 }
 
 @end

@@ -55,7 +55,7 @@
 
 -(IBAction)editDetail:(id)sender
 {
-    NSLog(@"Edit Clicked");
+   [self.delegate selectTypeForCell:self];
 }
 
 -(IBAction)textFieldValueChanged:(id)sender

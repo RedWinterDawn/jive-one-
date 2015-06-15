@@ -22,15 +22,15 @@
 
 #import "JCDialerViewController.h"
 #import "JCStoryboardLoaderViewController.h"
-#import "JCPhoneTypeSelectorViewController.h"
+#import "JCTypeSelectorViewController.h"
 
-#import "JCPhoneTypeSelectorViewController.h"
+#import "JCTypeSelectorViewController.h"
 
 #import "JCContactPhoneNumberTableViewCell.h"
 #import "JCContactAddressTableViewCell.h"
 #import "JCContactOtherFieldTableViewCell.h"
 
-@interface JCContactDetailViewController () <JCPhoneTypeSelectorTableControllerDelegate, JCContactPhoneNumberTableViewCellDelegate> {
+@interface JCContactDetailViewController () <JCTypeSelectorTableControllerDelegate, JCContactPhoneNumberTableViewCellDelegate> {
     BOOL _addingContact;
 }
 
@@ -81,16 +81,23 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *viewController = segue.destinationViewController;
-    if ([viewController isKindOfClass:[JCPhoneTypeSelectorViewController class]]) {
-        JCPhoneTypeSelectorViewController *phoneTypeSelectorViewController = (JCPhoneTypeSelectorViewController *)viewController;
-        phoneTypeSelectorViewController.sender = sender;
-        phoneTypeSelectorViewController.delegate = self;
+    if ([viewController isKindOfClass:[JCTypeSelectorViewController class]]) {
+        JCTypeSelectorViewController *typeSelectorViewController = (JCTypeSelectorViewController *)viewController;
+        typeSelectorViewController.sender = sender;
+        typeSelectorViewController.delegate = self;
         
         if ([sender isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
             JCContactPhoneNumberTableViewCell *cell = (JCContactPhoneNumberTableViewCell *)sender;
             id<JCPhoneNumberDataSource> phoneNumber = cell.phoneNumber;
-            phoneTypeSelectorViewController.title = phoneNumber.titleText;
-            phoneTypeSelectorViewController.navigationItem.title = phoneNumber.titleText;
+            typeSelectorViewController.title = phoneNumber.titleText;
+            typeSelectorViewController.navigationItem.title = phoneNumber.titleText;
+            typeSelectorViewController.types = [JCTypeSelectorViewController phoneTypes];
+        } else if ([sender isKindOfClass:[JCContactAddressTableViewCell class]]) {
+            
+            // TODO:
+            
+        } else if ([sender isKindOfClass:[JCContactOtherFieldTableViewCell class]]) {
+            typeSelectorViewController.types = [JCTypeSelectorViewController otherTypes];
         }
     }
 }
@@ -254,8 +261,9 @@
                 cell = [self newPhoneNumberCellForContact:contact];
             } else if (cell == _addAddressCell) {
                 cell = [self newAddressCellForContact:contact];
-            } else {
+            } else if (cell == _addOtherCell) {
                 cell = [self newOtherFieldCellForContact:contact];
+                [self performSegueWithIdentifier:@"SelectPhoneType" sender:cell];
             }
             [self addCell:cell atIndexPath:actualIndexPath];
             break;
@@ -269,9 +277,8 @@
                     [self.managedObjectContext deleteObject:(PhoneNumber *)phoneNumber];
                 }
             } else if ([cell isKindOfClass:[JCContactAddressTableViewCell class]]){
-                
-                // TODO: FInish Address.
-                
+                Address *address = ((JCContactAddressTableViewCell *)cell).address;
+                [self.managedObjectContext deleteObject:address];
             } else if ([cell isKindOfClass:[JCContactOtherFieldTableViewCell class]]) {
                 ContactInfo *info = ((JCContactOtherFieldTableViewCell *)cell).info;
                 [self.managedObjectContext deleteObject:info];
@@ -294,7 +301,7 @@
 
 #pragma mark JCContactPhoneNumberTableViewCellDelegate
 
--(void)selectTypeForContactPhoneNumberCell:(JCContactPhoneNumberTableViewCell *)cell
+-(void)selectTypeForCell:(JCCustomEditTableViewCell *)cell
 {
     [self performSegueWithIdentifier:@"SelectPhoneType" sender:cell];
 }
@@ -308,15 +315,22 @@
 
 #pragma mark JCPhoneTypeSelectorTableViewControllerDelegate
 
--(void)phoneTypeSelectorController:(JCPhoneTypeSelectorViewController *)controller didSelectPhoneType:(NSString *)phoneType
+-(void)typeSelectorController:(JCTypeSelectorViewController *)controller didSelectPhoneType:(NSString *)type
 {
     id sender = controller.sender;
     if ([sender isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
         id<JCPhoneNumberDataSource> phoneNumber = ((JCContactPhoneNumberTableViewCell *)sender).phoneNumber;
         if([phoneNumber isKindOfClass:[PhoneNumber class]]) {
-            ((PhoneNumber *)phoneNumber).type = phoneType;
+            ((PhoneNumber *)phoneNumber).type = type;
         }
+    } else if([sender isKindOfClass:[JCContactAddressTableViewCell class]]) {
+        Address *address = ((JCContactAddressTableViewCell *)sender).address;
+        address.type = type;
+    } else if ([sender isKindOfClass:[JCContactOtherFieldTableViewCell class]]) {
+        ContactInfo *info = ((JCContactOtherFieldTableViewCell *)sender).info;
+        info.key = type;
     }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -392,12 +406,19 @@
     return cell;
 }
 
+-(UITableViewCell *)addressCellForAddress:(Address *)address
+{
+    JCContactAddressTableViewCell *cell = [JCContactAddressTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
+    cell.address = address;
+    return cell;
+}
+
 -(UITableViewCell *)newAddressCellForContact:(Contact *)contact
 {
     JCContactAddressTableViewCell *cell = [JCContactAddressTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
-    //    PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
-    //    phoneNumber.contact = contact;
-    //    cell.phoneNumber = phoneNumber;
+    Address *address = [Address MR_createEntityInContext:self.managedObjectContext];
+    address.contact = contact;
+    cell.address = address;
     return cell;
 }
 
@@ -457,6 +478,9 @@
     // Number Section
     [self layoutNumberSection:phoneNumber];
     
+    // Address Section
+    [self layoutAddressSection:phoneNumber];
+    
     // Info section
     [self layoutInfoSection:phoneNumber];
     
@@ -488,18 +512,6 @@
     [self setCell:_lastNameCell hidden:NO];
 }
 
--(void)layoutInfoSection:(id<JCPhoneNumberDataSource>)phoneNumber
-{
-    if ([phoneNumber isKindOfClass:[Contact class]]) {
-        Contact *contact = (Contact *)phoneNumber;
-        for (ContactInfo *info in contact.info) {
-            UITableViewCell *cell = [self contactInfoCellForContactInfo:info];
-            NSIndexPath *actualIndexPath = [self indexPathForCell:_addOtherCell];
-            [self addCell:cell atIndexPath:actualIndexPath];
-        }
-    }
-}
-
 -(void)layoutNumberSection:(id<JCPhoneNumberDataSource>)phoneNumber
 {
     [self setCells:_numberSectionCells hidden:YES];
@@ -521,6 +533,30 @@
         UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:phoneNumber];
         NSIndexPath *actualIndexPath = [self indexPathForCell:_addOtherCell];
         [self addCell:cell atIndexPath:actualIndexPath];
+    }
+}
+
+-(void)layoutAddressSection:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    if ([phoneNumber isKindOfClass:[Contact class]]) {
+        Contact *contact = (Contact *)phoneNumber;
+        for (Address *address in contact.addresses) {
+            UITableViewCell *cell = [self addressCellForAddress:address];
+            NSIndexPath *actualIndexPath = [self indexPathForCell:_addAddressCell];
+            [self addCell:cell atIndexPath:actualIndexPath];
+        }
+    }
+}
+
+-(void)layoutInfoSection:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    if ([phoneNumber isKindOfClass:[Contact class]]) {
+        Contact *contact = (Contact *)phoneNumber;
+        for (ContactInfo *info in contact.info) {
+            UITableViewCell *cell = [self contactInfoCellForContactInfo:info];
+            NSIndexPath *actualIndexPath = [self indexPathForCell:_addOtherCell];
+            [self addCell:cell atIndexPath:actualIndexPath];
+        }
     }
 }
 

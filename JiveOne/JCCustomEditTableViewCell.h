@@ -8,7 +8,11 @@
 
 #import "JCCustomCell.h"
 
+@protocol JCCustomEditTableViewCellDelegate;
+
 @interface JCCustomEditTableViewCell : JCCustomCell <UITextFieldDelegate>
+
+@property (nonatomic, weak) id<JCCustomEditTableViewCellDelegate> delegate;
 
 @property (nonatomic, strong) IBOutlet UIView *editView;
 
@@ -18,5 +22,11 @@
 -(IBAction)editDetail:(id)sender;
 
 -(void)setText:(NSString *)string;
+
+@end
+
+@protocol JCCustomEditTableViewCellDelegate <NSObject>
+
+-(void)selectTypeForCell:(JCCustomEditTableViewCell *)cell;
 
 @end

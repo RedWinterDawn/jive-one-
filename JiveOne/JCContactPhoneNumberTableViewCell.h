@@ -10,7 +10,13 @@
 
 #import "PhoneNumber.h"
 
-@protocol JCContactPhoneNumberTableViewCellDelegate;
+@class JCContactPhoneNumberTableViewCell;
+
+@protocol JCContactPhoneNumberTableViewCellDelegate <JCCustomEditTableViewCellDelegate>
+
+-(void)contactPhoneNumberCell:(JCContactPhoneNumberTableViewCell *)cell dialPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber;
+
+@end
 
 @interface JCContactPhoneNumberTableViewCell : JCCustomEditTableViewCell
 
@@ -22,9 +28,3 @@
 
 @end
 
-@protocol JCContactPhoneNumberTableViewCellDelegate <NSObject>
-
--(void)selectTypeForContactPhoneNumberCell:(JCContactPhoneNumberTableViewCell *)cell;
--(void)contactPhoneNumberCell:(JCContactPhoneNumberTableViewCell *)cell dialPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber;
-
-@end
