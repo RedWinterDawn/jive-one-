@@ -31,10 +31,10 @@
 {
     [super layoutSubviews];
     
-    self.detailEditLabel.text = _info.value;
-    self.detailTextLabel.text = _info.value;
-    self.textLabel.text = _info.key;
-    self.textField.text = _info.key;
+    self.detailEditLabel.text = _info.key;
+    self.detailTextLabel.text = _info.key;
+    self.textLabel.text = _info.value;
+    self.textField.text = _info.value;
 }
 
 -(void)setText:(NSString *)string

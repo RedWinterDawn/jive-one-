@@ -22,15 +22,15 @@
 
 #import "JCDialerViewController.h"
 #import "JCStoryboardLoaderViewController.h"
-#import "JCPhoneTypeSelectorViewController.h"
+#import "JCTypeSelectorViewController.h"
 
-#import "JCPhoneTypeSelectorViewController.h"
+#import "JCTypeSelectorViewController.h"
 
 #import "JCContactPhoneNumberTableViewCell.h"
 #import "JCContactAddressTableViewCell.h"
 #import "JCContactOtherFieldTableViewCell.h"
 
-@interface JCContactDetailViewController () <JCPhoneTypeSelectorTableControllerDelegate, JCContactPhoneNumberTableViewCellDelegate> {
+@interface JCContactDetailViewController () <JCTypeSelectorTableControllerDelegate, JCContactPhoneNumberTableViewCellDelegate> {
     BOOL _addingContact;
 }
 
@@ -81,16 +81,23 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *viewController = segue.destinationViewController;
-    if ([viewController isKindOfClass:[JCPhoneTypeSelectorViewController class]]) {
-        JCPhoneTypeSelectorViewController *phoneTypeSelectorViewController = (JCPhoneTypeSelectorViewController *)viewController;
-        phoneTypeSelectorViewController.sender = sender;
-        phoneTypeSelectorViewController.delegate = self;
+    if ([viewController isKindOfClass:[JCTypeSelectorViewController class]]) {
+        JCTypeSelectorViewController *typeSelectorViewController = (JCTypeSelectorViewController *)viewController;
+        typeSelectorViewController.sender = sender;
+        typeSelectorViewController.delegate = self;
         
         if ([sender isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
             JCContactPhoneNumberTableViewCell *cell = (JCContactPhoneNumberTableViewCell *)sender;
             id<JCPhoneNumberDataSource> phoneNumber = cell.phoneNumber;
-            phoneTypeSelectorViewController.title = phoneNumber.titleText;
-            phoneTypeSelectorViewController.navigationItem.title = phoneNumber.titleText;
+            typeSelectorViewController.title = phoneNumber.titleText;
+            typeSelectorViewController.navigationItem.title = phoneNumber.titleText;
+            typeSelectorViewController.types = [JCTypeSelectorViewController phoneTypes];
+        } else if ([sender isKindOfClass:[JCContactAddressTableViewCell class]]) {
+            
+            // TODO:
+            
+        } else if ([sender isKindOfClass:[JCContactOtherFieldTableViewCell class]]) {
+            typeSelectorViewController.types = [JCTypeSelectorViewController otherTypes];
         }
     }
 }
@@ -254,8 +261,9 @@
                 cell = [self newPhoneNumberCellForContact:contact];
             } else if (cell == _addAddressCell) {
                 cell = [self newAddressCellForContact:contact];
-            } else {
+            } else if (cell == _addOtherCell) {
                 cell = [self newOtherFieldCellForContact:contact];
+                [self performSegueWithIdentifier:@"SelectPhoneType" sender:cell];
             }
             [self addCell:cell atIndexPath:actualIndexPath];
             break;
@@ -308,15 +316,21 @@
 
 #pragma mark JCPhoneTypeSelectorTableViewControllerDelegate
 
--(void)phoneTypeSelectorController:(JCPhoneTypeSelectorViewController *)controller didSelectPhoneType:(NSString *)phoneType
+-(void)typeSelectorController:(JCTypeSelectorViewController *)controller didSelectPhoneType:(NSString *)type
 {
     id sender = controller.sender;
     if ([sender isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
         id<JCPhoneNumberDataSource> phoneNumber = ((JCContactPhoneNumberTableViewCell *)sender).phoneNumber;
         if([phoneNumber isKindOfClass:[PhoneNumber class]]) {
-            ((PhoneNumber *)phoneNumber).type = phoneType;
+            ((PhoneNumber *)phoneNumber).type = type;
         }
+    } else if([sender isKindOfClass:[JCContactAddressTableViewCell class]]) {
+        
+    } else if ([sender isKindOfClass:[JCContactOtherFieldTableViewCell class]]) {
+        ContactInfo *info = ((JCContactOtherFieldTableViewCell *)sender).info;
+        info.key = type;
     }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
