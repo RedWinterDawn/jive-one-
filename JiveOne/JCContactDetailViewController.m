@@ -124,6 +124,9 @@
     if ([cell isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
         return 60;
     }
+    else if ([cell isKindOfClass:[JCContactAddressTableViewCell class]]) {
+        return 180;
+    }
     return self.tableView.rowHeight;
 }
 
