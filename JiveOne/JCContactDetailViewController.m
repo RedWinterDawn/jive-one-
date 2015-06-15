@@ -93,9 +93,7 @@
             typeSelectorViewController.navigationItem.title = phoneNumber.titleText;
             typeSelectorViewController.types = [JCTypeSelectorViewController phoneTypes];
         } else if ([sender isKindOfClass:[JCContactAddressTableViewCell class]]) {
-            
-            // TODO:
-            
+            typeSelectorViewController.types = [JCTypeSelectorViewController addressTypes];
         } else if ([sender isKindOfClass:[JCContactOtherFieldTableViewCell class]]) {
             typeSelectorViewController.types = [JCTypeSelectorViewController otherTypes];
         }
@@ -125,7 +123,7 @@
         return 60;
     }
     else if ([cell isKindOfClass:[JCContactAddressTableViewCell class]]) {
-        return 180;
+        return 120;
     }
     return self.tableView.rowHeight;
 }
@@ -401,6 +399,7 @@
 {
     JCContactAddressTableViewCell *cell = [JCContactAddressTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
     cell.address = address;
+    cell.delegate = self;
     return cell;
 }
 
@@ -410,6 +409,7 @@
     Address *address = [Address MR_createEntityInContext:self.managedObjectContext];
     address.contact = contact;
     cell.address = address;
+    cell.delegate = self;
     return cell;
 }
 
@@ -417,6 +417,7 @@
 {
     JCContactOtherFieldTableViewCell *cell = [JCContactOtherFieldTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
     cell.info = contactInfo;
+    cell.delegate = self;
     return cell;
 }
 
@@ -426,6 +427,7 @@
     ContactInfo *info = [ContactInfo MR_createEntityInContext:self.managedObjectContext];
     info.contact = contact;
     cell.info = info;
+    cell.delegate = self;
     return cell;
 }
 

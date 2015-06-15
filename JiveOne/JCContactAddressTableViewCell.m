@@ -67,10 +67,10 @@
     self.textField.text         = _address.thoroughfare;
     self.cityLabel.text         = _address.city;
     self.cityTextField.text     = _address.city;
-    self.regionLabel.text       = _address.city;
-    self.regionTextField.text   = _address.city;
-    self.postalCodeLabel.text   = _address.city;
-    self.postalCodeLabel.text   = _address.city;
+    self.regionLabel.text       = _address.region;
+    self.regionTextField.text   = _address.region;
+    self.postalCodeLabel.text   = _address.postalCode;
+    self.postalCodeTextField.text   = _address.postalCode; 
 }
 
 -(void)dealloc

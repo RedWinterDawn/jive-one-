@@ -97,11 +97,11 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMM-3R-dza" customClass="JCBorederLabel">
-                    <rect key="frame" x="14" y="0.0" width="50" height="50"/>
+                    <rect key="frame" x="14" y="0.0" width="80" height="50"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <gestureRecognizers/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="Mf6-Tz-0cg"/>
+                        <constraint firstAttribute="width" constant="80" id="Mf6-Tz-0cg"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <color key="textColor" red="0.34901960780000002" green="0.64313725489999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -111,14 +111,14 @@
                     </connections>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray-accesibility-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="2X3-56-6H3">
-                    <rect key="frame" x="44" y="12" width="25" height="25"/>
+                    <rect key="frame" x="74" y="12" width="25" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="2X3-56-6H3" secondAttribute="height" multiplier="1:1" id="4w4-5B-z64"/>
                         <constraint firstAttribute="width" constant="25" id="otf-jz-yHg"/>
                     </constraints>
                 </imageView>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4wI-hk-irE">
-                    <rect key="frame" x="70" y="0.0" width="250" height="50"/>
+                    <rect key="frame" x="100" y="0.0" width="220" height="50"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                     <connections>
@@ -136,7 +136,7 @@
                 <constraint firstAttribute="trailing" secondItem="4wI-hk-irE" secondAttribute="trailing" id="JSk-KW-hVD"/>
                 <constraint firstAttribute="bottom" secondItem="4wI-hk-irE" secondAttribute="bottom" id="LMu-Xv-F2i"/>
                 <constraint firstItem="vMM-3R-dza" firstAttribute="leading" secondItem="w25-cD-cIq" secondAttribute="leading" constant="14" id="hed-RK-bfp"/>
-                <constraint firstItem="4wI-hk-irE" firstAttribute="leading" secondItem="w25-cD-cIq" secondAttribute="leading" constant="70" id="itn-5f-0Im"/>
+                <constraint firstItem="4wI-hk-irE" firstAttribute="leading" secondItem="w25-cD-cIq" secondAttribute="leading" constant="100" id="itn-5f-0Im"/>
                 <constraint firstItem="4wI-hk-irE" firstAttribute="leading" secondItem="vMM-3R-dza" secondAttribute="trailing" constant="19" id="o6f-hq-qmh"/>
                 <constraint firstItem="4wI-hk-irE" firstAttribute="leading" secondItem="vMM-3R-dza" secondAttribute="trailing" constant="19" id="v0Y-sb-Zhe"/>
             </constraints>
