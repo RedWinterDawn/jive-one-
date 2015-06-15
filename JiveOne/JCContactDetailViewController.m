@@ -263,6 +263,19 @@
         
         case UITableViewCellEditingStyleDelete:
             [self removeCell:cell];
+            if ([cell isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
+                id<JCPhoneNumberDataSource> phoneNumber = ((JCContactPhoneNumberTableViewCell *)cell).phoneNumber;
+                if ([phoneNumber isKindOfClass:[PhoneNumber class]]) {
+                    [self.managedObjectContext deleteObject:(PhoneNumber *)phoneNumber];
+                }
+            } else if ([cell isKindOfClass:[JCContactAddressTableViewCell class]]){
+                
+                // TODO: FInish Address.
+                
+            } else if ([cell isKindOfClass:[JCContactOtherFieldTableViewCell class]]) {
+                ContactInfo *info = ((JCContactOtherFieldTableViewCell *)cell).info;
+                [self.managedObjectContext deleteObject:info];
+            }
             break;
             
         default:
@@ -297,14 +310,13 @@
 
 -(void)phoneTypeSelectorController:(JCPhoneTypeSelectorViewController *)controller didSelectPhoneType:(NSString *)phoneType
 {
-//    id sender = controller.sender;
-//    if (![sender isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
-//        return;
-//    }
-//    
-//    JCContactPhoneNumberTableViewCell *cell = (JCContactPhoneNumberTableViewCell *)sender;
-//    [cell setType:phoneType];
-//    
+    id sender = controller.sender;
+    if ([sender isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
+        id<JCPhoneNumberDataSource> phoneNumber = ((JCContactPhoneNumberTableViewCell *)sender).phoneNumber;
+        if([phoneNumber isKindOfClass:[PhoneNumber class]]) {
+            ((PhoneNumber *)phoneNumber).type = phoneType;
+        }
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 

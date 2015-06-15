@@ -14,9 +14,38 @@
 {
     _info = info;
     
+    [info addObserver:self forKeyPath:NSStringFromSelector(@selector(key)) options:NSKeyValueObservingOptionNew context:nil];
+    [info addObserver:self forKeyPath:NSStringFromSelector(@selector(value)) options:NSKeyValueObservingOptionNew context:nil];
+    [self setNeedsLayout];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(key))] || [keyPath isEqualToString:NSStringFromSelector(@selector(value))]) {
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
+    }
+}
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
     
-    
-    
+    self.detailEditLabel.text = _info.value;
+    self.detailTextLabel.text = _info.value;
+    self.textLabel.text = _info.key;
+    self.textField.text = _info.key;
+}
+
+-(void)setText:(NSString *)string
+{
+    _info.value = string;
+}
+
+-(void)dealloc
+{
+    [_info removeObserver:self forKeyPath:NSStringFromSelector(@selector(key)) context:nil];
+    [_info removeObserver:self forKeyPath:NSStringFromSelector(@selector(value)) context:nil];
 }
 
 
