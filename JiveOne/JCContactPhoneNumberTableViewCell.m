@@ -10,39 +10,56 @@
 
 @implementation JCContactPhoneNumberTableViewCell
 
-
-
 -(void)setPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
     _phoneNumber = phoneNumber;
-    self.textLabel.text         = phoneNumber.formattedNumber;
-    self.detailTextLabel.text   = phoneNumber.type;
-    self.textField.text         = phoneNumber.number;
-    self.typeSelect.text        = phoneNumber.type;
-}
-
-
-
--(void)setType:(NSString *)type
-{
     if ([_phoneNumber isKindOfClass:[PhoneNumber class]]) {
         PhoneNumber *phoneNumber = (PhoneNumber *)_phoneNumber;
-        phoneNumber.type = type;
-        self.typeSelect.text = type;
-        self.detailTextLabel.text = type;
+        [phoneNumber addObserver:self forKeyPath:NSStringFromSelector(@selector(type)) options:NSKeyValueObservingOptionNew context:nil];
+        [phoneNumber addObserver:self forKeyPath:NSStringFromSelector(@selector(number)) options:NSKeyValueObservingOptionNew context:nil];
+    }
+    
+    [self setNeedsLayout];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(type))] || [keyPath isEqualToString:NSStringFromSelector(@selector(number))]) {
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
     }
 }
 
--(IBAction)textFieldValueChanged:(id)sender
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    self.detailEditLabel.text = _phoneNumber.type;
+    self.detailTextLabel.text = _phoneNumber.type;
+    self.textLabel.text = _phoneNumber.formattedNumber;
+    self.textField.text = _phoneNumber.number;
+}
+
+-(void)setText:(NSString *)string
 {
     if ([_phoneNumber isKindOfClass:[PhoneNumber class]]) {
         PhoneNumber *phoneNumber = (PhoneNumber *)_phoneNumber;
-        phoneNumber.number = self.textField.text;
-        self.textLabel.text = phoneNumber.formattedNumber;
+        phoneNumber.number = string;
     }
 }
 
--(IBAction)selectType:(id)sender
+-(void)dealloc
+{
+    if ([_phoneNumber isKindOfClass:[PhoneNumber class]]) {
+        PhoneNumber *phoneNumber = (PhoneNumber *)_phoneNumber;
+        [phoneNumber removeObserver:self forKeyPath:NSStringFromSelector(@selector(type)) context:nil];
+        [phoneNumber removeObserver:self forKeyPath:NSStringFromSelector(@selector(number)) context:nil];
+    }
+}
+
+#pragma mark - IBActions -
+
+-(IBAction)editDetail:(id)sender
 {
     [_delegate selectTypeForContactPhoneNumberCell:self];
 }

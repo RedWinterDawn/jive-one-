@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -71,11 +70,11 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="detailEditLabel" destination="vMM-3R-dza" id="gvZ-MN-cLO"/>
                 <outlet property="detailTextLabel" destination="qxF-ca-CTn" id="Qli-y1-Swy"/>
                 <outlet property="editView" destination="w25-cD-cIq" id="AJ2-h8-My1"/>
                 <outlet property="textField" destination="4wI-hk-irE" id="wjs-9p-2yM"/>
                 <outlet property="textLabel" destination="EXC-zw-90Y" id="vPp-Wh-kD5"/>
-                <outlet property="typeSelect" destination="vMM-3R-dza" id="9mn-jS-b5L"/>
             </connections>
             <point key="canvasLocation" x="432" y="347"/>
         </tableViewCell>
@@ -125,7 +124,7 @@
         </view>
         <tapGestureRecognizer id="Eoa-nx-CMe">
             <connections>
-                <action selector="selectType:" destination="pCE-hA-Rs3" id="2Mf-gq-dSI"/>
+                <action selector="editDetail:" destination="pCE-hA-Rs3" id="JCt-4v-WVp"/>
             </connections>
         </tapGestureRecognizer>
     </objects>

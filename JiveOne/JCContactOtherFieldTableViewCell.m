@@ -10,5 +10,14 @@
 
 @implementation JCContactOtherFieldTableViewCell
 
+-(void)setInfo:(ContactInfo *)info
+{
+    _info = info;
+    
+    
+    
+    
+}
+
 
 @end

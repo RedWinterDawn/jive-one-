@@ -12,10 +12,11 @@
 
 @property (nonatomic, strong) IBOutlet UIView *editView;
 
-@property (nonatomic, weak) IBOutlet UILabel *typeSelect;
+@property (nonatomic, weak) IBOutlet UILabel *detailEditLabel;
 @property (nonatomic, weak) IBOutlet UITextField *textField;
 
--(IBAction)selectType:(id)sender;
--(void)setType:(NSString *)type;
+-(IBAction)editDetail:(id)sender;
+
+-(void)setText:(NSString *)string;
 
 @end

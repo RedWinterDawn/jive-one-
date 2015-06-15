@@ -31,7 +31,6 @@
             <connections>
                 <outlet property="editView" destination="Yjr-Qo-V7v" id="Xkg-5A-utX"/>
                 <outlet property="textField" destination="lwK-bd-qUn" id="zjc-7e-A6b"/>
-                <outlet property="typeSelect" destination="rOM-9G-i0G" id="Gi0-hM-HYk"/>
             </connections>
             <point key="canvasLocation" x="389" y="152"/>
         </tableViewCell>

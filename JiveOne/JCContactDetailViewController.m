@@ -297,14 +297,14 @@
 
 -(void)phoneTypeSelectorController:(JCPhoneTypeSelectorViewController *)controller didSelectPhoneType:(NSString *)phoneType
 {
-    id sender = controller.sender;
-    if (![sender isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
-        return;
-    }
-    
-    JCContactPhoneNumberTableViewCell *cell = (JCContactPhoneNumberTableViewCell *)sender;
-    [cell setType:phoneType];
-    
+//    id sender = controller.sender;
+//    if (![sender isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
+//        return;
+//    }
+//    
+//    JCContactPhoneNumberTableViewCell *cell = (JCContactPhoneNumberTableViewCell *)sender;
+//    [cell setType:phoneType];
+//    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
