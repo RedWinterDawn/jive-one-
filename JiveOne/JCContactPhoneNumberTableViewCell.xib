@@ -118,11 +118,20 @@
                         <outletCollection property="gestureRecognizers" destination="Eoa-nx-CMe" appends="YES" id="HjF-7H-j81"/>
                     </connections>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="gray-accesibility-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="2X3-56-6H3">
+                    <rect key="frame" x="68" y="12" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="2X3-56-6H3" secondAttribute="height" multiplier="1:1" id="4w4-5B-z64"/>
+                        <constraint firstAttribute="width" constant="25" id="otf-jz-yHg"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="vMM-3R-dza" firstAttribute="top" secondItem="w25-cD-cIq" secondAttribute="top" id="0QG-Cc-sze"/>
                 <constraint firstItem="4wI-hk-irE" firstAttribute="top" secondItem="w25-cD-cIq" secondAttribute="top" id="12b-p9-pxr"/>
+                <constraint firstItem="2X3-56-6H3" firstAttribute="centerY" secondItem="vMM-3R-dza" secondAttribute="centerY" constant="-0.5" id="33u-1H-kLP"/>
+                <constraint firstItem="2X3-56-6H3" firstAttribute="trailing" secondItem="vMM-3R-dza" secondAttribute="trailing" constant="10" id="EQG-zb-5y8"/>
                 <constraint firstAttribute="bottom" secondItem="vMM-3R-dza" secondAttribute="bottom" id="FAU-fs-SeY"/>
                 <constraint firstAttribute="trailing" secondItem="4wI-hk-irE" secondAttribute="trailing" id="JSk-KW-hVD"/>
                 <constraint firstAttribute="bottom" secondItem="4wI-hk-irE" secondAttribute="bottom" id="LMu-Xv-F2i"/>
@@ -143,6 +152,7 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
+        <image name="gray-accesibility-arrow" width="50" height="50"/>
         <image name="green-phone" width="30" height="30"/>
     </resources>
 </document>
