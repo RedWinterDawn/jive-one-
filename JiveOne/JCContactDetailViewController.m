@@ -277,9 +277,8 @@
                     [self.managedObjectContext deleteObject:(PhoneNumber *)phoneNumber];
                 }
             } else if ([cell isKindOfClass:[JCContactAddressTableViewCell class]]){
-                
-                // TODO: FInish Address.
-                
+                Address *address = ((JCContactAddressTableViewCell *)cell).address;
+                [self.managedObjectContext deleteObject:address];
             } else if ([cell isKindOfClass:[JCContactOtherFieldTableViewCell class]]) {
                 ContactInfo *info = ((JCContactOtherFieldTableViewCell *)cell).info;
                 [self.managedObjectContext deleteObject:info];
@@ -302,7 +301,7 @@
 
 #pragma mark JCContactPhoneNumberTableViewCellDelegate
 
--(void)selectTypeForContactPhoneNumberCell:(JCContactPhoneNumberTableViewCell *)cell
+-(void)selectTypeForCell:(JCCustomEditTableViewCell *)cell
 {
     [self performSegueWithIdentifier:@"SelectPhoneType" sender:cell];
 }
@@ -325,7 +324,8 @@
             ((PhoneNumber *)phoneNumber).type = type;
         }
     } else if([sender isKindOfClass:[JCContactAddressTableViewCell class]]) {
-        
+        Address *address = ((JCContactAddressTableViewCell *)sender).address;
+        address.type = type;
     } else if ([sender isKindOfClass:[JCContactOtherFieldTableViewCell class]]) {
         ContactInfo *info = ((JCContactOtherFieldTableViewCell *)sender).info;
         info.key = type;
@@ -406,12 +406,19 @@
     return cell;
 }
 
+-(UITableViewCell *)addressCellForAddress:(Address *)address
+{
+    JCContactAddressTableViewCell *cell = [JCContactAddressTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
+    cell.address = address;
+    return cell;
+}
+
 -(UITableViewCell *)newAddressCellForContact:(Contact *)contact
 {
     JCContactAddressTableViewCell *cell = [JCContactAddressTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
-    //    PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
-    //    phoneNumber.contact = contact;
-    //    cell.phoneNumber = phoneNumber;
+    Address *address = [Address MR_createEntityInContext:self.managedObjectContext];
+    address.contact = contact;
+    cell.address = address;
     return cell;
 }
 
@@ -471,6 +478,9 @@
     // Number Section
     [self layoutNumberSection:phoneNumber];
     
+    // Address Section
+    [self layoutAddressSection:phoneNumber];
+    
     // Info section
     [self layoutInfoSection:phoneNumber];
     
@@ -502,18 +512,6 @@
     [self setCell:_lastNameCell hidden:NO];
 }
 
--(void)layoutInfoSection:(id<JCPhoneNumberDataSource>)phoneNumber
-{
-    if ([phoneNumber isKindOfClass:[Contact class]]) {
-        Contact *contact = (Contact *)phoneNumber;
-        for (ContactInfo *info in contact.info) {
-            UITableViewCell *cell = [self contactInfoCellForContactInfo:info];
-            NSIndexPath *actualIndexPath = [self indexPathForCell:_addOtherCell];
-            [self addCell:cell atIndexPath:actualIndexPath];
-        }
-    }
-}
-
 -(void)layoutNumberSection:(id<JCPhoneNumberDataSource>)phoneNumber
 {
     [self setCells:_numberSectionCells hidden:YES];
@@ -535,6 +533,30 @@
         UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:phoneNumber];
         NSIndexPath *actualIndexPath = [self indexPathForCell:_addOtherCell];
         [self addCell:cell atIndexPath:actualIndexPath];
+    }
+}
+
+-(void)layoutAddressSection:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    if ([phoneNumber isKindOfClass:[Contact class]]) {
+        Contact *contact = (Contact *)phoneNumber;
+        for (Address *address in contact.addresses) {
+            UITableViewCell *cell = [self addressCellForAddress:address];
+            NSIndexPath *actualIndexPath = [self indexPathForCell:_addAddressCell];
+            [self addCell:cell atIndexPath:actualIndexPath];
+        }
+    }
+}
+
+-(void)layoutInfoSection:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    if ([phoneNumber isKindOfClass:[Contact class]]) {
+        Contact *contact = (Contact *)phoneNumber;
+        for (ContactInfo *info in contact.info) {
+            UITableViewCell *cell = [self contactInfoCellForContactInfo:info];
+            NSIndexPath *actualIndexPath = [self indexPathForCell:_addOtherCell];
+            [self addCell:cell atIndexPath:actualIndexPath];
+        }
     }
 }
 
