@@ -155,18 +155,6 @@
     }
 }
 
--(IBAction)callExtension:(id)sender
-{
-    if ([sender isKindOfClass:[UITapGestureRecognizer class]]) {
-        UITableViewCell *cell = (UITableViewCell *)((UITapGestureRecognizer *)sender).view;
-        if (cell == self.extensionCell) {
-            [self dialPhoneNumber:self.phoneNumber
-                        usingLine:self.authenticationManager.line
-                           sender:sender];
-        }
-    }
-}
-
 -(IBAction)deleteContact:(id)sender
 {
     [self deleteContact];
@@ -531,7 +519,7 @@
         }
     } else {
         UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:phoneNumber];
-        NSIndexPath *actualIndexPath = [self indexPathForCell:_addOtherCell];
+        NSIndexPath *actualIndexPath = [self indexPathForCell:_addNumberCell];
         [self addCell:cell atIndexPath:actualIndexPath];
     }
 }
@@ -571,10 +559,11 @@
     
     // Numbers Section
     [self setCells:_numberSectionCells hidden:YES];
-    self.extensionCell.detailTextLabel.text = extension.number;
-    self.extensionCell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"phone-green"]];
+    UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:extension];
+    NSIndexPath *actualIndexPath = [self indexPathForCell:_addNumberCell];
+    [self addCell:cell atIndexPath:actualIndexPath];
     
-    [self setCell:_extensionCell hidden:NO];
+    // JiveID
     if ([extension isKindOfClass:[InternalExtension class]]) {
         NSString *jiveId = ((InternalExtension *)extension).jiveUserId;
         if (jiveId) {

@@ -117,7 +117,7 @@
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" defaultValueString="main" indexed="YES" syncable="YES"/>
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="phoneNumbers" inverseEntity="Contact" syncable="YES"/>
-        <relationship name="lineEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecentLineEvent" inverseName="phoneNumber" inverseEntity="RecentLineEvent" syncable="YES"/>
+        <relationship name="lineEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecentLineEvent" inverseName="phoneNumbers" inverseEntity="RecentLineEvent" syncable="YES"/>
         <relationship name="smsMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SMSMessage" inverseName="phoneNumber" inverseEntity="SMSMessage" syncable="YES"/>
     </entity>
     <entity name="RecentEvent" representedClassName="RecentEvent" isAbstract="YES" syncable="YES">
@@ -131,7 +131,7 @@
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="internalExtension" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="InternalExtension" inverseName="lineEvents" inverseEntity="InternalExtension" syncable="YES"/>
         <relationship name="line" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Line" inverseName="events" inverseEntity="Line" syncable="YES"/>
-        <relationship name="phoneNumber" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PhoneNumber" inverseName="lineEvents" inverseEntity="PhoneNumber" syncable="YES"/>
+        <relationship name="phoneNumbers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PhoneNumber" inverseName="lineEvents" inverseEntity="PhoneNumber" syncable="YES"/>
     </entity>
     <entity name="SMSMessage" representedClassName="SMSMessage" parentEntity="Message" syncable="YES">
         <attribute name="inbound" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>

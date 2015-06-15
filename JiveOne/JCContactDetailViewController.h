@@ -30,9 +30,6 @@
 
 @property (strong, nonatomic) IBOutletCollection(UITableViewCell) NSArray *numberSectionCells;
 
-@property (weak, nonatomic) IBOutlet UITableViewCell *extensionCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *numberCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *jiveIdCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *addNumberCell;
 
 // Address Section
@@ -42,6 +39,7 @@
 // Other Section
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *addOtherCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *jiveIdCell;
 
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *deleteCell;

@@ -15,6 +15,7 @@
 
 @implementation RecentLineEvent
 
+@dynamic type;
 @dynamic name;
 @dynamic number;
 
