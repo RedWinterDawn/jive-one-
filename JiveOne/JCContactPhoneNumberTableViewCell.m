@@ -10,10 +10,7 @@
 
 @implementation JCContactPhoneNumberTableViewCell
 
--(void)awakeFromNib
-{
-    self.textField.enabled = self.editing;
-}
+
 
 -(void)setPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
@@ -24,33 +21,7 @@
     self.typeSelect.text        = phoneNumber.type;
 }
 
--(void)setEditing:(BOOL)editing animated:(BOOL)animated
-{
-    [super setEditing:editing animated:animated];
-    self.textField.enabled = editing;
-}
 
--(void)setEditing:(BOOL)editing
-{
-    [super setEditing:editing];
-    self.textField.enabled = editing;
-}
-
--(void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    UIView *editView = self.editView;
-    UIView *contentView = self.contentView;
-    if (self.isEditing) {
-        if (editView.superview == nil) {
-            [contentView addSubview:editView];
-            editView.frame = contentView.bounds;
-        }
-    } else {
-        [editView removeFromSuperview];
-    }
-}
 
 -(void)setType:(NSString *)type
 {

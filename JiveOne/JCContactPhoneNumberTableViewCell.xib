@@ -128,16 +128,6 @@
                 <action selector="selectType:" destination="pCE-hA-Rs3" id="2Mf-gq-dSI"/>
             </connections>
         </tapGestureRecognizer>
-        <view contentMode="scaleToFill" id="9MT-dy-Gy3">
-            <rect key="frame" x="0.0" y="0.0" width="65" height="46"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <nil key="simulatedStatusBarMetrics"/>
-            <nil key="simulatedTopBarMetrics"/>
-            <nil key="simulatedBottomBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="559.5" y="463"/>
-        </view>
     </objects>
     <resources>
         <image name="green-phone" width="30" height="30"/>

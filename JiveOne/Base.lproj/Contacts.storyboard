@@ -439,32 +439,6 @@
                                             <outletCollection property="gestureRecognizers" destination="AYV-A1-JEv" appends="YES" id="oiA-wX-hhg"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="HMt-sO-cMs" detailTextLabel="AKt-Qv-pOA" style="IBUITableViewCellStyleValue2" id="3bl-Ff-KbF">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3bl-Ff-KbF" id="khD-Nr-1hk">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Jive ID" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HMt-sO-cMs">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    </variation>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AKt-Qv-pOA">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    </variation>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="HAb-qW-1pQ" style="IBUITableViewCellStyleDefault" id="act-KL-5FI" userLabel="Add Phone Cell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -503,6 +477,32 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="" id="ANx-Fh-l2E">
                                 <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="HMt-sO-cMs" detailTextLabel="AKt-Qv-pOA" style="IBUITableViewCellStyleValue2" id="3bl-Ff-KbF">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3bl-Ff-KbF" id="khD-Nr-1hk">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Jive ID" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HMt-sO-cMs">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    </variation>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AKt-Qv-pOA">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="Wgg-ry-Q1A" style="IBUITableViewCellStyleDefault" id="IJL-IJ-KH7" userLabel="Add Other Cell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -563,11 +563,11 @@
                         <outletCollection property="nameSectionCells" destination="eaw-pQ-Kb3" id="gJw-Iu-xO3"/>
                         <outletCollection property="nameSectionCells" destination="0zZ-CX-x0W" id="MW0-S3-QwW"/>
                         <outletCollection property="numberSectionCells" destination="7A5-dH-vMT" id="oja-9J-upL"/>
-                        <outletCollection property="numberSectionCells" destination="3bl-Ff-KbF" id="DXU-Dx-gZf"/>
                         <outletCollection property="editingCells" destination="act-KL-5FI" id="dl1-jh-4Su"/>
                         <outletCollection property="editingCells" destination="IP5-fE-rfq" id="e6r-C1-cCx"/>
                         <outletCollection property="editingCells" destination="IJL-IJ-KH7" id="Sf2-dU-asp"/>
                         <outletCollection property="editingCells" destination="3Zu-iQ-WVB" id="iAM-ke-yzo"/>
+                        <outletCollection property="numberSectionCells" destination="3bl-Ff-KbF" id="DXU-Dx-gZf"/>
                         <segue destination="wCP-M4-bk8" kind="show" identifier="SelectPhoneType" id="DR2-2K-uSy"/>
                     </connections>
                 </tableViewController>

@@ -6,11 +6,11 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCustomCell.h"
+#import "JCCustomEditTableViewCell.h"
 
 #import "ContactInfo.h"
 
-@interface JCContactOtherFieldTableViewCell : JCCustomCell
+@interface JCContactOtherFieldTableViewCell : JCCustomEditTableViewCell
 
 @property (nonatomic, strong) ContactInfo *info;
 
