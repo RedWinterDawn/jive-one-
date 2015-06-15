@@ -17,6 +17,7 @@
 @property (nonatomic, weak) id<JCContactPhoneNumberTableViewCellDelegate> delegate;
 @property (nonatomic, strong) id<JCPhoneNumberDataSource> phoneNumber;
 
+
 -(IBAction)dial:(id)sender;
 
 @end

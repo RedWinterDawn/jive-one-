@@ -29,7 +29,7 @@
                         <rect key="frame" x="13" y="24" width="241" height="29"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-1N-H6m">
@@ -96,7 +96,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMM-3R-dza">
+                <label contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMM-3R-dza" customClass="JCBorederLabel">
                     <rect key="frame" x="14" y="0.0" width="50" height="50"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <gestureRecognizers/>
@@ -111,7 +111,7 @@
                     </connections>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray-accesibility-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="2X3-56-6H3">
-                    <rect key="frame" x="49" y="12" width="25" height="25"/>
+                    <rect key="frame" x="44" y="12" width="25" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="2X3-56-6H3" secondAttribute="height" multiplier="1:1" id="4w4-5B-z64"/>
                         <constraint firstAttribute="width" constant="25" id="otf-jz-yHg"/>
@@ -130,8 +130,8 @@
             <constraints>
                 <constraint firstItem="vMM-3R-dza" firstAttribute="top" secondItem="w25-cD-cIq" secondAttribute="top" id="0QG-Cc-sze"/>
                 <constraint firstItem="4wI-hk-irE" firstAttribute="top" secondItem="w25-cD-cIq" secondAttribute="top" id="12b-p9-pxr"/>
-                <constraint firstItem="2X3-56-6H3" firstAttribute="centerY" secondItem="vMM-3R-dza" secondAttribute="centerY" constant="-0.5" id="33u-1H-kLP"/>
-                <constraint firstItem="2X3-56-6H3" firstAttribute="trailing" secondItem="vMM-3R-dza" secondAttribute="trailing" constant="10" id="EQG-zb-5y8"/>
+                <constraint firstItem="2X3-56-6H3" firstAttribute="centerY" secondItem="vMM-3R-dza" secondAttribute="centerY" id="33u-1H-kLP"/>
+                <constraint firstItem="2X3-56-6H3" firstAttribute="trailing" secondItem="vMM-3R-dza" secondAttribute="trailing" constant="5" id="EQG-zb-5y8"/>
                 <constraint firstAttribute="bottom" secondItem="vMM-3R-dza" secondAttribute="bottom" id="FAU-fs-SeY"/>
                 <constraint firstAttribute="trailing" secondItem="4wI-hk-irE" secondAttribute="trailing" id="JSk-KW-hVD"/>
                 <constraint firstAttribute="bottom" secondItem="4wI-hk-irE" secondAttribute="bottom" id="LMu-Xv-F2i"/>

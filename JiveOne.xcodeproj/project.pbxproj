@@ -275,6 +275,7 @@
 		B70EAB3D1AD32B1E00305F43 /* JCDidTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */; };
 		B70EAB3F1AD3302000305F43 /* JCAuthenticationManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */; };
 		B71506DF1B0122EC00C0E72C /* JCVoicemailAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B71506DE1B0122EC00C0E72C /* JCVoicemailAudioPlayer.m */; };
+		B73004721B2F607F003CC755 /* JCBorederLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B73004711B2F607F003CC755 /* JCBorederLabel.m */; };
 		B744DE321AF920F500A72682 /* JCBlockedNumbersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */; };
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
 		B77EFA2D1B03E51700D94AE9 /* VoicemailTranscription.m in Sources */ = {isa = PBXBuildFile; fileRef = B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */; };
@@ -839,6 +840,8 @@
 		B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationManagerTests.m; sourceTree = "<group>"; };
 		B71506DD1B0122EC00C0E72C /* JCVoicemailAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoicemailAudioPlayer.h; sourceTree = "<group>"; };
 		B71506DE1B0122EC00C0E72C /* JCVoicemailAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailAudioPlayer.m; sourceTree = "<group>"; };
+		B73004701B2F607F003CC755 /* JCBorederLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBorederLabel.h; sourceTree = "<group>"; };
+		B73004711B2F607F003CC755 /* JCBorederLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBorederLabel.m; sourceTree = "<group>"; };
 		B744DE301AF920F500A72682 /* JCBlockedNumbersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBlockedNumbersViewController.h; sourceTree = "<group>"; };
 		B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBlockedNumbersViewController.m; sourceTree = "<group>"; };
 		B75899741A9FEA320025D5AD /* JCMessagesMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagesMenuCell.h; sourceTree = "<group>"; };
@@ -1023,6 +1026,8 @@
 				5D3970D71B18FDA5009EADD6 /* JCMaskedRoundedButton.m */,
 				5D8FE4091B220AB0004FD594 /* JCEditableTableViewCell.h */,
 				5D8FE40A1B220AB0004FD594 /* JCEditableTableViewCell.m */,
+				B73004701B2F607F003CC755 /* JCBorederLabel.h */,
+				B73004711B2F607F003CC755 /* JCBorederLabel.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2266,6 +2271,7 @@
 				5D62FAC91AC9EA5500C6DE05 /* JCContactCollectionViewCell.m in Sources */,
 				F8C9A7D419E884D20049A715 /* OutgoingCall.m in Sources */,
 				5D8FE4181B2783CA004FD594 /* JCStaticTableViewController.m in Sources */,
+				B73004721B2F607F003CC755 /* JCBorederLabel.m in Sources */,
 				5DB0BFC419FFF97A006737D7 /* JCDrawing.m in Sources */,
 				5D241FE41A38BAD5008B498A /* InternalExtension.m in Sources */,
 				5DBF6F461ADEF477004B53F5 /* JCAddressBookEntity.m in Sources */,

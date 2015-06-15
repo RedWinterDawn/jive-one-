@@ -10,6 +10,7 @@
 //
 
 #import "JCCustomEditTableViewCell.h"
+#import "JCDrawing.h"
 
 @implementation JCCustomEditTableViewCell
 
@@ -18,6 +19,7 @@
     BOOL editing = self.editing;
     self.textField.enabled = editing;
     self.detailEditLabel.enabled = editing;
+
 }
 
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
@@ -48,6 +50,7 @@
     } else {
         [editView removeFromSuperview];
     }
+    
 }
 
 -(IBAction)editDetail:(id)sender
