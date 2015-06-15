@@ -63,6 +63,7 @@
         <attribute name="number" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="pbxId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="pbx" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBX" inverseName="extensions" inverseEntity="PBX" syncable="YES"/>
     </entity>
     <entity name="IncomingCall" representedClassName="IncomingCall" parentEntity="Call" syncable="YES"/>
     <entity name="InternalExtension" representedClassName="InternalExtension" parentEntity="Extension" syncable="YES">
@@ -71,7 +72,6 @@
         <relationship name="conversations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Conversation" inverseName="internalExtension" inverseEntity="Conversation" syncable="YES"/>
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InternalExtensionGroup" inverseName="internalExtensions" inverseEntity="InternalExtensionGroup" syncable="YES"/>
         <relationship name="lineEvents" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RecentLineEvent" inverseName="internalExtension" inverseEntity="RecentLineEvent" syncable="YES"/>
-        <relationship name="pbx" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBX" inverseName="contacts" inverseEntity="PBX" syncable="YES"/>
     </entity>
     <entity name="InternalExtensionGroup" representedClassName="InternalExtensionGroup" syncable="YES">
         <attribute name="groupId" optional="YES" attributeType="String" syncable="YES"/>
@@ -84,7 +84,6 @@
         <attribute name="mailboxUrl" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RecentLineEvent" inverseName="line" inverseEntity="RecentLineEvent" syncable="YES"/>
         <relationship name="lineConfiguration" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="LineConfiguration" inverseName="line" inverseEntity="LineConfiguration" syncable="YES"/>
-        <relationship name="pbx" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBX" inverseName="lines" inverseEntity="PBX" syncable="YES"/>
     </entity>
     <entity name="LineConfiguration" representedClassName="LineConfiguration" syncable="YES">
         <attribute name="display" optional="YES" attributeType="String" syncable="YES"/>
@@ -106,9 +105,8 @@
         <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="pbxId" optional="YES" transient="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="v5" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="InternalExtension" inverseName="pbx" inverseEntity="InternalExtension" syncable="YES"/>
         <relationship name="dids" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DID" inverseName="pbx" inverseEntity="DID" syncable="YES"/>
-        <relationship name="lines" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Line" inverseName="pbx" inverseEntity="Line" syncable="YES"/>
+        <relationship name="extensions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Extension" inverseName="pbx" inverseEntity="Extension" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="pbxs" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="PhoneNumber" representedClassName="PhoneNumber" syncable="YES">
@@ -170,7 +168,7 @@
         <element name="ContactInfo" positionX="108" positionY="344" width="128" height="88"/>
         <element name="Conversation" positionX="342" positionY="171" width="128" height="73"/>
         <element name="DID" positionX="-398" positionY="698" width="128" height="238"/>
-        <element name="Extension" positionX="-459" positionY="-154" width="128" height="133"/>
+        <element name="Extension" positionX="-459" positionY="-126" width="128" height="148"/>
         <element name="IncomingCall" positionX="700" positionY="-288" width="128" height="45"/>
         <element name="InternalExtension" positionX="-200" positionY="-90" width="128" height="133"/>
         <element name="InternalExtensionGroup" positionX="-45" positionY="81" width="128" height="88"/>
@@ -179,7 +177,7 @@
         <element name="Message" positionX="529" positionY="162" width="128" height="73"/>
         <element name="MissedCall" positionX="709" positionY="-360" width="128" height="45"/>
         <element name="OutgoingCall" positionX="711" positionY="-432" width="128" height="45"/>
-        <element name="PBX" positionX="-846" positionY="540" width="128" height="178"/>
+        <element name="PBX" positionX="-785" positionY="486" width="128" height="163"/>
         <element name="PhoneNumber" positionX="-9" positionY="459" width="128" height="148"/>
         <element name="RecentEvent" positionX="331" positionY="11" width="128" height="103"/>
         <element name="RecentLineEvent" positionX="412" positionY="-196" width="128" height="118"/>

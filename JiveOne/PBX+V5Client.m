@@ -184,8 +184,7 @@ NSString *const kPBXInfoResponseNumberReceiveSMSKey                 = @"receiveS
 
 + (void)processLines:(NSArray *)linesData pbx:(PBX *)pbx
 {
-    NSMutableSet *lines = pbx.lines.mutableCopy;
-    
+    NSMutableArray *lines = [Line MR_findByAttribute:NSStringFromSelector(@selector(pbx)) withValue:pbx inContext:pbx.managedObjectContext].mutableCopy;
     for (id object in linesData){
         if ([object isKindOfClass:[NSDictionary class]]) {
             Line *line = [self processLine:(NSDictionary *)object pbx:pbx];

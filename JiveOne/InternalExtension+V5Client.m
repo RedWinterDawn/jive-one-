@@ -29,7 +29,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
 
 @implementation InternalExtension (V5Client)
 
-+ (void)downloadContactsForLine:(Line *)line complete:(CompletionHandler)completion
++ (void)downloadInternalExtensionsForLine:(Line *)line complete:(CompletionHandler)completion
 {
     if (!line) {
         if (completion) {
@@ -44,7 +44,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     [client.manager GET:[NSString stringWithFormat:kContactRequestPath, line.pbx.pbxId, line.lineId]
              parameters:nil
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    [self processContactResponse:responseObject line:line completion:completion];
+                    [self processInternalExtensionResponse:responseObject line:line completion:completion];
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     if (completion) {
@@ -53,7 +53,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
                 }];
 }
 
-+ (void)processContactResponse:(id)responseObject line:(Line *)line completion:(CompletionHandler)completion
++ (void)processInternalExtensionResponse:(id)responseObject line:(Line *)line completion:(CompletionHandler)completion
 {
     @try {
         if (![responseObject isKindOfClass:[NSArray class]]){
@@ -62,7 +62,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
 
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             Line *localLine = (Line *)[localContext objectWithID:line.objectID];
-            [self processContactsData:(NSArray *)responseObject pbx:localLine.pbx];
+            [self processInternalExtensionsData:(NSArray *)responseObject pbx:localLine.pbx];
         } completion:^(BOOL success, NSError *error) {
             if (completion) {
                 if (error) {
@@ -81,28 +81,28 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     }
 }
 
-+ (void)processContactsData:(NSArray *)contactsData pbx:(PBX *)pbx
++ (void)processInternalExtensionsData:(NSArray *)internalExtensionsData pbx:(PBX *)pbx
 {
-    NSMutableSet *contacts = pbx.contacts.mutableCopy;
     
-    for (id object in contactsData)
+    NSMutableArray *internalExtensions = [InternalExtension MR_findByAttribute:NSStringFromSelector(@selector(pbx)) withValue:pbx inContext:pbx.managedObjectContext].mutableCopy;
+    for (id object in internalExtensionsData)
     {
         if ([object isKindOfClass:[NSDictionary class]]) {
-            InternalExtension *contact = [self processContactData:(NSDictionary *)object pbx:pbx];
-            if ([contacts containsObject:contact]) {
-                [contacts removeObject:contact];
+            InternalExtension *internalExtension = [self processInternalExtensionData:(NSDictionary *)object pbx:pbx];
+            if ([internalExtensions containsObject:internalExtension]) {
+                [internalExtensions removeObject:internalExtension];
             }
         }
     }
     
     // If there are any contacts left in the array, it means we have more contacts than the server
     // response, and we need to delete the extra contacts.
-    for (InternalExtension *contact in contacts) {
-        [pbx.managedObjectContext deleteObject:contact];
+    for (InternalExtension *internalExtension in internalExtensions) {
+        [pbx.managedObjectContext deleteObject:internalExtension];
     }
 }
 
-+ (InternalExtension *)processContactData:(NSDictionary *)data pbx:(PBX *)pbx
++ (InternalExtension *)processInternalExtensionData:(NSDictionary *)data pbx:(PBX *)pbx
 {
     // If we do not have a jrn, we do not have its primary key, so we cannot match it to a entity,
     // so we ignore it as being a non valid response.
@@ -118,45 +118,45 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
         return nil;
     }
     
-    InternalExtension *contact = [InternalExtension contactForJrn:jrn pbx:pbx];
-    contact.name        = [data stringValueForKey:kContactResponseNameKey];
-    contact.number      = [data stringValueForKey:kContactResponseExtensionKey];
-    contact.jiveUserId  = jiveUserId;
+    InternalExtension *internalExtension = [InternalExtension internalExtensionForJrn:jrn pbx:pbx];
+    internalExtension.name        = [data stringValueForKey:kContactResponseNameKey];
+    internalExtension.number      = [data stringValueForKey:kContactResponseExtensionKey];
+    internalExtension.jiveUserId  = jiveUserId;
     
     id object = [data objectForKey:kContactResponseGroupKey];
     if ([object isKindOfClass:[NSArray class]]){
-        [self updateContactGroupsForContact:contact data:(NSArray *)object];
+        [self updateInternalExtensionGroupsForInternalExtension:internalExtension data:(NSArray *)object];
     }
-    return contact;
+    return internalExtension;
 }
 
-+(void)updateContactGroupsForContact:(InternalExtension *)contact data:(NSArray *)data
++(void)updateInternalExtensionGroupsForInternalExtension:(InternalExtension *)internalExtension data:(NSArray *)data
 {
     for(id object in data) {
         if ([object isKindOfClass:[NSDictionary class]]){
             NSDictionary *groupData = (NSDictionary *)object;
             NSString *identifer = [groupData stringValueForKey:kContactResponseGroupIdKey];
-            InternalExtensionGroup *group = [self contactGroupForIdentifier:identifer contact:contact];
+            InternalExtensionGroup *group = [self internalExtensionGroupForIdentifier:identifer contact:internalExtension];
             group.name = [groupData stringValueForKey:kContactResponseGroupNameKey];
         }
     }
 }
 
-+ (InternalExtension *)contactForJrn:(NSString *)jrn pbx:(PBX *)pbx
++ (InternalExtension *)internalExtensionForJrn:(NSString *)jrn pbx:(PBX *)pbx
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and jrn = %@", pbx, jrn];
-    InternalExtension *contact = [InternalExtension MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
-    if(!contact)
+    InternalExtension *internalExtension = [InternalExtension MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
+    if(!internalExtension)
     {
-        contact = [InternalExtension MR_createEntityInContext:pbx.managedObjectContext];
-        contact.jrn = jrn;
-        contact.pbx = pbx;
-        contact.pbxId = pbx.pbxId;
+        internalExtension = [InternalExtension MR_createEntityInContext:pbx.managedObjectContext];
+        internalExtension.jrn = jrn;
+        internalExtension.pbx = pbx;
+        internalExtension.pbxId = pbx.pbxId;
     }
-    return contact;
+    return internalExtension;
 }
 
-+ (InternalExtensionGroup *)contactGroupForIdentifier:(NSString *)identifer contact:(InternalExtension *)contact
++ (InternalExtensionGroup *)internalExtensionGroupForIdentifier:(NSString *)identifer contact:(InternalExtension *)contact
 {
     InternalExtensionGroup *group = [InternalExtensionGroup MR_findFirstByAttribute:NSStringFromSelector(@selector(groupId)) withValue:identifer inContext:contact.managedObjectContext];
     if (!group) {

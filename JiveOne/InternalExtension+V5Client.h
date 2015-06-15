@@ -11,7 +11,7 @@
 @interface InternalExtension (V5Client)
 
 // Retrives all contacts for a line.
-+ (void)downloadContactsForLine:(Line *)line complete:(CompletionHandler)completed;
++ (void)downloadInternalExtensionsForLine:(Line *)line complete:(CompletionHandler)completed;
 
 @end
 

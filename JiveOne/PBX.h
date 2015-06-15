@@ -23,9 +23,8 @@
 @property (nonatomic, getter=isV5) BOOL v5;
 
 // Relationships
-@property (nonatomic, retain) NSSet * contacts;
+@property (nonatomic, retain) NSSet * extensions;
 @property (nonatomic, retain) User * user;
-@property (nonatomic, retain) NSSet * lines;
 @property (nonatomic, retain) NSSet * dids;
 
 // Transient (Readonly)
