@@ -8,6 +8,8 @@
 
 #import "JCCustomCell.h"
 
+@protocol JCContactAddressTableViewCellDelegate;
+
 @interface JCContactAddressTableViewCell : JCCustomCell
 
 @end

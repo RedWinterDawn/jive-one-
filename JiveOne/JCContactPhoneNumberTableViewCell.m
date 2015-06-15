@@ -9,7 +9,6 @@
 #import "JCContactPhoneNumberTableViewCell.h"
 #import "JCDrawing.h"
 
-#define DEFAULT_SEPERATOR_COLOR [UIColor colorWithRed:200/255.0 green:199/255.0 blue:204/255.0 alpha:1.0]
 
 @implementation JCContactPhoneNumberTableViewCell
 
