@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -14,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qxF-ca-CTn">
-                        <rect key="frame" x="13" y="8" width="241" height="17"/>
+                        <rect key="frame" x="13" y="6" width="241" height="17"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="S60-SP-DJ1"/>
@@ -24,24 +26,30 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXC-zw-90Y">
-                        <rect key="frame" x="13" y="24" width="241" height="23"/>
+                        <rect key="frame" x="13" y="24" width="241" height="29"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-1N-H6m">
-                        <rect key="frame" x="254" y="8" width="58" height="39"/>
+                        <rect key="frame" x="254" y="8" width="58" height="43"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cmF-Jd-jFj">
-                                <rect key="frame" x="23" y="5" width="30" height="30"/>
+                                <rect key="frame" x="28" y="8" width="25" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="RKF-Wo-fsq"/>
+                                    <constraint firstAttribute="width" constant="25" id="RKF-Wo-fsq"/>
+                                    <constraint firstAttribute="width" secondItem="cmF-Jd-jFj" secondAttribute="height" multiplier="1:1" id="SO8-qb-XCw"/>
                                     <constraint firstAttribute="height" constant="30" id="hjs-W4-2Ql"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="green-phone">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="hjs-W4-2Ql"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="dial:" destination="pCE-hA-Rs3" eventType="touchUpInside" id="RfW-bs-pKI"/>
                                 </connections>
@@ -52,7 +60,13 @@
                             <constraint firstItem="cmF-Jd-jFj" firstAttribute="top" secondItem="W5Y-1N-H6m" secondAttribute="top" constant="5" id="U0G-1c-1VY"/>
                             <constraint firstAttribute="trailing" secondItem="cmF-Jd-jFj" secondAttribute="trailing" constant="5" id="eVi-Ig-wcU"/>
                             <constraint firstAttribute="width" constant="58" id="liE-j4-J2z"/>
+                            <constraint firstAttribute="centerY" secondItem="cmF-Jd-jFj" secondAttribute="centerY" constant="1.5" id="q7D-tL-XXp"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="U0G-1c-1VY"/>
+                            </mask>
+                        </variation>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -61,11 +75,11 @@
                     <constraint firstAttribute="trailing" secondItem="EXC-zw-90Y" secondAttribute="trailing" constant="66" id="72Y-tY-hUs"/>
                     <constraint firstItem="EXC-zw-90Y" firstAttribute="top" secondItem="H63-Lq-Qpo" secondAttribute="top" constant="24" id="8L8-CS-kZR"/>
                     <constraint firstItem="W5Y-1N-H6m" firstAttribute="trailing" secondItem="H63-Lq-Qpo" secondAttribute="trailingMargin" id="Fbm-90-AHq"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="W5Y-1N-H6m" secondAttribute="bottom" constant="4" id="FeR-wh-3uD"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="W5Y-1N-H6m" secondAttribute="bottom" id="FeR-wh-3uD"/>
                     <constraint firstAttribute="trailing" secondItem="qxF-ca-CTn" secondAttribute="trailing" constant="66" id="JBf-8J-kzt"/>
                     <constraint firstItem="qxF-ca-CTn" firstAttribute="leading" secondItem="H63-Lq-Qpo" secondAttribute="leading" constant="13" id="Wcw-TH-G8o"/>
-                    <constraint firstItem="qxF-ca-CTn" firstAttribute="top" secondItem="H63-Lq-Qpo" secondAttribute="top" constant="8" id="Yha-h7-ogB"/>
-                    <constraint firstAttribute="bottom" secondItem="EXC-zw-90Y" secondAttribute="bottom" constant="12" id="wVp-hS-V8H"/>
+                    <constraint firstItem="qxF-ca-CTn" firstAttribute="top" secondItem="H63-Lq-Qpo" secondAttribute="top" constant="6" id="Yha-h7-ogB"/>
+                    <constraint firstAttribute="bottom" secondItem="EXC-zw-90Y" secondAttribute="bottom" constant="6" id="wVp-hS-V8H"/>
                     <constraint firstItem="W5Y-1N-H6m" firstAttribute="top" secondItem="H63-Lq-Qpo" secondAttribute="topMargin" id="ykr-Gy-peB"/>
                 </constraints>
             </tableViewCellContentView>
@@ -97,8 +111,8 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="68" id="Mf6-Tz-0cg"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="0.34901960780000002" green="0.64313725489999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                     <connections>
                         <outletCollection property="gestureRecognizers" destination="Eoa-nx-CMe" appends="YES" id="HjF-7H-j81"/>
