@@ -267,9 +267,9 @@
 		B77EFA2D1B03E51700D94AE9 /* VoicemailTranscription.m in Sources */ = {isa = PBXBuildFile; fileRef = B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */; };
 		B79F55551AEF1DF900E4768F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
 		B79F55561AEF1DF900E4768F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
-		B7AD76D01B30C35B00E6BEE6 /* Localizable1.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7AD76CF1B30C35B00E6BEE6 /* Localizable1.strings */; };
 		B7AD76D51B30C55B00E6BEE6 /* Localizable2.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7AD76D31B30C55B00E6BEE6 /* Localizable2.strings */; };
 		B7AD76D81B30C5A200E6BEE6 /* Chat.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7AD76D61B30C5A200E6BEE6 /* Chat.strings */; };
+		B7AD76F11B30CDD500E6BEE6 /* Localizable1.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7AD76EF1B30CDD500E6BEE6 /* Localizable1.strings */; };
 		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
 		B7DFAA371AC0CDA50033ACFB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */; };
 		B7F331E91AFC015900343DAC /* JCVoicemailDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F331E81AFC015900343DAC /* JCVoicemailDetailViewController.m */; };
@@ -812,10 +812,21 @@
 		B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesMenuCell.m; sourceTree = "<group>"; };
 		B77EFA2B1B03E51700D94AE9 /* VoicemailTranscription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoicemailTranscription.h; sourceTree = "<group>"; };
 		B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoicemailTranscription.m; sourceTree = "<group>"; };
+		B794BCDC1B30D1F800DE6401 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable1.strings; sourceTree = "<group>"; };
+		B794BCDD1B30D21E00DE6401 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable1.strings; sourceTree = "<group>"; };
+		B794BCDE1B30D22100DE6401 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable1.strings; sourceTree = "<group>"; };
+		B794BCE01B30D22F00DE6401 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable1.strings; sourceTree = "<group>"; };
 		B7AD76CE1B30C27200E6BEE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B7AD76CF1B30C35B00E6BEE6 /* Localizable1.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable1.strings; path = en.lproj/Localizable1.strings; sourceTree = "<group>"; };
 		B7AD76D41B30C55B00E6BEE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable2.strings; sourceTree = "<group>"; };
 		B7AD76D71B30C5A200E6BEE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Chat.strings; sourceTree = "<group>"; };
+		B7AD76D91B30CB7D00E6BEE6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable2.strings; sourceTree = "<group>"; };
+		B7AD76DB1B30CB8400E6BEE6 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable2.strings; sourceTree = "<group>"; };
+		B7AD76DC1B30CB8800E6BEE6 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable2.strings; sourceTree = "<group>"; };
+		B7AD76DD1B30CB8B00E6BEE6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable2.strings; sourceTree = "<group>"; };
+		B7AD76DE1B30CB8C00E6BEE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable2.strings; sourceTree = "<group>"; };
+		B7AD76DF1B30CBD800E6BEE6 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable2.strings; sourceTree = "<group>"; };
+		B7AD76F21B30CE2500E6BEE6 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable1.strings; sourceTree = "<group>"; };
+		B7AD76F41B30CE7100E6BEE6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable1.strings; sourceTree = "<group>"; };
 		B7AEDD561ABA08670063033E /* JCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionSheet.h; sourceTree = "<group>"; };
 		B7AEDD571ABA08670063033E /* JCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionSheet.m; sourceTree = "<group>"; };
 		B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -1177,7 +1188,7 @@
 				275F4A5D18AD0FBC00D2F069 /* main.m */,
 				275F4A5F18AD0FBC00D2F069 /* JiveOne-Prefix.pch */,
 				275F4A5A18AD0FBC00D2F069 /* InfoPlist.strings */,
-				B7AD76CF1B30C35B00E6BEE6 /* Localizable1.strings */,
+				B7AD76EF1B30CDD500E6BEE6 /* Localizable1.strings */,
 				B7AD76D31B30C55B00E6BEE6 /* Localizable2.strings */,
 				5D0199EE1A1BF4BC00F4CF13 /* Localizable.strings */,
 			);
@@ -2049,7 +2060,6 @@
 				5D0199EC1A1BF4BC00F4CF13 /* Localizable.strings in Resources */,
 				5D5448F61B0E3B2B00F44D8F /* Chat.storyboard in Resources */,
 				5D8E340C1B0A84AA00FD8AE1 /* Settings_iPad.storyboard in Resources */,
-				B7AD76D01B30C35B00E6BEE6 /* Localizable1.strings in Resources */,
 				5D0199C21A1BBC0500F4CF13 /* IncomingCallViewCell.xib in Resources */,
 				5D25F8201AE5895E00981DB6 /* Main_iPad.storyboard in Resources */,
 				5DEC492A1B0EDF6000361499 /* Phone.strings in Resources */,
@@ -2063,6 +2073,7 @@
 				5D8E33ED1B0A560500FD8AE1 /* Contacts_iPad.storyboard in Resources */,
 				5D7007181B1CAE630036E72F /* JCVoicemailDetailViewController.xib in Resources */,
 				5D5448C51B0D3BF500F44D8F /* Phone.storyboard in Resources */,
+				B7AD76F11B30CDD500E6BEE6 /* Localizable1.strings in Resources */,
 				271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */,
 				5D5448E51B0E312A00F44D8F /* Chat_iPad.storyboard in Resources */,
 				9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */,
@@ -2682,6 +2693,12 @@
 			isa = PBXVariantGroup;
 			children = (
 				B7AD76D41B30C55B00E6BEE6 /* en */,
+				B7AD76D91B30CB7D00E6BEE6 /* de */,
+				B7AD76DB1B30CB8400E6BEE6 /* es */,
+				B7AD76DC1B30CB8800E6BEE6 /* pt */,
+				B7AD76DD1B30CB8B00E6BEE6 /* fr */,
+				B7AD76DE1B30CB8C00E6BEE6 /* Base */,
+				B7AD76DF1B30CBD800E6BEE6 /* it */,
 			);
 			name = Localizable2.strings;
 			sourceTree = "<group>";
@@ -2692,6 +2709,19 @@
 				B7AD76D71B30C5A200E6BEE6 /* en */,
 			);
 			name = Chat.strings;
+			sourceTree = "<group>";
+		};
+		B7AD76EF1B30CDD500E6BEE6 /* Localizable1.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B7AD76F21B30CE2500E6BEE6 /* it */,
+				B7AD76F41B30CE7100E6BEE6 /* fr */,
+				B794BCDC1B30D1F800DE6401 /* de */,
+				B794BCDD1B30D21E00DE6401 /* es */,
+				B794BCDE1B30D22100DE6401 /* pt */,
+				B794BCE01B30D22F00DE6401 /* Base */,
+			);
+			name = Localizable1.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
