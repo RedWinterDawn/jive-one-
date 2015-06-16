@@ -8,20 +8,22 @@
 
 #import "JCPersonManagedObject.h"
 
-@class PhoneNumber;
-@class User;
+@class PhoneNumber, Address, ContactInfo, User;
 
 @interface Contact : JCPersonManagedObject
 
 // Attributes
+@property (nonatomic, strong) NSString *contactId;
 @property (nonatomic, retain) NSString *etag;
-@property (nonatomic, retain) NSString *data;
+
+@property (nonatomic) BOOL markForDeletion;
+@property (nonatomic) BOOL markForUpdate;
 
 // Relationships
-@property (nonatomic, retain) User *user;
 @property (nonatomic, retain) NSSet *phoneNumbers;
 @property (nonatomic, retain) NSSet *addresses;
 @property (nonatomic, retain) NSSet *info;
+@property (nonatomic, retain) User *user;
 
 @end
 
@@ -32,13 +34,13 @@
 - (void)addPhoneNumbers:(NSSet *)values;
 - (void)removePhoneNumbers:(NSSet *)values;
 
-- (void)addAddressesObject:(PhoneNumber *)value;
-- (void)removeAddressesObject:(PhoneNumber *)value;
+- (void)addAddressesObject:(Address *)value;
+- (void)removeAddressesObject:(Address *)value;
 - (void)addAddresses:(NSSet *)values;
 - (void)removeAddresses:(NSSet *)values;
 
-- (void)addInfoObject:(PhoneNumber *)value;
-- (void)removeInfoObject:(PhoneNumber *)value;
+- (void)addInfoObject:(ContactInfo *)value;
+- (void)removeInfoObject:(ContactInfo *)value;
 - (void)addInfo:(NSSet *)values;
 - (void)removeInfo:(NSSet *)values;
 
