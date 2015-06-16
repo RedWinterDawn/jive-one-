@@ -1,9 +1,8 @@
+/* Class = "UINavigationController"; title = "Keypad"; ObjectID = "G3s-tk-XlH"; */
+"G3s-tk-XlH.title" = "Ziffernblock";
 
 /* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "Kji-Db-lbK"; */
 "Kji-Db-lbK.title" = "Klar";
-
-/* Class = "UINavigationController"; title = "Keypad"; ObjectID = "G3s-tk-XlH"; */
-"G3s-tk-XlH.title" = "Ziffernblock";
 
 /* Class = "UINavigationController"; title = "History"; ObjectID = "LGG-G6-Qgm"; */
 "LGG-G6-Qgm.title" = "Anrufliste";
@@ -40,3 +39,4 @@
 
 /* Class = "UINavigationItem"; title = "Call History"; ObjectID = "k2g-vl-Yo3"; */
 "k2g-vl-Yo3.title" = "Anrufliste";
+
