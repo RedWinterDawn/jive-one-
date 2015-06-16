@@ -121,9 +121,9 @@ NSString *const kJCV5ApiExtensionsRequestPath = @"/contacts/2014-07/%@/line/id/%
 #define DELETE_CONTACT_NUMBER_OF_TRIES 1
 #endif
 
-NSString *const kJCV5ApiContactsDownloadRequestPath = @"/contact/v3/user/contacts";
-NSString *const kJCV5ApiContactDownloadRequestPath  = @"/contact/v3/user/contact/%@";
-NSString *const kJCV5ApiContactUploadRequestPath    = @"/contact/v3/user/contact";
+NSString *const kJCV5ApiContactsDownloadRequestPath = @"/contacts/v3/user/contacts";
+NSString *const kJCV5ApiContactDownloadRequestPath  = @"/contacts/v3/user/contact/%@";
+NSString *const kJCV5ApiContactUploadRequestPath    = @"/contacts/v3/user/contact";
 
 + (void)downloadContactsWithCompletion:(JCV5ApiClientCompletionHandler)completion
 {
