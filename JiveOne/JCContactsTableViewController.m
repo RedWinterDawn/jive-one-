@@ -13,6 +13,12 @@
 #import "Extension.h"
 #import "Line.h"
 #import "Contact.h"
+#import "PBX.h"
+#import "User.h"
+
+#import "Contact+V5Client.h"
+#import "InternalExtension+V5Client.h"
+
 #import "JCAddressBookPerson.h"
 
 // Views
@@ -83,6 +89,24 @@
     }
     else if ([object isKindOfClass:[InternalExtensionGroup class]]) {
         cell.textLabel.text = ((InternalExtensionGroup *)object).name;
+    }
+}
+
+-(IBAction)sync:(id)sender
+{
+    if ([sender isKindOfClass:[UIRefreshControl class]]) {
+        Line *line = self.authenticationManager.line;
+//        [InternalExtension downloadInternalExtensionsForLine:line complete:^(BOOL success, NSError *error) {
+//            
+//        }];
+        
+        User *user = line.pbx.user;
+        [Contact downloadContactsForUser:user completion:^(BOOL success, NSError *error) {
+            [((UIRefreshControl *)sender) endRefreshing];
+            if (error) {
+                [self showError:error];
+            }
+        }];
     }
 }
 
