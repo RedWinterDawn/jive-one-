@@ -26,7 +26,7 @@
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="markForDeletion" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="markForUpdate" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="markForUpdate" optional="YES" attributeType="Boolean" defaultValueString="YES" indexed="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="addresses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Address" inverseName="contact" inverseEntity="Address" syncable="YES"/>
@@ -166,7 +166,7 @@
         <element name="Address" positionX="-90" positionY="243" width="128" height="178"/>
         <element name="BlockedNumber" positionX="-171" positionY="702" width="128" height="133"/>
         <element name="Call" positionX="538" positionY="-360" width="128" height="45"/>
-        <element name="Contact" positionX="-342" positionY="333" width="128" height="223"/>
+        <element name="Contact" positionX="-342" positionY="333" width="128" height="225"/>
         <element name="ContactInfo" positionX="108" positionY="344" width="128" height="88"/>
         <element name="Conversation" positionX="342" positionY="171" width="128" height="73"/>
         <element name="DID" positionX="-398" positionY="698" width="128" height="238"/>

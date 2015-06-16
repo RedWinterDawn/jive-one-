@@ -18,4 +18,9 @@
 
 + (void)deleteContact:(Contact *)contact completion:(CompletionHandler)completion;
 
+@property (nonatomic, readonly) NSDictionary *serializedData;
+
+- (void)markForUpdate:(CompletionHandler)completion;
+- (void)markForDeletion:(CompletionHandler)comletion;
+
 @end

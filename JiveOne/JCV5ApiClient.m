@@ -11,7 +11,7 @@
 #import "Voicemail.h"
 #import "User.h"
 #import "DID.h"
-#import "Contact.h"
+#import "Contact+V5Client.h"
 #import "PBX.h"
 #import "Line.h"
 #import "JCAuthenticationManager.h"
@@ -161,16 +161,17 @@ NSString *const kJCV5ApiContactUploadRequestPath    = @"/contacts/v3/user/contac
     }
     
     
+    NSDictionary *serializedData = contact.serializedData;
     if (!contact.contactId) {
         [JCV5ApiClient postWithPath:kJCV5ApiContactUploadRequestPath
-                         parameters:nil
+                         parameters:serializedData
                   requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
                             retries:UPLOAD_CONTACT_NUMBER_OF_TRIES
                          completion:completion];
     }
     else {
         [JCV5ApiClient putWithPath:kJCV5ApiContactUploadRequestPath
-                        parameters:nil
+                        parameters:serializedData
                  requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
                            retries:UPLOAD_CONTACT_NUMBER_OF_TRIES
                         completion:completion];

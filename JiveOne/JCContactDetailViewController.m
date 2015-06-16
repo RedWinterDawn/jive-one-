@@ -16,7 +16,7 @@
 #import "Line.h"
 #import "PBX.h"
 #import "User.h"
-#import "Contact.h"
+#import "Contact+V5Client.h"
 #import "JCVoicemailNumber.h"
 #import "JCPersonDataSource.h"
 
@@ -350,9 +350,24 @@
 
 -(void)saveContact
 {
-    [self.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
-        NSLog(@"%@", [error description]);
-        
+    id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
+    if (![phoneNumber isKindOfClass:[Contact class]]) {
+        return;
+    }
+    
+    Contact *contact = (Contact *)phoneNumber;
+    NSManagedObjectContext *context = contact.managedObjectContext;
+    if (!context.hasChanges) {
+        if (contact.contactId || contact.etag) {
+            return;
+        }
+    }
+    
+    [contact markForUpdate:^(BOOL success, NSError *error) {
+        if (error) {
+            self.editing = TRUE;
+            [self showError:error];
+        }
         _addingContact = FALSE;
     }];
 }
@@ -364,9 +379,10 @@
         return;
     }
     
+    [self showStatus:NSLocalizedString(@"Deleting", @"Deleting Contact")];
     Contact *contact = (Contact *)phoneNumber;
-    [self.managedObjectContext deleteObject:contact];
-    [self.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
+    [contact markForDeletion:^(BOOL success, NSError *error) {
+        [self hideStatus];
         [self.navigationController popViewControllerAnimated:YES];
     }];
 }

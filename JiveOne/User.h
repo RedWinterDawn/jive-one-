@@ -18,6 +18,7 @@
 
 // Relationships
 @property (nonatomic, retain) NSSet *pbxs;
+@property (nonatomic, retain) NSSet *contacts;
 
 @end
 
