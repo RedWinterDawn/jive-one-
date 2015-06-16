@@ -22,6 +22,13 @@ typedef void(^JCV5ApiClientCompletionHandler)(BOOL success, id response, NSError
 + (void)requestPBXInforForUser:(User *)user
                      competion:(JCV5ApiClientCompletionHandler)completion;
 
+#pragma mark - Internal Extensions -
+
++ (void)downloadInternalExtensionsForLine:(Line *)line
+                               completion:(JCV5ApiClientCompletionHandler)completion;
+
+#pragma mark - Contacts -
+
 
 #pragma mark - SMS Messaging -
 

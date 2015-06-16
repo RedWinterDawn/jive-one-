@@ -11,6 +11,9 @@
 #import "Voicemail.h"
 #import "User.h"
 #import "DID.h"
+#import "Contact.h"
+#import "PBX.h"
+#import "Line.h"
 #import "JCAuthenticationManager.h"
 
 NSString *const kJCV5ApiClientBaseUrl = @"https://api.jive.com/";
@@ -79,6 +82,30 @@ NSString *const kJCV5ApiPBXInfoRequestPath = @"/jif/v3/user/jiveId/%@";
                     completion:completion];
 }
 
+#pragma mark - Internal Contacts -
+
+#ifndef GET_EXTENSIONS_NUMBER_OF_TRIES
+#define GET_EXTENSIONS_NUMBER_OF_TRIES 1
+#endif
+
+NSString *const kJCV5ApiExtensionsRequestPath = @"/contacts/2014-07/%@/line/id/%@";
+
++ (void)downloadInternalExtensionsForLine:(Line *)line completion:(JCV5ApiClientCompletionHandler)completion
+{
+    if (!line) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Line Is Null"]);
+        }
+        return;
+    }
+    
+    NSString *path = [NSString stringWithFormat:kJCV5ApiExtensionsRequestPath, line.pbx.pbxId, line.lineId];
+    [JCV5ApiClient getWithPath:path
+                    parameters:nil
+             requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+                       retries:GET_EXTENSIONS_NUMBER_OF_TRIES
+                    completion:completion];
+}
 #pragma mark - SMS Messaging -
 
 #ifndef MESSAGES_SEND_NUMBER_OF_TRIES
@@ -102,6 +129,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
 {
     [JCV5ApiClient postWithPath:kJCV5ApiSMSMessageSendRequestUrlPath
                      parameters:parameters
+              requestSerializer:nil
                         retries:MESSAGES_SEND_NUMBER_OF_TRIES
                      completion:completion];
 }
@@ -191,6 +219,7 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
     NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageBlockURLPath, did.number, phoneNumber.dialableNumber];
     [JCV5ApiClient postWithPath:path
                      parameters:nil
+              requestSerializer:nil
                         retries:MESSAGES_UNBLOCK_NUMBER_OF_TRIES
                      completion:completion];
 }
@@ -202,6 +231,7 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
     NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageUnblockURLPath, did.number, phoneNumber.dialableNumber];
     [JCV5ApiClient postWithPath:path
                      parameters:nil
+              requestSerializer:nil
                         retries:MESSAGES_UNBLOCK_NUMBER_OF_TRIES
                      completion:completion];
 }
@@ -217,9 +247,9 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
                     completion:completion];
 }
 
-#pragma - Private -
+#pragma mark - Private -
 
-#pragma Retrying GETs
+#pragma mark Retrying GETs
 
 +(void)getWithPath:(NSString *)path
         parameters:(NSDictionary *)parameters
@@ -282,15 +312,80 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
     }
 }
 
-#pragma Retrying POSTs
+#pragma mark Retrying PUTS
+
++(void)putWithPath:(NSString *)path
+        parameters:(NSDictionary *)parameters
+ requestSerializer:(AFJSONRequestSerializer *)requestSerializer
+           retries:(NSUInteger)retries
+        completion:(JCV5ApiClientCompletionHandler)completion
+{
+    [self putWithPath:path
+           parameters:parameters
+    requestSerializer:requestSerializer
+              retries:retries
+              success:^(id responseObject) {
+                  if (completion) {
+                      completion(YES, responseObject, nil);
+                  };
+              }
+              failure:^(NSError *error) {
+                  if (completion) {
+                      completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+                  }
+              }];
+}
+
++(void)putWithPath:(NSString *)path
+        parameters:(NSDictionary *)parameters
+ requestSerializer:(AFJSONRequestSerializer *)requestSerializer
+           retries:(NSUInteger)retryCount
+           success:(void (^)(id responseObject))success
+           failure:(void (^)(NSError *error))failure
+{
+    if (retryCount <= 0) {
+        if (failure) {
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_TIMEOUT_ERROR reason:@"Request Timeout"];
+            failure(error);
+        }
+    } else {
+        JCV5ApiClient *client = [JCV5ApiClient new];
+        if (requestSerializer) {
+            client.manager.requestSerializer = requestSerializer;
+        }
+        
+        [client.manager PUT:path
+                 parameters:parameters
+                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        success(responseObject);
+                    }
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        if (error.code == NSURLErrorTimedOut) {
+                            NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
+                            [self putWithPath:path
+                                   parameters:parameters
+                            requestSerializer:requestSerializer
+                                      retries:(retryCount - 1)
+                                      success:success
+                                      failure:failure];
+                        } else{
+                            failure(error);
+                        }
+                    }];
+    }
+}
+
+#pragma mark Retrying POSTs
 
 +(void)postWithPath:(NSString *)path
          parameters:(NSDictionary *)parameters
+  requestSerializer:(AFJSONRequestSerializer *)requestSerializer
             retries:(NSUInteger)retries
          completion:(JCV5ApiClientCompletionHandler)completion
 {
     [JCV5ApiClient postWithPath:path
                      parameters:parameters
+              requestSerializer:requestSerializer
                         retries:retries
                         success:^(id responseObject) {
                             if (completion) {
@@ -306,6 +401,7 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
 
 +(void)postWithPath:(NSString *)path
          parameters:(NSDictionary *)parameters
+  requestSerializer:(AFJSONRequestSerializer *)requestSerializer
             retries:(NSUInteger)retryCount
             success:(void (^)(id responseObject))success
             failure:(void (^)(NSError *error))failure
@@ -316,7 +412,11 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
             failure(error);
         }
     } else {
-        JCV5ApiClient *client = [JCV5ApiClient sharedClient];
+        JCV5ApiClient *client = [JCV5ApiClient new];
+        if (requestSerializer) {
+            client.manager.requestSerializer = requestSerializer;
+        }
+        
         [client.manager POST:path
                   parameters:parameters
                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -325,7 +425,75 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                          if (error.code == NSURLErrorTimedOut) {
                              NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
-                             [self postWithPath:path parameters:parameters retries:(retryCount - 1) success:success failure:failure];
+                             [self postWithPath:path
+                                     parameters:parameters
+                              requestSerializer:requestSerializer
+                                        retries:(retryCount - 1)
+                                        success:success
+                                        failure:failure];
+                         } else{
+                             failure(error);
+                         }
+                     }];
+    }
+}
+
+#pragma mark Retrying DELETES
+
++(void)deleteWithPath:(NSString *)path
+           parameters:(NSDictionary *)parameters
+    requestSerializer:(AFJSONRequestSerializer *)requestSerializer
+              retries:(NSUInteger)retries
+           completion:(JCV5ApiClientCompletionHandler)completion
+{
+    [self deleteWithPath:path
+              parameters:parameters
+       requestSerializer:requestSerializer
+                 retries:retries
+                 success:^(id responseObject) {
+                     if (completion) {
+                         completion(YES, responseObject, nil);
+                     };
+                 }
+                 failure:^(NSError *error) {
+                     if (completion) {
+                         completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+                     }
+                 }];
+}
+
++(void)deleteWithPath:(NSString *)path
+         parameters:(NSDictionary *)parameters
+  requestSerializer:(AFJSONRequestSerializer *)requestSerializer
+            retries:(NSUInteger)retryCount
+            success:(void (^)(id responseObject))success
+            failure:(void (^)(NSError *error))failure
+{
+    if (retryCount <= 0) {
+        if (failure) {
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_TIMEOUT_ERROR reason:@"Request Timeout"];
+            failure(error);
+        }
+    } else {
+        JCV5ApiClient *client = [JCV5ApiClient new];
+        if (requestSerializer) {
+            client.manager.requestSerializer = requestSerializer;
+        }
+        
+        [client.manager DELETE:path
+                  parameters:parameters
+                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                         success(responseObject);
+                     }
+                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                         if (error.code == NSURLErrorTimedOut) {
+                             NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
+                             [self deleteWithPath:path
+                                       parameters:parameters
+                                requestSerializer:requestSerializer
+                                          retries:(retryCount - 1)
+                                          success:success
+                                          failure:failure];
                          } else{
                              failure(error);
                          }

@@ -25,32 +25,19 @@ NSString *const kContactResponseGroupKey        = @"groups";
 NSString *const kContactResponseGroupIdKey          = @"id";
 NSString *const kContactResponseGroupNameKey        = @"name";
 
-NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
-
 @implementation InternalExtension (V5Client)
 
 + (void)downloadInternalExtensionsForLine:(Line *)line complete:(CompletionHandler)completion
 {
-    if (!line) {
-        if (completion) {
-            completion(false, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Line Is Null"]);
+    [JCV5ApiClient downloadInternalExtensionsForLine:line completion:^(BOOL success, id response, NSError *error) {
+        if (success) {
+            [self processInternalExtensionResponse:response line:line completion:completion];
+        } else {
+            if (completion) {
+                completion(NO, error);
+            }
         }
-        return;
-    }
-    
-    // Request using the v5 client.
-    JCV5ApiClient *client = [JCV5ApiClient new];
-    client.manager.requestSerializer = [JCBearerAuthenticationJSONRequestSerializer serializer];
-    [client.manager GET:[NSString stringWithFormat:kContactRequestPath, line.pbx.pbxId, line.lineId]
-             parameters:nil
-                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    [self processInternalExtensionResponse:responseObject line:line completion:completion];
-                }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    if (completion) {
-                        completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:error.localizedDescription]);
-                    }
-                }];
+    }];
 }
 
 + (void)processInternalExtensionResponse:(id)responseObject line:(Line *)line completion:(CompletionHandler)completion
