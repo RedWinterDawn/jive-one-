@@ -106,6 +106,94 @@ NSString *const kJCV5ApiExtensionsRequestPath = @"/contacts/2014-07/%@/line/id/%
                        retries:GET_EXTENSIONS_NUMBER_OF_TRIES
                     completion:completion];
 }
+
+#pragma mark - Contacts -
+
+#ifndef GET_CONTACTS_NUMBER_OF_TRIES
+#define GET_CONTACTS_NUMBER_OF_TRIES 1
+#endif
+
+#ifndef UPLOAD_CONTACT_NUMBER_OF_TRIES
+#define UPLOAD_CONTACT_NUMBER_OF_TRIES 1
+#endif
+
+#ifndef DELETE_CONTACT_NUMBER_OF_TRIES
+#define DELETE_CONTACT_NUMBER_OF_TRIES 1
+#endif
+
+NSString *const kJCV5ApiContactsDownloadRequestPath = @"/contact/v3/user/contacts";
+NSString *const kJCV5ApiContactDownloadRequestPath  = @"/contact/v3/user/contact/%@";
+NSString *const kJCV5ApiContactUploadRequestPath    = @"/contact/v3/user/contact";
+
++ (void)downloadContactsWithCompletion:(JCV5ApiClientCompletionHandler)completion
+{
+    [JCV5ApiClient getWithPath:kJCV5ApiContactsDownloadRequestPath
+                    parameters:nil
+             requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+                       retries:GET_CONTACTS_NUMBER_OF_TRIES
+                    completion:completion];
+}
+
++ (void)downloadContact:(Contact *)contact completion:(JCV5ApiClientCompletionHandler)completion
+{
+    if (!contact) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Contact Is Null"]);
+        }
+        return;
+    }
+    
+    NSString *path = [NSString stringWithFormat:kJCV5ApiContactDownloadRequestPath, contact.contactId];
+    [JCV5ApiClient getWithPath:path
+                    parameters:nil
+             requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+                       retries:GET_CONTACTS_NUMBER_OF_TRIES
+                    completion:completion];
+}
+
++ (void)uploadContact:(Contact *)contact completion:(JCV5ApiClientCompletionHandler)completion
+{
+    if (!contact) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Contact Is Null"]);
+        }
+        return;
+    }
+    
+    
+    if (!contact.contactId) {
+        [JCV5ApiClient postWithPath:kJCV5ApiContactUploadRequestPath
+                         parameters:nil
+                  requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+                            retries:UPLOAD_CONTACT_NUMBER_OF_TRIES
+                         completion:completion];
+    }
+    else {
+        [JCV5ApiClient putWithPath:kJCV5ApiContactUploadRequestPath
+                        parameters:nil
+                 requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+                           retries:UPLOAD_CONTACT_NUMBER_OF_TRIES
+                        completion:completion];
+    }
+}
+
++ (void)deleteContact:(Contact *)contact conpletion:(JCV5ApiClientCompletionHandler)completion
+{
+    if (!contact) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Contact Is Null"]);
+        }
+        return;
+    }
+    
+    NSString *path = [NSString stringWithFormat:kJCV5ApiContactDownloadRequestPath, contact.contactId];
+    [JCV5ApiClient deleteWithPath:path
+                    parameters:nil
+             requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+                       retries:DELETE_CONTACT_NUMBER_OF_TRIES
+                    completion:completion];
+}
+
 #pragma mark - SMS Messaging -
 
 #ifndef MESSAGES_SEND_NUMBER_OF_TRIES

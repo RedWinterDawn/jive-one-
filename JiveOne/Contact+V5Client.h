@@ -10,4 +10,12 @@
 
 @interface Contact (V5Client)
 
++ (void)downloadContactsForUser:(User *)user completion:(CompletionHandler)completion;
+
++ (void)downloadContact:(Contact *)contact completion:(CompletionHandler)completion;
+
++ (void)uploadContact:(Contact *)contact completion:(CompletionHandler)completion;
+
++ (void)deleteContact:(Contact *)contact completion:(CompletionHandler)completion;
+
 @end

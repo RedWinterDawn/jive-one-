@@ -16,8 +16,6 @@
 #import "User.h"
 #import "DID.h"
 
-NSString *const kPBXInfoRequestPath             = @"/jif/v3/user/jiveId/%@";
-
 NSString *const kPBXInfoResponseDataKey             = @"data";
 NSString *const kPBXInfoResponseUserKey                 = @"user";
 NSString *const kPBXInfoResponseUserJiveIdKey               = @"externalId";

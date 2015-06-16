@@ -9,6 +9,8 @@
 #import "JCApiClient.h"
 #import "JCConversationGroupObject.h"
 
+@class User, Line, DID, Contact;
+
 typedef void(^JCV5ApiClientCompletionHandler)(BOOL success, id response, NSError *error);
 
 @interface JCV5ApiClient : JCApiClient
@@ -29,6 +31,16 @@ typedef void(^JCV5ApiClientCompletionHandler)(BOOL success, id response, NSError
 
 #pragma mark - Contacts -
 
++ (void)downloadContactsWithCompletion:(JCV5ApiClientCompletionHandler)completion;
+
++ (void)downloadContact:(Contact *)contact
+             completion:(JCV5ApiClientCompletionHandler)completion;
+
++ (void)uploadContact:(Contact *)contact
+           completion:(JCV5ApiClientCompletionHandler)completion;
+
++ (void)deleteContact:(Contact *)contact
+           conpletion:(JCV5ApiClientCompletionHandler)completion;
 
 #pragma mark - SMS Messaging -
 
