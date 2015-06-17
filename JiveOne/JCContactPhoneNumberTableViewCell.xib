@@ -35,11 +35,11 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-1N-H6m">
-                        <rect key="frame" x="254" y="8" width="58" height="43"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-1N-H6m">
+                        <rect key="frame" x="254" y="8" width="58" height="38"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cmF-Jd-jFj">
-                                <rect key="frame" x="28" y="8" width="25" height="25"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cmF-Jd-jFj">
+                                <rect key="frame" x="28" y="5" width="25" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="25" id="RKF-Wo-fsq"/>
                                     <constraint firstAttribute="width" secondItem="cmF-Jd-jFj" secondAttribute="height" multiplier="1:1" id="SO8-qb-XCw"/>

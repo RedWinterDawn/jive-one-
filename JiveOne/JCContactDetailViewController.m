@@ -41,7 +41,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
     // Handling calling from the view.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     JCPhoneManager *phoneManager = self.phoneManager;
@@ -120,10 +120,13 @@
 - (CGFloat)heightForCell:(UITableViewCell *)cell
 {
     if ([cell isKindOfClass:[JCContactPhoneNumberTableViewCell class]]) {
-        return 60;
+        return 55;
     }
     else if ([cell isKindOfClass:[JCContactAddressTableViewCell class]]) {
         return 120;
+    }
+    else if ([cell isKindOfClass:[JCContactOtherFieldTableViewCell class]]) {
+        return 55;
     }
     return self.tableView.rowHeight;
 }

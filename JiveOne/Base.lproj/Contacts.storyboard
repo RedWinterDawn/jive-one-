@@ -240,7 +240,7 @@
         <scene sceneID="gdz-BD-FFF">
             <objects>
                 <tableViewController storyboardIdentifier="ContactsDetailViewTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ab5-kr-ogH" customClass="JCContactDetailViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Rn4-RK-QR8">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Rn4-RK-QR8">
                         <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -306,7 +306,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="first name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="wXW-Jz-vMR">
-                                                    <rect key="frame" x="108" y="7" width="484" height="30"/>
+                                                    <rect key="frame" x="13" y="7" width="579" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="ZGF-zG-Cmy"/>
                                                     </constraints>
@@ -324,7 +324,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="wXW-Jz-vMR" secondAttribute="trailing" constant="-7" id="Qaa-rz-EeO"/>
                                                 <constraint firstItem="wXW-Jz-vMR" firstAttribute="top" secondItem="wU0-SP-YIU" secondAttribute="topMargin" constant="-1" id="bFo-n3-WKy"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="wXW-Jz-vMR" secondAttribute="bottom" constant="-2" id="r95-y6-87w"/>
-                                                <constraint firstItem="wXW-Jz-vMR" firstAttribute="leading" secondItem="wU0-SP-YIU" secondAttribute="leadingMargin" constant="100" id="ztp-ep-w6B"/>
+                                                <constraint firstItem="wXW-Jz-vMR" firstAttribute="leading" secondItem="wU0-SP-YIU" secondAttribute="leading" constant="13" id="ztp-ep-w6B"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -344,7 +344,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="last name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="OOl-O1-57O">
-                                                    <rect key="frame" x="108" y="7" width="484" height="30"/>
+                                                    <rect key="frame" x="13" y="7" width="579" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="aO9-F3-hJT"/>
                                                     </constraints>
@@ -358,7 +358,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottomMargin" secondItem="OOl-O1-57O" secondAttribute="bottom" constant="-2" id="1Rv-tq-A2l"/>
-                                                <constraint firstItem="OOl-O1-57O" firstAttribute="leading" secondItem="xP1-qg-XoW" secondAttribute="leadingMargin" constant="100" id="BCQ-jD-4OL"/>
+                                                <constraint firstItem="OOl-O1-57O" firstAttribute="leading" secondItem="xP1-qg-XoW" secondAttribute="leading" constant="13" id="BCQ-jD-4OL"/>
                                                 <constraint firstAttribute="trailing" secondItem="OOl-O1-57O" secondAttribute="trailing" constant="8" id="KCI-FD-Qej"/>
                                                 <constraint firstItem="OOl-O1-57O" firstAttribute="top" secondItem="xP1-qg-XoW" secondAttribute="topMargin" constant="-1" id="fHP-nV-WtL"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="OOl-O1-57O" secondAttribute="trailing" constant="-7" id="ghf-LE-NwF"/>
@@ -444,7 +444,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="Wgg-ry-Q1A" style="IBUITableViewCellStyleDefault" id="IJL-IJ-KH7" userLabel="Add Other Cell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="Wgg-ry-Q1A" rowHeight="55" style="IBUITableViewCellStyleDefault" id="IJL-IJ-KH7" userLabel="Add Other Cell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IJL-IJ-KH7" id="OBP-bE-bgq">
@@ -534,7 +534,7 @@
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="cC6-N1-7TW" style="IBUITableViewCellStyleDefault" id="q2m-xy-Ati">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="cC6-N1-7TW" rowHeight="55" style="IBUITableViewCellStyleDefault" id="q2m-xy-Ati">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q2m-xy-Ati" id="RoK-o0-rdL">
                                     <autoresizingMask key="autoresizingMask"/>

@@ -45,7 +45,9 @@
     if (self.isEditing) {
         if (editView.superview == nil) {
             [contentView addSubview:editView];
-            editView.frame = contentView.bounds;
+            CGRect bounds = contentView.bounds;
+            bounds.size.height -= 1;
+            editView.frame = bounds;
         }
     } else {
         [editView removeFromSuperview];

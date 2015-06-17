@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="133" id="KGk-i7-Jjw" customClass="JCContactAddressTableViewCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="133" id="KGk-i7-Jjw" customClass="JCContactAddressTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="126"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -35,7 +35,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dap-Wa-Uhg">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dap-Wa-Uhg">
                         <rect key="frame" x="13" y="6" width="36" height="29"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -97,8 +97,8 @@
             <connections>
                 <outlet property="cityLabel" destination="nqZ-LV-keR" id="Ex4-qM-HQh"/>
                 <outlet property="cityTextField" destination="eKD-lK-lgo" id="vap-Xc-afl"/>
-                <outlet property="detailEditLabel" destination="Dap-Wa-Uhg" id="JEa-dz-75C"/>
-                <outlet property="detailTextLabel" destination="FqN-EV-KD6" id="jpZ-Hj-4Lm"/>
+                <outlet property="detailEditLabel" destination="FqN-EV-KD6" id="rhF-Ed-7cb"/>
+                <outlet property="detailTextLabel" destination="Dap-Wa-Uhg" id="g0Y-Wj-a7O"/>
                 <outlet property="editView" destination="jUo-zC-XNS" id="UbD-ox-z9J"/>
                 <outlet property="postalCodeLabel" destination="JWF-DX-Gid" id="zMP-SN-9aC"/>
                 <outlet property="postalCodeTextField" destination="FZp-Hc-TQm" id="JII-nI-Yc2"/>

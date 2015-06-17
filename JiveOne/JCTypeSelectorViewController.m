@@ -37,8 +37,8 @@
 
 +(NSArray *)otherTypes
 {
-    return @[NSLocalizedString(@"Job Title", @"PhoneTypeSelector"),
-             NSLocalizedString(@"Department", @"PhoneTypeSelector")];
+    return @[NSLocalizedString(@"job title", @"PhoneTypeSelector"),
+             NSLocalizedString(@"department", @"PhoneTypeSelector")];
 }
 
 - (void)viewDidLoad {
