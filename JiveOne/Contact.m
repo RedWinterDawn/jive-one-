@@ -41,6 +41,16 @@ NSString *const kContactMarkForUpdateAttribute = @"markForUpdate";
     return [self boolValueFromPrimitiveValueForKey:kContactMarkForUpdateAttribute];
 }
 
+-(void)setEtag:(NSInteger)etag
+{
+    [self setPrimitiveValueFromIntegerValue:etag forKey:NSStringFromSelector(@selector(etag))];
+}
+
+-(NSInteger)etag
+{
+    return [self integerValueFromPrimitiveValueForKey:NSStringFromSelector(@selector(etag))];
+}
+
 // Relationships
 
 @dynamic user;

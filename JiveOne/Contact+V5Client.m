@@ -33,6 +33,7 @@ NSString *const kContactPhoneNumberTypeKey      = @"type";
 NSString *const kContactPhoneNumberNumberKey    = @"number";
 
 NSString *const kContactAddressesNodeKey    = @"address";
+NSString *const kContactAddressesHashKey        = @"hash";
 NSString *const kContactAddressesKey            = @"address";
 NSString *const kContactAddressesCityKey        = @"city";
 NSString *const kContactAddressesRegionKey      = @"region";
@@ -40,6 +41,8 @@ NSString *const kContactAddressesPostalCodeKey  = @"postalCode";
 NSString *const kContactAddressTypeKey          = @"type";
 
 NSString *const kContactOtherNodeKey        = @"other";
+NSString *const kContactOtherHashKey            = @"hash";
+NSString *const kContactOtherTypeKey            = @"type";
 NSString *const kContactOtherKey                = @"key";
 NSString *const kContactOtherValueKey           = @"value";
 
@@ -127,7 +130,7 @@ NSString *const kContactOtherValueKey           = @"value";
     Contact *contact = [self contactForContactId:contactId user:user];
     contact.firstName   = [data stringValueForKey:kContactFirstNameKey];
     contact.lastName    = [data stringValueForKey:kContactLastNameKey];
-    contact.etag        = [data stringValueForKey:kContactETagKey];
+    contact.etag        = [data integerValueForKey:kContactETagKey];
     
     // Phone numbers
     NSArray *phoneNumbers = [data arrayForKey:kContactPhoneNumbersNodeKey];
@@ -167,9 +170,11 @@ NSString *const kContactOtherValueKey           = @"value";
 +(void)processPhoneNumberArrayData:(NSArray *)phoneNumbersData contact:(Contact *)contact
 {
     NSMutableSet *phoneNumbers = contact.phoneNumbers.mutableCopy;
-    for (NSDictionary *phoneNumberData in phoneNumbersData) {
+    for (int index = 0; index < phoneNumbersData.count; index++) {
+        NSDictionary *phoneNumberData = [phoneNumbersData objectAtIndex:index];
         if ([phoneNumberData isKindOfClass:[NSDictionary class]]) {
             PhoneNumber *phoneNumber = [self processPhoneNumberData:phoneNumberData contact:contact];
+            phoneNumber.order = index;
             if ([phoneNumbers containsObject:phoneNumber]) {
                 [phoneNumbers removeObject:phoneNumber];
             }
@@ -187,9 +192,24 @@ NSString *const kContactOtherValueKey           = @"value";
 
 +(PhoneNumber *)processPhoneNumberData:(NSDictionary *)data contact:(Contact *)contact
 {
-    // TODO: Finish
+    NSString *number = [data stringValueForKey:kContactPhoneNumberNumberKey];
+    if (!number) {
+        return nil;
+    }
     
-    return nil;
+    // Get Phone number
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"number = %@ AND contact = %@", number, contact];
+    PhoneNumber *phoneNumber = [PhoneNumber MR_findFirstWithPredicate:predicate inContext:contact.managedObjectContext];
+    if (!phoneNumber) {
+        phoneNumber = [PhoneNumber MR_createEntityInContext:contact.managedObjectContext];
+        phoneNumber.number = number;
+        phoneNumber.contact = contact;
+    }
+    
+    // Update phone number
+    phoneNumber.type = [data stringValueForKey:kContactPhoneNumberTypeKey];
+    
+    return phoneNumber;
 }
 
 #pragma mark Address
@@ -197,9 +217,11 @@ NSString *const kContactOtherValueKey           = @"value";
 +(void)processAddressArrayData:(NSArray *)addressArrayData contact:(Contact *)contact
 {
     NSMutableSet *addresses = contact.addresses.mutableCopy;
-    for (NSDictionary *addressData in addressArrayData) {
+    for (int index = 0; index < addressArrayData.count; index++) {
+        NSDictionary *addressData = [addressArrayData objectAtIndex:index];
         if ([addressData isKindOfClass:[NSDictionary class]]) {
             Address *address = [self processAddressData:addressData contact:contact];
+            address.order = index;
             if ([addresses containsObject:address]) {
                 [addresses removeObject:address];
             }
@@ -217,9 +239,34 @@ NSString *const kContactOtherValueKey           = @"value";
 
 +(Address *)processAddressData:(NSDictionary *)data contact:(Contact *)contact
 {
-    // TODO: Finish
+    NSString *hash = [data stringValueForKey:kContactAddressesHashKey];
     
-    return nil;
+    Address *address = [self addressForHash:hash contact:contact];
+    address.thoroughfare = [data stringValueForKey:kContactAddressesKey];
+    address.city         = [data stringValueForKey:kContactAddressesCityKey];
+    address.region       = [data stringValueForKey:kContactAddressesRegionKey];
+    address.postalCode   = [data stringValueForKey:kContactAddressesPostalCodeKey];
+    address.type         = [data stringValueForKey:kContactAddressTypeKey];
+    
+    return address;
+}
+
++ (Address *)addressForHash:(NSString *)hash contact:(Contact *)contact
+{
+    Address *address;
+    if (!hash) {
+        address = [Address MR_createEntityInContext:contact.managedObjectContext];
+        address.contact = contact;
+        return address;
+    }
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dataHash = %@ AND contact = @%", hash, contact];
+    address = [Address MR_findFirstWithPredicate:predicate inContext:contact.managedObjectContext];
+    if (!address) {
+        address = [Address MR_createEntityInContext:contact.managedObjectContext];
+        address.contact = contact;
+    }
+    return address;
 }
 
 #pragma mark Other
@@ -227,9 +274,11 @@ NSString *const kContactOtherValueKey           = @"value";
 +(void)processOtherArrayData:(NSArray *)othersArrayData contact:(Contact *)contact
 {
     NSMutableSet *info = contact.info.mutableCopy;
-    for (NSDictionary *otherData in othersArrayData) {
+    for (int index = 0; index < othersArrayData.count; index++) {
+        NSDictionary *otherData = [othersArrayData objectAtIndex:index];
         if ([otherData isKindOfClass:[NSDictionary class]]) {
             ContactInfo *contactInfo = [self processOtherData:otherData contact:contact];
+            contactInfo.order = index;
             if ([info containsObject:contactInfo]) {
                 [info removeObject:contactInfo];
             }
@@ -247,9 +296,30 @@ NSString *const kContactOtherValueKey           = @"value";
 
 +(ContactInfo *)processOtherData:(NSDictionary *)data contact:(Contact *)contact
 {
-    // TODO: Finish
+    NSString *hash = [data stringValueForKey:kContactAddressesHashKey];
+    ContactInfo *contactInfo = [self contactInfoForHash:hash contact:contact];
+    contactInfo.type  = [data stringValueForKey:kContactOtherTypeKey];
+    contactInfo.key   = [data stringValueForKey:kContactOtherKey];
+    contactInfo.value = [data stringValueForKey:kContactOtherValueKey];
+    return contactInfo;
+}
+
++(ContactInfo *)contactInfoForHash:(NSString *)hash contact:(Contact *)contact
+{
+    ContactInfo *contactInfo;
+    if (!hash) {
+        contactInfo = [ContactInfo MR_createEntityInContext:contact.managedObjectContext];
+        contactInfo.contact = contact;
+        return contactInfo;
+    }
     
-    return nil;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dataHash = %@ AND contact = @%", hash, contact];
+    contactInfo = [ContactInfo MR_findFirstWithPredicate:predicate inContext:contact.managedObjectContext];
+    if (!contactInfo) {
+        contactInfo = [ContactInfo MR_createEntityInContext:contact.managedObjectContext];
+        contactInfo.contact = contact;
+    }
+    return contactInfo;
 }
 
 #pragma mark - Upload -
@@ -323,9 +393,10 @@ NSString *const kContactOtherValueKey           = @"value";
     [data setValue:self.contactId forKey:kContactContactIdKey];
     [data setValue:self.firstName forKey:kContactFirstNameKey];
     [data setValue:self.lastName forKey:kContactLastNameKey];
+    [data setObject:[NSNumber numberWithInteger:self.etag] forKey:kContactETagKey];
     
     // Phone numbers
-    NSSet *phoneNumbers = self.phoneNumbers;
+    NSArray *phoneNumbers = [self.phoneNumbers.allObjects sortedArrayUsingSelector:@selector(order)];
     NSMutableArray *phoneNumberData = [NSMutableArray arrayWithCapacity:phoneNumbers.count];
     for (PhoneNumber *phoneNumber in phoneNumbers) {
         [phoneNumberData addObject:[self phoneNumberDataForPhoneNumber:phoneNumber]];
@@ -333,7 +404,7 @@ NSString *const kContactOtherValueKey           = @"value";
     [data setObject:phoneNumberData forKey:kContactPhoneNumbersNodeKey];
     
     // Address numbers.
-    NSSet *addresses = self.addresses;
+    NSArray *addresses = [self.addresses.allObjects sortedArrayUsingSelector:@selector(order)];
     NSMutableArray *addressesData = [NSMutableArray arrayWithCapacity:addresses.count];
     for (Address *address in addresses) {
         [addressesData addObject:[self addressBookDataForAddress:address]];
@@ -341,11 +412,10 @@ NSString *const kContactOtherValueKey           = @"value";
     [data setObject:addressesData forKey:kContactAddressesNodeKey];
     
     // Info Data
-    NSSet *info = self.info;
+    NSArray *info = [self.info.allObjects sortedArrayUsingSelector:@selector(order)];
     NSMutableArray *infoData = [NSMutableArray arrayWithCapacity:info.count];
     for (ContactInfo *contactInfo in info) {
-        [infoData addObject:@{ kContactOtherKey : contactInfo.key,
-                               kContactOtherValueKey : contactInfo.value}];
+        [infoData addObject:[self otherDataForContactInfo:contactInfo]];
     }
     [data setObject:infoData forKey:kContactOtherNodeKey];
     
@@ -363,6 +433,7 @@ NSString *const kContactOtherValueKey           = @"value";
 -(NSDictionary *)addressBookDataForAddress:(Address *)address
 {
     NSMutableDictionary *data = [NSMutableDictionary new];
+    [data setValue:address.dataHash forKey:kContactAddressesHashKey];
     [data setValue:address.type forKey:kContactAddressesPostalCodeKey];
     [data setValue:address.thoroughfare forKey:kContactAddressesPostalCodeKey];
     [data setValue:address.city forKey:kContactAddressesPostalCodeKey];
@@ -374,6 +445,8 @@ NSString *const kContactOtherValueKey           = @"value";
 -(NSDictionary *)otherDataForContactInfo:(ContactInfo *)contactInfo
 {
     NSMutableDictionary *data = [NSMutableDictionary new];
+    [data setValue:contactInfo.dataHash forKey:kContactOtherHashKey];
+    [data setValue:contactInfo.type forKey:kContactOtherTypeKey];
     [data setValue:contactInfo.key forKey:kContactOtherKey];
     [data setValue:contactInfo.value forKey:kContactOtherValueKey];
     return data;

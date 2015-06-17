@@ -13,6 +13,8 @@
 
 @interface Address : NSManagedObject
 
+// Attributes
+@property (nonatomic) NSInteger order;
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * city;
 @property (nonatomic, retain) NSString * country;
@@ -21,6 +23,10 @@
 @property (nonatomic, retain) NSString * postalCode;
 @property (nonatomic, retain) NSString * region;
 @property (nonatomic, retain) NSString * thoroughfare;
+@property (nonatomic, readonly) NSString * dataHash;
+
+// Relationships
+
 @property (nonatomic, retain) Contact *contact;
 
 @end

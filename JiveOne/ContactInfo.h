@@ -13,6 +13,9 @@
 
 @interface ContactInfo : NSManagedObject
 
+@property (nonatomic) NSInteger order;
+@property (nonatomic, retain) NSString * dataHash;
+@property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * key;
 @property (nonatomic, retain) NSString * value;
 

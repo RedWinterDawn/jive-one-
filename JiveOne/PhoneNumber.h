@@ -15,6 +15,7 @@
 
 @interface PhoneNumber : JCPhoneNumberManagedObject
 
+@property (nonatomic) NSInteger order;
 @property (nonatomic, strong) NSString *type;
 
 // Relationships

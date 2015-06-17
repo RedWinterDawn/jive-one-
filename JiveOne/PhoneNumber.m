@@ -11,6 +11,16 @@
 
 @implementation PhoneNumber
 
+-(void)setOrder:(NSInteger)order
+{
+    [self setPrimitiveValueFromIntegerValue:order forKey:NSStringFromSelector(@selector(order))];
+}
+
+-(NSInteger)order
+{
+    return [self integerValueFromPrimitiveValueForKey:NSStringFromSelector(@selector(order))];
+}
+
 @dynamic type;
 @dynamic smsMessages;
 @dynamic lineEvents;

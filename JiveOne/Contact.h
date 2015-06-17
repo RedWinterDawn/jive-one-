@@ -14,7 +14,7 @@
 
 // Attributes
 @property (nonatomic, strong) NSString *contactId;
-@property (nonatomic, retain) NSString *etag;
+@property (nonatomic) NSInteger etag;
 
 @property (nonatomic) BOOL markForDeletion;
 @property (nonatomic) BOOL markForUpdate;

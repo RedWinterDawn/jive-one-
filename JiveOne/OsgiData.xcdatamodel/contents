@@ -3,8 +3,10 @@
     <entity name="Address" representedClassName="Address" syncable="YES">
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dataHash" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="postalCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="region" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thoroughfare" optional="YES" attributeType="String" syncable="YES"/>
@@ -22,7 +24,7 @@
     <entity name="Call" representedClassName="Call" isAbstract="YES" parentEntity="RecentLineEvent" syncable="YES"/>
     <entity name="Contact" representedClassName="Contact" syncable="YES">
         <attribute name="contactId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="etag" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="etag" optional="YES" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="markForDeletion" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -35,7 +37,10 @@
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="contacts" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="ContactInfo" representedClassName="ContactInfo" syncable="YES">
+        <attribute name="dataHash" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="info" inverseEntity="Contact" syncable="YES"/>
     </entity>
@@ -114,6 +119,7 @@
     <entity name="PhoneNumber" representedClassName="PhoneNumber" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="number" attributeType="String" syncable="YES"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" defaultValueString="main" indexed="YES" syncable="YES"/>
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="phoneNumbers" inverseEntity="Contact" syncable="YES"/>
@@ -163,11 +169,11 @@
         <relationship name="voicemail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Voicemail" inverseName="transcription" inverseEntity="Voicemail" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Address" positionX="-90" positionY="243" width="128" height="178"/>
+        <element name="Address" positionX="-90" positionY="243" width="128" height="210"/>
         <element name="BlockedNumber" positionX="-171" positionY="702" width="128" height="133"/>
         <element name="Call" positionX="538" positionY="-360" width="128" height="45"/>
         <element name="Contact" positionX="-342" positionY="333" width="128" height="225"/>
-        <element name="ContactInfo" positionX="108" positionY="344" width="128" height="88"/>
+        <element name="ContactInfo" positionX="108" positionY="344" width="128" height="135"/>
         <element name="Conversation" positionX="342" positionY="171" width="128" height="73"/>
         <element name="DID" positionX="-398" positionY="698" width="128" height="238"/>
         <element name="Extension" positionX="-459" positionY="-126" width="128" height="148"/>
@@ -180,7 +186,7 @@
         <element name="MissedCall" positionX="709" positionY="-360" width="128" height="45"/>
         <element name="OutgoingCall" positionX="711" positionY="-432" width="128" height="45"/>
         <element name="PBX" positionX="-785" positionY="486" width="128" height="163"/>
-        <element name="PhoneNumber" positionX="-9" positionY="459" width="128" height="148"/>
+        <element name="PhoneNumber" positionX="-9" positionY="459" width="128" height="165"/>
         <element name="RecentEvent" positionX="331" positionY="11" width="128" height="103"/>
         <element name="RecentLineEvent" positionX="412" positionY="-196" width="128" height="118"/>
         <element name="SMSMessage" positionX="628" positionY="702" width="128" height="88"/>
