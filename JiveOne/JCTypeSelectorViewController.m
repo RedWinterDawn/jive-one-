@@ -18,27 +18,27 @@
 
 +(NSArray *)phoneTypes
 {
-  return @[NSLocalizedString(@"home", @"PhoneTypeSelector"),
-           NSLocalizedString(@"work", @"PhoneTypeSelector"),
+  return @[NSLocalizedString(@"Home", @"PhoneTypeSelector"),
+           NSLocalizedString(@"Work", @"PhoneTypeSelector"),
            NSLocalizedString(@"iPhone", @"PhoneTypeSelector"),
-           NSLocalizedString(@"mobile", @"PhoneTypeSelector"),
-           NSLocalizedString(@"main", @"PhoneTypeSelector"),
-           NSLocalizedString(@"home fax", @"PhoneTypeSelector"),
-           NSLocalizedString(@"work fax", @"PhoneTypeSelector"),
-           NSLocalizedString(@"pager", @"PhoneTypeSelector")];
+           NSLocalizedString(@"Mobile", @"PhoneTypeSelector"),
+           NSLocalizedString(@"Main", @"PhoneTypeSelector"),
+           NSLocalizedString(@"Home fax", @"PhoneTypeSelector"),
+           NSLocalizedString(@"Work fax", @"PhoneTypeSelector"),
+           NSLocalizedString(@"Pager", @"PhoneTypeSelector")];
 }
 
 +(NSArray *)addressTypes
 {
-    return @[NSLocalizedString(@"home", @"PhoneTypeSelector"),
-             NSLocalizedString(@"work", @"PhoneTypeSelector"),
-             NSLocalizedString(@"other", @"PhoneTypeSelector")];
+    return @[NSLocalizedString(@"Home", @"PhoneTypeSelector"),
+             NSLocalizedString(@"Work", @"PhoneTypeSelector"),
+             NSLocalizedString(@"Other", @"PhoneTypeSelector")];
 }
 
 +(NSArray *)otherTypes
 {
-    return @[NSLocalizedString(@"job title", @"PhoneTypeSelector"),
-             NSLocalizedString(@"department", @"PhoneTypeSelector")];
+    return @[NSLocalizedString(@"Job Title", @"PhoneTypeSelector"),
+             NSLocalizedString(@"Department", @"PhoneTypeSelector")];
 }
 
 - (void)viewDidLoad {
