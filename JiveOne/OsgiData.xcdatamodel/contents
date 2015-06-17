@@ -10,7 +10,7 @@
         <attribute name="postalCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="region" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thoroughfare" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" defaultValueString="Main" indexed="YES" syncable="YES"/>
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="addresses" inverseEntity="Contact" syncable="YES"/>
     </entity>
     <entity name="BlockedNumber" representedClassName="BlockedNumber" syncable="YES">
@@ -121,7 +121,7 @@
         <attribute name="number" attributeType="String" syncable="YES"/>
         <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" defaultValueString="main" indexed="YES" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" defaultValueString="Main" indexed="YES" syncable="YES"/>
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="phoneNumbers" inverseEntity="Contact" syncable="YES"/>
         <relationship name="lineEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecentLineEvent" inverseName="phoneNumbers" inverseEntity="RecentLineEvent" syncable="YES"/>
         <relationship name="smsMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SMSMessage" inverseName="phoneNumber" inverseEntity="SMSMessage" syncable="YES"/>
