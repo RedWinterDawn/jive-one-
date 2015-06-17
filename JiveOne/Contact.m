@@ -26,7 +26,7 @@ NSString *const kContactMarkForUpdateAttribute = @"markForUpdate";
     [self setPrimitiveValueFromBoolValue:markForDeletion forKey:kContactMarkForDeletionAttribute];
 }
 
--(BOOL)markForDeletion
+-(BOOL)isMarkedForDeletion
 {
     return [self boolValueFromPrimitiveValueForKey:kContactMarkForDeletionAttribute];
 }
@@ -36,7 +36,7 @@ NSString *const kContactMarkForUpdateAttribute = @"markForUpdate";
     [self setPrimitiveValueFromBoolValue:markForUpdate forKey:kContactMarkForUpdateAttribute];
 }
 
--(BOOL)markForUpdate
+-(BOOL)isMarkedForUpdate
 {
     return [self boolValueFromPrimitiveValueForKey:kContactMarkForUpdateAttribute];
 }

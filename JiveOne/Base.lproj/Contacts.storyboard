@@ -183,6 +183,14 @@
                     <navigationItem key="navigationItem" id="M0A-5M-DwE"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="QM3-zX-dSg">
                         <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Syncing...">
+                                <attributes>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
                         <connections>
                             <action selector="sync:" destination="p2g-D4-iQF" eventType="valueChanged" id="99x-2l-BZm"/>
                         </connections>
@@ -496,6 +504,20 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="xlK-I5-OCy"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="jhQ-kv-c7u">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Syncing...">
+                                <attributes>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <connections>
+                            <action selector="sync:" destination="Ab5-kr-ogH" eventType="valueChanged" id="19H-9f-gAT"/>
+                        </connections>
+                    </refreshControl>
                     <connections>
                         <outlet property="addAddressCell" destination="IP5-fE-rfq" id="uMd-1v-VM7"/>
                         <outlet property="addNumberCell" destination="act-KL-5FI" id="fsn-0U-MeZ"/>

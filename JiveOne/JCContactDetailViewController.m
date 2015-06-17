@@ -73,6 +73,7 @@
             [self setCells:_editingCells hidden:YES];
         }
     } else {
+        self.refreshControl.enabled = FALSE;
         [self setCells:_editingCells hidden:YES];
     }
     [self layoutForPhoneNumber:self.phoneNumber animated:NO];
@@ -162,6 +163,33 @@
 -(IBAction)deleteContact:(id)sender
 {
     [self deleteContact];
+}
+
+-(IBAction)sync:(id)sender
+{
+    if ([sender isKindOfClass:[UIRefreshControl class]]) {
+        id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
+        if (![phoneNumber isKindOfClass:[Contact class]]) {
+            [((UIRefreshControl *)sender) endRefreshing];
+            return;
+        }
+        
+        Contact *contact = (Contact *)phoneNumber;
+        
+        // If we do not have a contact ID, we do not need to sync yet, since we do not exits on the
+        // server yet.
+        if (!contact.contactId) {
+            [((UIRefreshControl *)sender) endRefreshing];
+            return;
+        }
+        
+        [Contact syncContact:contact completion:^(BOOL success, NSError *error) {
+            [((UIRefreshControl *)sender) endRefreshing];
+            if (error) {
+                [self showError:error];
+            }
+        }];
+    }
 }
 
 -(IBAction)cancel:(id)sender
@@ -529,7 +557,8 @@
     [self setCells:_numberSectionCells hidden:YES];
     if ([phoneNumber isKindOfClass:[Contact class]]) {
         Contact *contact = (Contact *)phoneNumber;
-        for (PhoneNumber *number in contact.phoneNumbers) {
+        NSArray *phoneNumbers = [contact.phoneNumbers.allObjects sortedArrayUsingSelector:@selector(order)];
+        for (PhoneNumber *number in phoneNumbers) {
             UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:number];
             NSIndexPath *actualIndexPath = [self indexPathForCell:_addNumberCell];
             [self addCell:cell atIndexPath:actualIndexPath];
@@ -552,7 +581,8 @@
 {
     if ([phoneNumber isKindOfClass:[Contact class]]) {
         Contact *contact = (Contact *)phoneNumber;
-        for (Address *address in contact.addresses) {
+        NSArray *addresses = [contact.addresses.allObjects sortedArrayUsingSelector:@selector(order)];
+        for (Address *address in addresses) {
             UITableViewCell *cell = [self addressCellForAddress:address];
             NSIndexPath *actualIndexPath = [self indexPathForCell:_addAddressCell];
             [self addCell:cell atIndexPath:actualIndexPath];
@@ -564,8 +594,9 @@
 {
     if ([phoneNumber isKindOfClass:[Contact class]]) {
         Contact *contact = (Contact *)phoneNumber;
-        for (ContactInfo *info in contact.info) {
-            UITableViewCell *cell = [self contactInfoCellForContactInfo:info];
+        NSArray *info = [contact.info.allObjects sortedArrayUsingSelector:@selector(order)];
+        for (ContactInfo *contactInfo in info) {
+            UITableViewCell *cell = [self contactInfoCellForContactInfo:contactInfo];
             NSIndexPath *actualIndexPath = [self indexPathForCell:_addOtherCell];
             [self addCell:cell atIndexPath:actualIndexPath];
         }

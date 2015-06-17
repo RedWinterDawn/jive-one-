@@ -101,7 +101,7 @@
 //        }];
         
         User *user = line.pbx.user;
-        [Contact downloadContactsForUser:user completion:^(BOOL success, NSError *error) {
+        [Contact syncContactsForUser:user completion:^(BOOL success, NSError *error) {
             [((UIRefreshControl *)sender) endRefreshing];
             if (error) {
                 [self showError:error];

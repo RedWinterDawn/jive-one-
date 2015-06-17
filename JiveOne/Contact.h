@@ -16,8 +16,8 @@
 @property (nonatomic, strong) NSString *contactId;
 @property (nonatomic) NSInteger etag;
 
-@property (nonatomic) BOOL markForDeletion;
-@property (nonatomic) BOOL markForUpdate;
+@property (nonatomic, getter=isMarkedForDeletion) BOOL markForDeletion;
+@property (nonatomic, getter=isMarkedForUpdate) BOOL markForUpdate;
 
 // Relationships
 @property (nonatomic, retain) NSSet *phoneNumbers;

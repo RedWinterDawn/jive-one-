@@ -48,6 +48,39 @@ NSString *const kContactOtherValueKey           = @"value";
 
 @implementation Contact (V5Client)
 
++ (void)syncContactsForUser:(User *)user completion:(CompletionHandler)completion
+{
+    [self deleteMarkedContactsForUser:user completion:^(BOOL success, NSError *error) {
+        if (success) {
+            [self uploadMarkedContactsForUser:user completion:^(BOOL success, NSError *error) {
+                if (success) {
+                    [self downloadContactsForUser:user completion:completion];
+                } else {
+                    if (completion) {
+                        completion(NO, error);
+                    }
+                }
+            }];
+        } else {
+            if (completion) {
+                completion(NO, error);
+            }
+        }
+    }];
+}
+
++ (void)syncContact:(Contact *)contact completion:(CompletionHandler)completion
+{
+    // if we have a pending upload, do the update rather than a download. We will be updated to be
+    // the latest version.
+    if (contact.isMarkedForUpdate) {
+        [self uploadContact:contact completion:completion];
+        return;
+    }
+    
+    [self downloadContact:contact completion:completion];
+}
+
 #pragma mark - Download -
 
 + (void)downloadContactsForUser:(User *)user completion:(CompletionHandler)completion
@@ -66,7 +99,30 @@ NSString *const kContactOtherValueKey           = @"value";
 + (void)downloadContact:(Contact *)contact completion:(CompletionHandler)completion
 {
     [JCV5ApiClient downloadContact:contact completion:^(BOOL success, id response, NSError *error) {
-        
+        if (success) {
+            if (![response isKindOfClass:[NSDictionary class]]) {
+                if (completion) {
+                    completion(NO, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_ERROR reason:NSLocalizedString(@"Invalid contacts response. Expecting an object", @"Download Contact")]);
+                }
+            } else {
+                NSDictionary *contactData = (NSDictionary *)response;
+                [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                    [self processContactData:contactData user:(User *)[localContext objectWithID:contact.user.objectID]];
+                } completion:^(BOOL contextDidSave, NSError *error) {
+                    if (completion) {
+                        if (error) {
+                            completion(NO, error);
+                        } else {
+                            completion(YES, nil);
+                        }
+                    }
+                }];
+            }
+        } else {
+            if (completion) {
+                completion(NO, error);
+            }
+        }
     }];
 }
 
@@ -324,6 +380,37 @@ NSString *const kContactOtherValueKey           = @"value";
 
 #pragma mark - Upload -
 
++ (void)uploadMarkedContactsForUser:(User *)user completion:(CompletionHandler)completion
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForUpdate = %@ AND user = %@", @YES, user];
+    __block NSMutableArray *pendingContactsToUpdate = [Contact MR_findAllWithPredicate:predicate inContext:user.managedObjectContext].mutableCopy;
+    
+    // If we do not have any to delete, call completion.
+    if (pendingContactsToUpdate.count == 0) {
+        if (completion) {
+            completion(YES, nil);
+        }
+        return;
+    }
+    
+    // Iterate through each contact to delete.
+    __block NSError *batchError;
+    for (Contact *contact in pendingContactsToUpdate) {
+        [self uploadContact:contact completion:^(BOOL success, NSError *error) {
+            if (error && !batchError) {
+                batchError = error;
+            }
+            
+            [pendingContactsToUpdate removeObject:contact];
+            if (pendingContactsToUpdate.count == 0) {
+                if (completion) {
+                    completion((batchError == nil), batchError );
+                }
+            }
+        }];
+    }
+}
+
 /**
  * Mark the contact for upload. Save changes made before we upload, then try to upload it.
  */
@@ -453,6 +540,37 @@ NSString *const kContactOtherValueKey           = @"value";
 }
 
 #pragma mark - Deletion -
+
++ (void)deleteMarkedContactsForUser:(User *)user completion:(CompletionHandler)completion
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion = %@ AND user = %@", @YES, user];
+    __block NSMutableArray *pendingContactsToDelete = [Contact MR_findAllWithPredicate:predicate inContext:user.managedObjectContext].mutableCopy;
+    
+    // If we do not have any to delete, call completion.
+    if (pendingContactsToDelete.count == 0) {
+        if (completion) {
+            completion(YES, nil);
+        }
+        return;
+    }
+    
+    // Iterate through each contact to delete.
+    __block NSError *batchError;
+    for (Contact *contact in pendingContactsToDelete) {
+        [self deleteContact:contact completion:^(BOOL success, NSError *error) {
+            if (error && !batchError) {
+                batchError = error;
+            }
+            
+            [pendingContactsToDelete removeObject:contact];
+            if (pendingContactsToDelete.count == 0) {
+                if (completion) {
+                    completion((batchError == nil), batchError );
+                }
+            }
+        }];
+    }
+}
 
 /**
  * Mark the contact for deletion, save it, and then try to delete it server side. By saving before

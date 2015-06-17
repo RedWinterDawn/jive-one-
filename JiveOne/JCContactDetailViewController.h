@@ -46,4 +46,6 @@
 
 @property (strong, nonatomic) IBOutletCollection(UITableViewCell) NSArray *editingCells;
 
+-(IBAction)sync:(id)sender;
+
 @end
