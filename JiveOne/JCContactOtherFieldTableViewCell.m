@@ -10,6 +10,8 @@
 
 @implementation JCContactOtherFieldTableViewCell
 
+@dynamic delegate;
+
 -(void)setInfo:(ContactInfo *)info
 {
     _info = info;
@@ -39,6 +41,7 @@
 
 -(void)setText:(NSString *)string
 {
+    
     _info.value = string;
 }
 
