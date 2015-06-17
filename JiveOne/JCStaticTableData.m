@@ -11,6 +11,7 @@
 @interface JCStaticTableData ()
 {
     NSMutableArray *_cells;
+    NSMutableArray *_addedCells;
     NSMutableArray *_sections;
     
     BOOL _batchUpdates;
@@ -29,6 +30,7 @@
         NSInteger numberOfSections = [tableView numberOfSections];
         _sections = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
         _cells = [NSMutableArray new];
+        _addedCells = [NSMutableArray new];
         
         for (NSInteger section = 0; section < numberOfSections; ++section)
         {
@@ -147,6 +149,8 @@
 {
     [self beginUpdates];
     
+    [_cells addObject:cell];
+    [_addedCells addObject:cell];
     JCStaticSectionInfo *sectionInfo = [_sections objectAtIndex:indexPath.section];
     JCStaticRowData *row = [JCStaticRowData new];
     row.cell = cell;
@@ -158,6 +162,12 @@
 
 - (void)removeCell:(UITableViewCell *)cell
 {
+    if (![_addedCells containsObject:cell]) {
+        return;
+    }
+    
+    [_cells removeObject:cell];
+    [_addedCells removeObject:cell];
     for (int section = 0; section < _sections.count; section++)
     {
         JCStaticSectionInfo *sectionInfo = [_sections objectAtIndex:section];
@@ -174,6 +184,14 @@
                 return;
             }
         }
+    }
+}
+
+-(void)removeAddedCells
+{
+    NSArray *addedCells = [NSArray arrayWithArray:_addedCells];
+    for (UITableViewCell *cell in addedCells) {
+        [self removeCell:cell];
     }
 }
 

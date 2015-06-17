@@ -25,6 +25,8 @@
 - (NSIndexPath *)indexPathForCell:(UITableViewCell *)cell;
 - (UITableViewCell *)cellAtIndexPath:(NSIndexPath *)indexPath;
 
+- (void)reset;
+
 - (void)startUpdates;
 - (void)endUpdates;
 

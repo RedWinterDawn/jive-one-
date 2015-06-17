@@ -15,7 +15,6 @@
 @property (nonatomic, weak) id<JCCustomEditTableViewCellDelegate> delegate;
 
 @property (nonatomic, strong) IBOutlet UIView *editView;
-
 @property (nonatomic, weak) IBOutlet UILabel *detailEditLabel;
 @property (nonatomic, weak) IBOutlet UITextField *textField;
 

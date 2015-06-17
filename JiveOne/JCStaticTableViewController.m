@@ -13,7 +13,6 @@
 @interface JCStaticTableViewController () <JCStaticTableDataDelegate>
 {
     JCStaticTableData *_tableData;
-    
     BOOL _animated;
 }
 
@@ -54,6 +53,14 @@
 -(BOOL)cellIsHidden:(UITableViewCell *)cell
 {
     return [_tableData cellIsHidden:cell];
+}
+
+-(void)reset
+{
+    if (_tableData) {
+        [_tableData removeAddedCells];
+        [_tableData setCells:_tableData.cells hidden:NO];
+    }
 }
 
 -(void)startUpdates

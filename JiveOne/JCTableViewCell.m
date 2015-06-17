@@ -18,8 +18,29 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         _seperatorColor = DEFAULT_SEPERATOR_COLOR;
+        _top = FALSE;
+        _bottom = TRUE;
+        _lastRow = FALSE;
     }
     return self;
+}
+
+-(void)setLastRow:(BOOL)lastRow
+{
+    _lastRow = lastRow;
+    [self setNeedsDisplay];
+}
+
+-(void)setEditing:(BOOL)editing
+{
+    [super setEditing:editing];
+    [self setNeedsDisplay];
+}
+
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    [self setNeedsDisplay];
 }
 
 -(void)awakeFromNib
@@ -52,16 +73,30 @@
 {
     [super prepareForReuse];
     
-    _top = false;
+    _top = FALSE;
+    _bottom = TRUE;
 }
 
 -(void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
     JCDrawingLine drawingLine = JCDrawingLineMake(0.5, _seperatorColor.CGColor);
-    JCDrawingContextDrawLineAtPosition(context, drawingLine, rect, kJCDrawingLinePositionBottom);
+    if ((_lastRowOnly && _lastRow) || self.editing) {
+        [self drawWithContext:context rect:rect drawingLine:drawingLine];
+    }
+    else if (!_lastRowOnly){
+        [self drawWithContext:context rect:rect drawingLine:drawingLine];
+    }
+}
+
+-(void)drawWithContext:(CGContextRef)context rect:(CGRect)rect drawingLine:(JCDrawingLine)drawingLine
+{
+    if (_bottom)
+        JCDrawingContextDrawLineAtPosition(context, drawingLine, rect, kJCDrawingLinePositionBottom);
+    
     if (_top)
         JCDrawingContextDrawLineAtPosition(context, drawingLine, rect, kJCDrawingLinePositionTop);
 }
+
 
 @end

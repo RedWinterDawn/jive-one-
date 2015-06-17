@@ -187,6 +187,8 @@
             [((UIRefreshControl *)sender) endRefreshing];
             if (error) {
                 [self showError:error];
+            } else {
+                [self layoutForPhoneNumber:contact animated:YES];
             }
         }];
     }
@@ -424,57 +426,63 @@
     return (Contact *)phoneNumber;
 }
 
--(UITableViewCell *)phoneNumberCellForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
+-(JCCustomEditTableViewCell *)phoneNumberCellForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
     JCContactPhoneNumberTableViewCell *cell = [JCContactPhoneNumberTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
     cell.phoneNumber = phoneNumber;
     cell.delegate = self;
+    cell.lastRowOnly = TRUE;
     return cell;
 }
 
--(UITableViewCell *)newPhoneNumberCellForContact:(Contact *)contact
+-(JCCustomEditTableViewCell *)newPhoneNumberCellForContact:(Contact *)contact
 {
     JCContactPhoneNumberTableViewCell *cell = [JCContactPhoneNumberTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
     PhoneNumber *phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
     phoneNumber.contact = contact;
     cell.phoneNumber = phoneNumber;
     cell.delegate = self;
+    cell.lastRowOnly = TRUE;
     return cell;
 }
 
--(UITableViewCell *)addressCellForAddress:(Address *)address
+-(JCCustomEditTableViewCell *)addressCellForAddress:(Address *)address
 {
     JCContactAddressTableViewCell *cell = [JCContactAddressTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
     cell.address = address;
     cell.delegate = self;
+    cell.lastRowOnly = TRUE;
     return cell;
 }
 
--(UITableViewCell *)newAddressCellForContact:(Contact *)contact
+-(JCCustomEditTableViewCell *)newAddressCellForContact:(Contact *)contact
 {
     JCContactAddressTableViewCell *cell = [JCContactAddressTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
     Address *address = [Address MR_createEntityInContext:self.managedObjectContext];
     address.contact = contact;
     cell.address = address;
     cell.delegate = self;
+    cell.lastRowOnly = TRUE;
     return cell;
 }
 
--(UITableViewCell *)contactInfoCellForContactInfo:(ContactInfo *)contactInfo
+-(JCCustomEditTableViewCell *)contactInfoCellForContactInfo:(ContactInfo *)contactInfo
 {
     JCContactOtherFieldTableViewCell *cell = [JCContactOtherFieldTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
     cell.info = contactInfo;
     cell.delegate = self;
+    cell.lastRowOnly = TRUE;
     return cell;
 }
 
--(UITableViewCell *)newOtherFieldCellForContact:(Contact *)contact
+-(JCCustomEditTableViewCell *)newOtherFieldCellForContact:(Contact *)contact
 {
     JCContactOtherFieldTableViewCell *cell = [JCContactOtherFieldTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
     ContactInfo *info = [ContactInfo MR_createEntityInContext:self.managedObjectContext];
     info.contact = contact;
     cell.info = info;
     cell.delegate = self;
+    cell.lastRowOnly = TRUE;
     return cell;
 }
 
@@ -503,6 +511,8 @@
 -(void)layoutForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber animated:(BOOL)animated
 {
     [self startUpdates];
+    
+    [self reset];
     
     // We can not edit Extensions.
     if ([phoneNumber isKindOfClass:[Extension class]])
@@ -558,20 +568,28 @@
     if ([phoneNumber isKindOfClass:[Contact class]]) {
         Contact *contact = (Contact *)phoneNumber;
         NSArray *phoneNumbers = [contact.phoneNumbers.allObjects sortedArrayUsingSelector:@selector(order)];
-        for (PhoneNumber *number in phoneNumbers) {
-            UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:number];
+        NSInteger count = phoneNumbers.count;
+        for (int index = 0; index < count; index++) {
+            PhoneNumber *number = [phoneNumbers objectAtIndex:index];
+            JCCustomEditTableViewCell *cell = [self phoneNumberCellForPhoneNumber:number];
             NSIndexPath *actualIndexPath = [self indexPathForCell:_addNumberCell];
+            cell.lastRow = (index+1 == count);
             [self addCell:cell atIndexPath:actualIndexPath];
         }
     } else if ([phoneNumber isKindOfClass:[JCAddressBookPerson class]]) {
         JCAddressBookPerson *person = (JCAddressBookPerson *)phoneNumber;
-        for (JCAddressBookNumber *number in person.phoneNumbers) {
-            UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:number];
+        NSArray *phoneNumbers = person.phoneNumbers;
+        NSInteger count = phoneNumbers.count;
+        for (int index = 0; index < count; index++) {
+            JCAddressBookNumber *number = [phoneNumbers objectAtIndex:index];
+            JCCustomEditTableViewCell *cell = [self phoneNumberCellForPhoneNumber:number];
+            cell.lastRow = (index+1 == count);
             NSIndexPath *actualIndexPath = [self indexPathForCell:_addNumberCell];
             [self addCell:cell atIndexPath:actualIndexPath];
         }
     } else {
-        UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:phoneNumber];
+        JCCustomEditTableViewCell *cell = [self phoneNumberCellForPhoneNumber:phoneNumber];
+        cell.lastRow = TRUE;
         NSIndexPath *actualIndexPath = [self indexPathForCell:_addNumberCell];
         [self addCell:cell atIndexPath:actualIndexPath];
     }
@@ -582,8 +600,11 @@
     if ([phoneNumber isKindOfClass:[Contact class]]) {
         Contact *contact = (Contact *)phoneNumber;
         NSArray *addresses = [contact.addresses.allObjects sortedArrayUsingSelector:@selector(order)];
-        for (Address *address in addresses) {
-            UITableViewCell *cell = [self addressCellForAddress:address];
+        NSInteger count = addresses.count;
+        for (int index = 0; index < count; index++) {
+            Address *address = [addresses objectAtIndex:index];
+            JCCustomEditTableViewCell *cell = [self addressCellForAddress:address];
+            cell.lastRow = (index+1 == count);
             NSIndexPath *actualIndexPath = [self indexPathForCell:_addAddressCell];
             [self addCell:cell atIndexPath:actualIndexPath];
         }
@@ -595,8 +616,11 @@
     if ([phoneNumber isKindOfClass:[Contact class]]) {
         Contact *contact = (Contact *)phoneNumber;
         NSArray *info = [contact.info.allObjects sortedArrayUsingSelector:@selector(order)];
-        for (ContactInfo *contactInfo in info) {
-            UITableViewCell *cell = [self contactInfoCellForContactInfo:contactInfo];
+        NSInteger count = info.count;
+        for (int index = 0; index < count; index++) {
+            ContactInfo *contactInfo = [info objectAtIndex:index];
+            JCCustomEditTableViewCell *cell = [self contactInfoCellForContactInfo:contactInfo];
+            cell.lastRow = (index+1 == count);
             NSIndexPath *actualIndexPath = [self indexPathForCell:_addOtherCell];
             [self addCell:cell atIndexPath:actualIndexPath];
         }
@@ -630,6 +654,12 @@
         self.jiveIdCell.detailTextLabel.text = ((Line *)extension).pbx.user.jiveUserId;
         [self setCell:_jiveIdCell hidden:NO];
     }
+}
+
+-(void)reset
+{
+    [super reset];
+    [self layoutForEditing:self.editing animated:NO];
 }
 
 @end

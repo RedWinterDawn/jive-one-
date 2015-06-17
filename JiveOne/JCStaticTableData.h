@@ -41,6 +41,8 @@
 - (NSIndexPath *)indexPathForVisibleIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 
+- (void)removeAddedCells;
+
 @end
 
 @protocol JCStaticTableDataDelegate <NSFetchedResultsControllerDelegate>
