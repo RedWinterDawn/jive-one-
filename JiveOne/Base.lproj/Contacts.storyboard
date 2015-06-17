@@ -325,7 +325,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="ZGF-zG-Cmy"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     <connections>
                                                         <action selector="nameChanged:" destination="Ab5-kr-ogH" eventType="editingChanged" id="MIX-cs-HWM"/>
                                                         <outlet property="delegate" destination="Ab5-kr-ogH" id="8mA-y6-dGA"/>
@@ -363,7 +363,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="aO9-F3-hJT"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     <connections>
                                                         <action selector="nameChanged:" destination="Ab5-kr-ogH" eventType="editingChanged" id="KGc-UW-T6m"/>
                                                         <outlet property="delegate" destination="Ab5-kr-ogH" id="Oa9-Qc-D1Z"/>

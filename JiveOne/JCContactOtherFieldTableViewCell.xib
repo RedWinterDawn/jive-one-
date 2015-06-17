@@ -74,7 +74,7 @@
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Text" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lwK-bd-qUn">
                     <rect key="frame" x="100" y="0.0" width="220" height="44"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                    <textInputTraits key="textInputTraits"/>
                     <connections>
                         <action selector="textFieldValueChanged:" destination="U20-Dw-py4" eventType="editingChanged" id="SB6-LR-b2r"/>
                     </connections>
