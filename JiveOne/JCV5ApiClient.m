@@ -418,9 +418,9 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
                       completion(YES, responseObject, nil);
                   };
               }
-              failure:^(NSError *error) {
+              failure:^(id responseObject, NSError *error) {
                   if (completion) {
-                      completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+                      completion(NO, responseObject, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
                   }
               }];
 }
@@ -430,12 +430,12 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
  requestSerializer:(AFJSONRequestSerializer *)requestSerializer
            retries:(NSUInteger)retryCount
            success:(void (^)(id responseObject))success
-           failure:(void (^)(NSError *error))failure
+           failure:(void (^)(id responseObject, NSError *error))failure
 {
     if (retryCount <= 0) {
         if (failure) {
             NSError *error = [JCApiClientError errorWithCode:API_CLIENT_TIMEOUT_ERROR reason:@"Request Timeout"];
-            failure(error);
+            failure(nil, error);
         }
     } else {
         JCV5ApiClient *client = [JCV5ApiClient new];
@@ -457,8 +457,8 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
                                       retries:(retryCount - 1)
                                       success:success
                                       failure:failure];
-                        } else{
-                            failure(error);
+                        } else {
+                            failure(operation.responseObject, error);
                         }
                     }];
     }
@@ -481,9 +481,9 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
                                 completion(YES, responseObject, nil);
                             };
                         }
-                        failure:^(NSError *error) {
+                        failure:^(id responseObject, NSError *error) {
                             if (completion) {
-                                completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+                                completion(NO, responseObject, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
                             }
                         }];
 }
@@ -493,12 +493,12 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
   requestSerializer:(AFJSONRequestSerializer *)requestSerializer
             retries:(NSUInteger)retryCount
             success:(void (^)(id responseObject))success
-            failure:(void (^)(NSError *error))failure
+            failure:(void (^)(id responseObject, NSError *error))failure
 {
     if (retryCount <= 0) {
         if (failure) {
             NSError *error = [JCApiClientError errorWithCode:API_CLIENT_TIMEOUT_ERROR reason:@"Request Timeout"];
-            failure(error);
+            failure(nil, error);
         }
     } else {
         JCV5ApiClient *client = [JCV5ApiClient new];
@@ -521,7 +521,7 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
                                         success:success
                                         failure:failure];
                          } else{
-                             failure(error);
+                             failure(operation.responseObject, error);
                          }
                      }];
     }
