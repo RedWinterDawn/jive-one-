@@ -184,6 +184,14 @@ NSString *const kContactOtherValueKey           = @"value";
     }
     
     Contact *contact = [self contactForContactId:contactId user:user];
+    
+    [self updateContact:contact data:data];
+    
+    return contact;
+}
+
++ (void)updateContact:(Contact *)contact data:(NSDictionary *)data
+{
     contact.firstName   = [data stringValueForKey:kContactFirstNameKey];
     contact.lastName    = [data stringValueForKey:kContactLastNameKey];
     contact.etag        = [data integerValueForKey:kContactETagKey];
@@ -205,8 +213,6 @@ NSString *const kContactOtherValueKey           = @"value";
     if (other) {
         [self processAddressArrayData:other contact:contact];
     }
-    
-    return contact;
 }
 
 + (Contact *)contactForContactId:(NSString *)contactId user:(User *)user
@@ -431,9 +437,41 @@ NSString *const kContactOtherValueKey           = @"value";
 + (void)uploadContact:(Contact *)contact completion:(CompletionHandler)completion
 {
     [JCV5ApiClient uploadContact:contact completion:^(BOOL success, id response, NSError *error) {
+        
+        // If we do not get a response, we had a fatal error, so we call completion with an error.
+        if (!response) {
+            if (completion) {
+                completion(NO, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_ERROR underlyingError:error]);
+            }
+        }
+        
+        if (![response isKindOfClass:[NSDictionary class]]) {
+            if (completion) {
+                completion(NO, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_ERROR reason:@"Unexpected response object"]);
+            }
+        }
+        
+        NSDictionary *contactData = (NSDictionary *)response;
+        
+        // If we received success, it means we updated correctly, and were in sync with the etag
+        // versioning of the contact.
         if (success) {
-            [self processContactUploadResponse:response contact:contact completion:completion];
+            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                Contact *localContact = (Contact *)[localContext objectWithID:contact.objectID];
+                localContact.contactId       = [contactData stringValueForKey:kContactContactIdKey];
+                localContact.etag            = [contactData integerValueForKey:kContactETagKey];
+                localContact.markForUpdate   = FALSE;
+            } completion:^(BOOL contextDidSave, NSError *error) {
+                
+            }];
         } else {
+            //[self updateContact:contact data:contactData];
+            
+            
+            
+            
+            
+            
             if (completion) {
                 completion(NO, error);
             }
@@ -448,8 +486,6 @@ NSString *const kContactOtherValueKey           = @"value";
     @try {
         
         NSDictionary *contactData = nil;
-        
-        
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             [self processContactUpload:contactData contact:(Contact *)[localContext objectWithID:contact.objectID]];
         } completion:^(BOOL contextDidSave, NSError *error) {
@@ -471,6 +507,15 @@ NSString *const kContactOtherValueKey           = @"value";
 
 + (void)processContactUpload:(NSDictionary *)contactData contact:(Contact *)contact
 {
+    contact.contactId = [contactData stringValueForKey:kContactContactIdKey];
+    
+    [self updateContact:contact data:contactData];
+    
+    
+    
+    
+    
+    
     
 }
 
