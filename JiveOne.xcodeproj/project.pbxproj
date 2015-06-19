@@ -170,6 +170,7 @@
 		5D55236C1A7AB7B400CA8A6D /* calling.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5D55236B1A7AB7B400CA8A6D /* calling.mp3 */; };
 		5D55236F1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D55236E1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m */; };
 		5D5525BF1AC5DC730037F703 /* JCV4ApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5525BE1AC5DC730037F703 /* JCV4ApiClient.m */; };
+		5D5782E21B33BF24005F1B86 /* eula.html in Resources */ = {isa = PBXBuildFile; fileRef = 5D5782E41B33BF24005F1B86 /* eula.html */; };
 		5D5782871B32FF70005F1B86 /* JCFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5782861B32FF70005F1B86 /* JCFile.m */; };
 		5D57828F1B330194005F1B86 /* JCDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D57828E1B330194005F1B86 /* JCDataLoader.m */; };
 		5D5782901B33038B005F1B86 /* de.xliff in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D2D73C51ACF97AE00B98BDF /* de.xliff */; };
@@ -631,6 +632,7 @@
 		5D55236E1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSipNetworkQualityRequestOperation.m; sourceTree = "<group>"; };
 		5D5525BD1AC5DC730037F703 /* JCV4ApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCV4ApiClient.h; sourceTree = "<group>"; };
 		5D5525BE1AC5DC730037F703 /* JCV4ApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV4ApiClient.m; sourceTree = "<group>"; };
+		5D5782E31B33BF24005F1B86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/eula.html; sourceTree = "<group>"; };
 		5D57827D1B32FCE2005F1B86 /* generateStrings */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = generateStrings; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D5782851B32FF70005F1B86 /* JCFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCFile.h; sourceTree = "<group>"; };
 		5D5782861B32FF70005F1B86 /* JCFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCFile.m; sourceTree = "<group>"; };
@@ -1219,6 +1221,7 @@
 		275F4A5818AD0FBC00D2F069 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5D5782E41B33BF24005F1B86 /* eula.html */,
 				2751590218AD10E500FD8D3F /* Constants.h */,
 				275F4A5918AD0FBC00D2F069 /* JiveOne-Info.plist */,
 				91B4A53319427A9C00DC7459 /* JiveOneEnterprise-Info.plist */,
@@ -2146,6 +2149,7 @@
 				5D8E340C1B0A84AA00FD8AE1 /* Settings_iPad.storyboard in Resources */,
 				5D0199C21A1BBC0500F4CF13 /* IncomingCallViewCell.xib in Resources */,
 				5D25F8201AE5895E00981DB6 /* Main_iPad.storyboard in Resources */,
+				5D5782E21B33BF24005F1B86 /* eula.html in Resources */,
 				5DEC492A1B0EDF6000361499 /* Phone.strings in Resources */,
 				5D5449091B0E52A000F44D8F /* Contacts.storyboard in Resources */,
 				F202433D18B2CF4A006DB2EF /* README.md in Resources */,
@@ -2723,6 +2727,14 @@
 				5D5449171B0E530000F44D8F /* it */,
 			);
 			name = Contacts.storyboard;
+			sourceTree = "<group>";
+		};
+		5D5782E41B33BF24005F1B86 /* eula.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5D5782E31B33BF24005F1B86 /* Base */,
+			);
+			name = eula.html;
 			sourceTree = "<group>";
 		};
 		5D70071A1B1CAE630036E72F /* JCVoicemailDetailViewController.xib */ = {
