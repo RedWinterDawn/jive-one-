@@ -14,6 +14,7 @@
 @interface JCPersonManagedObject : NSManagedObject <JCPersonDataSource>
 
 // Attributes
+@property (nonatomic, retain) NSString *type;
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *firstName;
 @property (nonatomic, retain) NSString *lastName;

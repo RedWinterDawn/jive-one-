@@ -29,6 +29,7 @@ NSString *const kPersonT9AttributeKey = @"t9";
 
 #pragma mark - Attributes -
 
+@dynamic type;
 @dynamic name;
 @dynamic number;
 @dynamic t9;

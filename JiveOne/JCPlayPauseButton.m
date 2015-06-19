@@ -61,7 +61,7 @@ NSString *const kJCPlayPauseButtonImageCacheName = @"JCPlayPauseButton.imageCach
 
 -(UIImage *)imageForState:(UIControlState)state isPaused:(BOOL)paused
 {
-    NSString *key = [NSString stringWithFormat:@"%hhd-%lu", paused, (unsigned long)state];
+    NSString *key = [NSString stringWithFormat:@"%i-%lu", paused, (unsigned long)state];
     UIImage *image = [_imageCache objectForKey:key];
     if (image) {
         return image;

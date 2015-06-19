@@ -17,6 +17,6 @@
 
 @property (nonatomic, readonly) NSArray *phoneNumbers;
 
--(JCAddressBookNumber *)addressBookNumberForIdentifier:(NSInteger)identifier;
+-(JCAddressBookNumber *)addressBookNumberForIdentifier:(ABMultiValueIdentifier)identifier;
 
 @end

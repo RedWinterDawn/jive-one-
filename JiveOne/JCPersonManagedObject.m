@@ -32,6 +32,7 @@ NSString *const kJCPersonNameAttributeKey   = @"name";
 
 #pragma mark - Attributes -
 
+@dynamic type;
 @dynamic name;
 @dynamic firstName;
 @dynamic lastName;
