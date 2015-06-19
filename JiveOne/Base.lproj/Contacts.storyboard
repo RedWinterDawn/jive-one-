@@ -261,57 +261,41 @@
                         <sections>
                             <tableViewSection id="vLx-5C-XDl">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="lL3-3z-a46" customClass="JCEditableTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="axD-8F-grE" customClass="JCEditableTableViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lL3-3z-a46" id="UXj-HR-E5b">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="axD-8F-grE" id="g8x-KL-BdD">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="2mV-i0-rMN">
-                                                    <rect key="frame" x="112" y="7" width="480" height="30"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="F5j-DF-70M">
+                                                    <rect key="frame" x="13" y="7" width="579" height="30"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="q51-yK-4mt"/>
+                                                        <constraint firstAttribute="height" constant="30" id="nhX-Vk-Ylw"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     <connections>
-                                                        <action selector="nameChanged:" destination="Ab5-kr-ogH" eventType="editingChanged" id="qkr-tV-M24"/>
-                                                        <outlet property="delegate" destination="Ab5-kr-ogH" id="yfa-bf-8bl"/>
+                                                        <action selector="nameChanged:" destination="Ab5-kr-ogH" eventType="valueChanged" id="Tq7-Fs-LnD"/>
                                                     </connections>
                                                 </textField>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vUy-pf-7NS">
-                                                    <rect key="frame" x="14" y="11" width="91" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="91" id="3gl-qr-eOC"/>
-                                                        <constraint firstAttribute="height" constant="21" id="XlF-aX-Lun"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    </variation>
-                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="2mV-i0-rMN" secondAttribute="centerY" id="1Sm-8N-qny"/>
-                                                <constraint firstItem="2mV-i0-rMN" firstAttribute="leading" secondItem="vUy-pf-7NS" secondAttribute="trailing" constant="7" id="9uA-Op-6Nk"/>
-                                                <constraint firstItem="vUy-pf-7NS" firstAttribute="top" secondItem="UXj-HR-E5b" secondAttribute="top" constant="11" id="AEO-6H-AG5"/>
-                                                <constraint firstItem="vUy-pf-7NS" firstAttribute="leading" secondItem="UXj-HR-E5b" secondAttribute="leading" constant="14" id="FGH-bg-rDY"/>
-                                                <constraint firstItem="2mV-i0-rMN" firstAttribute="top" secondItem="UXj-HR-E5b" secondAttribute="topMargin" constant="-1" id="Fp0-gA-Rzn"/>
-                                                <constraint firstAttribute="trailing" secondItem="2mV-i0-rMN" secondAttribute="trailing" constant="8" id="Ql2-Yz-AFQ"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="2mV-i0-rMN" secondAttribute="trailing" constant="-7" id="pXq-ut-6MR"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="2mV-i0-rMN" secondAttribute="bottom" constant="-2" id="xoC-mM-JfL"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="F5j-DF-70M" secondAttribute="trailing" constant="-7" id="1HR-wd-Jdz"/>
+                                                <constraint firstAttribute="trailing" secondItem="F5j-DF-70M" secondAttribute="trailing" constant="8" id="78Y-a0-5FK"/>
+                                                <constraint firstAttribute="centerY" secondItem="F5j-DF-70M" secondAttribute="centerY" id="A7g-lz-CWv"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="F5j-DF-70M" secondAttribute="bottom" constant="-2" id="Cq4-NO-GzC"/>
+                                                <constraint firstItem="F5j-DF-70M" firstAttribute="leading" secondItem="g8x-KL-BdD" secondAttribute="leading" constant="13" id="IWY-fK-hf9"/>
+                                                <constraint firstItem="F5j-DF-70M" firstAttribute="top" secondItem="g8x-KL-BdD" secondAttribute="topMargin" constant="-1" id="pUU-y4-NkH"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="Fp0-gA-Rzn"/>
-                                                    <exclude reference="pXq-ut-6MR"/>
-                                                    <exclude reference="xoC-mM-JfL"/>
+                                                    <exclude reference="1HR-wd-Jdz"/>
+                                                    <exclude reference="pUU-y4-NkH"/>
+                                                    <exclude reference="Cq4-NO-GzC"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="textField" destination="2mV-i0-rMN" id="aaA-dx-X11"/>
+                                            <outlet property="textField" destination="F5j-DF-70M" id="dwk-ww-yuK"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="eaw-pQ-Kb3" customClass="JCEditableTableViewCell">
@@ -526,8 +510,7 @@
                         <outlet property="firstNameCell" destination="eaw-pQ-Kb3" id="Qx1-Zc-Z4M"/>
                         <outlet property="jiveIdCell" destination="3bl-Ff-KbF" id="DIJ-PR-VXa"/>
                         <outlet property="lastNameCell" destination="0zZ-CX-x0W" id="GVr-NW-rhX"/>
-                        <outlet property="nameCell" destination="lL3-3z-a46" id="JfJ-Yc-QKC"/>
-                        <outletCollection property="nameSectionCells" destination="lL3-3z-a46" id="qyx-pV-U69"/>
+                        <outlet property="nameCell" destination="axD-8F-grE" id="v7B-St-eFz"/>
                         <outletCollection property="nameSectionCells" destination="eaw-pQ-Kb3" id="gJw-Iu-xO3"/>
                         <outletCollection property="nameSectionCells" destination="0zZ-CX-x0W" id="MW0-S3-QwW"/>
                         <outletCollection property="editingCells" destination="act-KL-5FI" id="dl1-jh-4Su"/>
@@ -535,6 +518,7 @@
                         <outletCollection property="editingCells" destination="IJL-IJ-KH7" id="Sf2-dU-asp"/>
                         <outletCollection property="editingCells" destination="3Zu-iQ-WVB" id="iAM-ke-yzo"/>
                         <outletCollection property="numberSectionCells" destination="3bl-Ff-KbF" id="DXU-Dx-gZf"/>
+                        <outletCollection property="nameSectionCells" destination="axD-8F-grE" id="7Rv-22-mGF"/>
                         <segue destination="wCP-M4-bk8" kind="show" identifier="SelectPhoneType" id="DR2-2K-uSy"/>
                     </connections>
                 </tableViewController>
