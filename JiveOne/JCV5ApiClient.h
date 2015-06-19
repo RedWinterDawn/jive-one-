@@ -11,8 +11,6 @@
 
 @class User, Line, DID, Contact;
 
-typedef void(^JCV5ApiClientCompletionHandler)(BOOL success, id response, NSError *error);
-
 @interface JCV5ApiClient : JCApiClient
 
 + (instancetype)sharedClient;
@@ -22,51 +20,51 @@ typedef void(^JCV5ApiClientCompletionHandler)(BOOL success, id response, NSError
 #pragma mark - PBX INFO -
 
 + (void)requestPBXInforForUser:(User *)user
-                     competion:(JCV5ApiClientCompletionHandler)completion;
+                     competion:(JCApiClientCompletionHandler)completion;
 
 #pragma mark - Internal Extensions -
 
 + (void)downloadInternalExtensionsForLine:(Line *)line
-                               completion:(JCV5ApiClientCompletionHandler)completion;
+                               completion:(JCApiClientCompletionHandler)completion;
 
 #pragma mark - Contacts -
 
-+ (void)downloadContactsWithCompletion:(JCV5ApiClientCompletionHandler)completion;
++ (void)downloadContactsWithCompletion:(JCApiClientCompletionHandler)completion;
 
 + (void)downloadContact:(Contact *)contact
-             completion:(JCV5ApiClientCompletionHandler)completion;
+             completion:(JCApiClientCompletionHandler)completion;
 
 + (void)uploadContact:(Contact *)contact
-           completion:(JCV5ApiClientCompletionHandler)completion;
+           completion:(JCApiClientCompletionHandler)completion;
 
 + (void)deleteContact:(Contact *)contact
-           conpletion:(JCV5ApiClientCompletionHandler)completion;
+           conpletion:(JCApiClientCompletionHandler)completion;
 
 #pragma mark - SMS Messaging -
 
 + (void)sendSMSMessageWithParameters:(NSDictionary *)parameters
-                          completion:(JCV5ApiClientCompletionHandler)completion;
+                          completion:(JCApiClientCompletionHandler)completion;
 
 + (void)downloadMessagesDigestForDID:(DID *)did
-                         completion:(JCV5ApiClientCompletionHandler)completion;
+                         completion:(JCApiClientCompletionHandler)completion;
 
 + (void)downloadMessagesForDID:(DID *)did
-                    completion:(JCV5ApiClientCompletionHandler)completion;
+                    completion:(JCApiClientCompletionHandler)completion;
 
 + (void)downloadMessagesForDID:(DID *)did
            toConversationGroup:(id<JCConversationGroupObject>)conversationGroup
-                    completion:(JCV5ApiClientCompletionHandler)completion;
+                    completion:(JCApiClientCompletionHandler)completion;
 
 #pragma mark - SMS Message Blocking -
 
 + (void)blockSMSMessageForDID:(DID *)did
                        number:(id<JCPhoneNumberDataSource>)phoneNumber
-                   completion:(JCV5ApiClientCompletionHandler)completion;
+                   completion:(JCApiClientCompletionHandler)completion;
 
 + (void)unblockSMSMessageForDID:(DID *)did
                          number:(id<JCPhoneNumberDataSource>)phoneNumber
-                     completion:(JCV5ApiClientCompletionHandler)completion;
+                     completion:(JCApiClientCompletionHandler)completion;
 
 + (void)downloadMessagesBlockedForDID:(DID *)did
-                           completion:(JCV5ApiClientCompletionHandler)completion;
+                           completion:(JCApiClientCompletionHandler)completion;
 @end
