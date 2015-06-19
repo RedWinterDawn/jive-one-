@@ -224,6 +224,19 @@
     }
 }
 
+-(void)deleteObject:(id<NSObject>)object
+{
+    if ([object isKindOfClass:[Contact class]]) {
+        Contact *contact = (Contact *)object;
+        [self showStatus:NSLocalizedString(@"Deleting...", @"Deleting a contact")];
+        [contact markForDeletion:^(BOOL success, NSError *error) {
+            [self hideStatus];
+        }];
+    } else {
+        [super deleteObject:object];
+    }
+}
+
 #pragma mark UISearchBarDelegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
