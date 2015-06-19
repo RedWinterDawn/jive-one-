@@ -3,31 +3,31 @@
 "Kji-Db-lbK.title" = "Claro";
 
 /* Class = "UINavigationController"; title = "Keypad"; ObjectID = "G3s-tk-XlH"; */
-"G3s-tk-XlH.title" = "Keypad";
+"G3s-tk-XlH.title" = "teclado";
 
 /* Class = "UINavigationController"; title = "History"; ObjectID = "LGG-G6-Qgm"; */
-"LGG-G6-Qgm.title" = "History";
+"LGG-G6-Qgm.title" = "História";
 
 /* Class = "UITabBarItem"; title = "Voicemail"; ObjectID = "RN6-p8-PVT"; */
 "RN6-p8-PVT.title" = "Voicemail";
 
 /* Class = "UISegmentedControl"; UHR-O3-J6m.segmentTitles[0] = "All"; ObjectID = "UHR-O3-J6m"; */
-"UHR-O3-J6m.segmentTitles[0]" = "All";
+"UHR-O3-J6m.segmentTitles[0]" = "tudo";
 
 /* Class = "UISegmentedControl"; UHR-O3-J6m.segmentTitles[1] = "Missed"; ObjectID = "UHR-O3-J6m"; */
-"UHR-O3-J6m.segmentTitles[1]" = "Missed";
+"UHR-O3-J6m.segmentTitles[1]" = "Faltou";
 
 /* Class = "UILabel"; text = "Confiance: %@"; ObjectID = "UHm-eu-MVg"; */
-"UHm-eu-MVg.text" = "Confiance: %@";
+"UHm-eu-MVg.text" = "Confiança: %@";
 
 /* Class = "UILabel"; text = "Word count: %i"; ObjectID = "VMi-W8-6Ys"; */
-"VMi-W8-6Ys.text" = "Word count: %i";
+"VMi-W8-6Ys.text" = "A contagem da palavra: %i";
 
 /* Class = "UITabBarItem"; title = "History"; ObjectID = "WRq-PA-NpD"; */
-"WRq-PA-NpD.title" = "History";
+"WRq-PA-NpD.title" = "História";
 
 /* Class = "UILabel"; text = "Phone"; ObjectID = "XXV-Pa-tfR"; */
-"XXV-Pa-tfR.text" = "Phone";
+"XXV-Pa-tfR.text" = "telefone";
 
 /* Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "Z7Z-Gy-oE8"; */
 "Z7Z-Gy-oE8.title" = "Voicemail";
@@ -36,13 +36,13 @@
 "aJF-xB-iIc.title" = "Voicemail";
 
 /* Class = "UITabBarItem"; title = "Keypad"; ObjectID = "bsn-3T-LYb"; */
-"bsn-3T-LYb.title" = "Keypad";
+"bsn-3T-LYb.title" = "teclado";
 
 /* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "cHI-JS-mn5"; */
 "cHI-JS-mn5.title" = "Claro";
 
 /* Class = "UITabBarItem"; title = "Phone"; ObjectID = "eFd-Wl-GUh"; */
-"eFd-Wl-GUh.title" = "Phone";
+"eFd-Wl-GUh.title" = "telefone";
 
 /* Class = "UINavigationItem"; title = "Call History"; ObjectID = "k2g-vl-Yo3"; */
-"k2g-vl-Yo3.title" = "Call History";
+"k2g-vl-Yo3.title" = "Histórico de chamadas";

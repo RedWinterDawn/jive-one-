@@ -1,0 +1,57 @@
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "82N-g7-bfh"; */
+"82N-g7-bfh.text" = "Detail";
+
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "A3I-As-eGt"; */
+"A3I-As-eGt.placeholder" = "Search";
+
+/* Class = "UIButton"; normalTitle = "★"; ObjectID = "GZo-rs-Vym"; */
+"GZo-rs-Vym.normalTitle" = "★";
+
+/* Class = "UILabel"; text = "Extension"; ObjectID = "Hhh-5d-Rvp"; */
+"Hhh-5d-Rvp.text" = "Extension";
+
+/* Class = "UILabel"; text = "name"; ObjectID = "IeK-gQ-uSI"; */
+"IeK-gQ-uSI.text" = "name";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "MDi-Ax-x1V"; */
+"MDi-Ax-x1V.text" = "Title";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "U6D-l3-ORb"; */
+"U6D-l3-ORb.text" = "Name";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "XHn-eP-nWq"; */
+"XHn-eP-nWq.text" = "Label";
+
+/* Class = "UILabel"; text = "Jive ID"; ObjectID = "YmX-dQ-bCu"; */
+"YmX-dQ-bCu.text" = "Jive ID";
+
+/* Class = "UILabel"; text = "name"; ObjectID = "Zkl-gn-z83"; */
+"Zkl-gn-z83.text" = "name";
+
+/* Class = "UISegmentedControl"; ZlM-6f-NMM.segmentTitles[0] = "Contacts"; ObjectID = "ZlM-6f-NMM"; */
+"ZlM-6f-NMM.segmentTitles[0]" = "Contacts";
+
+/* Class = "UISegmentedControl"; ZlM-6f-NMM.segmentTitles[1] = "Groups"; ObjectID = "ZlM-6f-NMM"; */
+"ZlM-6f-NMM.segmentTitles[1]" = "Groups";
+
+/* Class = "UISegmentedControl"; ZlM-6f-NMM.segmentTitles[2] = "Local"; ObjectID = "ZlM-6f-NMM"; */
+"ZlM-6f-NMM.segmentTitles[2]" = "Local";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "dp0-9n-ESH"; */
+"dp0-9n-ESH.text" = "Label";
+
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "gyL-0L-l47"; */
+"gyL-0L-l47.placeholder" = "Search";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "rHc-eK-MlA"; */
+"rHc-eK-MlA.text" = "Detail";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "uSS-cb-HzU"; */
+"uSS-cb-HzU.text" = "Detail";
+
+/* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "vNR-6x-fXV"; */
+"vNR-6x-fXV.title" = "Contacts";
+
+/* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "z08-gl-NAi"; */
+"z08-gl-NAi.title" = "Contacts";
