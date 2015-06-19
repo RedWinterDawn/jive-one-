@@ -7,10 +7,11 @@
 //
 
 #import "JCPersonManagedObject.h"
+#import "JCPhoneNumberDataSourceUtils.h"
 #import "NSManagedObject+Additions.h"
 
-NSString *const kPersonFirstNameAttributeKey = @"firstName";
-NSString *const kPersonLastNameAttributeKey = @"lastName";
+NSString *const kJCPersonT9AttributeKey     = @"t9";
+NSString *const kJCPersonNameAttributeKey   = @"name";
 
 @implementation JCPersonManagedObject
 
@@ -18,19 +19,12 @@ NSString *const kPersonLastNameAttributeKey = @"lastName";
 {
     if (![self isDeleted])
     {
-        NSString *name = self.name;
+        // generates the t9 representation of the name of the number.
+        NSString *name = self.firstNameFirstName;
         if(name) {
-            NSArray *components = [name componentsSeparatedByString:@" "];
-            if (components.count > 1) {
-                NSString *firstName = [self primitiveValueForKey:kPersonFirstNameAttributeKey];
-                NSString *lastName = [self primitiveValueForKey:kPersonLastNameAttributeKey];
-                if (!firstName) {
-                    [self setPrimitiveValue:components.firstObject forKey:kPersonFirstNameAttributeKey];
-                }
-                if (!lastName) {
-                    [self setPrimitiveValue:components.lastObject forKey:kPersonLastNameAttributeKey];
-                }
-            }
+            NSString *t9 = [JCPhoneNumberDataSourceUtils t9StringForString:name];
+            [self setPrimitiveValue:name forKey:kJCPersonNameAttributeKey];
+            [self setPrimitiveValue:t9 forKey:kJCPersonT9AttributeKey];
         }
     }
     [super willSave];
@@ -38,8 +32,11 @@ NSString *const kPersonLastNameAttributeKey = @"lastName";
 
 #pragma mark - Attributes -
 
+@dynamic type;
+@dynamic name;
 @dynamic firstName;
 @dynamic lastName;
+@dynamic t9;
 
 #pragma mark - Transient Protocol Methods -
 
@@ -54,11 +51,6 @@ NSString *const kPersonLastNameAttributeKey = @"lastName";
     if (firstName.length > 0) {
         return [[firstName substringToIndex:1] uppercaseStringWithLocale:firstName.locale];
     }
-    
-    NSString *name = self.name;
-    if (name.length > 0) {
-        return [[name substringToIndex:1] uppercaseStringWithLocale:name.locale];
-    }
     return nil;
 }
 
@@ -72,11 +64,6 @@ NSString *const kPersonLastNameAttributeKey = @"lastName";
     NSString *lastName = self.lastName;
     if (lastName.length > 0) {
         return [[lastName substringToIndex:1] uppercaseStringWithLocale:lastName.locale];
-    }
-    
-    NSString *name = self.name;
-    if (name.length > 0) {
-        return [[name substringToIndex:1] uppercaseStringWithLocale:name.locale];
     }
     return nil;
 }
@@ -93,7 +80,12 @@ NSString *const kPersonLastNameAttributeKey = @"lastName";
 
 -(NSString *)firstNameFirstName
 {
-    return self.name;
+    NSString *firstName = self.firstName;
+    NSString *lastName = self.lastName;
+    if (firstName && lastName) {
+        return [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+    }
+    return firstName;
 }
 
 -(NSString *)lastNameFirstName
@@ -101,6 +93,70 @@ NSString *const kPersonLastNameAttributeKey = @"lastName";
     return [NSString stringWithFormat:@"%@, %@", self.lastName, self.firstName];
 }
 
+#pragma mark - JCPhoneNumberDataSource Protocol -
+
+-(NSString *)titleText
+{
+    return self.name;
+}
+
+-(NSString *)detailText
+{
+    return self.formattedNumber;
+}
+
+-(NSString *)name
+{
+    return self.firstNameFirstName;
+}
+
+-(NSString *)number
+{
+    return nil;
+}
+
+-(NSString *)dialableNumber
+{
+    return [JCPhoneNumberDataSourceUtils dialableStringForPhoneNumber:self];
+}
+
+-(NSString *)formattedNumber
+{
+    return [JCPhoneNumberDataSourceUtils formattedPhoneNumberForPhoneNumber:self];
+}
+
+-(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    return [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword
+                                                         font:font
+                                                        color:color
+                                                  phoneNumber:self];
+}
+
+-(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    return [JCPhoneNumberDataSourceUtils detailTextWithKeyword:keyword
+                                                          font:font
+                                                         color:color
+                                                   phoneNumber:self];
+}
+
+-(BOOL)containsKeyword:(NSString *)keyword
+{
+    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+                                     containsKeyword:keyword];
+}
+
+-(BOOL)containsT9Keyword:(NSString *)keyword
+{
+    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+                                   containsT9Keyword:keyword];
+}
+
+-(BOOL)isEqualToPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
+{
+    return [JCPhoneNumberDataSourceUtils phoneNumber:self isEqualToPhoneNumber:phoneNumber];
+}
 
 
 @end

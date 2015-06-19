@@ -7,7 +7,7 @@
 //
 
 #import "JCSMSConversationGroup.h"
-#import "LocalContact.h"
+#import "PhoneNumber.h"
 #import "DID.h"
 #import "Common.h"
 
@@ -28,7 +28,7 @@
 {
     NSString *name;
     if (smsMessage) {
-        name = smsMessage.localContact.name;
+        name = smsMessage.phoneNumber.name;
         if (!name) {
             name = phoneNumber.name;
         }

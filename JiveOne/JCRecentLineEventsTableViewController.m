@@ -27,7 +27,7 @@
 #import "JCNonVisualVoicemailViewController.h"
 #import "JCVoicemailDetailViewController.h"
 #import "JCStoryboardLoaderViewController.h"
-#import "JCContactDetailTableViewController.h"
+#import "JCContactDetailViewController.h"
 #import "UIDevice+Additions.h"
 
 NSString *const kJCHistoryCellReuseIdentifier = @"HistoryCell";
@@ -106,9 +106,9 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
         recentEventCell.name.text     = recentLineEvent.titleText;
         recentEventCell.number.text   = recentLineEvent.detailText;
         recentEventCell.read          = recentLineEvent.isRead;
-        Contact *contact = recentLineEvent.contact;
-        if (contact) {
-            recentEventCell.identifier = contact.jrn;
+        InternalExtension *internalExtension = recentLineEvent.internalExtension;
+        if (internalExtension) {
+            recentEventCell.identifier = internalExtension.jrn;
         }
     }
     
@@ -151,12 +151,12 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
         voicemailDetailViewController.delegate = self;
     }
     
-    else if ([viewController isKindOfClass:[JCContactDetailTableViewController class]] && recentLineEvent){
-        Contact *contact = recentLineEvent.contact;
-        NSArray *localContacts = recentLineEvent.localContacts.allObjects;
+    else if ([viewController isKindOfClass:[JCContactDetailViewController class]] && recentLineEvent){
+        InternalExtension *internalExtension = recentLineEvent.internalExtension;
+        NSArray *localContacts = recentLineEvent.phoneNumbers.allObjects;
         id<JCPhoneNumberDataSource> phoneNumber;
-        if (contact) {
-            phoneNumber = contact;
+        if (internalExtension) {
+            phoneNumber = internalExtension;
         }
         else if (localContacts.count > 0) {
             if (localContacts.count > 1) {
@@ -171,7 +171,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
                                                             forPbx:recentLineEvent.line.pbx
                                                      excludingLine:recentLineEvent.line];
         }
-        ((JCContactDetailTableViewController *)viewController).phoneNumber = phoneNumber;
+        ((JCContactDetailViewController *)viewController).phoneNumber = phoneNumber;
     }
 }
 

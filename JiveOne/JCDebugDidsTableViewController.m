@@ -30,7 +30,7 @@
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCDebugDIDTableViewController class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        ((JCDebugDIDTableViewController *)viewController).did = [self objectAtIndexPath:indexPath];
+        ((JCDebugDIDTableViewController *)viewController).did = (DID *)[self objectAtIndexPath:indexPath];
     }
 }
 

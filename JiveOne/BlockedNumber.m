@@ -10,7 +10,7 @@
 
 // Managed Objects
 #import "DID.h"
-#import "LocalContact.h"
+#import "PhoneNumber.h"
 #import "NSManagedObject+Additions.h"
 
 NSString *const kBlockedContactMarkForDeletionAttribute = @"markForDeletion";

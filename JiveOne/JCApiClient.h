@@ -11,6 +11,8 @@
 #import <AFNetworking/AFNetworking.h>
 #import "JCError.h"
 
+typedef void(^JCApiClientCompletionHandler)(BOOL success, id response, NSError *error);
+
 @interface JCApiClient : NSObject
 {
     AFHTTPRequestOperationManager *_manager;
@@ -21,6 +23,30 @@
 -(instancetype)initWithBaseURL:(NSURL *)url;
 
 + (void)cancelAllOperations;
+
++(void)getWithPath:(NSString *)path
+        parameters:(NSDictionary *)parameters
+ requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+           retries:(NSUInteger)retries
+        completion:(JCApiClientCompletionHandler)completion;
+
++(void)putWithPath:(NSString *)path
+        parameters:(NSDictionary *)parameters
+ requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+           retries:(NSUInteger)retries
+        completion:(JCApiClientCompletionHandler)completion;
+
++(void)postWithPath:(NSString *)path
+         parameters:(NSDictionary *)parameters
+  requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+            retries:(NSUInteger)retries
+         completion:(JCApiClientCompletionHandler)completion;
+
++(void)deleteWithPath:(NSString *)path
+           parameters:(NSDictionary *)parameters
+    requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+              retries:(NSUInteger)retries
+           completion:(JCApiClientCompletionHandler)completion;
 
 @end
 

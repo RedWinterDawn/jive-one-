@@ -35,7 +35,7 @@
 #import "Line.h"
 #import "User.h"
 
-#import "Contact+V5Client.h"
+#import "InternalExtension+V5Client.h"
 #import "Voicemail+V5Client.h"
 #import "SMSMessage+V5Client.h"
 #import "BlockedNumber+V5Client.h"
@@ -202,7 +202,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     // Get Contacts. Once we have contacts, we subscribe to their presence, fetch voicemails trying
     // to link contacts to thier voicemail if in the pbx. Only fetch voicmails, and open sockets for
     // v5 pbxs. If we are on v4, we disconnect, and do not fetch voicemails.
-    [Contact downloadContactsForLine:line complete:^(BOOL success, NSError *error) {
+    [InternalExtension downloadInternalExtensionsForLine:line complete:^(BOOL success, NSError *error) {
         
         // Fetch Voicemails (feature flagged only for v5 clients). Since we try to link the
         // voicemails to thier contacts, we try to download/update the contacts list first, then

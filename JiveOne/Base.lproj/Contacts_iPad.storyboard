@@ -37,10 +37,10 @@
             </objects>
             <point key="canvasLocation" x="252" y="216"/>
         </scene>
-        <!--Contact Detail Table View Controller-->
+        <!--Contact Detail View Controller-->
         <scene sceneID="KIP-rl-sjN">
             <objects>
-                <tableViewController storyboardIdentifier="ContactsDetailViewTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PY2-Q9-cLS" customClass="JCContactDetailTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ContactsDetailViewTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PY2-Q9-cLS" customClass="JCContactDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="sIa-Ho-YGp">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

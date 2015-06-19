@@ -10,6 +10,8 @@
 
 @implementation JCConferenceCallCardViewCell
 
+@dynamic callCard;
+
 -(void)setCallCard:(JCConferenceCallCard *)callCard
 {
     [super setCallCard:callCard];

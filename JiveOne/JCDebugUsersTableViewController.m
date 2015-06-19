@@ -29,7 +29,7 @@
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCDebugUserTableViewController class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        ((JCDebugUserTableViewController *)viewController).user = [self objectAtIndexPath:indexPath];
+        ((JCDebugUserTableViewController *)viewController).user = (User *)[self objectAtIndexPath:indexPath];
     }
 }
 

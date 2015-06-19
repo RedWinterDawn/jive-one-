@@ -12,7 +12,7 @@
 
 #define INVALID_SESSION_ID -1
 
-@class Contact;
+@class InternalExtension;
 
 extern NSString *const kJCLineSessionStateKey;
 extern NSString *const kJCLineSessionHoldKey;

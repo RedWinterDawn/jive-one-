@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="55" id="pCE-hA-Rs3" customClass="JCContactPhoneNumberTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pCE-hA-Rs3" id="H63-Lq-Qpo">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qxF-ca-CTn">
+                        <rect key="frame" x="13" y="6" width="241" height="17"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17" id="S60-SP-DJ1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                        <color key="textColor" red="0.0" green="0.46666666670000001" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXC-zw-90Y">
+                        <rect key="frame" x="13" y="24" width="241" height="24"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="dMX-l0-EzE"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-1N-H6m">
+                        <rect key="frame" x="254" y="8" width="58" height="38"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cmF-Jd-jFj">
+                                <rect key="frame" x="28" y="5" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="RKF-Wo-fsq"/>
+                                    <constraint firstAttribute="width" secondItem="cmF-Jd-jFj" secondAttribute="height" multiplier="1:1" id="SO8-qb-XCw"/>
+                                    <constraint firstAttribute="height" constant="30" id="hjs-W4-2Ql"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="green-phone">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="hjs-W4-2Ql"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="dial:" destination="pCE-hA-Rs3" eventType="touchUpInside" id="RfW-bs-pKI"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cmF-Jd-jFj" firstAttribute="top" secondItem="W5Y-1N-H6m" secondAttribute="top" constant="5" id="U0G-1c-1VY"/>
+                            <constraint firstAttribute="trailing" secondItem="cmF-Jd-jFj" secondAttribute="trailing" constant="5" id="eVi-Ig-wcU"/>
+                            <constraint firstAttribute="width" constant="58" id="liE-j4-J2z"/>
+                            <constraint firstAttribute="centerY" secondItem="cmF-Jd-jFj" secondAttribute="centerY" constant="1.5" id="q7D-tL-XXp"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="U0G-1c-1VY"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="EXC-zw-90Y" firstAttribute="leading" secondItem="H63-Lq-Qpo" secondAttribute="leading" constant="13" id="4Ea-i2-Qsv"/>
+                    <constraint firstAttribute="trailing" secondItem="EXC-zw-90Y" secondAttribute="trailing" constant="66" id="72Y-tY-hUs"/>
+                    <constraint firstItem="EXC-zw-90Y" firstAttribute="top" secondItem="H63-Lq-Qpo" secondAttribute="top" constant="24" id="8L8-CS-kZR"/>
+                    <constraint firstItem="W5Y-1N-H6m" firstAttribute="trailing" secondItem="H63-Lq-Qpo" secondAttribute="trailingMargin" id="Fbm-90-AHq"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="W5Y-1N-H6m" secondAttribute="bottom" id="FeR-wh-3uD"/>
+                    <constraint firstAttribute="trailing" secondItem="qxF-ca-CTn" secondAttribute="trailing" constant="66" id="JBf-8J-kzt"/>
+                    <constraint firstItem="qxF-ca-CTn" firstAttribute="leading" secondItem="H63-Lq-Qpo" secondAttribute="leading" constant="13" id="Wcw-TH-G8o"/>
+                    <constraint firstItem="qxF-ca-CTn" firstAttribute="top" secondItem="H63-Lq-Qpo" secondAttribute="top" constant="6" id="Yha-h7-ogB"/>
+                    <constraint firstAttribute="bottom" secondItem="EXC-zw-90Y" secondAttribute="bottom" constant="6" id="wVp-hS-V8H"/>
+                    <constraint firstItem="W5Y-1N-H6m" firstAttribute="top" secondItem="H63-Lq-Qpo" secondAttribute="topMargin" id="ykr-Gy-peB"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="detailEditLabel" destination="vMM-3R-dza" id="gvZ-MN-cLO"/>
+                <outlet property="detailTextLabel" destination="qxF-ca-CTn" id="Qli-y1-Swy"/>
+                <outlet property="editView" destination="w25-cD-cIq" id="AJ2-h8-My1"/>
+                <outlet property="textField" destination="4wI-hk-irE" id="wjs-9p-2yM"/>
+                <outlet property="textLabel" destination="EXC-zw-90Y" id="vPp-Wh-kD5"/>
+            </connections>
+            <point key="canvasLocation" x="432" y="347"/>
+        </tableViewCell>
+        <view contentMode="scaleToFill" id="w25-cD-cIq" userLabel="Edit View">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray-accesibility-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="2X3-56-6H3">
+                    <rect key="frame" x="70" y="12" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="2X3-56-6H3" secondAttribute="height" multiplier="1:1" id="4w4-5B-z64"/>
+                        <constraint firstAttribute="width" constant="25" id="otf-jz-yHg"/>
+                    </constraints>
+                </imageView>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4wI-hk-irE">
+                    <rect key="frame" x="100" y="0.0" width="220" height="50"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                    <connections>
+                        <action selector="textFieldValueChanged:" destination="pCE-hA-Rs3" eventType="editingChanged" id="iuL-fd-OJq"/>
+                    </connections>
+                </textField>
+                <label contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMM-3R-dza" customClass="JCBorederLabel">
+                    <rect key="frame" x="10" y="0.0" width="80" height="50"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="Mf6-Tz-0cg"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="0.34901960780000002" green="0.64313725489999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="Eoa-nx-CMe" appends="YES" id="HjF-7H-j81"/>
+                    </connections>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="vMM-3R-dza" firstAttribute="top" secondItem="w25-cD-cIq" secondAttribute="top" id="0QG-Cc-sze"/>
+                <constraint firstItem="4wI-hk-irE" firstAttribute="top" secondItem="w25-cD-cIq" secondAttribute="top" id="12b-p9-pxr"/>
+                <constraint firstItem="2X3-56-6H3" firstAttribute="centerY" secondItem="vMM-3R-dza" secondAttribute="centerY" id="33u-1H-kLP"/>
+                <constraint firstItem="2X3-56-6H3" firstAttribute="trailing" secondItem="vMM-3R-dza" secondAttribute="trailing" constant="5" id="EQG-zb-5y8"/>
+                <constraint firstAttribute="bottom" secondItem="vMM-3R-dza" secondAttribute="bottom" id="FAU-fs-SeY"/>
+                <constraint firstAttribute="trailing" secondItem="4wI-hk-irE" secondAttribute="trailing" id="JSk-KW-hVD"/>
+                <constraint firstAttribute="bottom" secondItem="4wI-hk-irE" secondAttribute="bottom" id="LMu-Xv-F2i"/>
+                <constraint firstItem="vMM-3R-dza" firstAttribute="leading" secondItem="w25-cD-cIq" secondAttribute="leading" constant="10" id="hed-RK-bfp"/>
+                <constraint firstItem="4wI-hk-irE" firstAttribute="leading" secondItem="w25-cD-cIq" secondAttribute="leading" constant="100" id="itn-5f-0Im"/>
+                <constraint firstItem="4wI-hk-irE" firstAttribute="leading" secondItem="vMM-3R-dza" secondAttribute="trailing" constant="19" id="o6f-hq-qmh"/>
+                <constraint firstItem="4wI-hk-irE" firstAttribute="leading" secondItem="vMM-3R-dza" secondAttribute="trailing" constant="19" id="v0Y-sb-Zhe"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="o6f-hq-qmh"/>
+                    <exclude reference="v0Y-sb-Zhe"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="432" y="453"/>
+        </view>
+        <tapGestureRecognizer id="Eoa-nx-CMe">
+            <connections>
+                <action selector="editDetail:" destination="pCE-hA-Rs3" id="JCt-4v-WVp"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="gray-accesibility-arrow" width="50" height="50"/>
+        <image name="green-phone" width="30" height="30"/>
+    </resources>
+</document>

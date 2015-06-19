@@ -13,6 +13,8 @@
 @implementation User
 
 @dynamic jiveUserId;
+
+@dynamic contacts;
 @dynamic pbxs;
 
 @end

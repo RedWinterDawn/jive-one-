@@ -6,28 +6,28 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCPersonManagedObject.h"
-#import "JCAddressBookPerson.h"
+#import "JCPhoneNumberManagedObject.h"
 #import "JCAddressBookNumber.h"
 
+@class Contact;
 @class SMSMessage;
 @class RecentLineEvent;
 
-@interface LocalContact : JCPersonManagedObject
+@interface PhoneNumber : JCPhoneNumberManagedObject
 
-// Attributes
-@property (nonatomic, strong) NSString *personHash;
-@property (nonatomic) NSInteger personId;
+@property (nonatomic) NSInteger order;
+@property (nonatomic, strong) NSString *type;
 
 // Relationships
 @property (nonatomic, retain) NSSet *smsMessages;
 @property (nonatomic, retain) NSSet *lineEvents;
+@property (nonatomic, retain) Contact *contact;
 
 @property (nonatomic, strong) JCAddressBookNumber *phoneNumber;
 
 @end
 
-@interface LocalContact (CoreDataGeneratedAccessors)
+@interface PhoneNumber (CoreDataGeneratedAccessors)
 
 - (void)addSmsMessagesObject:(SMSMessage *)value;
 - (void)removeSmsMessagesObject:(SMSMessage *)value;
@@ -41,8 +41,6 @@
 
 @end
 
-@interface LocalContact (JCAddressBook)
-
-+(LocalContact *)localContactForAddressBookNumber:(JCAddressBookNumber *)addressBookNumber context:(NSManagedObjectContext *)context;
+@interface PhoneNumber (JCAddressBook)
 
 @end

@@ -9,7 +9,7 @@
 #import "SMSMessage.h"
 
 #import "DID.h"
-#import "LocalContact.h"
+#import "PhoneNumber.h"
 
 #import "NSManagedObject+Additions.h"
 
@@ -32,14 +32,14 @@ NSString *const kSMSMessageInboundAttributeKey = @"inbound";
 #pragma mark - Relationships -
 
 @dynamic did;
-@dynamic localContact;
+@dynamic phoneNumber;
 
 #pragma mark - Transient Properties -
 
 -(NSString *)senderId
 {
     if (self.isInbound) {
-        return self.localContact.number;
+        return self.phoneNumber.number;
     }
     return self.did.number;
 }
@@ -47,7 +47,7 @@ NSString *const kSMSMessageInboundAttributeKey = @"inbound";
 -(NSString *)senderDisplayName
 {
     if (self.isInbound) {
-        return self.localContact.name;
+        return self.phoneNumber.name;
     }
     return NSLocalizedString(@"me", nil);
 }
@@ -72,21 +72,21 @@ NSString *const kSMSMessageInboundAttributeKey = @"inbound";
 {
     self.messageGroupId = number;
     
-    LocalContact *localContact = [LocalContact MR_findFirstByAttribute:NSStringFromSelector(@selector(number))
+    PhoneNumber *phoneNumber = [PhoneNumber MR_findFirstByAttribute:NSStringFromSelector(@selector(number))
                                                              withValue:number
                                                              inContext:self.managedObjectContext];
     
     
-    if (!localContact) {
-        localContact = [LocalContact MR_createEntityInContext:self.managedObjectContext];
-        localContact.number = number;
+    if (!phoneNumber) {
+        phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
+        phoneNumber.number = number;
         if (name) {
-            localContact.name = name;
+            phoneNumber.name = name;
         }
     }
     
-    if (self.localContact != localContact) {
-        self.localContact = localContact;
+    if (self.phoneNumber != phoneNumber) {
+        self.phoneNumber = phoneNumber;
     }
 }
 

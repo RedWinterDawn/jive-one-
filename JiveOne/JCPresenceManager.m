@@ -21,7 +21,7 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
 
 @interface JCPresenceManager ()
 {
-    NSMutableArray *_lines;
+    NSMutableArray *_extensions;
     PBX *_pbx;
 }
 
@@ -43,18 +43,18 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
 }
 
 
--(JCLinePresence *)linePresenceForContact:(Contact *)contact
+-(JCLinePresence *)linePresenceForContact:(InternalExtension *)contact
 {
     return [self linePresenceForIdentifier:contact.jrn];
 }
 
 -(JCLinePresence *)linePresenceForIdentifier:(NSString *)identifier
 {
-    if (!_lines) {
+    if (!_extensions) {
         return nil;
     }
     
-    for (JCLinePresence *linePresence in _lines) {
+    for (JCLinePresence *linePresence in _extensions) {
         if ([linePresence.identfier isEqualToString:identifier]) {
             return linePresence;
         }
@@ -140,19 +140,12 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
     if (![JCAppSettings sharedSettings].isPresenceEnabled) {
         return;
     }
-
-    NSSet *lines = pbx.lines;
-    for (Line *line in lines) {
-        [_lines addObject:[[JCLinePresence alloc] initWithLineIdentifer:line.jrn]];
-        [JCSocket subscribeToSocketEventsWithIdentifer:line.jrn entity:line.jrn type:@"dialog"];
-    }
     
-    // Create a line presence object to represent the contact.
-    NSSet *contacts = pbx.contacts;
-    _lines = [NSMutableArray arrayWithCapacity:contacts.count];
-    for (Contact *contact in contacts) {
-        [_lines addObject:[[JCLinePresence alloc] initWithLineIdentifer:contact.jrn]];
-        [JCSocket subscribeToSocketEventsWithIdentifer:contact.jrn entity:contact.jrn type:@"dialog"];
+    NSSet *extensions = pbx.extensions;
+    _extensions = [NSMutableArray arrayWithCapacity:extensions.count];
+    for (Extension *extension in extensions) {
+        [_extensions addObject:[[JCLinePresence alloc] initWithLineIdentifer:extension.jrn]];
+        [JCSocket subscribeToSocketEventsWithIdentifer:extension.jrn entity:extension.jrn type:@"dialog"];
     }
     
     [self postNotificationNamed:kJCPresenceManagerLinesChangedNotification];
@@ -162,7 +155,7 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
 {
     [JCSocket unsubscribeToSocketEvents:^(BOOL success, NSError *error) {
         if (success) {
-            _lines = nil;
+            _extensions = nil;
             [self postNotificationNamed:kJCPresenceManagerLinesChangedNotification];
         }
     }];

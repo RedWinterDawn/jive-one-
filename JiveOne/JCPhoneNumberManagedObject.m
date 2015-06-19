@@ -17,6 +17,7 @@ NSString *const kPersonT9AttributeKey = @"t9";
 {
     if (![self isDeleted])
     {
+        // generates the t9 representation of the name of the number.
         NSString *name = self.name;
         if(name) {
             NSString *t9 = [JCPhoneNumberDataSourceUtils t9StringForString:name];
@@ -28,9 +29,21 @@ NSString *const kPersonT9AttributeKey = @"t9";
 
 #pragma mark - Attributes -
 
+@dynamic type;
 @dynamic name;
 @dynamic number;
 @dynamic t9;
+
+#pragma mark - Transient Properties -
+
+-(NSString *)firstInitial
+{
+    NSString *name = self.name;
+    if (name.length > 0) {
+        return [[name substringToIndex:1] uppercaseStringWithLocale:name.locale];
+    }
+    return nil;
+}
 
 #pragma mark - JCPhoneNumberDataSource Protocol -
 
@@ -41,7 +54,12 @@ NSString *const kPersonT9AttributeKey = @"t9";
 
 -(NSString *)detailText
 {
-    return self.formattedNumber;
+    NSString *formattedNumber = self.formattedNumber;
+    NSString *type = self.type;
+    if (type) {
+        return [NSString stringWithFormat:@"%@: %@", type, formattedNumber];
+    }
+    return formattedNumber;
 }
 
 -(NSString *)dialableNumber
