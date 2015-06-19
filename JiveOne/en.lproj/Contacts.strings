@@ -1,9 +1,24 @@
 
+/* Class = "UILabel"; text = "Detail"; ObjectID = "0Ib-w3-Hbh"; */
+"0Ib-w3-Hbh.text" = "Detail";
+
+/* Class = "UILabel"; text = "name"; ObjectID = "4Ry-Fo-vlb"; */
+"4Ry-Fo-vlb.text" = "name";
+
 /* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "7JZ-gb-ulN"; */
-"DqX-dl-Ngq.title" = "Contacts";
+"7JZ-gb-ulN.title" = "Contacts";
+
+/* Class = "UIButton"; normalTitle = "★"; ObjectID = "AH7-6r-D1F"; */
+"AH7-6r-D1F.normalTitle" = "★";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "BKy-rR-Eom"; */
+"BKy-rR-Eom.text" = "Name";
 
 /* Class = "UITabBarItem"; title = "Local Contacts"; ObjectID = "DUL-Wa-VNC"; */
 "DUL-Wa-VNC.title" = "Local Contacts";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "E6a-Vq-RPl"; */
+"E6a-Vq-RPl.text" = "Detail";
 
 /* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "KBK-ek-azj"; */
 "KBK-ek-azj.placeholder" = "Search";
@@ -11,8 +26,32 @@
 /* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "Kwx-dH-stY"; */
 "Kwx-dH-stY.placeholder" = "Search";
 
+/* Class = "UILabel"; text = "Label"; ObjectID = "Pn4-ax-mMz"; */
+"Pn4-ax-mMz.text" = "Label";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Uwi-GE-t3C"; */
+"Uwi-GE-t3C.text" = "Title";
+
+/* Class = "UILabel"; text = "name"; ObjectID = "aBa-fS-FIH"; */
+"aBa-fS-FIH.text" = "name";
+
+/* Class = "UILabel"; text = "Jive ID"; ObjectID = "bRW-Ju-VgO"; */
+"bRW-Ju-VgO.text" = "Jive ID";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "c49-Ja-NVS"; */
+"c49-Ja-NVS.text" = "Detail";
+
 /* Class = "UINavigationItem"; title = "Contacts"; ObjectID = "pOW-HV-x3k"; */
 "pOW-HV-x3k.title" = "Contacts";
 
+/* Class = "UINavigationItem"; title = "Contact Group"; ObjectID = "pPi-nu-wYj"; */
+"pPi-nu-wYj.title" = "Contact Group";
+
+/* Class = "UILabel"; text = "Extension"; ObjectID = "uKT-Cv-Vzc"; */
+"uKT-Cv-Vzc.text" = "Extension";
+
 /* Class = "UITabBarItem"; title = "Groups"; ObjectID = "z2I-cm-BpM"; */
 "z2I-cm-BpM.title" = "Groups";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "zTc-HM-fDX"; */
+"zTc-HM-fDX.text" = "Label";

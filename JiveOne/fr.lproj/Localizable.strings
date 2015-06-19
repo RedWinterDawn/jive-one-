@@ -1,0 +1,584 @@
+/* Localizable.strings
+ JiveOne
+ 
+ Created by P Leonard on 6/16/15.
+ Copyright (c) 2015 Jive Communications, Inc. All rights reserved. */
+
+/* Port Sip Error */
+"Add TCP Transport Failure" = "Ajouter défaut TCP Transport";
+/* Port Sip Error */
+"Add TLS Transport Failure" = "Ajouter échec TLS Transport";
+/* Port Sip Error */
+"Add UDP Transport Failure" = "Ajouter défaut UDP Transport";
+/* Sip Error */
+"Address Incomplete" = "Adresse incomplète";
+/* Sip Error Description */
+"Address Incomplete. Request - URI incomplete." = "Adresse incomplète. Demande - URI incomplètes.";
+/* Port Sip Error */
+"Already Initialized" = "Déjà initialisée";
+/* Port Sip Error */
+"Already Registered" = "Déjà Enregistré";
+/* Sip Error */
+"Ambiguous" = "Ambigu";
+/* Sip Error Description */
+"Ambiguous. Request - URI is ambiguous." = "Ambigu. Demande - URI est ambiguë.";
+/* Sip Error Description */
+"An Error has occurred. An unknown error has occured." = "Une erreur est survenue. Une erreur inconnue est survenue.";
+/* Phone Manager Error */
+"An unknown error has occured. If this problem persists, please contact support." = "Une erreur inconnue est survenue. Si ce problème persiste, s'il vous plaît contacter le support.";
+/* Sip Error */
+"Anonymity Disallowed" = "Anonymat interdit";
+/* Sip Error Description */
+"Anonymity Disallowed. The request has been rejected because it was anonymous." = "Anonymat interdit. La demande a été rejetée parce qu'elle était anonyme.";
+/* Port Sip Error */
+"Argument is Null" = "L'argument est Null";
+/* Port Sip Error */
+"Argument too long" = "Argument trop longtemps";
+/* Port Sip Error */
+"Audio and Video Port Overlapped" = "Audio et Vidéo Port Overlapped";
+/* Port Sip Error */
+"Audio and Video Port Range to Small" = "Range Audio et Vidéo à Port Petit";
+/* Port Sip Error */
+"Audio Channel not found" = "Canal audio introuvable";
+/* Port Sip Error */
+"Audio Codec Empty but Audio is enabled" = "Audio Codec audio vide, mais est activé";
+/* Port Sip Error */
+"Audio Codec not supported" = "Audio Codec non pris en charge";
+/* Port Sip Error */
+"Audio File Name is empty" = "Audio Nom de fichier est vide";
+/* Port Sip Error */
+"Audio Handle is NULL" = "Poignée Audio est NULL";
+/* Port Sip Error */
+"Audio Open Play File Failure" = "Audio Open Play Défaillance d'un fichier";
+/* Port Sip Error */
+"Audio Play File Already Enabled" = "Lire un fichier audio déjà permis";
+/* Port Sip Error */
+"Audio Play File Format not supported" = "Lecture audio Format de fichier non pris en charge";
+/* Port Sip Error */
+"Audio Play File Get Position Failure" = "Lecture de fichiers audio obtenir la position non-";
+/* Port Sip Error */
+"Audio Play File Mode not supported" = "Mode Fichier Audio Play pas pris en charge";
+/* Port Sip Error */
+"Audio Play File Not enabled" = "Lire un fichier audio non activé";
+/* Port Sip Error */
+"Audio Play Object does not Exit" = "Lecture audio objet ne sort pas";
+/* Port Sip Error */
+"Audio Play stram not enabled" = "Lecture audio stram pas activé";
+/* Port Sip Error */
+"Audio Play stream already enabled" = "Flux Audio Play déjà activé";
+/* Port Sip Error */
+"Audio Register Callback Failure" = "Audio enregistrer rappel échec";
+/* Port Sip Error */
+"Audio Register Playback Failure" = "Échec Audio enregistrer lecture";
+/* Port Sip Error */
+"Audio Register Recording Failure" = "Le défaut d'enregistrement audio enregistrer";
+/* Port Sip Error */
+"Audio Sample is not multiple of 10" = "Audio Sample est pas multiple de 10";
+/* Port Sip Error */
+"Audio Sample Out of Range (10-60)" = "Exemple Audio Out of Range (10-60)";
+/* Port Sip Error */
+"Audio start recording failure" = "Échec de l'enregistrement de démarrage Audio";
+/* Port Sip Error */
+"Audio Video Codec is empty" = "Audio Video Codec est vide";
+/* Port Sip Error */
+"Audio Volume out of range" = "Volume audio hors de portée";
+/* Sip Error */
+"Bad Event" = "Bad événement";
+/* Sip Error Description */
+"Bad Event. The server did not understand an event package specified in an Event header field." = "Bad événement. Le serveur n'a pas compris une trousse d'événement spécifié dans un champ d'en-tête de l'événement.";
+/* Sip Error */
+"Bad Extension" = "Bad Extension";
+/* Sip Error Description */
+"Bad Extension. Bad SIP Protocol Extension used, not understood by the server." = "Bad Extension. Protocole SIP Mauvaise extension utilisé, non comprise par le serveur.";
+/* Sip Error */
+"Bad Gateway" = "Mauvaise Passerelle";
+/* Sip Error Description */
+"Bad Gateway. The server is acting as a gateway or proxy, and received an invalid response from a downstream server while attempting to fulfill the request." = "Mauvaise Passerelle. Le serveur agit comme une passerelle ou un proxy, et a reçu une réponse invalide à partir d'un serveur en aval tout en essayant de répondre à la demande.";
+/* Sip Error Description */
+"Bad Identity -Info. The request has an Identity -Info header, and the URI scheme in that header cannot be dereferenced." = "Bad Identité -Info. La demande a un en-tête Identity -Info, et le schéma d'URI dans cet en-tête ne peut pas être déréférencé.";
+/* Sip Error */
+"Bad Identity-Info" = "Bad Identity-Info";
+/* Sip Error */
+"Bad Location Information" = "Bad Localisation information";
+/* Sip Error Description */
+"Bad Location Information. The request's location content was malformed or otherwise unsatisfactory." = "Bad informations de localisation. Le contenu de l'emplacement de la demande était malformée ou insatisfaisante.";
+/* Sip Error */
+"Bad Request" = "Mauvaise Demande";
+/* Sip Error Description */
+"Bad Request. The request could not be understood due to malformed syntax." = "Mauvaise Demande. La demande n'a pas pu être entendu en raison de syntaxe incorrecte.";
+/* Port Sip Error */
+"Buffer is to Small" = "Buffer est de Petit";
+/* Sip Error */
+"Busy Everywhere" = "Occupé Partout";
+/* Sip Error Description */
+"Busy Everywhere. All possible destinations are busy. Destination knows there are no alternative destinations (such as a voicemail server) able to accept the call." = "Occupé Partout. Toutes les destinations possibles sont occupés. Destinations sait qu'il n'y a pas d'autres destinations (comme un serveur de messagerie vocale) en mesure d'accepter l'appel.";
+/* Sip Error */
+"Busy Here" = "Occupé ici";
+/* Sip Error Description */
+"Busy Here. Callee is busy." = "Occupé ici. Appelé est occupé.";
+/* Local notification text */
+"Call from %@ :%@" = "Appel de %1$@ : %2$@";
+/* Port Sip Error */
+"Call id not found." = "Id Appel introuvable.";
+/* Port Sip Error */
+"Call is Already on Hold" = "Appel est déjà en attente";
+/* Port Sip Error */
+"Call is Closed" = "Appel est fermé";
+/* Port Sip Error */
+"Call is in hold" = "Appel est en attente";
+/* Port Sip Error */
+"Call is not Established" = "Appel est pas établi";
+/* Port Sip Error */
+"Call Not on Hold" = "Appelez pas en attente";
+/* Sip Error */
+"Call/Transaction Does Not Exist" = "Appel / transaction ne Exist";
+/* Sip Error Description */
+"Call/Transaction Does Not Exist. Server received a request that does not match any dialog or transaction." = "Appel / transaction ne pas exister. Serveur a reçu une demande qui ne correspond à aucune de dialogue ou de la transaction.";
+/* Port Sip Error */
+"Callee is empty" = "Callee est vide";
+/* Port Sip Error */
+"Can't set Audio Device Id During Call" = "Impossible de définir Id Audio Device Durant appel";
+/* Port Sip Error */
+"Can't set device id durring call" = "Vous ne pouvez pas configurer l'appareil id durring appel";
+/* No comment provided by engineer. */
+"Cancel" = "Annuler";
+/* Port Sip Error */
+"COde Type Invalid" = "Le type de code non valide";
+/* Port Sip Error */
+"Codec already exits" = "Codec existe déjà";
+/* Port Sip Error */
+"Codec Not Supported" = "Codec non pris en charge";
+/* Port Sip Error */
+"Codec parameter not supported" = "Paramètre Codec non pris en charge";
+/* Sip Error */
+"Conditional Request Failed" = "Demande conditionnelle Échec";
+/* Sip Error Description */
+"Conditional Request Failed. The given precondition has not been met." = "Demande conditionnelle a échoué. La condition préalable donnée n'a pas été respectée.";
+/* Sip Manager Error */
+"Conference call already ended" = "Conférence téléphonique déjà terminée";
+/* Phone Manager Error */
+"Conference Call already exists" = "Conférence téléphonique existe déjà";
+/* Sip Manager Error */
+"Conference call already started" = "Conférence téléphonique a déjà commencé";
+/* Sip Error */
+"Conflict" = "Conflit";
+/* Sip Error Description */
+"Conflict. User already registered." = "Conflit. Utilisateur déjà enregistré.";
+/* Sip Error */
+"Consent Needed" = "Consentement nécessaire";
+/* Sip Error Description */
+"Consent Needed. The source of the request did not have the permission of the recipient to make such a request." = "Consentement nécessaire. La source de la demande n'a pas eu la permission de le destinataire à faire une telle demande.";
+/* Port Sip Error */
+"Create Audio Channel Failed" = "Créer canal audio Échec";
+/* Port Sip Error */
+"Create Audio Conference Failure" = "Échec de la création Conférence Audio";
+/* Port Sip Error */
+"Create Audio Recording Failure" = "Échec de la création Enregistrement";
+/* Port Sip Error */
+"Create Media Engine Failre" = "Créer Media Engine Failre";
+/* Port Sip Error */
+"Data Size is too large" = "Taille des données est trop grande";
+/* Sip Error */
+"Decline" = "Déclin";
+/* Sip Error Description */
+"Decline. The destination does not wish to participate in the call" = "Refuser. La destination ne souhaite pas participer à l'appel";
+/* Sip Error */
+"Does Not Exist Anywhere" = "Ne pas exister nulle part";
+/* Sip Error Description */
+"Does Not Exist Anywhere. The server has authoritative information that the requested user does not exist anywhere." = "Does not Exist Anywhere. Le serveur a des informations faisant autorité qui ne existe nulle part l'utilisateur demandé.";
+/* No comment provided by engineer. */
+"Downloading..." = "Téléchargement ...";
+/* Sip Manager Error */
+"Error Creating Conference" = "Erreur Création Conférence";
+/* Sip Manager Error */
+"Error holding the line sessions" = "Erreur tenue des sessions de la ligne";
+/* Sip Manager Error */
+"Error Joining line session to conference" = "Erreur Rejoindre session de ligne à la conférence";
+/* Sip Manager Error */
+"Error placing calls on hold" = "Erreur placer des appels en attente";
+/* Sip Manager Error */
+"Error placing calls on hold after ending a conference" = "Erreur placer des appels en attente après la fin d'une conférence";
+/* Sip Manager Error */
+"Error Trying to Hang up" = "Erreur en tentant d'Raccrochez";
+/* Sip Manager Error */
+"Error trying to manually reject incomming call" = "Erreur lors de l'appel manuellement reject incomming";
+/* Sip Manager Error */
+"Error unholding the line session while after joing the conference" = "Erreur unholding la session de ligne de temps après la conférence joing";
+/* Port Sip Error */
+"Expires Value is to small." = "Expire valeur est trop petite.";
+/* Sip Error */
+"Extension Required" = "Extension requis";
+/* Sip Error Description */
+"Extension Required. The server needs a specific extension not listed in the Supported header." = "Extension requis. Le serveur a besoin d'une extension spécifique ne figure pas dans la tête Supported.";
+/* Phone Manager Error */
+"Failed ending conference call" = "Échec terminant conférence téléphonique";
+/* Phone Manager Error */
+"Failed to create conference call" = "Impossible de créer conférence téléphonique";
+/* Sip Error */
+"First Hop Lacks Outbound Support" = "Première Hop manque de soutien Outbound";
+/* Sip Error Description */
+"First Hop Lacks Outbound Support. The first outbound proxy the user is attempting to register through does not support the 'outbound' feature of RFC 5626, although the registrar does." = "Première Hop manque de soutien sortant. Le premier proxy sortant l'utilisateur tente d'enregistrer par le biais ne supporte pas la fonction «sortant» de RFC 5626, bien que le registraire fait.";
+/* Port Sip Error */
+"Fix Payload can't change" = "Fix charge utile ne peut pas changer";
+/* Sip Error */
+"Flow Failed" = "Échec de débit";
+/* Sip Error Description */
+"Flow Failed. A specific flow to a user agent has failed, although other flows may succeed." = "Échec de flux. Un flux spécifique à un agent utilisateur a échoué, bien que d'autres débits peuvent réussir.";
+/* Sip Error */
+"Forbidden" = "Interdit";
+/* Sip Error Description */
+"Forbidden. The server understood the request, but is refusing to fulfil it." = "Interdite. Le serveur a compris la requête, mais refuse de le remplir.";
+/* Port Sip Error */
+"Get Audio Statistics Failure" = "Obtenez Statistiques Audio échec";
+/* Port Sip Error */
+"Get Device Name Failure" = "Obtenez Nom de l'appareil Défaut";
+/* Port Sip Error */
+"Get Statistics Failure" = "Obtenez Statistiques échec";
+/* Sip Error */
+"Gone" = "Disparu";
+/* Sip Error Description */
+"Gone. The user existed once, but is not available here any more." = "Autant en emporte. L'utilisateur a déjà existé, mais ne sont pas disponibles plus ici.";
+/* Port Sip Error */
+"Header Value List is empty" = "Tête de liste de valeurs est vide";
+/* Port Sip Error */
+"Initialize Stack Failure" = "Initialiser Stack échec";
+/* Port Sip Error */
+"Initialize Winsock Failure" = "Initialiser Winsock échec";
+/* Sip Error */
+"Interval Too Brief" = "Intervalle trop bref";
+/* Sip Error Description */
+"Interval Too Brief. Expiration time of the resource is too short." = "Intervalle trop bref. Délai d'expiration de la ressource est trop court.";
+/* Sip Error */
+"Invalid Identity Header" = "Invalid Identity-tête";
+/* Sip Error Description */
+"Invalid Identity Header. The server obtained a valid certificate that the request claimed was used to sign the request, but was unable to verify that signature." = "Invalid Identity-tête. Le serveur a obtenu un certificat valide la demande réclamé a été utilisé pour signer la demande, mais a été incapable de vérifier que la signature.";
+/* Port Sip Error */
+"Invalid Session Id" = "Invalid Session Id";
+/* Port Sip Error */
+"Invalid URI" = "Invalid URI";
+/* Port Sip Error */
+"Invide Session not found" = "Invide session introuvable";
+/* Port Sip Error */
+"IVR Index is out of range" = "Indice IVR est hors de portée";
+/* Port Sip Error */
+"IVR Object is Null" = "IVR objet est Null";
+/* Port Sip Error */
+"IVR Refer Failure" = "IVR échec";
+/* Port Sip Error */
+"IVR Waiting Timeout" = "IVR attente Timeout";
+/* Terms and Conditions EULA title */
+"Jive Mobile EULA" = "Jive mobile CLUF";
+/* Sip Error */
+"Length Required" = "Longueur requise";
+/* Sip Error Description */
+"Length Required. The server will not accept the request without a valid Content - Length." = "Longueur requise. Le serveur ne sera pas accepter la demande sans contenu valable - Longueur.";
+/* Sip Manager Error */
+"Line Configuration is Empty" = "Configuration de la ligne est vide";
+/* Sip Manager Error */
+"Line is empty" = "Ligne est vide";
+/* Sip Manager Error */
+"Line Session in empty" = "Session de ligne en vide";
+/* Sip Error */
+"Loop Detected" = "Boucle détecté";
+/* Sip Error Description */
+"Loop Detected. Server has detected a loop." = "Boucle détectée. Server a détecté une boucle.";
+/* Port Sip Error */
+"Max Audio Port Not Even Number" = "Max Port Audio Not Even Nombre";
+/* Port Sip Error */
+"Max Audio Port out of range" = "Max Port Audio hors de portée";
+/* Port Sip Error */
+"Max Video Port Not Event Number" = "Port Max Vidéo non Numéro d'événement";
+/* Port Sip Error */
+"Max Video Port out of range" = "Port Max vidéo hors de portée";
+/* No comment provided by engineer. */
+"me" = "moi";
+/* Sip Error */
+"Message Too Large" = "Message trop grande";
+/* Sip Error Description */
+"Message Too Large. The request message length is longer than the server can process." = "Message trop grande. La longueur demande de message est plus long que le serveur peut traiter.";
+/* Sip Error */
+"Method Not Allowed" = "Méthode Non Autorisée";
+/* Sip Error Description */
+"Method Not Allowed. The method specified in the Request -Line is understood, but not allowed for the address identified by the Request-URI." = "Méthode Non Autorisée. La méthode indiquée dans la demande -Line est entendu, mais pas autorisée pour l'adresse indiquée par le Request-URI.";
+/* Port Sip Error */
+"Mime Type Unknown" = "Mime type inconnu";
+/* Port Sip Error */
+"Mini Audio Port out of range" = "Mini Audio Port hors de portée";
+/* Port Sip Error */
+"Mini RTP Port is not even number" = "Mini Port RTP est pas même numéro";
+/* Port Sip Error */
+"Mini Video Port Not Even Number" = "Mini Port Vidéo non Même Nombre";
+/* Port Sip Error */
+"Mini Video Port out of range" = "Mini Port Vidéo hors de portée";
+/* Port Sip Error */
+"Network Interface is unavialable" = "Interface réseau est unavialable";
+/* No comment provided by engineer. */
+"New Message from %@ ***%@" = "Nouveau Message de %@ *** %@";
+/* No comment provided by engineer. */
+"No" = "Aucun";
+/* Sip Manager Error */
+"No Active Line" = "Non Active Line";
+/* Phone Manager Error */
+"No Conference call to end" = "Pas Conférence téléphonique à la fin";
+/* No Connection */
+"No Connection" = "Pas De Connection";
+/* Port Sip Error */
+"No Free Dialog Session" = "Pas de session de dialogue gratuit";
+/* Sip Manager Error */
+"No Idle Line" = "Pas de ligne inactive";
+/* Sip Manager Error */
+"No Referral line" = "Aucune ligne de renvoi";
+/* Sip Error */
+"Not Acceptable" = "Pas Acceptable";
+/* Sip Error */
+"Not Acceptable Here" = "Non acceptable ici";
+/* Sip Error Description */
+"Not Acceptable Here. Some aspect of the session description or the Request - URI is not acceptable." = "Non acceptable ici. Certains aspects de la description de session ou de la demande - URI est pas acceptable.";
+/* Sip Error Description */
+"Not Acceptable. The resource identified by the request is only capable of generating response entities that have content characteristics but not acceptable according to the Accept header field sent in the request." = "Pas Acceptable. La ressource identifiée par la requête ne peut générer que des entités de réponse qui ont des caractéristiques de contenu mais pas acceptable en fonction du champ d'en-tête Accept envoyé dans la requête.";
+/* Sip Error Description */
+"Not Acceptable. The user's agent was contacted successfully but some aspects of the session description such as the requested media, bandwidth, or addressing style were not acceptable." = "Pas Acceptable. L'agent de l'utilisateur a été contacté avec succès mais certains aspects de la description de session tels que les médias l'demandées, bande passante, ou le style d'adressage sont pas acceptables.";
+/* Port Sip Error */
+"Not an Incomming Call" = "Pas un appel Incomming";
+/* Sip Error */
+"Not Found" = "Pas Trouvé";
+/* Port Sip Error */
+"Not Found Subscribe Id" = "Introuvable abonner Id";
+/* Sip Error Description */
+"Not Found. The server has definitive information that the user does not exist at the domain specified in the Request-URI." = "Pas Trouvé. Le serveur a information définitive que l'utilisateur ne existe pas au domaine spécifié dans l'URI requête.";
+/* Sip Error */
+"Not Implemented" = "Pas Mis En Œuvre";
+/* Sip Error Description */
+"Not Implemented. The server does not have the ability to fulfill the request, such as because it does not recognize the request method." = "Pas Mis En Œuvre. Le serveur n'a pas la capacité de répondre à la demande, tels que parce qu'il ne reconnaît pas la méthode de requête.";
+/* Port Sip Error */
+"Not Initialized" = "Non initialisé";
+/* Port Sip Error */
+"Not Registered" = "Non Enregistré";
+/* Port Sip Error */
+"Not supported callback mode" = "Non pris en charge le mode de rappel";
+/* No comment provided by engineer. */
+"Number" = "Nombre";
+/* No comment provided by engineer. */
+"OK" = "OK";
+/* Port Sip Error */
+"Outgoing Audio is muted" = "Sortant audio est mis en sourdine";
+/* Port Sip Error */
+"Outgoing Video is nuted" = "Vidéo sortant est nuted";
+/* Sip Manager Error */
+"Password is empty" = "Mot de passe est vide";
+/* Port Sip Error */
+"Payload already exists. Duplicate payload values are not allowed" = "Payload existe déjà. Les valeurs de la charge utile en double ne sont pas autorisés";
+/* Port Sip Error */
+"Payload is out of range (96-127)" = "La charge utile est hors de portée (96-127)";
+/* Port Sip Error */
+"Payload Type invalid" = "Type d'invalide de charge utile";
+/* Sip Error */
+"Payment Required" = "Paiement requis";
+/* Sip Error Description */
+"Payment Required." = "Paiement requis.";
+/* Phone Manager Error */
+"Phone could not be initialized" = "Téléphone pas pu être initialisé";
+/* Sip Manager Error */
+"Phone is already attempting to register" = "Téléphone est déjà tente d'inscrire";
+/* Phone Manager Error */
+"Phone is set to be Wifi Only" = "Téléphone est réglé pour être Wifi Seulement";
+/* Sip Manager Error */
+"Phone registration is unable to register at this time. You may not be on an Approved network. If problem persists, contact your System Administrator to add your network." = "Enregistrement de téléphone est incapable de vous inscrire à cette époque. Vous ne pouvez pas être sur un réseau approuvé. Si le problème persiste, contactez votre administrateur système pour ajouter votre réseau.";
+/* please verify your internet connection */
+"please verify your internet connection" = "s'il vous plaît vérifier votre connexion Internet";
+/* Network Quality Indicator Popover Text */
+"Poor Network Quality" = "Mauvaise qualité de réseau";
+/* Port Sip Error */
+"Port out of range" = "Port hors de portée";
+/* Sip Error */
+"Precondition Failure" = "Condition non-";
+/* Sip Error Description */
+"Precondition Failure. The server is unable or unwilling to meet some constraints specified in the offer." = "Condition échec. Le serveur est incapable ou refuse de répondre à certaines contraintes spécifiées dans l'offre.";
+/* Sip Error */
+"Provide Referrer Identity" = "Fournir Referrer Identité";
+/* Sip Error Description */
+"Provide Referrer Identity. The server did not receive a valid Referred-By token on the request." = "Fournir Referrer identité. Le serveur n'a pas reçu un Renvoyé-By jeton valide sur la demande.";
+/* Sip Error */
+"Proxy Authentication Required" = "Authentification proxy requise";
+/* Sip Error Description */
+"Proxy Authentication Required. The request requires user authentication." = "Authentification proxy requise. La demande requiert une authentification utilisateur.";
+/* No comment provided by engineer. */
+"Registering..." = "Enregistrement ...";
+/* No comment provided by engineer. */
+"Registration Failure" = "Le défaut d'enregistrement";
+/* Sip Error Description */
+"Request - URI Too Long. The server is refusing to service the request because the Request - URI is longer than the server is willing to interpret." = "Demande - URI Too Long. Le serveur refuse de servir la demande parce que la demande - URI est plus long que le serveur est prêt à interpréter.";
+/* Sip Error */
+"Request Entity Too Large" = "Requête trop grand";
+/* Sip Error Description */
+"Request Entity Too Large. Request body too large." = "Requête trop grand. Demande corps trop grand.";
+/* Sip Error */
+"Request Pending" = "Demande en attente";
+/* Sip Error Description */
+"Request Pending. Server has some pending request from the same dialog." = "Demande en attente. Server dispose d'une certaine demande en attente de la même boîte de dialogue.";
+/* Sip Error */
+"Request Terminated" = "Demande Terminé";
+/* Sip Error Description */
+"Request Terminated. Request has terminated by bye or cancel." = "Demande Terminé. Demande a été dénoncée par revoir ou d'annuler.";
+/* Sip Error */
+"Request Timeout" = "Request Timeout";
+/* Sip Error Description */
+"Request Timeout. Couldn't find the user in time. The server could not produce a response within a suitable amount of time, for example, if it could not determine the location of the user in time." = "Request Timeout. Impossible de trouver l'utilisateur dans le temps. Le serveur ne peut pas produire une réponse dans un laps de temps approprié, par exemple, si elle n'a pas pu déterminer la localisation de l'utilisateur dans le temps.";
+/* Sip Error */
+"Request-URI Too Long" = "Request-URI Too Long";
+/* Port Sip Error */
+"SDK Object is Null" = "SDK objet est Null";
+/* Sip Error */
+"Security Agreement Required" = "Accord de sécurité requis";
+/* Sip Error Description */
+"Security Agreement Required." = "Accord de sécurité requis.";
+/* No comment provided by engineer. */
+"Selecting Line..." = "Sélection Ligne ...";
+/* Port Sip Error */
+"Send Avi File Failure" = "Envoyer Avi défaut du fichier";
+/* Send SMS to new participant's phone number. */
+"Send SMS to %@" = "Envoyer un SMS à %@";
+/* Sip Error */
+"Server Internal Error" = "Internal Server Error";
+/* Sip Error Description */
+"Server Internal Error. The server could not fulfill the request due to some unexpected condition." = "Internal Server Error. Le serveur n'a pas pu répondre à la demande en raison d'une condition inattendue.";
+/* Sip Manager Error */
+"Server is empty" = "Server est vide";
+/* Sip Error */
+"Server Time-out" = "Serveur Time-out";
+/* Sip Error Description */
+"Server Time-out. The server attempted to access another server in attempting to process the request, and did not receive a prompt response." = "Serveur Time-out. Le serveur a tenté d'accéder à un autre serveur pour tenter de traiter la demande, et n'a pas reçu une réponse rapide.";
+/* Sip Error */
+"Service Unavailable" = "Service Indisponible";
+/* Sip Error Description */
+"Service Unavailable. The server is undergoing maintenance or is temporarily overloaded and so cannot process the request." = "Service Indisponible. Le serveur est en cours de maintenance ou est temporairement surchargé et ne peut donc pas traiter la demande.";
+/* Sip Error */
+"Session Interval Too Small" = "Session Intervalle Too Small";
+/* Sip Error Description */
+"Session Interval Too Small. The received request contains a Session-Expires header field with a duration below the minimum timer." = "Session Intervalle Too Small. La demande reçue contient une session Expire-champ d'en-tête d'une durée inférieure à la minuterie minimum.";
+/* Port Sip Error */
+"Session numbers out of range" = "numéros de session hors de portée";
+/* Port Sip Error */
+"Session Timer Value is to small" = "Session Valeur minuterie est trop petit";
+/* Port Sip Error */
+"Sip Header does not exist" = "Sip-tête ne existe pas";
+/* Port Sip Error */
+"Sip Header is badly formed" = "Sip-tête est mal formé";
+/* Port Sip Error */
+"Sip Header name is empty" = "Nom Sip-tête est vide";
+/* Port Sip Error */
+"Sip Header Parser is empty" = "Sip-tête Parser est vide";
+/* Port Sip Error */
+"Sip Header value is empty" = "Valeur Sip-tête est vide";
+/* Port Sip Error */
+"Sip Header value list is NULL" = "Liste de valeurs Sip-tête est NULL";
+/* Port Sip Error */
+"Sip Message is Empty" = "Sip message est vide";
+/* Port Sip Error */
+"Sip Server Path is Empty" = "Chemin Sip Server est vide";
+/* No comment provided by engineer. */
+"SMS on %@" = "SMS sur %@";
+/* Port Sip Error */
+"Stack Exception" = "Stack Exception";
+/* Port Sip Error */
+"Start Play AVI Failure" = "Lancer Lecture AVI échec";
+/* Port Sip Error */
+"Start Send Failure" = "Lancer Envoyer Échec";
+/* Port Sip Error */
+"Start Video Capture Failure" = "Démarrer Capture vidéo défaut";
+/* Sip Error */
+"Temporarily Unavailable" = "Temporairement Indisponible";
+/* Sip Error Description */
+"Temporarily Unavailable. Callee currently unavailable." = "Temporairement Indisponible. Appelé actuellement indisponible.";
+/* Sip Error */
+"Too Many Hops" = "Trop de houblon";
+/* Sip Error Description */
+"Too Many Hops. Max - Forwards header has reached the value '0'." = "Trop de houblon. Max - Avants-tête a atteint la valeur \"0\".";
+/* No comment provided by engineer. */
+"Transfering..." = "Transférer ...";
+/* Port Sip Error */
+"Trial Version License Key" = "Version d'essai clé de licence";
+/* Sip Manager Error */
+"Unable to answer the call" = "Impossible de répondre à l'appel";
+/* Phone Manager Error */
+"Unable to connect to the*** network at this time." = "Impossible de se connecter au réseau *** en ce moment.";
+/* Phone Manager Error */
+"Unable to connect to this line at this time. Please Try again." = "Impossible de se connecter à cette ligne à ce moment. S'il vous plaît essayez de nouveau.";
+/* Sip Manager Error */
+"Unable to make a call" = "Impossible de faire un appel";
+/* No comment provided by engineer. */
+"Unable to perform transfer at this time. Please Try Again." = "Impossible d'effectuer le transfert à ce moment. S'il vous plaît essayer à nouveau.";
+/* No comment provided by engineer. */
+"Unable to select line. Please call Customer Care. You may not have a device associated with this account." = "Impossible de sélectionner la ligne. S'il vous plaît appelez le service à la clientèle. Vous ne pouvez pas avoir un dispositif associé à ce compte.";
+/* Sip Error */
+"Unauthorized" = "Non autorisé";
+/* Sip Error Description */
+"Unauthorized. The request requires user authentication." = "Non autorisée. La demande requiert une authentification utilisateur.";
+/* Sip Error */
+"Undecipherable" = "Indéchiffrable";
+/* Sip Error Description */
+"Undecipherable. Request contains an encrypted MIME body, which recipient can not decrypt." = "Indéchiffrable. Requête contient un corps MIME chiffré, qui destinataire ne peut pas décrypter.";
+/* No comment provided by engineer. */
+"Unknown" = "Inconnu";
+/* Sip Manager Error */
+"Unknown Error Has Occured" = "Inconnu erreur est survenue";
+/* Sip Error Description */
+"Unknown Resource -Priority. There was a resource - priority option tag, but no Resource-Priority header." = "Inconnu -Priority ressources. Il était une ressource - option prioritaire tag, mais aucun en-tête de ressources priorité.";
+/* Sip Error */
+"Unknown Resource-Priority" = "Inconnu ressources priorité";
+/* Port Sip Error */
+"Unknown Video Record Codec" = "Inconnu Video Codec Enregistrement";
+/* Sip Error */
+"Unsupported Certificate" = "Certificat non pris en charge";
+/* Sip Error Description */
+"Unsupported Certificate. The server was unable to validate a certificate for the domain that signed the request." = "Certificat non pris en charge. Le serveur n'a pas pu valider un certificat pour le domaine qui a signé la demande.";
+/* Sip Error */
+"Unsupported Media Type" = "Type de support non pris en charge";
+/* Sip Error Description */
+"Unsupported Media Type. Request body in a format not supported." = "Type de support non pris en charge. Demande corps dans un format non pris en charge.";
+/* Sip Error */
+"Unsupported URI Scheme" = "URI du schéma non pris en charge";
+/* Sip Error Description */
+"Unsupported URI Scheme. Request - URI is unknown to the server." = "URI du schéma non pris en charge. Demande - URI est inconnu du serveur.";
+/* Port Sip Error */
+"Unsupported Video Capture Resolution" = "Vidéo non pris en charge Résolution de capture";
+/* Port Sip Error */
+"Unsupported Video Capture Rotation" = "Vidéo non pris en charge la capture Rotation";
+/* Sip Error */
+"Use Identity Header" = "Utiliser Identity-tête";
+/* Sip Error Description */
+"Use Identity Header. The server policy requires an Identity header, and one has not been provided." = "Utilisez Identity-tête. La politique de serveur nécessite une tête Identity, et l'un n'a pas été fourni.";
+/* Sip Manager Error */
+"User is Empty" = "L'utilisateur est vide";
+/* Port Sip Error */
+"User Name Auth Name is Empty" = "Nom d'utilisateur Nom Auth est vide";
+/* Sip Error */
+"Version Not Supported" = "Version non pris en charge";
+/* Sip Error Description */
+"Version Not Supported. The SIP protocol version in the request is not supported by the server." = "Version non pris en charge. La version de protocole SIP à la demande n'a pas été pris en charge par le serveur.";
+/* Port Sip Error */
+"Video Channel Not Found" = "Video Channel introuvable";
+/* Port Sip Error */
+"Video Code is Empty but video is enabled" = "Code de vidéo est vide mais la vidéo est activée";
+/* Port Sip Error */
+"Video File Name Empty" = "Vidéo Nom du fichier vide";
+/* Port Sip Error */
+"Video Get Device Id Failure" = "Dispositif vidéo Get Id Défaut";
+/* Port Sip Error */
+"Video Get Device Name Failure" = "Vidéo obtenir le nom de l'appareil Défaut";
+/* Port Sip Error */
+"Video Handle is NULL" = "Poignée de vidéo est NULL";
+/* No comment provided by engineer. */
+"Voicemail" = "Messagerie vocale";
+/* No comment provided by engineer. */
+"Warning" = "Avertissement";
+/* Port Sip Error */
+"Wrong DTMF Tone" = "Mauvais tonalité DTMF";
+/* Port Sip Error */
+"Wrong License Key" = "Clé de licence erronées";
+/* No comment provided by engineer. */
+"Yes" = "Oui";
+/* Yesterday */
+"Yesterday" = "Hier";
+/* Sip Manager Error */
+"You may not be on an Approved network. If the problem persists, please contact your System Administrator to add your current network to the list of approved networks." = "Vous ne pouvez pas être sur un réseau approuvé. Si le problème persiste, s'il vous plaît contactez votre administrateur système pour ajouter votre réseau actuel à la liste des réseaux approuvés.";

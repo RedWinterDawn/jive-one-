@@ -1,0 +1,12 @@
+
+/* Class = "UILabel"; accessibilityLabel = "Callers Number"; ObjectID = "5rL-pd-NyF"; */
+"5rL-pd-NyF.accessibilityLabel" = "Callers Number";
+
+/* Class = "UILabel"; text = "Callers Number"; ObjectID = "5rL-pd-NyF"; */
+"5rL-pd-NyF.text" = "Callers Number";
+
+/* Class = "UILabel"; text = "Callers Name"; ObjectID = "FT8-wZ-Uc2"; */
+"FT8-wZ-Uc2.text" = "Callers Name";
+
+/* Class = "UILabel"; text = "INCOMING CALL"; ObjectID = "xbc-N2-nOI"; */
+"xbc-N2-nOI.text" = "INCOMING CALL";
