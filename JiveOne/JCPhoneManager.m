@@ -186,6 +186,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         if (success) {
             [self registerWithLine:line];
         } else {
+            // If we have a line configuration for the line, try to register it.
+            if (line.lineConfiguration){
+                [self registerWithLine:line];
+                return;
+            }
+            
             [self reportError:[JCPhoneManagerError errorWithCode:JC_PHONE_LINE_CONFIGURATION_REQUEST_ERROR underlyingError:error]];
         }
     }];

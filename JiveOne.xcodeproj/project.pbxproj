@@ -351,6 +351,7 @@
 		276215201912AA7400CFBCC8 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
 		276E06781A0293BC00CD2827 /* JCContactsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactsTableViewController.h; sourceTree = "<group>"; };
 		276E06791A0293BC00CD2827 /* JCContactsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsTableViewController.m; sourceTree = "<group>"; };
+		27765F441B34705A00C2E10E /* JiveOne-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JiveOne-Bridging-Header.h"; sourceTree = "<group>"; };
 		277A1F7E18F88987009A41F7 /* JCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLoginViewController.h; sourceTree = "<group>"; };
 		277A1F7F18F88987009A41F7 /* JCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLoginViewController.m; sourceTree = "<group>"; };
 		2788F148190EB1260099348D /* NSNull+IntValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNull+IntValue.h"; sourceTree = "<group>"; };
@@ -1184,6 +1185,7 @@
 				275F4A5F18AD0FBC00D2F069 /* JiveOne-Prefix.pch */,
 				275F4A5A18AD0FBC00D2F069 /* InfoPlist.strings */,
 				5D0199EE1A1BF4BC00F4CF13 /* Localizable.strings */,
+				27765F441B34705A00C2E10E /* JiveOne-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

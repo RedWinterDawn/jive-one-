@@ -23,6 +23,7 @@
 #import "JCPresenceManager.h"
 #import "JCVoicemailManager.h"
 #import "JCSMSMessageManager.h"
+#import "LineConfiguration+V4Client.h"
 
 #import "JCBadgeManager.h"
 #import "JCApplicationSwitcherDelegate.h"
