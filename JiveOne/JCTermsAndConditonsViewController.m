@@ -8,11 +8,6 @@
 
 #import "JCTermsAndConditonsViewController.h"
 
-NSString *const kJCTermsAndConditionsViewControllerURL = @"https://s3.amazonaws.com/jive.com-website/iOS+eula/%@.html";
-NSString *const kJCTermsAndConditionsViewControllerEnglish = @"en";
-NSString *const kJCTermsAndConditionsViewControllerMexicoSpanish = @"es-MX";
-NSString *const kJCTermsAndConditionsViewControllerSpanish = @"es";
-
 @implementation JCTermsAndConditonsViewController
 
 - (void)viewDidLoad
@@ -20,9 +15,9 @@ NSString *const kJCTermsAndConditionsViewControllerSpanish = @"es";
     [super viewDidLoad];
 
     self.title = NSLocalizedString(@"Jive Mobile EULA", @"Terms and Conditions EULA title");
-    
-    NSString *urlString = [NSString stringWithFormat:kJCTermsAndConditionsViewControllerURL, self.langauageCode];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"eula" ofType:@"html"];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [[NSURLCache sharedURLCache] removeCachedResponseForRequest:urlRequest];
     [self.webView loadRequest:urlRequest];
 }
@@ -31,19 +26,6 @@ NSString *const kJCTermsAndConditionsViewControllerSpanish = @"es";
     [self dismissViewControllerAnimated:YES completion:nil];
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
-
--(NSString *)langauageCode
-{
-    NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
-    if ([language isEqualToString:kJCTermsAndConditionsViewControllerMexicoSpanish]) {
-        return language;
-    }
-    else if ([language isEqualToString:kJCTermsAndConditionsViewControllerSpanish]) {
-        return language;
-    }
-    return kJCTermsAndConditionsViewControllerEnglish;
-}
-
 
 #pragma mark - Delegate Handlers -
 
