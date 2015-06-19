@@ -39,32 +39,20 @@
     _boldDateFont = [UIFont fontWithDescriptor:[[_dateFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_dateFont.pointSize];
 }
 
--(void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    if (self.isRead) {
-        self.name.font      = _nameFont;
-        self.detail.font    = _detailFont;
-        self.date.font      = _dateFont;
-    } else {
-        self.name.font      = _boldNameFont;
-        self.detail.font    = _boldDetailFont;
-        self.date.font      = _boldDateFont;
-    }
-}
-
 #pragma mark - Setters -
 
 -(void)setRead:(BOOL)read
 {
     _read = read;
-    [self setNeedsLayout];
-    [self layoutIfNeeded];
-}
--(UIButton *)blockBtn{
-    //make Call to block a number
-    return 0;
+    if (read) {
+        _name.font      = _nameFont;
+        _detail.font    = _detailFont;
+        _date.font      = _dateFont;
+    } else {
+        _name.font      = _boldNameFont;
+        _detail.font    = _boldDetailFont;
+        _date.font      = _boldDateFont;
+    }
 }
 
 -(IBAction)blockNumberBtn:(id)sender
