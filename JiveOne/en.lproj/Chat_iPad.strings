@@ -1,0 +1,36 @@
+
+/* Class = "UILabel"; text = "3:03 PM"; ObjectID = "5pa-Vh-mNq"; */
+"5pa-Vh-mNq.text" = "3:03 PM";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "J8I-zG-k2G"; */
+"J8I-zG-k2G.text" = "Detail";
+
+/* Class = "UINavigationItem"; title = "Messages"; ObjectID = "Thw-n3-ffm"; */
+"Thw-n3-ffm.title" = "Messages";
+
+/* Class = "UINavigationItem"; title = "Details"; ObjectID = "TxK-l8-YtH"; */
+"TxK-l8-YtH.title" = "Details";
+
+/* Class = "UITableViewSection"; footerTitle = "Blocks this number from sending or receiving an SMS message on your PBX for all users."; ObjectID = "Vv3-tz-o6o"; */
+"Vv3-tz-o6o.footerTitle" = "Blocks this number from sending or receiving an SMS message on your PBX for all users.";
+
+/* Class = "UINavigationItem"; title = "New Message"; ObjectID = "g1X-2S-xoD"; */
+"g1X-2S-xoD.title" = "New Message";
+
+/* Class = "UILabel"; text = "Contact Name"; ObjectID = "hYA-nm-SF2"; */
+"hYA-nm-SF2.text" = "Contact Name";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "jld-WF-yRr"; */
+"jld-WF-yRr.text" = "Title";
+
+/* Class = "UILabel"; text = "Last Message"; ObjectID = "qVa-e2-mlP"; */
+"qVa-e2-mlP.text" = "Last Message";
+
+/* Class = "UIBarButtonItem"; title = "Details"; ObjectID = "qo1-nf-jvR"; */
+"qo1-nf-jvR.title" = "Details";
+
+/* Class = "UILabel"; text = "Block Number"; ObjectID = "tPN-wh-a8h"; */
+"tPN-wh-a8h.text" = "Block Number";
+
+/* Class = "UISearchBar"; placeholder = "Search For People"; ObjectID = "zad-Lo-XYN"; */
+"zad-Lo-XYN.placeholder" = "Search For People";
