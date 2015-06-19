@@ -178,12 +178,6 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
             return;
         }
     }
-    
-    // If we have a line configuration for the line, try to register it.
-    if (line.lineConfiguration){
-        [self registerWithLine:line];
-        return;
-    }
    
     // If we made it here, we do not have a line configuration, we need to request it. If the
     // request was successfull, we try to register.
