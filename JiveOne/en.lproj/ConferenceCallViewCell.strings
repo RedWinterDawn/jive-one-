@@ -1,0 +1,15 @@
+
+/* Class = "UIView"; accessibilityHint = "callStateView"; ObjectID = "3tE-5t-IUF"; */
+"3tE-5t-IUF.accessibilityHint" = "callStateView";
+
+/* Class = "UILabel"; text = "Callers Number"; ObjectID = "5Ts-vU-ZOh"; */
+"5Ts-vU-ZOh.text" = "Callers Number";
+
+/* Class = "UILabel"; text = "ON HOLD"; ObjectID = "DyB-N9-NeR"; */
+"DyB-N9-NeR.text" = "ON HOLD";
+
+/* Class = "UILabel"; text = "1:03"; ObjectID = "cuQ-l6-1Vo"; */
+"cuQ-l6-1Vo.text" = "1:03";
+
+/* Class = "UILabel"; text = "Conference"; ObjectID = "qfp-g2-efF"; */
+"qfp-g2-efF.text" = "Conference";

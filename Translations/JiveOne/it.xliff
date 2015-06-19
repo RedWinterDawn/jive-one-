@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
-  <file original="IntegrationTests/Info.plist" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="IntegrationTests/Info.plist" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -13,7 +13,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="IntegrationTests/Localizable.strings" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="IntegrationTests/Localizable.strings" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -36,7 +36,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Chat.storyboard" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/Chat.storyboard" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -78,10 +78,6 @@
         <source>Title</source>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "Qvq-as-cHg";</note>
       </trans-unit>
-      <trans-unit id="SR8-Vw-dmU.text">
-        <source>Title</source>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "SR8-Vw-dmU";</note>
-      </trans-unit>
       <trans-unit id="XfF-8X-6TV.title">
         <source>New Message</source>
         <target>Nuovo messaggio</target>
@@ -91,10 +87,6 @@
         <source>Blocks this number from sending or recieving an SMS message on your PBX for all users.</source>
         <target>Blocchi questo numero di invio o la ricezione di un messaggio SMS sul vostro centralino per tutti gli utenti.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Blocks this number from sending or recieving an SMS message on your PBX for all users."; ObjectID = "Z3S-aR-6oR";</note>
-      </trans-unit>
-      <trans-unit id="hIn-Yb-LXh.text">
-        <source>Subtitle</source>
-        <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "hIn-Yb-LXh";</note>
       </trans-unit>
       <trans-unit id="hea-0j-GeP.title">
         <source>Details</source>
@@ -110,13 +102,9 @@
         <source>3:03 PM</source>
         <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "vWD-lg-8BW";</note>
       </trans-unit>
-      <trans-unit id="yAa-hQ-2ec.text">
-        <source>Title</source>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "yAa-hQ-2ec";</note>
-      </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Chat_iPad.storyboard" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/Chat_iPad.storyboard" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -125,17 +113,9 @@
         <source>3:03 PM</source>
         <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "5pa-Vh-mNq";</note>
       </trans-unit>
-      <trans-unit id="DqX-YJ-qdu.text">
-        <source>Title</source>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "DqX-YJ-qdu";</note>
-      </trans-unit>
       <trans-unit id="J8I-zG-k2G.text">
         <source>Detail</source>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "J8I-zG-k2G";</note>
-      </trans-unit>
-      <trans-unit id="LUT-Vk-JWR.text">
-        <source>Subtitle</source>
-        <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "LUT-Vk-JWR";</note>
       </trans-unit>
       <trans-unit id="Thw-n3-ffm.title">
         <source>Messages</source>
@@ -160,10 +140,6 @@
       <trans-unit id="hYA-nm-SF2.text">
         <source>Contact Name</source>
         <note>Class = "UILabel"; text = "Contact Name"; ObjectID = "hYA-nm-SF2";</note>
-      </trans-unit>
-      <trans-unit id="jS0-2t-nJ7.text">
-        <source>Title</source>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "jS0-2t-nJ7";</note>
       </trans-unit>
       <trans-unit id="jld-WF-yRr.text">
         <source>Title</source>
@@ -190,7 +166,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/ConferenceCallViewCell.xib" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/ConferenceCallViewCell.xib" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -219,11 +195,15 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Contacts.storyboard" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/Contacts.storyboard" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
     <body>
+      <trans-unit id="0Ib-w3-Hbh.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "0Ib-w3-Hbh";</note>
+      </trans-unit>
       <trans-unit id="4Ry-Fo-vlb.text">
         <source>name</source>
         <note>Class = "UILabel"; text = "name"; ObjectID = "4Ry-Fo-vlb";</note>
@@ -236,14 +216,18 @@
         <source>★</source>
         <note>Class = "UIButton"; normalTitle = "★"; ObjectID = "AH7-6r-D1F";</note>
       </trans-unit>
+      <trans-unit id="BKy-rR-Eom.text">
+        <source>Name</source>
+        <note>Class = "UILabel"; text = "Name"; ObjectID = "BKy-rR-Eom";</note>
+      </trans-unit>
       <trans-unit id="DUL-Wa-VNC.title">
         <source>Local Contacts</source>
         <target>Contatto locale</target>
         <note>Class = "UITabBarItem"; title = "Local Contacts"; ObjectID = "DUL-Wa-VNC";</note>
       </trans-unit>
-      <trans-unit id="DqX-dl-Ngq.title">
-        <source>Contacts</source>
-        <target>Contacts</target>
+      <trans-unit id="E6a-Vq-RPl.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "E6a-Vq-RPl";</note>
       </trans-unit>
       <trans-unit id="KBK-ek-azj.placeholder">
         <source>Search</source>
@@ -267,6 +251,14 @@
         <source>name</source>
         <note>Class = "UILabel"; text = "name"; ObjectID = "aBa-fS-FIH";</note>
       </trans-unit>
+      <trans-unit id="bRW-Ju-VgO.text">
+        <source>Jive ID</source>
+        <note>Class = "UILabel"; text = "Jive ID"; ObjectID = "bRW-Ju-VgO";</note>
+      </trans-unit>
+      <trans-unit id="c49-Ja-NVS.text">
+        <source>Detail</source>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "c49-Ja-NVS";</note>
+      </trans-unit>
       <trans-unit id="pOW-HV-x3k.title">
         <source>Contacts</source>
         <target>Contacts</target>
@@ -275,6 +267,10 @@
       <trans-unit id="pPi-nu-wYj.title">
         <source>Contact Group</source>
         <note>Class = "UINavigationItem"; title = "Contact Group"; ObjectID = "pPi-nu-wYj";</note>
+      </trans-unit>
+      <trans-unit id="uKT-Cv-Vzc.text">
+        <source>Extension</source>
+        <note>Class = "UILabel"; text = "Extension"; ObjectID = "uKT-Cv-Vzc";</note>
       </trans-unit>
       <trans-unit id="z2I-cm-BpM.title">
         <source>Groups</source>
@@ -287,7 +283,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Contacts_iPad.storyboard" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/Contacts_iPad.storyboard" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -380,7 +376,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/CurrentCallViewCell.xib" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/CurrentCallViewCell.xib" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -412,7 +408,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/IncomingCallViewCell.xib" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/IncomingCallViewCell.xib" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -436,7 +432,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/JCNonVisualVoicemailViewController.xib" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/JCNonVisualVoicemailViewController.xib" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -448,7 +444,40 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Login.storyboard" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/JCVoicemailDetailViewController.xib" source-language="en" datatype="plaintext" target-language="it">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="0SF-MX-8Bz.text">
+        <source>817-343-9239</source>
+        <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "0SF-MX-8Bz";</note>
+      </trans-unit>
+      <trans-unit id="4zV-0G-h0L.text">
+        <source>Voicemail Cell</source>
+        <note>Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "4zV-0G-h0L";</note>
+      </trans-unit>
+      <trans-unit id="CsB-Au-p5f.text">
+        <source>Confidence: %@</source>
+        <target>Fiducia: %@</target>
+        <note>Class = "UILabel"; text = "Confidence: %@"; ObjectID = "CsB-Au-p5f";</note>
+      </trans-unit>
+      <trans-unit id="YYK-uE-J9h.text">
+        <source>3:03 PM</source>
+        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "YYK-uE-J9h";</note>
+      </trans-unit>
+      <trans-unit id="gXq-iW-czr.text">
+        <source>Word count: %i</source>
+        <target>Conteggio parole: %i</target>
+        <note>Class = "UILabel"; text = "Word count: %i"; ObjectID = "gXq-iW-czr";</note>
+      </trans-unit>
+      <trans-unit id="uIh-4N-1Qj.text">
+        <source>0:00</source>
+        <note>Class = "UILabel"; text = "0:00"; ObjectID = "uIh-4N-1Qj";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/Login.storyboard" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -502,7 +531,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Main_iPad.storyboard" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/Main_iPad.storyboard" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -579,7 +608,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Main_iPhone.storyboard" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/Main_iPhone.storyboard" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -685,7 +714,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Phone.storyboard" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/Phone.storyboard" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -702,18 +731,27 @@
         <source>Dan Leonard</source>
         <note>Class = "UILabel"; text = "Dan Leonard"; ObjectID = "6Dg-Eu-qpr";</note>
       </trans-unit>
+      <trans-unit id="CANCELED">
+        <source>CANCELED</source>
+      </trans-unit>
+      <trans-unit id="Conference">
+        <source>Conference</source>
+      </trans-unit>
+      <trans-unit id="Connecting">
+        <source>Connecting</source>
+      </trans-unit>
+      <trans-unit id="Disabled">
+        <source>Disabled</source>
+      </trans-unit>
       <trans-unit id="G3s-tk-XlH.title">
         <source>Keypad</source>
         <target>Tastierino</target>
         <note>Class = "UINavigationController"; title = "Keypad"; ObjectID = "G3s-tk-XlH";</note>
       </trans-unit>
-      <trans-unit id="G4E-uV-P1d.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "G4E-uV-P1d";</note>
-      </trans-unit>
-      <trans-unit id="Kdj-bb-J0Z.text">
-        <source>817-343-9239</source>
-        <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "Kdj-bb-J0Z";</note>
+      <trans-unit id="Kji-Db-lbK.title">
+        <source>Clear</source>
+        <target>Chiaro</target>
+        <note>Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "Kji-Db-lbK";</note>
       </trans-unit>
       <trans-unit id="LGG-G6-Qgm.title">
         <source>History</source>
@@ -724,18 +762,19 @@
         <source>3:03 PM</source>
         <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "M6i-Nu-fpj";</note>
       </trans-unit>
-      <trans-unit id="Nvt-uK-WzZ.text">
-        <source>0.05</source>
-        <note>Class = "UILabel"; text = "0.05"; ObjectID = "Nvt-uK-WzZ";</note>
+      <trans-unit id="Merge Calls">
+        <source>Merge Calls</source>
+      </trans-unit>
+      <trans-unit id="RINGING">
+        <source>RINGING</source>
       </trans-unit>
       <trans-unit id="RN6-p8-PVT.title">
         <source>Voicemail</source>
         <target>Segreteria</target>
         <note>Class = "UITabBarItem"; title = "Voicemail"; ObjectID = "RN6-p8-PVT";</note>
       </trans-unit>
-      <trans-unit id="TQG-yI-VWH.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "TQG-yI-VWH";</note>
+      <trans-unit id="Split Calls">
+        <source>Split Calls</source>
       </trans-unit>
       <trans-unit id="UHR-O3-J6m.segmentTitles[0]">
         <source>All</source>
@@ -747,15 +786,8 @@
         <target>Perse</target>
         <note>Class = "UISegmentedControl"; UHR-O3-J6m.segmentTitles[1] = "Missed"; ObjectID = "UHR-O3-J6m";</note>
       </trans-unit>
-      <trans-unit id="UHm-eu-MVg.text">
-        <source>Confidence: %@</source>
-        <target>Fiducia: %@</target>
-        <note>Class = "UILabel"; text = "Confidence: %@"; ObjectID = "UHm-eu-MVg";</note>
-      </trans-unit>
-      <trans-unit id="VMi-W8-6Ys.text">
-        <source>Word count: %i</source>
-        <target>Conteggio parole: %i</target>
-        <note>Class = "UILabel"; text = "Word count: %i"; ObjectID = "VMi-W8-6Ys";</note>
+      <trans-unit id="Unregistered">
+        <source>Unregistered</source>
       </trans-unit>
       <trans-unit id="WRq-PA-NpD.title">
         <source>History</source>
@@ -786,26 +818,19 @@
         <target>Tastierino</target>
         <note>Class = "UITabBarItem"; title = "Keypad"; ObjectID = "bsn-3T-LYb";</note>
       </trans-unit>
-      <trans-unit id="bwK-e7-eQb.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "bwK-e7-eQb";</note>
+      <trans-unit id="cHI-JS-mn5.title">
+        <source>Clear</source>
+        <target>Chiaro</target>
+        <note>Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "cHI-JS-mn5";</note>
       </trans-unit>
       <trans-unit id="eFd-Wl-GUh.title">
         <source>Phone</source>
         <target>Phone</target>
         <note>Class = "UITabBarItem"; title = "Phone"; ObjectID = "eFd-Wl-GUh";</note>
       </trans-unit>
-      <trans-unit id="f8E-Ze-iMO.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "f8E-Ze-iMO";</note>
-      </trans-unit>
       <trans-unit id="fw1-N6-Rq7.text">
         <source>817-343-9239</source>
         <note>Class = "UILabel"; text = "817-343-9239"; ObjectID = "fw1-N6-Rq7";</note>
-      </trans-unit>
-      <trans-unit id="gtg-0d-joM.text">
-        <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
-        <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "gtg-0d-joM";</note>
       </trans-unit>
       <trans-unit id="k2g-vl-Yo3.title">
         <source>Call History</source>
@@ -820,25 +845,9 @@
         <source>Voicemail Cell</source>
         <note>Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "nwZ-xB-2hO";</note>
       </trans-unit>
-      <trans-unit id="oSn-F9-0WR.text">
-        <source>0:00</source>
-        <note>Class = "UILabel"; text = "0:00"; ObjectID = "oSn-F9-0WR";</note>
-      </trans-unit>
-      <trans-unit id="uNm-pu-7W1.normalTitle">
-        <source>Line Picker</source>
-        <note>Class = "UIButton"; normalTitle = "Line Picker"; ObjectID = "uNm-pu-7W1";</note>
-      </trans-unit>
-      <trans-unit id="v6c-w0-dHK.text">
-        <source>3:03 PM</source>
-        <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "v6c-w0-dHK";</note>
-      </trans-unit>
-      <trans-unit id="wFS-rk-8O8.text">
-        <source>Voicemail Cell</source>
-        <note>Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "wFS-rk-8O8";</note>
-      </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/PhoneManager.storyboard" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/PhoneManager.storyboard" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -925,7 +934,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Phone_iPad.storyboard" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/Phone_iPad.storyboard" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -935,18 +944,9 @@
         <target>MNO</target>
         <note>Class = "UILabel"; text = "MNO"; ObjectID = "0E0-Ga-yKj";</note>
       </trans-unit>
-      <trans-unit id="3hD-2T-xYG.text">
-        <source>Word count: %i</source>
-        <target>Conteggio parole: %i</target>
-        <note>Class = "UILabel"; text = "Word count: %i"; ObjectID = "3hD-2T-xYG";</note>
-      </trans-unit>
       <trans-unit id="8Ra-dK-mWX.text">
         <source>+</source>
         <note>Class = "UILabel"; text = "+"; ObjectID = "8Ra-dK-mWX";</note>
-      </trans-unit>
-      <trans-unit id="8Wk-uq-aXj.text">
-        <source>0:00</source>
-        <note>Class = "UILabel"; text = "0:00"; ObjectID = "8Wk-uq-aXj";</note>
       </trans-unit>
       <trans-unit id="A5J-Bt-Bbh.title">
         <source>DialerView</source>
@@ -955,10 +955,6 @@
       <trans-unit id="A5Z-Jv-4XP.title">
         <source>Voicemail</source>
         <note>Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "A5Z-Jv-4XP";</note>
-      </trans-unit>
-      <trans-unit id="AEl-R2-Jqz.text">
-        <source>(801) 349-7643</source>
-        <note>Class = "UILabel"; text = "(801) 349-7643"; ObjectID = "AEl-R2-Jqz";</note>
       </trans-unit>
       <trans-unit id="Amh-2F-CRy.text">
         <source>TUV</source>
@@ -969,10 +965,6 @@
         <source>WXYZ</source>
         <target>WXYZ</target>
         <note>Class = "UILabel"; text = "WXYZ"; ObjectID = "C1I-IP-hpm";</note>
-      </trans-unit>
-      <trans-unit id="CQZ-eU-dLa.text">
-        <source>Today, 10:57 PM</source>
-        <note>Class = "UILabel"; text = "Today, 10:57 PM"; ObjectID = "CQZ-eU-dLa";</note>
       </trans-unit>
       <trans-unit id="EMe-MP-2GH.segmentTitles[0]">
         <source>All</source>
@@ -988,10 +980,6 @@
         <source>Voicemail</source>
         <target>Segreteria</target>
         <note>Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[2] = "Voicemail"; ObjectID = "EMe-MP-2GH";</note>
-      </trans-unit>
-      <trans-unit id="F9q-cd-yQV.text">
-        <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulloccaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
-        <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulloccaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "F9q-cd-yQV";</note>
       </trans-unit>
       <trans-unit id="NMf-MW-Ar6.text">
         <source>3:03 PM</source>
@@ -1028,9 +1016,15 @@
         <target>PQRS</target>
         <note>Class = "UILabel"; text = "PQRS"; ObjectID = "YCw-kb-mRe";</note>
       </trans-unit>
-      <trans-unit id="ddr-iV-54q.text">
-        <source>Bob Seger</source>
-        <note>Class = "UILabel"; text = "Bob Seger"; ObjectID = "ddr-iV-54q";</note>
+      <trans-unit id="dp5-3A-4aJ.title">
+        <source>Clear</source>
+        <target>Chiaro</target>
+        <note>Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "dp5-3A-4aJ";</note>
+      </trans-unit>
+      <trans-unit id="eVx-Ji-0H8.title">
+        <source>History</source>
+        <target>Cronologia</target>
+        <note>Class = "UINavigationItem"; title = "History"; ObjectID = "eVx-Ji-0H8";</note>
       </trans-unit>
       <trans-unit id="kF5-dn-WTA.text">
         <source>3:03 PM</source>
@@ -1045,11 +1039,6 @@
         <target>DEF</target>
         <note>Class = "UILabel"; text = "DEF"; ObjectID = "utJ-wf-z8v";</note>
       </trans-unit>
-      <trans-unit id="zDJ-eE-vfh.text">
-        <source>Confidence: %@</source>
-        <target>Fiducia: %@</target>
-        <note>Class = "UILabel"; text = "Confidence: %@"; ObjectID = "zDJ-eE-vfh";</note>
-      </trans-unit>
       <trans-unit id="zzd-cv-BlF.text">
         <source>GHI</source>
         <target>GHI</target>
@@ -1057,7 +1046,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Settings.storyboard" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/Settings.storyboard" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -1201,14 +1190,14 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Base.lproj/Settings_iPad.storyboard" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Base.lproj/Settings_iPad.storyboard" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
     <body>
       <trans-unit id="2h8-Ie-UJ7.title">
         <source>Blocked Numbers</source>
-        <target>Numeri Bloccati</target>
+        <target>Numeri bloccati</target>
         <note>Class = "UINavigationItem"; title = "Blocked Numbers"; ObjectID = "2h8-Ie-UJ7";</note>
       </trans-unit>
       <trans-unit id="2sr-Lt-Rn4.text">
@@ -1218,20 +1207,22 @@
       </trans-unit>
       <trans-unit id="7tm-mE-fMU.text">
         <source>Detail</source>
+        <target>Dettaglio</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "7tm-mE-fMU";</note>
       </trans-unit>
       <trans-unit id="8lc-FR-WyW.title">
         <source>Debug</source>
+        <target>Mettere a punto</target>
         <note>Class = "UIViewController"; title = "Debug"; ObjectID = "8lc-FR-WyW";</note>
       </trans-unit>
       <trans-unit id="9gS-cp-gEd.footerTitle">
         <source>When enabled, people can dial *%@ and start talking to you.</source>
-        <target>Quando è abilitata, la gente può comporre *%@ e iniziare a parlare con te.</target>
+        <target>Quando è abilitata, la gente può comporre * %@ e iniziare a parlare con te.</target>
         <note>Class = "UITableViewSection"; footerTitle = "When enabled, people can dial *%@ and start talking to you."; ObjectID = "9gS-cp-gEd";</note>
       </trans-unit>
       <trans-unit id="99b-dA-8Mk.headerTitle">
         <source>Calling</source>
-        <target>Telefono</target>
+        <target>Chiamata</target>
         <note>Class = "UITableViewSection"; headerTitle = "Calling"; ObjectID = "99b-dA-8Mk";</note>
       </trans-unit>
       <trans-unit id="A0o-6u-f06.text">
@@ -1246,11 +1237,12 @@
       </trans-unit>
       <trans-unit id="G8f-jt-7Vj.text">
         <source>Mute Microphone</source>
-        <target>Disattivazione del Microfono</target>
+        <target>Disattivazione del microfono</target>
         <note>Class = "UILabel"; text = "Mute Microphone"; ObjectID = "G8f-jt-7Vj";</note>
       </trans-unit>
       <trans-unit id="IJd-MH-GKu.text">
         <source>Debug</source>
+        <target>Mettere a punto</target>
         <note>Class = "UILabel"; text = "Debug"; ObjectID = "IJd-MH-GKu";</note>
       </trans-unit>
       <trans-unit id="JKy-bL-axo.title">
@@ -1265,6 +1257,7 @@
       </trans-unit>
       <trans-unit id="N1D-t7-zLF.text">
         <source>build label</source>
+        <target>costruire label</target>
         <note>Class = "UILabel"; text = "build label"; ObjectID = "N1D-t7-zLF";</note>
       </trans-unit>
       <trans-unit id="NCS-71-YpF.footerTitle">
@@ -1274,39 +1267,42 @@
       </trans-unit>
       <trans-unit id="O9q-yv-7D9.title">
         <source>Debug</source>
+        <target>Mettere a punto</target>
         <note>Class = "UINavigationItem"; title = "Debug"; ObjectID = "O9q-yv-7D9";</note>
       </trans-unit>
       <trans-unit id="R7K-ih-8g1.text">
         <source>Title</source>
+        <target>Titolo</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "R7K-ih-8g1";</note>
       </trans-unit>
       <trans-unit id="SD3-M8-VN8.text">
         <source>Installation Id</source>
-        <target>Identificatore di Installazione</target>
+        <target>Installazione Id</target>
         <note>Class = "UILabel"; text = "Installation Id"; ObjectID = "SD3-M8-VN8";</note>
       </trans-unit>
       <trans-unit id="XtU-6m-RWQ.text">
         <source>Blocked Numbers</source>
-        <target>Numeri Bloccati</target>
+        <target>Numeri bloccati</target>
         <note>Class = "UILabel"; text = "Blocked Numbers"; ObjectID = "XtU-6m-RWQ";</note>
       </trans-unit>
       <trans-unit id="Y7Z-2w-WvV.text">
         <source>Detail</source>
+        <target>Dettaglio</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "Y7Z-2w-WvV";</note>
       </trans-unit>
       <trans-unit id="aP5-Db-WW6.title">
         <source>Intercom</source>
-        <target>Citofono</target>
+        <target>Citofon</target>
         <note>Class = "UINavigationItem"; title = "Intercom"; ObjectID = "aP5-Db-WW6";</note>
       </trans-unit>
       <trans-unit id="axJ-EB-B5c.text">
         <source>Make/Receive calls via Wi-Fi only</source>
-        <target>Effettuare/Ricevere chiamate via Wifi solo</target>
+        <target>Effettuare / ricevere chiamate solo tramite Wi-Fi</target>
         <note>Class = "UILabel"; text = "Make/Receive calls via Wi-Fi only"; ObjectID = "axJ-EB-B5c";</note>
       </trans-unit>
       <trans-unit id="bCr-bN-IuJ.text">
         <source>EULA</source>
-        <target>Contratto di licenza per l'utente</target>
+        <target>EULA</target>
         <note>Class = "UILabel"; text = "EULA"; ObjectID = "bCr-bN-IuJ";</note>
       </trans-unit>
       <trans-unit id="cq8-ct-GGR.text">
@@ -1326,16 +1322,17 @@
       </trans-unit>
       <trans-unit id="fdV-Zu-hqO.title">
         <source>Logout</source>
-        <target>Disconnettersi</target>
+        <target>Uscire</target>
         <note>Class = "UIBarButtonItem"; title = "Logout"; ObjectID = "fdV-Zu-hqO";</note>
       </trans-unit>
       <trans-unit id="gSR-1b-nJh.text">
         <source>User Id</source>
-        <target>ID utente</target>
+        <target>Id Utente</target>
         <note>Class = "UILabel"; text = "User Id"; ObjectID = "gSR-1b-nJh";</note>
       </trans-unit>
       <trans-unit id="gvY-o6-J0k.text">
         <source>Detail</source>
+        <target>Dettaglio</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "gvY-o6-J0k";</note>
       </trans-unit>
       <trans-unit id="hYY-U9-bgs.text">
@@ -1355,6 +1352,7 @@
       </trans-unit>
       <trans-unit id="hgZ-Q1-2MM.text">
         <source>Detail</source>
+        <target>Dettaglio</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "hgZ-Q1-2MM";</note>
       </trans-unit>
       <trans-unit id="iKo-rY-a54.text">
@@ -1374,65 +1372,47 @@
       </trans-unit>
       <trans-unit id="lzL-3Z-bTD.title">
         <source>Select a Line</source>
-        <target>Selezionare un interno telefonico</target>
+        <target>Seleziona una linea</target>
         <note>Class = "UINavigationItem"; title = "Select a Line"; ObjectID = "lzL-3Z-bTD";</note>
       </trans-unit>
       <trans-unit id="mtR-S3-xtq.text">
         <source>Detail</source>
+        <target>Dettaglio</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "mtR-S3-xtq";</note>
       </trans-unit>
       <trans-unit id="rkO-Oi-jBt.text">
         <source>Title</source>
+        <target>Titolo</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "rkO-Oi-jBt";</note>
       </trans-unit>
       <trans-unit id="rp4-J5-nkk.text">
         <source>app label</source>
+        <target>app label</target>
         <note>Class = "UILabel"; text = "app label"; ObjectID = "rp4-J5-nkk";</note>
       </trans-unit>
       <trans-unit id="xWY-6d-dO8.text">
         <source>Detail</source>
+        <target>Dettaglio</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "xWY-6d-dO8";</note>
       </trans-unit>
       <trans-unit id="xy6-CT-mZ7.text">
         <source>Leave Feeback</source>
-        <target>Scrivi opinione</target>
+        <target>Lascia Feeback</target>
         <note>Class = "UILabel"; text = "Leave Feeback"; ObjectID = "xy6-CT-mZ7";</note>
       </trans-unit>
       <trans-unit id="ya1-cS-0UJ.text">
         <source>Detail</source>
+        <target>Dettaglio</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "ya1-cS-0UJ";</note>
       </trans-unit>
       <trans-unit id="zf8-zH-ZBO.text">
         <source>Allow Intercom</source>
-        <target>Consenti Citofono</target>
+        <target>Consenti Intercom</target>
         <note>Class = "UILabel"; text = "Allow Intercom"; ObjectID = "zf8-zH-ZBO";</note>
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Chat.strings" source-language="en" datatype="plaintext" target-language="Italian">
-    <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
-    </header>
-    <body>
-      <trans-unit id="Send SMS">
-        <source>Send SMS</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Set as default">
-        <source>Set as default</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Set this phone number as default phone number for all sms messages">
-        <source>Set this phone number as default phone number for all sms messages</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Which number would you like to send from">
-        <source>Which number would you like to send from</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-    </body>
-  </file>
-  <file original="JiveOne/JiveOne-Info.plist" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/JiveOne-Info.plist" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -1444,625 +1424,778 @@
         <source>${PRODUCT_NAME}</source>
       </trans-unit>
       <trans-unit id="CFBundleShortVersionString">
-        <source>1.2.4</source>
+        <source>1.2.5</source>
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Localizable.strings" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Localizable.strings" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
     <body>
       <trans-unit id="Add TCP Transport Failure">
         <source>Add TCP Transport Failure</source>
+        <target>Aggiungere Fallimento TCP Trasporti</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Add TLS Transport Failure">
         <source>Add TLS Transport Failure</source>
+        <target>Aggiungere Fallimento TLS Transport</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Add UDP Transport Failure">
         <source>Add UDP Transport Failure</source>
+        <target>Aggiungere Fallimento UDP Transport</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Address Incomplete">
         <source>Address Incomplete</source>
+        <target>Indirizzo incompleto</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Address Incomplete. Request - URI incomplete.">
         <source>Address Incomplete. Request - URI incomplete.</source>
+        <target>Indirizzo incompleto. Richiesta - URI incompleta.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Already Initialized">
         <source>Already Initialized</source>
+        <target>Già inizializzato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Already Registered">
         <source>Already Registered</source>
+        <target>Già Registrato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Ambiguous">
         <source>Ambiguous</source>
+        <target>Ambiguo</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Ambiguous. Request - URI is ambiguous.">
         <source>Ambiguous. Request - URI is ambiguous.</source>
+        <target>Ambiguo. Richiesta - URI è ambiguo.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="An Error has occurred. An unknown error has occured.">
         <source>An Error has occurred. An unknown error has occured.</source>
+        <target>Si è verificato un errore. Un errore sconosciuto si è verificato.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="An unknown error has occured. If this problem persists, please contact support.">
         <source>An unknown error has occured. If this problem persists, please contact support.</source>
+        <target>Un errore sconosciuto si è verificato. Se il problema persiste, contattare il supporto.</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="Anonymity Disallowed">
         <source>Anonymity Disallowed</source>
+        <target>Anonimato Non consentito</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Anonymity Disallowed. The request has been rejected because it was anonymous.">
         <source>Anonymity Disallowed. The request has been rejected because it was anonymous.</source>
+        <target>Anonimato Non consentito. La richiesta è stata respinta perché era anonimo.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Argument is Null">
         <source>Argument is Null</source>
+        <target>L'argomento è Null</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Argument too long">
         <source>Argument too long</source>
+        <target>Argomento troppo lungo</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Channel not found">
         <source>Audio Channel not found</source>
+        <target>Canale audio non trovato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Codec Empty but Audio is enabled">
         <source>Audio Codec Empty but Audio is enabled</source>
+        <target>Audio Codec audio vuoto ma è abilitata</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Codec not supported">
         <source>Audio Codec not supported</source>
+        <target>Audio Codec non supportato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio File Name is empty">
         <source>Audio File Name is empty</source>
+        <target>Audio File Name è vuota</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Handle is NULL">
         <source>Audio Handle is NULL</source>
+        <target>Handle audio è NULL</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Open Play File Failure">
         <source>Audio Open Play File Failure</source>
+        <target>Audio Aperto Giocare Fallimento File</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play File Already Enabled">
         <source>Audio Play File Already Enabled</source>
+        <target>Riproduci file audio già abilitato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play File Format not supported">
         <source>Audio Play File Format not supported</source>
+        <target>Audio Gioca Formato file non supportato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play File Get Position Failure">
         <source>Audio Play File Get Position Failure</source>
+        <target>Riproduci file audio Prendi posizione Fallimento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play File Mode not supported">
         <source>Audio Play File Mode not supported</source>
+        <target>Audio Riproduzione Modalità file non supportati</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play File Not enabled">
         <source>Audio Play File Not enabled</source>
+        <target>Riproduci file audio non abilitato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play Object does not Exit">
         <source>Audio Play Object does not Exit</source>
+        <target>Audio Giocare oggetto non esce</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play stram not enabled">
         <source>Audio Play stram not enabled</source>
+        <target>Audio Giocare stram non abilitato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play stream already enabled">
         <source>Audio Play stream already enabled</source>
+        <target>Flusso Play Audio già abilitato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Register Callback Failure">
         <source>Audio Register Callback Failure</source>
+        <target>Audio Registro Richiamata Fallimento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Register Playback Failure">
         <source>Audio Register Playback Failure</source>
+        <target>Il mancato audio Registrati Riproduzione</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Register Recording Failure">
         <source>Audio Register Recording Failure</source>
+        <target>La mancata registrazione audio Register</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Sample Out of Range (10-60)">
         <source>Audio Sample Out of Range (10-60)</source>
+        <target>Audio Sample Out of Range (10-60)</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Sample is not multiple of 10">
         <source>Audio Sample is not multiple of 10</source>
+        <target>Campione audio non è multiplo di 10</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Video Codec is empty">
         <source>Audio Video Codec is empty</source>
+        <target>Audio Video Codec è vuoto</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Volume out of range">
         <source>Audio Volume out of range</source>
+        <target>Audio Volume fuori portata</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio and Video Port Overlapped">
         <source>Audio and Video Port Overlapped</source>
+        <target>Audio e Video Port Overlapped</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio and Video Port Range to Small">
         <source>Audio and Video Port Range to Small</source>
+        <target>Audio e video Intervallo porta a Piccolo</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio start recording failure">
         <source>Audio start recording failure</source>
+        <target>Fallimento avviare la registrazione audio</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Event">
         <source>Bad Event</source>
+        <target>Bad Evento</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Event. The server did not understand an event package specified in an Event header field.">
         <source>Bad Event. The server did not understand an event package specified in an Event header field.</source>
+        <target>Bad eventi. Il server non ha compreso un pacchetto di evento specificato in un campo di intestazione evento.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Bad Extension">
         <source>Bad Extension</source>
+        <target>Bad Extension</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Extension. Bad SIP Protocol Extension used, not understood by the server.">
         <source>Bad Extension. Bad SIP Protocol Extension used, not understood by the server.</source>
+        <target>Bad Extension. Bad protocollo SIP estensione utilizzata, non compresa dal server.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Bad Gateway">
         <source>Bad Gateway</source>
+        <target>Bad Gateway</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Gateway. The server is acting as a gateway or proxy, and received an invalid response from a downstream server while attempting to fulfill the request.">
         <source>Bad Gateway. The server is acting as a gateway or proxy, and received an invalid response from a downstream server while attempting to fulfill the request.</source>
+        <target>Bad Gateway. Il server agisce come un gateway o proxy, e ha ricevuto una risposta non valida da un server downstream nel tentativo di soddisfare la richiesta.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Bad Identity -Info. The request has an Identity -Info header, and the URI scheme in that header cannot be dereferenced.">
         <source>Bad Identity -Info. The request has an Identity -Info header, and the URI scheme in that header cannot be dereferenced.</source>
+        <target>Bad Identità -Info. La richiesta ha un header Identità -Info, e lo schema URI in quel colpo di testa non può essere dereferenziato.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Bad Identity-Info">
         <source>Bad Identity-Info</source>
+        <target>Bad Identity-Info</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Location Information">
         <source>Bad Location Information</source>
+        <target>Bad Informazioni sulla posizione</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Location Information. The request's location content was malformed or otherwise unsatisfactory.">
         <source>Bad Location Information. The request's location content was malformed or otherwise unsatisfactory.</source>
+        <target>Bad informazioni sulla posizione. Contenuti di localizzazione del richiesta era malformato o comunque insoddisfacente.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Bad Request">
         <source>Bad Request</source>
+        <target>Richiesta Sbagliata</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Request. The request could not be understood due to malformed syntax.">
         <source>Bad Request. The request could not be understood due to malformed syntax.</source>
+        <target>Richiesta Sbagliata. La richiesta non può essere compreso a causa di sintassi non valida.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Buffer is to Small">
         <source>Buffer is to Small</source>
+        <target>Buffer è di Piccolo</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Busy Everywhere">
         <source>Busy Everywhere</source>
+        <target>Busy Everywhere</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Busy Everywhere. All possible destinations are busy. Destination knows there are no alternative destinations (such as a voicemail server) able to accept the call.">
         <source>Busy Everywhere. All possible destinations are busy. Destination knows there are no alternative destinations (such as a voicemail server) able to accept the call.</source>
+        <target>Busy Everywhere. Tutte le possibili destinazioni sono occupati. Destinazione conosce non ci sono destinazioni alternative (ad esempio un server di posta vocale) in grado di accettare la chiamata.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Busy Here">
         <source>Busy Here</source>
+        <target>Busy Qui</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Busy Here. Callee is busy.">
         <source>Busy Here. Callee is busy.</source>
+        <target>Occupato qui. Callee è occupato.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="COde Type Invalid">
         <source>COde Type Invalid</source>
+        <target>Codice Tipo non valido</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call Not on Hold">
         <source>Call Not on Hold</source>
+        <target>Non Chiamata in attesa</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call from %@ :%@">
         <source>Call from %1$@ :%2$@</source>
+        <target>Chiamata da %1$@ : %2$@</target>
         <note>Local notification text</note>
       </trans-unit>
       <trans-unit id="Call id not found.">
         <source>Call id not found.</source>
+        <target>Chiamata id non trovato.</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call is Already on Hold">
         <source>Call is Already on Hold</source>
+        <target>Chiamata è già in attesa</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call is Closed">
         <source>Call is Closed</source>
+        <target>Gli uffici saranno chiusi</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call is in hold">
         <source>Call is in hold</source>
+        <target>La chiamata è in attesa</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call is not Established">
         <source>Call is not Established</source>
+        <target>Chiamata non stabilito</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call/Transaction Does Not Exist">
         <source>Call/Transaction Does Not Exist</source>
+        <target>Chiamata / transazione non esiste</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Call/Transaction Does Not Exist. Server received a request that does not match any dialog or transaction.">
         <source>Call/Transaction Does Not Exist. Server received a request that does not match any dialog or transaction.</source>
+        <target>Chiamata / transazione non esiste. Server ha ricevuto una richiesta che non corrisponde ad alcun dialogo o transazione.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Callee is empty">
         <source>Callee is empty</source>
+        <target>Callee è vuoto</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Can't set Audio Device Id During Call">
         <source>Can't set Audio Device Id During Call</source>
+        <target>Impossibile impostare Id periferica audio durante la chiamata</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Can't set device id durring call">
         <source>Can't set device id durring call</source>
+        <target>Impossibile impostare Device ID chiamata di durante</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Cancel">
         <source>Cancel</source>
+        <target>Cancellare</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Codec Not Supported">
         <source>Codec Not Supported</source>
+        <target>Codec non supportato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Codec already exits">
         <source>Codec already exits</source>
+        <target>Codec esce già</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Codec parameter not supported">
         <source>Codec parameter not supported</source>
+        <target>Parametro Codec non supportato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Conditional Request Failed">
         <source>Conditional Request Failed</source>
+        <target>Richiesta condizionale non riuscita</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Conditional Request Failed. The given precondition has not been met.">
         <source>Conditional Request Failed. The given precondition has not been met.</source>
+        <target>Richiesta condizionale non riuscita. La data presupposto non è stato raggiunto.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Conference Call already exists">
         <source>Conference Call already exists</source>
+        <target>Conference Call esiste già</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="Conference call already ended">
         <source>Conference call already ended</source>
+        <target>Conference call già conclusa</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Conference call already started">
         <source>Conference call already started</source>
+        <target>Conference call già iniziato</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Conflict">
         <source>Conflict</source>
+        <target>Conflitto</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Conflict. User already registered.">
         <source>Conflict. User already registered.</source>
+        <target>Conflitto. Utente già registrato.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Consent Needed">
         <source>Consent Needed</source>
+        <target>Consenso Needed</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Consent Needed. The source of the request did not have the permission of the recipient to make such a request.">
         <source>Consent Needed. The source of the request did not have the permission of the recipient to make such a request.</source>
+        <target>Consenso necessario. La fonte della richiesta non ha avuto il permesso del destinatario di tale richiesta.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Create Audio Channel Failed">
         <source>Create Audio Channel Failed</source>
+        <target>Creare riuscita canale audio</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Create Audio Conference Failure">
         <source>Create Audio Conference Failure</source>
+        <target>Creare Fallimento audioconferenza</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Create Audio Recording Failure">
         <source>Create Audio Recording Failure</source>
+        <target>Creare Fallimento registrazione audio</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Create Media Engine Failre">
         <source>Create Media Engine Failre</source>
+        <target>Crea Media Engine Failre</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Data Size is too large">
         <source>Data Size is too large</source>
+        <target>Dimensione è troppo grande</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Decline">
         <source>Decline</source>
+        <target>Declino</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Decline. The destination does not wish to participate in the call">
         <source>Decline. The destination does not wish to participate in the call</source>
+        <target>Declino. La destinazione non intende partecipare al bando</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Does Not Exist Anywhere">
         <source>Does Not Exist Anywhere</source>
+        <target>Non esiste da nessuna</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Does Not Exist Anywhere. The server has authoritative information that the requested user does not exist anywhere.">
         <source>Does Not Exist Anywhere. The server has authoritative information that the requested user does not exist anywhere.</source>
+        <target>Non esiste da nessuna. Il server dispone di informazioni autorevoli che l'utente richiesto non esiste da nessuna parte.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Downloading...">
         <source>Downloading...</source>
+        <target>Download ...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error Creating Conference">
         <source>Error Creating Conference</source>
+        <target>Errore durante la creazione Conference</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error Joining line session to conference">
         <source>Error Joining line session to conference</source>
+        <target>Errore Unire sessione di riga alla conferenza</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error Trying to Hang up">
         <source>Error Trying to Hang up</source>
+        <target>Errore nel tentativo di riagganciare</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error holding the line sessions">
         <source>Error holding the line sessions</source>
+        <target>Errore tenendo le sessioni di linea</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error placing calls on hold">
         <source>Error placing calls on hold</source>
+        <target>Immissione Errore chiamate in attesa</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error placing calls on hold after ending a conference">
         <source>Error placing calls on hold after ending a conference</source>
+        <target>Immissione Errore chiamate in attesa dopo aver terminato una conferenza</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error trying to manually reject incomming call">
         <source>Error trying to manually reject incomming call</source>
+        <target>Errore cercando di manualmente scarto incomming chiamata</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error unholding the line session while after joing the conference">
         <source>Error unholding the line session while after joing the conference</source>
+        <target>Errore unholding la sessione di riga, mentre dopo partecipa alla conferenza</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Expires Value is to small.">
         <source>Expires Value is to small.</source>
+        <target>Scade valore è di piccole dimensioni.</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Extension Required">
         <source>Extension Required</source>
+        <target>Estensione Obbligatorio</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Extension Required. The server needs a specific extension not listed in the Supported header.">
         <source>Extension Required. The server needs a specific extension not listed in the Supported header.</source>
+        <target>Estensione Obbligatorio. Il server ha bisogno di un interno specifico non elencato nella intestazione supportati.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Failed ending conference call">
         <source>Failed ending conference call</source>
+        <target>Impossibile terminare chiamata in conferenza</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="Failed to create conference call">
         <source>Failed to create conference call</source>
+        <target>Impossibile creare conference call</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="First Hop Lacks Outbound Support">
         <source>First Hop Lacks Outbound Support</source>
+        <target>Prima Hop manca il supporto in uscita</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="First Hop Lacks Outbound Support. The first outbound proxy the user is attempting to register through does not support the 'outbound' feature of RFC 5626, although the registrar does.">
         <source>First Hop Lacks Outbound Support. The first outbound proxy the user is attempting to register through does not support the 'outbound' feature of RFC 5626, although the registrar does.</source>
+        <target>Prima Hop manca il supporto in uscita. Il primo proxy in uscita l'utente sta tentando di registrarsi attraverso non supporta la funzionalità di 'outbound' di RFC 5626, anche se il cancelliere fa.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Fix Payload can't change">
         <source>Fix Payload can't change</source>
+        <target>Fix Payload non può cambiare</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Flow Failed">
         <source>Flow Failed</source>
+        <target>Flusso non riuscito</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Flow Failed. A specific flow to a user agent has failed, although other flows may succeed.">
         <source>Flow Failed. A specific flow to a user agent has failed, although other flows may succeed.</source>
+        <target>Flusso non riuscita. Un flusso specifico per un agente utente non è riuscita, anche se altri flussi possono avere successo.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Forbidden">
         <source>Forbidden</source>
+        <target>Proibito</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Forbidden. The server understood the request, but is refusing to fulfil it.">
         <source>Forbidden. The server understood the request, but is refusing to fulfil it.</source>
+        <target>Proibita. Il server ha capito la richiesta, ma si rifiuta di compierla.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Get Audio Statistics Failure">
         <source>Get Audio Statistics Failure</source>
+        <target>Ottenere Audio Statistiche Fallimento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Get Device Name Failure">
         <source>Get Device Name Failure</source>
+        <target>Ottenere Nome dispositivo Fallimento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Get Statistics Failure">
         <source>Get Statistics Failure</source>
+        <target>Trova Statistiche Fallimento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Gone">
         <source>Gone</source>
+        <target>Andato</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Gone. The user existed once, but is not available here any more.">
         <source>Gone. The user existed once, but is not available here any more.</source>
+        <target>Andato. L'utente esisteva una volta, ma non è disponibile più qui.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Header Value List is empty">
         <source>Header Value List is empty</source>
+        <target>Intestazione Elenco valori è vuota</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="IVR Index is out of range">
         <source>IVR Index is out of range</source>
+        <target>IVR Index è fuori portata</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="IVR Object is Null">
         <source>IVR Object is Null</source>
+        <target>IVR Object è Null</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="IVR Refer Failure">
         <source>IVR Refer Failure</source>
+        <target>IVR Suggerire Fallimento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="IVR Waiting Timeout">
         <source>IVR Waiting Timeout</source>
+        <target>IVR Timeout attesa</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Initialize Stack Failure">
         <source>Initialize Stack Failure</source>
+        <target>Inizializzare Stack Fallimento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Initialize Winsock Failure">
         <source>Initialize Winsock Failure</source>
+        <target>Inizializzare Winsock Fallimento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Interval Too Brief">
         <source>Interval Too Brief</source>
+        <target>Intervallo troppo breve</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Interval Too Brief. Expiration time of the resource is too short.">
         <source>Interval Too Brief. Expiration time of the resource is too short.</source>
+        <target>Intervallo troppo breve. Tempo di scadenza della risorsa è troppo breve.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Invalid Identity Header">
         <source>Invalid Identity Header</source>
+        <target>Identità valido Header</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Invalid Identity Header. The server obtained a valid certificate that the request claimed was used to sign the request, but was unable to verify that signature.">
         <source>Invalid Identity Header. The server obtained a valid certificate that the request claimed was used to sign the request, but was unable to verify that signature.</source>
+        <target>Identità valido intestazione. Il server ha ottenuto un certificato valido che la richiesta ha sostenuto è stato utilizzato per firmare la richiesta, ma non era in grado di verificare che la firma.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Invalid Session Id">
         <source>Invalid Session Id</source>
+        <target>Invalid Session ID</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Invalid URI">
         <source>Invalid URI</source>
+        <target>URI non valido</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Invide Session not found">
         <source>Invide Session not found</source>
+        <target>Invide sessione non trovato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Jive Mobile EULA">
         <source>Jive Mobile EULA</source>
+        <target>Jive mobile EULA</target>
         <note>Terms and Conditions EULA title</note>
       </trans-unit>
       <trans-unit id="Length Required">
         <source>Length Required</source>
+        <target>Lunghezza Richiesto</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Length Required. The server will not accept the request without a valid Content - Length.">
         <source>Length Required. The server will not accept the request without a valid Content - Length.</source>
+        <target>Lunghezza desiderata. Il server non accetterà la richiesta senza un Content valida - Durata.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Line Configuration is Empty">
         <source>Line Configuration is Empty</source>
+        <target>Configurazione della linea è Vuoto</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Line Session in empty">
         <source>Line Session in empty</source>
+        <target>Session Line in vuoto</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Line is empty">
         <source>Line is empty</source>
+        <target>Line è vuoto</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Loop Detected">
         <source>Loop Detected</source>
+        <target>Loop Rilevato</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Loop Detected. Server has detected a loop.">
         <source>Loop Detected. Server has detected a loop.</source>
+        <target>Loop rilevato. Server ha rilevato un ciclo.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Max Audio Port Not Even Number">
         <source>Max Audio Port Not Even Number</source>
+        <target>Max Audio Port Not Even Number</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Max Audio Port out of range">
         <source>Max Audio Port out of range</source>
+        <target>Max porta audio fuori campo</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Max Video Port Not Event Number">
         <source>Max Video Port Not Event Number</source>
+        <target>Max porta Video Non Numero evento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Max Video Port out of range">
         <source>Max Video Port out of range</source>
+        <target>Max Video Porto fuori portata</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Message Too Large">
         <source>Message Too Large</source>
+        <target>Messaggio troppo grande</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Message Too Large. The request message length is longer than the server can process.">
         <source>Message Too Large. The request message length is longer than the server can process.</source>
+        <target>Messaggio troppo grande. La lunghezza richiesta messaggio è più lungo del server può elaborare.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Method Not Allowed">
         <source>Method Not Allowed</source>
+        <target>Metodo non ammessi</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Method Not Allowed. The method specified in the Request -Line is understood, but not allowed for the address identified by the Request-URI.">
         <source>Method Not Allowed. The method specified in the Request -Line is understood, but not allowed for the address identified by the Request-URI.</source>
+        <target>Metodo non consentito. Il metodo specificato nella richiesta -Line è capito, ma non è consentito per l'indirizzo identificata dalla richiesta-URI.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Mime Type Unknown">
         <source>Mime Type Unknown</source>
+        <target>Mime tipo sconosciuto</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Mini Audio Port out of range">
         <source>Mini Audio Port out of range</source>
+        <target>Mini audio Porto fuori portata</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Mini RTP Port is not even number">
         <source>Mini RTP Port is not even number</source>
+        <target>Mini RTP Port non è nemmeno il numero</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Mini Video Port Not Even Number">
         <source>Mini Video Port Not Even Number</source>
+        <target>Mini Porta video Not Even Number</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Mini Video Port out of range">
         <source>Mini Video Port out of range</source>
+        <target>Mini Video Porto fuori portata</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Network Interface is unavialable">
         <source>Network Interface is unavialable</source>
+        <target>Interfaccia di rete è unavialable</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="New Message from %@ \n%@">
@@ -2072,370 +2205,462 @@
       </trans-unit>
       <trans-unit id="No">
         <source>No</source>
+        <target>No</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Active Line">
         <source>No Active Line</source>
+        <target>No Active Line</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="No Conference call to end">
         <source>No Conference call to end</source>
+        <target>Nessuna chiamata conferenza per terminare</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="No Connection">
         <source>No Connection</source>
+        <target>Nessuna connessione</target>
         <note>No Connection</note>
       </trans-unit>
       <trans-unit id="No Free Dialog Session">
         <source>No Free Dialog Session</source>
+        <target>No Gratis Dialog Session</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="No Idle Line">
         <source>No Idle Line</source>
+        <target>Nessuna linea inattiva</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="No Referral line">
         <source>No Referral line</source>
+        <target>Nessuna linea Referral</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Not Acceptable">
         <source>Not Acceptable</source>
+        <target>Inaccettabile</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Not Acceptable Here">
         <source>Not Acceptable Here</source>
+        <target>Non accettabile Qui</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Not Acceptable Here. Some aspect of the session description or the Request - URI is not acceptable.">
         <source>Not Acceptable Here. Some aspect of the session description or the Request - URI is not acceptable.</source>
+        <target>Non accettabile Qui. Alcuni aspetti della descrizione di sessione o la richiesta - URI non è accettabile.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Not Acceptable. The resource identified by the request is only capable of generating response entities that have content characteristics but not acceptable according to the Accept header field sent in the request.">
         <source>Not Acceptable. The resource identified by the request is only capable of generating response entities that have content characteristics but not acceptable according to the Accept header field sent in the request.</source>
+        <target>Inaccettabile. La risorsa identificata tramite richiesta può solo generare una risposta che hanno caratteristiche di contenuto ma non accettabile secondo il campo di intestazione Accept inviato nella richiesta.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Not Acceptable. The user's agent was contacted successfully but some aspects of the session description such as the requested media, bandwidth, or addressing style were not acceptable.">
         <source>Not Acceptable. The user's agent was contacted successfully but some aspects of the session description such as the requested media, bandwidth, or addressing style were not acceptable.</source>
+        <target>Inaccettabile. L'agente dell'utente è stato contattato con successo ma alcuni aspetti della descrizione della sessione, come i media richiesti, larghezza di banda, o lo stile di indirizzamento non erano accettabili.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Not Found">
         <source>Not Found</source>
+        <target>Non Trovato</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Not Found Subscribe Id">
         <source>Not Found Subscribe Id</source>
+        <target>Not Found Iscriviti Id</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Not Found. The server has definitive information that the user does not exist at the domain specified in the Request-URI.">
         <source>Not Found. The server has definitive information that the user does not exist at the domain specified in the Request-URI.</source>
+        <target>Non Trovato. Il server dispone di informazioni definitive che l'utente non esiste al dominio specificato nella Request-URI.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Not Implemented">
         <source>Not Implemented</source>
+        <target>Non implementato</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Not Implemented. The server does not have the ability to fulfill the request, such as because it does not recognize the request method.">
         <source>Not Implemented. The server does not have the ability to fulfill the request, such as because it does not recognize the request method.</source>
+        <target>Non implementato. Il server non ha la capacità di soddisfare la richiesta, ad esempio perché non riconosce il metodo di richiesta.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Not Initialized">
         <source>Not Initialized</source>
+        <target>Non inizializzato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Not Registered">
         <source>Not Registered</source>
+        <target>Non Registrato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Not an Incomming Call">
         <source>Not an Incomming Call</source>
+        <target>Non un Incomming chiamata</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Not supported callback mode">
         <source>Not supported callback mode</source>
+        <target>Non modo di richiamata supportata</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Number">
         <source>Number</source>
+        <target>Numero</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="OK">
         <source>OK</source>
+        <target>OK</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Outgoing Audio is muted">
         <source>Outgoing Audio is muted</source>
+        <target>In uscita audio è disattivato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Outgoing Video is nuted">
         <source>Outgoing Video is nuted</source>
+        <target>Il video in uscita è nuted</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Password is empty">
         <source>Password is empty</source>
+        <target>La password è vuoto</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Payload Type invalid">
         <source>Payload Type invalid</source>
+        <target>Payload Type non valido</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Payload already exists. Duplicate payload values are not allowed">
         <source>Payload already exists. Duplicate payload values are not allowed</source>
+        <target>Payload esiste già. I valori di carico utile duplicati non sono consentiti</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Payload is out of range (96-127)">
         <source>Payload is out of range (96-127)</source>
+        <target>Payload è fuori campo (96-127)</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Payment Required">
         <source>Payment Required</source>
+        <target>Pagamento Richiesto</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Payment Required.">
         <source>Payment Required.</source>
+        <target>Pagamento richiesto.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Phone could not be initialized">
         <source>Phone could not be initialized</source>
+        <target>Telefono non potrebbe essere inizializzato</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="Phone is already attempting to register">
         <source>Phone is already attempting to register</source>
+        <target>Il telefono è già tentando di registrarsi</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Phone is set to be Wifi Only">
         <source>Phone is set to be Wifi Only</source>
+        <target>Il telefono è impostato per essere solo Wifi</target>
         <note>Phone Manager Error</note>
       </trans-unit>
-      <trans-unit id="Phone registration is unable to register at this time. Please check your network connection and try again. If problem persists, restart the application.">
-        <source>Phone registration is unable to register at this time. Please check your network connection and try again. If problem persists, restart the application.</source>
-        <note>Sip Manager Error</note>
-      </trans-unit>
-      <trans-unit id="Please try again. If the problem persists, please contact support.">
-        <source>Please try again. If the problem persists, please contact support.</source>
+      <trans-unit id="Phone registration is unable to register at this time. You may not be on an Approved network. If problem persists, contact your System Administrator to add your network.">
+        <source>Phone registration is unable to register at this time. You may not be on an Approved network. If problem persists, contact your System Administrator to add your network.</source>
+        <target>Registrazione Phone è in grado di registrare in questo momento. Potrebbe non essere su una rete Approvato. Se il problema persiste, rivolgersi all'amministratore del sistema aggiungere la rete.</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Poor Network Quality">
         <source>Poor Network Quality</source>
+        <target>Scarsa qualità della rete</target>
         <note>Network Quality Indicator Popover Text</note>
       </trans-unit>
       <trans-unit id="Port out of range">
         <source>Port out of range</source>
+        <target>Porto fuori portata</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Precondition Failure">
         <source>Precondition Failure</source>
+        <target>Presupposto Fallimento</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Precondition Failure. The server is unable or unwilling to meet some constraints specified in the offer.">
         <source>Precondition Failure. The server is unable or unwilling to meet some constraints specified in the offer.</source>
+        <target>Fallimento Premessa. Il server non è in grado o non vuole incontrare alcuni vincoli specificati nell'offerta.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Provide Referrer Identity">
         <source>Provide Referrer Identity</source>
+        <target>Fornire Referrer Identity</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Provide Referrer Identity. The server did not receive a valid Referred-By token on the request.">
         <source>Provide Referrer Identity. The server did not receive a valid Referred-By token on the request.</source>
+        <target>Fornire Referrer Identity. Il server non ha ricevuto una By Riferito token valida sulla richiesta.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Proxy Authentication Required">
         <source>Proxy Authentication Required</source>
+        <target>Autenticazione proxy richiesta</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Proxy Authentication Required. The request requires user authentication.">
         <source>Proxy Authentication Required. The request requires user authentication.</source>
+        <target>Autenticazione Proxy Richiesta. La richiesta richiede l'autenticazione dell'utente.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Registering...">
         <source>Registering...</source>
+        <target>Registrazione ...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Registration Failure">
         <source>Registration Failure</source>
+        <target>Errore di registrazione</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Request - URI Too Long. The server is refusing to service the request because the Request - URI is longer than the server is willing to interpret.">
         <source>Request - URI Too Long. The server is refusing to service the request because the Request - URI is longer than the server is willing to interpret.</source>
+        <target>Richiesta - URI Too Long. Il server rifiuta di servire la richiesta perché la richiesta - URI è più lungo il server è disposto ad interpretare.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Request Entity Too Large">
         <source>Request Entity Too Large</source>
+        <target>Richiedi entità troppo grande</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Request Entity Too Large. Request body too large.">
         <source>Request Entity Too Large. Request body too large.</source>
+        <target>Richiedi entità troppo grande. Richiesta corpo troppo grande.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Request Pending">
         <source>Request Pending</source>
+        <target>Richiesta in sospeso</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Request Pending. Server has some pending request from the same dialog.">
         <source>Request Pending. Server has some pending request from the same dialog.</source>
+        <target>Richiesta in sospeso. Server ha qualche richiesta in sospeso dalla stessa finestra di dialogo.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Request Terminated">
         <source>Request Terminated</source>
+        <target>Richiesta Terminato</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Request Terminated. Request has terminated by bye or cancel.">
         <source>Request Terminated. Request has terminated by bye or cancel.</source>
+        <target>Richiesta terminato. Richiesta ha terminato da bye o annullare.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Request Timeout">
         <source>Request Timeout</source>
+        <target>Richiesta Timeout</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Request Timeout. Couldn't find the user in time. The server could not produce a response within a suitable amount of time, for example, if it could not determine the location of the user in time.">
         <source>Request Timeout. Couldn't find the user in time. The server could not produce a response within a suitable amount of time, for example, if it could not determine the location of the user in time.</source>
+        <target>Richiesta Timeout. Impossibile trovare l'utente in tempo. Il server non potrebbe produrre una risposta entro un periodo di tempo adeguato, per esempio, se non in grado di determinare la posizione dell'utente in tempo.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Request-URI Too Long">
         <source>Request-URI Too Long</source>
+        <target>Request-URI Too Long</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="SDK Object is Null">
         <source>SDK Object is Null</source>
+        <target>SDK Object è Null</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="SMS on %@">
         <source>SMS on %@</source>
+        <target>SMS %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Security Agreement Required">
         <source>Security Agreement Required</source>
+        <target>Sicurezza Contratto Richiesto</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Security Agreement Required.">
         <source>Security Agreement Required.</source>
+        <target>Accordo di sicurezza richiesti.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Selecting Line...">
         <source>Selecting Line...</source>
+        <target>Selezione Linea ...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Send Avi File Failure">
         <source>Send Avi File Failure</source>
+        <target>Invia Avi Fallimento File</target>
         <note>Port Sip Error</note>
+      </trans-unit>
+      <trans-unit id="Send SMS to %@">
+        <source>Send SMS to %@</source>
+        <target>Invia SMS a %@</target>
+        <note>Send SMS to new participant's phone number.</note>
       </trans-unit>
       <trans-unit id="Server Internal Error">
         <source>Server Internal Error</source>
+        <target>Server Errore interno</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Server Internal Error. The server could not fulfill the request due to some unexpected condition.">
         <source>Server Internal Error. The server could not fulfill the request due to some unexpected condition.</source>
+        <target>Server Errore interno. Il server non ha potuto soddisfare la richiesta a causa di un po 'di condizione imprevista.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Server Time-out">
         <source>Server Time-out</source>
+        <target>Server Time-out</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Server Time-out. The server attempted to access another server in attempting to process the request, and did not receive a prompt response.">
         <source>Server Time-out. The server attempted to access another server in attempting to process the request, and did not receive a prompt response.</source>
+        <target>Server Time-out. Il server ha tentato di accedere a un altro server nel tentativo di elaborare la richiesta e non ha ricevuto una risposta tempestiva.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Server is empty">
         <source>Server is empty</source>
+        <target>Server è vuoto</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Service Unavailable">
         <source>Service Unavailable</source>
+        <target>Servizio Indisponibile</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Service Unavailable. The server is undergoing maintenance or is temporarily overloaded and so cannot process the request.">
         <source>Service Unavailable. The server is undergoing maintenance or is temporarily overloaded and so cannot process the request.</source>
+        <target>Servizio Indisponibile. Il server è in manutenzione o di un sovraccarico temporaneo e quindi non in grado di elaborare la richiesta.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Session Interval Too Small">
         <source>Session Interval Too Small</source>
+        <target>Session Intervallo troppo piccolo</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Session Interval Too Small. The received request contains a Session-Expires header field with a duration below the minimum timer.">
         <source>Session Interval Too Small. The received request contains a Session-Expires header field with a duration below the minimum timer.</source>
+        <target>Session Intervallo troppo piccolo. La richiesta ricevuta contiene un Session-Expires campo con una durata sotto il timer minimo.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Session Timer Value is to small">
         <source>Session Timer Value is to small</source>
+        <target>Session Timer valore è di piccole dimensioni</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Session numbers out of range">
         <source>Session numbers out of range</source>
+        <target>Numeri di sessione fuori campo</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Header Parser is empty">
         <source>Sip Header Parser is empty</source>
+        <target>Sip intestazione Parser è vuoto</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Header does not exist">
         <source>Sip Header does not exist</source>
+        <target>Sip intestazione non esiste</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Header is badly formed">
         <source>Sip Header is badly formed</source>
+        <target>Sip Header è mal formato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Header name is empty">
         <source>Sip Header name is empty</source>
+        <target>Nome Sip Header è vuoto</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Header value is empty">
         <source>Sip Header value is empty</source>
+        <target>Valore Sip intestazione è vuoto</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Header value list is NULL">
         <source>Sip Header value list is NULL</source>
+        <target>Lista valori Sip intestazione è NULL</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Message is Empty">
         <source>Sip Message is Empty</source>
+        <target>Sip messaggio è Vuoto</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Server Path is Empty">
         <source>Sip Server Path is Empty</source>
+        <target>Percorso Sip Server è vuoto</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Stack Exception">
         <source>Stack Exception</source>
+        <target>Stack Eccezione</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Start Play AVI Failure">
         <source>Start Play AVI Failure</source>
+        <target>Avviare la riproduzione AVI Fallimento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Start Send Failure">
         <source>Start Send Failure</source>
+        <target>Inizia Invia Fallimento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Start Video Capture Failure">
         <source>Start Video Capture Failure</source>
+        <target>Avvio Video Capture Fallimento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Temporarily Unavailable">
         <source>Temporarily Unavailable</source>
+        <target>Temporaneamente Non Disponibile</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Temporarily Unavailable. Callee currently unavailable.">
         <source>Temporarily Unavailable. Callee currently unavailable.</source>
+        <target>Temporaneamente Non Disponibile. Chiamato al momento disponibile.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Too Many Hops">
         <source>Too Many Hops</source>
+        <target>Troppi Luppolo</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Too Many Hops. Max - Forwards header has reached the value '0'.">
         <source>Too Many Hops. Max - Forwards header has reached the value '0'.</source>
+        <target>Troppi luppolo. Max - intestazione Forwards ha raggiunto il valore '0'.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Transfering...">
         <source>Transfering...</source>
+        <target>Trasferimento di ...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Trial Version License Key">
         <source>Trial Version License Key</source>
+        <target>Trial Version License Key</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Unable to answer the call">
         <source>Unable to answer the call</source>
+        <target>Incapace di rispondere alla chiamata</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Unable to connect to the\n network at this time.">
@@ -2445,171 +2670,217 @@
       </trans-unit>
       <trans-unit id="Unable to connect to this line at this time. Please Try again.">
         <source>Unable to connect to this line at this time. Please Try again.</source>
+        <target>Impossibile connettersi a questa linea in questo momento. Riprova, per favore.</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="Unable to make a call">
         <source>Unable to make a call</source>
+        <target>Incapace di fare una chiamata</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Unable to perform transfer at this time. Please Try Again.">
         <source>Unable to perform transfer at this time. Please Try Again.</source>
+        <target>Impossibile eseguire il trasferimento in questo momento. Riprova, Per Favore.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Unable to select line. Please call Customer Care. You may not have a device associated with this account.">
         <source>Unable to select line. Please call Customer Care. You may not have a device associated with this account.</source>
+        <target>Impossibile selezionare la riga. Si prega di chiamare il Servizio Clienti. Non si può avere un dispositivo associato a questo account.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Unauthorized">
         <source>Unauthorized</source>
+        <target>Non autorizzato</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Unauthorized. The request requires user authentication.">
         <source>Unauthorized. The request requires user authentication.</source>
+        <target>Non autorizzato. La richiesta richiede l'autenticazione dell'utente.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Undecipherable">
         <source>Undecipherable</source>
+        <target>Indecifrabili</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Undecipherable. Request contains an encrypted MIME body, which recipient can not decrypt.">
         <source>Undecipherable. Request contains an encrypted MIME body, which recipient can not decrypt.</source>
+        <target>Indecifrabili. La richiesta contiene un corpo MIME crittografato, che destinatario non può decifrare.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Unknown">
         <source>Unknown</source>
+        <target>Sconosciuto</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Unknown Error Has Occured">
         <source>Unknown Error Has Occured</source>
+        <target>Errore sconosciuto si è verificato</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Unknown Resource -Priority. There was a resource - priority option tag, but no Resource-Priority header.">
         <source>Unknown Resource -Priority. There was a resource - priority option tag, but no Resource-Priority header.</source>
+        <target>Sconosciuto Resource -Priority. C'era una risorsa - tag opzione prioritaria, ma nessun colpo di testa Resource-Priority.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Unknown Resource-Priority">
         <source>Unknown Resource-Priority</source>
+        <target>Sconosciuto Resource-Priority</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Unknown Video Record Codec">
         <source>Unknown Video Record Codec</source>
+        <target>Unknown Video Record Codec</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Unsupported Certificate">
         <source>Unsupported Certificate</source>
+        <target>Certificato non supportato</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Unsupported Certificate. The server was unable to validate a certificate for the domain that signed the request.">
         <source>Unsupported Certificate. The server was unable to validate a certificate for the domain that signed the request.</source>
+        <target>Certificato non supportato. Il server non è in grado di convalidare un certificato per il dominio che ha firmato la richiesta.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Unsupported Media Type">
         <source>Unsupported Media Type</source>
+        <target>Tipo di Supporto Non</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Unsupported Media Type. Request body in a format not supported.">
         <source>Unsupported Media Type. Request body in a format not supported.</source>
+        <target>Tipo di supporto non supportato. Richiesta corpo in un formato non supportato.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Unsupported URI Scheme">
         <source>Unsupported URI Scheme</source>
+        <target>Schema URI non supportato</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Unsupported URI Scheme. Request - URI is unknown to the server.">
         <source>Unsupported URI Scheme. Request - URI is unknown to the server.</source>
+        <target>Schema URI non supportato. Richiesta - URI è sconosciuto al server.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Unsupported Video Capture Resolution">
         <source>Unsupported Video Capture Resolution</source>
+        <target>Video non supportato Risoluzione acquisizione</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Unsupported Video Capture Rotation">
         <source>Unsupported Video Capture Rotation</source>
+        <target>Video non supportato Capture rotazione</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Use Identity Header">
         <source>Use Identity Header</source>
+        <target>Usa Identità Header</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Use Identity Header. The server policy requires an Identity header, and one has not been provided.">
         <source>Use Identity Header. The server policy requires an Identity header, and one has not been provided.</source>
+        <target>Utilizzare Identità intestazione. La politica di server richiede un header di identità, e non è stato fornito.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="User Name Auth Name is Empty">
         <source>User Name Auth Name is Empty</source>
+        <target>Nome utente Nome Auth è Vuoto</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="User is Empty">
         <source>User is Empty</source>
+        <target>L'utente è vuoto</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Version Not Supported">
         <source>Version Not Supported</source>
+        <target>Versione non supportata</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Version Not Supported. The SIP protocol version in the request is not supported by the server.">
         <source>Version Not Supported. The SIP protocol version in the request is not supported by the server.</source>
+        <target>Versione non supportata. La versione del protocollo SIP nella richiesta non è supportato dal server.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Video Channel Not Found">
         <source>Video Channel Not Found</source>
+        <target>Canale Video non trovato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Video Code is Empty but video is enabled">
         <source>Video Code is Empty but video is enabled</source>
+        <target>Video codice è vuoto, ma il video è abilitato</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Video File Name Empty">
         <source>Video File Name Empty</source>
+        <target>Video File Name Vuota</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Video Get Device Id Failure">
         <source>Video Get Device Id Failure</source>
+        <target>Video Get ID dispositivo Fallimento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Video Get Device Name Failure">
         <source>Video Get Device Name Failure</source>
+        <target>Video Get Nome dispositivo Fallimento</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Video Handle is NULL">
         <source>Video Handle is NULL</source>
+        <target>Video maniglia è NULL</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Voicemail">
         <source>Voicemail</source>
+        <target>Voicemail</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Warning">
         <source>Warning</source>
+        <target>Avvertimento</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Wrong DTMF Tone">
         <source>Wrong DTMF Tone</source>
+        <target>Sbagliato Tone DTMF</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Wrong License Key">
         <source>Wrong License Key</source>
+        <target>Sbagliato License Key</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Yes">
         <source>Yes</source>
+        <target>Sì</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Yesterday">
         <source>Yesterday</source>
+        <target>Ieri</target>
         <note>Yesterday</note>
+      </trans-unit>
+      <trans-unit id="You may not be on an Approved network. If the problem persists, please contact your System Administrator to add your current network to the list of approved networks.">
+        <source>You may not be on an Approved network. If the problem persists, please contact your System Administrator to add your current network to the list of approved networks.</source>
+        <target>Potrebbe non essere su una rete Approvato. Se il problema persiste, contattare l'amministratore del sistema per aggiungere la rete corrente all'elenco delle reti approvati.</target>
+        <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="me">
         <source>me</source>
+        <target>me</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="please verify your internet connection">
         <source>please verify your internet connection</source>
+        <target>si prega di verificare la connessione a Internet</target>
         <note>please verify your internet connection</note>
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Phone.strings" source-language="en" datatype="plaintext" target-language="Italian">
+  <file original="JiveOne/Phone.strings" source-language="en" datatype="plaintext" target-language="it">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
     </header>
@@ -2645,6 +2916,29 @@
       <trans-unit id="Unregistered">
         <source>Unregistered</source>
         <note>Registration Status Display</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/en.lproj/Chat.strings" source-language="en" datatype="plaintext" target-language="it">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="Send SMS">
+        <source>Send SMS</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Set as default">
+        <source>Set as default</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Set this phone number as default phone number for all sms messages">
+        <source>Set this phone number as default phone number for all sms messages</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Which number would you like to send from">
+        <source>Which number would you like to send from</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
   </file>

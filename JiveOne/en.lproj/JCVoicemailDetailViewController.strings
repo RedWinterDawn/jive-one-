@@ -1,0 +1,18 @@
+
+/* Class = "UILabel"; text = "817-343-9239"; ObjectID = "0SF-MX-8Bz"; */
+"0SF-MX-8Bz.text" = "817-343-9239";
+
+/* Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "4zV-0G-h0L"; */
+"4zV-0G-h0L.text" = "Voicemail Cell";
+
+/* Class = "UILabel"; text = "Confidence: %@"; ObjectID = "CsB-Au-p5f"; */
+"CsB-Au-p5f.text" = "Confidence: %@";
+
+/* Class = "UILabel"; text = "3:03 PM"; ObjectID = "YYK-uE-J9h"; */
+"YYK-uE-J9h.text" = "3:03 PM";
+
+/* Class = "UILabel"; text = "Word count: %i"; ObjectID = "gXq-iW-czr"; */
+"gXq-iW-czr.text" = "Word count: %i";
+
+/* Class = "UILabel"; text = "0:00"; ObjectID = "uIh-4N-1Qj"; */
+"uIh-4N-1Qj.text" = "0:00";

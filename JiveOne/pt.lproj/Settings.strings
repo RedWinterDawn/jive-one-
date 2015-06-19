@@ -1,75 +1,75 @@
 
 /* Class = "UILabel"; text = "Default Did for sending SMS"; ObjectID = "7d4-HB-7qj"; */
-"7d4-HB-7qj.text" = "Default Did for sending SMS";
+"7d4-HB-7qj.text" = "Fez padrão para envio de SMS";
 
 /* Class = "UILabel"; text = "Mute Microphone"; ObjectID = "9mr-zh-J8Q"; */
-"9mr-zh-J8Q.text" = "Mute Microphone";
+"9mr-zh-J8Q.text" = "Microfone sem som";
 
 /* Class = "UILabel"; text = "Make/Receive calls via Wi-Fi only"; ObjectID = "DXx-lH-VMg"; */
-"DXx-lH-VMg.text" = "Make/Receive calls via Wi-Fi only";
+"DXx-lH-VMg.text" = "Chamadas via única Wi-Fi";
 
 /* Class = "UILabel"; text = "Logout"; ObjectID = "F6R-j9-aOO"; */
-"F6R-j9-aOO.text" = "Logout";
+"F6R-j9-aOO.text" = "Sair";
 
 /* Class = "UITableViewSection"; footerTitle = "Mutes your phone when someone calls you through the intercom. Requires you to unmute to talk to them."; ObjectID = "FEf-a1-jnp"; */
-"FEf-a1-jnp.footerTitle" = "Mutes your phone when someone calls you through the intercom. Requires you to unmute to talk to them.";
+"FEf-a1-jnp.footerTitle" = "Silencia o telefone quando alguém te chama pelo interfone . Requer que você ativar o som para falar com eles.";
 
 /* Class = "UINavigationItem"; title = "Default DID"; ObjectID = "FiV-Hw-tUc"; */
-"FiV-Hw-tUc.title" = "Default DID";
+"FiV-Hw-tUc.title" = "Omissão DID";
 
 /* Class = "UILabel"; text = "Blocked Numbers"; ObjectID = "Krx-xe-7BT"; */
-"Krx-xe-7BT.text" = "Blocked Numbers";
+"Krx-xe-7BT.text" = "Números bloqueados";
 
 /* Class = "UIBarButtonItem"; title = "Debug"; ObjectID = "NbB-XZ-rca"; */
-"NbB-XZ-rca.title" = "Debug";
+"NbB-XZ-rca.title" = "Depurar";
 
 /* Class = "UINavigationItem"; title = "Blocked Numbers"; ObjectID = "Qv8-xZ-A0F"; */
-"Qv8-xZ-A0F.title" = "Blocked Numbers";
+"Qv8-xZ-A0F.title" = "Números bloqueados";
 
 /* Class = "UITableViewSection"; headerTitle = "Account"; ObjectID = "S1V-c3-O7g"; */
-"S1V-c3-O7g.headerTitle" = "Account";
+"S1V-c3-O7g.headerTitle" = "Conta";
 
 /* Class = "UILabel"; text = "Allow Intercom"; ObjectID = "TuP-tT-lh1"; */
-"TuP-tT-lh1.text" = "Allow Intercom";
+"TuP-tT-lh1.text" = "Permitir Intercom";
 
 /* Class = "UILabel"; text = "Leave Feedback"; ObjectID = "W8s-nF-Vea"; */
-"W8s-nF-Vea.text" = "Leave Feedback";
+"W8s-nF-Vea.text" = "Deixar Feedback";
 
 /* Class = "UILabel"; text = "Intercom"; ObjectID = "ZFd-rf-5RO"; */
-"ZFd-rf-5RO.text" = "Intercom";
+"ZFd-rf-5RO.text" = "Intercomunicador";
 
 /* Class = "UITableViewSection"; headerTitle = "General"; ObjectID = "biz-br-QA0"; */
-"biz-br-QA0.headerTitle" = "General";
+"biz-br-QA0.headerTitle" = "geral";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "cQM-kO-QJN"; */
-"cQM-kO-QJN.title" = "Settings";
+"cQM-kO-QJN.title" = "Definições";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "f1Z-xV-kuN"; */
-"f1Z-xV-kuN.title" = "Back";
+"f1Z-xV-kuN.title" = "de volta";
 
 /* Class = "UILabel"; text = "App Label"; ObjectID = "hq8-aR-4hN"; */
-"hq8-aR-4hN.text" = "App Label";
+"hq8-aR-4hN.text" = "Etiqueta app";
 
 /* Class = "UINavigationItem"; title = "Intercom"; ObjectID = "iuF-Pi-BxI"; */
-"iuF-Pi-BxI.title" = "Intercom";
+"iuF-Pi-BxI.title" = "Intercomunicador";
 
 /* Class = "UITabBarItem"; title = "Settings"; ObjectID = "jhL-Fu-sxw"; */
-"jhL-Fu-sxw.title" = "Settings";
+"jhL-Fu-sxw.title" = "Definições";
 
 /* Class = "UILabel"; text = "Build  Label"; ObjectID = "kEZ-fz-XUn"; */
-"kEZ-fz-XUn.text" = "Build  Label";
+"kEZ-fz-XUn.text" = "construir Etiqueta";
 
 /* Class = "UILabel"; text = "User"; ObjectID = "kU4-aW-3vj"; */
-"kU4-aW-3vj.text" = "User";
+"kU4-aW-3vj.text" = "Usuário";
 
 /* Class = "UITableViewSection"; headerTitle = "Calling"; ObjectID = "lZS-QW-xga"; */
-"lZS-QW-xga.headerTitle" = "Calling";
+"lZS-QW-xga.headerTitle" = "Chamada";
 
 /* Class = "UINavigationItem"; title = "Select Line"; ObjectID = "qWk-EZ-l9T"; */
-"qWk-EZ-l9T.title" = "Select Line";
+"qWk-EZ-l9T.title" = "Selecionar Linha";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, people can dial *%@ and start talking to you."; ObjectID = "sra-ba-8Uy"; */
-"sra-ba-8Uy.footerTitle" = "When enabled, people can dial *%@ and start talking to you.";
+"sra-ba-8Uy.footerTitle" = "Quando ativado , as pessoas podem discar * % @ e começar a falar para você.";
 
 /* Class = "UITableViewSection"; headerTitle = "SMS"; ObjectID = "teJ-Rq-6NK"; */
 "teJ-Rq-6NK.headerTitle" = "SMS";
@@ -78,7 +78,7 @@
 "urK-HX-F87.text" = "End User License Agreement";
 
 /* Class = "UILabel"; text = "Show other people's availability"; ObjectID = "yl8-b8-1UC"; */
-"yl8-b8-1UC.text" = "Show other people's availability";
+"yl8-b8-1UC.text" = "Mostrar disponibilidade de outras pessoas";
 
 /* Class = "UILabel"; text = "Extension"; ObjectID = "zOl-KB-sdE"; */
-"zOl-KB-sdE.text" = "Extension";
+"zOl-KB-sdE.text" = "Extensão";

@@ -20,6 +20,9 @@
 /* Class = "UILabel"; text = "Blocked Numbers"; ObjectID = "Krx-xe-7BT"; */
 "Krx-xe-7BT.text" = "Blocked Numbers";
 
+/* Class = "UIBarButtonItem"; title = "Debug"; ObjectID = "NbB-XZ-rca"; */
+"NbB-XZ-rca.title" = "Debug";
+
 /* Class = "UINavigationItem"; title = "Blocked Numbers"; ObjectID = "Qv8-xZ-A0F"; */
 "Qv8-xZ-A0F.title" = "Blocked Numbers";
 
