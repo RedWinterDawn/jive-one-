@@ -178,6 +178,11 @@
 		5D5782931B33038B005F1B86 /* it.xliff in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D2D73CA1ACF97AE00B98BDF /* it.xliff */; };
 		5D5782941B33038B005F1B86 /* pt.xliff in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D2D73CB1ACF97AE00B98BDF /* pt.xliff */; };
 		5D5782CB1B33186A005F1B86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5782CA1B33186A005F1B86 /* main.m */; };
+		5D5782D51B335083005F1B86 /* XMLDictionary.h in Sources */ = {isa = PBXBuildFile; fileRef = 5D5782D31B335083005F1B86 /* XMLDictionary.h */; };
+		5D5782D61B335083005F1B86 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5782D41B335083005F1B86 /* XMLDictionary.m */; };
+		5D5782D91B335A30005F1B86 /* JCTranslationUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5782D81B335A30005F1B86 /* JCTranslationUnit.m */; };
+		5D5782DC1B3385FE005F1B86 /* JCTranslationString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5782DB1B3385FE005F1B86 /* JCTranslationString.m */; };
+		5D5782DE1B33ADD5005F1B86 /* ignore.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D5782DD1B33A9FE005F1B86 /* ignore.txt */; };
 		5D5B86EE1AE97A0300F265A3 /* JCSMSMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1AE61AE806A400C59A63 /* JCSMSMessageManager.m */; };
 		5D5B86F11AE9A28400F265A3 /* JCAppMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B86F01AE9A28400F265A3 /* JCAppMenuViewController.m */; };
 		5D62436F1A65B7DF001DF88E /* JCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D62436E1A65B7DF001DF88E /* JCManager.m */; };
@@ -330,6 +335,7 @@
 			dstPath = input;
 			dstSubfolderSpec = 16;
 			files = (
+				5D5782DE1B33ADD5005F1B86 /* ignore.txt in CopyFiles */,
 				5D5782901B33038B005F1B86 /* de.xliff in CopyFiles */,
 				5D5782911B33038B005F1B86 /* es.xliff in CopyFiles */,
 				5D5782921B33038B005F1B86 /* fr.xliff in CopyFiles */,
@@ -633,6 +639,14 @@
 		5D57828D1B330194005F1B86 /* JCDataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDataLoader.h; sourceTree = "<group>"; };
 		5D57828E1B330194005F1B86 /* JCDataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDataLoader.m; sourceTree = "<group>"; };
 		5D5782CA1B33186A005F1B86 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5D5782D01B334DDB005F1B86 /* libPods-XMLDictionary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-XMLDictionary.a"; path = "Pods/../build/Debug-iphoneos/libPods-XMLDictionary.a"; sourceTree = "<group>"; };
+		5D5782D31B335083005F1B86 /* XMLDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XMLDictionary.h; path = ../Pods/XMLDictionary/XMLDictionary/XMLDictionary.h; sourceTree = "<group>"; };
+		5D5782D41B335083005F1B86 /* XMLDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XMLDictionary.m; path = ../Pods/XMLDictionary/XMLDictionary/XMLDictionary.m; sourceTree = "<group>"; };
+		5D5782D71B335A30005F1B86 /* JCTranslationUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTranslationUnit.h; sourceTree = "<group>"; };
+		5D5782D81B335A30005F1B86 /* JCTranslationUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTranslationUnit.m; sourceTree = "<group>"; };
+		5D5782DA1B3385FE005F1B86 /* JCTranslationString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTranslationString.h; sourceTree = "<group>"; };
+		5D5782DB1B3385FE005F1B86 /* JCTranslationString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTranslationString.m; sourceTree = "<group>"; };
+		5D5782DD1B33A9FE005F1B86 /* ignore.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ignore.txt; sourceTree = "<group>"; };
 		5D5B86EF1AE9A28400F265A3 /* JCAppMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppMenuViewController.h; sourceTree = "<group>"; };
 		5D5B86F01AE9A28400F265A3 /* JCAppMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppMenuViewController.m; sourceTree = "<group>"; };
 		5D6243641A644D17001DF88E /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -1163,6 +1177,7 @@
 		275F4A5018AD0FBC00D2F069 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5D5782D01B334DDB005F1B86 /* libPods-XMLDictionary.a */,
 				5D85A97D1ACF933200991A97 /* Bolts.framework */,
 				5D85A97F1ACF933200991A97 /* Parse.framework */,
 				5D85A9801ACF933200991A97 /* PortSIPLib.framework */,
@@ -1459,6 +1474,7 @@
 				5D2D73C91ACF97AE00B98BDF /* fr.xliff */,
 				5D2D73CA1ACF97AE00B98BDF /* it.xliff */,
 				5D2D73CB1ACF97AE00B98BDF /* pt.xliff */,
+				5D5782DD1B33A9FE005F1B86 /* ignore.txt */,
 			);
 			path = JiveOne;
 			sourceTree = "<group>";
@@ -1767,6 +1783,12 @@
 				5D5782861B32FF70005F1B86 /* JCFile.m */,
 				5D57828D1B330194005F1B86 /* JCDataLoader.h */,
 				5D57828E1B330194005F1B86 /* JCDataLoader.m */,
+				5D5782D71B335A30005F1B86 /* JCTranslationUnit.h */,
+				5D5782D81B335A30005F1B86 /* JCTranslationUnit.m */,
+				5D5782D31B335083005F1B86 /* XMLDictionary.h */,
+				5D5782D41B335083005F1B86 /* XMLDictionary.m */,
+				5D5782DA1B3385FE005F1B86 /* JCTranslationString.h */,
+				5D5782DB1B3385FE005F1B86 /* JCTranslationString.m */,
 			);
 			path = generateStrings;
 			sourceTree = "<group>";
@@ -2518,8 +2540,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D5782D51B335083005F1B86 /* XMLDictionary.h in Sources */,
+				5D5782D61B335083005F1B86 /* XMLDictionary.m in Sources */,
+				5D5782DC1B3385FE005F1B86 /* JCTranslationString.m in Sources */,
 				5D5782871B32FF70005F1B86 /* JCFile.m in Sources */,
 				5D5782CB1B33186A005F1B86 /* main.m in Sources */,
+				5D5782D91B335A30005F1B86 /* JCTranslationUnit.m in Sources */,
 				5D57828F1B330194005F1B86 /* JCDataLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3159,6 +3185,10 @@
 					"$(inherited)",
 				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3176,6 +3206,10 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3193,6 +3227,10 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";

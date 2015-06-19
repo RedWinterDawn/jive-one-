@@ -10,6 +10,10 @@
 
 @interface JCDataLoader : NSObject
 
--(instancetype)initWithFilePath:(NSString *)filePath;
+-(instancetype)initWithFilePath:(NSString *)filePath ignore:(NSArray *)ignore;
+
+@property (nonatomic, readonly) NSArray *translationUnits;
+
+@property (nonatomic, readonly) NSString *strings;
 
 @end

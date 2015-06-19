@@ -10,4 +10,13 @@
 
 @interface JCFile : NSObject
 
+-(instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
+@property (nonatomic, readonly) NSString *dataType;
+@property (nonatomic, readonly) NSString *original;
+@property (nonatomic, readonly) NSString *sourceLanguage;
+@property (nonatomic, readonly) NSString *targetLanguage;
+
+@property (nonatomic, readonly) NSArray *translationUnits;
+
 @end

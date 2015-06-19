@@ -14,28 +14,31 @@ int main(int argc, const char * argv[]) {
         
         NSArray *arguments = [[NSProcessInfo processInfo] arguments];
         
-        NSLog(@"%@", arguments);
+        NSString *basePath      = [arguments[0] stringByDeletingLastPathComponent];
+        NSString *inputPath     = [NSString stringWithFormat:@"%@/%@", basePath, arguments[1]];
+        NSString *outputPath    = [NSString stringWithFormat:@"%@/%@", basePath, arguments[2]];
+        NSArray *files = [arguments[3] componentsSeparatedByString:@","];
         
+        NSString *ignoreFile = arguments[4];
         
-        //        DebugLog(@"arguments: %@", arguments);
+        __autoreleasing NSError *error;
+        NSURL *ignoreFilePath = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@", inputPath, ignoreFile]];
+        NSString *ignoreData = [NSString stringWithContentsOfURL:ignoreFilePath encoding:NSUTF8StringEncoding error:&error];
+        NSArray *ignore = [ignoreData componentsSeparatedByString:@"\n"];
         
-        //        DebugLog(@"environment: %@", [[NSProcessInfo processInfo] environment]);
-        
-//        if (arguments.count < 4 || (arguments.count >= 2 && [@"-?" isEqualToString:arguments[1]])) {
-//            printf("%s <source path> <destination path> <prefix>\n", [[[NSProcessInfo processInfo] processName] UTF8String]);
-//        }
-//        else if (arguments.count >= 4) {
-//            SnippetImporter *importer = [[SnippetImporter alloc] init];
-//            [importer importSnippetsWithSourcePath:arguments[1] destinationPath:arguments[2] prefix:arguments[3]];
-//        }
-        
-        
-        
-//        JCDataLoader *dataLoader = [[JCDataLoader alloc] initWithFilePath:@"input/de.xliff"];
-        
-        
-        // insert code here...
-        NSLog(@"Hello, World!");
+        for (NSString *fileName in files) {
+            NSString *input = [NSString stringWithFormat:@"%@%@.xliff", inputPath, fileName];
+            
+            JCDataLoader *loader = [[JCDataLoader alloc] initWithFilePath:input ignore:ignore];
+            
+            NSString *strings = loader.strings;
+            
+            __autoreleasing NSError *error;
+            NSString *output = [NSString stringWithFormat:@"%@%@.strings", outputPath, fileName];
+            if (![strings writeToFile:output atomically:YES encoding:NSUTF8StringEncoding error:&error]) {
+                NSLog(@"%@", error);
+            }
+        }
     }
     return 0;
 }
