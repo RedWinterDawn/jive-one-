@@ -462,7 +462,13 @@ NSString *const kContactOtherValueKey           = @"value";
                 localContact.etag            = [contactData integerValueForKey:kContactETagKey];
                 localContact.markForUpdate   = FALSE;
             } completion:^(BOOL contextDidSave, NSError *error) {
-                
+                if (completion) {
+                    if (error) {
+                        completion(NO, error);
+                    } else {
+                        completion(YES, nil);
+                    }
+                }
             }];
         } else {
             //[self updateContact:contact data:contactData];
@@ -510,7 +516,6 @@ NSString *const kContactOtherValueKey           = @"value";
     contact.contactId = [contactData stringValueForKey:kContactContactIdKey];
     
     [self updateContact:contact data:contactData];
-    
     
     
     
