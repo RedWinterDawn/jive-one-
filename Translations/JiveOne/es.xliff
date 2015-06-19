@@ -730,6 +730,18 @@
         <source>Dan Leonard</source>
         <note>Class = "UILabel"; text = "Dan Leonard"; ObjectID = "6Dg-Eu-qpr";</note>
       </trans-unit>
+      <trans-unit id="CANCELED">
+        <source>CANCELED</source>
+      </trans-unit>
+      <trans-unit id="Conference">
+        <source>Conference</source>
+      </trans-unit>
+      <trans-unit id="Connecting">
+        <source>Connecting</source>
+      </trans-unit>
+      <trans-unit id="Disabled">
+        <source>Disabled</source>
+      </trans-unit>
       <trans-unit id="G3s-tk-XlH.title">
         <source>Keypad</source>
         <target>Teclado</target>
@@ -749,10 +761,19 @@
         <source>3:03 PM</source>
         <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "M6i-Nu-fpj";</note>
       </trans-unit>
+      <trans-unit id="Merge Calls">
+        <source>Merge Calls</source>
+      </trans-unit>
+      <trans-unit id="RINGING">
+        <source>RINGING</source>
+      </trans-unit>
       <trans-unit id="RN6-p8-PVT.title">
         <source>Voicemail</source>
         <target>Buzón voz</target>
         <note>Class = "UITabBarItem"; title = "Voicemail"; ObjectID = "RN6-p8-PVT";</note>
+      </trans-unit>
+      <trans-unit id="Split Calls">
+        <source>Split Calls</source>
       </trans-unit>
       <trans-unit id="UHR-O3-J6m.segmentTitles[0]">
         <source>All</source>
@@ -763,6 +784,9 @@
         <source>Missed</source>
         <target>Perdidas</target>
         <note>Class = "UISegmentedControl"; UHR-O3-J6m.segmentTitles[1] = "Missed"; ObjectID = "UHR-O3-J6m";</note>
+      </trans-unit>
+      <trans-unit id="Unregistered">
+        <source>Unregistered</source>
       </trans-unit>
       <trans-unit id="WRq-PA-NpD.title">
         <source>History</source>
@@ -1370,29 +1394,6 @@
         <source>Allow Intercom</source>
         <target>Permitir Intercomunicador</target>
         <note>Class = "UILabel"; text = "Allow Intercom"; ObjectID = "zf8-zH-ZBO";</note>
-      </trans-unit>
-    </body>
-  </file>
-  <file original="JiveOne/Chat.strings" source-language="en" datatype="plaintext" target-language="es">
-    <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
-    </header>
-    <body>
-      <trans-unit id="Send SMS">
-        <source>Send SMS</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Set as default">
-        <source>Set as default</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Set this phone number as default phone number for all sms messages">
-        <source>Set this phone number as default phone number for all sms messages</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Which number would you like to send from">
-        <source>Which number would you like to send from</source>
-        <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
   </file>
@@ -2615,6 +2616,29 @@
       <trans-unit id="Unregistered">
         <source>Unregistered</source>
         <note>Registration Status Display</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/en.lproj/Chat.strings" source-language="en" datatype="plaintext" target-language="es">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="Send SMS">
+        <source>Send SMS</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Set as default">
+        <source>Set as default</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Set this phone number as default phone number for all sms messages">
+        <source>Set this phone number as default phone number for all sms messages</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Which number would you like to send from">
+        <source>Which number would you like to send from</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
   </file>

@@ -645,6 +645,7 @@
 		5D5782DA1B3385FE005F1B86 /* JCTranslationString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTranslationString.h; sourceTree = "<group>"; };
 		5D5782DB1B3385FE005F1B86 /* JCTranslationString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTranslationString.m; sourceTree = "<group>"; };
 		5D5782DD1B33A9FE005F1B86 /* ignore.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ignore.txt; sourceTree = "<group>"; };
+		5D5782DF1B33B728005F1B86 /* output */ = {isa = PBXFileReference; lastKnownFileType = text; name = output; path = ../Debug/output; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D5B86EF1AE9A28400F265A3 /* JCAppMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppMenuViewController.h; sourceTree = "<group>"; };
 		5D5B86F01AE9A28400F265A3 /* JCAppMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppMenuViewController.m; sourceTree = "<group>"; };
 		5D6243641A644D17001DF88E /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -1445,6 +1446,7 @@
 			children = (
 				5D57827E1B32FCE2005F1B86 /* Generate Strings */,
 				5D2D73C41ACF97AE00B98BDF /* JiveOne */,
+				5D5782DF1B33B728005F1B86 /* output */,
 			);
 			path = Translations;
 			sourceTree = "<group>";

@@ -729,6 +729,18 @@
         <source>Dan Leonard</source>
         <note>Class = "UILabel"; text = "Dan Leonard"; ObjectID = "6Dg-Eu-qpr";</note>
       </trans-unit>
+      <trans-unit id="CANCELED">
+        <source>CANCELED</source>
+      </trans-unit>
+      <trans-unit id="Conference">
+        <source>Conference</source>
+      </trans-unit>
+      <trans-unit id="Connecting">
+        <source>Connecting</source>
+      </trans-unit>
+      <trans-unit id="Disabled">
+        <source>Disabled</source>
+      </trans-unit>
       <trans-unit id="G3s-tk-XlH.title">
         <source>Keypad</source>
         <target>Ziffernblock</target>
@@ -748,10 +760,19 @@
         <source>3:03 PM</source>
         <note>Class = "UILabel"; text = "3:03 PM"; ObjectID = "M6i-Nu-fpj";</note>
       </trans-unit>
+      <trans-unit id="Merge Calls">
+        <source>Merge Calls</source>
+      </trans-unit>
+      <trans-unit id="RINGING">
+        <source>RINGING</source>
+      </trans-unit>
       <trans-unit id="RN6-p8-PVT.title">
         <source>Voicemail</source>
         <target>Voicemail</target>
         <note>Class = "UITabBarItem"; title = "Voicemail"; ObjectID = "RN6-p8-PVT";</note>
+      </trans-unit>
+      <trans-unit id="Split Calls">
+        <source>Split Calls</source>
       </trans-unit>
       <trans-unit id="UHR-O3-J6m.segmentTitles[0]">
         <source>All</source>
@@ -762,6 +783,9 @@
         <source>Missed</source>
         <target>Verpasst</target>
         <note>Class = "UISegmentedControl"; UHR-O3-J6m.segmentTitles[1] = "Missed"; ObjectID = "UHR-O3-J6m";</note>
+      </trans-unit>
+      <trans-unit id="Unregistered">
+        <source>Unregistered</source>
       </trans-unit>
       <trans-unit id="WRq-PA-NpD.title">
         <source>History</source>
@@ -1372,29 +1396,6 @@
       </trans-unit>
     </body>
   </file>
-  <file original="JiveOne/Chat.strings" source-language="en" datatype="plaintext" target-language="de">
-    <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
-    </header>
-    <body>
-      <trans-unit id="Send SMS">
-        <source>Send SMS</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Set as default">
-        <source>Set as default</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Set this phone number as default phone number for all sms messages">
-        <source>Set this phone number as default phone number for all sms messages</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Which number would you like to send from">
-        <source>Which number would you like to send from</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-    </body>
-  </file>
   <file original="JiveOne/JiveOne-Info.plist" source-language="en" datatype="plaintext" target-language="de">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
@@ -1418,614 +1419,767 @@
     <body>
       <trans-unit id="Add TCP Transport Failure">
         <source>Add TCP Transport Failure</source>
+        <target>In TCP Transport Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Add TLS Transport Failure">
         <source>Add TLS Transport Failure</source>
+        <target>In TLS Transport Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Add UDP Transport Failure">
         <source>Add UDP Transport Failure</source>
+        <target>In UDP Transport Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Address Incomplete">
         <source>Address Incomplete</source>
+        <target>Address Incomplete</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Address Incomplete. Request - URI incomplete.">
         <source>Address Incomplete. Request - URI incomplete.</source>
+        <target>Adresse unvollständig. Request - URI unvollständig.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Already Initialized">
         <source>Already Initialized</source>
+        <target>Bereits initialisiert</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Already Registered">
         <source>Already Registered</source>
+        <target>Bereits Registriert</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Ambiguous">
         <source>Ambiguous</source>
+        <target>Zweideutig</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Ambiguous. Request - URI is ambiguous.">
         <source>Ambiguous. Request - URI is ambiguous.</source>
+        <target>Zweideutig. Request - URI ist nicht eindeutig.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="An Error has occurred. An unknown error has occured.">
         <source>An Error has occurred. An unknown error has occured.</source>
+        <target>Ein Fehler ist aufgetreten. Ein unbekannter Fehler ist aufgetreten.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="An unknown error has occured. If this problem persists, please contact support.">
         <source>An unknown error has occured. If this problem persists, please contact support.</source>
+        <target>Ein unbekannter Fehler ist aufgetreten. Wenn dieses Problem weiterhin besteht, wenden Sie sich bitte an den Support.</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="Anonymity Disallowed">
         <source>Anonymity Disallowed</source>
+        <target>Anonymität Nicht erlaubt</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Anonymity Disallowed. The request has been rejected because it was anonymous.">
         <source>Anonymity Disallowed. The request has been rejected because it was anonymous.</source>
+        <target>Anonymität Unzulässig. Der Antrag wurde abgelehnt, weil es anonym.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Argument is Null">
         <source>Argument is Null</source>
+        <target>Argument ist Null</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Argument too long">
         <source>Argument too long</source>
+        <target>Argument zu lang</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Channel not found">
         <source>Audio Channel not found</source>
+        <target>Audio-Kanal wurde nicht gefunden</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Codec Empty but Audio is enabled">
         <source>Audio Codec Empty but Audio is enabled</source>
+        <target>Audio Codec leer, aber Audio aktiviert ist</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Codec not supported">
         <source>Audio Codec not supported</source>
+        <target>Audio Codec nicht unterstützt</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio File Name is empty">
         <source>Audio File Name is empty</source>
+        <target>Audio-Dateiname ist leer</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Handle is NULL">
         <source>Audio Handle is NULL</source>
+        <target>Audio Handle NULL</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Open Play File Failure">
         <source>Audio Open Play File Failure</source>
+        <target>Audio Öffnen Play File Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play File Already Enabled">
         <source>Audio Play File Already Enabled</source>
+        <target>Audio Play File bereits aktiviert</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play File Format not supported">
         <source>Audio Play File Format not supported</source>
+        <target>Audio Wiedergabe-Dateiformat nicht unterstützt</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play File Get Position Failure">
         <source>Audio Play File Get Position Failure</source>
+        <target>Audio Play File Get Position Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play File Mode not supported">
         <source>Audio Play File Mode not supported</source>
+        <target>Audio Play File-Modus nicht unterstützt</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play File Not enabled">
         <source>Audio Play File Not enabled</source>
+        <target>Audio Play File Nicht aktiviert</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play Object does not Exit">
         <source>Audio Play Object does not Exit</source>
+        <target>Audio Wiedergabe Objekt nicht verlassen</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play stram not enabled">
         <source>Audio Play stram not enabled</source>
+        <target>Audio Wiedergabe stram nicht aktiviert</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Play stream already enabled">
         <source>Audio Play stream already enabled</source>
+        <target>Audio Wiedergabe Strom bereits aktiviert</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Register Callback Failure">
         <source>Audio Register Callback Failure</source>
+        <target>Audio Register Rückruf Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Register Playback Failure">
         <source>Audio Register Playback Failure</source>
+        <target>Audio Register Wiedergabe Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Register Recording Failure">
         <source>Audio Register Recording Failure</source>
+        <target>Audio Registrieren Aufnahme Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Sample Out of Range (10-60)">
         <source>Audio Sample Out of Range (10-60)</source>
+        <target>Hörprobe Out of Range (10-60)</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Sample is not multiple of 10">
         <source>Audio Sample is not multiple of 10</source>
+        <target>Hörprobe ist kein Vielfaches von 10</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Video Codec is empty">
         <source>Audio Video Codec is empty</source>
+        <target>Audio Video Codec ist leer</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio Volume out of range">
         <source>Audio Volume out of range</source>
+        <target>Audio Volume außerhalb des Bereichs</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio and Video Port Overlapped">
         <source>Audio and Video Port Overlapped</source>
+        <target>Audio- und Video-Anschluss mit Überlappung</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio and Video Port Range to Small">
         <source>Audio and Video Port Range to Small</source>
+        <target>Audio- und Video-Port-Bereich zu klein</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Audio start recording failure">
         <source>Audio start recording failure</source>
+        <target>Audio Aufnahme starten Ausfall</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Event">
         <source>Bad Event</source>
+        <target>Bad Ereignis</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Event. The server did not understand an event package specified in an Event header field.">
         <source>Bad Event. The server did not understand an event package specified in an Event header field.</source>
+        <target>Bad Ereignis. Der Server hat nicht verstehen, die eine in einer Ereignis-Header-Feld angegebene Event-Paket.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Bad Extension">
         <source>Bad Extension</source>
+        <target>Bad-Erweiterung</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Extension. Bad SIP Protocol Extension used, not understood by the server.">
         <source>Bad Extension. Bad SIP Protocol Extension used, not understood by the server.</source>
+        <target>Bad Extension. Bad SIP Protokoll-Erweiterung verwendet wird, vom Server nicht verstanden.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Bad Gateway">
         <source>Bad Gateway</source>
+        <target>Bad Gateway</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Gateway. The server is acting as a gateway or proxy, and received an invalid response from a downstream server while attempting to fulfill the request.">
         <source>Bad Gateway. The server is acting as a gateway or proxy, and received an invalid response from a downstream server while attempting to fulfill the request.</source>
+        <target>Bad Gateway. Der Server ist als Gateway oder Proxy agiert und hat eine ungültige Antwort von einem untergeordneten Server beim Versuch, die Anforderung zu erfüllen.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Bad Identity -Info. The request has an Identity -Info header, and the URI scheme in that header cannot be dereferenced.">
         <source>Bad Identity -Info. The request has an Identity -Info header, and the URI scheme in that header cannot be dereferenced.</source>
+        <target>Bad Identität -Info. Der Antrag hat eine Identität -Info Header, und die URI-Schema in dieser Header kann nicht dereferenziert werden.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Bad Identity-Info">
         <source>Bad Identity-Info</source>
+        <target>Bad Identitäts Info</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Location Information">
         <source>Bad Location Information</source>
+        <target>Bad Informationen</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Location Information. The request's location content was malformed or otherwise unsatisfactory.">
         <source>Bad Location Information. The request's location content was malformed or otherwise unsatisfactory.</source>
+        <target>Bad Informationen. Ort Inhalt der Anfrage war missgebildete oder anderweitig nicht zufriedenstellend.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Bad Request">
         <source>Bad Request</source>
+        <target>Ungültige Anforderung</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Bad Request. The request could not be understood due to malformed syntax.">
         <source>Bad Request. The request could not be understood due to malformed syntax.</source>
+        <target>Ungültige Anforderung. Die Anforderung konnte wegen fehlerhaften Syntax zu verstehen.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Buffer is to Small">
         <source>Buffer is to Small</source>
+        <target>Buffer ist zu klein</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Busy Everywhere">
         <source>Busy Everywhere</source>
+        <target>Busy Everywhere</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Busy Everywhere. All possible destinations are busy. Destination knows there are no alternative destinations (such as a voicemail server) able to accept the call.">
         <source>Busy Everywhere. All possible destinations are busy. Destination knows there are no alternative destinations (such as a voicemail server) able to accept the call.</source>
+        <target>Busy Everywhere. Alle möglichen Ziele sind damit beschäftigt. Destination kennt keine alternativen Reisezielen (wie ein Voicemail-Server) in der Lage, den Anruf anzunehmen.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Busy Here">
         <source>Busy Here</source>
+        <target>Busy Here</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Busy Here. Callee is busy.">
         <source>Busy Here. Callee is busy.</source>
+        <target>Busy Here. Angerufene ist besetzt.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="COde Type Invalid">
         <source>COde Type Invalid</source>
+        <target>Codetyp ungültig</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call Not on Hold">
         <source>Call Not on Hold</source>
+        <target>Rufen Sie nicht in der Warteschleife</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call from %@ :%@">
         <source>Call from %1$@ :%2$@</source>
+        <target>Rufen Sie aus %1$@ : %2$@</target>
         <note>Local notification text</note>
       </trans-unit>
       <trans-unit id="Call id not found.">
         <source>Call id not found.</source>
+        <target>Call-ID nicht gefunden.</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call is Already on Hold">
         <source>Call is Already on Hold</source>
+        <target>Anruf bereits auf Halten</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call is Closed">
         <source>Call is Closed</source>
+        <target>Anruf wird geschlossen</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call is in hold">
         <source>Call is in hold</source>
+        <target>Anruf in Halte</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call is not Established">
         <source>Call is not Established</source>
+        <target>Anruf nicht Gegründet</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Call/Transaction Does Not Exist">
         <source>Call/Transaction Does Not Exist</source>
+        <target>Call / Transaktion ist nicht vorhanden</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Call/Transaction Does Not Exist. Server received a request that does not match any dialog or transaction.">
         <source>Call/Transaction Does Not Exist. Server received a request that does not match any dialog or transaction.</source>
+        <target>Call / Transaktion ist nicht vorhanden. Server hat eine Anforderung, die keinen Dialog oder der Transaktion übereinstimmt.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Callee is empty">
         <source>Callee is empty</source>
+        <target>Angerufene ist leer</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Can't set Audio Device Id During Call">
         <source>Can't set Audio Device Id During Call</source>
+        <target>Können Audio Device Id Während Anruf nicht gesetzt</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Can't set device id durring call">
         <source>Can't set device id durring call</source>
+        <target>Können Geräte-ID durring Anruf nicht gesetzt</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Cancel">
         <source>Cancel</source>
+        <target>Stornieren</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Codec Not Supported">
         <source>Codec Not Supported</source>
+        <target>Codec nicht unterstützt</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Codec already exits">
         <source>Codec already exits</source>
+        <target>Codec bereits beendet</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Codec parameter not supported">
         <source>Codec parameter not supported</source>
+        <target>Codec-Parameter nicht unterstützt</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Conditional Request Failed">
         <source>Conditional Request Failed</source>
+        <target>Fehler beim Conditional anfordern</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Conditional Request Failed. The given precondition has not been met.">
         <source>Conditional Request Failed. The given precondition has not been met.</source>
+        <target>Conditional Anfrage fehlgeschlagen. Die gegebene Voraussetzung nicht erfüllt wurde.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Conference Call already exists">
         <source>Conference Call already exists</source>
+        <target>Conference Call ist bereits vorhanden</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="Conference call already ended">
         <source>Conference call already ended</source>
+        <target>Telefonkonferenz bereits beendet</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Conference call already started">
         <source>Conference call already started</source>
+        <target>Telefonkonferenz bereits begonnen</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Conflict">
         <source>Conflict</source>
+        <target>Konflikt</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Conflict. User already registered.">
         <source>Conflict. User already registered.</source>
+        <target>Conflict. User bereits registriert.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Consent Needed">
         <source>Consent Needed</source>
+        <target>Zustimmung erforderlich</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Consent Needed. The source of the request did not have the permission of the recipient to make such a request.">
         <source>Consent Needed. The source of the request did not have the permission of the recipient to make such a request.</source>
+        <target>Zustimmung notwendig. Die Quelle der Anfrage hat keine Erlaubnis des Empfängers, einen solchen Antrag zu stellen.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Create Audio Channel Failed">
         <source>Create Audio Channel Failed</source>
+        <target>Erstellen Sie Audio-Kanal fehlgeschlagen</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Create Audio Conference Failure">
         <source>Create Audio Conference Failure</source>
+        <target>Erstellen Sie Audio Conference Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Create Audio Recording Failure">
         <source>Create Audio Recording Failure</source>
+        <target>Erstellen Sie Audio-Aufnahme Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Create Media Engine Failre">
         <source>Create Media Engine Failre</source>
+        <target>Erstelle Media Engine Failre</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Data Size is too large">
         <source>Data Size is too large</source>
+        <target>Daten Dateigröße zu groß ist</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Decline">
         <source>Decline</source>
+        <target>Rückgang</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Decline. The destination does not wish to participate in the call">
         <source>Decline. The destination does not wish to participate in the call</source>
+        <target>Sinken. Der Ziel nicht wünscht, in dem Telefonat beteiligen</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Does Not Exist Anywhere">
         <source>Does Not Exist Anywhere</source>
+        <target>Existiert nirgends</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Does Not Exist Anywhere. The server has authoritative information that the requested user does not exist anywhere.">
         <source>Does Not Exist Anywhere. The server has authoritative information that the requested user does not exist anywhere.</source>
+        <target>Existiert nicht überall. Der Server verfügt über maßgebliche Informationen, die die gewünschte Benutzer existiert nirgends.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Downloading...">
         <source>Downloading...</source>
+        <target>Herunterladen ...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error Creating Conference">
         <source>Error Creating Conference</source>
+        <target>Fehler beim Erstellen der Konferenz</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error Joining line session to conference">
         <source>Error Joining line session to conference</source>
+        <target>Fehler beim Verbindungslinie Sitzung in Tagungsband</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error Trying to Hang up">
         <source>Error Trying to Hang up</source>
+        <target>Fehler beim Versuch, Auflegen</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error holding the line sessions">
         <source>Error holding the line sessions</source>
+        <target>Fehler halten die Linie Sitzungen</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error placing calls on hold">
         <source>Error placing calls on hold</source>
+        <target>Fehler das Halten von Anrufen</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error placing calls on hold after ending a conference">
         <source>Error placing calls on hold after ending a conference</source>
+        <target>Fehler das Halten von Anrufen nach dem Ende einer Konferenz</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error trying to manually reject incomming call">
         <source>Error trying to manually reject incomming call</source>
+        <target>Fehler beim Versuch, manuell ablehnen eingehenden Anruf</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Error unholding the line session while after joing the conference">
         <source>Error unholding the line session while after joing the conference</source>
+        <target>Fehler unholding die Zeilensitzung, während nach joing die Konferenz</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Expires Value is to small.">
         <source>Expires Value is to small.</source>
+        <target>Läuft ab Wert zu klein.</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Extension Required">
         <source>Extension Required</source>
+        <target>Extension Required</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Extension Required. The server needs a specific extension not listed in the Supported header.">
         <source>Extension Required. The server needs a specific extension not listed in the Supported header.</source>
+        <target>Erweiterung Erforderlich. Der Server benötigt eine bestimmte Neben nicht in der unterstützten Header enthalten sind.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Failed ending conference call">
         <source>Failed ending conference call</source>
+        <target>Fehlgeschlagen endet Telefonkonferenz</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="Failed to create conference call">
         <source>Failed to create conference call</source>
+        <target>Fehler beim Telefonkonferenz zusammen</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="First Hop Lacks Outbound Support">
         <source>First Hop Lacks Outbound Support</source>
+        <target>Erste Hop Lacks Outbound Unterstützung</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="First Hop Lacks Outbound Support. The first outbound proxy the user is attempting to register through does not support the 'outbound' feature of RFC 5626, although the registrar does.">
         <source>First Hop Lacks Outbound Support. The first outbound proxy the user is attempting to register through does not support the 'outbound' feature of RFC 5626, although the registrar does.</source>
+        <target>Erste Hop Lacks Outbound-Support. Die erste Outbound-Proxy der Benutzer versucht, durch nicht den 'outbound' Merkmal der RFC 5626 nicht unterstützt registrieren, auch wenn der Registrar tut.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Fix Payload can't change">
         <source>Fix Payload can't change</source>
+        <target>Fix Payload nicht ändern kann</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Flow Failed">
         <source>Flow Failed</source>
+        <target>Fließen fehlgeschlagen</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Flow Failed. A specific flow to a user agent has failed, although other flows may succeed.">
         <source>Flow Failed. A specific flow to a user agent has failed, although other flows may succeed.</source>
+        <target>Flow fehlgeschlagen. Eine spezifische Fluss zu einem User-Agent ist fehlgeschlagen, obwohl auch andere Strömungen kann Erfolg haben.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Forbidden">
         <source>Forbidden</source>
+        <target>Verboten</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Forbidden. The server understood the request, but is refusing to fulfil it.">
         <source>Forbidden. The server understood the request, but is refusing to fulfil it.</source>
+        <target>Verboten. Der Server die Anforderung verstanden, aber weigert sich, es zu erfüllen.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Get Audio Statistics Failure">
         <source>Get Audio Statistics Failure</source>
+        <target>Holen Sie sich Audio Statistik Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Get Device Name Failure">
         <source>Get Device Name Failure</source>
+        <target>Get Device Name Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Get Statistics Failure">
         <source>Get Statistics Failure</source>
+        <target>Holen Statistik Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Gone">
         <source>Gone</source>
+        <target>Weg</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Gone. The user existed once, but is not available here any more.">
         <source>Gone. The user existed once, but is not available here any more.</source>
+        <target>Gegangen. Der Benutzer existierte einmal, aber nicht verfügbar ist hier nicht mehr.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Header Value List is empty">
         <source>Header Value List is empty</source>
+        <target>Header Werteliste ist leer</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="IVR Index is out of range">
         <source>IVR Index is out of range</source>
+        <target>IVR-Index außerhalb des zulässigen Bereichs</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="IVR Object is Null">
         <source>IVR Object is Null</source>
+        <target>IVR-Objekt ist Null</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="IVR Refer Failure">
         <source>IVR Refer Failure</source>
+        <target>IVR Siehe Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="IVR Waiting Timeout">
         <source>IVR Waiting Timeout</source>
+        <target>IVR Waiting Timeout</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Initialize Stack Failure">
         <source>Initialize Stack Failure</source>
+        <target>Initialisieren Stapel Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Initialize Winsock Failure">
         <source>Initialize Winsock Failure</source>
+        <target>Initialisieren Winsock Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Interval Too Brief">
         <source>Interval Too Brief</source>
+        <target>Intervall zu kurz</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Interval Too Brief. Expiration time of the resource is too short.">
         <source>Interval Too Brief. Expiration time of the resource is too short.</source>
+        <target>Intervall zu kurz. Ablaufzeit der Ressource zu kurz ist.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Invalid Identity Header">
         <source>Invalid Identity Header</source>
+        <target>Ungültige Identity-Header</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Invalid Identity Header. The server obtained a valid certificate that the request claimed was used to sign the request, but was unable to verify that signature.">
         <source>Invalid Identity Header. The server obtained a valid certificate that the request claimed was used to sign the request, but was unable to verify that signature.</source>
+        <target>Ungültige Identity-Header. Der Server erhält ein gültiges Zertifikat, das die Anforderung beansprucht wurde verwendet, um den Antrag zu unterzeichnen, war aber nicht in der Lage, diese Signatur zu verifizieren.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Invalid Session Id">
         <source>Invalid Session Id</source>
+        <target>Ungültige Sitzungs-ID</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Invalid URI">
         <source>Invalid URI</source>
+        <target>Ungültige URI</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Invide Session not found">
         <source>Invide Session not found</source>
+        <target>Invide Session nicht gefunden</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Jive Mobile EULA">
         <source>Jive Mobile EULA</source>
+        <target>Jive Mobil EULA</target>
         <note>Terms and Conditions EULA title</note>
       </trans-unit>
       <trans-unit id="Length Required">
         <source>Length Required</source>
+        <target>Länge Erforderlich</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Length Required. The server will not accept the request without a valid Content - Length.">
         <source>Length Required. The server will not accept the request without a valid Content - Length.</source>
+        <target>Länge erforderlich. Länge - Der Server wird die Anfrage ohne gültige Inhalt nicht akzeptieren.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Line Configuration is Empty">
         <source>Line Configuration is Empty</source>
+        <target>Leitungskonfiguration ist leer</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Line Session in empty">
         <source>Line Session in empty</source>
+        <target>Line Session in leeren</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Line is empty">
         <source>Line is empty</source>
+        <target>Linie ist leer</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Loop Detected">
         <source>Loop Detected</source>
+        <target>Schleife erkannt</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Loop Detected. Server has detected a loop.">
         <source>Loop Detected. Server has detected a loop.</source>
+        <target>Schleife erkannt. Server hat eine Schleife erkannt.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Max Audio Port Not Even Number">
         <source>Max Audio Port Not Even Number</source>
+        <target>Max Audio Port Not Even Anzahl</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Max Audio Port out of range">
         <source>Max Audio Port out of range</source>
+        <target>Max Audio Port außerhalb des Bereichs</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Max Video Port Not Event Number">
         <source>Max Video Port Not Event Number</source>
+        <target>Max Videoanschluss Nicht Ereignisnummer</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Max Video Port out of range">
         <source>Max Video Port out of range</source>
+        <target>Max Video Hafen außerhalb des Bereichs</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Message Too Large">
         <source>Message Too Large</source>
+        <target>Mitteilung zu groß</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Message Too Large. The request message length is longer than the server can process.">
         <source>Message Too Large. The request message length is longer than the server can process.</source>
+        <target>Mitteilung zu groß. Die Anforderungsnachricht Länge von mehr als der Server verarbeiten kann.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Method Not Allowed">
         <source>Method Not Allowed</source>
+        <target>Methode nicht erlaubt</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Method Not Allowed. The method specified in the Request -Line is understood, but not allowed for the address identified by the Request-URI.">
         <source>Method Not Allowed. The method specified in the Request -Line is understood, but not allowed for the address identified by the Request-URI.</source>
+        <target>Methode nicht erlaubt. Die in der Anfrage -Line angegebene Methode wird davon ausgegangen, aber nicht für die von der Request-URI identifiziert Adresse erlaubt.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Mime Type Unknown">
         <source>Mime Type Unknown</source>
+        <target>Dateityp Unknown</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Mini Audio Port out of range">
         <source>Mini Audio Port out of range</source>
+        <target>Mini Audio Port außerhalb des Bereichs</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Mini RTP Port is not even number">
         <source>Mini RTP Port is not even number</source>
+        <target>Mini RTP-Port ist nicht gerade Zahl</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Mini Video Port Not Even Number">
         <source>Mini Video Port Not Even Number</source>
+        <target>Mini Video Hafen Not Even Anzahl</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Mini Video Port out of range">
         <source>Mini Video Port out of range</source>
+        <target>Mini Video Hafen außerhalb des Bereichs</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Network Interface is unavialable">
         <source>Network Interface is unavialable</source>
+        <target>Netzwerkschnittstelle ist unavialable</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="New Message from %@ \n%@">
@@ -2035,370 +2189,462 @@
       </trans-unit>
       <trans-unit id="No">
         <source>No</source>
+        <target>Keine</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Active Line">
         <source>No Active Line</source>
+        <target>Kein Active Line</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="No Conference call to end">
         <source>No Conference call to end</source>
+        <target>Keine Telefonkonferenz zu beenden</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="No Connection">
         <source>No Connection</source>
+        <target>Keine Verbindung</target>
         <note>No Connection</note>
       </trans-unit>
       <trans-unit id="No Free Dialog Session">
         <source>No Free Dialog Session</source>
+        <target>Kein kostenloser Dialog Session</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="No Idle Line">
         <source>No Idle Line</source>
+        <target>Keine freie Leitung</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="No Referral line">
         <source>No Referral line</source>
+        <target>Keine Referral Linie</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Not Acceptable">
         <source>Not Acceptable</source>
+        <target>Inakzeptabel</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Not Acceptable Here">
         <source>Not Acceptable Here</source>
+        <target>Not Acceptable Here</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Not Acceptable Here. Some aspect of the session description or the Request - URI is not acceptable.">
         <source>Not Acceptable Here. Some aspect of the session description or the Request - URI is not acceptable.</source>
+        <target>Not Acceptable Here. Einige Aspekt der Sitzungsbeschreibung oder der Request - URI ist nicht akzeptabel.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Not Acceptable. The resource identified by the request is only capable of generating response entities that have content characteristics but not acceptable according to the Accept header field sent in the request.">
         <source>Not Acceptable. The resource identified by the request is only capable of generating response entities that have content characteristics but not acceptable according to the Accept header field sent in the request.</source>
+        <target>Inakzeptabel. Die von der Anfrage identifiziert Ressource ist nur in der Lage ist, die Reaktion Einheiten Inhalte Eigenschaften, aber nicht akzeptabel, nach dem Header-Feld in der Anfrage gesendet akzeptieren.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Not Acceptable. The user's agent was contacted successfully but some aspects of the session description such as the requested media, bandwidth, or addressing style were not acceptable.">
         <source>Not Acceptable. The user's agent was contacted successfully but some aspects of the session description such as the requested media, bandwidth, or addressing style were not acceptable.</source>
+        <target>Inakzeptabel. Der Anwender Mittel wurde erfolgreich kontaktiert, aber einige Aspekte der Session Beschreibung, wie die angeforderten Medien, Bandbreite oder Adressierungsarten waren nicht akzeptabel.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Not Found">
         <source>Not Found</source>
+        <target>Nicht Gefunden</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Not Found Subscribe Id">
         <source>Not Found Subscribe Id</source>
+        <target>Nicht gefunden abonnieren Id</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Not Found. The server has definitive information that the user does not exist at the domain specified in the Request-URI.">
         <source>Not Found. The server has definitive information that the user does not exist at the domain specified in the Request-URI.</source>
+        <target>Nicht Gefunden. Der Server verfügt über definitive Informationen, die der Benutzer nicht in der in der Request-URI angegebene Domäne existiert.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Not Implemented">
         <source>Not Implemented</source>
+        <target>Nicht Implementiert</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Not Implemented. The server does not have the ability to fulfill the request, such as because it does not recognize the request method.">
         <source>Not Implemented. The server does not have the ability to fulfill the request, such as because it does not recognize the request method.</source>
+        <target>Nicht Implementiert. Der Server verfügt nicht über die Möglichkeit, die Anforderung zu erfüllen, wie zum Beispiel, weil sie nicht die Request-Methode zu erkennen.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Not Initialized">
         <source>Not Initialized</source>
+        <target>Nicht initialisiert</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Not Registered">
         <source>Not Registered</source>
+        <target>Nicht Registriert</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Not an Incomming Call">
         <source>Not an Incomming Call</source>
+        <target>Kein Incomming Anruf</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Not supported callback mode">
         <source>Not supported callback mode</source>
+        <target>Nicht unterstützt Callback-Modus</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Number">
         <source>Number</source>
+        <target>Anzahl</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="OK">
         <source>OK</source>
+        <target>OK</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Outgoing Audio is muted">
         <source>Outgoing Audio is muted</source>
+        <target>Abgehende Audio stumm geschaltet</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Outgoing Video is nuted">
         <source>Outgoing Video is nuted</source>
+        <target>Abgehende Video ist nuted</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Password is empty">
         <source>Password is empty</source>
+        <target>Kennwort ist leer</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Payload Type invalid">
         <source>Payload Type invalid</source>
+        <target>Payload Type ungültig</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Payload already exists. Duplicate payload values are not allowed">
         <source>Payload already exists. Duplicate payload values are not allowed</source>
+        <target>Payload existiert bereits. Doppelte Nutzlastwerte sind nicht erlaubt</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Payload is out of range (96-127)">
         <source>Payload is out of range (96-127)</source>
+        <target>Payload liegt außerhalb des Bereichs (96 bis 127)</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Payment Required">
         <source>Payment Required</source>
+        <target>Zahlung erforderlich</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Payment Required.">
         <source>Payment Required.</source>
+        <target>Zahlung erforderlich.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Phone could not be initialized">
         <source>Phone could not be initialized</source>
+        <target>Telefon konnte nicht initialisiert werden</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="Phone is already attempting to register">
         <source>Phone is already attempting to register</source>
+        <target>Telefon bereits versucht, registrieren</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Phone is set to be Wifi Only">
         <source>Phone is set to be Wifi Only</source>
+        <target>Telefon kann Wifi Nur sein</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="Phone registration is unable to register at this time. You may not be on an Approved network. If problem persists, contact your System Administrator to add your network.">
         <source>Phone registration is unable to register at this time. You may not be on an Approved network. If problem persists, contact your System Administrator to add your network.</source>
+        <target>Phone-Registrierung ist nicht in der Lage, in dieser Zeit registrieren. Sie dürfen bei einer zugelassenen Netzwerk sein. Wenn das Problem weiterhin besteht, wenden Sie sich an den Systemverwalter zu Ihrem Netzwerk hinzufügen.</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Poor Network Quality">
         <source>Poor Network Quality</source>
+        <target>Schlechte Netzqualität</target>
         <note>Network Quality Indicator Popover Text</note>
       </trans-unit>
       <trans-unit id="Port out of range">
         <source>Port out of range</source>
+        <target>Port außerhalb des Bereichs</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Precondition Failure">
         <source>Precondition Failure</source>
+        <target>Voraussetzung Failure</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Precondition Failure. The server is unable or unwilling to meet some constraints specified in the offer.">
         <source>Precondition Failure. The server is unable or unwilling to meet some constraints specified in the offer.</source>
+        <target>Voraussetzung Failure. Der Server ist nicht in der Lage oder nicht willens, einige Einschränkungen im Angebot genannten entsprechen.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Provide Referrer Identity">
         <source>Provide Referrer Identity</source>
+        <target>Bieten Referrer-Identität</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Provide Referrer Identity. The server did not receive a valid Referred-By token on the request.">
         <source>Provide Referrer Identity. The server did not receive a valid Referred-By token on the request.</source>
+        <target>Bieten Referrer-Identität. Der Server nicht erhalten eine gültige empfohlene-By-Token über den Antrag.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Proxy Authentication Required">
         <source>Proxy Authentication Required</source>
+        <target>Proxy-Authentifizierung erforderlich</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Proxy Authentication Required. The request requires user authentication.">
         <source>Proxy Authentication Required. The request requires user authentication.</source>
+        <target>Proxy-Authentifizierung erforderlich. Der Antrag erfordert Benutzerauthentifizierung.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Registering...">
         <source>Registering...</source>
+        <target>Registrierung ...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Registration Failure">
         <source>Registration Failure</source>
+        <target>Registration Failure</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Request - URI Too Long. The server is refusing to service the request because the Request - URI is longer than the server is willing to interpret.">
         <source>Request - URI Too Long. The server is refusing to service the request because the Request - URI is longer than the server is willing to interpret.</source>
+        <target>Request - URI zu lang. Der Server verweigert die Bearbeitung der Anforderung, da die Request - URI ist länger als der Server bereit ist, zu interpretieren ist.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Request Entity Too Large">
         <source>Request Entity Too Large</source>
+        <target>Angeforderter Wert Zu Groß</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Request Entity Too Large. Request body too large.">
         <source>Request Entity Too Large. Request body too large.</source>
+        <target>Angeforderter Wert Zu Groß. Anfrage Körper zu groß.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Request Pending">
         <source>Request Pending</source>
+        <target>Fordern Pending</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Request Pending. Server has some pending request from the same dialog.">
         <source>Request Pending. Server has some pending request from the same dialog.</source>
+        <target>Fordern Pending. Server hat einige ausstehende Anforderung aus dem gleichen Dialog.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Request Terminated">
         <source>Request Terminated</source>
+        <target>Abgebrochene Anfrage</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Request Terminated. Request has terminated by bye or cancel.">
         <source>Request Terminated. Request has terminated by bye or cancel.</source>
+        <target>Anfrage beendet. Anforderung von bye oder Abbrechen beendet.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Request Timeout">
         <source>Request Timeout</source>
+        <target>Zeitüberschreitung Der Anforderung</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Request Timeout. Couldn't find the user in time. The server could not produce a response within a suitable amount of time, for example, if it could not determine the location of the user in time.">
         <source>Request Timeout. Couldn't find the user in time. The server could not produce a response within a suitable amount of time, for example, if it could not determine the location of the user in time.</source>
+        <target>Zeitüberschreitung Der Anforderung. Den Benutzer in der Zeit konnte sie nicht finden. Könnte der Server eine Antwort innerhalb einer geeigneten Zeitspanne nicht zu erzeugen, zum Beispiel, wenn es könnte die Position des Benutzers in der Zeit zu bestimmen.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Request-URI Too Long">
         <source>Request-URI Too Long</source>
+        <target>Request-URI Too Long</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="SDK Object is Null">
         <source>SDK Object is Null</source>
+        <target>SDK Objekt ist Null</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="SMS on %@">
         <source>SMS on %@</source>
+        <target>SMS an %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Security Agreement Required">
         <source>Security Agreement Required</source>
+        <target>Sicherheitsabkommen Erforderliche</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Security Agreement Required.">
         <source>Security Agreement Required.</source>
+        <target>Sicherheitsvereinbarung.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Selecting Line...">
         <source>Selecting Line...</source>
+        <target>Auswahlleitung ...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Send Avi File Failure">
         <source>Send Avi File Failure</source>
+        <target>Senden Sie AVI-Datei Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Send SMS to %@">
         <source>Send SMS to %@</source>
+        <target>Senden Sie eine SMS an %@</target>
         <note>Send SMS to new participant's phone number.</note>
       </trans-unit>
       <trans-unit id="Server Internal Error">
         <source>Server Internal Error</source>
+        <target>Server Interner Fehler</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Server Internal Error. The server could not fulfill the request due to some unexpected condition.">
         <source>Server Internal Error. The server could not fulfill the request due to some unexpected condition.</source>
+        <target>Server Interner Fehler. Der Server konnte die Anforderung nicht erfüllen, aufgrund einiger unerwarteter Zustand.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Server Time-out">
         <source>Server Time-out</source>
+        <target>Server Time-out</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Server Time-out. The server attempted to access another server in attempting to process the request, and did not receive a prompt response.">
         <source>Server Time-out. The server attempted to access another server in attempting to process the request, and did not receive a prompt response.</source>
+        <target>Server Time-out. Der Server versucht, einen anderen Server in dem Versuch, die Anforderung zu verarbeiten zuzugreifen, und nicht eine schnelle Antwort zu erhalten.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Server is empty">
         <source>Server is empty</source>
+        <target>Server ist leer</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Service Unavailable">
         <source>Service Unavailable</source>
+        <target>Dienst Nicht Verfügbar</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Service Unavailable. The server is undergoing maintenance or is temporarily overloaded and so cannot process the request.">
         <source>Service Unavailable. The server is undergoing maintenance or is temporarily overloaded and so cannot process the request.</source>
+        <target>Dienst Nicht Verfügbar. Der Server wird gerade gewartet oder ist momentan überlastet und so kann die Anfrage nicht verarbeiten.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Session Interval Too Small">
         <source>Session Interval Too Small</source>
+        <target>Session-Intervall zu klein</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Session Interval Too Small. The received request contains a Session-Expires header field with a duration below the minimum timer.">
         <source>Session Interval Too Small. The received request contains a Session-Expires header field with a duration below the minimum timer.</source>
+        <target>Session-Intervall zu klein. Das empfangene Anforderung enthält eine Session-Expires Header-Feld mit einer Laufzeit unter dem Mindestzeitgeber.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Session Timer Value is to small">
         <source>Session Timer Value is to small</source>
+        <target>Session Timer-Wert auf kleine</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Session numbers out of range">
         <source>Session numbers out of range</source>
+        <target>Sitzungsnummern außerhalb des Bereichs</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Header Parser is empty">
         <source>Sip Header Parser is empty</source>
+        <target>SIP-Header Parser ist leer</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Header does not exist">
         <source>Sip Header does not exist</source>
+        <target>SIP-Header ist nicht vorhanden</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Header is badly formed">
         <source>Sip Header is badly formed</source>
+        <target>SIP-Header ist schlecht ausgebildet</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Header name is empty">
         <source>Sip Header name is empty</source>
+        <target>SIP-Header Name ist leer</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Header value is empty">
         <source>Sip Header value is empty</source>
+        <target>SIP-Header-Wert ist leer</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Header value list is NULL">
         <source>Sip Header value list is NULL</source>
+        <target>SIP-Header-Wert-Liste ist NULL</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Message is Empty">
         <source>Sip Message is Empty</source>
+        <target>SIP-Nachricht ist leer</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Sip Server Path is Empty">
         <source>Sip Server Path is Empty</source>
+        <target>SIP-Server-Pfad ist leer</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Stack Exception">
         <source>Stack Exception</source>
+        <target>Stack Exception</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Start Play AVI Failure">
         <source>Start Play AVI Failure</source>
+        <target>Starten Sie die Wiedergabe AVI Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Start Send Failure">
         <source>Start Send Failure</source>
+        <target>Starten Eine Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Start Video Capture Failure">
         <source>Start Video Capture Failure</source>
+        <target>Start Video Capture Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Temporarily Unavailable">
         <source>Temporarily Unavailable</source>
+        <target>Zur Zeit Nicht Verfügbar</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Temporarily Unavailable. Callee currently unavailable.">
         <source>Temporarily Unavailable. Callee currently unavailable.</source>
+        <target>Zur Zeit Nicht Verfügbar. Angerufene derzeit nicht verfügbar.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Too Many Hops">
         <source>Too Many Hops</source>
+        <target>Too Many Hops</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Too Many Hops. Max - Forwards header has reached the value '0'.">
         <source>Too Many Hops. Max - Forwards header has reached the value '0'.</source>
+        <target>Too Many Hops. Max - Forwards Header den Wert erreicht hat, '0'.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Transfering...">
         <source>Transfering...</source>
+        <target>Übertragung ...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Trial Version License Key">
         <source>Trial Version License Key</source>
+        <target>Testversion Lizenzschlüssel</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Unable to answer the call">
         <source>Unable to answer the call</source>
+        <target>Nicht in der Lage, um den Anruf</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Unable to connect to the\n network at this time.">
@@ -2408,170 +2654,212 @@
       </trans-unit>
       <trans-unit id="Unable to connect to this line at this time. Please Try again.">
         <source>Unable to connect to this line at this time. Please Try again.</source>
+        <target>Nicht imstande, an dieser Linie zu diesem Zeitpunkt zu verbinden. Bitte versuche es erneut.</target>
         <note>Phone Manager Error</note>
       </trans-unit>
       <trans-unit id="Unable to make a call">
         <source>Unable to make a call</source>
+        <target>Können Sie einen Anruf bilden</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Unable to perform transfer at this time. Please Try Again.">
         <source>Unable to perform transfer at this time. Please Try Again.</source>
+        <target>Nicht in der Lage, um die Übertragung zu dieser Zeit durchzuführen. Bitte Versuche Es Erneut.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Unable to select line. Please call Customer Care. You may not have a device associated with this account.">
         <source>Unable to select line. Please call Customer Care. You may not have a device associated with this account.</source>
+        <target>Kann nicht Zeile auswählen. Bitte rufen Sie den Kundendienst. Möglicherweise haben Sie nicht ein Gerät mit diesem Konto verbunden.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Unauthorized">
         <source>Unauthorized</source>
+        <target>Unbefugt</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Unauthorized. The request requires user authentication.">
         <source>Unauthorized. The request requires user authentication.</source>
+        <target>Ein. Der Antrag erfordert Benutzerauthentifizierung.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Undecipherable">
         <source>Undecipherable</source>
+        <target>Nicht entzifferbar</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Undecipherable. Request contains an encrypted MIME body, which recipient can not decrypt.">
         <source>Undecipherable. Request contains an encrypted MIME body, which recipient can not decrypt.</source>
+        <target>Entzifferbar. Anforderung enthält einen verschlüsselten MIME Körper, die Empfänger nicht entschlüsseln können.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Unknown">
         <source>Unknown</source>
+        <target>Unbekannt</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Unknown Error Has Occured">
         <source>Unknown Error Has Occured</source>
+        <target>Unbekannt Fehler aufgetreten</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Unknown Resource -Priority. There was a resource - priority option tag, but no Resource-Priority header.">
         <source>Unknown Resource -Priority. There was a resource - priority option tag, but no Resource-Priority header.</source>
+        <target>Unknown Ressourcen -Priority. Es gab eine Ressource - Priorität Option-Tag, aber keine Ressourcen-Priority-Header.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Unknown Resource-Priority">
         <source>Unknown Resource-Priority</source>
+        <target>Unknown Ressourcen Priority</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Unknown Video Record Codec">
         <source>Unknown Video Record Codec</source>
+        <target>Unknown Video auf Nimm ein Codec</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Unsupported Certificate">
         <source>Unsupported Certificate</source>
+        <target>Nicht unterstützte Zertifikat</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Unsupported Certificate. The server was unable to validate a certificate for the domain that signed the request.">
         <source>Unsupported Certificate. The server was unable to validate a certificate for the domain that signed the request.</source>
+        <target>Nicht unterstützte Certificate. Der Server konnte, um ein Zertifikat für die Domäne, die die Anforderung signiert validieren.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Unsupported Media Type">
         <source>Unsupported Media Type</source>
+        <target>Unsupported Media Type</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Unsupported Media Type. Request body in a format not supported.">
         <source>Unsupported Media Type. Request body in a format not supported.</source>
+        <target>Nicht unterstützter Medientyp. Anfrage Körper in einem Format nicht unterstützt.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Unsupported URI Scheme">
         <source>Unsupported URI Scheme</source>
+        <target>Unsupported URI Scheme</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Unsupported URI Scheme. Request - URI is unknown to the server.">
         <source>Unsupported URI Scheme. Request - URI is unknown to the server.</source>
+        <target>Unsupported URI Scheme. Request - URI ist nicht bekannt, an den Server.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Unsupported Video Capture Resolution">
         <source>Unsupported Video Capture Resolution</source>
+        <target>Nicht unterstützte Videosicherungs-Entschließung</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Unsupported Video Capture Rotation">
         <source>Unsupported Video Capture Rotation</source>
+        <target>Nicht unterstützte Video Capture Rotation</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Use Identity Header">
         <source>Use Identity Header</source>
+        <target>Verwenden Sie Identity-Header</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Use Identity Header. The server policy requires an Identity header, and one has not been provided.">
         <source>Use Identity Header. The server policy requires an Identity header, and one has not been provided.</source>
+        <target>Verwenden Sie Identity-Header. Die Server-Grundsätzen wird eine Identity-Header, und ein nicht vorgelegt.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="User Name Auth Name is Empty">
         <source>User Name Auth Name is Empty</source>
+        <target>Benutzername Auth Name leer</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="User is Empty">
         <source>User is Empty</source>
+        <target>Benutzer ist leer</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="Version Not Supported">
         <source>Version Not Supported</source>
+        <target>Version wird nicht unterstützt</target>
         <note>Sip Error</note>
       </trans-unit>
       <trans-unit id="Version Not Supported. The SIP protocol version in the request is not supported by the server.">
         <source>Version Not Supported. The SIP protocol version in the request is not supported by the server.</source>
+        <target>Version wird nicht unterstützt. Das SIP-Protokoll-Version in der Anfrage wird nicht vom Server unterstützt.</target>
         <note>Sip Error Description</note>
       </trans-unit>
       <trans-unit id="Video Channel Not Found">
         <source>Video Channel Not Found</source>
+        <target>Video Channel nicht gefunden</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Video Code is Empty but video is enabled">
         <source>Video Code is Empty but video is enabled</source>
+        <target>Video Code ist leer, aber Video aktiviert ist</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Video File Name Empty">
         <source>Video File Name Empty</source>
+        <target>Video File Name Leer</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Video Get Device Id Failure">
         <source>Video Get Device Id Failure</source>
+        <target>Video Get Device ID Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Video Get Device Name Failure">
         <source>Video Get Device Name Failure</source>
+        <target>Video Get Device Name Failure</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Video Handle is NULL">
         <source>Video Handle is NULL</source>
+        <target>Video Handle NULL</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Voicemail">
         <source>Voicemail</source>
+        <target>Voicemail</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Warning">
         <source>Warning</source>
+        <target>Warnung</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Wrong DTMF Tone">
         <source>Wrong DTMF Tone</source>
+        <target>Falsche DTMF Tone</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Wrong License Key">
         <source>Wrong License Key</source>
+        <target>Wrong License Key</target>
         <note>Port Sip Error</note>
       </trans-unit>
       <trans-unit id="Yes">
         <source>Yes</source>
+        <target>Ja</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Yesterday">
         <source>Yesterday</source>
+        <target>Gestern</target>
         <note>Yesterday</note>
       </trans-unit>
       <trans-unit id="You may not be on an Approved network. If the problem persists, please contact your System Administrator to add your current network to the list of approved networks.">
         <source>You may not be on an Approved network. If the problem persists, please contact your System Administrator to add your current network to the list of approved networks.</source>
+        <target>Sie dürfen bei einer zugelassenen Netzwerk sein. Wenn das Problem weiterhin besteht, wenden Sie sich bitte an Ihren Systemadministrator, um Ihre aktuelle Netzwerk, um die Liste der zugelassenen Netzwerke hinzufügen.</target>
         <note>Sip Manager Error</note>
       </trans-unit>
       <trans-unit id="me">
         <source>me</source>
+        <target>mich</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="please verify your internet connection">
         <source>please verify your internet connection</source>
+        <target>Bitte überprüfen Sie Ihre Internetverbindung</target>
         <note>please verify your internet connection</note>
       </trans-unit>
     </body>
@@ -2612,6 +2900,29 @@
       <trans-unit id="Unregistered">
         <source>Unregistered</source>
         <note>Registration Status Display</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/en.lproj/Chat.strings" source-language="en" datatype="plaintext" target-language="de">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.3.2" build-num="6D2105"/>
+    </header>
+    <body>
+      <trans-unit id="Send SMS">
+        <source>Send SMS</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Set as default">
+        <source>Set as default</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Set this phone number as default phone number for all sms messages">
+        <source>Set this phone number as default phone number for all sms messages</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Which number would you like to send from">
+        <source>Which number would you like to send from</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
   </file>
