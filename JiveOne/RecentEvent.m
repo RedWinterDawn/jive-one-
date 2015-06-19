@@ -16,6 +16,15 @@ NSString *const kRecentEventMarkForDeletionAttributeKey = @"markForDeletion";
 
 @implementation RecentEvent
 
+-(void)willSave
+{
+    [super willSave];
+    
+    if (self.isMarkedForDeletion) {
+        [self setPrimitiveValue:@YES forKey:kRecentEventReadAttributeKey];
+    }
+}
+
 @dynamic date;
 @dynamic eventId;
 
