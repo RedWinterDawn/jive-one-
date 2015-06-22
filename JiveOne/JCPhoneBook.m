@@ -12,7 +12,7 @@
 #import "JCUnknownNumber.h"
 #import "JCMultiPersonPhoneNumber.h"
 #import "PBX.h"
-#import "LocalContact.h"
+#import "PhoneNumber.h"
 #import "Extension.h"
 #import "JCVoicemailNumber.h"
 
@@ -146,7 +146,7 @@
     
     // Search the local contacts history stored in core data, to see if it tis a local contact which
     // we already know, and have a history with, so we can link it to that history.
-    return [LocalContact MR_findAllWithPredicate:predicate inContext:context];
+    return [PhoneNumber MR_findAllWithPredicate:predicate inContext:context];
 }
 
 -(NSPredicate *)predicateForName:(NSString *)name nameKey:(NSString *)nameKey number:(NSString *)number numberKey:(NSString *)numberKey
@@ -178,8 +178,8 @@
                 if ([localPhoneNumber isKindOfClass:[NSManagedObject class]]) {
                     NSManagedObject *localObject = (NSManagedObject *)localPhoneNumber;
                     NSManagedObject *object = [line.managedObjectContext objectWithID:localObject.objectID];
-                    if ([object isKindOfClass:[LocalContact class]]) {
-                        ((LocalContact *)object).phoneNumber = ((LocalContact *)localObject).phoneNumber;
+                    if ([object isKindOfClass:[PhoneNumber class]]) {
+                        ((PhoneNumber *)object).phoneNumber = ((PhoneNumber *)localObject).phoneNumber;
                     }
                     [phoneNumbers addObject:object];
                 } else {

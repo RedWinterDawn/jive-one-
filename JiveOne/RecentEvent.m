@@ -16,6 +16,15 @@ NSString *const kRecentEventMarkForDeletionAttributeKey = @"markForDeletion";
 
 @implementation RecentEvent
 
+-(void)willSave
+{
+    [super willSave];
+    
+    if (self.isMarkedForDeletion) {
+        [self setPrimitiveValue:@YES forKey:kRecentEventReadAttributeKey];
+    }
+}
+
 @dynamic date;
 @dynamic eventId;
 
@@ -76,6 +85,16 @@ NSString *const kRecentEventMarkForDeletionAttributeKey = @"markForDeletion";
 -(NSString *)detailText
 {
     return self.formattedModifiedShortDate;
+}
+
+// Marks the voicemail for deletion. Attempts to notify server of deletion.
+- (void)markForDeletion:(CompletionHandler)completion
+{
+    self.read = true;
+    self.markForDeletion = true;
+    if (completion) {
+        completion(YES, nil);
+    }
 }
 
 @end

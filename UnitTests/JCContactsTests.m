@@ -8,7 +8,7 @@
 
 #import "JCBaseTestCase.h"
 
-#import "Contact.h"
+#import "InternalExtension.h"
 #import "PBX.h"
 
 @interface JCContactsTests : JCBaseTestCase
@@ -24,11 +24,11 @@
     NSString *jrn = @"jrn:line::jive:01471162-f384-24f5-9351-000100420001:014a5955-b837-e8d0-ab9a-000100620002";
     
     // When
-    Contact *contact = [Contact MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
+    InternalExtension *contact = [InternalExtension MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
     
     //Thus
     XCTAssertNotNil(contact, @"Jive Contact should not be nil");
-    XCTAssertTrue([contact isKindOfClass:[Contact class]], @"Jive contact should be line");
+    XCTAssertTrue([contact isKindOfClass:[InternalExtension class]], @"Jive contact should be line");
     XCTAssertTrue([contact.pbxId isEqualToString:expectedPbxId], @"Jive contact pbx id should equal the expected pbxId");
     XCTAssertTrue([contact.pbx.pbxId isEqualToString:expectedPbxId], @"lines pbx's id should equal the expected pbxId");
 }

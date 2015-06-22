@@ -8,14 +8,14 @@
 
 #import "JCDebugContactGroupsTableViewController.h"
 #import "JCDebugContactsTableViewController.h"
-#import "ContactGroup.h"
+#import "InternalExtensionGroup.h"
 
 @implementation JCDebugContactGroupsTableViewController
 
 -(NSFetchedResultsController *)fetchedResultsController
 {
     if (!_fetchedResultsController) {
-        NSFetchRequest *fetchRequest = [ContactGroup MR_requestAllSortedBy:@"name" ascending:YES];
+        NSFetchRequest *fetchRequest = [InternalExtensionGroup MR_requestAllSortedBy:@"name" ascending:YES];
         super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                              managedObjectContext:self.managedObjectContext
                                                                                sectionNameKeyPath:nil
@@ -29,13 +29,13 @@
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCDebugContactsTableViewController class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        ((JCDebugContactsTableViewController *)viewController).contactGroup = [self objectAtIndexPath:indexPath];
+        ((JCDebugContactsTableViewController *)viewController).contactGroup = (InternalExtensionGroup *)[self objectAtIndexPath:indexPath];
     }
 }
 
--(void)configureCell:(UITableViewCell *)cell withObject:(ContactGroup *)contactGroup
+-(void)configureCell:(UITableViewCell *)cell withObject:(InternalExtensionGroup *)contactGroup
 {
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%lu)", contactGroup.name, (unsigned long)contactGroup.contacts.count];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%lu)", contactGroup.name, (unsigned long)contactGroup.internalExtensions.count];
     cell.detailTextLabel.text = contactGroup.groupId;
 }
 

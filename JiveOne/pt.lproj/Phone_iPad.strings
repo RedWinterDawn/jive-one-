@@ -3,10 +3,10 @@
 "0E0-Ga-yKj.text" = "MNO";
 
 /* Class = "UILabel"; text = "Word count: %i"; ObjectID = "3hD-2T-xYG"; */
-"3hD-2T-xYG.text" = "Word Count: %i";
+"3hD-2T-xYG.text" = "Contagem de palavra: %i";
 
 /* Class = "UIBarButtonItem"; title = "Delete"; ObjectID = "72c-iI-Aqr"; */
-"72c-iI-Aqr.title" = "Delete";
+"72c-iI-Aqr.title" = "Excluir";
 
 /* Class = "UILabel"; text = "+"; ObjectID = "8Ra-dK-mWX"; */
 "8Ra-dK-mWX.text" = "+";
@@ -21,16 +21,16 @@
 "C1I-IP-hpm.text" = "WXYZ";
 
 /* Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[0] = "All"; ObjectID = "EMe-MP-2GH"; */
-"EMe-MP-2GH.segmentTitles[0]" = "All";
+"EMe-MP-2GH.segmentTitles[0]" = "tudo";
 
 /* Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[1] = "Missed"; ObjectID = "EMe-MP-2GH"; */
-"EMe-MP-2GH.segmentTitles[1]" = "Missed";
+"EMe-MP-2GH.segmentTitles[1]" = "Faltou";
 
 /* Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[2] = "Voicemail"; ObjectID = "EMe-MP-2GH"; */
 "EMe-MP-2GH.segmentTitles[2]" = "Voicemail";
 
 /* Class = "UIButton"; normalTitle = "Call Voicemail"; ObjectID = "LpR-rv-Law"; */
-"LpR-rv-Law.normalTitle" = "Call Voicemail";
+"LpR-rv-Law.normalTitle" = "Voicemail chamada";
 
 /* Class = "UILabel"; text = "JKL"; ObjectID = "SgS-W2-AKQ"; */
 "SgS-W2-AKQ.text" = "JKL";
@@ -44,11 +44,14 @@
 /* Class = "UILabel"; text = "PQRS"; ObjectID = "YCw-kb-mRe"; */
 "YCw-kb-mRe.text" = "PQRS";
 
+/* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "dp5-3A-4aJ"; */
+"dp5-3A-4aJ.title" = "Claro";
+
+/* Class = "UINavigationItem"; title = "History"; ObjectID = "eVx-Ji-0H8"; */
+"eVx-Ji-0H8.title" = "História";
+
 /* Class = "UILabel"; text = "DEF"; ObjectID = "utJ-wf-z8v"; */
 "utJ-wf-z8v.text" = "DEF";
-
-/* Class = "UILabel"; text = "Confidence: %@"; ObjectID = "zDJ-eE-vfh"; */
-"zDJ-eE-vfh.text" = "Confidence: %@";
 
 /* Class = "UILabel"; text = "GHI"; ObjectID = "zzd-cv-BlF"; */
 "zzd-cv-BlF.text" = "GHI";

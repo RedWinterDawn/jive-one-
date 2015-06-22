@@ -21,8 +21,6 @@
     
     Line *line = self.line;
     self.name.text       = line.name;
-    self.firstName.text  = line.firstName;
-    self.lastName.text   = line.lastName;
     self.t9.text         = line.t9;
     self.extension.text  = line.number;
     self.jrn.text        = line.jrn;

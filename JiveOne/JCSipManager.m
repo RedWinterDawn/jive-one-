@@ -2153,10 +2153,10 @@ NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
             return NSLocalizedStringFromTable(@"Password is empty", PHONE_STRINGS_NAME, @"Sip Manager Error");
             
         case JC_SIP_REGISTRATION_TIMEOUT:
-            return NSLocalizedStringFromTable(@"Phone registration is unable to register at this time. Please check your network connection and try again. If problem persists, restart the application.", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            return NSLocalizedStringFromTable(@"Phone is unable to register at this time. You may not be on an Approved network. If problem persists, contact your System Administrator to add your network.", PHONE_STRINGS_NAME, @"Sip Manager Error");
             
         case JC_SIP_REGISTRATION_FAILURE:
-            return NSLocalizedStringFromTable(@"Please try again. If the problem persists, please contact support.", PHONE_STRINGS_NAME, @"Sip Manager Error");
+            return NSLocalizedStringFromTable(@"You may not be on an Approved network. If the problem persists, please contact your System Administrator to add your current network to the list of approved networks.", PHONE_STRINGS_NAME, @"Sip Manager Error");
             
         case JC_SIP_CALL_NO_IDLE_LINE:
             return NSLocalizedStringFromTable(@"No Idle Line", PHONE_STRINGS_NAME, @"Sip Manager Error");

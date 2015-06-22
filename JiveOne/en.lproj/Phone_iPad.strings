@@ -1,0 +1,69 @@
+
+/* Class = "UILabel"; text = "MNO"; ObjectID = "0E0-Ga-yKj"; */
+"0E0-Ga-yKj.text" = "MNO";
+
+/* Class = "UILabel"; text = "+"; ObjectID = "8Ra-dK-mWX"; */
+"8Ra-dK-mWX.text" = "+";
+
+/* Class = "UIViewController"; title = "DialerView"; ObjectID = "A5J-Bt-Bbh"; */
+"A5J-Bt-Bbh.title" = "DialerView";
+
+/* Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "A5Z-Jv-4XP"; */
+"A5Z-Jv-4XP.title" = "Voicemail";
+
+/* Class = "UILabel"; text = "TUV"; ObjectID = "Amh-2F-CRy"; */
+"Amh-2F-CRy.text" = "TUV";
+
+/* Class = "UILabel"; text = "WXYZ"; ObjectID = "C1I-IP-hpm"; */
+"C1I-IP-hpm.text" = "WXYZ";
+
+/* Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[0] = "All"; ObjectID = "EMe-MP-2GH"; */
+"EMe-MP-2GH.segmentTitles[0]" = "All";
+
+/* Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[1] = "Missed"; ObjectID = "EMe-MP-2GH"; */
+"EMe-MP-2GH.segmentTitles[1]" = "Missed";
+
+/* Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[2] = "Voicemail"; ObjectID = "EMe-MP-2GH"; */
+"EMe-MP-2GH.segmentTitles[2]" = "Voicemail";
+
+/* Class = "UILabel"; text = "3:03 PM"; ObjectID = "NMf-MW-Ar6"; */
+"NMf-MW-Ar6.text" = "3:03 PM";
+
+/* Class = "UILabel"; text = "0.05"; ObjectID = "Omy-IO-SfF"; */
+"Omy-IO-SfF.text" = "0.05";
+
+/* Class = "UILabel"; text = "Dan Leonard"; ObjectID = "PKM-zV-Ygr"; */
+"PKM-zV-Ygr.text" = "Dan Leonard";
+
+/* Class = "UILabel"; text = "817-343-9239"; ObjectID = "QCh-kZ-Oh6"; */
+"QCh-kZ-Oh6.text" = "817-343-9239";
+
+/* Class = "UILabel"; text = "Voicemail Cell"; ObjectID = "SHb-cE-gV6"; */
+"SHb-cE-gV6.text" = "Voicemail Cell";
+
+/* Class = "UILabel"; text = "JKL"; ObjectID = "SgS-W2-AKQ"; */
+"SgS-W2-AKQ.text" = "JKL";
+
+/* Class = "UILabel"; text = "ABC"; ObjectID = "Six-TQ-o0K"; */
+"Six-TQ-o0K.text" = "ABC";
+
+/* Class = "UILabel"; text = "PQRS"; ObjectID = "YCw-kb-mRe"; */
+"YCw-kb-mRe.text" = "PQRS";
+
+/* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "dp5-3A-4aJ"; */
+"dp5-3A-4aJ.title" = "Clear";
+
+/* Class = "UINavigationItem"; title = "History"; ObjectID = "eVx-Ji-0H8"; */
+"eVx-Ji-0H8.title" = "History";
+
+/* Class = "UILabel"; text = "3:03 PM"; ObjectID = "kF5-dn-WTA"; */
+"kF5-dn-WTA.text" = "3:03 PM";
+
+/* Class = "UILabel"; text = "817-343-9239"; ObjectID = "oWf-2d-u0f"; */
+"oWf-2d-u0f.text" = "817-343-9239";
+
+/* Class = "UILabel"; text = "DEF"; ObjectID = "utJ-wf-z8v"; */
+"utJ-wf-z8v.text" = "DEF";
+
+/* Class = "UILabel"; text = "GHI"; ObjectID = "zzd-cv-BlF"; */
+"zzd-cv-BlF.text" = "GHI";

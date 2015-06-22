@@ -53,6 +53,12 @@
     self.transcriptionConfidence.text = [NSString stringWithFormat:self.transcriptionConfidence.text, [percent stringFromNumber:[NSNumber numberWithFloat:transcription.confidence]]];
     self.transcriptionWordCount.text  = [NSString stringWithFormat:self.transcriptionWordCount.text, transcription.wordCount];
     
+    self.shadowbox.layer.masksToBounds = NO;
+    self.shadowbox.layer.shadowOffset = CGSizeMake(4 , 8);
+    self.shadowbox.layer.shadowRadius = 5.0;
+    self.shadowbox.layer.shadowOpacity = 0.2;
+    self.shadowbox.layer.shadowColor = [[UIColor blackColor] CGColor];
+    
     // If we have the voicemail data, load the player and prepare for playback.
     if (voicemail.data.length > 0) {
         _player = [[JCVoicemailAudioPlayer alloc] initWithVoicemail:voicemail delegate:self];

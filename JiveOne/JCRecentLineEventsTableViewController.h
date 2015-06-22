@@ -22,5 +22,6 @@ typedef enum : NSUInteger {
 - (void)reloadTable;
 
 - (IBAction)toggleFilterState:(id)sender;
+- (IBAction)clear:(id)sender;
 
 @end

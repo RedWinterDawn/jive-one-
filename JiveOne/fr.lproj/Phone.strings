@@ -1,4 +1,7 @@
 
+/* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "Kji-Db-lbK"; */
+"Kji-Db-lbK.title" = "Clair";
+
 /* Class = "UINavigationController"; title = "Keypad"; ObjectID = "G3s-tk-XlH"; */
 "G3s-tk-XlH.title" = "Clavier";
 
@@ -28,6 +31,9 @@
 
 /* Class = "UITabBarItem"; title = "Keypad"; ObjectID = "bsn-3T-LYb"; */
 "bsn-3T-LYb.title" = "Clavier";
+
+/* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "cHI-JS-mn5"; */
+"cHI-JS-mn5.title" = "Clair";
 
 /* Class = "UITabBarItem"; title = "Phone"; ObjectID = "eFd-Wl-GUh"; */
 "eFd-Wl-GUh.title" = "Téléphone";

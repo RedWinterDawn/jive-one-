@@ -20,14 +20,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0fY-vT-dKH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="q1N-pU-KrT" customClass="JCModuleSplitViewControllerDelegate"/>
             </objects>
-            <point key="canvasLocation" x="1043" y="-246"/>
+            <point key="canvasLocation" x="83" y="-246"/>
         </scene>
         <!--Call History Table View Controller-->
         <scene sceneID="dsz-A0-Cfd">
             <objects>
                 <tableViewController id="OTa-m3-HwH" customClass="JCCallHistoryTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="4LA-AY-z3y">
-                        <rect key="frame" x="0.0" y="44" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="477"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -182,21 +182,6 @@
                             <outlet property="delegate" destination="OTa-m3-HwH" id="Pjl-Je-kWl"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="IeV-V7-eh0">
-                        <nil key="title"/>
-                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="EMe-MP-2GH" propertyAccessControl="localizable">
-                            <rect key="frame" x="180" y="7" width="240" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="All"/>
-                                <segment title="Missed"/>
-                                <segment title="Voicemail"/>
-                            </segments>
-                            <connections>
-                                <action selector="toggleFilterState:" destination="OTa-m3-HwH" eventType="valueChanged" id="Ph3-gm-c2Z"/>
-                            </connections>
-                        </segmentedControl>
-                    </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="FTb-Kq-obK">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -222,12 +207,12 @@
                         <color key="barTintColor" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="OTa-m3-HwH" kind="relationship" relationship="rootViewController" id="Zg3-YI-0QS"/>
+                        <segue destination="ldO-q9-N3Q" kind="relationship" relationship="rootViewController" id="xmg-D0-azu"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P3A-mS-nB7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2015" y="-742"/>
+            <point key="canvasLocation" x="1055" y="-742"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="P5t-vr-TOR">
@@ -283,7 +268,7 @@
                         <viewControllerLayoutGuide type="bottom" id="F2H-kd-mr2"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="eu7-c0-PPn">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ba4-Nk-2xl" customClass="JCFormattedPhoneNumberLabel">
@@ -314,7 +299,7 @@
                                     <outletCollection property="gestureRecognizers" destination="fN9-0k-UN1" appends="YES" id="fHT-kN-AMX"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Mf-rl-fOz" userLabel="Dial Button">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Mf-rl-fOz" userLabel="Dial Button">
                                 <rect key="frame" x="271" y="452" width="58" height="58"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="4Mf-rl-fOz" secondAttribute="height" multiplier="1:1" id="UbS-j5-yIH"/>
@@ -1260,11 +1245,96 @@
             </objects>
             <point key="canvasLocation" x="4626" y="-1722"/>
         </scene>
+        <!--History-->
+        <scene sceneID="Ldl-Pi-dNa">
+            <objects>
+                <viewController storyboardIdentifier="JCHistroyContainerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ldO-q9-N3Q" customClass="JCCallHistoryViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hu5-VO-cKo"/>
+                        <viewControllerLayoutGuide type="bottom" id="b7P-RR-TbC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lZ5-W2-22h">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="main-logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="yEf-Eq-nZE">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <color key="backgroundColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ohl-z4-jYh">
+                                <rect key="frame" x="0.0" y="59" width="600" height="477"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="OTa-m3-HwH" kind="embed" id="ImC-aZ-wKn"/>
+                                </connections>
+                            </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Th6-Xu-4z3" customClass="JCView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="EMe-MP-2GH">
+                                        <rect key="frame" x="150" y="16" width="300" height="29"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="geF-VM-yec"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="All"/>
+                                            <segment title="Missed"/>
+                                            <segment title="Voicemail"/>
+                                        </segments>
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <action selector="toggleFilterState:" destination="ldO-q9-N3Q" eventType="valueChanged" id="ft0-6V-a4N"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" white="0.87" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="EMe-MP-2GH" secondAttribute="centerX" id="50b-L5-qtk"/>
+                                    <constraint firstItem="EMe-MP-2GH" firstAttribute="top" secondItem="Th6-Xu-4z3" secondAttribute="top" constant="16" id="cHK-Ma-Ly4"/>
+                                    <constraint firstAttribute="height" constant="60" id="uzr-9o-GkJ"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="seperatorColor">
+                                        <color key="value" red="0.6588235294" green="0.66274509800000003" blue="0.67843137249999996" alpha="0.0" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.94389748090000003" green="0.94389748090000003" blue="0.94389748090000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="b7P-RR-TbC" firstAttribute="top" secondItem="yEf-Eq-nZE" secondAttribute="bottom" id="2Pj-BS-IRH"/>
+                            <constraint firstItem="Th6-Xu-4z3" firstAttribute="leading" secondItem="lZ5-W2-22h" secondAttribute="leading" id="8FT-VS-mIj"/>
+                            <constraint firstItem="yEf-Eq-nZE" firstAttribute="leading" secondItem="lZ5-W2-22h" secondAttribute="leading" id="AKL-DR-gNA"/>
+                            <constraint firstItem="Th6-Xu-4z3" firstAttribute="top" secondItem="hu5-VO-cKo" secondAttribute="bottom" id="KP5-7n-4lW"/>
+                            <constraint firstAttribute="trailing" secondItem="Th6-Xu-4z3" secondAttribute="trailing" id="Ugf-hY-bQ5"/>
+                            <constraint firstItem="yEf-Eq-nZE" firstAttribute="top" secondItem="lZ5-W2-22h" secondAttribute="top" id="XhS-6k-mAC"/>
+                            <constraint firstItem="Ohl-z4-jYh" firstAttribute="top" secondItem="Th6-Xu-4z3" secondAttribute="bottom" constant="-1" id="YUE-vb-Ayy"/>
+                            <constraint firstAttribute="trailing" secondItem="Ohl-z4-jYh" secondAttribute="trailing" id="ejA-Oz-GgU"/>
+                            <constraint firstItem="b7P-RR-TbC" firstAttribute="top" secondItem="Ohl-z4-jYh" secondAttribute="bottom" id="grd-pA-crV"/>
+                            <constraint firstAttribute="trailing" secondItem="yEf-Eq-nZE" secondAttribute="trailing" id="tLo-mj-qb3"/>
+                            <constraint firstItem="Ohl-z4-jYh" firstAttribute="leading" secondItem="lZ5-W2-22h" secondAttribute="leading" id="uYe-vl-lfa"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" title="History" id="eVx-Ji-0H8">
+                        <barButtonItem key="rightBarButtonItem" title="Clear" id="dp5-3A-4aJ">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="clear:" destination="ldO-q9-N3Q" id="z9Z-1K-NpB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="97e-Wa-N0m" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1921" y="-742"/>
+        </scene>
     </scenes>
     <resources>
         <image name="delete-black" width="35" height="35"/>
         <image name="dialer-callButton-green" width="58" height="58"/>
         <image name="gray-callbutton" width="58" height="58"/>
+        <image name="main-logo.png" width="33" height="16"/>
         <image name="nav-voicemail-black" width="33" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>

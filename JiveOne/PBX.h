@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Contact;
+@class InternalExtension;
 @class User;
 @class Line;
 @class DID;
@@ -23,9 +23,8 @@
 @property (nonatomic, getter=isV5) BOOL v5;
 
 // Relationships
-@property (nonatomic, retain) NSSet * contacts;
+@property (nonatomic, retain) NSSet * extensions;
 @property (nonatomic, retain) User * user;
-@property (nonatomic, retain) NSSet * lines;
 @property (nonatomic, retain) NSSet * dids;
 
 // Transient (Readonly)
@@ -40,8 +39,8 @@
 
 @interface PBX (CoreDataGeneratedAccessors)
 
-- (void)addContactsObject:(Contact *)value;
-- (void)removeContactsObject:(Contact *)value;
+- (void)addContactsObject:(InternalExtension *)value;
+- (void)removeContactsObject:(InternalExtension *)value;
 - (void)addContacts:(NSSet *)values;
 - (void)removeContacts:(NSSet *)values;
 

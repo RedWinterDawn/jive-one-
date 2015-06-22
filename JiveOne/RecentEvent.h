@@ -24,4 +24,7 @@
 @property (nonatomic) long long unixTimestamp;
 @property (nonatomic, readonly) NSString *detailText;
 
+// Marks the voicemail for deletion. Attempts to notify server of deletion.
+- (void)markForDeletion:(CompletionHandler)completion;
+
 @end

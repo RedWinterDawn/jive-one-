@@ -1,0 +1,30 @@
+$(PRODUCT_NAME)
+${PRODUCT_NAME}
++
+0.05
+0:00
+1.0
+1.2.5
+1:03
+3:03 PM
+5555 (Polycom)
+817-343-9239
+ABC
+Build  Label
+DEF
+Dan Leonard
+Debug
+GHI
+JKL
+Katerina Illiov
+Label
+MNO
+PQRS
+TUV
+WXYZ
+build label
+callStateView
+emailTextField
+passwordTextField
+★
+app label

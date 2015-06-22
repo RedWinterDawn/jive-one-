@@ -20,7 +20,7 @@
 
 // Managed Objects
 #import "OutgoingCall.h"
-#import "LocalContact.h"
+#import "PhoneNumber.h"
 
 // Controllers
 #import "JCCallerViewController.h"

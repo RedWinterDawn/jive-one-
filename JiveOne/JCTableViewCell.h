@@ -12,5 +12,8 @@
 
 @property (nonatomic, strong) UIColor *seperatorColor;
 @property (nonatomic) BOOL top;
+@property (nonatomic) BOOL bottom;
+@property (nonatomic) BOOL lastRow;
+@property (nonatomic) BOOL lastRowOnly;
 
 @end

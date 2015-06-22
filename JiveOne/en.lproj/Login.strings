@@ -1,0 +1,30 @@
+
+/* Class = "UITextField"; accessibilityLabel = "passwordTextField"; ObjectID = "6Lg-gi-Ebj"; */
+"6Lg-gi-Ebj.accessibilityLabel" = "passwordTextField";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "6Lg-gi-Ebj"; */
+"6Lg-gi-Ebj.placeholder" = "password";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "Rjl-m9-p92"; */
+"Rjl-m9-p92.normalTitle" = "Done";
+
+/* Class = "UITextField"; accessibilityLabel = "emailTextField"; ObjectID = "RmQ-bW-WSU"; */
+"RmQ-bW-WSU.accessibilityLabel" = "emailTextField";
+
+/* Class = "UITextField"; placeholder = "user name"; ObjectID = "RmQ-bW-WSU"; */
+"RmQ-bW-WSU.placeholder" = "user name";
+
+/* Class = "UILabel"; text = "Select a line extension to continue"; ObjectID = "Rsq-9f-ILa"; */
+"Rsq-9f-ILa.text" = "Select a line extension to continue";
+
+/* Class = "UILabel"; text = "Remember me"; ObjectID = "Z3w-nO-T7g"; */
+"Z3w-nO-T7g.text" = "Remember me";
+
+/* Class = "UILabel"; text = "By signing in you agree to our Terms & Conditions."; ObjectID = "a85-4q-BLA"; */
+"a85-4q-BLA.text" = "By signing in you agree to our Terms & Conditions.";
+
+/* Class = "UIButton"; normalTitle = "CONTINUE"; ObjectID = "cuI-dB-ab2"; */
+"cuI-dB-ab2.normalTitle" = "CONTINUE";
+
+/* Class = "UIButton"; normalTitle = "5555 (Polycom)"; ObjectID = "y6C-sT-Bui"; */
+"y6C-sT-Bui.normalTitle" = "5555 (Polycom)";

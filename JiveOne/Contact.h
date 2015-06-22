@@ -2,46 +2,46 @@
 //  Contact.h
 //  JiveOne
 //
-//  Created by Robert Barclay on 12/10/14.
-//  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
+//  Created by Robert Barclay on 6/5/15.
+//  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "Extension.h"
+#import "JCPersonManagedObject.h"
 
-@class PBX;
-@class ContactGroup;
-@class RecentLineEvent;
-@class Conversation;
+@class PhoneNumber, Address, ContactInfo, User;
 
-@interface Contact : Extension
+@interface Contact : JCPersonManagedObject
 
 // Attributes
-@property (nonatomic, retain) NSString *jiveUserId;
-@property (nonatomic, getter=isFavorite) BOOL favorite;
+@property (nonatomic, strong) NSString *contactId;
+@property (nonatomic) NSInteger etag;
+
+@property (nonatomic, getter=isMarkedForDeletion) BOOL markForDeletion;
+@property (nonatomic, getter=isMarkedForUpdate) BOOL markForUpdate;
 
 // Relationships
-@property (nonatomic, strong) NSSet *lineEvents;
-@property (nonatomic, strong) NSSet *conversations;
-@property (nonatomic, retain) NSSet *groups;
-@property (nonatomic, retain) PBX *pbx;
+@property (nonatomic, retain) NSSet *phoneNumbers;
+@property (nonatomic, retain) NSSet *addresses;
+@property (nonatomic, retain) NSSet *info;
+@property (nonatomic, retain) User *user;
 
 @end
 
 @interface Contact (CoreDataGeneratedAccessors)
 
-- (void)addLineEventsObject:(RecentLineEvent *)value;
-- (void)removeLineEventsObject:(RecentLineEvent *)value;
-- (void)addLineEvents:(NSSet *)values;
-- (void)removeLineEvents:(NSSet *)values;
+- (void)addPhoneNumbersObject:(PhoneNumber *)value;
+- (void)removePhoneNumbersObject:(PhoneNumber *)value;
+- (void)addPhoneNumbers:(NSSet *)values;
+- (void)removePhoneNumbers:(NSSet *)values;
 
-- (void)addConversationsObject:(Conversation *)value;
-- (void)removeConversationsObject:(Conversation *)value;
-- (void)addConversations:(NSSet *)values;
-- (void)removeConversations:(NSSet *)values;
+- (void)addAddressesObject:(Address *)value;
+- (void)removeAddressesObject:(Address *)value;
+- (void)addAddresses:(NSSet *)values;
+- (void)removeAddresses:(NSSet *)values;
 
-- (void)addGroupsObject:(ContactGroup *)value;
-- (void)removeGroupsObject:(ContactGroup *)value;
-- (void)addGroups:(NSSet *)values;
-- (void)removeGroups:(NSSet *)values;
+- (void)addInfoObject:(ContactInfo *)value;
+- (void)removeInfoObject:(ContactInfo *)value;
+- (void)addInfo:(NSSet *)values;
+- (void)removeInfo:(NSSet *)values;
 
 @end
