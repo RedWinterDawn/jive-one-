@@ -642,7 +642,7 @@
 		5D55236E1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSipNetworkQualityRequestOperation.m; sourceTree = "<group>"; };
 		5D5525BD1AC5DC730037F703 /* JCV4ApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCV4ApiClient.h; sourceTree = "<group>"; };
 		5D5525BE1AC5DC730037F703 /* JCV4ApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV4ApiClient.m; sourceTree = "<group>"; };
-		5D57827D1B32FCE2005F1B86 /* generateStrings */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = generateStrings; path = GenerateStrings; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D57827D1B32FCE2005F1B86 /* GenerateStrings */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GenerateStrings; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D5782851B32FF70005F1B86 /* JCFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCFile.h; sourceTree = "<group>"; };
 		5D5782861B32FF70005F1B86 /* JCFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCFile.m; sourceTree = "<group>"; };
 		5D57828D1B330194005F1B86 /* JCDataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDataLoader.h; sourceTree = "<group>"; };
@@ -1221,7 +1221,7 @@
 				275F4A4E18AD0FBC00D2F069 /* JiveOne.app */,
 				5D2D74121ACFA84700B98BDF /* UnitTests.xctest */,
 				5D2D74461ACFBDA400B98BDF /* IntegrationTests.xctest */,
-				5D57827D1B32FCE2005F1B86 /* generateStrings */,
+				5D57827D1B32FCE2005F1B86 /* GenerateStrings */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2160,7 +2160,7 @@
 			);
 			name = GenerateStrings;
 			productName = generateStrings;
-			productReference = 5D57827D1B32FCE2005F1B86 /* generateStrings */;
+			productReference = 5D57827D1B32FCE2005F1B86 /* GenerateStrings */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
