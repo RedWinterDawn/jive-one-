@@ -634,7 +634,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
             if(self.outputType == JCPhoneAudioManagerOutputReceiver) {
                 shouldTurnOnSpeaker = TRUE;
             }
-            sipHandler.loudSpeakerEnabled = shouldTurnOnSpeaker;
+            [sipHandler setLoudSpeakerEnabled:shouldTurnOnSpeaker];
             
             BOOL mute = appSettings.isIntercomMicrophoneMuteEnabled;
             [sipHandler muteCall:mute];
