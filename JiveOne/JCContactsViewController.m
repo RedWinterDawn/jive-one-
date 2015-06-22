@@ -59,6 +59,10 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *viewController = segue.destinationViewController;
+    if ([viewController isKindOfClass:[UINavigationController class]]) {
+        viewController = ((UINavigationController *)viewController).topViewController;
+    }
+    
     if ([viewController isKindOfClass:[JCContactsTableViewController class]]) {
         _contactsTableViewController = (JCContactsTableViewController *)viewController;
         _contactsTableViewController.contactGroup = self.contactGroup;

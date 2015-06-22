@@ -119,17 +119,11 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <gestureRecognizers/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="Odt-Xe-OOg"/>
                         <constraint firstAttribute="width" constant="80" id="nDR-a2-t6c"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <color key="textColor" red="0.34901960780000002" green="0.64313725489999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="Odt-Xe-OOg"/>
-                        </mask>
-                    </variation>
                     <connections>
                         <outletCollection property="gestureRecognizers" destination="F2b-4w-Wg7" appends="YES" id="ZiH-Uw-iF2"/>
                     </connections>
@@ -211,16 +205,11 @@
             <constraints>
                 <constraint firstItem="FZp-Hc-TQm" firstAttribute="top" secondItem="xOT-No-wxB" secondAttribute="bottom" id="2xC-pJ-8s1"/>
                 <constraint firstAttribute="trailing" secondItem="dhs-80-a8L" secondAttribute="trailing" id="4tI-wd-5kQ"/>
-                <constraint firstItem="flB-PX-SrF" firstAttribute="trailing" secondItem="FqN-EV-KD6" secondAttribute="trailing" constant="5" id="5fd-9i-Eb5"/>
-                <constraint firstItem="eKD-lK-lgo" firstAttribute="leading" secondItem="FqN-EV-KD6" secondAttribute="trailing" constant="4" id="7Vi-RA-f4p"/>
                 <constraint firstItem="dhs-80-a8L" firstAttribute="top" secondItem="Rc7-py-LNy" secondAttribute="bottom" constant="29" id="7aB-zb-VAd"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="FZp-Hc-TQm" secondAttribute="bottom" id="8ZW-vO-Yya"/>
                 <constraint firstItem="dhs-80-a8L" firstAttribute="leading" secondItem="jUo-zC-XNS" secondAttribute="leading" constant="100" id="AGS-PH-bde"/>
                 <constraint firstItem="ucN-sR-uuf" firstAttribute="top" secondItem="jUo-zC-XNS" secondAttribute="top" id="C7g-dq-2Vl"/>
-                <constraint firstItem="FZp-Hc-TQm" firstAttribute="leading" secondItem="FqN-EV-KD6" secondAttribute="trailing" constant="4" id="EvW-tY-6F5"/>
                 <constraint firstItem="Rc7-py-LNy" firstAttribute="leading" secondItem="jUo-zC-XNS" secondAttribute="leading" constant="100" id="FuE-kE-zmA"/>
-                <constraint firstItem="eKD-lK-lgo" firstAttribute="leading" secondItem="FqN-EV-KD6" secondAttribute="trailing" constant="19" id="Hc1-oW-mMs"/>
-                <constraint firstItem="eKD-lK-lgo" firstAttribute="top" secondItem="jUo-zC-XNS" secondAttribute="top" id="Jgn-yE-42U"/>
                 <constraint firstAttribute="bottom" secondItem="FqN-EV-KD6" secondAttribute="bottom" id="Ka6-Mv-CV0"/>
                 <constraint firstAttribute="trailing" secondItem="eKD-lK-lgo" secondAttribute="trailing" id="LYt-wn-Zlj"/>
                 <constraint firstAttribute="trailing" secondItem="FZp-Hc-TQm" secondAttribute="trailing" id="NIL-E8-OXy"/>
@@ -230,22 +219,13 @@
                 <constraint firstItem="FqN-EV-KD6" firstAttribute="top" secondItem="jUo-zC-XNS" secondAttribute="top" id="UqF-cM-LN3"/>
                 <constraint firstItem="FqN-EV-KD6" firstAttribute="leading" secondItem="jUo-zC-XNS" secondAttribute="leading" constant="10" id="WMI-fZ-rrJ"/>
                 <constraint firstAttribute="trailing" secondItem="xOT-No-wxB" secondAttribute="trailing" id="XUT-vf-QCQ"/>
-                <constraint firstItem="FqN-EV-KD6" firstAttribute="leading" secondItem="jUo-zC-XNS" secondAttribute="leading" id="Yws-ou-s3Z"/>
                 <constraint firstItem="eKD-lK-lgo" firstAttribute="top" secondItem="ucN-sR-uuf" secondAttribute="bottom" id="ZJs-rA-9aK"/>
                 <constraint firstItem="FqN-EV-KD6" firstAttribute="trailing" secondItem="flB-PX-SrF" secondAttribute="trailing" constant="-5" id="a9f-Td-obd"/>
                 <constraint firstItem="Rc7-py-LNy" firstAttribute="top" secondItem="eKD-lK-lgo" secondAttribute="bottom" id="aWo-J0-ppp"/>
                 <constraint firstItem="xOT-No-wxB" firstAttribute="top" secondItem="eKD-lK-lgo" secondAttribute="bottom" id="cJb-Fd-ksp"/>
-                <constraint firstItem="eKD-lK-lgo" firstAttribute="leading" secondItem="FqN-EV-KD6" secondAttribute="trailing" constant="19" id="cel-CA-hIg"/>
-                <constraint firstItem="ucN-sR-uuf" firstAttribute="leading" secondItem="FqN-EV-KD6" secondAttribute="trailing" constant="4" id="gcv-Qs-kXG"/>
-                <constraint firstItem="FqN-EV-KD6" firstAttribute="centerY" secondItem="eKD-lK-lgo" secondAttribute="centerY" id="lDo-Ng-eGE"/>
                 <constraint firstItem="eKD-lK-lgo" firstAttribute="leading" secondItem="jUo-zC-XNS" secondAttribute="leading" constant="100" id="mY9-dw-a8x"/>
-                <constraint firstItem="Rc7-py-LNy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jUo-zC-XNS" secondAttribute="leading" constant="100" id="nxf-4x-6cH"/>
                 <constraint firstItem="xOT-No-wxB" firstAttribute="leading" secondItem="jUo-zC-XNS" secondAttribute="leading" constant="100" id="oMg-PM-Fg1"/>
-                <constraint firstAttribute="bottom" secondItem="FqN-EV-KD6" secondAttribute="bottom" id="oTE-zp-q6S"/>
                 <constraint firstItem="ucN-sR-uuf" firstAttribute="leading" secondItem="jUo-zC-XNS" secondAttribute="leading" constant="100" id="ogC-S8-PRh"/>
-                <constraint firstItem="xOT-No-wxB" firstAttribute="leading" secondItem="FqN-EV-KD6" secondAttribute="trailing" constant="4" id="phj-t8-OWY"/>
-                <constraint firstItem="eKD-lK-lgo" firstAttribute="top" secondItem="ucN-sR-uuf" secondAttribute="bottom" constant="2" id="rfr-NK-453"/>
-                <constraint firstItem="eKD-lK-lgo" firstAttribute="leading" secondItem="jUo-zC-XNS" secondAttribute="leading" constant="70" id="s6z-dx-mto"/>
                 <constraint firstAttribute="trailing" secondItem="Rc7-py-LNy" secondAttribute="trailing" id="teG-zi-vab"/>
                 <constraint firstItem="flB-PX-SrF" firstAttribute="centerY" secondItem="FqN-EV-KD6" secondAttribute="centerY" id="xEA-tC-tCv"/>
                 <constraint firstAttribute="trailing" secondItem="X2c-P5-4iq" secondAttribute="trailing" id="yYY-q5-Wgv"/>
@@ -255,24 +235,6 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="Yws-ou-s3Z"/>
-                    <exclude reference="lDo-Ng-eGE"/>
-                    <exclude reference="oTE-zp-q6S"/>
-                    <exclude reference="5fd-9i-Eb5"/>
-                    <exclude reference="gcv-Qs-kXG"/>
-                    <exclude reference="7Vi-RA-f4p"/>
-                    <exclude reference="Hc1-oW-mMs"/>
-                    <exclude reference="Jgn-yE-42U"/>
-                    <exclude reference="cel-CA-hIg"/>
-                    <exclude reference="rfr-NK-453"/>
-                    <exclude reference="s6z-dx-mto"/>
-                    <exclude reference="nxf-4x-6cH"/>
-                    <exclude reference="phj-t8-OWY"/>
-                    <exclude reference="EvW-tY-6F5"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="525" y="700"/>
         </view>
         <tapGestureRecognizer id="F2b-4w-Wg7">

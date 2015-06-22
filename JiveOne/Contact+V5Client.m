@@ -441,14 +441,16 @@ NSString *const kContactOtherValueKey           = @"value";
         // If we do not get a response, we had a fatal error, so we call completion with an error.
         if (!response) {
             if (completion) {
-                completion(NO, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_ERROR underlyingError:error]);
+                completion(NO, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_ERROR reason:NSLocalizedString(@"Upload Error", @"Upload Error")  underlyingError:error]);
             }
+            return;
         }
         
         if (![response isKindOfClass:[NSDictionary class]]) {
             if (completion) {
-                completion(NO, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_ERROR reason:@"Unexpected response object"]);
+                completion(NO, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_ERROR reason:NSLocalizedString(@"Upload Unexpected Server Response", @"Upload Error") underlyingError:error]);
             }
+            return;
         }
         
         NSDictionary *contactData = (NSDictionary *)response;
@@ -462,18 +464,46 @@ NSString *const kContactOtherValueKey           = @"value";
                 localContact.etag            = [contactData integerValueForKey:kContactETagKey];
                 localContact.markForUpdate   = FALSE;
             } completion:^(BOOL contextDidSave, NSError *error) {
-                
+                if (completion) {
+                    if (error) {
+                        completion(NO, error);
+                    } else {
+                        completion(YES, nil);
+                    }
+                }
             }];
-        } else {
-            //[self updateContact:contact data:contactData];
+        }
+        
+        // If we did not receive a succes, but had a responce, it means possiboly we has a update
+        // conflict on the server, and failed to update due to stale etag. IF this is the case, we
+        // respond the the failed, and then procced.
+        else {
+            NSInteger code = error.code;
+            if ([error isKindOfClass:[JCApiClientError class]]) {
+                code = ((JCApiClientError *)error).underlyingStatusCode;
+            }
             
-            
-            
-            
-            
-            
-            if (completion) {
-                completion(NO, error);
+            if (code == JCHTTPStatusCodeConflict) {
+                
+                // TODO: Future handling of conflict senario. If we have a conflict here, present
+                // error, with prompt to accept the changes, merge changes or override changes.
+                // Current logic just overrides the changes.
+                
+                [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                    [self updateContact:contact data:contactData];
+                } completion:^(BOOL contextDidSave, NSError *error) {
+                    if (completion) {
+                        if (error) {
+                            completion(NO, error);
+                        } else {
+                            completion(YES, nil);
+                        }
+                    }
+                }];
+            } else {
+                if (completion) {
+                    completion(NO, error);
+                }
             }
         }
     }];
@@ -510,7 +540,6 @@ NSString *const kContactOtherValueKey           = @"value";
     contact.contactId = [contactData stringValueForKey:kContactContactIdKey];
     
     [self updateContact:contact data:contactData];
-    
     
     
     

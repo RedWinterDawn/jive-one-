@@ -33,22 +33,25 @@
 {
     [super layoutSubviews];
     
-    self.detailEditLabel.text = _info.key;
-    self.detailTextLabel.text = _info.key;
-    self.textLabel.text = _info.value;
-    self.textField.text = _info.value;
+    if (_info) {
+        self.detailEditLabel.text = _info.key;
+        self.detailTextLabel.text = _info.key;
+        self.textLabel.text = _info.value;
+        self.textField.text = _info.value;
+    }
 }
 
 -(void)setText:(NSString *)string
 {
-    
     _info.value = string;
 }
 
 -(void)dealloc
 {
-    [_info removeObserver:self forKeyPath:NSStringFromSelector(@selector(key)) context:nil];
-    [_info removeObserver:self forKeyPath:NSStringFromSelector(@selector(value)) context:nil];
+    if (_info) {
+        [_info removeObserver:self forKeyPath:NSStringFromSelector(@selector(key)) context:nil];
+        [_info removeObserver:self forKeyPath:NSStringFromSelector(@selector(value)) context:nil];
+    }
 }
 
 

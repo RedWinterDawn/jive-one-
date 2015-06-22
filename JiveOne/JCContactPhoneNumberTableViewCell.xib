@@ -28,9 +28,6 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXC-zw-90Y">
                         <rect key="frame" x="13" y="24" width="241" height="24"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="24" id="dMX-l0-EzE"/>
-                        </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -43,16 +40,10 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="25" id="RKF-Wo-fsq"/>
                                     <constraint firstAttribute="width" secondItem="cmF-Jd-jFj" secondAttribute="height" multiplier="1:1" id="SO8-qb-XCw"/>
-                                    <constraint firstAttribute="height" constant="30" id="hjs-W4-2Ql"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="green-phone">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="hjs-W4-2Ql"/>
-                                    </mask>
-                                </variation>
                                 <connections>
                                     <action selector="dial:" destination="pCE-hA-Rs3" eventType="touchUpInside" id="RfW-bs-pKI"/>
                                 </connections>
@@ -60,16 +51,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="cmF-Jd-jFj" firstAttribute="top" secondItem="W5Y-1N-H6m" secondAttribute="top" constant="5" id="U0G-1c-1VY"/>
                             <constraint firstAttribute="trailing" secondItem="cmF-Jd-jFj" secondAttribute="trailing" constant="5" id="eVi-Ig-wcU"/>
                             <constraint firstAttribute="width" constant="58" id="liE-j4-J2z"/>
                             <constraint firstAttribute="centerY" secondItem="cmF-Jd-jFj" secondAttribute="centerY" constant="1.5" id="q7D-tL-XXp"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="U0G-1c-1VY"/>
-                            </mask>
-                        </variation>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -140,19 +125,11 @@
                 <constraint firstAttribute="bottom" secondItem="4wI-hk-irE" secondAttribute="bottom" id="LMu-Xv-F2i"/>
                 <constraint firstItem="vMM-3R-dza" firstAttribute="leading" secondItem="w25-cD-cIq" secondAttribute="leading" constant="10" id="hed-RK-bfp"/>
                 <constraint firstItem="4wI-hk-irE" firstAttribute="leading" secondItem="w25-cD-cIq" secondAttribute="leading" constant="100" id="itn-5f-0Im"/>
-                <constraint firstItem="4wI-hk-irE" firstAttribute="leading" secondItem="vMM-3R-dza" secondAttribute="trailing" constant="19" id="o6f-hq-qmh"/>
-                <constraint firstItem="4wI-hk-irE" firstAttribute="leading" secondItem="vMM-3R-dza" secondAttribute="trailing" constant="19" id="v0Y-sb-Zhe"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="o6f-hq-qmh"/>
-                    <exclude reference="v0Y-sb-Zhe"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="432" y="453"/>
         </view>
         <tapGestureRecognizer id="Eoa-nx-CMe">

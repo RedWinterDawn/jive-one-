@@ -109,7 +109,107 @@ typedef void(^JCApiClientCompletionHandler)(BOOL success, id response, NSError *
 
 // Voicemail
 
+
+typedef NS_ENUM(NSInteger, JCHTTPStatusCodes) {
+    // Informational
+    JCHTTPStatusCodeInformationalUnknown = 1,
+    JCHTTPStatusCodeContinue = 100,
+    JCHTTPStatusCodeSwitchingProtocols = 101,
+    JCHTTPStatusCodeProcessing = 102,
+    
+    // Success
+    JCHTTPStatusCodeSuccessUnknown = 2,
+    JCHTTPStatusCodeOK = 200,
+    JCHTTPStatusCodeCreated = 201,
+    JCHTTPStatusCodeAccepted = 202,
+    JCHTTPStatusCodeNonAuthoritativeInformation = 203,
+    JCHTTPStatusCodeNoContent = 204,
+    JCHTTPStatusCodeResetContent = 205,
+    JCHTTPStatusCodePartialContent = 206,
+    JCHTTPStatusCodeMultiStatus = 207,
+    JCHTTPStatusCodeAlreadyReported = 208,
+    JCHTTPStatusCodeIMUsed = 209,
+    
+    // Redirection
+    JCHTTPStatusCodeRedirectionSuccessUnknown = 3,
+    JCHTTPStatusCodeMultipleChoices = 300,
+    JCHTTPStatusCodeMovedPermanently = 301,
+    JCHTTPStatusCodeFound = 302,
+    JCHTTPStatusCodeSeeOther = 303,
+    JCHTTPStatusCodeNotModified = 304,
+    JCHTTPStatusCodeUseProxy = 305,
+    JCHTTPStatusCodeSwitchProxy = 306,
+    JCHTTPStatusCodeTemporaryRedirect = 307,
+    JCHTTPStatusCodePermanentRedirect = 308,
+    
+    // Client error
+    JCHTTPStatusCode4XXSuccessUnknown = 4,
+    JCHTTPStatusCodeBadRequest = 400,
+    JCHTTPStatusCodeUnauthorised = 401,
+    JCHTTPStatusCodePaymentRequired = 402,
+    JCHTTPStatusCodeForbidden = 403,
+    JCHTTPStatusCodeNotFound = 404,
+    JCHTTPStatusCodeMethodNotAllowed = 405,
+    JCHTTPStatusCodeNotAcceptable = 406,
+    JCHTTPStatusCodeProxyAuthenticationRequired = 407,
+    JCHTTPStatusCodeRequestTimeout = 408,
+    JCHTTPStatusCodeConflict = 409,
+    JCHTTPStatusCodeGone = 410,
+    JCHTTPStatusCodeLengthRequired = 411,
+    JCHTTPStatusCodePreconditionFailed = 412,
+    JCHTTPStatusCodeRequestEntityTooLarge = 413,
+    JCHTTPStatusCodeRequestURITooLong = 414,
+    JCHTTPStatusCodeUnsupportedMediaType = 415,
+    JCHTTPStatusCodeRequestedRangeNotSatisfiable = 416,
+    JCHTTPStatusCodeExpectationFailed = 417,
+    JCHTTPStatusCodeIamATeapot = 418,
+    JCHTTPStatusCodeAuthenticationTimeout = 419,
+    JCHTTPStatusCodeMethodFailureSpringFramework = 420,
+    JCHTTPStatusCodeEnhanceYourCalmTwitter = 4200,
+    JCHTTPStatusCodeUnprocessableEntity = 422,
+    JCHTTPStatusCodeLocked = 423,
+    JCHTTPStatusCodeFailedDependency = 424,
+    JCHTTPStatusCodeMethodFailureWebDaw = 4240,
+    JCHTTPStatusCodeUnorderedCollection = 425,
+    JCHTTPStatusCodeUpgradeRequired = 426,
+    JCHTTPStatusCodePreconditionRequired = 428,
+    JCHTTPStatusCodeTooManyRequests = 429,
+    JCHTTPStatusCodeRequestHeaderFieldsTooLarge = 431,
+    JCHTTPStatusCodeNoResponseNginx = 444,
+    JCHTTPStatusCodeRetryWithMicrosoft = 449,
+    JCHTTPStatusCodeBlockedByWindowsParentalControls = 450,
+    JCHTTPStatusCodeRedirectMicrosoft = 451,
+    JCHTTPStatusCodeUnavailableForLegalReasons = 4510,
+    JCHTTPStatusCodeRequestHeaderTooLargeNginx = 494,
+    JCHTTPStatusCodeCertErrorNginx = 495,
+    JCHTTPStatusCodeNoCertNginx = 496,
+    JCHTTPStatusCodeHTTPToHTTPSNginx = 497,
+    JCHTTPStatusCodeClientClosedRequestNginx = 499,
+    
+    // Server error
+    JCHTTPStatusCode5XXSuccessUnknown = 5,
+    JCHTTPStatusCodeInternalServerError = 500,
+    JCHTTPStatusCodeNotImplemented = 501,
+    JCHTTPStatusCodeBadGateway = 502,
+    JCHTTPStatusCodeServiceUnavailable = 503,
+    JCHTTPStatusCodeGatewayTimeout = 504,
+    JCHTTPStatusCodeHTTPVersionNotSupported = 505,
+    JCHTTPStatusCodeVariantAlsoNegotiates = 506,
+    JCHTTPStatusCodeInsufficientStorage = 507,
+    JCHTTPStatusCodeLoopDetected = 508,
+    JCHTTPStatusCodeBandwidthLimitExceeded = 509,
+    JCHTTPStatusCodeNotExtended = 510,
+    JCHTTPStatusCodeNetworkAuthenticationRequired = 511,
+    JCHTTPStatusCodeConnectionTimedOut = 522,
+    JCHTTPStatusCodeNetworkReadTimeoutErrorUnknown = 598,
+    JCHTTPStatusCodeNetworkConnectTimeoutErrorUnknown = 599
+};
+
 @interface JCApiClientError : JCError
+
+@property (nonatomic, readonly) NSInteger underlyingStatusCode;
+
++(NSInteger)underlyingErrorCodeForError:(NSError *)error;
 
 @end
 

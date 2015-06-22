@@ -8,6 +8,7 @@
 //
 
 #import "JCAlertView.h"
+#import "JCError.h"
 
 static const NSMutableArray *alerts;
 
@@ -184,7 +185,7 @@ static const NSMutableArray *alerts;
         message = [error localizedFailureReason];
     }
     
-    NSError *underlyingError = [self underlyingErrorForError:error];
+    NSError *underlyingError = [JCError underlyingErrorForError:error];
     NSString *underlyingFailureReason = [underlyingError localizedFailureReason];
     if(underlyingFailureReason && ![underlyingFailureReason isEqualToString:message]) {
         message = [NSString stringWithFormat:@"%@\n(%li: %@)", message, (long)underlyingError.code, underlyingFailureReason];
@@ -215,7 +216,7 @@ static const NSMutableArray *alerts;
     if (!message) {
         message = [error localizedFailureReason];
     }
-    NSError *underlyingError = [self underlyingErrorForError:error];
+    NSError *underlyingError = [JCError underlyingErrorForError:error];
     NSString *underlyingFailureReason = [underlyingError localizedFailureReason];
     if(underlyingFailureReason && ![underlyingFailureReason isEqualToString:message]) {
         message = [NSString stringWithFormat:@"%@\n(%li: %@)", message, (long)underlyingError.code, underlyingFailureReason];
@@ -281,25 +282,6 @@ static const NSMutableArray *alerts;
         va_end(argumentList);
     }
     return alertView;
-}
-
-+(NSError *)underlyingErrorForError:(NSError *)error
-{
-    NSError *underlyingError = [error.userInfo objectForKey:NSUnderlyingErrorKey];
-    if (underlyingError) {
-        return [self underlyingErrorForError:underlyingError];
-    }
-    return error;
-}
-
-+(NSInteger)underlyingErrorCodeForError:(NSError *)error
-{
-    error = [self underlyingErrorForError:error];
-    if ([error.domain isEqualToString:AFURLResponseSerializationErrorDomain]) {
-        NSHTTPURLResponse *urlResponse = [error.userInfo valueForKey:AFNetworkingOperationFailingURLResponseErrorKey];
-        return urlResponse.statusCode;
-    }
-    return error.code;
 }
 
 @end

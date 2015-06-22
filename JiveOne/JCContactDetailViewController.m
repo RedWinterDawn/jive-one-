@@ -363,6 +363,7 @@
     id <JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
     self.title = phoneNumber.titleText;
     self.navigationItem.title = phoneNumber.titleText;
+    self.nameCell.textField.text = phoneNumber.name;
 }
 
 -(void)convertContact
@@ -413,7 +414,11 @@
     Contact *contact = (Contact *)phoneNumber;
     [contact markForDeletion:^(BOOL success, NSError *error) {
         [self hideStatus];
-        [self.navigationController popViewControllerAnimated:YES];
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            [self performSegueWithIdentifier:@"ShowDefaultDetail" sender:self];
+        } else {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }];
 }
 
@@ -495,11 +500,12 @@
     if (!editing) {
         self.navigationItem.leftBarButtonItem = nil;
         [self setCells:_editingCells hidden:YES];
-        
+        [self setCell:_nameCell hidden:NO];
     } else {
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
         self.navigationItem.leftBarButtonItem = item;
         [self setCells:_editingCells hidden:NO];
+        [self setCell:_nameCell hidden:YES];
         if (_addingContact) {
             [self setCell:_deleteCell hidden:YES];
         }
@@ -539,8 +545,6 @@
 
 -(void)layoutNameSection:(id<JCPhoneNumberDataSource>)phoneNumber
 {
-    [self setCells:_nameSectionCells hidden:YES];
-    
     NSString *name = phoneNumber.titleText;
     [self updateTitle];
     if (phoneNumber && ![phoneNumber conformsToProtocol:@protocol(JCPersonDataSource)]) {
@@ -557,14 +561,11 @@
     if (person.lastName) {
         self.lastNameCell.textField.text = person.lastName;
     }
-    
-    [self setCell:_firstNameCell hidden:NO];
-    [self setCell:_lastNameCell hidden:NO];
+    self.nameCell.textField.text = person.name;
 }
 
 -(void)layoutNumberSection:(id<JCPhoneNumberDataSource>)phoneNumber
 {
-    [self setCells:_numberSectionCells hidden:YES];
     if ([phoneNumber isKindOfClass:[Contact class]]) {
         Contact *contact = (Contact *)phoneNumber;
         NSArray *phoneNumbers = [contact.phoneNumbers.allObjects sortedArrayUsingSelector:@selector(order)];
@@ -638,21 +639,32 @@
     
     // Numbers Section
     [self setCells:_numberSectionCells hidden:YES];
-    UITableViewCell *cell = [self phoneNumberCellForPhoneNumber:extension];
+    JCCustomEditTableViewCell *cell = [self phoneNumberCellForPhoneNumber:extension];
     NSIndexPath *actualIndexPath = [self indexPathForCell:_addNumberCell];
+    cell.lastRow = YES;
     [self addCell:cell atIndexPath:actualIndexPath];
     
     // JiveID
     if ([extension isKindOfClass:[InternalExtension class]]) {
         NSString *jiveId = ((InternalExtension *)extension).jiveUserId;
         if (jiveId) {
-            self.jiveIdCell.detailTextLabel.text = jiveId;
-            [self setCell:_jiveIdCell hidden:NO];
+            JCContactOtherFieldTableViewCell *cell = [JCContactOtherFieldTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
+            cell.lastRowOnly = TRUE;
+            cell.detailTextLabel.text = NSLocalizedString(@"Jive ID", @"Jive Id display in contacts");
+            cell.textLabel.text = jiveId;
+            cell.lastRow = YES;
+            NSIndexPath *actualIndexPath = [self indexPathForCell:_addOtherCell];
+            [self addCell:cell atIndexPath:actualIndexPath];
         }
     }
     else if([extension isKindOfClass:[Line class]]) {
-        self.jiveIdCell.detailTextLabel.text = ((Line *)extension).pbx.user.jiveUserId;
-        [self setCell:_jiveIdCell hidden:NO];
+        JCContactOtherFieldTableViewCell *cell = [JCContactOtherFieldTableViewCell cellWithParent:self bundle:[NSBundle mainBundle]];
+        cell.lastRowOnly = TRUE;
+        cell.detailTextLabel.text = NSLocalizedString(@"Jive ID", @"Jive Id display in contacts");
+        cell.textLabel.text = ((Line *)extension).pbx.user.jiveUserId;
+        cell.lastRow = YES;
+        NSIndexPath *actualIndexPath = [self indexPathForCell:_addOtherCell];
+        [self addCell:cell atIndexPath:actualIndexPath];
     }
 }
 
