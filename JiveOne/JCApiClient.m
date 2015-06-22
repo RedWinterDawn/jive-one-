@@ -502,4 +502,19 @@ static BOOL JCErrorOrUnderlyingErrorHasCode(NSError *error, NSInteger code) {
     return nil;
 }
 
+-(NSInteger)underlyingStatusCode
+{
+    return [[self class] underlyingErrorCodeForError:self];
+}
+
++(NSInteger)underlyingErrorCodeForError:(NSError *)error
+{
+    error = [self underlyingErrorForError:error];
+    if ([error.domain isEqualToString:AFURLResponseSerializationErrorDomain]) {
+        NSHTTPURLResponse *urlResponse = [error.userInfo valueForKey:AFNetworkingOperationFailingURLResponseErrorKey];
+        return urlResponse.statusCode;
+    }
+    return error.code;
+}
+
 @end

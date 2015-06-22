@@ -12,6 +12,25 @@
 
 NSString *kJCErrorGerneralDomain = @"JiveGeneralErrorDomain";
 
+-(NSError *)underlyingError
+{
+    return [self.userInfo objectForKey:NSUnderlyingErrorKey];
+}
+
+-(NSError *)rootError
+{
+    return [[self class] underlyingErrorForError:self];
+}
+
++(NSError *)underlyingErrorForError:(NSError *)error
+{
+    NSError *underlyingError = [error.userInfo objectForKey:NSUnderlyingErrorKey];
+    if (underlyingError) {
+        return [self underlyingErrorForError:underlyingError];
+    }
+    return error;
+}
+
 +(instancetype)errorWithCode:(NSInteger)code
 {
     return [self errorWithCode:code underlyingError:nil];
@@ -65,6 +84,9 @@ NSString *kJCErrorGerneralDomain = @"JiveGeneralErrorDomain";
     }
     
     if (error) {
+        if (!userInfo) {
+            userInfo = [NSMutableDictionary new];
+        }
         [userInfo setObject:error forKey:NSUnderlyingErrorKey];
     }
     
