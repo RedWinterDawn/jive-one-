@@ -59,7 +59,14 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
     if ([viewController isKindOfClass:[JCContactsTableViewController class]]) {
         _contactsTableViewController = (JCContactsTableViewController *)viewController;
         _contactsTableViewController.delegate = self;
-        _contactsTableViewController.group = self.group;
+        
+        id<JCGroupDataSource> group = self.group;
+        if (group) {
+            if ([group isKindOfClass:[ContactGroup class]]) {
+                self.navigationItem.rightBarButtonItem = _contactsTableViewController.editButtonItem;
+            }
+            _contactsTableViewController.group = self.group;
+        }
         _contactsTableViewController.filterType = JCContactFilterAll;
         self.searchBar.delegate = _contactsTableViewController;
         

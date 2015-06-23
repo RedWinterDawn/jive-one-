@@ -247,6 +247,7 @@
 		5DB7AFA51B39D40600451A0B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8221AE5895E00981DB6 /* Main_iPad.storyboard */; };
 		5DB7AFA61B39E45E00451A0B /* JCContactPhoneNumberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE4271B28F65A004FD594 /* JCContactPhoneNumberTableViewCell.xib */; };
 		5DB7AFA71B39E45E00451A0B /* JCContactAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE42B1B2A4C78004FD594 /* JCContactAddressTableViewCell.xib */; };
+		5DB7AFAD1B3A163C00451A0B /* JCGroupTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB7AFAC1B3A163C00451A0B /* JCGroupTableViewController.m */; };
 		5DB81B5B1AEFFF5A00D707DF /* JCSMSConversationGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB81B5A1AEFFF5A00D707DF /* JCSMSConversationGroup.m */; };
 		5DBABCD41A283DA500B09783 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBABCD31A283DA500B09783 /* NSString+Additions.m */; };
 		5DBBDCC319DCB29100A4DB96 /* JCCallCardCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC219DCB29100A4DB96 /* JCCallCardCollectionViewController.m */; };
@@ -818,6 +819,8 @@
 		5DB7AF891B39103D00451A0B /* JCGroupsFetchedResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCGroupsFetchedResultsController.m; sourceTree = "<group>"; };
 		5DB7AF8B1B39AC9800451A0B /* JCAggregateFetchedResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAggregateFetchedResultsController.h; sourceTree = "<group>"; };
 		5DB7AF8C1B39AC9800451A0B /* JCAggregateFetchedResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAggregateFetchedResultsController.m; sourceTree = "<group>"; };
+		5DB7AFAB1B3A163C00451A0B /* JCGroupTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCGroupTableViewController.h; sourceTree = "<group>"; };
+		5DB7AFAC1B3A163C00451A0B /* JCGroupTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCGroupTableViewController.m; sourceTree = "<group>"; };
 		5DB81B591AEFFF5A00D707DF /* JCSMSConversationGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSMSConversationGroup.h; sourceTree = "<group>"; };
 		5DB81B5A1AEFFF5A00D707DF /* JCSMSConversationGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSMSConversationGroup.m; sourceTree = "<group>"; };
 		5DB81B5C1AEFFFB400D707DF /* JCConversationGroupObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCConversationGroupObject.h; sourceTree = "<group>"; };
@@ -1825,6 +1828,8 @@
 				5D3F1AE91AE8154E00C59A63 /* JCContactDetailViewController.m */,
 				B7EE4A451B278620003F4278 /* JCTypeSelectorViewController.h */,
 				B7EE4A461B278620003F4278 /* JCTypeSelectorViewController.m */,
+				5DB7AFAB1B3A163C00451A0B /* JCGroupTableViewController.h */,
+				5DB7AFAC1B3A163C00451A0B /* JCGroupTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2406,6 +2411,7 @@
 				F8C9A7D419E884D20049A715 /* OutgoingCall.m in Sources */,
 				5D8FE4181B2783CA004FD594 /* JCStaticTableViewController.m in Sources */,
 				B73004721B2F607F003CC755 /* JCBorederLabel.m in Sources */,
+				5DB7AFAD1B3A163C00451A0B /* JCGroupTableViewController.m in Sources */,
 				5DB0BFC419FFF97A006737D7 /* JCDrawing.m in Sources */,
 				5D241FE41A38BAD5008B498A /* InternalExtension.m in Sources */,
 				5DBF6F461ADEF477004B53F5 /* JCAddressBookEntity.m in Sources */,
