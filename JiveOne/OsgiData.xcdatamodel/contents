@@ -24,7 +24,7 @@
     <entity name="Call" representedClassName="Call" isAbstract="YES" parentEntity="RecentLineEvent" syncable="YES"/>
     <entity name="Contact" representedClassName="Contact" syncable="YES">
         <attribute name="contactId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="etag" optional="YES" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="etag" optional="YES" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="markForDeletion" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -32,9 +32,16 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="addresses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Address" inverseName="contact" inverseEntity="Address" syncable="YES"/>
+        <relationship name="contactGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContactGroup" inverseName="contacts" inverseEntity="ContactGroup" syncable="YES"/>
         <relationship name="info" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ContactInfo" inverseName="contact" inverseEntity="ContactInfo" syncable="YES"/>
         <relationship name="phoneNumbers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PhoneNumber" inverseName="contact" inverseEntity="PhoneNumber" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="contacts" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="ContactGroup" representedClassName="ContactGroup" parentEntity="Group" syncable="YES">
+        <attribute name="etag" optional="YES" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="markForDeletion" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <attribute name="markForUpdate" optional="YES" attributeType="Boolean" defaultValueString="YES" indexed="YES" syncable="YES"/>
+        <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="contactGroups" inverseEntity="Contact" syncable="YES"/>
     </entity>
     <entity name="ContactInfo" representedClassName="ContactInfo" syncable="YES">
         <attribute name="dataHash" optional="YES" attributeType="String" syncable="YES"/>
@@ -72,6 +79,10 @@
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="pbx" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBX" inverseName="extensions" inverseEntity="PBX" syncable="YES"/>
     </entity>
+    <entity name="Group" representedClassName="JCPersonGroupManagedObject" isAbstract="YES" syncable="YES">
+        <attribute name="groupId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
     <entity name="IncomingCall" representedClassName="IncomingCall" parentEntity="Call" syncable="YES"/>
     <entity name="InternalExtension" representedClassName="InternalExtension" parentEntity="Extension" syncable="YES">
         <attribute name="favorite" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -80,9 +91,7 @@
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InternalExtensionGroup" inverseName="internalExtensions" inverseEntity="InternalExtensionGroup" syncable="YES"/>
         <relationship name="lineEvents" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RecentLineEvent" inverseName="internalExtension" inverseEntity="RecentLineEvent" syncable="YES"/>
     </entity>
-    <entity name="InternalExtensionGroup" representedClassName="InternalExtensionGroup" syncable="YES">
-        <attribute name="groupId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="InternalExtensionGroup" representedClassName="InternalExtensionGroup" parentEntity="Group" syncable="YES">
         <relationship name="internalExtensions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InternalExtension" inverseName="groups" inverseEntity="InternalExtension" syncable="YES"/>
     </entity>
     <entity name="Line" representedClassName="Line" parentEntity="Extension" syncable="YES">
@@ -169,29 +178,31 @@
         <relationship name="voicemail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Voicemail" inverseName="transcription" inverseEntity="Voicemail" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Address" positionX="-90" positionY="243" width="128" height="210"/>
-        <element name="BlockedNumber" positionX="-171" positionY="702" width="128" height="133"/>
+        <element name="Address" positionX="-81" positionY="297" width="128" height="210"/>
+        <element name="BlockedNumber" positionX="-171" positionY="758" width="128" height="133"/>
         <element name="Call" positionX="538" positionY="-360" width="128" height="45"/>
-        <element name="Contact" positionX="-342" positionY="333" width="128" height="225"/>
-        <element name="ContactInfo" positionX="108" positionY="344" width="128" height="135"/>
+        <element name="Contact" positionX="-452" positionY="347" width="128" height="238"/>
+        <element name="ContactInfo" positionX="72" positionY="441" width="128" height="135"/>
         <element name="Conversation" positionX="342" positionY="171" width="128" height="73"/>
         <element name="DID" positionX="-398" positionY="698" width="128" height="238"/>
-        <element name="Extension" positionX="-459" positionY="-126" width="128" height="148"/>
+        <element name="Extension" positionX="-549" positionY="-189" width="128" height="148"/>
         <element name="IncomingCall" positionX="700" positionY="-288" width="128" height="45"/>
-        <element name="InternalExtension" positionX="-200" positionY="-90" width="128" height="133"/>
-        <element name="InternalExtensionGroup" positionX="-45" positionY="81" width="128" height="88"/>
+        <element name="InternalExtension" positionX="-324" positionY="-169" width="128" height="133"/>
+        <element name="InternalExtensionGroup" positionX="-90" positionY="-36" width="128" height="58"/>
         <element name="Line" positionX="-333" positionY="-378" width="128" height="135"/>
         <element name="LineConfiguration" positionX="-45" positionY="-252" width="128" height="135"/>
         <element name="Message" positionX="529" positionY="162" width="128" height="73"/>
         <element name="MissedCall" positionX="709" positionY="-360" width="128" height="45"/>
         <element name="OutgoingCall" positionX="711" positionY="-432" width="128" height="45"/>
         <element name="PBX" positionX="-785" positionY="486" width="128" height="163"/>
-        <element name="PhoneNumber" positionX="-9" positionY="459" width="128" height="165"/>
+        <element name="PhoneNumber" positionX="7" positionY="594" width="128" height="165"/>
         <element name="RecentEvent" positionX="331" positionY="11" width="128" height="103"/>
         <element name="RecentLineEvent" positionX="412" positionY="-196" width="128" height="118"/>
         <element name="SMSMessage" positionX="628" positionY="702" width="128" height="88"/>
         <element name="User" positionX="-1134" positionY="198" width="128" height="103"/>
         <element name="Voicemail" positionX="711" positionY="-189" width="128" height="178"/>
         <element name="VoicemailTranscription" positionX="945" positionY="-162" width="128" height="118"/>
+        <element name="ContactGroup" positionX="-245" positionY="275" width="128" height="103"/>
+        <element name="Group" positionX="-245" positionY="98" width="128" height="73"/>
     </elements>
 </model>

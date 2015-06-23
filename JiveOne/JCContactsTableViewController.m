@@ -27,6 +27,7 @@
 // Controllers
 #import "JCContactDetailViewController.h"
 #import "JCContactsFetchedResultsController.h"
+#import "JCGroupsFetchedResultsController.h"
 
 @interface JCContactsTableViewController()
 {
@@ -43,7 +44,6 @@
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:self.authenticationManager];
-    
     self.clearsSelectionOnViewWillAppear = TRUE;
 }
 
@@ -124,18 +124,21 @@
 {
     if (!_fetchedResultsController)
     {
+        NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+        PBX *pbx = self.authenticationManager.pbx;
         switch (_filterType) {
             case JCContactFilterGrouped:
             {
-                // TODO: Grouped Messages.
+                _fetchedResultsController = [[JCGroupsFetchedResultsController alloc] initWithSearchText:_searchText
+                                                                                         sortDescriptors:sortDescriptors
+                                                                                                     pbx:pbx
+                                                                                      sectionNameKeyPath:@"sectionName"];
                 
                 break;
             }
                 
             default:
             {
-                NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
-                PBX *pbx = self.authenticationManager.pbx;
                 _fetchedResultsController = [[JCContactsFetchedResultsController alloc] initWithSearchText:_searchText
                                                                                            sortDescriptors:sortDescriptors
                                                                                                        pbx:pbx
@@ -182,7 +185,8 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (_filterType == JCContactFilterGrouped) {
-        return nil;
+        id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+        return sectionInfo.name;
     }
     return [self.fetchedResultsController sectionIndexTitles][section];
 }
