@@ -428,6 +428,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="kzl-o1-2av">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="vk9-lC-ACB" kind="relationship" relationship="rootViewController" id="S2x-r9-chT"/>
@@ -1012,5 +1013,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="JcL-tp-tcf"/>
     </inferredMetricsTieBreakers>
-    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
 </document>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="f4Z-kz-Svg">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -1002,6 +1001,7 @@
                                         <exclude reference="Rtc-ap-tXt"/>
                                         <exclude reference="z9j-K6-Nj7"/>
                                         <exclude reference="L0g-EQ-g2L"/>
+                                        <exclude reference="FoB-xY-cWj"/>
                                         <exclude reference="3UC-4B-9vf"/>
                                         <exclude reference="Ds3-D7-73U"/>
                                         <exclude reference="MWi-81-zxA"/>
@@ -1009,7 +1009,6 @@
                                         <exclude reference="Xdd-Ys-naz"/>
                                         <exclude reference="idL-XN-XYo"/>
                                         <exclude reference="zAi-ed-TGB"/>
-                                        <exclude reference="FoB-xY-cWj"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular">
@@ -1040,9 +1039,9 @@
                                         <include reference="Khl-p8-q3q"/>
                                         <include reference="Rtc-ap-tXt"/>
                                         <include reference="L0g-EQ-g2L"/>
+                                        <include reference="FoB-xY-cWj"/>
                                         <include reference="Ds3-D7-73U"/>
                                         <include reference="idL-XN-XYo"/>
-                                        <include reference="FoB-xY-cWj"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact">

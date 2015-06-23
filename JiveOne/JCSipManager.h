@@ -36,7 +36,7 @@
                                error:(NSError *__autoreleasing *)error;
 
 // Methods to handle registration.
-- (void)registerToProvisioning:(id <JCSipManagerProvisioningDataSource>)line;
+- (BOOL)registerToProvisioning:(id <JCSipManagerProvisioningDataSource>)line;
 - (void)unregister;
 
 // Backgrounding
