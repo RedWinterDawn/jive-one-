@@ -1,0 +1,21 @@
+
+/* Class = "UINavigationItem"; title = "Messages"; ObjectID = "Thw-n3-ffm"; */
+"Thw-n3-ffm.title" = "Messaggi";
+
+/* Class = "UINavigationItem"; title = "Details"; ObjectID = "TxK-l8-YtH"; */
+"TxK-l8-YtH.title" = "Dettagli";
+
+/* Class = "UITableViewSection"; footerTitle = "Blocks this number from sending or recieving an SMS message on your PBX for all users."; ObjectID = "Vv3-tz-o6o"; */
+"Vv3-tz-o6o.footerTitle" = "Blocchi questo numero di invio o la ricezione di un messaggio SMS sul vostro centralino per tutti gli utenti.";
+
+/* Class = "UINavigationItem"; title = "New Message"; ObjectID = "g1X-2S-xoD"; */
+"g1X-2S-xoD.title" = "Nuovo messaggio";
+
+/* Class = "UIBarButtonItem"; title = "Details"; ObjectID = "qo1-nf-jvR"; */
+"qo1-nf-jvR.title" = "Dettagli";
+
+/* Class = "UILabel"; text = "Block Number"; ObjectID = "tPN-wh-a8h"; */
+"tPN-wh-a8h.text" = "Blocca contatto";
+
+/* Class = "UISearchBar"; placeholder = "Search For People"; ObjectID = "zad-Lo-XYN"; */
+"zad-Lo-XYN.placeholder" = "Cerca persone";

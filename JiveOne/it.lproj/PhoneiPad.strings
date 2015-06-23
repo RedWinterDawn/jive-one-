@@ -1,0 +1,45 @@
+
+/* Class = "UILabel"; text = "MNO"; ObjectID = "0E0-Ga-yKj"; */
+"0E0-Ga-yKj.text" = "MNO";
+
+/* Class = "UILabel"; text = "Word count: %i"; ObjectID = "3hD-2T-xYG"; */
+"3hD-2T-xYG.text" = "Conteggio parole: %i";
+
+/* Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "AkF-KA-69I"; */
+"AkF-KA-69I.title" = "Segreteria";
+
+/* Class = "UILabel"; text = "TUV"; ObjectID = "Amh-2F-CRy"; */
+"Amh-2F-CRy.text" = "TUV";
+
+/* Class = "UILabel"; text = "WXYZ"; ObjectID = "C1I-IP-hpm"; */
+"C1I-IP-hpm.text" = "WXYZ";
+
+/* Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[0] = "All"; ObjectID = "EMe-MP-2GH"; */
+"EMe-MP-2GH.segmentTitles[0]" = "Tutti";
+
+/* Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[1] = "Missed"; ObjectID = "EMe-MP-2GH"; */
+"EMe-MP-2GH.segmentTitles[1]" = "Perse";
+
+/* Class = "UISegmentedControl"; EMe-MP-2GH.segmentTitles[2] = "Voicemail"; ObjectID = "EMe-MP-2GH"; */
+"EMe-MP-2GH.segmentTitles[2]" = "Segreteria";
+
+/* Class = "UILabel"; text = "JKL"; ObjectID = "SgS-W2-AKQ"; */
+"SgS-W2-AKQ.text" = "JKL";
+
+/* Class = "UILabel"; text = "ABC"; ObjectID = "Six-TQ-o0K"; */
+"Six-TQ-o0K.text" = "ABC";
+
+/* Class = "UINavigationItem"; title = "Voicemail"; ObjectID = "XwV-jt-nQC"; */
+"XwV-jt-nQC.title" = "Segreteria";
+
+/* Class = "UILabel"; text = "PQRS"; ObjectID = "YCw-kb-mRe"; */
+"YCw-kb-mRe.text" = "PQRS";
+
+/* Class = "UILabel"; text = "DEF"; ObjectID = "utJ-wf-z8v"; */
+"utJ-wf-z8v.text" = "DEF";
+
+/* Class = "UILabel"; text = "Confidence: %@"; ObjectID = "zDJ-eE-vfh"; */
+"zDJ-eE-vfh.text" = "Fiducia: %@";
+
+/* Class = "UILabel"; text = "GHI"; ObjectID = "zzd-cv-BlF"; */
+"zzd-cv-BlF.text" = "GHI";
