@@ -15,6 +15,7 @@
 #import "Contact.h"
 #import "PBX.h"
 #import "User.h"
+#import "ContactGroup.h"
 
 #import "Contact+V5Client.h"
 #import "InternalExtension+V5Client.h"
@@ -87,8 +88,8 @@
             ((JCPresenceCell *)cell).identifier = ((Extension *)phoneNumber).jrn;
         }
     }
-    else if ([object isKindOfClass:[InternalExtensionGroup class]]) {
-        cell.textLabel.text = ((InternalExtensionGroup *)object).name;
+    else if ([object conformsToProtocol:@protocol(JCGroupDataSource)]) {
+        cell.textLabel.text = ((id<JCGroupDataSource>)object).name;
     }
 }
 
@@ -198,7 +199,7 @@
         [self configureCell:cell withObject:object];
         return cell;
     }
-    else if ([object isKindOfClass:[InternalExtensionGroup class]])
+    else if ([object conformsToProtocol:@protocol(JCGroupDataSource)])
     {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactGroupCell"];
         [self configureCell:cell withObject:object];
@@ -209,21 +210,26 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id<JCPhoneNumberDataSource> phoneNumber = (id<JCPhoneNumberDataSource>)[self objectAtIndexPath:indexPath];
-    if ([phoneNumber isKindOfClass:[Extension class]]) {
+    id object = [self objectAtIndexPath:indexPath];
+    if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource) ]) {
+        if ([object isKindOfClass:[Contact class]]) {
+            return TRUE;
+        }
         return FALSE;
-    } else if ([phoneNumber isKindOfClass:[JCAddressBookPerson class]]) {
+    } else {
+        if ([object isKindOfClass:[ContactGroup class]]) {
+            return TRUE;
+        }
         return FALSE;
     }
-    return TRUE;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id object = [self objectAtIndexPath:indexPath];
-    if ([object isKindOfClass:[InternalExtensionGroup class]]) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(contactsTableViewController:didSelectContactGroup:)]) {
-            [self.delegate contactsTableViewController:self didSelectContactGroup:(InternalExtensionGroup *)object];
+    if ([object conformsToProtocol:@protocol(JCGroupDataSource)]) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(contactsTableViewController:didSelectGroup:)]) {
+            [self.delegate contactsTableViewController:self didSelectGroup:object];
         }
     }
 }

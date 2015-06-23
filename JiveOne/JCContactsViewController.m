@@ -11,8 +11,11 @@
 #import "JCPhoneManager.h"
 #import "InternalExtensionGroup.h"
 #import "JCUnknownNumber.h"
+#import "ContactGroup.h"
 
 #import "JCContactDetailViewController.h"
+#import "PBX.h"
+#import "User.h"
 
 NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"ContactGroupViewController";
 
@@ -45,7 +48,7 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
     
     if ([viewController isKindOfClass:[JCContactsTableViewController class]]) {
         _contactsTableViewController = (JCContactsTableViewController *)viewController;
-        _contactsTableViewController.contactGroup = self.contactGroup;
+        //_contactsTableViewController.contactGroup = self.contactGroup;
         _contactsTableViewController.delegate = self;
         _contactsTableViewController.filterType = JCContactFilterAll;
         self.searchBar.delegate = _contactsTableViewController;
@@ -94,12 +97,13 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
     if (_contactsTableViewController == JCContactFilterAll) {
         [self performSegueWithIdentifier:@"AddContact" sender:@"Edit"];
     } else {
-        
-        
-        
-        
-        
-        
+        User *user = self.authenticationManager.pbx.user;
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            // Simulate the creation of a group
+            ContactGroup *contactGroup = [ContactGroup MR_createEntityInContext:localContext];
+            contactGroup.name = @"Test Group";
+            contactGroup.user = ((User * )[localContext objectWithID:user.objectID]);
+        }];
     }
 }
 
@@ -116,7 +120,7 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 #pragma mark JCContactsTableViewControllerDelegate
 
 -(void)contactsTableViewController:(JCContactsTableViewController *)contactsViewController
-             didSelectContactGroup:(InternalExtensionGroup *)contactGroup
+             didSelectGroup:(id<JCGroupDataSource>)group
 {
     [self performSegueWithIdentifier:kJCContactsViewControllerContactGroupSegueIdentifier sender:self];
 }

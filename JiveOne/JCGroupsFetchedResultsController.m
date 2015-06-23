@@ -57,7 +57,7 @@
         
         // Contacts are tied to the user. We only want contacts that are tied to the current user.
         NSFetchRequest *request = [ContactGroup MR_requestAllInContext:self.managedObjectContext];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ANY contacts.user = [cd]%@", pbx.user];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@", pbx.user];
         if (searchText && searchText.length > 0) {
             NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[cd] %@)", searchText]; // OR ( contacts.phoneNumbers.number CONTAINS[cd] %@) OR ( contacts.name CONTAINS[cd] %@)", searchText, searchText, searchText];
             predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
@@ -69,6 +69,8 @@
                                                                                      managedObjectContext:self.managedObjectContext
                                                                                        sectionNameKeyPath:nil
                                                                                                 cacheName:nil];
+        
+        _contactGroupsFetchedResultsController.delegate = self;
         
         // Contacts are tied to the user. We only want contacts that are tied to the current user.
         request = [InternalExtensionGroup MR_requestAllInContext:self.managedObjectContext];
@@ -84,6 +86,8 @@
                                                                                            managedObjectContext:self.managedObjectContext
                                                                                              sectionNameKeyPath:nil
                                                                                                       cacheName:nil];
+        
+        _internalExtenstionsFetchedResultsController.delegate = self;
         
     }
     return self;

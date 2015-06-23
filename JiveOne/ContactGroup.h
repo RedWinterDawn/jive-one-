@@ -8,7 +8,7 @@
 
 #import "Group.h"
 
-@class Contact;
+@class Contact, User;
 
 @interface ContactGroup : Group
 
@@ -19,6 +19,7 @@
 
 // Relationships
 @property (nonatomic, retain) NSSet *contacts;
+@property (nonatomic, strong) User *user;
 
 @end
 

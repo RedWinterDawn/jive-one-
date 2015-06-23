@@ -9,12 +9,12 @@
 #import "User.h"
 #import "PBX.h"
 
-
 @implementation User
 
 @dynamic jiveUserId;
 
 @dynamic contacts;
 @dynamic pbxs;
+@dynamic contactGroups;
 
 @end

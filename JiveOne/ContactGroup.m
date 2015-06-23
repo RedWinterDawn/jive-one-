@@ -47,6 +47,7 @@ NSString *const kContactGroupMarkForDeletionAttribute = @"markForDeletion";
 }
 
 @dynamic contacts;
+@dynamic user;
 
 -(NSSet *)members
 {
