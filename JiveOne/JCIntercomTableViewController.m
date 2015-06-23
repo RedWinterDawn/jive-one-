@@ -28,6 +28,10 @@
         UISwitch *switchBtn = (UISwitch *)sender;
         JCAppSettings *settings = [JCAppSettings sharedSettings];
         settings.intercomEnabled = !settings.isIntercomEnabled;
+        if (settings.isIntercomEnabled == FALSE) {
+           settings.intercomMicrophoneMuteEnabled = TRUE;
+            self.intercomeMicrophoneMuteSwitch.on = settings.isIntercomMicrophoneMuteEnabled;
+        }
         [self enableIntercomMicrophoneMuteSwitch:settings.isIntercomEnabled];
         switchBtn.on = settings.isIntercomEnabled;
     }

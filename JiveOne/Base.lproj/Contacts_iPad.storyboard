@@ -10,10 +10,10 @@
         <scene sceneID="zpO-Ri-nui">
             <objects>
                 <navigationController id="us6-GT-6VE" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="p4B-8D-Nfe">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="p4B-8D-Nfe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.32549019610000002" green="0.25098039220000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="IwX-7Q-uAt" kind="relationship" relationship="rootViewController" id="dM2-eQ-Iks"/>
@@ -42,10 +42,10 @@
         <scene sceneID="c7u-HX-rzy">
             <objects>
                 <navigationController id="2Hc-En-5i1" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="e8X-0W-Z6w">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="e8X-0W-Z6w">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.32549019610000002" green="0.25098039220000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="nvw-8h-EWT" kind="relationship" relationship="rootViewController" id="bAc-39-VYX"/>
@@ -99,7 +99,7 @@
                     <navigationItem key="navigationItem" id="ymI-rm-Gg2">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="ZlM-6f-NMM">
-                            <rect key="frame" x="194" y="7" width="213" height="30"/>
+                            <rect key="frame" x="159" y="7" width="283" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Contacts"/>
@@ -617,9 +617,8 @@
         <image name="black-avatar" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="W2y-Ec-1nB"/>
         <segue reference="n6G-bZ-ptt"/>
-        <segue reference="X0P-T2-nhj"/>
+        <segue reference="Cvn-0O-gnV"/>
     </inferredMetricsTieBreakers>
-    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
 </document>

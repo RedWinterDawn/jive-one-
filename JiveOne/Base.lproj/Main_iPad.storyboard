@@ -48,7 +48,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fzd-VK-rQK" customClass="JCRoundedView">
                                                     <rect key="frame" x="10" y="10" width="40" height="40"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phone-white" highlightedImage="phone-green" translatesAutoresizingMaskIntoConstraints="NO" id="f0s-US-T3M">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="black-phone" translatesAutoresizingMaskIntoConstraints="NO" id="f0s-US-T3M">
                                                             <rect key="frame" x="8" y="8" width="25" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="f0s-US-T3M" secondAttribute="height" multiplier="1:1" id="5CJ-w5-Vt6"/>
@@ -61,7 +61,7 @@
                                                             </variation>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="0x7-jd-tDP">
                                                             <variation key="widthClass=compact" constant="40"/>
@@ -78,7 +78,7 @@
                                                             <integer key="value" value="1"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="value" white="0.66666666666666663" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
@@ -126,7 +126,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zuq-9Q-dn3" customClass="JCRoundedView">
                                                     <rect key="frame" x="10" y="10" width="40" height="40"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="msg-white" highlightedImage="msg-blu" translatesAutoresizingMaskIntoConstraints="NO" id="mbM-y9-ajJ">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="black-bubble" translatesAutoresizingMaskIntoConstraints="NO" id="mbM-y9-ajJ">
                                                             <rect key="frame" x="8" y="14" width="25" height="13"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="25" id="KIh-Dh-69S"/>
@@ -139,7 +139,7 @@
                                                             </variation>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.0" green="0.46666666670000001" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="QCY-09-75N">
                                                             <variation key="widthClass=compact" constant="40"/>
@@ -157,7 +157,7 @@
                                                             <integer key="value" value="1"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" red="0.0" green="0.46666666670000001" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="value" white="0.66666666666666663" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                     <variation key="default">
@@ -208,7 +208,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QhQ-1V-MVr" customClass="JCRoundedView">
                                                     <rect key="frame" x="10" y="10" width="40" height="40"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contacts-white" highlightedImage="contacts-purp" translatesAutoresizingMaskIntoConstraints="NO" id="WOM-fb-UJX">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="black-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="WOM-fb-UJX">
                                                             <rect key="frame" x="8" y="12" width="25" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="25" id="EeE-hN-1zH"/>
@@ -221,7 +221,7 @@
                                                             </variation>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.32549019610000002" green="0.25098039220000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="QhQ-1V-MVr" secondAttribute="height" multiplier="1:1" id="OaK-cr-Lox"/>
                                                         <constraint firstAttribute="width" constant="50" id="UGE-AO-peu">
@@ -239,7 +239,7 @@
                                                             <integer key="value" value="1"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" red="0.32549019610000002" green="0.25098039220000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="value" white="0.66666666666666663" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                     <variation key="default">
@@ -306,7 +306,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ayE-EJ-HxL" customClass="JCRoundedView">
                                                     <rect key="frame" x="10" y="10" width="40" height="40"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settings_white" highlightedImage="settings-yellow" translatesAutoresizingMaskIntoConstraints="NO" id="qfg-Iq-b01">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="black-gear" translatesAutoresizingMaskIntoConstraints="NO" id="qfg-Iq-b01">
                                                             <rect key="frame" x="8" y="7" width="25" height="26"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="qfg-Iq-b01" secondAttribute="height" multiplier="1:1" id="duZ-l2-pZ2"/>
@@ -319,7 +319,7 @@
                                                             </variation>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.96862745100000003" green="0.73725490199999999" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="ayE-EJ-HxL" secondAttribute="height" multiplier="1:1" id="1ea-BI-5Dv"/>
                                                         <constraint firstAttribute="centerY" secondItem="qfg-Iq-b01" secondAttribute="centerY" id="Nzn-UY-ZVa"/>
@@ -337,7 +337,7 @@
                                                             <integer key="value" value="1"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" red="0.96862745100000003" green="0.73725490199999999" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="value" white="0.66666666666666663" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                     <variation key="default">
@@ -399,10 +399,10 @@
             </objects>
             <point key="canvasLocation" x="481" y="940"/>
         </scene>
-        <!--My Jive-->
+        <!--I-->
         <scene sceneID="OjX-AQ-owA">
             <objects>
-                <viewController id="tyI-26-Tl6" customClass="JCAppMenuViewController" sceneMemberID="viewController">
+                <viewController title="I" id="tyI-26-Tl6" customClass="JCAppMenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="i05-8G-yLx"/>
                         <viewControllerLayoutGuide type="bottom" id="iQU-dB-uo4"/>
@@ -461,13 +461,11 @@
             <objects>
                 <navigationController id="0xH-aP-rUx" sceneMemberID="viewController">
                     <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="trn-on-nMu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="trn-on-nMu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </textAttributes>
+                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="tyI-26-Tl6" kind="relationship" relationship="rootViewController" id="cQZ-rd-Wir"/>
@@ -797,19 +795,16 @@
         </scene>
     </scenes>
     <resources>
-        <image name="contacts-purp" width="19" height="17"/>
-        <image name="contacts-white" width="19" height="17"/>
+        <image name="black-avatar" width="25" height="25"/>
+        <image name="black-bubble" width="25" height="23"/>
+        <image name="black-gear" width="25" height="26"/>
+        <image name="black-phone" width="25" height="25"/>
         <image name="msg-blu" width="15" height="12"/>
-        <image name="msg-white" width="16" height="13"/>
         <image name="nav-voicemail-black" width="33" height="16"/>
-        <image name="phone-green" width="15" height="15"/>
-        <image name="phone-white" width="15" height="15"/>
-        <image name="settings-yellow" width="25" height="26"/>
-        <image name="settings_white" width="25" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="kmu-gD-Rdf"/>
         <segue reference="A4u-Kc-AqH"/>
     </inferredMetricsTieBreakers>
-    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
 </document>
