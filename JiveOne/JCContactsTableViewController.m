@@ -142,8 +142,9 @@
             {
                 _fetchedResultsController = [[JCContactsFetchedResultsController alloc] initWithSearchText:_searchText
                                                                                            sortDescriptors:sortDescriptors
+                                                                                        sectionNameKeyPath:@"firstInitial"
                                                                                                        pbx:pbx
-                                                                                        sectionNameKeyPath:@"firstInitial"];
+                                                                                                     group:self.group];
                 break;
             }
         }

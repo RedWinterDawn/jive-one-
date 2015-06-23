@@ -107,7 +107,7 @@
             <objects>
                 <tableViewController id="p2g-D4-iQF" customClass="JCContactsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="jcM-J2-uwV">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="443"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -648,7 +648,7 @@
         <image name="local_contacts" width="24" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="VSk-i7-zoD"/>
         <segue reference="MkJ-Nz-ljR"/>
+        <segue reference="0Zw-9y-sBe"/>
     </inferredMetricsTieBreakers>
 </document>

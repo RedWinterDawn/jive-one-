@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger, JCContactFilter) {
 
 @property (weak, nonatomic) IBOutlet id<JCContactsTableViewControllerDelegate> delegate;
 @property (nonatomic) JCContactFilter filterType;
+@property (nonatomic, strong) id<JCGroupDataSource> group;
 
 -(IBAction)sync:(id)sender;
 

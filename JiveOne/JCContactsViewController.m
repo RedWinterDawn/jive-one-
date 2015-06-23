@@ -24,6 +24,9 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
     JCContactsTableViewController *_contactsTableViewController;
 }
 
+@property (nonatomic, weak) IBOutlet UITabBar *tabBar;
+@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
+
 @end
 
 @implementation JCContactsViewController
@@ -31,16 +34,23 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tabBar.selectedItem = [self.tabBar.items objectAtIndex:0];
     
-    InternalExtensionGroup *contactGroup = self.contactGroup;
-    if (contactGroup) {
-        self.title = contactGroup.name;
+    UITabBar *tabBar = self.tabBar;
+    if (tabBar) {
+        tabBar.selectedItem = [tabBar.items objectAtIndex:0];
+    }
+    
+    id<JCGroupDataSource> group = self.group;
+    if (group) {
+        self.title = group.name;
+        self.navigationItem.title = group.name;
     }
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    [super prepareForSegue:segue sender:sender];
+    
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[UINavigationController class]]) {
         viewController = ((UINavigationController *)viewController).topViewController;
@@ -48,18 +58,19 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
     
     if ([viewController isKindOfClass:[JCContactsTableViewController class]]) {
         _contactsTableViewController = (JCContactsTableViewController *)viewController;
-        //_contactsTableViewController.contactGroup = self.contactGroup;
         _contactsTableViewController.delegate = self;
+        _contactsTableViewController.group = self.group;
         _contactsTableViewController.filterType = JCContactFilterAll;
         self.searchBar.delegate = _contactsTableViewController;
+        
     }
 	else if ([viewController isKindOfClass:[JCContactsViewController class]])
     {
-        JCContactsViewController *contacts = (JCContactsViewController *)viewController;
+        JCContactsViewController *groupViewController = (JCContactsViewController *)viewController;
         NSIndexPath *indexPath = [_contactsTableViewController.tableView indexPathForSelectedRow];
         id object = [_contactsTableViewController objectAtIndexPath:indexPath];
-        if ([object isKindOfClass:[InternalExtensionGroup class]]) {
-            contacts.contactGroup = (InternalExtensionGroup *)object;
+        if ([object conformsToProtocol:@protocol(JCGroupDataSource)]) {
+            groupViewController.group = (id<JCGroupDataSource>)object;
         }
     }
     else if ([viewController isKindOfClass:[JCContactDetailViewController class]])

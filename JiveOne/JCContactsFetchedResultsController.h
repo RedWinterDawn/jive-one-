@@ -10,12 +10,16 @@
 //
 
 #import "JCAggregateFetchedResultsController.h"
+#import "JCGroupDataSource.h"
 
 @interface JCContactsFetchedResultsController : JCAggregateFetchedResultsController
 
 -(instancetype)initWithSearchText:(NSString *)searchText
                   sortDescriptors:(NSArray *)sortDescriptors
+               sectionNameKeyPath:(NSString *)sectionNameKeyPath
                               pbx:(PBX *)pbx
-               sectionNameKeyPath:(NSString *)sectionNameKeyPath;
+                            group:(id<JCGroupDataSource>)group;
+
+@property (nonatomic, readonly) id<JCGroupDataSource> group;
 
 @end

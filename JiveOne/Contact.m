@@ -57,6 +57,7 @@ NSString *const kContactMarkForUpdateAttribute = @"markForUpdate";
 @dynamic phoneNumbers;
 @dynamic info;
 @dynamic addresses;
+@dynamic contactGroups;
 
 // Overides
 

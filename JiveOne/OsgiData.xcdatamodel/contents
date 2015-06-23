@@ -191,7 +191,7 @@
         <element name="Extension" positionX="-549" positionY="-189" width="128" height="148"/>
         <element name="Group" positionX="-245" positionY="98" width="128" height="73"/>
         <element name="IncomingCall" positionX="700" positionY="-288" width="128" height="45"/>
-        <element name="InternalExtension" positionX="-324" positionY="-169" width="128" height="133"/>
+        <element name="InternalExtension" positionX="-335" positionY="-160" width="128" height="133"/>
         <element name="InternalExtensionGroup" positionX="-90" positionY="-36" width="128" height="58"/>
         <element name="Line" positionX="-333" positionY="-378" width="128" height="135"/>
         <element name="LineConfiguration" positionX="-45" positionY="-252" width="128" height="135"/>
