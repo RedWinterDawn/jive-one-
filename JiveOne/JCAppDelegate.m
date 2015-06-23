@@ -321,6 +321,13 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
         [[JCPhoneManager sharedManager] connectToLine:line];
     }
     
+    // Transition from unknown network to other wifi or cellular data
+    else if (currentNetworkType == JCPhoneManagerUnknownNetwork &&
+             (status == AFNetworkReachabilityStatusReachableViaWiFi || status == AFNetworkReachabilityStatusReachableViaWWAN)) {
+        NSLog(@"Transitioning from unknown network to wifi or wwan");
+        [[JCPhoneManager sharedManager] connectToLine:line];
+    }
+    
     // Handle socket to reconnect. Since we reuse the socket, we do not need to subscribe, but just
     // activate the socket to reopen it. We only want to try to connect if we do not have a device token.
     NSString *deviceToken = [JCAuthenticationManager sharedInstance].deviceToken;
