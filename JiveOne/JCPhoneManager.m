@@ -199,9 +199,11 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 -(void)registerWithLine:(Line *)line
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegisteringNotification object:self];
-    [UIApplication showStatus:NSLocalizedStringFromTable(@"Registering...", PHONE_STRINGS_NAME, nil)];
-    [self.sipManager registerToProvisioning:line];
+    BOOL registered = [self.sipManager registerToProvisioning:line];
+    if (registered) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegisteringNotification object:self];
+        [UIApplication showStatus:NSLocalizedStringFromTable(@"Registering...", PHONE_STRINGS_NAME, nil)];
+    }
 }
 
 -(void)disconnect
