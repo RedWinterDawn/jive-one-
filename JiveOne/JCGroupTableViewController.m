@@ -8,6 +8,8 @@
 
 #import "JCGroupTableViewController.h"
 
+#import "ContactGroup.h"
+
 @implementation JCGroupTableViewController
 
 -(void)setEditing:(BOOL)editing
@@ -28,23 +30,41 @@
 -(void)layoutForEditing:(BOOL)editing animated:(BOOL)animated
 {
     if (!editing) {
-        self.navigationItem.leftBarButtonItem = nil;
+        self.parentViewController.navigationItem.leftBarButtonItem = nil;
     } else {
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                                               target:self
                                                                               action:@selector(cancel)];
-        self.navigationItem.leftBarButtonItem = item;
+        self.parentViewController.navigationItem.leftBarButtonItem = item;
     }
 }
 
 -(void)cancel
 {
+    [self.managedObjectContext reset];
+    
     NSLog(@"Cancel");
+    
+    self.editing = FALSE;
 }
 
 -(void)save
 {
-    NSLog(@"Save");
+    id<JCGroupDataSource> group = self.group;
+    if (![group isKindOfClass:[ContactGroup class]]) {
+        return;
+    }
+    
+    ContactGroup *contactGroup = (ContactGroup *)group;
+    NSManagedObjectContext *context = contactGroup.managedObjectContext;
+    if (!context.hasChanges) {
+        if (contactGroup.groupId) {
+            return;
+        }
+        NSLog(@"Add Group");
+    } else {
+        NSLog(@"Update Group");
+    }
 }
 
 @end
