@@ -21,12 +21,10 @@
     NSFetchedResultsController *_contactGroupsFetchedResultsController;
     NSFetchedResultsController *_internalExtenstionsFetchedResultsController;
     
-    
     JCAddressBook *_addressBook;
 }
 
 @end
-
 
 @implementation JCGroupsFetchedResultsController
 
@@ -61,31 +59,31 @@
         NSFetchRequest *request = [ContactGroup MR_requestAllInContext:self.managedObjectContext];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ANY contacts.user = [cd]%@", pbx.user];
         if (searchText && searchText.length > 0) {
-            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"((name CONTAINS[cd] %@) OR ( contacts.phoneNumbers.number CONTAINS[cd] %@)) OR ( contacts.name CONTAINS[cd] %@))", searchText, searchText, searchText];
+            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[cd] %@)", searchText]; // OR ( contacts.phoneNumbers.number CONTAINS[cd] %@) OR ( contacts.name CONTAINS[cd] %@)", searchText, searchText, searchText];
             predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
         }
         request.predicate = predicate;
         request.sortDescriptors = self.fetchRequest.sortDescriptors;
         request.fetchBatchSize = self.fetchRequest.fetchBatchSize;
         _contactGroupsFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                                                managedObjectContext:self.managedObjectContext
-                                                                                  sectionNameKeyPath:nil
-                                                                                           cacheName:nil];
+                                                                                     managedObjectContext:self.managedObjectContext
+                                                                                       sectionNameKeyPath:nil
+                                                                                                cacheName:nil];
         
         // Contacts are tied to the user. We only want contacts that are tied to the current user.
         request = [InternalExtensionGroup MR_requestAllInContext:self.managedObjectContext];
         predicate = [NSPredicate predicateWithFormat:@"ANY internalExtensions.pbx = [cd]%@", pbx];
         if (searchText && searchText.length > 0) {
-            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"((name CONTAINS[cd] %@) OR ( internalExtensions.phoneNumbers.number CONTAINS[cd] %@)) OR ( internalExtensions.name CONTAINS[cd] %@))", searchText, searchText, searchText];
+            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[cd] %@)", searchText]; // OR ( internalExtensions.number CONTAINS[cd] %@) OR ( internalExtensions.name CONTAINS[cd] %@)", searchText, searchText, searchText];
             predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
         }
         request.predicate = predicate;
         request.sortDescriptors = self.fetchRequest.sortDescriptors;
         request.fetchBatchSize = self.fetchRequest.fetchBatchSize;
         _internalExtenstionsFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                                                     managedObjectContext:self.managedObjectContext
-                                                                                       sectionNameKeyPath:nil
-                                                                                                cacheName:nil];
+                                                                                           managedObjectContext:self.managedObjectContext
+                                                                                             sectionNameKeyPath:nil
+                                                                                                      cacheName:nil];
         
     }
     return self;

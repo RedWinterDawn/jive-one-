@@ -1818,6 +1818,8 @@
 				5DB7AF8C1B39AC9800451A0B /* JCAggregateFetchedResultsController.m */,
 				5D8FE4101B2263EB004FD594 /* JCContactsFetchedResultsController.h */,
 				5D8FE4111B2263EB004FD594 /* JCContactsFetchedResultsController.m */,
+				5DB7AF881B39103D00451A0B /* JCGroupsFetchedResultsController.h */,
+				5DB7AF891B39103D00451A0B /* JCGroupsFetchedResultsController.m */,
 				2747F1641A07E0F300E3FE73 /* JCContactsViewController.h */,
 				2747F1651A07E0F300E3FE73 /* JCContactsViewController.m */,
 				276E06781A0293BC00CD2827 /* JCContactsTableViewController.h */,
@@ -1828,8 +1830,6 @@
 				B7EE4A461B278620003F4278 /* JCTypeSelectorViewController.m */,
 				5DB7AF7D1B38B9B600451A0B /* JCGroupDetailViewController.h */,
 				5DB7AF7E1B38B9B600451A0B /* JCGroupDetailViewController.m */,
-				5DB7AF881B39103D00451A0B /* JCGroupsFetchedResultsController.h */,
-				5DB7AF891B39103D00451A0B /* JCGroupsFetchedResultsController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";

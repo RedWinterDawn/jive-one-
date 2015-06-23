@@ -21,6 +21,4 @@
 - (id <NSObject> )objectAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathForObject:(id<NSObject>)object;
 
-- (void)addObjectsToSections:(NSArray *)objects;
-
 @end

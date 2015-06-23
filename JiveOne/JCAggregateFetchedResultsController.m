@@ -33,7 +33,6 @@
 
 @end
 
-
 @implementation JCAggregateFetchedResultsController
 
 -(instancetype)initWithSearchText:(NSString *)searchText
