@@ -97,13 +97,14 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark - Registration -
 
--(void)registerToProvisioning:(id<JCSipManagerProvisioningDataSource>)provisioning
+-(BOOL)registerToProvisioning:(id<JCSipManagerProvisioningDataSource>)provisioning
 {
     __autoreleasing NSError *error;
     BOOL registered = [self registerToProvisioning:provisioning error:&error];
     if (!registered) {
         [_delegate sipHandler:self didFailToRegisterWithError:error];
     }
+    return registered;
 }
 
 -(void)unregister
@@ -117,6 +118,12 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [_mPortSIPSDK unInitialize];
     _registered = FALSE;
     [_delegate sipHandlerDidUnregister:self];
+}
+
+-(void)reRegister
+{
+    [self unregister];
+    [self registerToProvisioning:_provisioning];
 }
 
 #pragma mark Private
@@ -275,19 +282,24 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return FALSE;
     }
     
+    NSString *ouboundProxy = provisioning.outboundProxy;
+
+    
     int errorCode = [_mPortSIPSDK setUser:userName
                               displayName:provisioning.displayName
                                  authName:userName
                                  password:password
                                   localIP:@"0.0.0.0"                      // Auto select IP address
                              localSIPPort:(10000 + arc4random()%1000)     // Generate a random port in the 10,000 range
-                               userDomain:@""
-                                SIPServer:server
+                               userDomain:server
+                                SIPServer:ouboundProxy
                             SIPServerPort:OUTBOUND_SIP_SERVER_PORT
                                STUNServer:@""
                            STUNServerPort:0
-                           outboundServer:provisioning.outboundProxy
-                       outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
+                           outboundServer:@""
+                       outboundServerPort:0];
+    
+    
     
     if(errorCode) {
         if (error) {
@@ -1112,8 +1124,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             // Reregister is we have no active lines, and we were flagged to reregister.
             if (_reregisterAfterActiveCallEnds && !self.isActive) {
                 _reregisterAfterActiveCallEnds = false;
-                [self unregister];
-                [self registerToProvisioning:_provisioning];
+                [self reRegister];
             }
             
             break;
@@ -1432,6 +1443,11 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSString *event = [NSString stringWithFormat:@"onInviteFailure reason: %@ code: %i", reasonString, code];
     NSError *error = [JCSipManagerError errorWithCode:code reason:reasonString];
     [self setSessionState:JCCallFailed forSessionId:sessionId event:event error:error];
+    
+    if (code == 503)
+    {
+        [self reRegister];
+    }
 }
 
 /**
@@ -1509,6 +1525,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     // This event will be fired when the SDK sent a SIP message
 	// you can use signaling to access the SIP message.
+//    NSLog(@"%ld - %s", sessionId, message);
 }
 
 - (void)onWaitingVoiceMessage:(char*)messageAccount
