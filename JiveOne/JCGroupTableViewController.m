@@ -27,6 +27,8 @@
     [self layoutForEditing:editing animated:YES];
 }
 
+#pragma mark - Private -
+
 -(void)layoutForEditing:(BOOL)editing animated:(BOOL)animated
 {
     if (!editing) {
