@@ -22,6 +22,7 @@
 #import "JCPresenceManager.h"
 #import "JCVoicemailManager.h"
 #import "JCSMSMessageManager.h"
+#import "LineConfiguration+V4Client.h"
 
 #import "JCBadgeManager.h"
 #import "JCApplicationSwitcherDelegate.h"
@@ -316,6 +317,13 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     // Transition from no connection to having a connection.
     else if(currentNetworkType == JCPhoneManagerNoNetwork && status != AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"Transitioning from no network connectivity to connected.");
+        [[JCPhoneManager sharedManager] connectToLine:line];
+    }
+    
+    // Transition from unknown network to other wifi or cellular data
+    else if (currentNetworkType == JCPhoneManagerUnknownNetwork &&
+             (status == AFNetworkReachabilityStatusReachableViaWiFi || status == AFNetworkReachabilityStatusReachableViaWWAN)) {
+        NSLog(@"Transitioning from unknown network to wifi or wwan");
         [[JCPhoneManager sharedManager] connectToLine:line];
     }
     

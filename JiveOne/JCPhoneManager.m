@@ -178,12 +178,6 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
             return;
         }
     }
-    
-    // If we have a line configuration for the line, try to register it.
-    if (line.lineConfiguration){
-        [self registerWithLine:line];
-        return;
-    }
    
     // If we made it here, we do not have a line configuration, we need to request it. If the
     // request was successfull, we try to register.
@@ -192,6 +186,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         if (success) {
             [self registerWithLine:line];
         } else {
+            // If we have a line configuration for the line, try to register it.
+            if (line.lineConfiguration){
+                [self registerWithLine:line];
+                return;
+            }
+            
             [self reportError:[JCPhoneManagerError errorWithCode:JC_PHONE_LINE_CONFIGURATION_REQUEST_ERROR underlyingError:error]];
         }
     }];
@@ -199,9 +199,11 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 -(void)registerWithLine:(Line *)line
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegisteringNotification object:self];
-    [UIApplication showStatus:NSLocalizedStringFromTable(@"Registering...", PHONE_STRINGS_NAME, nil)];
-    [self.sipManager registerToProvisioning:line];
+    BOOL registered = [self.sipManager registerToProvisioning:line];
+    if (registered) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegisteringNotification object:self];
+        [UIApplication showStatus:NSLocalizedStringFromTable(@"Registering...", PHONE_STRINGS_NAME, nil)];
+    }
 }
 
 -(void)disconnect
