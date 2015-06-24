@@ -9,15 +9,28 @@
 #import "Extension.h"
 #import "Line.h"
 #import "PBX.h"
+#import "NSManagedObject+Additions.h"
+
+static NSString *kExtensionHiddenAttribute = @"hidden";
 
 @implementation Extension
 
 @dynamic jrn;
 @dynamic pbxId;
 
--(NSString *)detailText
+-(void)setHidden:(BOOL)hidden
 {
-    return [NSString stringWithFormat:@"ext: %@", super.detailText];
+    [self setPrimitiveValueFromBoolValue:hidden forKey:kExtensionHiddenAttribute];
+}
+
+-(BOOL)hidden
+{
+    return [self boolValueFromPrimitiveValueForKey:kExtensionHiddenAttribute];
+}
+
+-(NSString *)type
+{
+    return @"ext";
 }
 
 @end

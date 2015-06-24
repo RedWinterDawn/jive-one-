@@ -57,6 +57,253 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
     }
 }
 
++(void)getWithPath:(NSString *)path
+        parameters:(NSDictionary *)parameters
+ requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+           retries:(NSUInteger)retries
+        completion:(JCApiClientCompletionHandler)completion
+{
+    [self getWithPath:path
+           parameters:parameters
+    requestSerializer:requestSerializer
+              retries:retries
+              success:^(id responseObject) {
+                  if (completion) {
+                      completion(YES, responseObject, nil);
+                  };
+              }
+              failure:^(NSError *error) {
+                  if (completion) {
+                      completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+                  }
+              }];
+}
+
++(void)putWithPath:(NSString *)path
+        parameters:(NSDictionary *)parameters
+ requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+           retries:(NSUInteger)retries
+        completion:(JCApiClientCompletionHandler)completion
+{
+    [self putWithPath:path
+           parameters:parameters
+    requestSerializer:requestSerializer
+              retries:retries
+              success:^(id responseObject) {
+                  if (completion) {
+                      completion(YES, responseObject, nil);
+                  };
+              }
+              failure:^(id responseObject, NSError *error) {
+                  if (completion) {
+                      completion(NO, responseObject, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+                  }
+              }];
+}
+
++(void)postWithPath:(NSString *)path
+         parameters:(NSDictionary *)parameters
+  requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+            retries:(NSUInteger)retries
+         completion:(JCApiClientCompletionHandler)completion
+{
+    [self postWithPath:path
+            parameters:parameters
+     requestSerializer:requestSerializer
+               retries:retries
+               success:^(id responseObject) {
+                   if (completion) {
+                       completion(YES, responseObject, nil);
+                   };
+               }
+               failure:^(id responseObject, NSError *error) {
+                   if (completion) {
+                       completion(NO, responseObject, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+                   }
+               }];
+}
+
++(void)deleteWithPath:(NSString *)path
+           parameters:(NSDictionary *)parameters
+    requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+              retries:(NSUInteger)retries
+           completion:(JCApiClientCompletionHandler)completion
+{
+    [self deleteWithPath:path
+              parameters:parameters
+       requestSerializer:requestSerializer
+                 retries:retries
+                 success:^(id responseObject) {
+                     if (completion) {
+                         completion(YES, responseObject, nil);
+                     };
+                 }
+                 failure:^(NSError *error) {
+                     if (completion) {
+                         completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+                     }
+                 }];
+}
+
+
+#pragma mark - Private -
+
++(void)getWithPath:(NSString *)path
+        parameters:(NSDictionary *)parameters
+ requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+           retries:(NSUInteger)retryCount
+           success:(void (^)(id responseObject))success
+           failure:(void (^)(NSError *error))failure
+{
+    if (retryCount <= 0) {
+        if (failure) {
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_TIMEOUT_ERROR reason:@"Request Timeout"];
+            failure(error);
+        }
+    } else {
+        JCApiClient *client = [self new];
+        if (requestSerializer) {
+            client.manager.requestSerializer = requestSerializer;
+        }
+        
+        [client.manager GET:path
+                 parameters:parameters
+                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        success(responseObject);
+                    }
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        if (error.code == NSURLErrorTimedOut) {
+                            NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
+                            [self getWithPath:path
+                                   parameters:parameters
+                            requestSerializer:requestSerializer
+                                      retries:(retryCount - 1)
+                                      success:success
+                                      failure:failure];
+                        } else{
+                            failure(error);
+                        }
+                    }];
+    }
+}
+
++(void)putWithPath:(NSString *)path
+        parameters:(NSDictionary *)parameters
+ requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+           retries:(NSUInteger)retryCount
+           success:(void (^)(id responseObject))success
+           failure:(void (^)(id responseObject, NSError *error))failure
+{
+    if (retryCount <= 0) {
+        if (failure) {
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_TIMEOUT_ERROR reason:@"Request Timeout"];
+            failure(nil, error);
+        }
+    } else {
+        JCApiClient *client = [self new];
+        if (requestSerializer) {
+            client.manager.requestSerializer = requestSerializer;
+        }
+        
+        [client.manager PUT:path
+                 parameters:parameters
+                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        success(responseObject);
+                    }
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        if (error.code == NSURLErrorTimedOut) {
+                            NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
+                            [self putWithPath:path
+                                   parameters:parameters
+                            requestSerializer:requestSerializer
+                                      retries:(retryCount - 1)
+                                      success:success
+                                      failure:failure];
+                        } else {
+                            failure(operation.responseObject, error);
+                        }
+                    }];
+    }
+}
+
++(void)postWithPath:(NSString *)path
+         parameters:(NSDictionary *)parameters
+  requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+            retries:(NSUInteger)retryCount
+            success:(void (^)(id responseObject))success
+            failure:(void (^)(id responseObject, NSError *error))failure
+{
+    if (retryCount <= 0) {
+        if (failure) {
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_TIMEOUT_ERROR reason:@"Request Timeout"];
+            failure(nil, error);
+        }
+    } else {
+        JCApiClient *client = [self new];
+        if (requestSerializer) {
+            client.manager.requestSerializer = requestSerializer;
+        }
+        
+        [client.manager POST:path
+                  parameters:parameters
+                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                         success(responseObject);
+                     }
+                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                         if (error.code == NSURLErrorTimedOut) {
+                             NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
+                             [self postWithPath:path
+                                     parameters:parameters
+                              requestSerializer:requestSerializer
+                                        retries:(retryCount - 1)
+                                        success:success
+                                        failure:failure];
+                         } else{
+                             failure(operation.responseObject, error);
+                         }
+                     }];
+    }
+}
+
++(void)deleteWithPath:(NSString *)path
+           parameters:(NSDictionary *)parameters
+    requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+              retries:(NSUInteger)retryCount
+              success:(void (^)(id responseObject))success
+              failure:(void (^)(NSError *error))failure
+{
+    if (retryCount <= 0) {
+        if (failure) {
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_TIMEOUT_ERROR reason:@"Request Timeout"];
+            failure(error);
+        }
+    } else {
+        JCApiClient *client = [self new];
+        if (requestSerializer) {
+            client.manager.requestSerializer = requestSerializer;
+        }
+        
+        [client.manager DELETE:path
+                    parameters:parameters
+                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                           success(responseObject);
+                       }
+                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                           if (error.code == NSURLErrorTimedOut) {
+                               NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
+                               [self deleteWithPath:path
+                                         parameters:parameters
+                                  requestSerializer:requestSerializer
+                                            retries:(retryCount - 1)
+                                            success:success
+                                            failure:failure];
+                           } else{
+                               failure(error);
+                           }
+                       }];
+    }
+}
+
 @end
 
 
@@ -253,6 +500,21 @@ static BOOL JCErrorOrUnderlyingErrorHasCode(NSError *error, NSInteger code) {
 //            return @"Unknown Error Has Occured.";
     }
     return nil;
+}
+
+-(NSInteger)underlyingStatusCode
+{
+    return [[self class] underlyingErrorCodeForError:self];
+}
+
++(NSInteger)underlyingErrorCodeForError:(NSError *)error
+{
+    error = [self underlyingErrorForError:error];
+    if ([error.domain isEqualToString:AFURLResponseSerializationErrorDomain]) {
+        NSHTTPURLResponse *urlResponse = [error.userInfo valueForKey:AFNetworkingOperationFailingURLResponseErrorKey];
+        return urlResponse.statusCode;
+    }
+    return error.code;
 }
 
 @end

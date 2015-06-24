@@ -10,7 +10,7 @@
 #import "JCPhoneBook.h"
 #import "Message.h"
 #import "SMSMessage.h"
-#import "LocalContact.h"
+#import "PhoneNumber.h"
 #import "PBX.h"
 
 #import "SMSMessage+V5Client.h"
@@ -273,7 +273,7 @@
     id<JCConversationGroupObject> conversationGroup;
     if ([message isKindOfClass:[SMSMessage class]] && ((SMSMessage *)message).did.pbx == pbx) {
         SMSMessage *smsMessage = (SMSMessage *)message;
-        id<JCPhoneNumberDataSource> phoneNumber = [JCPhoneNumber phoneNumberWithName:smsMessage.localContact.name number:conversationGroupId];
+        id<JCPhoneNumberDataSource> phoneNumber = [JCPhoneNumber phoneNumberWithName:smsMessage.phoneNumber.name number:conversationGroupId];
         phoneNumber = [_phoneBook localPhoneNumberForPhoneNumber:phoneNumber context:message.managedObjectContext];
         conversationGroup = [[JCSMSConversationGroup alloc] initWithMessage:(SMSMessage *)message phoneNumber:phoneNumber];
     }

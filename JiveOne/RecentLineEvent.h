@@ -12,7 +12,7 @@
 
 #import "JCPhoneNumberDataSource.h"
 
-@class Contact, Line, LocalContact;
+@class InternalExtension, Line, PhoneNumber;
 
 @interface RecentLineEvent : RecentEvent <JCPhoneNumberDataSource>
 
@@ -23,17 +23,17 @@
 @property (nonatomic, readwrite, strong) NSString *number;
 
 // Relationships
-@property (nonatomic, strong) Contact *contact;
+@property (nonatomic, strong) InternalExtension *internalExtension;
 @property (nonatomic, strong) Line *line;
-@property (nonatomic, strong) NSSet *localContacts;
+@property (nonatomic, strong) NSSet *phoneNumbers;
 
 @end
 
 @interface RecentLineEvent (CoreDataGeneratedAccessors)
 
-- (void)addLocalContactsObject:(LocalContact *)value;
-- (void)removeLocalContactsObject:(LocalContact *)value;
-- (void)addLocalContacts:(NSSet *)values;
-- (void)removeLocalContacts:(NSSet *)values;
+- (void)addPhoneNumbersObject:(PhoneNumber *)value;
+- (void)removePhoneNumbersObject:(PhoneNumber *)value;
+- (void)addPhoneNumbers:(NSSet *)values;
+- (void)removePhoneNumbers:(NSSet *)values;
 
 @end

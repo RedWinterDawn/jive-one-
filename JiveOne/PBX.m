@@ -33,8 +33,7 @@ NSString *const kPBXV5AttributeKey = @"v5";
 #pragma mark - Relationships -
 
 @dynamic user;
-@dynamic lines;
-@dynamic contacts;
+@dynamic extensions;
 @dynamic dids;
 
 #pragma mark - Transient -

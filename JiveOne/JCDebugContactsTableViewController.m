@@ -7,8 +7,8 @@
 //
 
 #import "JCDebugContactsTableViewController.h"
-#import "Contact.h"
-#import "ContactGroup.h"
+#import "InternalExtension.h"
+#import "InternalExtensionGroup.h"
 
 @implementation JCDebugContactsTableViewController
 
@@ -19,10 +19,10 @@
         NSFetchRequest *fetchRequest = nil;
         if (self.contactGroup) {
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"groups contains %@", self.contactGroup];
-            fetchRequest = [Contact MR_requestAllSortedBy:@"name" ascending:YES withPredicate:predicate inContext:self.managedObjectContext];
+            fetchRequest = [InternalExtension MR_requestAllSortedBy:@"name" ascending:YES withPredicate:predicate inContext:self.managedObjectContext];
         }
         else {
-            fetchRequest = [Contact MR_requestAllSortedBy:@"name" ascending:YES];
+            fetchRequest = [InternalExtension MR_requestAllSortedBy:@"name" ascending:YES];
         }
         super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                              managedObjectContext:self.managedObjectContext
@@ -41,7 +41,7 @@
     //    }
 }
 
--(void)configureCell:(UITableViewCell *)cell withObject:(Contact *)contact
+-(void)configureCell:(UITableViewCell *)cell withObject:(InternalExtension *)contact
 {
     cell.textLabel.text         = contact.titleText;
     cell.detailTextLabel.text   = contact.detailText;

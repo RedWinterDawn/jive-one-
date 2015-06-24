@@ -2,34 +2,72 @@
 //  Contact.m
 //  JiveOne
 //
-//  Created by Robert Barclay on 12/10/14.
-//  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
+//  Created by Robert Barclay on 6/5/15.
+//  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
 #import "Contact.h"
+#import "PhoneNumber.h"
+#import "JCPhoneNumberDataSourceUtils.h"
 #import "NSManagedObject+Additions.h"
 
-NSString *kContacktFavoriteAttribute = @"favorite";
+NSString *const kContactMarkForDeletionAttribute = @"markForDeletion";
+NSString *const kContactMarkForUpdateAttribute = @"markForUpdate";
 
 @implementation Contact
 
-@dynamic jiveUserId;
+// Attributes
 
--(void)setFavorite:(BOOL)favorite
+@dynamic contactId;
+@dynamic etag;
+
+-(void)setMarkForDeletion:(BOOL)markForDeletion
 {
-    [self setPrimitiveValueFromBoolValue:favorite forKey:kContacktFavoriteAttribute];
+    [self setPrimitiveValueFromBoolValue:markForDeletion forKey:kContactMarkForDeletionAttribute];
 }
 
--(BOOL)isFavorite
+-(BOOL)isMarkedForDeletion
 {
-    return [self boolValueFromPrimitiveValueForKey:kContacktFavoriteAttribute];
+    return [self boolValueFromPrimitiveValueForKey:kContactMarkForDeletionAttribute];
 }
 
-#pragma mark - Relationships
+-(void)setMarkForUpdate:(BOOL)markForUpdate
+{
+    [self setPrimitiveValueFromBoolValue:markForUpdate forKey:kContactMarkForUpdateAttribute];
+}
 
-@dynamic lineEvents;
-@dynamic conversations;
-@dynamic pbx;
-@dynamic groups;
+-(BOOL)isMarkedForUpdate
+{
+    return [self boolValueFromPrimitiveValueForKey:kContactMarkForUpdateAttribute];
+}
+
+-(void)setEtag:(NSInteger)etag
+{
+    [self setPrimitiveValueFromIntegerValue:etag forKey:NSStringFromSelector(@selector(etag))];
+}
+
+-(NSInteger)etag
+{
+    return [self integerValueFromPrimitiveValueForKey:NSStringFromSelector(@selector(etag))];
+}
+
+// Relationships
+
+@dynamic user;
+@dynamic phoneNumbers;
+@dynamic info;
+@dynamic addresses;
+
+// Overides
+
+-(NSString *)number
+{
+    NSSet *phoneNumbers = self.phoneNumbers;
+    if (phoneNumbers && phoneNumbers.count > 0) {
+        PhoneNumber *phoneNumber = phoneNumbers.allObjects.firstObject;
+        return phoneNumber.number;
+    }
+    return nil;
+}
 
 @end

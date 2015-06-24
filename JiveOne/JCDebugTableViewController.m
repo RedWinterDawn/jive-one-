@@ -16,8 +16,8 @@
 #import "MissedCall.h"
 #import "Voicemail.h"
 #import "PBX.h"
-#import "Contact.h"
-#import "ContactGroup.h"
+#import "InternalExtension.h"
+#import "InternalExtensionGroup.h"
 
 @interface JCDebugTableViewController ()
 
@@ -46,8 +46,8 @@
     self.missed.text                = [NSString stringWithFormat:@"%lu", (unsigned long)[MissedCall MR_countOfEntities]];
     self.voicemails.text            = [NSString stringWithFormat:@"%lu", (unsigned long)[Voicemail MR_countOfEntities]];
     
-    self.contacts.text              = [NSString stringWithFormat:@"%lu", (unsigned long)[Contact MR_countOfEntities]];
-    self.contactGroups.text         = [NSString stringWithFormat:@"%lu", (unsigned long)[ContactGroup MR_countOfEntities]];
+    self.contacts.text              = [NSString stringWithFormat:@"%lu", (unsigned long)[InternalExtension MR_countOfEntities]];
+    self.contactGroups.text         = [NSString stringWithFormat:@"%lu", (unsigned long)[InternalExtensionGroup MR_countOfEntities]];
 }
 
 @end

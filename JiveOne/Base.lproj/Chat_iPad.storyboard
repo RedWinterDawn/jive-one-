@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="kqz-q2-BEs">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -128,10 +127,10 @@
         <scene sceneID="W9q-p1-gA2">
             <objects>
                 <navigationController id="qME-YT-ZZ2" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="F7v-mT-E9R">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="F7v-mT-E9R">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.0" green="0.46666666670000001" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="sQD-gH-LnF" kind="relationship" relationship="rootViewController" id="kfj-MB-1wu"/>
@@ -145,10 +144,10 @@
         <scene sceneID="IGJ-6Y-Yes">
             <objects>
                 <navigationController id="zOB-gc-we6" customClass="JCNavigationController" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="udr-mE-gIQ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="udr-mE-gIQ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.0" green="0.46666666670000001" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="pWz-tY-54G" kind="relationship" relationship="rootViewController" id="xMT-Fn-SCd"/>
@@ -416,5 +415,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="2E9-x3-8Sc"/>
     </inferredMetricsTieBreakers>
-    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
 </document>

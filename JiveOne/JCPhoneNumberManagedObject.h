@@ -11,8 +11,11 @@
 
 @interface JCPhoneNumberManagedObject : NSManagedObject <JCPhoneNumberDataSource>
 
+@property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *number;
 @property (nonatomic, strong) NSString *t9;
+
+@property (nonatomic, readonly) NSString *firstInitial;
 
 @end

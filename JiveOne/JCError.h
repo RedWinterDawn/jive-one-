@@ -10,6 +10,9 @@
 
 @interface JCError : NSError
 
+@property (nonatomic, readonly) NSError *rootError;
+@property (nonatomic, readonly) NSError *underlyingError;
+
 +(instancetype)errorWithCode:(NSInteger)code;
 +(instancetype)errorWithCode:(NSInteger)code underlyingError:(NSError *)error;
 
@@ -23,5 +26,7 @@
 
 +(NSString *)failureReasonFromCode:(NSInteger)integer;
 +(NSString *)descriptionFromCode:(NSInteger)integer;
+
++(NSError *)underlyingErrorForError:(NSError *)error;
 
 @end

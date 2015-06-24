@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="f4Z-kz-Svg">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -201,10 +200,10 @@
         <scene sceneID="sTM-xW-0Ib">
             <objects>
                 <navigationController id="dgo-s9-VKp" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="tGy-OV-uPf">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="tGy-OV-uPf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="ldO-q9-N3Q" kind="relationship" relationship="rootViewController" id="xmg-D0-azu"/>
@@ -218,10 +217,10 @@
         <scene sceneID="P5t-vr-TOR">
             <objects>
                 <navigationController id="WhA-Bu-xlD" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="d0d-OA-7d5">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="d0d-OA-7d5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="A5J-Bt-Bbh" kind="relationship" relationship="rootViewController" id="BML-8n-nNh"/>
@@ -235,10 +234,10 @@
         <scene sceneID="fUW-GX-Kka">
             <objects>
                 <navigationController id="b55-mY-pcl" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="AKk-qM-oFd">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AKk-qM-oFd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="vNw-XP-xAw" kind="relationship" relationship="rootViewController" id="4B1-RQ-Bzl"/>
@@ -388,8 +387,8 @@
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e6A-Sf-BTx" userLabel="Keypad">
                                 <rect key="frame" x="135" y="105" width="330" height="333"/>
                                 <subviews>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e9c-yb-zbj" customClass="JCRoundedButton">
-                                        <rect key="frame" x="0.0" y="0.0" width="83" height="83"/>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e9c-yb-zbj" customClass="JCRoundedButton">
+                                        <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="e9c-yb-zbj" secondAttribute="height" multiplier="1:1" id="YQN-5H-Ww7"/>
                                         </constraints>
@@ -407,7 +406,7 @@
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                 <integer key="value" value="1"/>
@@ -417,8 +416,8 @@
                                             <action selector="numPadPressed:" destination="A5J-Bt-Bbh" eventType="touchUpInside" id="Owj-8z-KFM"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ghy-YJ-dTQ" customClass="JCRoundedButton">
-                                        <rect key="frame" x="123" y="0.0" width="84" height="83"/>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ghy-YJ-dTQ" customClass="JCRoundedButton">
+                                        <rect key="frame" x="110" y="0.0" width="110" height="110"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ghy-YJ-dTQ" secondAttribute="height" multiplier="1:1" id="IOK-KN-O8V"/>
                                         </constraints>
@@ -436,7 +435,7 @@
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                 <integer key="value" value="1"/>
@@ -452,8 +451,8 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rdH-hs-D3l" customClass="JCRoundedButton">
-                                        <rect key="frame" x="247" y="0.0" width="83" height="83"/>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rdH-hs-D3l" customClass="JCRoundedButton">
+                                        <rect key="frame" x="220" y="0.0" width="110" height="110"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="rdH-hs-D3l" secondAttribute="height" multiplier="1:1" id="sQS-TL-y9i"/>
                                         </constraints>
@@ -471,7 +470,7 @@
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                 <integer key="value" value="1"/>
@@ -482,7 +481,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="7" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CjU-Gt-tdN" customClass="JCRoundedButton">
-                                        <rect key="frame" x="0.0" y="167" width="83" height="83"/>
+                                        <rect key="frame" x="0.0" y="185" width="110" height="110"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="CjU-Gt-tdN" secondAttribute="height" multiplier="1:1" id="6sz-8r-jzb"/>
                                         </constraints>
@@ -500,7 +499,7 @@
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                 <integer key="value" value="1"/>
@@ -529,7 +528,7 @@
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                 <integer key="value" value="1"/>
@@ -537,37 +536,6 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="numPadPressed:" destination="A5J-Bt-Bbh" eventType="touchUpInside" id="DvB-PO-t1G"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="8" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a2k-xz-GuG" customClass="JCRoundedButton">
-                                        <rect key="frame" x="123" y="167" width="84" height="83"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="a2k-xz-GuG" secondAttribute="height" multiplier="1:1" id="7pN-lC-ipV">
-                                                <variation key="widthClass=compact" constant="0.0"/>
-                                            </constraint>
-                                        </constraints>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="8">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <integer key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="numPadPressed:" destination="A5J-Bt-Bbh" eventType="touchUpInside" id="Ee7-0G-M7d"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B0i-pw-ezd" customClass="JCRoundedButton">
@@ -599,7 +567,7 @@
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                 <integer key="value" value="1"/>
@@ -609,8 +577,8 @@
                                             <action selector="numPadPressed:" destination="A5J-Bt-Bbh" eventType="touchUpInside" id="WA2-bi-4Oe"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="5" contentMode="scaleToFill" verticalCompressionResistancePriority="250" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wO5-h5-dsx" customClass="JCRoundedButton">
-                                        <rect key="frame" x="123" y="83" width="84" height="84"/>
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" verticalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wO5-h5-dsx" customClass="JCRoundedButton">
+                                        <rect key="frame" x="110" y="110" width="110" height="110"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="56" id="mpN-uC-PPJ">
                                                 <variation key="widthClass=compact" constant="50"/>
@@ -631,7 +599,7 @@
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                 <integer key="value" value="1"/>
@@ -651,8 +619,8 @@
                                             <action selector="numPadPressed:" destination="A5J-Bt-Bbh" eventType="touchUpInside" id="SKQ-Jr-iXY"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="6" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lQ4-Cl-zet" customClass="JCRoundedButton">
-                                        <rect key="frame" x="247" y="83" width="83" height="84"/>
+                                    <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lQ4-Cl-zet" customClass="JCRoundedButton">
+                                        <rect key="frame" x="220" y="110" width="110" height="110"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="lQ4-Cl-zet" secondAttribute="height" multiplier="1:1" id="s3k-6M-NSb">
                                                 <variation key="widthClass=compact" constant="0.0"/>
@@ -680,7 +648,7 @@
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                 <integer key="value" value="1"/>
@@ -690,8 +658,8 @@
                                             <action selector="numPadPressed:" destination="A5J-Bt-Bbh" eventType="touchUpInside" id="U8P-Xm-0dP"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zfG-JS-oep" customClass="JCRoundedButton">
-                                        <rect key="frame" x="123" y="250" width="84" height="83"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zfG-JS-oep" customClass="JCRoundedButton">
+                                        <rect key="frame" x="110" y="330" width="110" height="110"/>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="zfG-JS-oep" secondAttribute="height" multiplier="1:1" id="Deo-2C-jI1">
@@ -712,7 +680,7 @@
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                 <integer key="value" value="1"/>
@@ -723,8 +691,8 @@
                                             <outletCollection property="gestureRecognizers" destination="reL-ov-41e" appends="YES" id="eiH-fl-7Mc"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="11" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sr4-gJ-jJZ" customClass="JCRoundedButton">
-                                        <rect key="frame" x="247" y="250" width="83" height="83"/>
+                                    <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sr4-gJ-jJZ" customClass="JCRoundedButton">
+                                        <rect key="frame" x="220" y="330" width="110" height="110"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Sr4-gJ-jJZ" secondAttribute="height" multiplier="1:1" id="Uia-eF-bgL"/>
                                         </constraints>
@@ -742,7 +710,7 @@
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                 <integer key="value" value="1"/>
@@ -792,7 +760,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" tag="10" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="US1-NH-Fjd" customClass="JCRoundedButton">
-                                        <rect key="frame" x="0.0" y="250" width="83" height="83"/>
+                                        <rect key="frame" x="0.0" y="225" width="110" height="110"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="US1-NH-Fjd" secondAttribute="height" multiplier="1:1" id="eOT-vZ-yZN"/>
                                         </constraints>
@@ -810,7 +778,7 @@
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                 <integer key="value" value="1"/>
@@ -821,6 +789,37 @@
                                         </variation>
                                         <connections>
                                             <action selector="numPadPressed:" destination="A5J-Bt-Bbh" eventType="touchUpInside" id="V2U-Yb-sI6"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="8" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a2k-xz-GuG" customClass="JCRoundedButton">
+                                        <rect key="frame" x="123" y="167" width="84" height="83"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="a2k-xz-GuG" secondAttribute="height" multiplier="1:1" id="7pN-lC-ipV">
+                                                <variation key="widthClass=compact" constant="0.0"/>
+                                            </constraint>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="8">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <integer key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="numPadPressed:" destination="A5J-Bt-Bbh" eventType="touchUpInside" id="Ee7-0G-M7d"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -903,9 +902,11 @@
                                     <constraint firstItem="SgS-W2-AKQ" firstAttribute="bottom" secondItem="wO5-h5-dsx" secondAttribute="bottom" constant="-45" id="cIc-hw-X84">
                                         <variation key="heightClass=regular" constant="-5"/>
                                     </constraint>
+                                    <constraint firstItem="wO5-h5-dsx" firstAttribute="width" secondItem="a2k-xz-GuG" secondAttribute="width" id="dAp-LS-ZOo"/>
                                     <constraint firstItem="zzd-cv-BlF" firstAttribute="bottom" secondItem="B0i-pw-ezd" secondAttribute="bottom" constant="-38" id="dE7-wM-T9Y">
                                         <variation key="heightClass=regular" constant="-5"/>
                                     </constraint>
+                                    <constraint firstItem="wO5-h5-dsx" firstAttribute="width" secondItem="zfG-JS-oep" secondAttribute="width" id="fO5-RM-ifH"/>
                                     <constraint firstItem="Sr4-gJ-jJZ" firstAttribute="width" secondItem="wO5-h5-dsx" secondAttribute="width" id="fwo-De-QAY">
                                         <variation key="widthClass=compact" constant="0.0"/>
                                         <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
@@ -949,6 +950,7 @@
                                     <constraint firstItem="Six-TQ-o0K" firstAttribute="centerX" secondItem="ghy-YJ-dTQ" secondAttribute="centerX" constant="-3" id="ue0-ZU-Bf6">
                                         <variation key="heightClass=regular" constant="0.0"/>
                                     </constraint>
+                                    <constraint firstItem="ghy-YJ-dTQ" firstAttribute="width" secondItem="wO5-h5-dsx" secondAttribute="width" id="wXg-am-7k3"/>
                                     <constraint firstAttribute="trailing" secondItem="lQ4-Cl-zet" secondAttribute="trailing" id="wZi-jc-xSf">
                                         <variation key="widthClass=compact" constant="10"/>
                                         <variation key="heightClass=regular-widthClass=compact" constant="10"/>
@@ -999,6 +1001,7 @@
                                         <exclude reference="Rtc-ap-tXt"/>
                                         <exclude reference="z9j-K6-Nj7"/>
                                         <exclude reference="L0g-EQ-g2L"/>
+                                        <exclude reference="FoB-xY-cWj"/>
                                         <exclude reference="3UC-4B-9vf"/>
                                         <exclude reference="Ds3-D7-73U"/>
                                         <exclude reference="MWi-81-zxA"/>
@@ -1006,7 +1009,6 @@
                                         <exclude reference="Xdd-Ys-naz"/>
                                         <exclude reference="idL-XN-XYo"/>
                                         <exclude reference="zAi-ed-TGB"/>
-                                        <exclude reference="FoB-xY-cWj"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular">
@@ -1037,9 +1039,9 @@
                                         <include reference="Khl-p8-q3q"/>
                                         <include reference="Rtc-ap-tXt"/>
                                         <include reference="L0g-EQ-g2L"/>
+                                        <include reference="FoB-xY-cWj"/>
                                         <include reference="Ds3-D7-73U"/>
                                         <include reference="idL-XN-XYo"/>
-                                        <include reference="FoB-xY-cWj"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact">
@@ -1209,10 +1211,10 @@
         <scene sceneID="vR4-Mr-zh6">
             <objects>
                 <navigationController id="P8B-bZ-9QR" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="k82-WE-ECU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="k82-WE-ECU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.64705882349999999" green="0.80784313730000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="KNn-63-C2z" kind="relationship" relationship="rootViewController" id="2ix-9b-NXM"/>
@@ -1231,7 +1233,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ln9-9f-MEc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xz8-F3-u5O">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1340,5 +1342,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="05J-vq-9gY"/>
     </inferredMetricsTieBreakers>
-    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
 </document>

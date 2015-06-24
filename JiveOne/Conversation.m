@@ -7,17 +7,17 @@
 //
 
 #import "Conversation.h"
-#import "Contact.h"
+#import "InternalExtension.h"
 
 @implementation Conversation
 
-@dynamic contact;
+@dynamic internalExtension;
 @dynamic user;
 
 -(NSString *)senderId
 {
-    if (self.contact) {
-        return self.contact.jiveUserId;
+    if (self.internalExtension) {
+        return self.internalExtension.jiveUserId;
     }
     return self.user.jiveUserId;
 }

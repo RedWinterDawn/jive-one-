@@ -62,6 +62,7 @@
 
 @synthesize name = _name;
 @synthesize number = _number;
+@synthesize type = _type;
 
 -(NSString *)titleText
 {

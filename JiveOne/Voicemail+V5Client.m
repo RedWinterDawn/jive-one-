@@ -14,7 +14,7 @@
 
 // Models
 #import "PBX.h"
-#import "Contact.h"
+#import "InternalExtension.h"
 #import "Line.h"
 #import "VoicemailTranscription.h"
 
@@ -351,8 +351,8 @@ NSString *const kVoicemailResponseTranscriptionUrlKey = @"transcription";
     voicemail.mailboxUrl        = [data stringValueForKey:kVoicemailResponseSelfMailboxKey];
     voicemail.unixTimestamp     = [data integerValueForKey:kVoicemailResponseTimestampKey];
     Extension *extension = [Extension extensionForNumber:voicemail.number onPbx:line.pbx excludingLine:line];
-    if ([extension isKindOfClass:[Contact class]]) {
-        voicemail.contact = (Contact *)extension;
+    if ([extension isKindOfClass:[InternalExtension class]]) {
+        voicemail.internalExtension = (InternalExtension *)extension;
     }
     
     NSDictionary *transcriptionData = [data dictionaryForKey:kVoicemailResponseTranscriptionKey];

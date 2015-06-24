@@ -9,7 +9,7 @@
 #import "Message.h"
 
 @class DID;
-@class LocalContact;
+@class PhoneNumber;
 
 extern NSString *const kSMSMessageInboundAttributeKey;
 
@@ -20,7 +20,7 @@ extern NSString *const kSMSMessageInboundAttributeKey;
 
 // Relationships
 @property (nonatomic, strong) DID *did;
-@property (nonatomic, strong) LocalContact *localContact;
+@property (nonatomic, strong) PhoneNumber *phoneNumber;
 
 // Finds the DID from the didId, and attaches it to the message.
 -(void)setDidId:(NSString *)didId;

@@ -7,6 +7,8 @@
 //
 
 #import "JCProgressHUD.h"
+#import "JCError.h"
+#import "JCApiClient.h"
 
 static NSInteger JCProgressHUDDuration;
 
@@ -47,19 +49,19 @@ static NSInteger JCProgressHUDDuration;
 {
     [self configureHud];
     
-    NSLog(@"%@", [error description]);
     NSString *message = [error localizedDescription];
     if (!message) {
         message = [error localizedFailureReason];
     }
     
-    NSError *underlyingError = [self underlyingErrorForError:error];
+    NSError *underlyingError = [JCError underlyingErrorForError:error];
     NSString *underlyingFailureReason = [underlyingError localizedFailureReason];
+    NSUInteger underlingErrorCode = [JCApiClientError underlyingErrorCodeForError:underlyingError];
     if(underlyingFailureReason && ![underlyingFailureReason isEqualToString:message]) {
-        message = [NSString stringWithFormat:@"%@(%li: %@)", message, (long)underlyingError.code, underlyingFailureReason];
+        message = [NSString stringWithFormat:@"%@ (%li: %@)", message, (long)underlingErrorCode, underlyingFailureReason];
     }
     else {
-        message = [NSString stringWithFormat:@"%@(%li)", message, (long)underlyingError.code];
+        message = [NSString stringWithFormat:@"%@ (%li)", message, (long)underlingErrorCode];
     }
     [JCProgressHUD showErrorWithStatus:message];
 }
@@ -93,24 +95,6 @@ static NSInteger JCProgressHUDDuration;
 - (void)hideStatus
 {
     [JCProgressHUD dismiss];
-}
-
--(NSInteger)underlyingErrorCodeForError:(NSError *)error
-{
-    NSError *underlyingError = [error.userInfo objectForKey:NSUnderlyingErrorKey];
-    if (underlyingError) {
-        return [self underlyingErrorCodeForError:underlyingError];
-    }
-    return error.code;
-}
-
--(NSError *)underlyingErrorForError:(NSError *)error
-{
-    NSError *underlyingError = [error.userInfo objectForKey:NSUnderlyingErrorKey];
-    if (underlyingError) {
-        return [self underlyingErrorForError:underlyingError];
-    }
-    return error;
 }
 
 @end
