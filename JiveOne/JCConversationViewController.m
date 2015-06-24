@@ -109,23 +109,32 @@
     id<JCConversationGroupObject> conversationGroup = self.conversationGroup;
     if (self.count == 0) {
         NSMutableArray *dids = authenticationManager.pbx.dids.allObjects.mutableCopy;
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES];
-        [dids sortUsingDescriptors:@[sortDescriptor]];
-        NSMutableArray *titles = [NSMutableArray array];
-        for (DID *did in dids) {
-            [titles addObject:did.titleText];
+        if (dids.count < 2){
+             [self sendMessageWithSelectedDID:text toConversationGroup:conversationGroup fromDid:authenticationManager.did];
         }
+        else
+        {
+            NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES];
+            [dids sortUsingDescriptors:@[sortDescriptor]];
+            NSMutableArray *titles = [NSMutableArray array];
+            for (DID *did in dids) {
+                [titles addObject:did.titleText];
+            }
             
-        JCActionSheet *didOptions = [[JCActionSheet alloc] initWithTitle:NSLocalizedStringFromTable(@"Which number would you like to send from", @"Chat", nil)
-                                                               dismissed:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
-                                                                   if (buttonIndex != actionSheet.cancelButtonIndex) {
-                                                                       DID *did = [dids objectAtIndex:buttonIndex];
-                                                                       [self sendMessageWithSelectedDID:text toConversationGroup:conversationGroup fromDid:did];
-                                                                    }
-                                                               }
-                                                       cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                            otherButtons:titles];
-        [didOptions show:self.view];
+            NSString *title = NSLocalizedStringFromTable(@"Which number would you like to send from", @"Chat", nil);
+            JCActionSheet *didOptions = [[JCActionSheet alloc] initWithTitle:title
+                                                                   dismissed:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
+                                                                       if (buttonIndex != actionSheet.cancelButtonIndex) {
+                                                                           DID *did = [dids objectAtIndex:buttonIndex];
+                                                                           [self sendMessageWithSelectedDID:text
+                                                                                        toConversationGroup:conversationGroup
+                                                                                                    fromDid:did];
+                                                                       }
+                                                                   }
+                                                           cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                                otherButtons:titles];
+            [didOptions show:self.view];
+        }
     } else {
         [self sendMessageWithSelectedDID:text toConversationGroup:conversationGroup fromDid:authenticationManager.did];
     }
