@@ -112,6 +112,11 @@
         NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES];
         [dids sortUsingDescriptors:@[sortDescriptor]];
         NSMutableArray *titles = [NSMutableArray array];
+        if (dids.count <= 2){
+             [self sendMessageWithSelectedDID:text toConversationGroup:conversationGroup fromDid:authenticationManager.did];
+        }
+        else
+        {
         for (DID *did in dids) {
             [titles addObject:did.titleText];
         }
@@ -126,6 +131,7 @@
                                                        cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                             otherButtons:titles];
         [didOptions show:self.view];
+        }
     } else {
         [self sendMessageWithSelectedDID:text toConversationGroup:conversationGroup fromDid:authenticationManager.did];
     }
