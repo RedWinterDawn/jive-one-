@@ -216,6 +216,11 @@
 		5DB7AFA31B39D40600451A0B /* PhoneManager.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D1175921AA0D82600D2B03A /* PhoneManager.storyboard */; };
 		5DB7AFA41B39D40600451A0B /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D0199BA1A1BBBAC00F4CF13 /* Main_iPhone.storyboard */; };
 		5DB7AFA51B39D40600451A0B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8221AE5895E00981DB6 /* Main_iPad.storyboard */; };
+		5DB7AFB71B3CAD8F00451A0B /* JCNonVisualVoicemailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D5448D81B0E2EAC00F44D8F /* JCNonVisualVoicemailViewController.xib */; };
+		5DB7AFB81B3CAD8F00451A0B /* JCVoicemailDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D70071A1B1CAE630036E72F /* JCVoicemailDetailViewController.xib */; };
+		5DB7AFB91B3CADB000451A0B /* IncomingCallViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D0199C41A1BBC0500F4CF13 /* IncomingCallViewCell.xib */; };
+		5DB7AFBA1B3CADB000451A0B /* CurrentCallViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D0199BF1A1BBBF400F4CF13 /* CurrentCallViewCell.xib */; };
+		5DB7AFBB1B3CADB000451A0B /* ConferenceCallViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D0199C91A1BBC1500F4CF13 /* ConferenceCallViewCell.xib */; };
 		5DB81B5B1AEFFF5A00D707DF /* JCSMSConversationGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB81B5A1AEFFF5A00D707DF /* JCSMSConversationGroup.m */; };
 		5DBABCD41A283DA500B09783 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBABCD31A283DA500B09783 /* NSString+Additions.m */; };
 		5DBBDCC319DCB29100A4DB96 /* JCCallCardCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC219DCB29100A4DB96 /* JCCallCardCollectionViewController.m */; };
@@ -2038,6 +2043,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DB7AFB91B3CADB000451A0B /* IncomingCallViewCell.xib in Resources */,
+				5DB7AFBA1B3CADB000451A0B /* CurrentCallViewCell.xib in Resources */,
+				5DB7AFBB1B3CADB000451A0B /* ConferenceCallViewCell.xib in Resources */,
+				5DB7AFB71B3CAD8F00451A0B /* JCNonVisualVoicemailViewController.xib in Resources */,
+				5DB7AFB81B3CAD8F00451A0B /* JCVoicemailDetailViewController.xib in Resources */,
 				5DB7AF9C1B39D40600451A0B /* Login.storyboard in Resources */,
 				5DB7AF9D1B39D40600451A0B /* Settings_iPad.storyboard in Resources */,
 				5DB7AF9E1B39D40600451A0B /* Chat.storyboard in Resources */,
