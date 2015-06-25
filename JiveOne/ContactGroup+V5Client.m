@@ -28,6 +28,70 @@ NSString *const kContactNameKey        = @"name";
     return data;
 }
 
++ (void)syncContactGroupsForUser:(User *)user completion:(CompletionHandler)completion
+{
+    [self deleteMarkedContactGroupsForUser:user completion:^(BOOL success, NSError *error) {
+        if (success) {
+            [self uploadMarkedContactsForUser:user completion:^(BOOL success, NSError *error) {
+                if (success) {
+                    [self downloadContactGroupsForUser:user completion:completion];
+                } else {
+                    if (completion) {
+                        completion(NO, error);
+                    }
+                }
+            }];
+        } else {
+            if (completion) {
+                completion(NO, error);
+            }
+        }
+    }];
+}
+
++ (void)syncContactGroup:(ContactGroup *)contact completion:(CompletionHandler)completion
+{
+    // if we have a pending upload, do the update rather than a download. We will be updated to be
+    // the latest version.
+    if (contact.isMarkedForUpdate) {
+        [self uploadContactGroup:contact completion:completion];
+        return;
+    }
+    
+    [self downloadContactGroup:contact completion:completion];
+}
+
+#pragma mark - Download -
+
++ (void)downloadContactGroupsForUser:(User *)user completion:(CompletionHandler)completion
+{
+    [JCV5ApiClient downloadContactGroupsWithCompletion:^(BOOL success, id response, NSError *error) {
+        if (success) {
+            //[self processContactsDownloadResponse:response user:user completion:completion];
+            
+            // TODO: Need Server implementation to complete.
+            
+            if (completion) {
+                completion(YES, nil);
+            }
+            
+        } else {
+            if (completion) {
+                completion(NO, error);
+            }
+        }
+    }];
+}
+
++ (void)downloadContactGroup:(ContactGroup *)contact completion:(CompletionHandler)completion {
+    // TODO Need Server implementation to complete.
+    
+    if (completion) {
+        completion(YES, nil);
+    }
+}
+
+
 #pragma mark - Upload -
 
 -(void)markForUpdate:(CompletionHandler)completion

@@ -16,6 +16,18 @@
 @property (nonatomic, readonly) NSDictionary *serializedData;
 
 /* ========================================================*/
+/* ====================== Contact Sync ====================*/
+/* ========================================================*/
+
+/* Syncs all the data, fist deleting acy contacts that are marked for deletion, then uploading any
+ contacts that are marked for upload, then download all contacts. */
++ (void)syncContactGroupsForUser:(User *)user completion:(CompletionHandler)completion;
+
+/* Syncs a contact. If the contact is marked for upload, it will perform the upload, updating the
+ contact with the data from the server. If it does not need to be uploaded, it downloads it. */
++ (void)syncContactGroup:(ContactGroup *)contact completion:(CompletionHandler)completion;
+
+/* ========================================================*/
 /* ================= Contact Group Upload =================*/
 /* ========================================================*/
 
@@ -24,7 +36,6 @@
  connection, the contact group is saved being marked for update, and will be updated during the next 
  synce operation. */
 -(void)markForUpdate:(CompletionHandler)completion;
-
 
 /* ========================================================*/
 /* ================= Contact Group Delete =================*/
