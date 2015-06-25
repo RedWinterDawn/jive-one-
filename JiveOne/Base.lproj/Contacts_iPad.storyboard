@@ -617,9 +617,6 @@
         <image name="black-avatar" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fr3-YI-YP2"/>
-        <segue reference="bnN-21-nTO"/>
-        <segue reference="uPT-qT-mCT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
 </document>
