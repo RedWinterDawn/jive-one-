@@ -91,6 +91,7 @@
     self.incomingCallAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
     self.incomingCallAudioPlayer.numberOfLoops = 0;
     [self.incomingCallAudioPlayer prepareToPlay];
+    [self.session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
     self.incomingCallAudioPlayer.volume = _appSettings.volumeLevel;
     [self.incomingCallAudioPlayer play];
 }
