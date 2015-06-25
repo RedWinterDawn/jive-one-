@@ -76,10 +76,23 @@
     self.earlyMediaRingBackPlayer.numberOfLoops = -1;
     self.earlyMediaRingBackPlayer.volume = _appSettings.volumeLevel;                                            // Set the audio volume of ringback sound to user defined amount
 }
+
 -(void)playIncomingCallTone {
+    self.incomingCallAudioPlayer.volume = _appSettings.volumeLevel;
     [self.incomingCallAudioPlayer prepareToPlay];
     [self.incomingCallAudioPlayer play];
     self.isIncomingRingerPlaying = YES;
+}
+
+-(void)playOnce {
+//     [self configureAudioSession];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"shortCall" ofType:@"mp3"];
+    NSURL *url = [NSURL fileURLWithPath:path];                                                                                // Setup audio players for Incoming call ringer
+    self.incomingCallAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+    self.incomingCallAudioPlayer.numberOfLoops = 0;
+    [self.incomingCallAudioPlayer prepareToPlay];
+    self.incomingCallAudioPlayer.volume = _appSettings.volumeLevel;
+    [self.incomingCallAudioPlayer play];
 }
 
 -(void)stopTheNoise {
@@ -96,9 +109,11 @@
 
 -(void)checkState {
     if (self.isIncomingRingerPlaying) {
-        if (_session.currentRoute.description == AVAudioSessionPortBuiltInReceiver) {
+        NSLog(@"_session what is your type  %lu", (unsigned long)_outputType);
+        if (_outputType == JCPhoneAudioManagerOutputReceiver || _outputType == JCPhoneAudioManagerOutputSpeaker) {
             [_session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
         }
+        
         
     }
 }
@@ -106,6 +121,7 @@
 
 #pragma mark - Early Media Player Methods
 -(void)playRingback{
+    self.earlyMediaRingBackPlayer.volume = _appSettings.volumeLevel;
     self.isEarlyMediaPlaying = YES;
     [self.earlyMediaRingBackPlayer prepareToPlay];
     [self.earlyMediaRingBackPlayer play];
@@ -120,44 +136,44 @@
 
 /* Access the Audio Session singlton and modify the AVAudioSessionPlayAndRecord property to allow Bluetooth.
  */
--(void)engageAudioSession
-{
-    __autoreleasing NSError* error = nil;
-    NSLog(@"engage audio session");
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    BOOL result  = [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error: &error];
-    if (!result) {
-        NSLog(@"Error setting the catigory on the audio session Error: %@", [error description] );
+//-(void)engageAudioSession
+//{
+//    __autoreleasing NSError* error = nil;
+//    NSLog(@"engage audio session");
+//    AVAudioSession *session = [AVAudioSession sharedInstance];
+//    BOOL result  = [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionAllowBluetooth error: &error];
+//    if (!result) {
+//        NSLog(@"Error setting the catigory on the audio session Error: %@", [error description] );
+//
+//    }
 
-    }
-    
-    BOOL mode = [session setMode:AVAudioSessionModeVoiceChat  error: &error];
-    if (!mode) {
-        NSLog(@"Error setting the Mode of audio session Error: %@", [error description] );
+//    BOOL mode = [session setMode:AVAudioSessionModeVoiceChat  error: &error];
+//    if (!mode) {
+//        NSLog(@"Error setting the Mode of audio session Error: %@", [error description] );
 
-    // activate audio session
-        BOOL activation = [session setActive:YES error: &error];
-        if (!activation) {
-            NSLog(@"Error setting Session Active Error: %@", [error description] );
-        }
-    _engaged = true;
-    }
-}
+//    // activate audio session
+//        BOOL activation = [session setActive:YES error: &error];
+//        if (!activation) {
+//            NSLog(@"Error setting Session Active Error: %@", [error description] );
+//        }
+//    _engaged = true;
+////    }
+//}
 
--(void)disengageAudioSession
-{
-    NSLog(@"disengage audio session");
-    // deactivate session
-    __autoreleasing NSError *error = nil;
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    BOOL result = [session setActive:NO error: &error];
-    if (!result) {
-        NSLog(@"Error Disabling Audio Session %@",[error description]);
-    }
-
-    
-    _engaged = false;
-}
+//-(void)disengageAudioSession
+//{
+//    NSLog(@"disengage audio session");
+//    // deactivate session
+//    __autoreleasing NSError *error = nil;
+//    AVAudioSession *session = [AVAudioSession sharedInstance];
+//    BOOL result = [session setActive:NO error: &error];
+//    if (!result) {
+//        NSLog(@"Error Disabling Audio Session %@",[error description]);
+//    }
+//
+//    
+//    _engaged = false;
+//}
 
 #pragma mark - Getters -
 

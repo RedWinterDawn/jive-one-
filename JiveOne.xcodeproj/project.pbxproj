@@ -167,7 +167,6 @@
 		5D5782D91B335A30005F1B86 /* JCTranslationUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5782D81B335A30005F1B86 /* JCTranslationUnit.m */; };
 		5D5782DC1B3385FE005F1B86 /* JCTranslationString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5782DB1B3385FE005F1B86 /* JCTranslationString.m */; };
 		5D5782DE1B33ADD5005F1B86 /* ignore.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D5782DD1B33A9FE005F1B86 /* ignore.txt */; };
-		5D5782E21B33BF24005F1B86 /* eula.html in Resources */ = {isa = PBXBuildFile; fileRef = 5D5782E41B33BF24005F1B86 /* eula.html */; };
 		5D5B86EE1AE97A0300F265A3 /* JCSMSMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1AE61AE806A400C59A63 /* JCSMSMessageManager.m */; };
 		5D5B86F11AE9A28400F265A3 /* JCAppMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5B86F01AE9A28400F265A3 /* JCAppMenuViewController.m */; };
 		5D5CC27B1B2BAFE400FB69E4 /* JCCustomEditTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5CC27A1B2BAFE400FB69E4 /* JCCustomEditTableViewCell.m */; };
@@ -200,10 +199,6 @@
 		5D895EB21A0AC66B0015368D /* JCBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D895EB11A0AC66B0015368D /* JCBadgeView.m */; };
 		5D895EB51A0B230F0015368D /* JCPresenceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D895EB41A0B230F0015368D /* JCPresenceCell.m */; };
 		5D8A35761AB76120009BD5E6 /* JCVoicemailManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A35751AB76120009BD5E6 /* JCVoicemailManager.m */; };
-		5D8E33DC1B0A4F3100FD8AE1 /* Phone_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33DE1B0A4F3100FD8AE1 /* Phone_iPad.storyboard */; };
-		5D8E33ED1B0A560500FD8AE1 /* Contacts_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33EF1B0A560500FD8AE1 /* Contacts_iPad.storyboard */; };
-		5D8E33FC1B0A5D7000FD8AE1 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E33FE1B0A5D7000FD8AE1 /* Login.storyboard */; };
-		5D8E340C1B0A84AA00FD8AE1 /* Settings_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8E340E1B0A84AA00FD8AE1 /* Settings_iPad.storyboard */; };
 		5D8FE40B1B220AB0004FD594 /* JCEditableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE40A1B220AB0004FD594 /* JCEditableTableViewCell.m */; };
 		5D8FE40E1B225A4C004FD594 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE40D1B225A4C004FD594 /* Contact.m */; };
 		5D8FE4121B2263EB004FD594 /* JCContactsFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4111B2263EB004FD594 /* JCContactsFetchedResultsController.m */; };
@@ -213,13 +208,11 @@
 		5D8FE41F1B27A898004FD594 /* JCStaticSectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE41E1B27A898004FD594 /* JCStaticSectionInfo.m */; };
 		5D8FE4221B27A9EC004FD594 /* JCStaticTableData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4211B27A9EC004FD594 /* JCStaticTableData.m */; };
 		5D8FE4251B28F271004FD594 /* JCContactPhoneNumberTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4241B28F271004FD594 /* JCContactPhoneNumberTableViewCell.m */; };
-		5D8FE4281B28F65A004FD594 /* JCContactPhoneNumberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE4271B28F65A004FD594 /* JCContactPhoneNumberTableViewCell.xib */; };
 		5D8FE42C1B2A4C78004FD594 /* JCContactAddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE42A1B2A4C78004FD594 /* JCContactAddressTableViewCell.m */; };
-		5D8FE42D1B2A4C78004FD594 /* JCContactAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE42B1B2A4C78004FD594 /* JCContactAddressTableViewCell.xib */; };
 		5D8FE4311B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE42F1B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.m */; };
 		5D8FE4321B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE4301B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib */; };
 		5D8FE4351B2B5B21004FD594 /* ContactInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4341B2B5B21004FD594 /* ContactInfo.m */; };
-		5D9382C01B0F94F800C5CEA0 /* Chat.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D9382BF1B0F94F800C5CEA0 /* Chat.strings */; };
+		5D9382C01B0F94F800C5CEA0 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		5D97A7FF1A828B4700A4434D /* JCIntercomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */; };
 		5D9A5E221A24E30A00E8274C /* JCPhoneAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */; };
 		5D9F72101AC34F8000B9D0F8 /* JCAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */; };
@@ -294,12 +287,12 @@
 		B77EFA2D1B03E51700D94AE9 /* VoicemailTranscription.m in Sources */ = {isa = PBXBuildFile; fileRef = B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */; };
 		B79F55551AEF1DF900E4768F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
 		B79F55561AEF1DF900E4768F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
-		B7AD76D81B30C5A200E6BEE6 /* Chat.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7AD76D61B30C5A200E6BEE6 /* Chat.strings */; };
 		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
 		B7DFAA371AC0CDA50033ACFB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */; };
 		B7EE4A471B278620003F4278 /* JCTypeSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE4A461B278620003F4278 /* JCTypeSelectorViewController.m */; };
 		B7F331E91AFC015900343DAC /* JCVoicemailDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F331E81AFC015900343DAC /* JCVoicemailDetailViewController.m */; };
 		B7FCA5AA1AD2E74E0034C5EC /* JCDIDSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */; };
+		B7FF93901B3C9A5000B751CE /* shortCall.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7FF938F1B3C9A5000B751CE /* shortCall.mp3 */; };
 		DD3BD9F418DCB1740080318E /* Voicemail+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */; };
 		DDCE1E8718F3561D003A6615 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */; };
 		DDCE1E8918F35623003A6615 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8818F35623003A6615 /* CFNetwork.framework */; };
@@ -917,6 +910,7 @@
 		B7F331E81AFC015900343DAC /* JCVoicemailDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailDetailViewController.m; sourceTree = "<group>"; };
 		B7FCA5A81AD2E74E0034C5EC /* JCDIDSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDIDSelectorViewController.h; sourceTree = "<group>"; };
 		B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDIDSelectorViewController.m; sourceTree = "<group>"; };
+		B7FF938F1B3C9A5000B751CE /* shortCall.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shortCall.mp3; sourceTree = "<group>"; };
 		DD3BD9F218DCB1740080318E /* Voicemail+V5Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Voicemail+V5Client.h"; sourceTree = "<group>"; };
 		DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Voicemail+V5Client.m"; sourceTree = "<group>"; };
 		DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1285,6 +1279,7 @@
 		275F4A5818AD0FBC00D2F069 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B7FF938F1B3C9A5000B751CE /* shortCall.mp3 */,
 				5D5782E41B33BF24005F1B86 /* eula.html */,
 				2751590218AD10E500FD8D3F /* Constants.h */,
 				275F4A5918AD0FBC00D2F069 /* JiveOne-Info.plist */,
@@ -2230,6 +2225,7 @@
 			files = (
 				5DB7AF9C1B39D40600451A0B /* Login.storyboard in Resources */,
 				5DB7AF9D1B39D40600451A0B /* Settings_iPad.storyboard in Resources */,
+				B7FF93901B3C9A5000B751CE /* shortCall.mp3 in Resources */,
 				5DB7AF9E1B39D40600451A0B /* Chat.storyboard in Resources */,
 				5DB7AF9F1B39D40600451A0B /* Chat_iPad.storyboard in Resources */,
 				5DB7AFA01B39D40600451A0B /* Contacts_iPad.storyboard in Resources */,
@@ -2240,7 +2236,7 @@
 				5DB7AFA51B39D40600451A0B /* Main_iPad.storyboard in Resources */,
 				5D8198ED1AC1D7520057FDDA /* Debug.storyboard in Resources */,
 				5D87FCD31AB2822700AE1CA5 /* JCConversationViewController.xib in Resources */,
-				5D9382C01B0F94F800C5CEA0 /* Chat.strings in Resources */,
+				5D9382C01B0F94F800C5CEA0 /* (null) in Resources */,
 				5D55236C1A7AB7B400CA8A6D /* calling.mp3 in Resources */,
 				5D5448B61B0CF02400F44D8F /* Settings.storyboard in Resources */,
 				5DEC492A1B0EDF6000361499 /* Phone.strings in Resources */,

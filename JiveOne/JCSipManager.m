@@ -1159,7 +1159,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.sessionState = state;
             
             if (!self.isActive) {
-                [_audioManager engageAudioSession];
+//                [_audioManager engageAudioSession];
+                [_audioManager playIncomingCallTone];
             }
             
             // Notify of incoming call by starting the ringing for the incoming call.

@@ -65,6 +65,7 @@ typedef enum : NSUInteger {
 -(void)playRingback;
 -(void)stopRingback;
 -(void)playIncomingCallTone;
+-(void)playOnce;
 -(void)stopTheNoise;
 -(void)checkState;
 
