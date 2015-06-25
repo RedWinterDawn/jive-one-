@@ -11,7 +11,7 @@
 #import "JCPhoneManager.h"
 #import "InternalExtensionGroup.h"
 #import "JCUnknownNumber.h"
-#import "ContactGroup.h"
+#import "ContactGroup+V5Client.h"
 
 #import "JCContactDetailViewController.h"
 #import "PBX.h"
@@ -116,11 +116,12 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
         [self performSegueWithIdentifier:@"AddContact" sender:@"Edit"];
     } else {
         User *user = self.authenticationManager.pbx.user;
-        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            // Simulate the creation of a group
-            ContactGroup *contactGroup = [ContactGroup MR_createEntityInContext:localContext];
-            contactGroup.name = @"Test Group";
-            contactGroup.user = ((User * )[localContext objectWithID:user.objectID]);
+        
+        ContactGroup *contactGroup = [ContactGroup MR_createEntityInContext:user.managedObjectContext];
+        contactGroup.name = @"Test Group";
+        contactGroup.user = user;
+        [contactGroup markForUpdate:^(BOOL success, NSError *error) {
+            NSLog(@"uploaded");
         }];
     }
 }
