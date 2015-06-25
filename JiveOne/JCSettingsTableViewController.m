@@ -53,6 +53,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     JCAppSettings *settings = self.appSettings;
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
+    _volumeslidder.value = settings.volumeLevel;
+
     
     #ifndef DEBUG
     if (self.debugCell) {
@@ -106,6 +108,13 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 }
 
 #pragma mark - IBActions -
+
+- (IBAction)sliderValue:(id)sender {
+    NSLog(@"value of slider %f",_volumeslidder.value);
+    self.appSettings.volumeLevel = _volumeslidder.value;
+}
+
+
 
 -(IBAction)leaveFeedback:(id)sender
 {

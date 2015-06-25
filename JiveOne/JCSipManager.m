@@ -235,7 +235,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
     
     // If we are registered to a line, we need to unregister from that line, and reconnect.
-    if (_registered || _provisioning != provisioning) {
+    if (_registered && _provisioning != provisioning) {
         [self unregister];
     }
     
@@ -368,6 +368,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     if (_mPortSIPSDK) {
         [_mPortSIPSDK stopKeepAwake];
+        [_audioManager checkState];
     }
     
     if (!self.isActive && !_registered && _provisioning) {
@@ -1115,7 +1116,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.updatable = FALSE;
             lineSession.sessionState = state;
             
-            [_audioManager stop];
+//            [_audioManager stop];
+            [_audioManager stopTheNoise];
+
             [_delegate sipHandler:self willRemoveLineSession:lineSession];
             
             NSLog(@"%@", [self.lineSessions description]);
@@ -1135,7 +1138,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         case JCCallInitiated:
         {
             if (!self.isActive) {
-                [_audioManager engageAudioSession];
+//                [_audioManager engageAudioSession];
+                [_audioManager playIncomingCallTone];
+
             }
             
             lineSession.active = TRUE;
@@ -1158,7 +1163,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             }
             
             // Notify of incoming call by starting the ringing for the incoming call.
-            [_audioManager startRepeatingRingtone:YES];
+//            [_audioManager startRepeatingRingtone:YES];
+            [_audioManager playIncomingCallTone];
+
 
             // Notify
             [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
@@ -1175,7 +1182,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.sessionState = state;
             
             // Stop Ringing
-            [_audioManager stop];
+//            [_audioManager stop];
+            [_audioManager stopTheNoise];
             
             // Notify
             [_delegate sipHandler:self didAnswerLineSession:lineSession];
@@ -1188,7 +1196,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.sessionState = state;
             
             // Stop Ringing
-            [_audioManager stop];
+//            [_audioManager stop];
+            [_audioManager stopTheNoise];
             
             [self startNetworkQualityIndicatorForLineSession:lineSession];
             break;
@@ -1387,7 +1396,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     JCLineSession *selectedLine = [self findSession:sessionId];
 	if (selectedLine && !selectedLine.mExistEarlyMedia) {
-        [_audioManager startRingback];
+//        [_audioManager startRingback];
+        [_audioManager playRingback];
 	}
     [self setSessionState:JCCallRinging forSession:selectedLine event:@"onInviteRinging" error:nil];
 }

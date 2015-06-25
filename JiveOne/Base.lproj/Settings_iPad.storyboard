@@ -118,6 +118,36 @@
                                             <segue destination="nTE-Sn-bRa" kind="showDetail" id="iTC-Vc-hzJ"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="74" id="zjW-Zx-WcT">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zjW-Zx-WcT" id="WHv-jt-cCS">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Volume" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="diS-g7-tTa">
+                                                    <rect key="frame" x="13" y="8" width="574" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2O8-Gh-uYH">
+                                                    <rect key="frame" x="21" y="31" width="558" height="35"/>
+                                                    <connections>
+                                                        <action selector="sliderValue:" destination="CGS-rY-7pk" eventType="valueChanged" id="CBw-b1-tUF"/>
+                                                    </connections>
+                                                </slider>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="2O8-Gh-uYH" secondAttribute="bottom" constant="8" id="14k-j0-YcH"/>
+                                                <constraint firstItem="2O8-Gh-uYH" firstAttribute="top" secondItem="diS-g7-tTa" secondAttribute="bottom" constant="2" id="Rx2-Yu-rva"/>
+                                                <constraint firstAttribute="trailing" secondItem="2O8-Gh-uYH" secondAttribute="trailing" constant="23" id="WvJ-6L-38I"/>
+                                                <constraint firstItem="diS-g7-tTa" firstAttribute="leading" secondItem="WHv-jt-cCS" secondAttribute="leading" constant="13" id="Xbr-mX-Ceb"/>
+                                                <constraint firstAttribute="trailing" secondItem="diS-g7-tTa" secondAttribute="trailing" constant="13" id="b06-pS-Z7Z"/>
+                                                <constraint firstItem="2O8-Gh-uYH" firstAttribute="leading" secondItem="WHv-jt-cCS" secondAttribute="leading" constant="23" id="fAf-gS-MkB"/>
+                                                <constraint firstItem="diS-g7-tTa" firstAttribute="top" secondItem="WHv-jt-cCS" secondAttribute="top" constant="8" id="tt7-jv-bAd"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="SMS" id="l1y-XU-h7g" userLabel="SMS">
@@ -239,6 +269,8 @@
                         <outlet property="extensionLabel" destination="Y7Z-2w-WvV" id="Oon-kd-LUc"/>
                         <outlet property="smsUserDefaultNumber" destination="mtR-S3-xtq" id="Lnv-Sa-4Ll"/>
                         <outlet property="userNameLabel" destination="ya1-cS-0UJ" id="0gl-ed-MTt"/>
+                        <outlet property="volumeLabel" destination="diS-g7-tTa" id="rC2-er-Z4p"/>
+                        <outlet property="volumeslidder" destination="2O8-Gh-uYH" id="GEg-s8-dW0"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m47-zx-oks" userLabel="First Responder" sceneMemberID="firstResponder"/>
