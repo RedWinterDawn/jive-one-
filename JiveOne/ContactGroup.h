@@ -8,7 +8,7 @@
 
 #import "Group.h"
 
-@class Contact, User;
+@class ContactGroupAssociation, User;
 
 @interface ContactGroup : Group
 
@@ -26,8 +26,8 @@
 
 @interface ContactGroup (CoreDataGeneratedAccessors)
 
-- (void)addContactsObject:(Contact *)value;
-- (void)removeContactsObject:(Contact *)value;
+- (void)addContactsObject:(ContactGroupAssociation *)value;
+- (void)removeContactsObject:(ContactGroupAssociation *)value;
 - (void)addContacts:(NSSet *)values;
 - (void)removeContacts:(NSSet *)values;
 

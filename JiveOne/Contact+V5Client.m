@@ -24,7 +24,6 @@ NSString *const kContactContactIdKey        = @"id";
 NSString *const kContactFirstNameKey        = @"firstName";
 NSString *const kContactLastNameKey         = @"lastName";
 
-
 NSString *const kContactETagKey             = @"etag";
 NSString *const kContactCreated             = @"created";
 

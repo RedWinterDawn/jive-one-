@@ -8,7 +8,7 @@
 
 #import "JCPersonManagedObject.h"
 
-@class PhoneNumber, Address, ContactInfo, User, ContactGroup;
+@class PhoneNumber, Address, ContactInfo, User, ContactGroupAssociation;
 
 @interface Contact : JCPersonManagedObject
 
@@ -19,7 +19,7 @@
 @property (nonatomic) NSInteger etag;
 
 // Relationships
-@property (nonatomic, strong) NSSet *contactGroups;
+@property (nonatomic, strong) NSSet *groups;
 @property (nonatomic, retain) NSSet *phoneNumbers;
 @property (nonatomic, retain) NSSet *addresses;
 @property (nonatomic, retain) NSSet *info;
@@ -44,9 +44,9 @@
 - (void)addInfo:(NSSet *)values;
 - (void)removeInfo:(NSSet *)values;
 
-- (void)addContactGroupsObject:(ContactGroup *)value;
-- (void)removeContactGroupsObject:(ContactGroup *)value;
-- (void)addContactGroups:(NSSet *)values;
-- (void)removeContactGroups:(NSSet *)values;
+- (void)addGroupsObject:(ContactGroupAssociation *)value;
+- (void)removeGroupsObject:(ContactGroupAssociation *)value;
+- (void)addGroups:(NSSet *)values;
+- (void)removeGroups:(NSSet *)values;
 
 @end

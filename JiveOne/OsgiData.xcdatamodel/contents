@@ -32,17 +32,22 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="addresses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Address" inverseName="contact" inverseEntity="Address" syncable="YES"/>
-        <relationship name="contactGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContactGroup" inverseName="contacts" inverseEntity="ContactGroup" syncable="YES"/>
+        <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContactGroupAssociation" inverseName="contact" inverseEntity="ContactGroupAssociation" syncable="YES"/>
         <relationship name="info" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ContactInfo" inverseName="contact" inverseEntity="ContactInfo" syncable="YES"/>
         <relationship name="phoneNumbers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PhoneNumber" inverseName="contact" inverseEntity="PhoneNumber" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="contacts" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="ContactGroup" representedClassName="ContactGroup" parentEntity="Group" syncable="YES">
-        <attribute name="etag" optional="YES" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="markForDeletion" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="markForUpdate" optional="YES" attributeType="Boolean" defaultValueString="YES" indexed="YES" syncable="YES"/>
-        <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="contactGroups" inverseEntity="Contact" syncable="YES"/>
+        <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContactGroupAssociation" inverseName="group" inverseEntity="ContactGroupAssociation" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="contactGroups" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="ContactGroupAssociation" representedClassName="ContactGroupAssociation" syncable="YES">
+        <attribute name="markForDeletion" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <attribute name="markForUpdate" optional="YES" attributeType="Boolean" defaultValueString="YES" indexed="YES" syncable="YES"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="groups" inverseEntity="Contact" syncable="YES"/>
+        <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContactGroup" inverseName="contacts" inverseEntity="ContactGroup" syncable="YES"/>
     </entity>
     <entity name="ContactInfo" representedClassName="ContactInfo" syncable="YES">
         <attribute name="dataHash" optional="YES" attributeType="String" syncable="YES"/>
@@ -183,13 +188,13 @@
         <element name="Address" positionX="-81" positionY="297" width="128" height="210"/>
         <element name="BlockedNumber" positionX="-171" positionY="758" width="128" height="133"/>
         <element name="Call" positionX="538" positionY="-360" width="128" height="45"/>
-        <element name="Contact" positionX="-443" positionY="392" width="128" height="238"/>
-        <element name="ContactGroup" positionX="-245" positionY="243" width="128" height="118"/>
+        <element name="Contact" positionX="-558" positionY="351" width="153" height="238"/>
+        <element name="ContactGroup" positionX="-585" positionY="113" width="153" height="103"/>
         <element name="ContactInfo" positionX="72" positionY="441" width="128" height="135"/>
         <element name="Conversation" positionX="342" positionY="171" width="128" height="73"/>
         <element name="DID" positionX="-398" positionY="698" width="128" height="238"/>
         <element name="Extension" positionX="-549" positionY="-189" width="128" height="148"/>
-        <element name="Group" positionX="-245" positionY="98" width="128" height="73"/>
+        <element name="Group" positionX="-252" positionY="80" width="128" height="73"/>
         <element name="IncomingCall" positionX="700" positionY="-288" width="128" height="45"/>
         <element name="InternalExtension" positionX="-335" positionY="-160" width="128" height="133"/>
         <element name="InternalExtensionGroup" positionX="-90" positionY="-36" width="128" height="58"/>
@@ -206,5 +211,6 @@
         <element name="User" positionX="-1134" positionY="206" width="128" height="118"/>
         <element name="Voicemail" positionX="711" positionY="-189" width="128" height="178"/>
         <element name="VoicemailTranscription" positionX="945" positionY="-162" width="128" height="118"/>
+        <element name="ContactGroupAssociation" positionX="-315" positionY="329" width="144" height="103"/>
     </elements>
 </model>
