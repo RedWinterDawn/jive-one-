@@ -113,7 +113,7 @@ NSString *const kContactNameKey        = @"name";
 + (void)uploadMarkedContactsForUser:(User *)user completion:(CompletionHandler)completion
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForUpdate = %@ AND user = %@", @YES, user];
-    __block NSMutableArray *pendingGroupsToUpdate = [Contact MR_findAllWithPredicate:predicate inContext:user.managedObjectContext].mutableCopy;
+    __block NSMutableArray *pendingGroupsToUpdate = [ContactGroup MR_findAllWithPredicate:predicate inContext:user.managedObjectContext].mutableCopy;
     
     // If we do not have any to delete, call completion.
     if (pendingGroupsToUpdate.count == 0) {

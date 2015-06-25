@@ -96,18 +96,33 @@
 -(IBAction)sync:(id)sender
 {
     if ([sender isKindOfClass:[UIRefreshControl class]]) {
-        Line *line = self.authenticationManager.line;
-//        [InternalExtension downloadInternalExtensionsForLine:line complete:^(BOOL success, NSError *error) {
-//            
-//        }];
         
-        User *user = line.pbx.user;
-        [Contact syncContactsForUser:user completion:^(BOOL success, NSError *error) {
-            [((UIRefreshControl *)sender) endRefreshing];
-            if (error) {
-                [self showError:error];
+        __block NSInteger count = 3;
+        __block NSError *blockError;
+        
+        CompletionHandler completion= ^(BOOL success, NSError *error) {
+            if (error && !blockError) {
+                blockError = error;
             }
-        }];
+            count--;
+            
+            if (count <= 0) {
+                [((UIRefreshControl *)sender) endRefreshing];
+                if (blockError) {
+                    [self showError:blockError];
+                }
+            }
+        };
+        
+        Line *line = self.authenticationManager.line;
+        [InternalExtension downloadInternalExtensionsForLine:line complete:completion];
+        
+        // Sync contacts.
+        User *user = line.pbx.user;
+        [Contact syncContactsForUser:user completion:completion];
+        
+        // Sync Groups.
+        [ContactGroup syncContactGroupsForUser:user completion:completion];
     }
 }
 
