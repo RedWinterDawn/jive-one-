@@ -15,8 +15,8 @@
 #import "Contact.h"
 #import "PBX.h"
 #import "User.h"
-#import "ContactGroup.h"
 
+#import "ContactGroup+V5Client.h"
 #import "Contact+V5Client.h"
 #import "InternalExtension+V5Client.h"
 
@@ -243,7 +243,14 @@
         [contact markForDeletion:^(BOOL success, NSError *error) {
             [self hideStatus];
         }];
-    } else {
+    } else if ([object isKindOfClass:[ContactGroup class]]) {
+        ContactGroup *contactGroup = (ContactGroup *)object;
+        [self showStatus:NSLocalizedString(@"Deleting...", @"Deleting a group")];
+        [contactGroup markForDeletion:^(BOOL success, NSError *error) {
+            [self hideStatus];
+        }];
+    }
+    else {
         [super deleteObject:object];
     }
 }

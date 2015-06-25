@@ -15,6 +15,25 @@
 // Returns the data structure expected by the Server for POST or PUT operations when converted to JSON
 @property (nonatomic, readonly) NSDictionary *serializedData;
 
+/* ========================================================*/
+/* ================= Contact Group Upload =================*/
+/* ========================================================*/
+
+/* Marks the contact group as to needing to be updated. If there is an active internet connection, 
+ it will upload the contact group, syncing the server to what is local. If there is no internet 
+ connection, the contact group is saved being marked for update, and will be updated during the next 
+ synce operation. */
+-(void)markForUpdate:(CompletionHandler)completion;
+
+
+/* ========================================================*/
+/* ================= Contact Group Delete =================*/
+/* ========================================================*/
+
+/* Marks the contact group for deletion. If there is an active internet connection, it will delete 
+ the contact group from the server. If there is not internet connection, the contact group is saved 
+ being marked for deletion, and will be removed during the next sync operation. */
+-(void)markForDeletion:(CompletionHandler)completion;
 
 
 @end

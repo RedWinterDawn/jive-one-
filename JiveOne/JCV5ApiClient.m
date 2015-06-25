@@ -246,6 +246,15 @@ NSString *const kJCV5ApiContactGroupDeleteRequestPath   = @"/contacts/v3/user/gr
         return;
     }
     
+    
+    if (!contactGroup.groupId) {
+        if (completion) {
+            completion(YES, nil, nil);
+        }
+        return;
+    }
+    
+    
     NSString *path = [NSString stringWithFormat:kJCV5ApiContactGroupDeleteRequestPath, contactGroup.groupId];
     [self deleteWithPath:path
               parameters:nil
