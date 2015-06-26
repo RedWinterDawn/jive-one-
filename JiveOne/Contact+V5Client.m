@@ -222,6 +222,8 @@ NSString *const kContactOtherValueKey           = @"value";
         contact = [Contact MR_createEntityInContext:user.managedObjectContext];
         contact.contactId = contactId;
         contact.user = user;
+        contact.markForDeletion = NO;
+        contact.markForUpdate = NO;
     }
     return contact;
 }

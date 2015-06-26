@@ -68,7 +68,7 @@
         if (!group || [_group isKindOfClass:[ContactGroup class]])
         {
             NSFetchRequest *request = [Contact MR_requestAllInContext:self.managedObjectContext];
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@", pbx.user];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@ AND markForDeletion = %@", pbx.user, @NO];
             if (searchText && searchText.length > 0) {
                 NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"((name contains[cd] %@) OR ( phoneNumbers.number contains[cd] %@))", searchText, searchText];
                 predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
