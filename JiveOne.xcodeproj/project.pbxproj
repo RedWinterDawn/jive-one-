@@ -246,6 +246,8 @@
 		5DB7AFB91B3CADB000451A0B /* IncomingCallViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D0199C41A1BBC0500F4CF13 /* IncomingCallViewCell.xib */; };
 		5DB7AFBA1B3CADB000451A0B /* CurrentCallViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D0199BF1A1BBBF400F4CF13 /* CurrentCallViewCell.xib */; };
 		5DB7AFBB1B3CADB000451A0B /* ConferenceCallViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D0199C91A1BBC1500F4CF13 /* ConferenceCallViewCell.xib */; };
+		5DB7AFBC1B3DA1A100451A0B /* JCContactPhoneNumberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE4271B28F65A004FD594 /* JCContactPhoneNumberTableViewCell.xib */; };
+		5DB7AFBD1B3DA1A100451A0B /* JCContactAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE42B1B2A4C78004FD594 /* JCContactAddressTableViewCell.xib */; };
 		5DB81B5B1AEFFF5A00D707DF /* JCSMSConversationGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB81B5A1AEFFF5A00D707DF /* JCSMSConversationGroup.m */; };
 		5DBABCD41A283DA500B09783 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBABCD31A283DA500B09783 /* NSString+Additions.m */; };
 		5DBBDCC319DCB29100A4DB96 /* JCCallCardCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC219DCB29100A4DB96 /* JCCallCardCollectionViewController.m */; };
@@ -2228,6 +2230,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DB7AFBC1B3DA1A100451A0B /* JCContactPhoneNumberTableViewCell.xib in Resources */,
+				5DB7AFBD1B3DA1A100451A0B /* JCContactAddressTableViewCell.xib in Resources */,
 				5DB7AFB91B3CADB000451A0B /* IncomingCallViewCell.xib in Resources */,
 				5DB7AFBA1B3CADB000451A0B /* CurrentCallViewCell.xib in Resources */,
 				5DB7AFBB1B3CADB000451A0B /* ConferenceCallViewCell.xib in Resources */,
