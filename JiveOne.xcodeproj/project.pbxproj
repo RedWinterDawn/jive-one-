@@ -1105,6 +1105,8 @@
 				B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */,
 				5D895EAD1A0AB7270015368D /* JCPhoneMenuCell.h */,
 				5D895EAE1A0AB7270015368D /* JCPhoneMenuCell.m */,
+				5D5CC2791B2BAFE400FB69E4 /* JCCustomEditTableViewCell.h */,
+				5D5CC27A1B2BAFE400FB69E4 /* JCCustomEditTableViewCell.m */,
 				5D895EB01A0AC66B0015368D /* JCBadgeView.h */,
 				5D895EB11A0AC66B0015368D /* JCBadgeView.m */,
 				5D2B2C041A30D8AE00938D76 /* JCVisualEffectsView.h */,
@@ -1144,6 +1146,8 @@
 				5D8FE41E1B27A898004FD594 /* JCStaticSectionInfo.m */,
 				5D8FE4201B27A9EC004FD594 /* JCStaticTableData.h */,
 				5D8FE4211B27A9EC004FD594 /* JCStaticTableData.m */,
+				5DB7AF8B1B39AC9800451A0B /* JCAggregateFetchedResultsController.h */,
+				5DB7AF8C1B39AC9800451A0B /* JCAggregateFetchedResultsController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1830,8 +1834,6 @@
 		5D5329941AD4EFA400C6AAC6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5DB7AF8B1B39AC9800451A0B /* JCAggregateFetchedResultsController.h */,
-				5DB7AF8C1B39AC9800451A0B /* JCAggregateFetchedResultsController.m */,
 				5D8FE4101B2263EB004FD594 /* JCContactsFetchedResultsController.h */,
 				5D8FE4111B2263EB004FD594 /* JCContactsFetchedResultsController.m */,
 				5DB7AF881B39103D00451A0B /* JCGroupsFetchedResultsController.h */,
@@ -1891,8 +1893,6 @@
 		5D8FE4261B28F278004FD594 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5D5CC2791B2BAFE400FB69E4 /* JCCustomEditTableViewCell.h */,
-				5D5CC27A1B2BAFE400FB69E4 /* JCCustomEditTableViewCell.m */,
 				5D8FE4231B28F271004FD594 /* JCContactPhoneNumberTableViewCell.h */,
 				5D8FE4241B28F271004FD594 /* JCContactPhoneNumberTableViewCell.m */,
 				5D8FE4291B2A4C78004FD594 /* JCContactAddressTableViewCell.h */,
