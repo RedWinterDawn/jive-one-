@@ -88,12 +88,7 @@
                                     completed:^(BOOL success, NSError *error) {
                                         [self hideStatus];
                                         if (error) {
-                                            NSError *underlyingError = [error.userInfo objectForKey:NSUnderlyingErrorKey];
-                                            if (underlyingError) {
-                                                [JCAlertView alertWithTitle:@"Warning" message:underlyingError.localizedFailureReason];
-                                            } else {
-                                                [JCAlertView alertWithError:error];
-                                            }
+                                            [JCAlertView alertWithError:error];
                                         }
                                     }];
 }
