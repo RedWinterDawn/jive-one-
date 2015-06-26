@@ -216,7 +216,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Volume" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wM6-FH-Bnl">
-                                                    <rect key="frame" x="13" y="8" width="574" height="21"/>
+                                                    <rect key="frame" x="15" y="8" width="572" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -229,7 +229,7 @@
                                                 </slider>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="wM6-FH-Bnl" firstAttribute="leading" secondItem="feE-ZK-dQs" secondAttribute="leading" constant="13" id="0uN-Qp-cn5"/>
+                                                <constraint firstItem="wM6-FH-Bnl" firstAttribute="leading" secondItem="feE-ZK-dQs" secondAttribute="leading" constant="15" id="0uN-Qp-cn5"/>
                                                 <constraint firstItem="0HA-p4-zQ7" firstAttribute="top" secondItem="wM6-FH-Bnl" secondAttribute="bottom" constant="2" id="8kX-H5-X7Z"/>
                                                 <constraint firstItem="0HA-p4-zQ7" firstAttribute="leading" secondItem="feE-ZK-dQs" secondAttribute="leading" constant="23" id="OCH-gv-h1e"/>
                                                 <constraint firstAttribute="bottom" secondItem="0HA-p4-zQ7" secondAttribute="bottom" constant="8" id="OKi-Q2-MwJ"/>
@@ -238,6 +238,24 @@
                                                 <constraint firstAttribute="trailing" secondItem="0HA-p4-zQ7" secondAttribute="trailing" constant="23" id="zFB-eU-WpV"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="xHM-uZ-1KS" style="IBUITableViewCellStyleDefault" id="727-V8-heh">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="727-V8-heh" id="rKO-m4-Yk7">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Ringtone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xHM-uZ-1KS">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Me4-l7-Voh" kind="showDetail" id="8by-dA-r3i"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -637,6 +655,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uxg-u7-hen" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="240" y="969"/>
+        </scene>
+        <!--Dial Tone Table View Controller-->
+        <scene sceneID="kkx-2d-T9Y">
+            <objects>
+                <tableViewController id="Me4-l7-Voh" customClass="JCDialToneTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="0Fc-rv-Sob">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="ringToneCell" selectionStyle="default" indentationWidth="10" id="7cw-T3-hI6">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7cw-T3-hI6" id="ats-ij-M8I">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <accessibility key="accessibilityConfiguration" label=""/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Me4-l7-Voh" id="YYE-kF-3mT"/>
+                            <outlet property="delegate" destination="Me4-l7-Voh" id="v0d-zU-Ex9"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hym-b4-8jw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="254" y="1717"/>
         </scene>
         <!--Debug Storyboard Loader View Controller-->
         <scene sceneID="8Vh-eh-Xww">

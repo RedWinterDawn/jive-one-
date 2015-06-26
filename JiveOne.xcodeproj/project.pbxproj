@@ -292,6 +292,14 @@
 		B744DE321AF920F500A72682 /* JCBlockedNumbersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */; };
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
 		B77EFA2D1B03E51700D94AE9 /* VoicemailTranscription.m in Sources */ = {isa = PBXBuildFile; fileRef = B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */; };
+		B78DBAF01B3DE62300F312B3 /* JCDialToneTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B78DBAEF1B3DE62300F312B3 /* JCDialToneTableViewController.m */; };
+		B78DBAF91B3DE6BD00F312B3 /* ambiant.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B78DBAF11B3DE6BD00F312B3 /* ambiant.mp3 */; };
+		B78DBAFB1B3DE6BD00F312B3 /* dialup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B78DBAF31B3DE6BD00F312B3 /* dialup.mp3 */; };
+		B78DBAFC1B3DE6BD00F312B3 /* futureDial.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B78DBAF41B3DE6BD00F312B3 /* futureDial.mp3 */; };
+		B78DBAFD1B3DE6BD00F312B3 /* iReport.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B78DBAF51B3DE6BD00F312B3 /* iReport.mp3 */; };
+		B78DBAFE1B3DE6BD00F312B3 /* oldPhone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B78DBAF61B3DE6BD00F312B3 /* oldPhone.mp3 */; };
+		B78DBAFF1B3DE6BD00F312B3 /* sifi.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B78DBAF71B3DE6BD00F312B3 /* sifi.mp3 */; };
+		B78DBB001B3DE6BD00F312B3 /* walkietalkie.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B78DBAF81B3DE6BD00F312B3 /* walkietalkie.mp3 */; };
 		B79F55551AEF1DF900E4768F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
 		B79F55561AEF1DF900E4768F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
 		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
@@ -903,6 +911,15 @@
 		B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesMenuCell.m; sourceTree = "<group>"; };
 		B77EFA2B1B03E51700D94AE9 /* VoicemailTranscription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoicemailTranscription.h; sourceTree = "<group>"; };
 		B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoicemailTranscription.m; sourceTree = "<group>"; };
+		B78DBAEE1B3DE62300F312B3 /* JCDialToneTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDialToneTableViewController.h; sourceTree = "<group>"; };
+		B78DBAEF1B3DE62300F312B3 /* JCDialToneTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDialToneTableViewController.m; sourceTree = "<group>"; };
+		B78DBAF11B3DE6BD00F312B3 /* ambiant.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = ambiant.mp3; path = ../../../ambiant.mp3; sourceTree = "<group>"; };
+		B78DBAF31B3DE6BD00F312B3 /* dialup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = dialup.mp3; path = ../../../dialup.mp3; sourceTree = "<group>"; };
+		B78DBAF41B3DE6BD00F312B3 /* futureDial.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = futureDial.mp3; path = ../../../futureDial.mp3; sourceTree = "<group>"; };
+		B78DBAF51B3DE6BD00F312B3 /* iReport.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = iReport.mp3; path = ../../../iReport.mp3; sourceTree = "<group>"; };
+		B78DBAF61B3DE6BD00F312B3 /* oldPhone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = oldPhone.mp3; path = ../../../oldPhone.mp3; sourceTree = "<group>"; };
+		B78DBAF71B3DE6BD00F312B3 /* sifi.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sifi.mp3; path = ../../../sifi.mp3; sourceTree = "<group>"; };
+		B78DBAF81B3DE6BD00F312B3 /* walkietalkie.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = walkietalkie.mp3; path = ../../../walkietalkie.mp3; sourceTree = "<group>"; };
 		B794BCE11B31CACD00DE6401 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B794BCE21B31CACD00DE6401 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B794BCE31B31CAD300DE6401 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1286,6 +1303,13 @@
 		275F4A5818AD0FBC00D2F069 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B78DBAF11B3DE6BD00F312B3 /* ambiant.mp3 */,
+				B78DBAF31B3DE6BD00F312B3 /* dialup.mp3 */,
+				B78DBAF41B3DE6BD00F312B3 /* futureDial.mp3 */,
+				B78DBAF51B3DE6BD00F312B3 /* iReport.mp3 */,
+				B78DBAF61B3DE6BD00F312B3 /* oldPhone.mp3 */,
+				B78DBAF71B3DE6BD00F312B3 /* sifi.mp3 */,
+				B78DBAF81B3DE6BD00F312B3 /* walkietalkie.mp3 */,
 				B7FF938F1B3C9A5000B751CE /* shortCall.mp3 */,
 				5D5782E41B33BF24005F1B86 /* eula.html */,
 				2751590218AD10E500FD8D3F /* Constants.h */,
@@ -1350,6 +1374,8 @@
 				B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */,
 				B744DE301AF920F500A72682 /* JCBlockedNumbersViewController.h */,
 				B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */,
+				B78DBAEE1B3DE62300F312B3 /* JCDialToneTableViewController.h */,
+				B78DBAEF1B3DE62300F312B3 /* JCDialToneTableViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -2231,15 +2257,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DB7AFBC1B3DA1A100451A0B /* JCContactPhoneNumberTableViewCell.xib in Resources */,
+				B78DBAFC1B3DE6BD00F312B3 /* futureDial.mp3 in Resources */,
 				5DB7AFBD1B3DA1A100451A0B /* JCContactAddressTableViewCell.xib in Resources */,
+				B78DBAF91B3DE6BD00F312B3 /* ambiant.mp3 in Resources */,
 				5DB7AFB91B3CADB000451A0B /* IncomingCallViewCell.xib in Resources */,
 				5DB7AFBA1B3CADB000451A0B /* CurrentCallViewCell.xib in Resources */,
 				5DB7AFBB1B3CADB000451A0B /* ConferenceCallViewCell.xib in Resources */,
 				5DB7AFB71B3CAD8F00451A0B /* JCNonVisualVoicemailViewController.xib in Resources */,
 				5DB7AFB81B3CAD8F00451A0B /* JCVoicemailDetailViewController.xib in Resources */,
+				B78DBAFB1B3DE6BD00F312B3 /* dialup.mp3 in Resources */,
+				B78DBAFE1B3DE6BD00F312B3 /* oldPhone.mp3 in Resources */,
 				5DB7AF9C1B39D40600451A0B /* Login.storyboard in Resources */,
 				5DB7AF9D1B39D40600451A0B /* Settings_iPad.storyboard in Resources */,
 				B7FF93901B3C9A5000B751CE /* shortCall.mp3 in Resources */,
+				B78DBB001B3DE6BD00F312B3 /* walkietalkie.mp3 in Resources */,
+				B78DBAFF1B3DE6BD00F312B3 /* sifi.mp3 in Resources */,
 				5DB7AF9E1B39D40600451A0B /* Chat.storyboard in Resources */,
 				5DB7AF9F1B39D40600451A0B /* Chat_iPad.storyboard in Resources */,
 				5DB7AFA01B39D40600451A0B /* Contacts_iPad.storyboard in Resources */,
@@ -2252,6 +2284,7 @@
 				5D87FCD31AB2822700AE1CA5 /* JCConversationViewController.xib in Resources */,
 				5D9382C01B0F94F800C5CEA0 /* (null) in Resources */,
 				5D55236C1A7AB7B400CA8A6D /* calling.mp3 in Resources */,
+				B78DBAFD1B3DE6BD00F312B3 /* iReport.mp3 in Resources */,
 				5D5448B61B0CF02400F44D8F /* Settings.storyboard in Resources */,
 				5DEC492A1B0EDF6000361499 /* Phone.strings in Resources */,
 				5D5449091B0E52A000F44D8F /* Contacts.storyboard in Resources */,
@@ -2364,6 +2397,7 @@
 			files = (
 				5D8198F31AC1F2160057FDDA /* JCDebugDIDTableViewController.m in Sources */,
 				5D7DD3671A7B004B00B9FF4D /* Message.m in Sources */,
+				B78DBAF01B3DE62300F312B3 /* JCDialToneTableViewController.m in Sources */,
 				5D490E761A93BCA5004B62C0 /* JCProgressHUD.m in Sources */,
 				5D7DD3681A7B004B00B9FF4D /* SMSMessage.m in Sources */,
 				5D25F8411AE6872E00981DB6 /* JCAppMenuTableViewController.m in Sources */,
