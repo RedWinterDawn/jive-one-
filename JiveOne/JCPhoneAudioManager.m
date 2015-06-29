@@ -121,6 +121,11 @@
     }
 }
 
+-(void)setSessionActive
+{
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+}
+
 #pragma mark - Getters -
 
 -(AVAudioPlayer *)incomingCallAudioPlayer

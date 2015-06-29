@@ -68,6 +68,6 @@ typedef enum : NSUInteger {
 -(void)stop;
 
 -(void)checkState;
-
+-(void)setSessionActive;
 
 @end

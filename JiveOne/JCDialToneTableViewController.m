@@ -23,7 +23,7 @@
     [super viewDidLoad];
     _audioManager = [JCPhoneAudioManager new];
 
-    _dialTones = @[@"ambiant", @"calling", @"dialup", @"futureDial", @"iReport", @"oldPhone", @"sifi", @"walkietalkie"];
+    _dialTones = @[@"Ring", @"Old Phone", @"Sifi", @"iReport", @"Walkie - Talkie", @"Call For All", @"Edm Trumpets", @"Nokia Tune", @"Piano Riff"];
 }
 
 #pragma mark - Table view data source

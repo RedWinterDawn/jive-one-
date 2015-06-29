@@ -8,6 +8,7 @@
 
 @import MessageUI;
 @import AVFoundation;
+@import MediaPlayer;
 
 #import "JCSettingsTableViewController.h"
 
@@ -41,7 +42,12 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+   
+   
     _audioManager = [JCPhoneAudioManager new];
+    [_audioManager setSessionActive];
+    MPVolumeView *volumeView = [MPVolumeView new];
+    self.routeIconBackground.hidden = !volumeView.showsRouteButton;
     // Device Info
     UIDevice *device = [UIDevice currentDevice];
     self.installationIdentifier.text = device.installationIdentifier;
