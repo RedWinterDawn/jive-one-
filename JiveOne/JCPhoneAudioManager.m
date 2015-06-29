@@ -85,6 +85,11 @@
 
 - (void) playIncomingCallToneDemo
 {
+    if (_incomingCallAudioPlayer.isPlaying) {
+        [_incomingCallAudioPlayer stop];
+        _incomingCallAudioPlayer = nil;
+    }
+   
     AVAudioPlayer *player = self.incomingCallAudioPlayer;
     player.numberOfLoops = 0;
     player.volume = _appSettings.volumeLevel;
@@ -405,24 +410,3 @@ void vibration (SystemSoundID ssID, void *clientData)
 }
 
 @end
-
-#pragma mark - Alerts -
-
-
-
-//static AVAudioPlayer *ringbackAudioPlayer;
-//static BOOL active;
-
-//@implementation JCPhoneAudioManager (Alerts)
-//
-//- (void)vibrate
-//{
-//    [self startRepeatingVibration:NO];
-//}
-
-//- (void)startRepeatingVibration:(BOOL)repeating
-//{
-//    active = repeating;
-//    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-//    AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL, vibration, NULL);
-//}

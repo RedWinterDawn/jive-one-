@@ -1116,8 +1116,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.updatable = FALSE;
             lineSession.sessionState = state;
             
-//            [_audioManager stop];
-            [_audioManager stopTheNoise];
+            [_audioManager stop];
 
             [_delegate sipHandler:self willRemoveLineSession:lineSession];
             
@@ -1183,8 +1182,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.sessionState = state;
             
             // Stop Ringing
-//            [_audioManager stop];
-            [_audioManager stopTheNoise];
+
+            [_audioManager stop];
             
             // Notify
             [_delegate sipHandler:self didAnswerLineSession:lineSession];
@@ -1197,8 +1196,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.sessionState = state;
             
             // Stop Ringing
-//            [_audioManager stop];
-            [_audioManager stopTheNoise];
+            [_audioManager stop];
             
             [self startNetworkQualityIndicatorForLineSession:lineSession];
             break;

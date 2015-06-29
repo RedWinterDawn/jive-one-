@@ -62,7 +62,7 @@
     self.appSettings.ringTone = dialTones[indexPath.row];
     NSLog(@"%@", dialTones[indexPath.row]);
     NSLog(@"%@", self.appSettings.ringTone);
-    [_audioManager playOnce];
+    [_audioManager playIncomingCallToneDemo];
 }
 
 

@@ -114,7 +114,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 
 - (IBAction)sliderValue:(id)sender {
     self.appSettings.volumeLevel = _volumeslidder.value;
-    [_audioManager playOnce];  //Plays a snippit of the ringer so the user know how load it is going ot be.
+    [_audioManager playIncomingCallToneDemo];  //Plays a snippit of the ringer so the user know how load it is going ot be.
 }
 
 
