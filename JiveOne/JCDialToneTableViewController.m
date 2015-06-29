@@ -21,9 +21,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (_audioManager) {
+        [_audioManager stop];
+    }
     _audioManager = [JCPhoneAudioManager new];
 
-    _dialTones = @[@"Ring", @"Old Phone", @"Sifi", @"iReport", @"Walkie - Talkie", @"Call For All", @"Edm Trumpets", @"Nokia Tune", @"Piano Riff"];
+    _dialTones = @[@"Ring", @"Old Phone", @"Sifi", @"iReport", @"Walkie - Talkie", @"Edm Trumpets", @"Nokia Tune", @"Piano Riff"];
 }
 
 #pragma mark - Table view data source
@@ -40,6 +43,8 @@
     static NSString *identifier = @"ringToneCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     cell.textLabel.text = _dialTones[indexPath.row];
+    NSLog(@"blah");
+    
     return cell;
 }
 

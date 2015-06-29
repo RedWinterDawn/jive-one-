@@ -41,6 +41,7 @@
         [self configureAudioSession];
         
         // Register for Audio Session Notifications
+       
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(audioSessionInterruptionSelector:) name:AVAudioSessionInterruptionNotification object:nil];
         [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
@@ -51,6 +52,12 @@
     }
     return self;
 }
+
+-(void)dealloc {
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self];
+}
+
 
 #pragma mark - Incoming Call Ringer Methods
 
@@ -94,8 +101,10 @@
     player.numberOfLoops = 0;
     player.volume = _appSettings.volumeLevel;
     
-     [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
-    
+    if (_outputType != JCPhoneAudioManagerOutputSpeaker) {
+         [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
+    }
+
     [player prepareToPlay];
     [player play];
 }

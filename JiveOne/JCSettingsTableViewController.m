@@ -97,6 +97,13 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     #endif
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    if (_audioManager)
+    {
+        [_audioManager stop];
+    }
+    
+}
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *controller = segue.destinationViewController;
