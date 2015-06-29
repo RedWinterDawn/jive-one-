@@ -60,13 +60,13 @@ typedef enum : NSUInteger {
 @property (nonatomic, readonly, getter=isInterupted) BOOL interupted;
 @property (nonatomic, readonly, getter=isEngaged) BOOL engaged;
 
-- (void)engageAudioSession;
-- (void)disengageAudioSession;
 -(void)playRingback;
--(void)stopRingback;
+
 -(void)playIncomingCallTone;
--(void)playOnce;
--(void)stopTheNoise;
+-(void)playIncomingCallToneDemo;
+
+-(void)stop;
+
 -(void)checkState;
 
 

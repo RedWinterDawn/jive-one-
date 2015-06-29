@@ -23,6 +23,8 @@ extern NSString *const kJCAppSettingsPresenceAttribute;
 // Remembers the last selected view controller for the app switcher.
 @property (nonatomic) NSString *appSwitcherLastSelectedViewControllerIdentifier;
 
+@property (nonatomic) NSString *ringTone;
+
 @end
 
 @interface JCAppSettings (Singleton)
