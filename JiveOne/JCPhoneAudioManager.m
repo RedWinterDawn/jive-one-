@@ -379,13 +379,36 @@
     }
 }
 
+#pragma mark - Private -
+#define DEFAULT_TIME_INTERVAL 1
 
+void vibration (SystemSoundID ssID, void *clientData)
+{
+    
+    double delayInSeconds = DEFAULT_TIME_INTERVAL;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        AudioServicesPlaySystemSound(ssID);
+    });
+}
+
+- (void)startVibrate
+{
+    
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL, vibration, NULL);
+}
+
+-(void)stopVibrate{
+    AudioServicesRemoveSystemSoundCompletion (kSystemSoundID_Vibrate);
+    AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
+}
 
 @end
 
 #pragma mark - Alerts -
 
-//#define DEFAULT_TIME_INTERVAL 1
+
 
 //static AVAudioPlayer *ringbackAudioPlayer;
 //static BOOL active;
@@ -403,40 +426,3 @@
 //    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 //    AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL, vibration, NULL);
 //}
-
-
-
-
-#pragma mark - Private -
-
-//void vibration (SystemSoundID ssID, void *clientData)
-//{
-//    if (!active)
-//        return;
-//    
-//    double delayInSeconds = DEFAULT_TIME_INTERVAL;
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//        if (!active)
-//            return;
-//        AudioServicesPlaySystemSound(ssID);
-//    });
-//}
-
-
-//TODO: Delete this
-//void ringtone (SystemSoundID ssID, void *clientData)
-//{
-//    if (!active)
-//        return;
-//    
-//    double delayInSeconds = DEFAULT_TIME_INTERVAL;
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//        if (!active)
-//            return;
-//        AudioServicesPlaySystemSound(ssID);
-//    });
-//}
-
-//@end
