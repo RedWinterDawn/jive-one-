@@ -11,10 +11,9 @@
 #import "JCPhoneAudioManager.h"
 
 @interface JCDialToneTableViewController (){
-    NSArray *dialTones;
-    
+    NSArray *_dialTones;
+    JCPhoneAudioManager *_audioManager;
 }
-@property (nonatomic) JCPhoneAudioManager* audioManager;
 
 @end
 
@@ -24,13 +23,7 @@
     [super viewDidLoad];
     _audioManager = [JCPhoneAudioManager new];
 
-    dialTones = @[@"ambiant", @"calling", @"dialup", @"futureDial", @"iReport", @"oldPhone", @"sifi", @"walkietalkie"];
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    _dialTones = @[@"ambiant", @"calling", @"dialup", @"futureDial", @"iReport", @"oldPhone", @"sifi", @"walkietalkie"];
 }
 
 #pragma mark - Table view data source
@@ -40,32 +33,20 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-     return dialTones.count;
+     return _dialTones.count;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier = @"ringToneCell";
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if(!cell)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
-
-    cell.textLabel.text = dialTones[indexPath.row];
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    cell.textLabel.text = _dialTones[indexPath.row];
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
    
-    self.appSettings.ringTone = dialTones[indexPath.row];
-    NSLog(@"%@", dialTones[indexPath.row]);
-    NSLog(@"%@", self.appSettings.ringTone);
+    self.appSettings.ringTone = _dialTones[indexPath.row];
     [_audioManager playIncomingCallToneDemo];
 }
-
-
-#pragma mark - Navigation
 
 @end
