@@ -143,7 +143,7 @@
         return _incomingCallAudioPlayer;
     }
     
-    NSString* ringTone = _appSettings.ringTone;
+    NSString* ringTone = _appSettings.ringtone;
     NSString *path = [[NSBundle mainBundle] pathForResource:ringTone ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:path];
     
@@ -159,7 +159,7 @@
         return _earlyMediaRingBackPlayer;
     }
     
-    NSString* ringTone = _appSettings.ringTone;
+    NSString* ringTone = _appSettings.ringtone;
     NSString *path = [[NSBundle mainBundle] pathForResource:ringTone ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:path];
     

@@ -50,7 +50,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
    
-    self.appSettings.ringTone = _dialTones[indexPath.row];
+    self.appSettings.ringtone = _dialTones[indexPath.row];
     [_audioManager playIncomingCallToneDemo];
 }
 
