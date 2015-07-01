@@ -7,12 +7,14 @@
 //
 
 @import MessageUI;
+@import AVFoundation;
 
 #import "JCSettingsTableViewController.h"
 
 // Managers
 #import "JCAuthenticationManager.h"
 #import "JCPhoneManager.h"
+#import "JCPhoneAudioManager.h"
 
 // Models
 #import "JCAppSettings.h"
@@ -30,6 +32,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 @interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate, JCDIDSelectorViewControllerDelegate>
 
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
+@property (nonatomic) JCPhoneAudioManager* audioManager;
 
 @end
 
@@ -38,7 +41,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    _audioManager = [JCPhoneAudioManager new];
     // Device Info
     UIDevice *device = [UIDevice currentDevice];
     self.installationIdentifier.text = device.installationIdentifier;
@@ -53,6 +56,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     JCAppSettings *settings = self.appSettings;
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
+    _volumeslidder.value = settings.volumeLevel;
+
     
     #ifndef DEBUG
     if (self.debugCell) {
@@ -106,6 +111,13 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 }
 
 #pragma mark - IBActions -
+
+- (IBAction)sliderValue:(id)sender {
+    self.appSettings.volumeLevel = _volumeslidder.value;
+    [_audioManager playOnce];  //Plays a snippit of the ringer so the user know how load it is going ot be.
+}
+
+
 
 -(IBAction)leaveFeedback:(id)sender
 {
