@@ -15,18 +15,33 @@
 {
     JCPhoneAudioManagerOutputType _outputType;
     JCPhoneAudioManagerInputType _inputType;
+    JCAppSettings *_appSettings;
 }
+
+@property (strong, nonatomic) AVAudioPlayer *incomingCallAudioPlayer;
+@property (strong, nonatomic) AVAudioPlayer *earlyMediaRingBackPlayer;
+
+@property (assign) SystemSoundID incomingRingerSound;
 
 @end
 
 @implementation JCPhoneAudioManager
 
--(instancetype)init
+- (instancetype)init {
+    return [self initWithAppSettings:[JCAppSettings sharedSettings]];
+}
+
+- (instancetype)initWithAppSettings:(JCAppSettings *)settings
 {
     self = [super init];
     if (self)
     {
+        _appSettings = settings;
+        
+        [self configureAudioSession];
+        
         // Register for Audio Session Notifications
+       
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(audioSessionInterruptionSelector:) name:AVAudioSessionInterruptionNotification object:nil];
         [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
@@ -38,47 +53,121 @@
     return self;
 }
 
-#pragma mark - Public Methods
-
-/* Access the Audio Session singlton and modify the AVAudioSessionPlayAndRecord property to allow Bluetooth.
- */
--(void)engageAudioSession
-{
-    NSLog(@"engage audio session");
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    if (![session setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil]) {
-        
-    }
-    
-    if (![session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:nil]) {
-        
-    }
-    
-    if (![session setMode:AVAudioSessionModeVoiceChat error:nil]) {
-        
-    }
-    
-    // activate audio session
-    if (![session setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil]) {
-        
-    }
-    
-    _engaged = true;
+-(void)dealloc {
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self];
 }
 
--(void)disengageAudioSession
+
+#pragma mark - Incoming Call Ringer Methods
+
+- (void) configureAudioSession {
+    __autoreleasing NSError *error;
+    
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionDuckOthers error:&error];
+    if (error){
+        NSLog(@"Error setting Category! %@", [error description]);
+    }
+}
+
+#pragma mark - Public Methods
+
+-(void)playRingback{
+    
+    AVAudioPlayer *player = self.earlyMediaRingBackPlayer;
+    player.volume = _appSettings.volumeLevel;
+    
+    [player prepareToPlay];
+    [player play];
+}
+
+- (void)playIncomingCallTone
 {
-    NSLog(@"disengage audio session");
-    // deactivate session
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    if (![session setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error: nil]) {
-        NSLog(@"Error Disabling Audio Session");
+    AVAudioPlayer *player = self.incomingCallAudioPlayer;
+    player.volume = _appSettings.volumeLevel;
+    
+    [player prepareToPlay];
+    [player play];
+}
+
+- (void) playIncomingCallToneDemo
+{
+    if (_incomingCallAudioPlayer.isPlaying) {
+        [_incomingCallAudioPlayer stop];
+        _incomingCallAudioPlayer = nil;
+    }
+   
+    AVAudioPlayer *player = self.incomingCallAudioPlayer;
+    player.numberOfLoops = 0;
+    player.volume = _appSettings.volumeLevel;
+    
+    if (_outputType != JCPhoneAudioManagerOutputSpeaker) {
+         [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
+    }
+
+    [player prepareToPlay];
+    [player play];
+}
+
+-(void)stop {
+    
+    AVAudioPlayer *player = _incomingCallAudioPlayer;
+    if (player && player.isPlaying) {
+        [player stop];
+        _incomingCallAudioPlayer = nil;
     }
     
-    _engaged = false;
+    player = _earlyMediaRingBackPlayer;
+    if (player && player.isPlaying) {
+        [player stop];
+        _earlyMediaRingBackPlayer = nil;
+    }
+}
+
+-(void)checkState {
+    if (_incomingCallAudioPlayer.isPlaying && _outputType == JCPhoneAudioManagerOutputReceiver) {
+        [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
+    }
+}
+
+-(void)setSessionActive
+{
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
 }
 
 #pragma mark - Getters -
+
+-(AVAudioPlayer *)incomingCallAudioPlayer
+{
+    if (_incomingCallAudioPlayer) {
+        return _incomingCallAudioPlayer;
+    }
+    
+    NSString* ringTone = _appSettings.ringtone;
+    NSString *path = [[NSBundle mainBundle] pathForResource:ringTone ofType:@"mp3"];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    
+    _incomingCallAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+    _incomingCallAudioPlayer.numberOfLoops = -1;
+    _incomingCallAudioPlayer.volume = _appSettings.volumeLevel;                                               // Set the audio volume to user defined amount
+    return _incomingCallAudioPlayer;
+}
+
+-(AVAudioPlayer *)earlyMediaRingBackPlayer
+{
+    if (_earlyMediaRingBackPlayer) {
+        return _earlyMediaRingBackPlayer;
+    }
+    
+    NSString* ringTone = _appSettings.ringtone;
+    NSString *path = [[NSBundle mainBundle] pathForResource:ringTone ofType:@"mp3"];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    
+    _earlyMediaRingBackPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];    // Setup audio players for Incoming call ringer
+    _earlyMediaRingBackPlayer.numberOfLoops = -1;
+    _earlyMediaRingBackPlayer.volume = _appSettings.volumeLevel;                                            // Set the audio volume of ringback sound to user defined amount
+    return _earlyMediaRingBackPlayer;
+}
 
 -(JCPhoneAudioManagerInputType)inputType
 {
@@ -119,16 +208,9 @@
     if (type == AVAudioSessionInterruptionTypeBegan) {
         _interupted = true;
         [_delegate audioSessionInteruptionDidBegin:self];
-        NSLog(@"Audio Session Interuption begin");
     } else {
         _interupted = false;
         [_delegate audioSessionInteruptionDidEnd:self];
-        NSLog(@"Audio Session Interuption end");
-    }
-    
-    AVAudioSessionInterruptionOptions options = ((NSNumber *)[userInfo valueForKey:AVAudioSessionInterruptionOptionKey]).unsignedIntegerValue;
-    if (options == AVAudioSessionInterruptionOptionShouldResume) {
-        NSLog(@"Audio Session Should Resume");
     }
 }
 
@@ -162,13 +244,6 @@
  */
 -(void)audioSessionMediaServicesWereResetSelector:(NSNotification *)notification
 {
-    if (_engaged) {
-        [self engageAudioSession];
-    }
-    else {
-        [self disengageAudioSession];
-    }
-    
     NSLog(@"Audio Session Media Services Were Reset %@", [notification.userInfo description]);
 }
 
@@ -323,127 +398,29 @@
     }
 }
 
-
-
-@end
-
-#pragma mark - Alerts -
-
+#pragma mark - Private -
 #define DEFAULT_TIME_INTERVAL 1
 
-static AVAudioPlayer *ringbackAudioPlayer;
-static SystemSoundID ringtoneID;
-static BOOL active;
-
-@implementation JCPhoneAudioManager (Alerts)
-
-- (void)vibrate
+void vibration (SystemSoundID ssID, void *clientData)
 {
-    [self startRepeatingVibration:NO];
+    
+    double delayInSeconds = DEFAULT_TIME_INTERVAL;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        AudioServicesPlaySystemSound(ssID);
+    });
 }
 
-- (void)startRepeatingVibration:(BOOL)repeating
+- (void)startVibrate
 {
-    active = repeating;
+    
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL, vibration, NULL);
 }
 
-- (void)stop
-{
-    active = false;
-    
-    if (ringtoneID) {
-        AudioServicesRemoveSystemSoundCompletion (ringtoneID);
-        AudioServicesDisposeSystemSoundID(ringtoneID);
-        ringtoneID = false;
-    }
-    
-    __autoreleasing NSError *error;
-    if (![[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error]) {
-        NSLog(@"%@", error);
-    }
-    
-    if (ringbackAudioPlayer) {
-        [ringbackAudioPlayer stop];
-        ringbackAudioPlayer = nil;
-    }
-}
-
-- (void)ring
-{
-    [self startRepeatingRingtone:NO];
-}
-
-- (void)startRepeatingRingtone:(BOOL)repeating
-{
-    active = repeating;
-    @try {
-        NSURL *url = [NSURL fileURLWithPath:@"/System/Library/Audio/UISounds/vc~ringing.caf"];
-        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-        if (self.outputType == JCPhoneAudioManagerOutputReceiver) {
-            __autoreleasing NSError *error;
-            if (![audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error]) {
-                NSLog(@"%@", error);
-            }
-        }
-        
-        AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)url, &ringtoneID);
-        AudioServicesPlaySystemSound(ringtoneID);
-        CFBridgingRelease((__bridge CFURLRef)url);
-        AudioServicesAddSystemSoundCompletion(ringtoneID, NULL, NULL, ringtone, NULL);
-        
-        if ([JCAppSettings sharedSettings].isVibrateOnRing)
-            [self startRepeatingVibration:repeating];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"%@", exception.description);
-    }
-}
-
-- (void)startRingback
-{
-    if (!ringbackAudioPlayer) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"calling" ofType:@"mp3"];
-        NSURL *url = [NSURL fileURLWithPath:path];
-        __autoreleasing NSError *error;
-        ringbackAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
-        [ringbackAudioPlayer prepareToPlay];
-    }
-    
-    if (!ringbackAudioPlayer.isPlaying) {
-        [ringbackAudioPlayer play];
-    }
-}
-
-#pragma mark - Private -
-
-void vibration (SystemSoundID ssID, void *clientData)
-{
-    if (!active)
-        return;
-    
-    double delayInSeconds = DEFAULT_TIME_INTERVAL;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        if (!active)
-            return;
-        AudioServicesPlaySystemSound(ssID);
-    });
-}
-
-void ringtone (SystemSoundID ssID, void *clientData)
-{
-    if (!active)
-        return;
-    
-    double delayInSeconds = DEFAULT_TIME_INTERVAL;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        if (!active)
-            return;
-        AudioServicesPlaySystemSound(ssID);
-    });
+-(void)stopVibrate{
+    AudioServicesRemoveSystemSoundCompletion (kSystemSoundID_Vibrate);
+    AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
 }
 
 @end

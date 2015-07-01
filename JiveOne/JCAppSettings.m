@@ -16,6 +16,9 @@ NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
 NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
 NSString *const kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute = @"applicationSwitcherLastSelected";
 NSString *const kJCAppSettingsVoicemailOnSpeakerAttribute = @"voicemailOnSpeaker";
+NSString *const kJCAppSettingsVolumeLevelAttribute = @"volumeLevel";
+NSString *const kJCRingToneSelectedAttribute = @"ringtone";
+
 
 @interface JCAppSettings ()
 
@@ -76,6 +79,17 @@ NSString *const kJCAppSettingsVoicemailOnSpeakerAttribute = @"voicemailOnSpeaker
     [self setSettingStringValue:lastSelectedViewControllerIdentifier forKey:kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute];
 }
 
+-(void)setRingtone:(NSString *)ringTone
+{
+    [self setSettingStringValue:ringTone forKey:kJCRingToneSelectedAttribute];
+}
+
+-(void)setVolumeLevel:(float )volumeLevel
+{
+    [self setFloatValue:volumeLevel forKey:kJCAppSettingsVolumeLevelAttribute];
+}
+
+
 #pragma mark - Getters -
 
 -(BOOL)isIntercomEnabled
@@ -111,6 +125,18 @@ NSString *const kJCAppSettingsVoicemailOnSpeakerAttribute = @"voicemailOnSpeaker
     return [self.userDefaults valueForKey:kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute];
 }
 
+-(NSString *)ringtone
+{
+    return [self.userDefaults valueForKey:kJCRingToneSelectedAttribute];
+}
+
+-(float)volumeLevel
+{
+    return [self.userDefaults floatForKey:kJCAppSettingsVolumeLevelAttribute];
+}
+
+
+
 #pragma mark - Private -
 
 -(void)setSettingBoolValue:(BOOL)value forKey:(NSString *)key
@@ -127,7 +153,16 @@ NSString *const kJCAppSettingsVoicemailOnSpeakerAttribute = @"voicemailOnSpeaker
     [self willChangeValueForKey:key];
     NSUserDefaults *defaults = self.userDefaults;
     [defaults setValue:value forKey:key];
+    [defaults synchronize];
     [self didChangeValueForKey:key];
+}
+
+-(void)setFloatValue:(float)value forKey:(NSString *)key
+{
+    [self willChangeValueForKey:key];
+    NSUserDefaults *defaults = self.userDefaults;
+    [defaults setFloat:value forKey:key];
+    [defaults synchronize];
 }
 
 @end

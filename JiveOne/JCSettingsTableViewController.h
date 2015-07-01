@@ -23,6 +23,11 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *debugCell;
 @property (weak, nonatomic) IBOutlet UISwitch *wifiOnly;
 @property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
+@property (weak, nonatomic) IBOutlet UILabel *volumeLabel;
+@property (weak, nonatomic) IBOutlet UIView *routeIconBackground;
+@property (weak, nonatomic) IBOutlet UISlider *volumeslidder;
+- (IBAction)sliderValue:(id)sender;
+
 
 -(IBAction)leaveFeedback:(id)sender;
 -(IBAction)logout:(id)sender;
