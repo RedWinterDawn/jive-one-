@@ -101,7 +101,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 {
     UIViewController *controller = segue.destinationViewController;
     if ([controller isKindOfClass:[UINavigationController class]]) {
-        controller = ((UINavigationController *)controller).topViewController; 
+        controller = ((UINavigationController *)controller).topViewController;
     }
     
     if ([controller isKindOfClass:[JCTermsAndConditonsViewController class]]) {
@@ -125,7 +125,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     [UserVoice presentUserVoiceInterfaceForParentViewController:self];
 }
 
--(void)configureUser{
+
 //        if ([MFMailComposeViewController canSendMail]) {
 //            MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
 //            mailViewController.mailComposeDelegate = self;
@@ -154,8 +154,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 //            [mailViewController setMessageBody:bodyTemplate isHTML:YES];
 //            [self presentViewController:mailViewController animated:YES completion:nil];
 //        }
-
-}
+//}
 
 -(IBAction)logout:(id)sender
 {
