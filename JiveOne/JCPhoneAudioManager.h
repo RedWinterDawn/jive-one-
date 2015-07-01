@@ -60,25 +60,14 @@ typedef enum : NSUInteger {
 @property (nonatomic, readonly, getter=isInterupted) BOOL interupted;
 @property (nonatomic, readonly, getter=isEngaged) BOOL engaged;
 
-- (void)engageAudioSession;
-- (void)disengageAudioSession;
 -(void)playRingback;
--(void)stopRingback;
+
 -(void)playIncomingCallTone;
--(void)playOnce;
--(void)stopTheNoise;
+-(void)playIncomingCallToneDemo;
+
+-(void)stop;
+
 -(void)checkState;
-
-
-@end
-
-@interface JCPhoneAudioManager (Alerts)
-
-- (void)vibrate;                                    // Single vibrate.
-- (void)startRepeatingVibration:(BOOL)repeating;    // Repeating Vibration
-- (void)ring;                                       // Single ring.
-- (void)startRepeatingRingtone:(BOOL)repeating;     // Repeating Ring.
-- (void)stop;                                       // Stops repeating events.
-- (void)startRingback;                              // Starts Ringback.
+-(void)setSessionActive;
 
 @end

@@ -17,6 +17,7 @@ NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
 NSString *const kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute = @"applicationSwitcherLastSelected";
 NSString *const kJCAppSettingsVoicemailOnSpeakerAttribute = @"voicemailOnSpeaker";
 NSString *const kJCAppSettingsVolumeLevelAttribute = @"volumeLevel";
+NSString *const kJCRingToneSelectedAttribute = @"ringtone";
 
 
 @interface JCAppSettings ()
@@ -78,6 +79,11 @@ NSString *const kJCAppSettingsVolumeLevelAttribute = @"volumeLevel";
     [self setSettingStringValue:lastSelectedViewControllerIdentifier forKey:kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute];
 }
 
+-(void)setRingtone:(NSString *)ringTone
+{
+    [self setSettingStringValue:ringTone forKey:kJCRingToneSelectedAttribute];
+}
+
 -(void)setVolumeLevel:(float )volumeLevel
 {
     [self setFloatValue:volumeLevel forKey:kJCAppSettingsVolumeLevelAttribute];
@@ -117,6 +123,11 @@ NSString *const kJCAppSettingsVolumeLevelAttribute = @"volumeLevel";
 -(NSString *)appSwitcherLastSelectedViewControllerIdentifier
 {
     return [self.userDefaults valueForKey:kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute];
+}
+
+-(NSString *)ringtone
+{
+    return [self.userDefaults valueForKey:kJCRingToneSelectedAttribute];
 }
 
 -(float)volumeLevel
