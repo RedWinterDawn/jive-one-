@@ -35,8 +35,11 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 
 @property (nonatomic, readonly) NSString *authToken;
 @property (nonatomic, readonly) NSString *jiveUserId;
+@property (nonatomic, readonly) double exspirationDate;
 @property (nonatomic, readonly) BOOL userAuthenticated;
 @property (nonatomic, readonly) BOOL userLoadedMinimumData;
+
+-(void)CheckForExpiration;
 
 // Remember Me
 @property (nonatomic) BOOL rememberMe;

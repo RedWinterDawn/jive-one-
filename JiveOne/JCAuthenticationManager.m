@@ -41,6 +41,7 @@ NSString *const kJCAuthenticationManagerJiveUserIdKey           = @"username";
 NSString *const kJCAuthenticationManagerAccessTokenKey  = @"access_token";
 NSString *const kJCAuthenticationManagerRefreshTokenKey = @"refresh_token";
 NSString *const kJCAuthenticationManagerUsernameKey     = @"username";
+NSString *const kJCAuthenticationExspirationTimeKey = @"expires_in";
 NSString *const kJCAuthenticationManagerRememberMeKey   = @"remberMe";
 
 NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
@@ -109,6 +110,34 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
     }
 }
 
+-(void)gotA403Alert {
+    //Present a alert that prompts user for password if failed log them out.
+    UIAlertView* verifyYouAreWhoYouSayYouAre = [[UIAlertView alloc] initWithTitle:@"Token exspired" message:@"Please enter your password" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+    
+    verifyYouAreWhoYouSayYouAre.alertViewStyle = UIAlertViewStyleSecureTextInput;
+    verifyYouAreWhoYouSayYouAre.tag = 12;
+    [verifyYouAreWhoYouSayYouAre addButtonWithTitle:@"Enter"];
+    [verifyYouAreWhoYouSayYouAre show];
+    
+}
+
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 12){
+        if (buttonIndex == 1) {
+            UITextField* password = [alertView textFieldAtIndex:0];
+            [self loginWithUsername: self.jiveUserId           //Present Alert
+                                                 password:password.text
+                                                completed:^(BOOL success, NSError *error) {
+                                                    if (error) {
+                                                        [self logout];            //If there is any problem log them out
+                                                    }
+                                                }];
+        }
+    }
+}
+
+
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password completed:(CompletionBlock)completion
 {
     // Destroy current authToken;
@@ -131,6 +160,17 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
         }
         _authClient = nil;
     }];
+}
+//TODO: finish making this work
+-(void)CheckForExpiration{
+   
+    time_t unixTime = (time_t) [[NSDate date] timeIntervalSince1970];           //Checks the current date against your tokens exspiration date and prompts if its exspired
+    if (_exspirationDate)
+    {
+        if (unixTime > _exspirationDate) {
+            [self gotA403Alert];
+        }
+    }
 }
 
 - (void)logout
@@ -293,7 +333,12 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
         if (!accessToken || accessToken.length == 0) {
             [NSException raise:NSInvalidArgumentException format:@"Access Token null or empty"];
         }
-        
+        double exspiration = [tokenData doubleValueForKey:kJCAuthenticationExspirationTimeKey];
+        if (!exspiration) {
+            [NSException raise:NSInvalidArgumentException format:@"Expiration of token not found"];
+        }
+        _exspirationDate = exspiration;
+        [self CheckForExpiration];
         NSString *jiveUserId = [tokenData valueForKey:kJCAuthenticationManagerUsernameKey];
         if (!jiveUserId || jiveUserId.length == 0) {
             [NSException raise:NSInvalidArgumentException format:@"Username null or empty"];

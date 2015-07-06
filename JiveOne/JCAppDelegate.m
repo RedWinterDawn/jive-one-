@@ -507,6 +507,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 {
     LOG_Info();
     [JCSocket restart]; // In case the socket stopped, we restart it.
+    [[JCAuthenticationManager sharedInstance] CheckForExpiration];
     [[JCPhoneManager sharedManager] stopKeepAlive];
 }
 

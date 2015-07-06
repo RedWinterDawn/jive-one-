@@ -195,9 +195,9 @@
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="aqf-Jw-rU9"/>
+                                                    <exclude reference="KKH-YN-c39"/>
                                                     <exclude reference="fPw-lw-fW0"/>
                                                     <exclude reference="kMw-Cs-YhT"/>
-                                                    <exclude reference="KKH-YN-c39"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>

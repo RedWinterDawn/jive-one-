@@ -369,6 +369,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     if (_mPortSIPSDK) {
         [_mPortSIPSDK stopKeepAwake];
         [_audioManager checkState];
+        [[JCAuthenticationManager sharedInstance] CheckForExpiration];
     }
     
     if (!self.isActive && !_registered && _provisioning) {
