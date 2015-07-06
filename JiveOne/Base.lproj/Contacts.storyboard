@@ -491,6 +491,8 @@
                         <outletCollection property="editingCells" destination="IJL-IJ-KH7" id="Sf2-dU-asp"/>
                         <outletCollection property="editingCells" destination="3Zu-iQ-WVB" id="iAM-ke-yzo"/>
                         <outletCollection property="nameSectionCells" destination="axD-8F-grE" id="7Rv-22-mGF"/>
+                        <outletCollection property="editingCells" destination="eaw-pQ-Kb3" id="M4E-RB-1Xg"/>
+                        <outletCollection property="editingCells" destination="0zZ-CX-x0W" id="jB8-IH-vbO"/>
                         <segue destination="wCP-M4-bk8" kind="show" identifier="SelectPhoneType" id="DR2-2K-uSy"/>
                     </connections>
                 </tableViewController>
