@@ -22,7 +22,7 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
 
 @implementation JCAuthenticationKeychain
 
-- (BOOL)setAccessToken:(NSString *)accessToken username:(NSString *)username;
+- (BOOL)setAccessToken:(NSString *)accessToken username:(NSString *)username expiration:(NSDate *)expriation
 {
     if (!username || username.length == 0) {
         [NSException raise:NSInvalidArgumentException format:@"Username null or empty"];
@@ -43,7 +43,10 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
     
     // Data store
     _accessToken = accessToken;
-    [keychainQuery setObject:[accessToken dataUsingEncoding:NSUTF8StringEncoding] forKey:(__bridge id)kSecValueData];
+    
+    NSDictionary *accessData = @{@"expiration": expriation, @"token": accessToken};
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:accessData];
+    [keychainQuery setObject:data forKey:(__bridge id)kSecValueData];
     
     #if DEBUG
     NSLog(@"%@", [keychainQuery description]);
@@ -108,13 +111,31 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
             return nil;
         }
         
-        NSString *accessToken = [self loadAccessTokenForAccount:jiveUserId];
+        NSDictionary *accessData = [self loadAccessTokenForAccount:jiveUserId];
+        NSString *accessToken = [accessData stringValueForKey:@"token"];
         if (accessToken && accessToken.length > 0) {
             _accessToken = accessToken;
         }
     }
     
     return _accessToken;
+}
+
+-(NSDate  *)expriation
+{
+    if (!_expiration) {
+        NSString *jiveUserId = self.jiveUserId;
+        if (!jiveUserId || jiveUserId.length < 1) {
+            return nil;
+        }
+        
+        NSDictionary *accessData = [self loadAccessTokenForAccount:jiveUserId];
+        NSDate *date = [accessData objectForKey:@"expiration"];
+        if (date) {
+            _expiration = date;
+        }
+    }
+    return _expiration;
 }
 
 -(BOOL)isAuthenticated
@@ -143,21 +164,24 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
     return baseKeyChainQuery;
 }
 
-- (NSString *)loadAccessTokenForAccount:(NSString *)account
+- (NSDictionary *)loadAccessTokenForAccount:(NSString *)account
 {
-    NSString *value = nil;
+    NSDictionary *data = nil;
     CFDataRef keyData = NULL;
     NSMutableDictionary *keychainQuery = [self getKeychainQueryForAccount:account];
     [keychainQuery setObject:(__bridge id)kCFBooleanTrue forKey:(__bridge id)kSecReturnData];
     [keychainQuery setObject:(__bridge id)kSecMatchLimitOne forKey:(__bridge id)kSecMatchLimit];
     if (SecItemCopyMatching((__bridge CFDictionaryRef)keychainQuery, (CFTypeRef *)&keyData) == noErr) {
         @try {
-            value = [[NSString alloc] initWithData:(__bridge NSData *)keyData encoding:NSUTF8StringEncoding];
+            id object = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)keyData];
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                data = (NSDictionary *) object;
+            }
         }
         @catch (NSException *e) {
             NSString *key = [keychainQuery valueForKey:(__bridge id)kSecAttrService];
             NSLog(@"Unarchive of %@ failed: %@", key, e);
-            value = nil;
+            data = nil;
         }
     }
     
@@ -165,7 +189,7 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
         CFRelease(keyData);
     }
     
-    return value;
+    return data;
 }
 
 @end

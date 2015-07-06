@@ -54,8 +54,8 @@
         [self.passwordTextField becomeFirstResponder];
     } else {
 #if DEBUG
-        self.usernameTextField.text = @"jivetesting@gmail.com";
-        self.passwordTextField.text = @"testing12";
+        self.usernameTextField.text = @"danielleonard";
+        self.passwordTextField.text = @"";
 #endif
         [self.usernameTextField becomeFirstResponder];
     }

@@ -355,8 +355,11 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
         if (![jiveUserId isEqualToString:username]) {
            [NSException raise:NSInvalidArgumentException format:@"Auth token user name does not match login user name"];
         }
+        NSDate *today = [NSDate date];
+        NSDate *expoDat = [[NSDate alloc]init];
         
-        if (![_authenticationKeychain setAccessToken:accessToken username:jiveUserId]) {
+        expoDat = [today dateByAddingTimeInterval:_exspirationDate];
+        if (![_authenticationKeychain setAccessToken:accessToken username:jiveUserId expiration:expoDat]) {
             [NSException raise:NSInvalidArgumentException format:@"Unable to save access token to keychain store."];
         }
         
