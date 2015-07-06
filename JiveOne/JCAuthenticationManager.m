@@ -131,7 +131,8 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
                                                 completed:^(BOOL success, NSError *error) {
                                                     if (error) {
                                                         [self logout];            //If there is any problem log them out
-                                                    }
+                                                    } else if (success)
+                                                    NSLog(@"you made it back in");
                                                 }];
         }
     }
@@ -152,6 +153,7 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
     [_authClient loginWithUsername:username password:password completion:^(BOOL success, NSDictionary *authToken, NSError *error) {
         if (success) {
             [self receivedAccessTokenData:authToken username:username completion:completion];
+            [self CheckForExpiration];
         }
         else {
             if (completion) {
@@ -165,11 +167,17 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
 -(void)CheckForExpiration{
    
     time_t unixTime = (time_t) [[NSDate date] timeIntervalSince1970];           //Checks the current date against your tokens exspiration date and prompts if its exspired
+    NSDate *today = [NSDate dateWithTimeIntervalSince1970:unixTime];
+    NSDate *expoDate = [[NSDate alloc] init];
+    
     if (_exspirationDate)
     {
-        if (unixTime > _exspirationDate) {
+        expoDate = [today dateByAddingTimeInterval:_exspirationDate];
+//        NSDate *expoDate = [NSDate dateWithTimeIntervalSinceNow:*(_exspirationDate)];
+        if ([today compare:expoDate] == NSOrderedDescending) {
             [self gotA403Alert];
         }
+    NSLog(@"date and expo date %@, : %@", today, expoDate);
     }
 }
 
@@ -337,8 +345,8 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
         if (!exspiration) {
             [NSException raise:NSInvalidArgumentException format:@"Expiration of token not found"];
         }
-        _exspirationDate = exspiration;
-        [self CheckForExpiration];
+        _exspirationDate = exspiration/1000;
+        
         NSString *jiveUserId = [tokenData valueForKey:kJCAuthenticationManagerUsernameKey];
         if (!jiveUserId || jiveUserId.length == 0) {
             [NSException raise:NSInvalidArgumentException format:@"Username null or empty"];
