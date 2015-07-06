@@ -158,9 +158,9 @@ NSString *const kContactOtherValueKey           = @"value";
 + (void)processContactsArrayData:(NSArray *)contactsData user:(User *)user
 {
     NSMutableSet *contacts = user.contacts.mutableCopy;
-    for (NSDictionary *contactData in contactsData) {
+    for (id contactData in contactsData) {
         if ([contactData isKindOfClass:[NSDictionary class]]) {
-            Contact *contact = [self processContactData:contactData user:user];
+            Contact *contact = [self processContactData:(NSDictionary *)contactData user:user];
             if ([contacts containsObject:contact]) {
                 [contacts removeObject:contact];
             }
@@ -322,7 +322,7 @@ NSString *const kContactOtherValueKey           = @"value";
         return address;
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dataHash = %@ AND contact = @%", hash, contact];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dataHash = %@ AND contact = %@", hash, contact];
     address = [Address MR_findFirstWithPredicate:predicate inContext:contact.managedObjectContext];
     if (!address) {
         address = [Address MR_createEntityInContext:contact.managedObjectContext];
