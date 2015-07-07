@@ -32,12 +32,12 @@ NSString *const kContactPhoneNumbersNodeKey = @"phoneNumber";
 NSString *const kContactPhoneNumberTypeKey      = @"type";
 NSString *const kContactPhoneNumberNumberKey    = @"number";
 
-NSString *const kContactAddressesNodeKey    = @"address";
-NSString *const kContactAddressesHashKey        = @"hash";
-NSString *const kContactAddressesKey            = @"address";
-NSString *const kContactAddressesCityKey        = @"city";
-NSString *const kContactAddressesRegionKey      = @"region";
-NSString *const kContactAddressesPostalCodeKey  = @"postalCode";
+NSString *const kContactAddressNodeKey      = @"address";
+NSString *const kContactAddressHashKey          = @"hash";
+NSString *const kContactAddressKey              = @"address";
+NSString *const kContactAddressCityKey          = @"city";
+NSString *const kContactAddressRegionKey        = @"region";
+NSString *const kContactAddressPostalCodeKey    = @"postalCode";
 NSString *const kContactAddressTypeKey          = @"type";
 
 NSString *const kContactOtherNodeKey        = @"other";
@@ -158,9 +158,9 @@ NSString *const kContactOtherValueKey           = @"value";
 + (void)processContactsArrayData:(NSArray *)contactsData user:(User *)user
 {
     NSMutableSet *contacts = user.contacts.mutableCopy;
-    for (NSDictionary *contactData in contactsData) {
+    for (id contactData in contactsData) {
         if ([contactData isKindOfClass:[NSDictionary class]]) {
-            Contact *contact = [self processContactData:contactData user:user];
+            Contact *contact = [self processContactData:(NSDictionary *)contactData user:user];
             if ([contacts containsObject:contact]) {
                 [contacts removeObject:contact];
             }
@@ -203,7 +203,7 @@ NSString *const kContactOtherValueKey           = @"value";
     }
     
     // Addresses
-    NSArray *addresses = [data arrayForKey:kContactAddressesNodeKey];
+    NSArray *addresses = [data arrayForKey:kContactAddressNodeKey];
     if (addresses) {
         [self processAddressArrayData:addresses contact:contact];
     }
@@ -211,7 +211,7 @@ NSString *const kContactOtherValueKey           = @"value";
     // Other
     NSArray *other = [data arrayForKey:kContactOtherNodeKey];
     if (other) {
-        [self processAddressArrayData:other contact:contact];
+        [self processOtherArrayData:other contact:contact];
     }
 }
 
@@ -301,13 +301,13 @@ NSString *const kContactOtherValueKey           = @"value";
 
 +(Address *)processAddressData:(NSDictionary *)data contact:(Contact *)contact
 {
-    NSString *hash = [data stringValueForKey:kContactAddressesHashKey];
+    NSString *hash = [data stringValueForKey:kContactAddressHashKey];
     
     Address *address = [self addressForHash:hash contact:contact];
-    address.thoroughfare = [data stringValueForKey:kContactAddressesKey];
-    address.city         = [data stringValueForKey:kContactAddressesCityKey];
-    address.region       = [data stringValueForKey:kContactAddressesRegionKey];
-    address.postalCode   = [data stringValueForKey:kContactAddressesPostalCodeKey];
+    address.thoroughfare = [data stringValueForKey:kContactAddressKey];
+    address.city         = [data stringValueForKey:kContactAddressCityKey];
+    address.region       = [data stringValueForKey:kContactAddressRegionKey];
+    address.postalCode   = [data stringValueForKey:kContactAddressPostalCodeKey];
     address.type         = [data stringValueForKey:kContactAddressTypeKey];
     
     return address;
@@ -322,7 +322,7 @@ NSString *const kContactOtherValueKey           = @"value";
         return address;
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dataHash = %@ AND contact = @%", hash, contact];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dataHash = %@ AND contact = %@", hash, contact];
     address = [Address MR_findFirstWithPredicate:predicate inContext:contact.managedObjectContext];
     if (!address) {
         address = [Address MR_createEntityInContext:contact.managedObjectContext];
@@ -358,7 +358,7 @@ NSString *const kContactOtherValueKey           = @"value";
 
 +(ContactInfo *)processOtherData:(NSDictionary *)data contact:(Contact *)contact
 {
-    NSString *hash = [data stringValueForKey:kContactAddressesHashKey];
+    NSString *hash = [data stringValueForKey:kContactAddressHashKey];
     ContactInfo *contactInfo = [self contactInfoForHash:hash contact:contact];
     contactInfo.type  = [data stringValueForKey:kContactOtherTypeKey];
     contactInfo.key   = [data stringValueForKey:kContactOtherKey];
@@ -538,14 +538,7 @@ NSString *const kContactOtherValueKey           = @"value";
 + (void)processContactUpload:(NSDictionary *)contactData contact:(Contact *)contact
 {
     contact.contactId = [contactData stringValueForKey:kContactContactIdKey];
-    
     [self updateContact:contact data:contactData];
-    
-    
-    
-    
-    
-    
 }
 
 -(NSDictionary *)serializedData
@@ -570,7 +563,7 @@ NSString *const kContactOtherValueKey           = @"value";
     for (Address *address in addresses) {
         [addressesData addObject:[self addressBookDataForAddress:address]];
     }
-    [data setObject:addressesData forKey:kContactAddressesNodeKey];
+    [data setObject:addressesData forKey:kContactAddressNodeKey];
     
     // Info Data
     NSArray *info = [self.info.allObjects sortedArrayUsingSelector:@selector(order)];
@@ -594,12 +587,12 @@ NSString *const kContactOtherValueKey           = @"value";
 -(NSDictionary *)addressBookDataForAddress:(Address *)address
 {
     NSMutableDictionary *data = [NSMutableDictionary new];
-    [data setValue:address.dataHash forKey:kContactAddressesHashKey];
-    [data setValue:address.type forKey:kContactAddressesPostalCodeKey];
-    [data setValue:address.thoroughfare forKey:kContactAddressesPostalCodeKey];
-    [data setValue:address.city forKey:kContactAddressesPostalCodeKey];
-    [data setValue:address.region forKey:kContactAddressesPostalCodeKey];
-    [data setValue:address.postalCode forKey:kContactAddressesPostalCodeKey];
+    [data setValue:address.dataHash forKey:kContactAddressHashKey];
+    [data setValue:address.type forKey:kContactAddressTypeKey];
+    [data setValue:address.thoroughfare forKey:kContactAddressKey];
+    [data setValue:address.city forKey:kContactAddressCityKey];
+    [data setValue:address.region forKey:kContactAddressRegionKey];
+    [data setValue:address.postalCode forKey:kContactAddressPostalCodeKey];
     return data;
 }
 

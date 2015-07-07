@@ -44,6 +44,7 @@
     [address addObserver:self forKeyPath:NSStringFromSelector(@selector(city)) options:NSKeyValueObservingOptionNew context:nil];
     [address addObserver:self forKeyPath:NSStringFromSelector(@selector(region)) options:NSKeyValueObservingOptionNew context:nil];
     [address addObserver:self forKeyPath:NSStringFromSelector(@selector(postalCode)) options:NSKeyValueObservingOptionNew context:nil];
+    [address addObserver:self forKeyPath:NSStringFromSelector(@selector(type)) options:NSKeyValueObservingOptionNew context:nil];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -51,7 +52,8 @@
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(thoroughfare))] ||
         [keyPath isEqualToString:NSStringFromSelector(@selector(city))] ||
         [keyPath isEqualToString:NSStringFromSelector(@selector(region))] ||
-        [keyPath isEqualToString:NSStringFromSelector(@selector(postalCode))]) {
+        [keyPath isEqualToString:NSStringFromSelector(@selector(postalCode))] ||
+        [keyPath isEqualToString:NSStringFromSelector(@selector(type))]) {
         [self setNeedsLayout];
         [self layoutIfNeeded];
     }
@@ -81,6 +83,7 @@
         [address removeObserver:self forKeyPath:NSStringFromSelector(@selector(city)) context:nil];
         [address removeObserver:self forKeyPath:NSStringFromSelector(@selector(region)) context:nil];
         [address removeObserver:self forKeyPath:NSStringFromSelector(@selector(postalCode)) context:nil];
+        [address removeObserver:self forKeyPath:NSStringFromSelector(@selector(type)) context:nil];
     }
 }
 

@@ -37,11 +37,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *addAddressCell;
 
 // Other Section
-
 @property (weak, nonatomic) IBOutlet UITableViewCell *addOtherCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *jiveIdCell;
-
-
 @property (weak, nonatomic) IBOutlet UITableViewCell *deleteCell;
 
 @property (strong, nonatomic) IBOutletCollection(UITableViewCell) NSArray *editingCells;
