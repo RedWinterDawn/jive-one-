@@ -211,7 +211,7 @@ NSString *const kContactOtherValueKey           = @"value";
     // Other
     NSArray *other = [data arrayForKey:kContactOtherNodeKey];
     if (other) {
-        [self processAddressArrayData:other contact:contact];
+        [self processOtherArrayData:other contact:contact];
     }
 }
 
@@ -538,14 +538,7 @@ NSString *const kContactOtherValueKey           = @"value";
 + (void)processContactUpload:(NSDictionary *)contactData contact:(Contact *)contact
 {
     contact.contactId = [contactData stringValueForKey:kContactContactIdKey];
-    
     [self updateContact:contact data:contactData];
-    
-    
-    
-    
-    
-    
 }
 
 -(NSDictionary *)serializedData
