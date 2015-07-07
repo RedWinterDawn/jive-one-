@@ -243,9 +243,9 @@ static const NSMutableArray *alerts;
     JCAlertView *alertView = [JCAlertView alertWithTitle:title
                                                  message:message
                                                dismissed:NULL
-                                       cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
-    if (showImmediately)
-        [alertView show];
+                                         showImmediately:showImmediately
+                                       cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                       otherButtonTitles:nil];
     return alertView;
 }
 
@@ -262,15 +262,13 @@ static const NSMutableArray *alerts;
 {
     JCAlertView *alertView = [JCAlertView alertWithTitle:title message:message
                                                dismissed:dismissBlock
+                                         showImmediately:showImmediately
                                        cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                        otherButtonTitles:NSLocalizedString(@"OK", nil),nil];
-    
-    if (showImmediately)
-        [alertView show];
     return alertView;
 }
 
-+(JCAlertView *)alertWithTitle:(NSString *)title message:(NSString *)message dismissed:(JCAlertViewDismissBlock)dismissBlock cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...
++(JCAlertView *)alertWithTitle:(NSString *)title message:(NSString *)message dismissed:(JCAlertViewDismissBlock)dismissBlock showImmediately:(BOOL)showImmediately cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...
 {
     JCAlertView *alertView = [[JCAlertView alloc] initWithTitle:title message:message dismissed:dismissBlock cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
     if (alertView)
@@ -281,6 +279,10 @@ static const NSMutableArray *alerts;
             [alertView addButtonWithTitle:title];
         va_end(argumentList);
     }
+    
+    if (showImmediately)
+        [alertView show];
+    
     return alertView;
 }
 

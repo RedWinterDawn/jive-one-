@@ -39,13 +39,14 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @property (nonatomic, readonly) BOOL userAuthenticated;
 @property (nonatomic, readonly) BOOL userLoadedMinimumData;
 
--(void)CheckForExpiration;
-
 // Remember Me
 @property (nonatomic) BOOL rememberMe;
 @property (nonatomic, readonly) NSString *rememberMeUser;
 
 @property (nonatomic, strong) NSString *deviceToken;
+
+
++ (void)requestAuthenticationForUser:(User *)user completion:(CompletionHandler)completion;
 
 @end
 

@@ -12,7 +12,7 @@
 // Keychain
 NSString *const kJCAuthenticationManagerKeychainStoreIdentifier         = @"oauth-token";
 NSString *const kJCAuthenticationManagerKeychainTokenKey                = @"token";
-NSString *const kJCAuthenticationManagerKeychainExpirationKey           = @"expirationDate";
+NSString *const kJCAuthenticationManagerKeychainExpirationDateKey       = @"expirationDate";
 NSString *const kJCAuthenticationManagerKeychainAuthenticationDateKey   = @"authenticationDate";
 
 
@@ -28,7 +28,7 @@ NSString *const kJCAuthenticationManagerKeychainAuthenticationDateKey   = @"auth
 
 @implementation JCAuthenticationKeychain
 
-- (BOOL)setAccessToken:(NSString *)accessToken username:(NSString *)username expiration:(NSDate *)expiration
+- (BOOL)setAccessToken:(NSString *)accessToken username:(NSString *)username expirationDate:(NSDate *)expirationDate
 {
     if (!username || username.length == 0) {
         [NSException raise:NSInvalidArgumentException format:@"Username null or empty"];
@@ -39,37 +39,20 @@ NSString *const kJCAuthenticationManagerKeychainAuthenticationDateKey   = @"auth
     }
     
     _jiveUserId = username;
-    NSMutableDictionary *keychainQuery = [self getKeychainQueryForAccount:username];
-    OSStatus result = SecItemDelete((__bridge CFDictionaryRef)keychainQuery);  // Easier to delete than to update.
-    if (result == noErr) {
-        #if DEBUG
-        NSLog(@"Successfully deleted previous store %@ into keychain", username);
-        #endif
-    }
-    
     NSDictionary *accessData = @{kJCAuthenticationManagerKeychainTokenKey: accessToken,
                                  kJCAuthenticationManagerKeychainAuthenticationDateKey: [NSDate date],
-                                 kJCAuthenticationManagerKeychainExpirationKey: expiration};
+                                 kJCAuthenticationManagerKeychainExpirationDateKey: expirationDate};
     _accessData = accessData;
-    
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:accessData];
+    
+    
+    NSMutableDictionary *keychainQuery = [self getKeychainQueryForAccount:username];
+    OSStatus result = SecItemDelete((__bridge CFDictionaryRef)keychainQuery);  // Easier to delete than to update.
     [keychainQuery setObject:data forKey:(__bridge id)kSecValueData];
-    
-    #if DEBUG
-    NSLog(@"%@", [keychainQuery description]);
-    #endif
-    
     result = SecItemAdd((__bridge CFDictionaryRef)keychainQuery, NULL);
     if (result == noErr) {
-        #if DEBUG
-        NSLog(@"Successfully stored access token for %@ into keychain", username);
-        #endif
         return YES;
     }
-    
-    #if DEBUG
-    NSLog(@"Failed storing value for keychain");
-    #endif
     return NO;
 }
 
@@ -125,7 +108,7 @@ NSString *const kJCAuthenticationManagerKeychainAuthenticationDateKey   = @"auth
 
 -(NSDate  *)expirationDate
 {
-    id object = [self.accessData objectForKey:kJCAuthenticationManagerKeychainExpirationKey];
+    id object = [self.accessData objectForKey:kJCAuthenticationManagerKeychainExpirationDateKey];
     if (object && [object isKindOfClass:[NSDate class]]) {
         return (NSDate *)object;
     }
