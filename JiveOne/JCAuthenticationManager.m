@@ -38,11 +38,11 @@ NSString *const kJCAuthenticationManagerLineChangedNotification                 
 NSString *const kJCAuthenticationManagerRememberMeAttributeKey  = @"rememberMe";
 NSString *const kJCAuthenticationManagerJiveUserIdKey           = @"username";
 
-NSString *const kJCAuthenticationManagerAccessTokenKey  = @"access_token";
-NSString *const kJCAuthenticationManagerRefreshTokenKey = @"refresh_token";
-NSString *const kJCAuthenticationManagerUsernameKey     = @"username";
-NSString *const kJCAuthenticationExspirationTimeKey = @"expires_in";
-NSString *const kJCAuthenticationManagerRememberMeKey   = @"remberMe";
+NSString *const kJCAuthenticationManagerAccessTokenKey                  = @"access_token";
+NSString *const kJCAuthenticationManagerRefreshTokenKey                 = @"refresh_token";
+NSString *const kJCAuthenticationManagerUsernameKey                     = @"username";
+NSString *const kJCAuthenticationManagerExpirationTimeIntervalKey       = @"expires_in";
+NSString *const kJCAuthenticationManagerRememberMeKey                   = @"rememberMe";
 
 NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
 
@@ -337,29 +337,34 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
             [NSException raise:NSInvalidArgumentException format:@"%@", tokenData[@"error"]];
         }
         
-        NSString *accessToken = [tokenData valueForKey:kJCAuthenticationManagerAccessTokenKey];
-        if (!accessToken || accessToken.length == 0) {
-            [NSException raise:NSInvalidArgumentException format:@"Access Token null or empty"];
-        }
-        double exspiration = [tokenData doubleValueForKey:kJCAuthenticationExspirationTimeKey];
-        if (!exspiration) {
-            [NSException raise:NSInvalidArgumentException format:@"Expiration of token not found"];
-        }
-        _exspirationDate = exspiration/1000;            //convert from miliseconds to give us a date for exspiration
-        
+        // Validate Jive User ID. Get the responce user ID, which should match the username we requested.
         NSString *jiveUserId = [tokenData valueForKey:kJCAuthenticationManagerUsernameKey];
         if (!jiveUserId || jiveUserId.length == 0) {
             [NSException raise:NSInvalidArgumentException format:@"Username null or empty"];
         }
         
         if (![jiveUserId isEqualToString:username]) {
-           [NSException raise:NSInvalidArgumentException format:@"Auth token user name does not match login user name"];
+            [NSException raise:NSInvalidArgumentException format:@"Auth token user name does not match login user name"];
         }
+        
+        // Retrive the access token
+        NSString *accessToken = [tokenData valueForKey:kJCAuthenticationManagerAccessTokenKey];
+        if (!accessToken || accessToken.length == 0) {
+            [NSException raise:NSInvalidArgumentException format:@"Access Token null or empty"];
+        }
+        
+        // Retrive the Expiration date.
+        double exspiration = [tokenData doubleValueForKey:kJCAuthenticationManagerExpirationTimeIntervalKey];
+        if (!exspiration) {
+            [NSException raise:NSInvalidArgumentException format:@"Expiration of token not found"];
+        }
+        _exspirationDate = exspiration/1000;            //convert from miliseconds to give us a date for exspiration
+        
         NSDate *today = [NSDate date];
         NSDate *expoDat = [[NSDate alloc]init];
         
         expoDat = [today dateByAddingTimeInterval:_exspirationDate];
-        if (![_authenticationKeychain setAccessToken:accessToken username:jiveUserId expiration:expoDat]) {
+        if (![_authenticationKeychain setAccessToken:accessToken username:jiveUserId expirationDate:expoDat]) {
             [NSException raise:NSInvalidArgumentException format:@"Unable to save access token to keychain store."];
         }
         

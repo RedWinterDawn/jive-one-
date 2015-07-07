@@ -12,10 +12,12 @@
 
 @property (nonatomic, readonly) NSString *jiveUserId;
 @property (nonatomic, readonly) NSString *accessToken;
-@property (nonatomic, readonly) NSDate *expiration;
+@property (nonatomic, readonly) NSDate *expirationDate;
+@property (nonatomic, readonly) NSDate *authenticationDate;
+
 @property (nonatomic, readonly) BOOL isAuthenticated;
 
-- (BOOL)setAccessToken:(NSString *)tokenData username:(NSString *)username expiration:(NSDate *)expriation;
+- (BOOL)setAccessToken:(NSString *)tokenData username:(NSString *)username expirationDate:(NSDate *)expriationDate;
 - (void)logout;
 
 @end

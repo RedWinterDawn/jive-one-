@@ -10,19 +10,25 @@
 #import "JCAuthenticationManagerError.h"
 
 // Keychain
-NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token";
+NSString *const kJCAuthenticationManagerKeychainStoreIdentifier         = @"oauth-token";
+NSString *const kJCAuthenticationManagerKeychainTokenKey                = @"token";
+NSString *const kJCAuthenticationManagerKeychainExpirationKey           = @"expirationDate";
+NSString *const kJCAuthenticationManagerKeychainAuthenticationDateKey   = @"authenticationDate";
+
 
 @interface JCAuthenticationKeychain ()
 {
     NSString *_jiveUserId;
-    NSString *_accessToken;
+    NSDictionary *_accessData;
 }
+
+@property (nonatomic, readonly) NSDictionary *accessData;
 
 @end
 
 @implementation JCAuthenticationKeychain
 
-- (BOOL)setAccessToken:(NSString *)accessToken username:(NSString *)username expiration:(NSDate *)expriation
+- (BOOL)setAccessToken:(NSString *)accessToken username:(NSString *)username expiration:(NSDate *)expiration
 {
     if (!username || username.length == 0) {
         [NSException raise:NSInvalidArgumentException format:@"Username null or empty"];
@@ -41,10 +47,11 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
         #endif
     }
     
-    // Data store
-    _accessToken = accessToken;
+    NSDictionary *accessData = @{kJCAuthenticationManagerKeychainTokenKey: accessToken,
+                                 kJCAuthenticationManagerKeychainAuthenticationDateKey: [NSDate date],
+                                 kJCAuthenticationManagerKeychainExpirationKey: expiration};
+    _accessData = accessData;
     
-    NSDictionary *accessData = @{@"expiration": expriation, @"token": accessToken};
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:accessData];
     [keychainQuery setObject:data forKey:(__bridge id)kSecValueData];
     
@@ -69,7 +76,7 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
 -(void)logout
 {
     _jiveUserId = nil;
-    _accessToken = nil;
+    _accessData = nil;
     NSMutableDictionary *keychainQuery = [self getBaseKeychainQuery];
     SecItemDelete((__bridge CFDictionaryRef)keychainQuery);
 }
@@ -92,11 +99,6 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
         if (result) {
             CFRelease(result);
         }
-        
-        #if DEBUG
-        NSLog(@"Loaded Jive User Id from keychain: %@", value);
-        #endif
-        
         _jiveUserId = value;
     }
     return _jiveUserId;
@@ -105,37 +107,29 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
 
 -(NSString *)accessToken
 {
-    if (!_accessToken) {
-        NSString *jiveUserId = self.jiveUserId;
-        if (!jiveUserId || jiveUserId.length < 1) {
-            return nil;
-        }
-        
-        NSDictionary *accessData = [self loadAccessTokenForAccount:jiveUserId];
-        NSString *accessToken = [accessData stringValueForKey:@"token"];
-        if (accessToken && accessToken.length > 0) {
-            _accessToken = accessToken;
-        }
+    NSString *accessToken = [self.accessData stringValueForKey:kJCAuthenticationManagerKeychainTokenKey];
+    if (accessToken && accessToken.length > 0) {
+         return accessToken;
     }
-    
-    return _accessToken;
+    return nil;
 }
 
--(NSDate  *)expriation
+-(NSDate *)authenticationDate
 {
-    if (!_expiration) {
-        NSString *jiveUserId = self.jiveUserId;
-        if (!jiveUserId || jiveUserId.length < 1) {
-            return nil;
-        }
-        
-        NSDictionary *accessData = [self loadAccessTokenForAccount:jiveUserId];
-        NSDate *date = [accessData objectForKey:@"expiration"];
-        if (date) {
-            _expiration = date;
-        }
+    id object = [self.accessData objectForKey:kJCAuthenticationManagerKeychainAuthenticationDateKey];
+    if (object && [object isKindOfClass:[NSDate class]]) {
+        return (NSDate *)object;
     }
-    return _expiration;
+    return nil;
+}
+
+-(NSDate  *)expirationDate
+{
+    id object = [self.accessData objectForKey:kJCAuthenticationManagerKeychainExpirationKey];
+    if (object && [object isKindOfClass:[NSDate class]]) {
+        return (NSDate *)object;
+    }
+    return nil;
 }
 
 -(BOOL)isAuthenticated
@@ -144,6 +138,21 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
 }
 
 #pragma mark - Private -
+
+-(NSDictionary *)accessData
+{
+    if (_accessData) {
+        return _accessData;
+    }
+    
+    NSString *jiveUserId = self.jiveUserId;
+    if (!jiveUserId || jiveUserId.length < 1) {
+        return nil;
+    }
+    
+    _accessData = [self loadAccessTokenForAccount:jiveUserId];
+    return _accessData;
+}
 
 - (NSMutableDictionary *)getBaseKeychainQuery
 {
