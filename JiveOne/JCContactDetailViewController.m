@@ -103,16 +103,15 @@
 
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
-    if (!editing) {
+    if (!editing && self.managedObjectContext.hasChanges) {
         [self saveContact:^(BOOL success, NSError *error) {
             if (success) {
-                [self layoutForEditing:editing animated:YES];
+                [self layoutForEditing:editing animated:animated];
                 [super setEditing:editing animated:animated];
             }
         }];
     } else {
-        [self convertContact];
-        [self layoutForEditing:editing animated:YES];
+        [self layoutForEditing:editing animated:animated];
         [super setEditing:editing animated:animated];
     }
 }
@@ -200,7 +199,11 @@
 
 -(IBAction)cancel:(id)sender
 {
-    [self.managedObjectContext reset];
+    if(self.managedObjectContext.hasChanges) {
+        [self.managedObjectContext rollback];
+        [self layoutForPhoneNumber:self.phoneNumber animated:NO];
+    }
+    
     if (_addingContact) {
         [self.navigationController popViewControllerAnimated:YES];
     }
