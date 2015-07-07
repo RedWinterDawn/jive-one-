@@ -104,13 +104,17 @@
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     if (!editing) {
-        [self saveContact];
+        [self saveContact:^(BOOL success, NSError *error) {
+            if (success) {
+                [self layoutForEditing:editing animated:YES];
+                [super setEditing:editing animated:animated];
+            }
+        }];
     } else {
         [self convertContact];
+        [self layoutForEditing:editing animated:YES];
+        [super setEditing:editing animated:animated];
     }
-    
-    [self layoutForEditing:editing animated:YES];
-    [super setEditing:editing animated:animated];
 }
 
 -(void)setEditing:(BOOL)editing
@@ -379,10 +383,13 @@
     }
 }
 
--(void)saveContact
+-(void)saveContact:(CompletionHandler)completion
 {
     id<JCPhoneNumberDataSource> phoneNumber = self.phoneNumber;
     if (![phoneNumber isKindOfClass:[Contact class]]) {
+        if (completion) {
+            completion(TRUE, nil);
+        }
         return;
     }
     
@@ -390,6 +397,9 @@
     NSManagedObjectContext *context = contact.managedObjectContext;
     if (!context.hasChanges) {
         if (contact.contactId || contact.etag) {
+            if (completion) {
+                completion(TRUE, nil);
+            }
             return;
         }
     }
@@ -400,6 +410,9 @@
             [self showError:error];
         }
         _addingContact = FALSE;
+        if (completion) {
+            completion(success, error);
+        }
     }];
 }
 
