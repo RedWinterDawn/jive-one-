@@ -138,13 +138,13 @@ NSString *const kJCAuthenticationManagerResponseExpirationTimeIntervalKey   = @"
         Line *line = self.line;
         if (line) {
             // Check our expiration date.
-//            if ([[NSDate date] timeIntervalSinceDate:_authenticationKeychain.expirationDate] > 0) {
+            if ([[NSDate date] timeIntervalSinceDate:_authenticationKeychain.expirationDate] > 0) {
                 [[self class] requestAuthenticationForUser:_user completion:^(BOOL success, NSError *error) {
                     [self postNotificationNamed:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
                 }];
-//            } else {
-//                [self postNotificationNamed:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
-//            }
+            } else {
+                [self postNotificationNamed:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
+            }
         } else {
             [JCAlertView alertWithTitle:NSLocalizedString(@"Warning", @"Authentication Manager Error")
                                 message:NSLocalizedString(@"Unable to select line. Please Login again.", @"Authentication Manager Error")];
