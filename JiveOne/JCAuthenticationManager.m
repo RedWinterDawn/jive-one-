@@ -345,7 +345,7 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
         if (!exspiration) {
             [NSException raise:NSInvalidArgumentException format:@"Expiration of token not found"];
         }
-        _exspirationDate = exspiration/1000;
+        _exspirationDate = exspiration/1000;            //convert from miliseconds to give us a date for exspiration
         
         NSString *jiveUserId = [tokenData valueForKey:kJCAuthenticationManagerUsernameKey];
         if (!jiveUserId || jiveUserId.length == 0) {
