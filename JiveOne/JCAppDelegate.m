@@ -428,7 +428,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 #if DEBUG
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
+    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
 #else
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
