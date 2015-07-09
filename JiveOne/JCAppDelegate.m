@@ -45,6 +45,8 @@
 
 #import  "JCAppSettings.h"
 
+#import "<Google/CloudMessaging.h>"
+
 #define SHARED_CACHE_CAPACITY 2 * 1024 * 1024
 #define DISK_CACHE_CAPACITY 100 * 1024 * 1024
 
@@ -60,6 +62,7 @@
 
 NSString *const kPAPInstallationChannelsKey = @"channels";
 NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciveRemoteNotification";
+NSString *const kGCMSenderId = @"937754980938";
 
 #pragma mark Login Workflow
 
@@ -408,8 +411,13 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 {
     [Appsee start:@"a57e92aea6e541529dc5227171341113"];
     
-    [Parse setApplicationId:@"bQTDjU0QtxWVpNQp2yJp7d9ycntVZdCXF5QrVH8q"
-                  clientKey:@"ec135dl8Xfu4VAUXz0ub6vt3QqYnQEur2VcMH1Yf"];
+//    [Parse setApplicationId:@"bQTDjU0QtxWVpNQp2yJp7d9ycntVZdCXF5QrVH8q"
+//                  clientKey:@"ec135dl8Xfu4VAUXz0ub6vt3QqYnQEur2VcMH1Yf"];
+    //GCM Push notifications
+    UIUserNotificationType allNotificationTypes = (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
     
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
@@ -536,6 +544,8 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceTokenData
 {
+    [[GGLInstanceID sharedInstance] startWithConfig:[GGLInstanceIDConfig defaultConfig]];
+    
     if (deviceTokenData)
     {
         PFInstallation *currentInstallation = [PFInstallation currentInstallation];
