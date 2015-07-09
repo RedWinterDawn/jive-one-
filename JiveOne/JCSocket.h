@@ -39,9 +39,12 @@ extern NSString *const kJCSocketNotificationResultKey;
 + (void)requestSocketSessionRequestUrlsWithDeviceIdentifier:(NSString *)deviceToken completion:(CompletionHandler)completion;
 
 // Subscribes the socket session for events related to a jrn identifeir on a entity for event types.
-+ (void)subscribeToSocketEventsWithIdentifer:(NSString *)identifer entity:(NSString *)entity type:(NSString *)type;
++ (void)subscribeToSocketEventsWithArray:(NSMutableArray *) requestArray;
+
 
 // Unsubscribes from all socket events.
 + (void)unsubscribeToSocketEvents:(CompletionHandler)completion;
+
++ (NSDictionary *)subscriptionDictionaryForIdentifier:(NSString *)identifier entity:(NSMutableDictionary *)entity type:(NSString *)type;
 
 @end

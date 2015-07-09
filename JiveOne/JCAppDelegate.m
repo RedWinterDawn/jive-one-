@@ -576,7 +576,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
     if (error) {
-        NSLog(@"%@", error);
+        NSLog(@"Failed to register for Remote Notifications : ERROR : %@", error);
     }
     
     [self application:application didRegisterForRemoteNotificationsWithDeviceToken:nil];

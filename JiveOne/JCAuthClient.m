@@ -15,7 +15,7 @@ NSString *const kJCAuthClientJavascriptString    = @"document.getElementById('us
 // OAuth
 NSString *const kJCAuthClientAccessTokenUrl     = @"https://auth.jive.com/oauth2/v2/grant?client_id=%@&response_type=token&scope=%@&redirect_uri=%@";
 NSString *const kJCAuthClientRefreshTokenUrl    = @"https://auth.jive.com/oauth2/v2/token";
-NSString *const kJCAuthClientScopeProfile       = @"contacts.v1.profile.read%20sms.v1.send";
+NSString *const kJCAuthClientScopeProfile       = @"contacts.v1.profile.read%20sms.v1.send%20jasmine.v2.subscribe";
 NSString *const kJCAuthClientRefreshTokenData   = @"refresh_token=%@&client_id=%@&redirect_uri=%@&grant_type=refresh_token";
 NSString *const kJCAuthClientClientId           = @"f62d7f80-3749-11e3-9b37-542696d7c505";
 NSString *const kJCAuthClientClientSecret       = @"enXabnU5KuVm4XRSWGkU";

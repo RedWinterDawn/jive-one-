@@ -246,7 +246,11 @@ NSString *const kVoicemailResponseTranscriptionUrlKey = @"transcription";
 
 + (void)subscribeToLine:(Line *)line
 {
-    [JCSocket subscribeToSocketEventsWithIdentifer:line.jrn entity:line.jrn type:@"mailbox"];
+    NSString *identifyer = [line.jrn componentsSeparatedByString:@":"].lastObject;
+    
+    NSMutableDictionary *entity = [@{@"type": @"voicemail", @"id": identifyer,  @"account":@"lame"}mutableCopy];
+    
+    [JCSocket subscriptionDictionaryForIdentifier:identifyer entity:entity type:@"mailbox"];
 }
 
 

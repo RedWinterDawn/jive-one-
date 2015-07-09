@@ -17,6 +17,8 @@ NSString *const kJCSMSMessageManagerFormNumber        = @"fromNumber";
 
 NSString *const kJCSMSMessageManagerEntityTypeKey        = @"entityType";
 NSString *const kJCSMSMessageManagerTypeSMSMessageKey       = @"smsmessage";
+NSString *const kJCSMSMessageManagerEntityDialogKey =     @"dialog";
+NSString *const kJCSMSMessageManagerEntityConversationKey =           @"conversation";
 //NSString *const kJCSMSMessageManagerActionKey            = @"action";
 //NSString *const kJCSMSMessageManagerActionValue          = @"NEW";
 //NSString *const kJCSMSMessageManagerSMSID          = @"ID";
@@ -41,7 +43,25 @@ NSString *const kJCSMSMessageManagerTypeSMSMessageKey       = @"smsmessage";
 -(void)subscribeToDid:(DID *)did
 {
     if (did.canReceiveSMS) {
-        [JCSocket subscribeToSocketEventsWithIdentifer:did.jrn entity:did.jrn type:kJCSMSMessageManagerTypeSMSMessageKey];
+        
+    //TODO: fix this
+//        NSMutableDictionary* entity = [@{kJCSMSMessageManagerTypeKey: @"test", kJCSMSMessageManagerTypeSMSMessageKey:@"preasence", kJCSMSMessageManagerTypeKey: @"line"}mutableCopy];
+        
+//        [JCSocket subscribeToSocketEventsWithIdentifer:did.jrn entity:entity type:kJCSMSMessageManagerTypeSMSMessageKey];
+        
+        NSArray *seperateString = [did.jrn componentsSeparatedByString:@":"];
+        NSString *didID = seperateString.lastObject;
+        NSLog(@"DID ID%@",didID);
+        
+        NSMutableDictionary* entity = [@{kJCSMSMessageManagerTypeKey: didID, kJCSMSMessageManagerTypeKey:kJCSMSMessageManagerEntityDialogKey,  @"account":@"lame"}mutableCopy];
+        
+        NSDictionary *requestParameters = [JCSocket  subscriptionDictionaryForIdentifier:didID entity:entity type:kJCSMSMessageManagerEntityConversationKey];
+        
+        NSMutableArray *mailboxArray = [NSMutableArray new];
+        [mailboxArray addObject:requestParameters];
+        
+        [JCSocket subscribeToSocketEventsWithArray:mailboxArray];
+
     }
 }
 

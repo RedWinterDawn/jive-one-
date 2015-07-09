@@ -14,10 +14,13 @@
 NSString *const kJCVoicemailManagerTypeKey              = @"type";
 NSString *const kJCVoicemailManagerTypeAnnounceValue    = @"announce";
 NSString *const kJCVoicemailManagerTypeMailboxKey       = @"mailbox";
+NSString *const kJCVoicemailManagerTypeVoiceMailKey       = @"voicemail";
 NSString *const kJCVoicemailManagerEntityTypeKey        = @"entityType";
 NSString *const kJCVoicemailManagerMailboxJrnKey        = @"mailboxJrn";
 NSString *const kJCVoicemailManagerActionKey            = @"action";
 NSString *const kJCVoicemailManagerActionValue          = @"NEW";
+NSString *const kJCVoicemailManagerIDKey                    = @"id";
+NSString *const kJCVoicemailManagerAccountKey          = @"account";
 
 @implementation JCVoicemailManager
 
@@ -34,7 +37,37 @@ NSString *const kJCVoicemailManagerActionValue          = @"NEW";
 
 -(void)subscribeToLine:(Line *)line
 {
-    [JCSocket subscribeToSocketEventsWithIdentifer:line.mailboxJrn entity:line.mailboxJrn type:kJCVoicemailManagerTypeMailboxKey];
+    
+    //TODO: fix this
+    NSLog(@"Here is your line you fool %@",line);
+    
+//    [JCSocket subscribeToSocketEventsWithIdentifer:line.mailboxJrn entity:line.mailboxJrn type:kJCVoicemailManagerTypeMailboxKey];
+    NSArray *seperateString = [line.mailboxJrn componentsSeparatedByString:@":"];
+    NSString *mailboxID = seperateString.lastObject;
+    NSLog(@" mailbox id  %@",mailboxID);
+    
+    NSMutableDictionary* entity = [@{kJCVoicemailManagerIDKey: mailboxID, kJCVoicemailManagerTypeKey:@"voicemail", kJCVoicemailManagerAccountKey: @"lame"}mutableCopy];
+    NSDictionary *requestParameters = [JCSocket  subscriptionDictionaryForIdentifier:mailboxID entity:entity type:kJCVoicemailManagerTypeMailboxKey];
+    
+    NSMutableArray *mailboxArray = [NSMutableArray new];
+    [mailboxArray addObject:requestParameters];
+
+    [JCSocket subscribeToSocketEventsWithArray:mailboxArray];
+    
+//    Here is your line you fool <Line: 0x7fa2161ee2f0> (entity: Line; id: 0xd000000000140004 <x-coredata://AE35763C-EFF9-4D4A-AEF0-EE6BAA1F71DD/Line/p5> ; data: {
+//                                                       active = 1;
+//                                                       events = "<relationship fault: 0x7fa216784870 'events'>";
+//                                                       hidden = 0;
+//                                                       jrn = "jrn:line::jive:01471162-f384-24f5-9351-000100420005:014b17d6-0d5a-3d73-1cb7-000100620005";
+//                                                       lineConfiguration = "0xd0000000000c0006 <x-coredata://AE35763C-EFF9-4D4A-AEF0-EE6BAA1F71DD/LineConfiguration/p3>";
+//                                                       mailboxJrn = "jrn:voicemail::jive:01471162-f384-24f5-9351-000100420005:vmbox/014b17d6-0d5a-3d74-1cb7-000100620005";
+//                                                       mailboxUrl = "https://api.jive.com/voicemail/v1/mailbox/id/014b17d6-0d5a-3d74-1cb7-000100620005";
+//                                                       name = "Pete LenonardMobile";
+//                                                       number = 5500;
+//                                                       pbx = "0xd000000000080002 <x-coredata://AE35763C-EFF9-4D4A-AEF0-EE6BAA1F71DD/PBX/p2>";
+//                                                       pbxId = "01471162-f384-24f5-9351-000100420005";
+//                                                       t9 = 738353666273662453;
+//                                                       })
 }
 
 -(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data {

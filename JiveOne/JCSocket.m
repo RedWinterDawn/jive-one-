@@ -23,7 +23,7 @@ NSString *const kJCSocketNotificationResultKey      = @"result";
 
 NSString *const kJCSocketSessionKeychainKey         = @"socket-session";
 
-NSString *const kJCV5ClientSocketSessionRequestURL                      = @"https://realtime.jive.com/session";
+NSString *const kJCV5ClientSocketSessionRequestURL                      = @"https://realtime.jive.com/v2/session";
 NSString *const kJCV5ClientSocketSessionResponseWebSocketRequestKey     = @"ws";
 NSString *const kJCV5ClientSocketSessionResponseSubscriptionRequestKey  = @"subscriptions";
 NSString *const kJCV5ClientSocketSessionResponseSelfRequestKey          = @"self";
@@ -382,13 +382,14 @@ NSString *const kJCSocketParameterIdentifierKey = @"id";
 NSString *const kJCSocketParameterEntityKey     = @"entity";
 NSString *const kJCSocketParameterTypeKey       = @"type";
 
-+ (void)subscribeToSocketEventsWithIdentifer:(NSString *)identifer entity:(NSString *)entity type:(NSString *)type
++ (void)subscribeToSocketEventsWithArray:(NSMutableArray *) requestArray
 {
-    NSDictionary *requestParameters = [self subscriptionDictionaryForIdentifier:identifer entity:entity type:type];
+    
+    NSLog(@"Here is your request params:::::  \n\n\n %@", requestArray);
     NSURL *url = [JCSocket sharedSocket].subscriptionUrl;
     JCV5ApiClient *apiClient = [JCV5ApiClient sharedClient];
     [apiClient.manager POST:url.absoluteString
-                 parameters:requestParameters
+                 parameters:requestArray
                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
                         NSLog(@"Success");
                     }
@@ -424,18 +425,20 @@ NSString *const kJCSocketParameterTypeKey       = @"type";
                       }];
 }
 
-+ (NSDictionary *)subscriptionDictionaryForIdentifier:(NSString *)identifier entity:(NSString *)entity type:(NSString *)type
++ (NSDictionary *)subscriptionDictionaryForIdentifier:(NSString *)identifier entity:(NSMutableDictionary *)entity type:(NSString *)type
 {
     if (!identifier || identifier.length < 1) {
         return nil;
     }
     
-    if (!entity || entity.length < 1) {
+    if (!entity || entity.count < 1) {
         return nil;
     }
     
+    
     NSMutableDictionary *parameters = [@{kJCSocketParameterIdentifierKey: identifier,
                                          kJCSocketParameterEntityKey: entity} mutableCopy];
+    
     
     if (type) {
         [parameters setObject:type forKey:kJCSocketParameterTypeKey];

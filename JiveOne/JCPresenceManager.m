@@ -124,6 +124,9 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
 
 #pragma mark - Private
 
+NSString *const kJCSocketPreasenceIdentifierKey = @"id";
+NSString *const kJCSocketPreasenceAccountKey     = @"account";
+NSString *const kJCSocketPreasenceTypeKey       = @"type";
 /**
  * Loops through the PBX's contacts and subscribe to presence events for each of them. Creates a 
  * line presence object to represent that contact.
@@ -143,10 +146,19 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
     
     NSSet *extensions = pbx.extensions;
     _extensions = [NSMutableArray arrayWithCapacity:extensions.count];
+    
+    NSMutableArray *preasenceArray = [NSMutableArray new];
+
     for (Extension *extension in extensions) {
         [_extensions addObject:[[JCLinePresence alloc] initWithLineIdentifer:extension.jrn]];
-        [JCSocket subscribeToSocketEventsWithIdentifer:extension.jrn entity:extension.jrn type:@"dialog"];
+        NSString *lineID = [extension.jrn componentsSeparatedByString:@":"].lastObject;
+        
+        NSMutableDictionary* entity = [@{kJCSocketPreasenceIdentifierKey:lineID, kJCSocketPreasenceAccountKey:@"account", kJCSocketPreasenceTypeKey: @"line"}mutableCopy];
+        NSDictionary *requestParameters = [JCSocket  subscriptionDictionaryForIdentifier:lineID entity:entity type:@"registration"];
+                [preasenceArray addObject:requestParameters];
     }
+    
+     [JCSocket subscribeToSocketEventsWithArray:preasenceArray];
     
     [self postNotificationNamed:kJCPresenceManagerLinesChangedNotification];
 }
