@@ -11,6 +11,9 @@
 @interface JCAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, weak) NSMutableDictionary* registrationOptions;
+@property (nonatomic, weak) NSString* gcmSenderID;
+@property BOOL connectedToGCM;
 
 
 
