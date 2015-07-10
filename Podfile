@@ -13,6 +13,7 @@ pod 'Appsee'
 pod 'XMLDictionary', '~> 1.4'
 pod 'SVProgressHUD'
 pod 'StaticDataTableViewController'
+pod 'Google/CloudMessaging'
 
 target 'UnitTests', :exclusive => true do
     pod 'OCMock'

@@ -45,6 +45,8 @@
 
 #import  "JCAppSettings.h"
 
+#import <Google/CloudMessaging.h>
+
 #define SHARED_CACHE_CAPACITY 2 * 1024 * 1024
 #define DISK_CACHE_CAPACITY 100 * 1024 * 1024
 
@@ -60,6 +62,7 @@
 
 NSString *const kPAPInstallationChannelsKey = @"channels";
 NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciveRemoteNotification";
+NSString *const kGCMSenderId = @"937754980938";
 
 #pragma mark Login Workflow
 
@@ -416,8 +419,13 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 {
     [Appsee start:@"a57e92aea6e541529dc5227171341113"];
     
-    [Parse setApplicationId:@"bQTDjU0QtxWVpNQp2yJp7d9ycntVZdCXF5QrVH8q"
-                  clientKey:@"ec135dl8Xfu4VAUXz0ub6vt3QqYnQEur2VcMH1Yf"];
+//    [Parse setApplicationId:@"bQTDjU0QtxWVpNQp2yJp7d9ycntVZdCXF5QrVH8q"
+//                  clientKey:@"ec135dl8Xfu4VAUXz0ub6vt3QqYnQEur2VcMH1Yf"];
+    //GCM Push notifications
+    UIUserNotificationType allNotificationTypes = (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
     
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
@@ -524,6 +532,16 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
  */
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+        // Connect to the GCM server to receive non-APNS notifications
+        [[GCMService sharedInstance] connectWithHandler:^(NSError *error) {
+            if (error) {
+                NSLog(@"Could not connect to GCM: %@", error.localizedDescription);
+            } else {
+                _connectedToGCM = true;
+                NSLog(@"Connected to GCM");
+                // ...
+            }
+        }];
     LOG_Info();
 }
 
@@ -548,23 +566,25 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     
     if (deviceTokenData)
     {
-        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-        [currentInstallation setDeviceTokenFromData:deviceTokenData];
-        [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (!error) {
-                NSLog(@"Saved Current installation");
-            } else {
-                NSLog(@"error in currentInstilation %@", error);
-            }
-        }];
+        [[GGLInstanceID sharedInstance] startWithConfig:[GGLInstanceIDConfig defaultConfig]];
         
-        [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                NSLog(@"Jive_One successfully subscribed to push notifications on the broadcast channel.");
-            } else {
-                NSLog(@"Jive_One failed to subscribe to push notifications on the broadcast channel.");
-            }
-        }];
+//        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+//        [currentInstallation setDeviceTokenFromData:deviceTokenData];
+//        [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//            if (!error) {
+//                NSLog(@"Saved Current installation");
+//            } else {
+//                NSLog(@"error in currentInstilation %@", error);
+//            }
+//        }];
+//        
+//        [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
+//            if (succeeded) {
+//                NSLog(@"Jive_One successfully subscribed to push notifications on the broadcast channel.");
+//            } else {
+//                NSLog(@"Jive_One failed to subscribe to push notifications on the broadcast channel.");
+//            }
+//        }];
     } else {
         deviceTokenData = [[UIDevice currentDevice].installationIdentifier dataUsingEncoding:NSUTF8StringEncoding];
     }
@@ -596,6 +616,13 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     
+    NSLog(@"Notification received: %@", userInfo);
+    // This works only if the app started the GCM service
+    [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
+    // Handle the received message
+    // ...
+
+
 //    [PFPush handlePush:userInfo];
 //    TODO:  This is where we need to get the whole message to show the user we have a new message for them.
     
