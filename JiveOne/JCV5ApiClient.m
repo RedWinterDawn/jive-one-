@@ -40,7 +40,7 @@ NSString *const kJCV5ApiClientBaseUrl = @"https://api.jive.com/";
 -(instancetype)initWithBaseURL:(NSURL *)url {
     self = [super initWithBaseURL:url];
     if (self) {
-        _manager.requestSerializer = [JCAuthenticationJSONRequestSerializer serializer];
+        _manager.requestSerializer = [JCBearerAuthenticationJSONRequestSerializer serializer];
         _manager.responseSerializer = [AFJSONResponseSerializer serializer];
     }
     return self;

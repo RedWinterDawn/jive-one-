@@ -36,7 +36,7 @@ extern NSString *const kJCSocketNotificationResultKey;
 @interface JCSocket (V5Client)
 
 // Requests from V5 portal urls needed to open a socket session.
-+ (void)requestSocketSessionRequestUrlsWithDeviceIdentifier:(NSString *)deviceToken completion:(CompletionHandler)completion;
++ (void)createPrioritySession:(NSString *)deviceToken :(CompletionHandler)completion;
 
 // Subscribes the socket session for events related to a jrn identifeir on a entity for event types.
 + (void)subscribeToSocketEventsWithArray:(NSMutableArray *) requestArray;

@@ -44,9 +44,8 @@ NSString *const kJCSocketManagerTypeKeepAlive = @"keepalive";
     id object = [results objectForKey:kJCSocketManagerDataKey];
     if (object && [object isKindOfClass:[NSDictionary class]]) {
         data = (NSDictionary *)object;
-    }
+        }
     [self receivedResult:results type:type data:data];
-    NSLog(@"data through sockets : %@",data);
 }
 
 -(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data

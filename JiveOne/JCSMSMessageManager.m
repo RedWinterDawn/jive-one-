@@ -45,8 +45,7 @@ NSString *const kJCSMSMessageManagerEntityConversationKey =           @"conversa
     if (did.canReceiveSMS) {
         
     //TODO: fix this
-//        NSMutableDictionary* entity = [@{kJCSMSMessageManagerTypeKey: @"test", kJCSMSMessageManagerTypeSMSMessageKey:@"preasence", kJCSMSMessageManagerTypeKey: @"line"}mutableCopy];
-        
+//        NSMutableDictionary* entity = [@{kJCSMSMessageManagerTypeKey: @"", kJCSMSMessageManagerTypeSMSMessageKey:@"conversation", kJCSMSMessageManagerTypeKey: @"line"}mutableCopy];        
 //        [JCSocket subscribeToSocketEventsWithIdentifer:did.jrn entity:entity type:kJCSMSMessageManagerTypeSMSMessageKey];
         
         NSArray *seperateString = [did.jrn componentsSeparatedByString:@":"];

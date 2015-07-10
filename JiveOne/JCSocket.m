@@ -23,7 +23,7 @@ NSString *const kJCSocketNotificationResultKey      = @"result";
 
 NSString *const kJCSocketSessionKeychainKey         = @"socket-session";
 
-NSString *const kJCV5ClientSocketSessionRequestURL                      = @"https://realtime.jive.com/v2/session";
+NSString *const kJCV5ClientSocketSessionRequestURL                      = @"https://realtime.jive.com/v2/session/priority/jediId/451";      //  we need priority sessions so we can get push notifications
 NSString *const kJCV5ClientSocketSessionResponseWebSocketRequestKey     = @"ws";
 NSString *const kJCV5ClientSocketSessionResponseSubscriptionRequestKey  = @"subscriptions";
 NSString *const kJCV5ClientSocketSessionResponseSelfRequestKey          = @"self";
@@ -289,7 +289,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 {
     return self;
 }
-
+//start the socket?
 + (void)connectWithDeviceToken:(NSString *)deviceToken completion:(CompletionHandler)completion
 {
     // If we have a socket session url, try to reuse it.
@@ -304,7 +304,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
     
     // If this is the first time we are connecting, or we have reset the session keychain, request it.
     if (!socket.sessionUrl) {
-        [JCSocket requestSocketSessionRequestUrlsWithDeviceIdentifier:deviceToken completion:completion];
+        [JCSocket createPrioritySession:deviceToken :completion];
         return;
     }
     
@@ -330,7 +330,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 @implementation JCSocket (V5Client)
 
-+ (void)requestSocketSessionRequestUrlsWithDeviceIdentifier:(NSString *)deviceToken completion:(CompletionHandler)completion
++ (void)createPrioritySession:(NSString *)deviceToken :(CompletionHandler)completion
 {
     JCV5ApiClient *client = [JCV5ApiClient new];
     [client.manager POST:kJCV5ClientSocketSessionRequestURL

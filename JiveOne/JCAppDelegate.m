@@ -254,9 +254,9 @@ NSString *const kGCMSenderId = @"937754980938";
 
 -(void)subscribeToLineEvents:(Line *)line
 {
-    [JCPresenceManager subscribeToPbx:line.pbx];
+ //   [JCPresenceManager subscribeToPbx:line.pbx];
 	[JCVoicemailManager subscribeToLine:line];
-    [JCSMSMessageManager subscribeToPbx:line.pbx];
+   // [JCSMSMessageManager subscribeToPbx:line.pbx];
 }
 
 #pragma mark - Notification Handlers -
@@ -335,10 +335,7 @@ NSString *const kGCMSenderId = @"937754980938";
     NSString *deviceToken = [JCAuthenticationManager sharedInstance].deviceToken;
     if (deviceToken && networkManager.isReachable && ![JCSocket sharedSocket].isReady) {            //@Rob what are we suppose to do if we dont have connection or the socket is not ready. Do we ever check again and try to connect.
         [JCSocket connectWithDeviceToken:deviceToken completion:NULL];
-    } else {
-        [JCSocket disconnect];
     }
-        
     
 }
 
@@ -568,23 +565,6 @@ NSString *const kGCMSenderId = @"937754980938";
     {
         [[GGLInstanceID sharedInstance] startWithConfig:[GGLInstanceIDConfig defaultConfig]];
         
-//        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-//        [currentInstallation setDeviceTokenFromData:deviceTokenData];
-//        [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//            if (!error) {
-//                NSLog(@"Saved Current installation");
-//            } else {
-//                NSLog(@"error in currentInstilation %@", error);
-//            }
-//        }];
-//        
-//        [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
-//            if (succeeded) {
-//                NSLog(@"Jive_One successfully subscribed to push notifications on the broadcast channel.");
-//            } else {
-//                NSLog(@"Jive_One failed to subscribe to push notifications on the broadcast channel.");
-//            }
-//        }];
     } else {
         deviceTokenData = [[UIDevice currentDevice].installationIdentifier dataUsingEncoding:NSUTF8StringEncoding];
     }
@@ -599,6 +579,7 @@ NSString *const kGCMSenderId = @"937754980938";
     [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
         if (success) {
             [self subscribeToLineEvents:authenticationManager.line];
+            NSLog(@"success with socket");
         } else if (!success)
             NSLog(@"Error trying to connect to a socket in the app delegate : %@", error);
     }];
