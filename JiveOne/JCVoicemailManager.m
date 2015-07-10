@@ -42,12 +42,13 @@ NSString *const kJCVoicemailManagerAccountKey          = @"account";
     NSLog(@"Here is your line you fool %@",line);
     
 //    [JCSocket subscribeToSocketEventsWithIdentifer:line.mailboxJrn entity:line.mailboxJrn type:kJCVoicemailManagerTypeMailboxKey];
-    NSArray *seperateString = [line.mailboxJrn componentsSeparatedByString:@":"];
-    NSString *mailboxID = seperateString.lastObject;
+    NSString *seperateString = [line.mailboxJrn componentsSeparatedByString:@":"].lastObject;
+    NSString * mailboxID = [seperateString componentsSeparatedByString:@"/"].lastObject;
+    
     NSLog(@" mailbox id  %@",mailboxID);
     
     NSMutableDictionary* entity = [@{kJCVoicemailManagerIDKey: mailboxID, kJCVoicemailManagerTypeKey:@"voicemail", kJCVoicemailManagerAccountKey: @"lame"}mutableCopy];
-    NSDictionary *requestParameters = [JCSocket  subscriptionDictionaryForIdentifier:mailboxID entity:entity type:kJCVoicemailManagerTypeMailboxKey];
+    NSDictionary *requestParameters = [JCSocket  subscriptionDictionaryForIdentifier:mailboxID entity:entity type:@"mailbox"];
     
     NSMutableArray *mailboxArray = [NSMutableArray new];
     [mailboxArray addObject:requestParameters];

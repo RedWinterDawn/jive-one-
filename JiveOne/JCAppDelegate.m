@@ -330,9 +330,13 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     // Handle socket to reconnect. Since we reuse the socket, we do not need to subscribe, but just
     // activate the socket to reopen it. We only want to try to connect if we do not have a device token.
     NSString *deviceToken = [JCAuthenticationManager sharedInstance].deviceToken;
-    if (deviceToken && networkManager.isReachable && ![JCSocket sharedSocket].isReady) {
+    if (deviceToken && networkManager.isReachable && ![JCSocket sharedSocket].isReady) {            //@Rob what are we suppose to do if we dont have connection or the socket is not ready. Do we ever check again and try to connect.
         [JCSocket connectWithDeviceToken:deviceToken completion:NULL];
+    } else {
+        [JCSocket disconnect];
     }
+        
+    
 }
 
 #pragma mark JCAuthenticationManager
@@ -388,7 +392,11 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
  */
 -(void)userDidLogout:(NSNotification *)notification
 {
-    [JCSocket unsubscribeToSocketEvents:NULL];          // Disconnect the socket and purge socket session.
+    [JCSocket unsubscribeToSocketEvents:^(BOOL success, NSError *error) {
+        if (!success) {
+            NSLog(@"Error unsubing to sockets : %@", error);
+        }
+    }];          // Disconnect the socket and purge socket session.
     [[JCPhoneManager sharedManager] disconnect];                        // Disconnect the phone manager
     [JCApiClient cancelAllOperations];                     // Kill any pending client network operations.
     [JCBadgeManager reset];                             // Resets the Badge Manager.
@@ -536,6 +544,8 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceTokenData
 {
+    
+    
     if (deviceTokenData)
     {
         PFInstallation *currentInstallation = [PFInstallation currentInstallation];
@@ -569,7 +579,8 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
         if (success) {
             [self subscribeToLineEvents:authenticationManager.line];
-        }
+        } else if (!success)
+            NSLog(@"Error trying to connect to a socket in the app delegate : %@", error);
     }];
 }
 

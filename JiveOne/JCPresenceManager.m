@@ -152,8 +152,9 @@ NSString *const kJCSocketPreasenceTypeKey       = @"type";
     for (Extension *extension in extensions) {
         [_extensions addObject:[[JCLinePresence alloc] initWithLineIdentifer:extension.jrn]];
         NSString *lineID = [extension.jrn componentsSeparatedByString:@":"].lastObject;
+        NSLog(@"Line id is +++ :%@", lineID);
         
-        NSMutableDictionary* entity = [@{kJCSocketPreasenceIdentifierKey:lineID, kJCSocketPreasenceAccountKey:@"account", kJCSocketPreasenceTypeKey: @"line"}mutableCopy];
+        NSMutableDictionary* entity = [@{kJCSocketPreasenceIdentifierKey:lineID, kJCSocketPreasenceAccountKey:@"lame", kJCSocketPreasenceTypeKey: @"line"}mutableCopy];
         NSDictionary *requestParameters = [JCSocket  subscriptionDictionaryForIdentifier:lineID entity:entity type:@"registration"];
                 [preasenceArray addObject:requestParameters];
     }

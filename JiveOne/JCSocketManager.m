@@ -9,7 +9,7 @@
 #import "JCSocketManager.h"
 
 NSString *const kJCSocketManagerTypeKey = @"type";
-NSString *const kJCSocketManagerDataKey = @"data";
+NSString *const kJCSocketManagerDataKey = @"entity";
 
 NSString *const kJCSocketManagerTypeKeepAlive = @"keepalive";
 
@@ -46,11 +46,12 @@ NSString *const kJCSocketManagerTypeKeepAlive = @"keepalive";
         data = (NSDictionary *)object;
     }
     [self receivedResult:results type:type data:data];
+    NSLog(@"data through sockets : %@",data);
 }
 
 -(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data
 {
-    NSLog(@"%@", result);
+    NSLog(@" The result of scckets : %@", result);
 }
 
 @end
