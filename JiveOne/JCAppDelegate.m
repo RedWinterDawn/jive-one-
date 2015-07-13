@@ -211,7 +211,7 @@ NSString *const kGCMSenderId = @"937754980938";
         // Fetch Voicemails (feature flagged only for v5 clients). Since we try to link the
         // voicemails to thier contacts, we try to download/update the contacts list first, then
         // request voicemails.
-        [Voicemail downloadVoicemailsForLine:line completion:NULL];
+        //[Voicemail downloadVoicemailsForLine:line completion:NULL];
         
         // If the socket is open already, clear and register for jasmine events for our current line
         if ([JCSocket sharedSocket].isReady) {
@@ -238,8 +238,8 @@ NSString *const kGCMSenderId = @"937754980938";
     if (!deviceToken) {
         return;
     }
-    
-    [JCSocket unsubscribeToSocketEvents:^(BOOL success, NSError *error) {
+
+    [JCSocketManager unsubscribe:^(BOOL success, NSError *error) {
         if (!success) {
             [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
                 if (success) {
@@ -254,24 +254,14 @@ NSString *const kGCMSenderId = @"937754980938";
 
 -(void)subscribeToLineEvents:(Line *)line
 {
- //   [JCPresenceManager subscribeToPbx:line.pbx];
-	[JCVoicemailManager subscribeToLine:line];
-   // [JCSMSMessageManager subscribeToPbx:line.pbx];
+    [JCPresenceManager generateSubscriptionForPbx:line.pbx];
+    [JCVoicemailManager generateSubscriptionForLine:line];
+    [JCSMSMessageManager generateSubscriptionForPbx:line.pbx];
+    
+    [JCSocketManager subscribe];
 }
 
 #pragma mark - Notification Handlers -
-
-#pragma mark JCSocket
-
--(void)socketConnectedSelector:(NSNotification *)notification
-{
-    [self resubscribeToLineEvents:[JCAuthenticationManager sharedInstance].line];
-}
-
--(void)socketFailedConnectionSelector:(NSNotification *)notification
-{
-    [self resubscribeToLineEvents:[JCAuthenticationManager sharedInstance].line];
-}
 
 #pragma mark AFNetworkReachability
 
@@ -387,6 +377,12 @@ NSString *const kGCMSenderId = @"937754980938";
     [self registerServicesToLine:authenticationManager.line deviceToken:authenticationManager.deviceToken];
 }
 
+-(void)userRequiresAuthentication:(NSNotification *)notification
+{
+    [JCBadgeManager reset];                             // Resets the Badge Manager.
+    [self presentLoginViewController:YES];              // Present the login view.
+}
+
 /**
  * Notification of user inititated logout.
  */
@@ -397,10 +393,9 @@ NSString *const kGCMSenderId = @"937754980938";
             NSLog(@"Error unsubing to sockets : %@", error);
         }
     }];          // Disconnect the socket and purge socket session.
-    [[JCPhoneManager sharedManager] disconnect];                        // Disconnect the phone manager
+    [[JCPhoneManager sharedManager] disconnect];           // Disconnect the phone manager
     [JCApiClient cancelAllOperations];                     // Kill any pending client network operations.
-    [JCBadgeManager reset];                             // Resets the Badge Manager.
-    [self presentLoginViewController:YES];              // Present the login view.
+    [self userRequiresAuthentication:notification];
 }
 
 #pragma mark - Delegate Handlers -
@@ -419,10 +414,10 @@ NSString *const kGCMSenderId = @"937754980938";
 //    [Parse setApplicationId:@"bQTDjU0QtxWVpNQp2yJp7d9ycntVZdCXF5QrVH8q"
 //                  clientKey:@"ec135dl8Xfu4VAUXz0ub6vt3QqYnQEur2VcMH1Yf"];
     //GCM Push notifications
-    UIUserNotificationType allNotificationTypes = (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+//    UIUserNotificationType allNotificationTypes = (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+//    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+//    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//    [[UIApplication sharedApplication] registerForRemoteNotifications];
     
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
@@ -470,15 +465,9 @@ NSString *const kGCMSenderId = @"937754980938";
     // Badging
     [JCBadgeManager updateBadgesFromContext:[NSManagedObjectContext MR_defaultContext]];
 
-	// Jasmine
-    JCSocket *socket = [JCSocket sharedSocket];
-    [center addObserver:self selector:@selector(socketConnectedSelector:) name:kJCSocketConnectedNotification object:socket];
-    [center addObserver:self selector:@selector(socketFailedConnectionSelector:) name:kJCSocketConnectFailedNotification object:socket];
-    
-    
     // Authentication
-    
     JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    [center addObserver:self selector:@selector(userRequiresAuthentication:) name:kJCAuthenticationManagerUserRequiresAuthenticationNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
@@ -559,12 +548,9 @@ NSString *const kGCMSenderId = @"937754980938";
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceTokenData
 {
-    
-    
     if (deviceTokenData)
     {
         [[GGLInstanceID sharedInstance] startWithConfig:[GGLInstanceIDConfig defaultConfig]];
-        
     } else {
         deviceTokenData = [[UIDevice currentDevice].installationIdentifier dataUsingEncoding:NSUTF8StringEncoding];
     }
@@ -576,13 +562,7 @@ NSString *const kGCMSenderId = @"937754980938";
         authenticationManager.deviceToken = deviceToken;
     }
     
-    [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
-        if (success) {
-            [self subscribeToLineEvents:authenticationManager.line];
-            NSLog(@"success with socket");
-        } else if (!success)
-            NSLog(@"Error trying to connect to a socket in the app delegate : %@", error);
-    }];
+    [JCSocket connectWithDeviceToken:deviceToken completion:NULL];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error

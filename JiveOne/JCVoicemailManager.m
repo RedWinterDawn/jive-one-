@@ -13,45 +13,32 @@
 
 NSString *const kJCVoicemailManagerTypeKey              = @"type";
 NSString *const kJCVoicemailManagerTypeAnnounceValue    = @"announce";
-NSString *const kJCVoicemailManagerTypeMailboxKey       = @"mailbox";
-NSString *const kJCVoicemailManagerTypeVoiceMailKey       = @"voicemail";
+NSString *const kJCVoicemailManagerTypeVoiceMailKey     = @"voicemail";
+NSString *const kJCVoicemailManagerSubscriptionTypeKey  = @"mailbox";
 NSString *const kJCVoicemailManagerEntityTypeKey        = @"entityType";
 NSString *const kJCVoicemailManagerMailboxJrnKey        = @"mailboxJrn";
 NSString *const kJCVoicemailManagerActionKey            = @"action";
 NSString *const kJCVoicemailManagerActionValue          = @"NEW";
-NSString *const kJCVoicemailManagerIDKey                    = @"id";
-NSString *const kJCVoicemailManagerAccountKey          = @"account";
 
 @implementation JCVoicemailManager
 
-+ (void)subscribeToLine:(Line *)line
++ (void)generateSubscriptionForLine:(Line *)line
 {
     if (!line.pbx.v5) {
         return;
     }
     
-    [[JCVoicemailManager sharedManager] subscribeToLine:line];
+    [[JCVoicemailManager sharedManager] generateSubscriptionForLine:line];
 }
 
 #pragma mark - Private -
 
--(void)subscribeToLine:(Line *)line
+-(void)generateSubscriptionForLine:(Line *)line
 {
-    
-    //TODO: fix this
-    
-    NSString *seperateString = [line.mailboxJrn componentsSeparatedByString:@":"].lastObject;
-    NSString * mailboxID = [seperateString componentsSeparatedByString:@"/"].lastObject;
-    
-    NSLog(@" mailbox id  %@",mailboxID);
-    
-    NSMutableDictionary* entity = [@{kJCVoicemailManagerIDKey: mailboxID, kJCVoicemailManagerTypeKey:@"voicemail", kJCVoicemailManagerAccountKey: @"lame"}mutableCopy];
-    NSDictionary *requestParameters = [JCSocket  subscriptionDictionaryForIdentifier:mailboxID entity:entity type:@"mailbox"];
-    
-    NSMutableArray *mailboxArray = [NSMutableArray new];
-    [mailboxArray addObject:requestParameters];
-
-    [JCSocket subscribeToSocketEventsWithArray:mailboxArray];
+    [self generateSubscriptionWithIdentifier:line.mailboxId
+                                        type:kJCVoicemailManagerTypeVoiceMailKey
+                            subscriptionType:kJCVoicemailManagerSubscriptionTypeKey
+                                         pbx:line.pbx];
 }
 
 -(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data {
@@ -69,7 +56,7 @@ NSString *const kJCVoicemailManagerAccountKey          = @"account";
     // We only care about voicemail entity types. (What we registered for).
     NSDictionary *entityTypeData = [data dictionaryForKey:kJCVoicemailManagerEntityTypeKey];
     NSString *entityType = [entityTypeData valueForKey:kJCVoicemailManagerEntityTypeKey];
-    if (![entityType isEqualToString:kJCVoicemailManagerTypeMailboxKey]) {
+    if (![entityType isEqualToString:kJCVoicemailManagerSubscriptionTypeKey]) {
         return;
     }
     

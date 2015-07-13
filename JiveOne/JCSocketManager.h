@@ -17,10 +17,17 @@
 
 -(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data;
 
+-(void)generateSubscriptionWithIdentifier:(NSString *)identifier type:(NSString *)type subscriptionType:(NSString *)subscriptionType pbx:(PBX *)pbx;
+
+//-(NSDictionary *)subscriptionDictionaryForIdentifier:(NSString *)identifier entity:(NSDictionary *)entity type:(NSString *)type;
+
 @end
 
 @interface JCSocketManager (Singleton)
 
 +(instancetype)sharedManager;
+
++(void)subscribe;
++(void)unsubscribe:(CompletionHandler)completion;
 
 @end

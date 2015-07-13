@@ -22,6 +22,7 @@
 
 // Transient Properties
 @property (nonatomic, readonly) NSString * lineId;
+@property (nonatomic, readonly) NSString * mailboxId;
 
 // Relationships
 @property (nonatomic, retain) NSSet *events;

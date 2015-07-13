@@ -91,7 +91,9 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
         }
         
         #if DEBUG
-        NSLog(@"Loaded Jive User Id from keychain: %@", value);
+        if (value) {
+            NSLog(@"Loaded Jive User Id from keychain: %@", value);
+        }
         #endif
         
         _jiveUserId = value;

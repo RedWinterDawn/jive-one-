@@ -378,11 +378,8 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
                  }];
 }
 
-NSString *const kJCSocketParameterIdentifierKey = @"id";
-NSString *const kJCSocketParameterEntityKey     = @"entity";
-NSString *const kJCSocketParameterTypeKey       = @"type";
 
-+ (void)subscribeToSocketEventsWithArray:(NSMutableArray *) requestArray
++ (void)subscribeToSocketEventsWithArray:(NSArray *) requestArray
 {
     
     NSLog(@"Here is your request params:::::  \n\n\n %@", requestArray);
@@ -423,28 +420,6 @@ NSString *const kJCSocketParameterTypeKey       = @"type";
                               completion(NO, error);
                           }
                       }];
-}
-
-+ (NSDictionary *)subscriptionDictionaryForIdentifier:(NSString *)identifier entity:(NSMutableDictionary *)entity type:(NSString *)type
-{
-    if (!identifier || identifier.length < 1) {
-        return nil;
-    }
-    
-    if (!entity || entity.count < 1) {
-        return nil;
-    }
-    
-    
-    NSMutableDictionary *parameters = [@{kJCSocketParameterIdentifierKey: identifier,
-                                         kJCSocketParameterEntityKey: entity} mutableCopy];
-    
-    
-    if (type) {
-        [parameters setObject:type forKey:kJCSocketParameterTypeKey];
-    }
-    
-    return parameters;
 }
 
 @end

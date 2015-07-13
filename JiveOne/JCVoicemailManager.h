@@ -12,6 +12,6 @@
 
 @interface JCVoicemailManager : JCSocketManager
 
-+(void)subscribeToLine:(Line *)line;
++(void)generateSubscriptionForLine:(Line *)line;
 
 @end

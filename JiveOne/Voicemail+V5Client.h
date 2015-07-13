@@ -31,9 +31,6 @@
 // Deletes voicemail on server using V5Client. Called by instance menthod markForDeletion:
 + (void)deleteVoicemail:(Voicemail *)voicemail completion:(CompletionHandler)completion;
 
-// Subscribe to a line for voicemail events.
-+ (void)subscribeToLine:(Line *)line;
-
 @end
 
 

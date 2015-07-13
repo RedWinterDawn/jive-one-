@@ -15,6 +15,7 @@
 @class DID;
 @class PBX;
 
+extern NSString *const kJCAuthenticationManagerUserRequiresAuthenticationNotification;
 extern NSString *const kJCAuthenticationManagerUserLoggedOutNotification;
 extern NSString *const kJCAuthenticationManagerUserAuthenticatedNotification;
 extern NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification;

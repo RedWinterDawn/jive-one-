@@ -19,20 +19,16 @@ NSString *const kJCSMSMessageManagerEntityTypeKey        = @"entityType";
 NSString *const kJCSMSMessageManagerTypeSMSMessageKey       = @"smsmessage";
 NSString *const kJCSMSMessageManagerEntityDialogKey =     @"dialog";
 NSString *const kJCSMSMessageManagerEntityConversationKey =           @"conversation";
-//NSString *const kJCSMSMessageManagerActionKey            = @"action";
-//NSString *const kJCSMSMessageManagerActionValue          = @"NEW";
-//NSString *const kJCSMSMessageManagerSMSID          = @"ID";
-
 
 @implementation JCSMSMessageManager
 
-+(void)subscribeToPbx:(PBX *)pbx {
-    [[JCSMSMessageManager sharedManager] subscribeToPbx:pbx];
++(void)generateSubscriptionForPbx:(PBX *)pbx {
+    [[JCSMSMessageManager sharedManager] generateSubscriptionForPbx:pbx];
 }
 
 #pragma mark - Private -
 
--(void)subscribeToPbx:(PBX *)pbx
+-(void)generateSubscriptionForPbx:(PBX *)pbx
 {
     NSSet *dids = pbx.dids;
     for (DID *did in dids) {
@@ -42,26 +38,14 @@ NSString *const kJCSMSMessageManagerEntityConversationKey =           @"conversa
 
 -(void)subscribeToDid:(DID *)did
 {
-    if (did.canReceiveSMS) {
-        
-    //TODO: fix this
-//        NSMutableDictionary* entity = [@{kJCSMSMessageManagerTypeKey: @"", kJCSMSMessageManagerTypeSMSMessageKey:@"conversation", kJCSMSMessageManagerTypeKey: @"line"}mutableCopy];        
-//        [JCSocket subscribeToSocketEventsWithIdentifer:did.jrn entity:entity type:kJCSMSMessageManagerTypeSMSMessageKey];
-        
-        NSArray *seperateString = [did.jrn componentsSeparatedByString:@":"];
-        NSString *didID = seperateString.lastObject;
-        NSLog(@"DID ID%@",didID);
-        
-        NSMutableDictionary* entity = [@{kJCSMSMessageManagerTypeKey: didID, kJCSMSMessageManagerTypeKey:kJCSMSMessageManagerEntityDialogKey,  @"account":@"lame"}mutableCopy];
-        
-        NSDictionary *requestParameters = [JCSocket  subscriptionDictionaryForIdentifier:didID entity:entity type:kJCSMSMessageManagerEntityConversationKey];
-        
-        NSMutableArray *mailboxArray = [NSMutableArray new];
-        [mailboxArray addObject:requestParameters];
-        
-        [JCSocket subscribeToSocketEventsWithArray:mailboxArray];
-
+    if (!did.canReceiveSMS){
+        return;
     }
+    
+    [self generateSubscriptionWithIdentifier:did.didId
+                                        type:kJCSMSMessageManagerEntityDialogKey
+                            subscriptionType:kJCSMSMessageManagerEntityConversationKey
+                                         pbx:did.pbx];
 }
 
 -(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data {

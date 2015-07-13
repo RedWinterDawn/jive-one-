@@ -28,6 +28,7 @@
 #import "UIDevice+Additions.h"
 
 // Notifications
+NSString *const kJCAuthenticationManagerUserRequiresAuthenticationNotification  = @"userRequiresAuthentication";
 NSString *const kJCAuthenticationManagerUserLoggedOutNotification               = @"userLoggedOut";
 NSString *const kJCAuthenticationManagerUserAuthenticatedNotification           = @"userAuthenticated";
 NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification       = @"userLoadedMinimumData";
@@ -88,7 +89,8 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
 {
     // Check to see if we are autheticiated. If we are not, notify that we are logged out.
     if (!_authenticationKeychain.isAuthenticated) {
-        [self postNotificationNamed:kJCAuthenticationManagerUserLoggedOutNotification];
+        [_authenticationKeychain logout];
+        [self postNotificationNamed:kJCAuthenticationManagerUserRequiresAuthenticationNotification];
         return;
     }
 
@@ -137,7 +139,7 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
 {
     // Destroy current authToken;
     [_authenticationKeychain logout];
-    
+
     // Clear local variables.
     _user = nil;
     _line = nil;
