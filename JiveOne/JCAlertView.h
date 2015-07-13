@@ -86,6 +86,6 @@ typedef void (^JCAlertViewDismissBlock)(NSInteger buttonIndex);
 + (JCAlertView *)alertWithTitle:(NSString *)title message:(NSString *)message dismissed:(JCAlertViewDismissBlock)dismissBlock showImmediately:(BOOL)showImmediately;
 
 // Complex Alert
-+ (JCAlertView *)alertWithTitle:(NSString *)title message:(NSString *)message dismissed:(JCAlertViewDismissBlock)dismissBlock cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...;
++(JCAlertView *)alertWithTitle:(NSString *)title message:(NSString *)message dismissed:(JCAlertViewDismissBlock)dismissBlock showImmediately:(BOOL)showImmediately cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...;
 
 @end
