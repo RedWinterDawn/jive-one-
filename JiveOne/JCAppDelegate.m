@@ -254,9 +254,9 @@ NSString *const kGCMSenderId = @"937754980938";
 
 -(void)subscribeToLineEvents:(Line *)line
 {
-    [JCPresenceManager generateSubscriptionForPbx:line.pbx];
+//    [JCPresenceManager generateSubscriptionForPbx:line.pbx];
     [JCVoicemailManager generateSubscriptionForLine:line];
-    [JCSMSMessageManager generateSubscriptionForPbx:line.pbx];
+//    [JCSMSMessageManager generateSubscriptionForPbx:line.pbx];
     
     [JCSocketManager subscribe];
 }
@@ -322,10 +322,10 @@ NSString *const kGCMSenderId = @"937754980938";
     
     // Handle socket to reconnect. Since we reuse the socket, we do not need to subscribe, but just
     // activate the socket to reopen it. We only want to try to connect if we do not have a device token.
-    NSString *deviceToken = [JCAuthenticationManager sharedInstance].deviceToken;
-    if (deviceToken && networkManager.isReachable && ![JCSocket sharedSocket].isReady) {            //@Rob what are we suppose to do if we dont have connection or the socket is not ready. Do we ever check again and try to connect.
-        [JCSocket connectWithDeviceToken:deviceToken completion:NULL];
-    }
+//    NSString *deviceToken = [JCAuthenticationManager sharedInstance].deviceToken;
+//    if (deviceToken && networkManager.isReachable && ![JCSocket sharedSocket].isReady) {            //@Rob what are we suppose to do if we dont have connection or the socket is not ready. Do we ever check again and try to connect.
+//        [JCSocket connectWithDeviceToken:deviceToken completion:NULL];
+//    }
     
 }
 

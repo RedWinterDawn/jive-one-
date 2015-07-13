@@ -70,7 +70,7 @@ static NSMutableArray *subscriptions;
                              kJCSocketParameterTypeKey:type,
                              kJCSocketParameterAccountKey:pbx.pbxId};
     
-    NSDictionary *requestParameters = [self subscriptionDictionaryForIdentifier:identifier entity:entity type:subscriptionType];
+    NSDictionary *requestParameters = [self subscriptionDictionaryForIdentifier:[NSString stringWithFormat:@"%@:%@", type, identifier] entity:entity type:subscriptionType];
     if (!subscriptions) {
         subscriptions = [NSMutableArray new];
     }

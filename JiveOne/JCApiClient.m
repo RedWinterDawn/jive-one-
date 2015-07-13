@@ -335,7 +335,7 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 {
     NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:object error:error] mutableCopy];
     NSString *authToken = [JCAuthenticationManager sharedInstance].authToken;
-    [mutableRequest setValue:[NSString stringWithFormat:@"Bearer %@", authToken] forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
+    [mutableRequest setValue:[NSString stringWithFormat:@"bearer %@", authToken] forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
     return mutableRequest;
 }
 

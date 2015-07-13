@@ -23,6 +23,7 @@ NSString *const kJCSocketNotificationResultKey      = @"result";
 
 NSString *const kJCSocketSessionKeychainKey         = @"socket-session";
 
+NSString *const kJCV5ClientSocketSessionCheckVersionPath                = @"v2";
 NSString *const kJCV5ClientSocketSessionRequestURL                      = @"https://realtime.jive.com/v2/session/priority/jediId/451";      //  we need priority sessions so we can get push notifications
 NSString *const kJCV5ClientSocketSessionResponseWebSocketRequestKey     = @"ws";
 NSString *const kJCV5ClientSocketSessionResponseSubscriptionRequestKey  = @"subscriptions";
@@ -117,7 +118,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 -(NSString *)sessionDeviceToken
 {
-    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
+    NSDictionary *socketSession = self.socketSession;
     if (socketSession) {
         return [socketSession objectForKey:kJCV5ClientSocketSessionDeviceTokenKey];
     }
@@ -126,7 +127,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 -(NSString *)sessionId
 {
-    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
+    NSDictionary *socketSession = self.socketSession;
     if (socketSession) {
         return [socketSession objectForKey:kJCSocketSessionIdKey];
     }
@@ -135,7 +136,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 -(NSURL *)sessionUrl
 {
-    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
+    NSDictionary *socketSession = self.socketSession;
     if (socketSession) {
         return [socketSession objectForKey:kJCV5ClientSocketSessionResponseWebSocketRequestKey];
     }
@@ -144,7 +145,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 -(NSURL *)subscriptionUrl
 {
-    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
+    NSDictionary *socketSession = self.socketSession;
     if (socketSession) {
         return [socketSession objectForKey:kJCV5ClientSocketSessionResponseSubscriptionRequestKey];
     }
@@ -153,11 +154,21 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 -(NSURL *)selfUrl
 {
-    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
+    NSDictionary *socketSession = self.socketSession;
     if (socketSession) {
         return [socketSession objectForKey:kJCV5ClientSocketSessionResponseSelfRequestKey];
     }
     return nil;
+}
+
+-(NSDictionary *)socketSession
+{
+    return [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
+}
+
+-(void)clearSocketSession
+{
+    [JCKeychain deleteValueForKey:kJCSocketSessionKeychainKey];
 }
 
 #pragma mark - Private -
@@ -303,8 +314,13 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
     }
     
     // If this is the first time we are connecting, or we have reset the session keychain, request it.
+    NSString *sessionUrl = socket.sessionUrl.absoluteString;
+    if ([sessionUrl rangeOfString:kJCV5ClientSocketSessionCheckVersionPath].location == NSNotFound) {
+        [socket clearSocketSession];
+    }
+    
     if (!socket.sessionUrl) {
-        [JCSocket createPrioritySession:deviceToken :completion];
+        [JCSocket createPrioritySession:deviceToken completion:completion];
         return;
     }
     
@@ -330,7 +346,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 @implementation JCSocket (V5Client)
 
-+ (void)createPrioritySession:(NSString *)deviceToken :(CompletionHandler)completion
++ (void)createPrioritySession:(NSString *)deviceToken completion:(CompletionHandler)completion
 {
     JCV5ApiClient *client = [JCV5ApiClient new];
     client.manager.requestSerializer = [JCBearerAuthenticationJSONRequestSerializer new];
@@ -382,8 +398,6 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 + (void)subscribeToSocketEventsWithArray:(NSArray *) requestArray
 {
-    NSLog(@"%@", requestArray);
-    
     NSURL *url = [JCSocket sharedSocket].subscriptionUrl;
     JCV5ApiClient *apiClient = [JCV5ApiClient sharedClient];
     apiClient.manager.requestSerializer = [JCBearerAuthenticationJSONRequestSerializer new];
