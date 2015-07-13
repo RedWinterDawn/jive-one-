@@ -170,6 +170,7 @@
                               
                           }
                       }
+                showImmediately:YES
               cancelButtonTitle:NSLocalizedString(@"No", nil)
               otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
 }
