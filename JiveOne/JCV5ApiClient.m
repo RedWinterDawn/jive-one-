@@ -218,7 +218,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
 {
     [self postWithPath:kJCV5ApiSMSMessageSendRequestUrlPath
             parameters:parameters
-     requestSerializer:nil
+     requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
                retries:MESSAGES_SEND_NUMBER_OF_TRIES
             completion:completion];
 }
@@ -235,7 +235,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
     NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageRequestConversationsDigestURLPath, did.number];
     [self getWithPath:path
            parameters:nil
-    requestSerializer:nil
+    requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
               retries:CONVERSATIONS_DOWNLOAD_NUMBER_OF_TRIES
            completion:completion];
 }
@@ -253,7 +253,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
     NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageRequestConversationsURLPath, did.number];
     [self getWithPath:path
            parameters:nil
-    requestSerializer:nil
+    requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
               retries:MESSAGES_DOWNLOAD_NUMBER_OF_TRIES
            completion:completion];
 }
@@ -278,7 +278,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
     NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageRequestConversationURLPath, did.number, conversationGroup.dialableNumber];
     [self getWithPath:path
            parameters:nil
-    requestSerializer:nil
+    requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
               retries:MESSAGES_DOWNLOAD_NUMBER_OF_TRIES
            completion:completion];
 }
@@ -308,7 +308,7 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
     NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageBlockURLPath, did.number, phoneNumber.dialableNumber];
     [self postWithPath:path
             parameters:nil
-     requestSerializer:nil
+     requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
                retries:MESSAGES_UNBLOCK_NUMBER_OF_TRIES
             completion:completion];
 }
@@ -320,7 +320,7 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
     NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageUnblockURLPath, did.number, phoneNumber.dialableNumber];
     [self postWithPath:path
             parameters:nil
-     requestSerializer:nil
+     requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
                retries:MESSAGES_UNBLOCK_NUMBER_OF_TRIES
             completion:completion];
 }
@@ -331,7 +331,7 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
     NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageBlockedNumbersURLPath, did.number];
     [self getWithPath:path
            parameters:nil
-    requestSerializer:nil
+    requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
               retries:MESSAGES_BLOCKED_NUMBER_DOWNLOAD_NUMBER_OF_TRIES
            completion:completion];
 }
