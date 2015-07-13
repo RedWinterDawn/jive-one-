@@ -75,6 +75,12 @@ NSString *const kJCAuthenticationManagerResponseExpirationTimeIntervalKey   = @"
 
 #pragma mark - Class methods
 
++ (void)requestAuthentication:(CompletionHandler)completion
+{
+    User *user = [self sharedInstance].user;
+    [self requestAuthenticationForUser:user completion:completion];
+}
+
 + (void)requestAuthenticationForUser:(User *)user completion:(CompletionHandler)completion
 {
     __block JCAlertView *alertView = [JCAlertView alertWithTitle:nil
