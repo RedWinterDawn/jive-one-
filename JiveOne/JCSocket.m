@@ -333,6 +333,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 + (void)createPrioritySession:(NSString *)deviceToken :(CompletionHandler)completion
 {
     JCV5ApiClient *client = [JCV5ApiClient new];
+    client.manager.requestSerializer = [JCBearerAuthenticationJSONRequestSerializer new];
     [client.manager POST:kJCV5ClientSocketSessionRequestURL
               parameters:((deviceToken && deviceToken.length > 0) ? @{kJCV5ClientSocketSessionDeviceTokenKey : deviceToken} : nil)
                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -381,10 +382,11 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 + (void)subscribeToSocketEventsWithArray:(NSArray *) requestArray
 {
+    NSLog(@"%@", requestArray);
     
-    NSLog(@"Here is your request params:::::  \n\n\n %@", requestArray);
     NSURL *url = [JCSocket sharedSocket].subscriptionUrl;
     JCV5ApiClient *apiClient = [JCV5ApiClient sharedClient];
+    apiClient.manager.requestSerializer = [JCBearerAuthenticationJSONRequestSerializer new];
     [apiClient.manager POST:url.absoluteString
                  parameters:requestArray
                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -406,6 +408,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
     }
     
     JCV5ApiClient *apiClient = [JCV5ApiClient sharedClient];
+    apiClient.manager.requestSerializer = [JCBearerAuthenticationJSONRequestSerializer new];
     [apiClient.manager DELETE:url.absoluteString
                    parameters:nil
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {

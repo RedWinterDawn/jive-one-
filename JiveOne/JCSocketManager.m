@@ -121,7 +121,7 @@ static NSMutableArray *subscriptions;
 
 -(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data
 {
-    NSLog(@" The result of scckets : %@", result);
+    
 }
 
 @end
