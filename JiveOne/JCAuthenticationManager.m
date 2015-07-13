@@ -26,6 +26,7 @@
 #import "JCAlertView.h"
 
 #import "UIDevice+Additions.h"
+#import "JCProgressHUD.h"
 
 // Notifications
 NSString *const kJCAuthenticationManagerUserLoggedOutNotification           = @"userLoggedOut";
@@ -43,6 +44,9 @@ NSString *const kJCAuthenticationManagerResponseAccessTokenKey              = @"
 NSString *const kJCAuthenticationManagerResponseRefreshTokenKey             = @"refresh_token";
 NSString *const kJCAuthenticationManagerResponseUsernameKey                 = @"username";
 NSString *const kJCAuthenticationManagerResponseExpirationTimeIntervalKey   = @"expires_in";
+
+static BOOL requestingAuthentication;
+static NSMutableArray *authenticationCompletionRequests;
 
 @interface JCAuthenticationManager () <UIWebViewDelegate>
 {
@@ -83,35 +87,61 @@ NSString *const kJCAuthenticationManagerResponseExpirationTimeIntervalKey   = @"
 
 + (void)requestAuthenticationForUser:(User *)user completion:(CompletionHandler)completion
 {
+    if (requestingAuthentication) {
+        if (!authenticationCompletionRequests) {
+            authenticationCompletionRequests = [NSMutableArray new];
+        }
+        if (![authenticationCompletionRequests containsObject:completion]) {
+            [authenticationCompletionRequests addObject:completion];
+        }
+        return;
+    }
+    
+    JCAuthenticationManager *manager = [[self class] sharedInstance];
+    CompletionHandler completionBlock = ^(BOOL success, NSError *error) {
+        if (success) {
+            [UIApplication hideStatus];
+            requestingAuthentication = FALSE;
+            if (authenticationCompletionRequests) {
+                for (CompletionHandler completionBlock in authenticationCompletionRequests) {
+                    completionBlock(success, error);
+                }
+                authenticationCompletionRequests = nil;
+            } else {
+                if (completion) {
+                    completion(success, error);
+                }
+            }
+        }
+        else
+        {
+            [JCAlertView alertWithTitle:nil message:NSLocalizedString(@"Invalid Password", nil)
+                              dismissed:^(NSInteger buttonIndex) {
+                                  if (buttonIndex == 0) {
+                                      [manager logout];
+                                  } else {
+                                      [self requestAuthenticationForUser:user completion:completion];
+                                  }
+                              }
+                        showImmediately:YES
+                      cancelButtonTitle:NSLocalizedString(@"Logout", nil)
+                      otherButtonTitles:NSLocalizedString(@"Try Again", nil), nil];
+        }
+    };
+    
+    requestingAuthentication = TRUE;
     __block JCAlertView *alertView = [JCAlertView alertWithTitle:nil
                                                 message:NSLocalizedString(@"Please enter your password", @"Authentication Manager Error")
                                               dismissed:^(NSInteger buttonIndex) {
                                                   if (buttonIndex == 0) {
-                                                      [[[self class] sharedInstance] logout];
+                                                      [UIApplication showStatus:NSLocalizedString(@"Logging Out...", nil)];
+                                                      [manager logout];
+                                                      [UIApplication hideStatus];
                                                   } else {
-                                                      [[[self class] sharedInstance] loginWithUsername:user.jiveUserId
-                                                                                              password:[alertView textFieldAtIndex:0].text
-                                                                                             completed:^(BOOL success, NSError *error) {
-                                                                                                 if (success) {
-                                                                                                     if (completion) {
-                                                                                                         completion(success, error);
-                                                                                                     }
-                                                                                                     else
-                                                                                                     {
-                                                                                                         [JCAlertView alertWithTitle:nil message:@"Invalid Password"
-                                                                                                                           dismissed:^(NSInteger buttonIndex) {
-                                                                                                                               if (buttonIndex == 0) {
-                                                                                                                                   [[[self class] sharedInstance] logout];
-                                                                                                                               } else {
-                                                                                                                                   [self requestAuthenticationForUser:user completion:completion];
-                                                                                                                               }
-                                                                                                                           }
-                                                                                                                     showImmediately:YES
-                                                                                                                   cancelButtonTitle:NSLocalizedString(@"Logout", nil)
-                                                                                                                   otherButtonTitles:NSLocalizedString(@"Try Again", nil), nil];
-                                                                                                     }
-                                                                                                 }
-                                                                                             }];
+                                                      [UIApplication showStatus:NSLocalizedString(@"Validating...", nil)];
+                                                      [manager loginWithUsername:user.jiveUserId
+                                                                        password:[alertView textFieldAtIndex:0].text
+                                                                       completed:completionBlock];
                                                   }
                                                 }
                                         showImmediately:NO
@@ -125,7 +155,7 @@ NSString *const kJCAuthenticationManagerResponseExpirationTimeIntervalKey   = @"
 /**
  * Checks the authentication status of the user.
  *
- * Retrieves from the authentication store if the user has authenticated, and tries to load the user 
+ * Retrieves from the authentication store if the user has authenticated, and tries to load the user
  * object using the user stored in the authenctication store.
  *
  */
