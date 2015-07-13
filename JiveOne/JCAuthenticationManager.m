@@ -134,6 +134,8 @@ static NSMutableArray *authenticationCompletionRequests;
                                                 message:NSLocalizedString(@"Please enter your password", @"Authentication Manager Error")
                                               dismissed:^(NSInteger buttonIndex) {
                                                   if (buttonIndex == 0) {
+                                                      requestingAuthentication = NO;
+                                                      authenticationCompletionRequests = nil;
                                                       [UIApplication showStatus:NSLocalizedString(@"Logging Out...", nil)];
                                                       [manager logout];
                                                       [UIApplication hideStatus];
