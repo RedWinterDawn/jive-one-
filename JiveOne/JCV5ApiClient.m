@@ -14,6 +14,7 @@
 #import "Contact+V5Client.h"
 #import "PBX.h"
 #import "Line.h"
+#import "ContactGroup+V5Client.h"
 #import "JCAuthenticationManager.h"
 
 NSString *const kJCV5ApiClientBaseUrl = @"https://api.jive.com/";
@@ -194,6 +195,105 @@ NSString *const kJCV5ApiContactUploadRequestPath    = @"/contacts/v3/user/contac
                  retries:DELETE_CONTACT_NUMBER_OF_TRIES
               completion:completion];
 }
+
+#pragma mark Contact Groups
+
+NSString *const kJCV5ApiContactGroupUploadRequestPath   = @"/contacts/v3/user/group/";
+NSString *const kJCV5ApiContactGroupDeleteRequestPath   = @"/contacts/v3/user/group/%@";
+
++ (void)downloadContactGroupsWithCompletion:(JCApiClientCompletionHandler)completion
+{
+    //  TODO: not yet implemented server side.
+    if (completion) {
+        completion(YES, nil, nil);
+    }
+}
+
++ (void)uploadContactGroup:(ContactGroup *)contactGroup completion:(JCApiClientCompletionHandler)completion
+{
+    if (!contactGroup) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Contact Group Is Null"]);
+        }
+        return;
+    }
+    
+    NSString *path = kJCV5ApiContactGroupUploadRequestPath;
+    AFHTTPRequestSerializer *serializer = [JCBearerAuthenticationJSONRequestSerializer new];
+    NSDictionary *serializedData = contactGroup.serializedData;
+    if (!contactGroup.groupId) {
+        [self postWithPath:path
+                parameters:serializedData
+         requestSerializer:serializer
+                   retries:UPLOAD_CONTACT_NUMBER_OF_TRIES
+                completion:completion];
+    }
+    else {
+        [self putWithPath:path
+               parameters:serializedData
+        requestSerializer:serializer
+                  retries:UPLOAD_CONTACT_NUMBER_OF_TRIES
+               completion:completion];
+    }
+}
+
++ (void)deleteContactGroup:(ContactGroup *)contactGroup completion:(JCApiClientCompletionHandler)completion
+{
+    if (!contactGroup) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Contact Group Is Null"]);
+        }
+        return;
+    }
+    
+    
+    if (!contactGroup.groupId) {
+        if (completion) {
+            completion(YES, nil, nil);
+        }
+        return;
+    }
+    
+    
+    NSString *path = [NSString stringWithFormat:kJCV5ApiContactGroupDeleteRequestPath, contactGroup.groupId];
+    [self deleteWithPath:path
+              parameters:nil
+       requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+                 retries:DELETE_CONTACT_NUMBER_OF_TRIES
+              completion:completion];
+}
+
+#pragma mark Contact Group Associations
+
+NSString *const kJCV5ApiContactGroupAddAssociationRequestPath      = @"/contacts/v3/user/group/add/%@";
+NSString *const kJCV5ApiContactGroupRemoveAssociationRequestPath   = @"/contacts/v3/user/group/remove/%@";
+
++ (void)associatedContactGroupAssociations:(NSDictionary *)contactGroupAssociations completion:(JCApiClientCompletionHandler)handler
+{
+    NSArray *groups = contactGroupAssociations.allKeys;
+    NSMutableArray *remaining = groups.mutableCopy;
+    for (NSString *group in groups) {
+        
+        NSString *path = [NSString stringWithFormat:kJCV5ApiContactGroupAddAssociationRequestPath, group];
+        NSArray *contactIds = [contactGroupAssociations objectForKey:group];
+        
+        NSLog(@"%@ -> %@", path, contactIds);
+    }
+}
+
++ (void)disassociatedContactGroupAssociations:(NSDictionary *)contactGroupAssociations completion:(JCApiClientCompletionHandler)handler
+{
+    NSArray *groups = contactGroupAssociations.allKeys;
+    NSMutableArray *remaining = groups.mutableCopy;
+    for (NSString *group in groups) {
+        
+        NSString *path = [NSString stringWithFormat:kJCV5ApiContactGroupRemoveAssociationRequestPath, group];
+        NSArray *contactIds = [contactGroupAssociations objectForKey:group];
+        
+        NSLog(@"%@ -> %@", path, contactIds);
+    }
+}
+
 
 #pragma mark - SMS Messaging -
 

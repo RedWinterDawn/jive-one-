@@ -9,17 +9,17 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-@import Foundation;
+#import "JCAggregateFetchedResultsController.h"
+#import "JCGroupDataSource.h"
 
-#import "JCPhoneNumberDataSource.h"
+@interface JCContactsFetchedResultsController : JCAggregateFetchedResultsController
 
-@protocol JCContactsFetchedResultsControllerDelegate;
+-(instancetype)initWithSearchText:(NSString *)searchText
+                  sortDescriptors:(NSArray *)sortDescriptors
+               sectionNameKeyPath:(NSString *)sectionNameKeyPath
+                              pbx:(PBX *)pbx
+                            group:(id<JCGroupDataSource>)group;
 
-@interface JCContactsFetchedResultsController : NSFetchedResultsController
-
--(instancetype)initWithSearchText:(NSString *)searchText sortDescriptors:(NSArray *)sortDescriptors pbx:(PBX *)pbx sectionNameKeyPath:(NSString *)sectionNameKeyPath;
-
-- (id <JCPhoneNumberDataSource> )objectAtIndexPath:(NSIndexPath *)indexPath;
-- (NSIndexPath *)indexPathForObject:(id<JCPhoneNumberDataSource>)object;
+@property (nonatomic, readonly) id<JCGroupDataSource> group;
 
 @end

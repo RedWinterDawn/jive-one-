@@ -6,26 +6,26 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-@import AddressBook;
-@import AddressBookUI;
-
 #import "JCContactsViewController.h"
 #import "JCContactsTableViewController.h"
 #import "JCPhoneManager.h"
 #import "InternalExtensionGroup.h"
 #import "JCUnknownNumber.h"
-#import "JCAddressBookNumber.h"
-#import "JCAddressBookPerson.h"
+#import "ContactGroup+V5Client.h"
 
 #import "JCContactDetailViewController.h"
+#import "PBX.h"
+#import "User.h"
 
 NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"ContactGroupViewController";
 
-@interface JCContactsViewController () <ABPeoplePickerNavigationControllerDelegate, JCContactsTableViewControllerDelegate>
+@interface JCContactsViewController () <JCContactsTableViewControllerDelegate>
 {
     JCContactsTableViewController *_contactsTableViewController;
-    JCAddressBookNumber *_phoneNumber;
 }
+
+@property (nonatomic, weak) IBOutlet UITabBar *tabBar;
+@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 
 @end
 
@@ -34,30 +34,23 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tabBar.selectedItem = [self.tabBar.items objectAtIndex:0];
     
-    InternalExtensionGroup *contactGroup = self.contactGroup;
-    if (contactGroup) {
-        self.title = contactGroup.name;
+    UITabBar *tabBar = self.tabBar;
+    if (tabBar) {
+        tabBar.selectedItem = [tabBar.items objectAtIndex:0];
     }
     
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    if (_phoneNumber) {
-        [self dialPhoneNumber:_phoneNumber
-                    usingLine:self.authenticationManager.line
-                       sender:nil
-                   completion:^(BOOL success, NSError *error) {
-                       _phoneNumber = nil;
-                   }];
+    id<JCGroupDataSource> group = self.group;
+    if (group) {
+        self.title = group.name;
+        self.navigationItem.title = group.name;
     }
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    [super prepareForSegue:segue sender:sender];
+    
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[UINavigationController class]]) {
         viewController = ((UINavigationController *)viewController).topViewController;
@@ -65,18 +58,26 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
     
     if ([viewController isKindOfClass:[JCContactsTableViewController class]]) {
         _contactsTableViewController = (JCContactsTableViewController *)viewController;
-        _contactsTableViewController.contactGroup = self.contactGroup;
         _contactsTableViewController.delegate = self;
+        
+        id<JCGroupDataSource> group = self.group;
+        if (group) {
+            if ([group isKindOfClass:[ContactGroup class]]) {
+                self.navigationItem.rightBarButtonItem = _contactsTableViewController.editButtonItem;
+            }
+            _contactsTableViewController.group = self.group;
+        }
         _contactsTableViewController.filterType = JCContactFilterAll;
         self.searchBar.delegate = _contactsTableViewController;
+        
     }
 	else if ([viewController isKindOfClass:[JCContactsViewController class]])
     {
-        JCContactsViewController *contacts = (JCContactsViewController *)viewController;
+        JCContactsViewController *groupViewController = (JCContactsViewController *)viewController;
         NSIndexPath *indexPath = [_contactsTableViewController.tableView indexPathForSelectedRow];
         id object = [_contactsTableViewController objectAtIndexPath:indexPath];
-        if ([object isKindOfClass:[InternalExtensionGroup class]]) {
-            contacts.contactGroup = (InternalExtensionGroup *)object;
+        if ([object conformsToProtocol:@protocol(JCGroupDataSource)]) {
+            groupViewController.group = (id<JCGroupDataSource>)object;
         }
     }
     else if ([viewController isKindOfClass:[JCContactDetailViewController class]])
@@ -86,54 +87,42 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
     }
 }
 
-#pragma mark - Private -
-
-// Called when users tap "Display Picker" in the application. Displays a list of contacts and allows users to select a contact from that list.
-// The application only shows the phone, email, and birthdate information of the selected contact.
--(void)showPeoplePickerController
-{
-    ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
-    picker.peoplePickerDelegate = self;
-    
-    // Display only a person's phone, email, and birthdate
-    NSArray *displayedItems = [NSArray arrayWithObjects:[NSNumber numberWithInt:kABPersonPhoneProperty],
-                               [NSNumber numberWithInt:kABPersonEmailProperty],
-                               [NSNumber numberWithInt:kABPersonBirthdayProperty], nil];
-    
-    
-    picker.displayedProperties = displayedItems;
-    
-    // Show the picker
-    [self presentViewController:picker animated:YES completion:nil];
-}
-
-- (void)didSelectPerson:(ABRecordRef)personRef identifier:(ABMultiValueIdentifier)identifier
-{
-    JCAddressBookPerson *person = [JCAddressBookPerson addressBookPersonWithABRecordRef:personRef];
-    JCAddressBookNumber *phoneNumber = [person addressBookNumberForIdentifier:identifier];
-    _phoneNumber = phoneNumber;
-}
+#pragma mark - IBActions -
 
 -(IBAction)toggleFilterState:(id)sender
 {
-    if ([sender isKindOfClass:[UISegmentedControl class]])
-    {
-        UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
-        switch (segmentedControl.selectedSegmentIndex) {
-            case 1:
-            {
-                _contactsTableViewController.filterType = JCContactFilterGrouped;
-                break;
-            }
-            case 2:
-            {
-                [self showPeoplePickerController];
-                break;
-            }
-            default:
-                _contactsTableViewController.filterType = JCContactFilterAll;
-                break;
-        }
+    NSInteger index = 0;
+    if ([sender isKindOfClass:[UISegmentedControl class]]) {
+        index = ((UISegmentedControl *)sender).selectedSegmentIndex;
+    } else if ([sender isKindOfClass:[UITabBar class]]) {
+        index = ((UITabBar *)sender).selectedItem.tag;
+    } else if([sender isKindOfClass:[UITabBarItem class]]) {
+        index = ((UITabBarItem *)sender).tag;
+    }
+    _contactsTableViewController.filterType = index;
+    NSString *title =  (index == 0) ? NSLocalizedString(@"Contacts", @"Contacts") : NSLocalizedString(@"Groups", @"Contact Groups");
+    self.title = title;
+    self.navigationItem.title = title;
+}
+
+-(IBAction)add:(id)sender
+{
+//    NSString *identifier = (_contactsTableViewController.filterType == JCContactFilterAll) ? @"AddContact" : @"AddGroup" ;
+//    [self performSegueWithIdentifier:identifier sender:self];
+    
+    // Temporary till we have more logic. The above code is the arcitecture we will want.
+    
+    if (_contactsTableViewController == JCContactFilterAll) {
+        [self performSegueWithIdentifier:@"AddContact" sender:@"Edit"];
+    } else {
+        User *user = self.authenticationManager.pbx.user;
+        
+        ContactGroup *contactGroup = [ContactGroup MR_createEntityInContext:user.managedObjectContext];
+        contactGroup.name = @"Test Group";
+        contactGroup.user = user;
+        [contactGroup markForUpdate:^(BOOL success, NSError *error) {
+            NSLog(@"uploaded");
+        }];
     }
 }
 
@@ -144,52 +133,13 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-    switch (tabBar.selectedItem.tag) {
-        case 1:
-            break;
-            
-        case 2:
-            _contactsTableViewController.filterType = JCContactFilterGrouped;
-            break;
-            
-        case 3:
-            [self showPeoplePickerController];
-            tabBar.selectedItem = nil;
-            break;
-            
-        default:
-            _contactsTableViewController.filterType = JCContactFilterAll;
-            break;
-    }
-}
-
-#pragma mark Show all contacts
-
-#pragma mark ABPeoplePickerNavigationControllerDelegate methods
-
-// On iOS 8.0, a selected person and property is returned with this method.
-- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker didSelectPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
-{
-    [self didSelectPerson:person identifier:identifier];
-}
-
-#pragma clang diagnostic ignored "-Wdeprecated-implementations" // iOS 7 backwards compatibility.
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
-{
-    [self didSelectPerson:person identifier:identifier];
-    [peoplePicker dismissViewControllerAnimated:YES completion:NULL];
-    return NO;
-}
-
-// Dismisses the people picker and shows the application when users tap Cancel.
-- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker;
-{
-    [peoplePicker dismissViewControllerAnimated:YES completion:NULL];
+    [self toggleFilterState:item];
 }
 
 #pragma mark JCContactsTableViewControllerDelegate
 
--(void)contactsTableViewController:(JCContactsTableViewController *)contactsViewController didSelectContactGroup:(InternalExtensionGroup *)contactGroup
+-(void)contactsTableViewController:(JCContactsTableViewController *)contactsViewController
+             didSelectGroup:(id<JCGroupDataSource>)group
 {
     [self performSegueWithIdentifier:kJCContactsViewControllerContactGroupSegueIdentifier sender:self];
 }

@@ -9,7 +9,7 @@
 #import "JCApiClient.h"
 #import "JCConversationGroupObject.h"
 
-@class User, Line, DID, Contact;
+@class User, Line, DID, Contact, ContactGroup;
 
 @interface JCV5ApiClient : JCApiClient
 
@@ -39,6 +39,25 @@
 
 + (void)deleteContact:(Contact *)contact
            conpletion:(JCApiClientCompletionHandler)completion;
+
+#pragma mark Contact Groups
+
++ (void)downloadContactGroupsWithCompletion:(JCApiClientCompletionHandler)completion;
+
++ (void)uploadContactGroup:(ContactGroup *)contactGroup
+                completion:(JCApiClientCompletionHandler)completion;
+
++ (void)deleteContactGroup:(ContactGroup *)contactGroup
+                completion:(JCApiClientCompletionHandler)completion;
+
+#pragma mark Contact Group Associataions
+
++ (void)associatedContactGroupAssociations:(NSDictionary *)contactGroupAssociations
+                                completion:(JCApiClientCompletionHandler)handler;
+
++ (void)disassociatedContactGroupAssociations:(NSDictionary *)contactGroupAssociations
+                                   completion:(JCApiClientCompletionHandler)handler;
+
 
 #pragma mark - SMS Messaging -
 

@@ -9,12 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+#import "Group.h"
+
 @class InternalExtension;
 
-@interface InternalExtensionGroup : NSManagedObject
-
-@property (nonatomic, retain) NSString * groupId;
-@property (nonatomic, retain) NSString * name;
+@interface InternalExtensionGroup : Group;
 
 @property (nonatomic, retain) NSSet *internalExtensions;
 

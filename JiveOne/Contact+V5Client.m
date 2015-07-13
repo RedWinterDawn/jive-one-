@@ -24,7 +24,6 @@ NSString *const kContactContactIdKey        = @"id";
 NSString *const kContactFirstNameKey        = @"firstName";
 NSString *const kContactLastNameKey         = @"lastName";
 
-
 NSString *const kContactETagKey             = @"etag";
 NSString *const kContactCreated             = @"created";
 
@@ -223,6 +222,8 @@ NSString *const kContactOtherValueKey           = @"value";
         contact = [Contact MR_createEntityInContext:user.managedObjectContext];
         contact.contactId = contactId;
         contact.user = user;
+        contact.markForDeletion = NO;
+        contact.markForUpdate = NO;
     }
     return contact;
 }
@@ -465,11 +466,7 @@ NSString *const kContactOtherValueKey           = @"value";
                 localContact.markForUpdate   = FALSE;
             } completion:^(BOOL contextDidSave, NSError *error) {
                 if (completion) {
-                    if (error) {
-                        completion(NO, error);
-                    } else {
-                        completion(YES, nil);
-                    }
+                    completion((error == nil), error);
                 }
             }];
         }
@@ -490,14 +487,11 @@ NSString *const kContactOtherValueKey           = @"value";
                 // Current logic just overrides the changes.
                 
                 [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                    [self updateContact:contact data:contactData];
+                    Contact *localContact = (Contact *)[localContext objectWithID:contact.objectID];
+                    [self updateContact:localContact data:contactData];
                 } completion:^(BOOL contextDidSave, NSError *error) {
                     if (completion) {
-                        if (error) {
-                            completion(NO, error);
-                        } else {
-                            completion(YES, nil);
-                        }
+                        completion((error == nil), error);
                     }
                 }];
             } else {
