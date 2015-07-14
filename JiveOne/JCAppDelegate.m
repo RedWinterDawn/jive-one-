@@ -550,7 +550,14 @@ NSString *const kGCMSenderId = @"937754980938";
 {
     if (deviceTokenData)
     {
-        [[GGLInstanceID sharedInstance] startWithConfig:[GGLInstanceIDConfig defaultConfig]];
+        GGLInstanceID *instance = [GGLInstanceID sharedInstance];
+        [instance startWithConfig:[GGLInstanceIDConfig defaultConfig]];
+        NSDictionary *options = @{kGGLInstanceIDRegisterAPNSOption: deviceTokenData,
+                                  kGGLInstanceIDAPNSServerTypeSandboxOption: @"YES"};
+        
+        [instance tokenWithAuthorizedEntity:kGCMSenderId scope:kGGLInstanceIDScopeGCM options:options handler:^(NSString *token, NSError *error) {
+            NSLog(@"%@", token);
+        }];
     } else {
         deviceTokenData = [[UIDevice currentDevice].installationIdentifier dataUsingEncoding:NSUTF8StringEncoding];
     }
