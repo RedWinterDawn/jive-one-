@@ -278,7 +278,15 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
      * If this was not closed on purpose, try to connect again
      */
     if (!_closeSocketOnPurpose) {
-        [self restartSocket];
+        if (code == 1001) {
+            NSString *deviceToken = self.sessionDeviceToken;
+            [self clearSocketSession];
+            [[self class] createPrioritySession:deviceToken completion:^(BOOL success, NSError *error) {
+                [self restartSocket];
+            }];
+        } else {
+            [self restartSocket];
+        }
     }
 }
 
