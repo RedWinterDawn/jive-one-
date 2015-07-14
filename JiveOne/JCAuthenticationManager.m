@@ -29,11 +29,12 @@
 #import "JCProgressHUD.h"
 
 // Notifications
-NSString *const kJCAuthenticationManagerUserLoggedOutNotification           = @"userLoggedOut";
-NSString *const kJCAuthenticationManagerUserAuthenticatedNotification       = @"userAuthenticated";
-NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification   = @"userLoadedMinimumData";
-NSString *const kJCAuthenticationManagerAuthenticationFailedNotification    = @"authenticationFailed";
-NSString *const kJCAuthenticationManagerLineChangedNotification             = @"lineChanged";
+NSString *const kJCAuthenticationManagerUserRequiresAuthenticationNotification  = @"userRequiresAuthentication";
+NSString *const kJCAuthenticationManagerUserLoggedOutNotification               = @"userLoggedOut";
+NSString *const kJCAuthenticationManagerUserAuthenticatedNotification           = @"userAuthenticated";
+NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification       = @"userLoadedMinimumData";
+NSString *const kJCAuthenticationManagerAuthenticationFailedNotification        = @"authenticationFailed";
+NSString *const kJCAuthenticationManagerLineChangedNotification                 = @"lineChanged";
 
 // KVO and NSUserDefaults Keys
 NSString *const kJCAuthenticationManagerRememberMeAttributeKey              = @"rememberMe";
