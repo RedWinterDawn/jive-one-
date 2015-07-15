@@ -78,9 +78,101 @@ NSString *const kJCV5ApiPBXInfoRequestPath = @"/jif/v3/user/jiveId/%@";
     NSString *path = [NSString stringWithFormat:kJCV5ApiPBXInfoRequestPath, user.jiveUserId];
     [self getWithPath:path
            parameters:nil
-    requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+    requestSerializer:nil
               retries:PBX_INFO_SEND_NUMBER_OF_TRIES
            completion:completion];
+}
+
+#pragma mark - Jedi -
+
+#ifndef GET_JEDI_IDENTIFIER_NUMBER_OF_TRIES
+#define GET_JEDI_IDENTIFIER_NUMBER_OF_TRIES 1
+#endif
+
+#ifndef UPDATE_JEDI_TOKEN_NUMBER_OF_TRIES
+#define UPDATE_JEDI_TOKEN_NUMBER_OF_TRIES 1
+#endif
+
+NSString *const kJCV5ApiJediIdentifierRequestPath = @"/jedi/v1/subscription/ios/%@";
+NSString *const kJCV5ApiJediUpdatePath            = @"/jedi/v1/%@/%@";
+
++ (void)requestJediIdForDeviceToken:(NSString *)deviceToken completion:(JCApiClientCompletionHandler)completion
+{
+    if (!deviceToken) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Device Token Is Null"]);
+        }
+        return;
+    }
+    
+    NSString *path = [NSString stringWithFormat:kJCV5ApiJediIdentifierRequestPath, deviceToken];
+    [self postWithPath:path
+            parameters:nil
+     requestSerializer:[JCAuthenticationJSONRequestSerializer new]
+               retries:GET_JEDI_IDENTIFIER_NUMBER_OF_TRIES
+            completion:completion];
+}
+
++ (void)updateJediFromOldDeviceToken:(NSString *)oldDeviceToken toNewDeviceToken:(NSString *)newDeviceToken completion:(JCApiClientCompletionHandler)completion
+{
+    if (!oldDeviceToken) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Old Device Token Is Null"]);
+        }
+        return;
+    }
+    
+    if (!newDeviceToken) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"New Device Token Is Null"]);
+        }
+        return;
+    }
+    
+    NSString *path = [NSString stringWithFormat:kJCV5ApiJediUpdatePath, oldDeviceToken, newDeviceToken];
+    [self putWithPath:path
+           parameters:nil
+    requestSerializer:[JCAuthenticationJSONRequestSerializer new]
+              retries:UPDATE_JEDI_TOKEN_NUMBER_OF_TRIES
+           completion:completion];
+}
+
+
+#pragma mark - Jasmine -
+
+#ifndef GET_JASMINE_PRIORITY_SESSION_NUMBER_OF_TRIES
+#define GET_JASMINE_PRIORITY_SESSION_NUMBER_OF_TRIES 1
+#endif
+
+NSString *const kJCV5ClientSocketBaseURL           = @"https://realtime.jive.com";
+NSString *const kJCV5ClientSocketSessionRequestURL = @"/v2/session/priority/jediId/%@";
+
++ (void)requestPrioritySessionForJediId:(NSString *)jediId completion:(JCApiClientCompletionHandler)completion
+{
+    if (!jediId) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Jedi ID Is Null"]);
+        }
+        return;
+    }
+    
+    NSString *path = [NSString stringWithFormat:kJCV5ClientSocketSessionRequestURL, jediId];
+    JCV5ApiClient *client = [[JCV5ApiClient alloc] initWithBaseURL:[NSURL URLWithString:kJCV5ClientSocketBaseURL]];
+    [client requestWithType:JCApiClientPost
+                       path:path parameters:nil
+          requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+         responceSerializer:nil
+                    retries:GET_JASMINE_PRIORITY_SESSION_NUMBER_OF_TRIES
+                    success:^(id responseObject) {
+                        if (completion) {
+                            completion(YES, responseObject, nil);
+                        }
+                    }
+                    failure:^(id responseObject, NSError *error) {
+                        if (completion) {
+                            completion(NO, responseObject, error);
+                        }
+                    }];
 }
 
 #pragma mark - Internal Contacts -
@@ -103,7 +195,7 @@ NSString *const kJCV5ApiExtensionsRequestPath = @"/contacts/2014-07/%@/line/id/%
     NSString *path = [NSString stringWithFormat:kJCV5ApiExtensionsRequestPath, line.pbx.pbxId, line.lineId];
     [self getWithPath:path
            parameters:nil
-    requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+    requestSerializer:nil
               retries:GET_EXTENSIONS_NUMBER_OF_TRIES
            completion:completion];
 }
@@ -130,7 +222,7 @@ NSString *const kJCV5ApiContactUploadRequestPath    = @"/contacts/v3/user/contac
 {
     [self getWithPath:kJCV5ApiContactsDownloadRequestPath
            parameters:nil
-    requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+    requestSerializer:nil
               retries:GET_CONTACTS_NUMBER_OF_TRIES
            completion:completion];
 }
@@ -147,7 +239,7 @@ NSString *const kJCV5ApiContactUploadRequestPath    = @"/contacts/v3/user/contac
     NSString *path = [NSString stringWithFormat:kJCV5ApiContactDownloadRequestPath, contact.contactId];
     [self getWithPath:path
            parameters:nil
-    requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+    requestSerializer:nil
               retries:GET_CONTACTS_NUMBER_OF_TRIES
            completion:completion];
 }
@@ -191,7 +283,7 @@ NSString *const kJCV5ApiContactUploadRequestPath    = @"/contacts/v3/user/contac
     NSString *path = [NSString stringWithFormat:kJCV5ApiContactDownloadRequestPath, contact.contactId];
     [self deleteWithPath:path
               parameters:nil
-       requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
+       requestSerializer:nil
                  retries:DELETE_CONTACT_NUMBER_OF_TRIES
               completion:completion];
 }

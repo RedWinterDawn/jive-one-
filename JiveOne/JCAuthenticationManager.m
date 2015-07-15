@@ -264,17 +264,6 @@ static NSMutableArray *authenticationCompletionRequests;
     [self postNotificationNamed:kJCAuthenticationManagerLineChangedNotification];
 }
 
-- (void)setDeviceToken:(NSString *)deviceToken
-{
-    NSString *newToken = [deviceToken description];
-    newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:newToken forKey:kJCAuthneticationManagerDeviceTokenKey];
-    [defaults synchronize];
-}
-
 #pragma mark - Getters -
 
 - (BOOL)userAuthenticated
@@ -295,11 +284,6 @@ static NSMutableArray *authenticationCompletionRequests;
 -(NSString *)jiveUserId
 {
     return _authenticationKeychain.jiveUserId;
-}
-
--(NSString *)deviceToken
-{
-    return [[NSUserDefaults standardUserDefaults] valueForKey:kJCAuthneticationManagerDeviceTokenKey];
 }
 
 - (BOOL)rememberMe

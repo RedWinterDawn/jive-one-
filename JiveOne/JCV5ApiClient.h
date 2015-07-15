@@ -17,10 +17,24 @@
 
 - (BOOL)isOperationRunning:(NSString *)operationName;
 
-#pragma mark - PBX INFO -
+#pragma mark - PBX INFO (JIF) -
 
 + (void)requestPBXInforForUser:(User *)user
                      competion:(JCApiClientCompletionHandler)completion;
+
+#pragma mark - Jedi -
+
++ (void)requestJediIdForDeviceToken:(NSString *)deviceToken
+                         completion:(JCApiClientCompletionHandler)completion;
+
++ (void)updateJediFromOldDeviceToken:(NSString *)oldDeviceToken
+                    toNewDeviceToken:(NSString *)newDeviceToken
+                          completion:(JCApiClientCompletionHandler)completion;
+
+#pragma mark - Jasmine -
+
++ (void)requestPrioritySessionForJediId:(NSString *)deviceToken
+                             completion:(JCApiClientCompletionHandler)completion;
 
 #pragma mark - Internal Extensions -
 

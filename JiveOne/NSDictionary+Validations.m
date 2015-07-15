@@ -21,6 +21,9 @@ NSString *const kNSStringEmptyString = @"";
         if(![string isEqualToString:kNSStringEmptyString])
             return (NSString *)object;
     }
+    else if([object isKindOfClass:[NSNumber class]]) {
+       return [((NSNumber *)object) stringValue];
+    }
     return nil;
 }
 
