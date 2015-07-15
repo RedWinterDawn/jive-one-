@@ -7,9 +7,9 @@
 //
 
 #import "JCFetchedResultsTableViewController.h"
+#import "JCGroupDataSource.h"
 
 @protocol JCContactsTableViewControllerDelegate;
-@class InternalExtensionGroup;
 
 typedef NS_ENUM(NSInteger, JCContactFilter) {
     JCContactFilterAll,
@@ -19,9 +19,8 @@ typedef NS_ENUM(NSInteger, JCContactFilter) {
 @interface JCContactsTableViewController : JCFetchedResultsTableViewController <UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet id<JCContactsTableViewControllerDelegate> delegate;
-
-@property (strong, nonatomic) InternalExtensionGroup *contactGroup;
 @property (nonatomic) JCContactFilter filterType;
+@property (nonatomic, strong) id<JCGroupDataSource> group;
 
 -(IBAction)sync:(id)sender;
 
@@ -29,6 +28,6 @@ typedef NS_ENUM(NSInteger, JCContactFilter) {
 
 @protocol JCContactsTableViewControllerDelegate <NSObject>
 
--(void)contactsTableViewController:(JCContactsTableViewController *)contactsViewController didSelectContactGroup:(InternalExtensionGroup *)contactGroup;
+-(void)contactsTableViewController:(JCContactsTableViewController *)contactsViewController didSelectGroup:(id<JCGroupDataSource>)group;
 
 @end
