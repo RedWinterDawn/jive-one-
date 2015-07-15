@@ -254,7 +254,7 @@ NSString *const kGCMSenderId = @"937754980938";
 
 -(void)subscribeToLineEvents:(Line *)line
 {
-//    [JCPresenceManager generateSubscriptionForPbx:line.pbx];
+    [JCPresenceManager generateSubscriptionForPbx:line.pbx];
     [JCVoicemailManager generateSubscriptionForLine:line];
 //    [JCSMSMessageManager generateSubscriptionForPbx:line.pbx];
     

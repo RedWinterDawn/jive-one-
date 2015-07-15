@@ -11,6 +11,7 @@
 #import "JCAppSettings.h"
 #import "Line.h"
 
+
 NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
 
 NSString *const kJCPresenceManagerTypeWithdraw      = @"withdraw";
@@ -144,25 +145,30 @@ NSString *const kJCSocketPreasenceTypeKey       = @"type";
         return;
     }
     
-//    NSSet *extensions = pbx.extensions;
-//    _extensions = [NSMutableArray arrayWithCapacity:extensions.count];
-//    
-//    NSMutableArray *preasenceArray = [NSMutableArray new];
-//
-////    for (Extension *extension in extensions) {
-////        [_extensions addObject:[[JCLinePresence alloc] initWithLineIdentifer:extension.jrn]];
-////        
-////        NSDictionary *entity = @{kJCSocketPreasenceIdentifierKey:extension.extensionId,
-////                                    kJCSocketPreasenceAccountKey:@"lame",
-////                                       kJCSocketPreasenceTypeKey:@"line"};
-////        
-////        NSDictionary *requestParameters = [self subscriptionDictionaryForIdentifier:extension.extensionId entity:entity type:@"registration"];
-////        [preasenceArray addObject:requestParameters];
-////    }
-////    
+    NSSet *extensions = pbx.extensions;
+    
+    
+    
+    for (Extension *extension in extensions){
+    [self generateSubscriptionWithIdentifier:extension.extensionId
+                                                          type:@"registration"
+                                      subscriptionType:@"device"
+                                                          pbx:pbx];
+    }
+//    for (Extension *extension in extensions) {
+//        [_extensions addObject:[[JCLinePresence alloc] initWithLineIdentifer:extension.jrn]];
+//        
+//        NSDictionary *entity = @{kJCSocketPreasenceIdentifierKey:extension.extensionId,
+//                                    kJCSocketPreasenceAccountKey:@"lame",
+//                                       kJCSocketPreasenceTypeKey:@"device"};
+//        
+//        NSDictionary *requestParameters = [self subscriptionDictionaryForIdentifier:extension.extensionId entity:entity type:@"registration"];
+//        [preasenceArray addObject:requestParameters];
+//    }
+    
 //    [JCSocket subscribeToSocketEventsWithArray:preasenceArray];
-//    
-//    [self postNotificationNamed:kJCPresenceManagerLinesChangedNotification];
+    
+    [self postNotificationNamed:kJCPresenceManagerLinesChangedNotification];
 }
 
 -(void)unsubscribeFromPbx:(PBX *)pbx
