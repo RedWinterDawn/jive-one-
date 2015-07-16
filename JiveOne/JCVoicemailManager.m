@@ -11,8 +11,9 @@
 #import "Line.h"
 #import "Voicemail+V5Client.h"
 
-NSString *const kJCVoicemailManagerTypeKey              = @"type";
-NSString *const kJCVoicemailManagerTypeAnnounceValue    = @"announce";
+NSString *const kJCVoicemailManagerTypeValue            = @"replace";
+
+
 NSString *const kJCVoicemailManagerTypeVoiceMailKey     = @"voicemail";
 NSString *const kJCVoicemailManagerSubscriptionTypeKey  = @"mailbox";
 NSString *const kJCVoicemailManagerEntityTypeKey        = @"entityType";
@@ -36,15 +37,16 @@ NSString *const kJCVoicemailManagerActionValue          = @"NEW";
 -(void)generateSubscriptionForLine:(Line *)line
 {
     [self generateSubscriptionWithIdentifier:line.mailboxId
-                                        type:kJCVoicemailManagerTypeVoiceMailKey
-                            subscriptionType:kJCVoicemailManagerSubscriptionTypeKey
-                                         pbx:line.pbx];
+                                        type:kJCVoicemailManagerSubscriptionTypeKey
+                                  entityType:kJCVoicemailManagerTypeVoiceMailKey
+                                    entityId:line.mailboxId
+                             entityAccountId:line.pbx.pbxId];
 }
 
 -(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data {
  
     // We are only looking for voicemail anounce events.
-    if (![type isEqualToString:kJCVoicemailManagerTypeAnnounceValue]) {
+    if (![type isEqualToString:kJCVoicemailManagerTypeValue]) {
         return;
     }
     
@@ -62,7 +64,7 @@ NSString *const kJCVoicemailManagerActionValue          = @"NEW";
     
     NSDictionary *actionData = [data dictionaryForKey:kJCVoicemailManagerActionKey];
     NSString *action = [actionData stringValueForKey:kJCVoicemailManagerActionKey];
-    if ([action isEqualToString:kJCVoicemailManagerActionValue]) {
+    if (![action isEqualToString:kJCVoicemailManagerActionValue]) {
         return;
     }
     
@@ -70,29 +72,28 @@ NSString *const kJCVoicemailManagerActionValue          = @"NEW";
     Line *line = [Line MR_findFirstByAttribute:NSStringFromSelector(@selector(mailboxJrn)) withValue:mailboxJrn];
     [Voicemail downloadVoicemailsForLine:line completion:NULL];
     
-//    Expected Response
-//        announce {
 //    data =     {
 //        action =         {
 //            action = NEW;
 //        };
 //        alert =         {
-//            alert = "New voicemail from George's Desk <6667>";
+//            alert = "<null>";
 //        };
 //        entityType =         {
 //            entityType = mailbox;
 //        };
-//        mailboxJrn = "jrn:voicemail::jive:01471162-f384-24f5-9351-000100420005:vmbox/014b17d6-0d5a-3d74-1cb7-000100620005";
-//        self = "https://api.jive.com/voicemail/v1/mailbox/id/014b17d6-0d5a-3d74-1cb7-000100620005";
+//        mailboxJrn = "jrn:voicemail::jive:01471162-f384-24f5-9351-000100420005:vmbox/014a5955-b837-e8d1-ab9a-000100620002";
+//        self = "https://api.jive.com/voicemail/v1/mailbox/id/014a5955-b837-e8d1-ab9a-000100620002";
 //        voicemailCount =         {
-//            INBOX = 1;
-//            total = 1;
+//            INBOX = 10;
+//            deleted = 45;
+//            total = 10;
 //        };
 //    };
-//    entityId = 1;
-//    subId = "jrn:voicemail::jive:01471162-f384-24f5-9351-000100420005:vmbox/014b17d6-0d5a-3d74-1cb7-000100620005";
-//    type = announce;
-//}
+//    newId = 3;
+//    oldId = 2;
+//    subId = "014a5955-b837-e8d1-ab9a-000100620002";
+//    type = replace;
 }
 
 @end

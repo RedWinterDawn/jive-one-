@@ -19,4 +19,9 @@
     return self;
 }
 
+-(NSString *)description
+{
+    return _identfier;
+}
+
 @end

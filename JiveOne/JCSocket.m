@@ -123,6 +123,10 @@ NSString *const kJCSocketJediIdKey = @"id";
 - (void)subscribeToSocketEventsWithArray:(NSArray *) requestArray
 {
     NSURL *url = self.sessionInfo.subscriptionUrl;
+    if (!url) {
+        return;
+    }
+    
     JCV5ApiClient *apiClient = [JCV5ApiClient sharedClient];
     apiClient.manager.requestSerializer = [JCBearerAuthenticationJSONRequestSerializer new];
     [apiClient.manager POST:url.absoluteString
@@ -138,6 +142,10 @@ NSString *const kJCSocketJediIdKey = @"id";
 - (void)unsubscribeToSocketEvents:(CompletionHandler)completion {
     
     NSURL *url = self.sessionInfo.subscriptionUrl;
+    if (!url) {
+        return;
+    }
+    
     if (!url) {
         if (completion) {
             completion(NO, [NSError errorWithDomain:@"Socket" code:0 userInfo:nil]);

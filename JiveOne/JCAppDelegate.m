@@ -201,17 +201,16 @@ NSString *const kGCMSenderId = @"937754980938";
     // If we do not have a socket, connect.
     else {
         [jasmineSocket connectWithCompletion:^(BOOL success, NSError *error) {
-            [self subscribeToLineEvents:line];
+            if (success) {
+                [self subscribeToLineEvents:line];
+            }
         }];
     }
 }
 
 -(void)subscribeToLineEvents:(Line *)line
 {
-    if ([JCAppSettings sharedSettings].isPresenceEnabled) {
-        [JCPresenceManager generateSubscriptionForPbx:line.pbx];
-    }
-    
+    [JCPresenceManager generateSubscriptionForPbx:line.pbx];
     [JCVoicemailManager generateSubscriptionForLine:line];
 //    [JCSMSMessageManager generateSubscriptionForPbx:line.pbx];
     

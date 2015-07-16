@@ -24,6 +24,7 @@
 
 // Views
 #import "JCPresenceCell.h"
+#import "JCPresenceManager.h"
 
 // Controllers
 #import "JCContactDetailViewController.h"
@@ -39,12 +40,28 @@
 
 @implementation JCContactsTableViewController
 
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        JCAuthenticationManager *authenticationManager = self.authenticationManager;
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
+        [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
+        [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
+        [center addObserver:self selector:@selector(reloadTable) name:kJCPresenceManagerLinesChangedNotification object:[JCPresenceManager sharedManager]];
+    }
+    return self;
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:self.authenticationManager];
     self.clearsSelectionOnViewWillAppear = TRUE;
 }
 
@@ -85,7 +102,7 @@
         cell.detailTextLabel.text = phoneNumber.detailText;
         
         if ([phoneNumber isKindOfClass:[Extension class]] && [cell isKindOfClass:[JCPresenceCell class]]) {
-            ((JCPresenceCell *)cell).identifier = ((Extension *)phoneNumber).jrn;
+            ((JCPresenceCell *)cell).identifier = ((Extension *)phoneNumber).extensionId;
         }
     }
     else if ([object conformsToProtocol:@protocol(JCGroupDataSource)]) {
@@ -178,13 +195,6 @@
 {
     _fetchedResultsController = nil;
     [self.tableView reloadData];
-}
-
-#pragma mark - Notification Handlers -
-
--(void)lineChanged:(NSNotification *)notification
-{
-    [self reloadTable];
 }
 
 #pragma mark - Delegate Handlers -

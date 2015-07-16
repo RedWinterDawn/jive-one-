@@ -9,16 +9,19 @@
 #import "JCSocketManager.h"
 #import "PBX.h"
 
-NSString *const kJCSocketManagerTypeKey = @"type";
-NSString *const kJCSocketManagerDataKey = @"entity";
+#define SOCKET_SUBSCRIPTION_BATCH_SIZE_LIMIT 5
 
-NSString *const kJCSocketManagerTypeKeepAlive = @"keepalive";
+NSString *const kJCSocketManagerTypeKeepAlive   = @"keepalive";
 
-NSString *const kJCSocketParameterIdentifierKey = @"id";
-NSString *const kJCSocketParameterEntityKey     = @"entity";
-NSString *const kJCSocketParameterTypeKey       = @"type";
+NSString *const kJCSocketManagerSubscriptionIdKey                   = @"id";
+NSString *const kJCSocketManagerSubscriptionTypeKey                 = @"type";
+NSString *const kJCSocketManagerSubscriptionEntityKey               = @"entity";
+NSString *const kJCSocketManagerSubscriptionEntityIdentifierKey         = @"id";
+NSString *const kJCSocketManagerSubscriptionEntityTypeKey               = @"type";
+NSString *const kJCSocketManagerSubscriptionEntityAccountKey            = @"account";
 
-NSString *const kJCSocketParameterAccountKey    = @"account";
+NSString *const kJCSocketManagerEventTypeKey                        = @"type";
+NSString *const kJCSocketManagerEventDataKey                        = @"data";
 
 static NSMutableArray *subscriptions;
 
@@ -38,11 +41,21 @@ static NSMutableArray *subscriptions;
 
 -(instancetype)init
 {
+    return [self initWithSocket:[JCSocket sharedSocket]
+                    appSettings:[JCAppSettings sharedSettings]];
+}
+
+-(instancetype)initWithSocket:(JCSocket *)socket appSettings:(JCAppSettings *)appSettings
+{
     self = [super init];
     if (self) {
         _socket = [JCSocket sharedSocket];
+        _appSettings = appSettings;
+        _batchSize = SOCKET_SUBSCRIPTION_BATCH_SIZE_LIMIT;
+        
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(socketDidReceiveMessageSelector:) name:kJCSocketReceivedDataNotification object:_socket];
+        
     }
     return self;
 }
@@ -53,43 +66,48 @@ static NSMutableArray *subscriptions;
         subscriptions = nil;
     }
     
-    [JCSocket unsubscribeToSocketEvents:completion];
+    [_socket unsubscribeToSocketEvents:completion];
 }
 
 -(void)subscribe
 {
-    if (subscriptions) {
-        [JCSocket subscribeToSocketEventsWithArray:subscriptions];
+    NSMutableArray *mutableSubset = nil;
+    if (_batchSize > 0) {
+        for (NSDictionary *subscription in subscriptions) {
+            if(!mutableSubset) {
+                mutableSubset = [NSMutableArray new];
+            }
+            
+            [mutableSubset addObject:subscription];
+            if (mutableSubset.count == _batchSize) {
+                [JCSocket subscribeToSocketEventsWithArray:mutableSubset];
+                mutableSubset = nil;
+            }
+        }
+        
+        if (mutableSubset) {
+            [_socket subscribeToSocketEventsWithArray:mutableSubset];
+        }
+    } else {
+        [_socket subscribeToSocketEventsWithArray:subscriptions];
     }
     subscriptions = nil;
 }
 
--(void)generateSubscriptionWithIdentifier:(NSString *)identifier type:(NSString *)type subscriptionType:(NSString *)subscriptionType pbx:(PBX *)pbx
+-(void)generateSubscriptionWithIdentifier:(NSString *)identifier type:(NSString *)type entityType:(NSString *)entityType entityId:(NSString *)entityId entityAccountId:(NSString *)entityAccountId;
 {
-    NSDictionary *entity = @{kJCSocketParameterIdentifierKey:identifier,
-                             kJCSocketParameterTypeKey:type,
-                             kJCSocketParameterAccountKey:pbx.pbxId};
-    
-    NSString *subscriptionIdentifier = [NSString stringWithFormat:@"%@:%@", type, identifier];
-    NSDictionary *requestParameters = [self subscriptionDictionaryForIdentifier:subscriptionIdentifier entity:entity type:subscriptionType];
+    NSDictionary *entity = @{kJCSocketManagerSubscriptionEntityIdentifierKey:entityId,
+                             kJCSocketManagerSubscriptionEntityTypeKey:entityType,
+                             kJCSocketManagerSubscriptionEntityAccountKey:entityAccountId};
+
+    NSDictionary *requestParameters = [self subscriptionDictionaryForIdentifier:identifier type:type entity:entity ];
     if (!subscriptions) {
         subscriptions = [NSMutableArray new];
     }
     [subscriptions addObject:requestParameters];
 }
 
--(void)removeSubscriptionForIdentifier:(NSString *)identifier type:(NSString *)type
-{
-    NSString *subscriptionIdentifier = [NSString stringWithFormat:@"%@:%@", type, identifier];
-    for (NSDictionary *requestParameter in subscriptions) {
-        NSString *identifier = [requestParameter stringValueForKey:kJCSocketParameterIdentifierKey];
-        if([subscriptionIdentifier isEqualToString:identifier]){
-            [subscriptions removeObject:requestParameter];
-        }
-    }
-}
-
-- (NSDictionary *)subscriptionDictionaryForIdentifier:(NSString *)identifier entity:(NSDictionary *)entity type:(NSString *)type
+- (NSDictionary *)subscriptionDictionaryForIdentifier:(NSString *)identifier type:(NSString *)type entity:(NSDictionary *)entity
 {
     if (!identifier || identifier.length < 1) {
         return nil;
@@ -99,14 +117,9 @@ static NSMutableArray *subscriptions;
         return nil;
     }
     
-    NSMutableDictionary *parameters = [@{kJCSocketParameterIdentifierKey: identifier,
-                                         kJCSocketParameterEntityKey: entity} mutableCopy];
-    
-    if (type) {
-        [parameters setObject:type forKey:kJCSocketParameterTypeKey];
-    }
-    
-    return parameters;
+    return @{kJCSocketManagerSubscriptionIdKey: identifier,
+             kJCSocketManagerSubscriptionTypeKey: type,
+             kJCSocketManagerSubscriptionEntityKey: entity};
 }
 
 -(void)socketDidReceiveMessageSelector:(NSNotification *)notification
@@ -120,11 +133,11 @@ static NSMutableArray *subscriptions;
     }
     
     // Get the event message type.
-    NSString *type = [results stringValueForKey:kJCSocketManagerTypeKey];
+    NSString *type = [results stringValueForKey:kJCSocketManagerEventTypeKey];
     
     // Get the event message data.
     NSDictionary *data = nil;
-    id object = [results objectForKey:kJCSocketManagerDataKey];
+    id object = [results objectForKey:kJCSocketManagerEventDataKey];
     if (object && [object isKindOfClass:[NSDictionary class]]) {
         data = (NSDictionary *)object;
         }

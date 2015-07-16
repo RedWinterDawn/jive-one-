@@ -43,9 +43,9 @@ NSString *const kJCSMSMessageManagerEntityConversationKey =           @"conversa
     }
     
     [self generateSubscriptionWithIdentifier:did.didId
-                                        type:kJCSMSMessageManagerEntityDialogKey
-                            subscriptionType:kJCSMSMessageManagerEntityConversationKey
-                                         pbx:did.pbx];
+                                        type:kJCSMSMessageManagerEntityConversationKey
+                                  entityType:kJCSMSMessageManagerEntityDialogKey
+                                    entityId:did.didId entityAccountId:did.pbx.pbxId];
 }
 
 -(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data {
