@@ -175,6 +175,33 @@ NSString *const kJCV5ClientSocketSessionRequestURL = @"/v2/session/priority/jedi
                     }];
 }
 
+#pragma mark - Voicemail -
+
++ (void)downloadVoicemailsForLine:(Line *)line completion:(JCApiClientCompletionHandler)completion
+{
+    // If the pbx is not V5, do not request for visual voicemails.
+    if (!line.pbx.isV5) {
+        if (completion) {
+            completion(YES, nil, nil);
+        }
+        return;
+    }
+    
+    // Check for required data.
+    if (!line.mailboxUrl || line.mailboxUrl.isEmpty || !line.pbx) {
+        if (completion != NULL) {
+            completion(false, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Line has no mailbox url."]);
+        }
+        return;
+    }
+    
+    [self getWithPath:line.mailboxUrl
+           parameters:nil
+    requestSerializer:[JCAuthenticationJSONRequestSerializer new]
+              retries:1
+           completion:completion];
+}
+
 #pragma mark - Internal Contacts -
 
 #ifndef GET_EXTENSIONS_NUMBER_OF_TRIES

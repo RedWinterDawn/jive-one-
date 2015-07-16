@@ -36,6 +36,11 @@
 + (void)requestPrioritySessionForJediId:(NSString *)deviceToken
                              completion:(JCApiClientCompletionHandler)completion;
 
+#pragma mark - Voicemail -
+
++ (void)downloadVoicemailsForLine:(Line *)line
+                       completion:(JCApiClientCompletionHandler)completion;
+
 #pragma mark - Internal Extensions -
 
 + (void)downloadInternalExtensionsForLine:(Line *)line

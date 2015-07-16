@@ -105,33 +105,15 @@ NSString *const kVoicemailResponseTranscriptionUrlKey = @"transcription";
 
 + (void)downloadVoicemailsForLine:(Line *)line completion:(CompletionHandler)completion {
     
-    // If the pbx is not V5, do not request for visual voicemails.
-    if (!line.pbx.isV5) {
-        if (completion) {
-            completion(YES, nil);
+    [JCV5ApiClient downloadVoicemailsForLine:line completion:^(BOOL success, id response, NSError *error) {
+        if (success) {
+            [self processVoicemailResponseObject:response line:line completion:completion];
+        } else {
+            if (completion) {
+                completion(success, error);
+            }
         }
-        return;
-    }
-    
-    // Check for required data.
-    if (!line.mailboxUrl || line.mailboxUrl.isEmpty || !line.pbx) {
-        if (completion != NULL) {
-            completion(false, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Line has no mailbox url."]);
-        }
-        return;
-    }
-    
-    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    [client.manager GET:line.mailboxUrl
-             parameters:nil
-                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    [self processVoicemailResponseObject:responseObject line:line completion:completion];
-                }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    if (completion) {
-                        completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:error.localizedDescription]);
-                    }
-                }];
+    }];
 }
 
 + (void)downloadAudioForVoicemail:(Voicemail *)voicemail completion:(void (^)(BOOL success, NSData *audioData, NSError *error))completion{
