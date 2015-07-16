@@ -15,6 +15,4 @@
 @property (nonatomic, weak) NSString* gcmSenderID;
 @property BOOL connectedToGCM;
 
-
-
 @end

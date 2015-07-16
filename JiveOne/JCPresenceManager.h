@@ -17,10 +17,9 @@ extern NSString *const kJCPresenceManagerLinesChangedNotification;
 
 @interface JCPresenceManager : JCSocketManager
 
--(JCLinePresence *)linePresenceForContact:(InternalExtension *)contact;
+-(JCLinePresence *)linePresenceForExtension:(Extension *)extension;
 -(JCLinePresence *)linePresenceForIdentifier:(NSString *)identifier;
 
 +(void)generateSubscriptionForPbx:(PBX *)pbx;
-+(void)unsubscribeFromPbx:(PBX *)pbx;
 
 @end

@@ -208,7 +208,10 @@ NSString *const kGCMSenderId = @"937754980938";
 
 -(void)subscribeToLineEvents:(Line *)line
 {
-    [JCPresenceManager generateSubscriptionForPbx:line.pbx];
+    if ([JCAppSettings sharedSettings].isPresenceEnabled) {
+        [JCPresenceManager generateSubscriptionForPbx:line.pbx];
+    }
+    
     [JCVoicemailManager generateSubscriptionForLine:line];
 //    [JCSMSMessageManager generateSubscriptionForPbx:line.pbx];
     
@@ -355,6 +358,12 @@ NSString *const kGCMSenderId = @"937754980938";
     [self userRequiresAuthentication:notification];
 }
 
+-(void)presenceChanged:(NSNotification *)notification
+{
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    [self subscribeToJasmineEventsForLine:authenticationManager.line];
+}
+
 #pragma mark - Delegate Handlers -
 
 -(void)pickerViewControllerShouldDismiss:(JCPickerViewController *)controller
@@ -421,6 +430,9 @@ NSString *const kGCMSenderId = @"937754980938";
     
     // Badging
     [JCBadgeManager updateBadgesFromContext:[NSManagedObjectContext MR_defaultContext]];
+    
+    JCAppSettings *appSettings = [JCAppSettings sharedSettings];
+    [center addObserver:self selector:@selector(presenceChanged:) name:kJCAppSettingsPresenceChangedNotification object:appSettings];
 
     // Authentication
     JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];

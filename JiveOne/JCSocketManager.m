@@ -20,7 +20,6 @@ NSString *const kJCSocketParameterTypeKey       = @"type";
 
 NSString *const kJCSocketParameterAccountKey    = @"account";
 
-
 static NSMutableArray *subscriptions;
 
 @implementation JCSocketManager
@@ -62,6 +61,7 @@ static NSMutableArray *subscriptions;
     if (subscriptions) {
         [JCSocket subscribeToSocketEventsWithArray:subscriptions];
     }
+    subscriptions = nil;
 }
 
 -(void)generateSubscriptionWithIdentifier:(NSString *)identifier type:(NSString *)type subscriptionType:(NSString *)subscriptionType pbx:(PBX *)pbx
@@ -70,11 +70,23 @@ static NSMutableArray *subscriptions;
                              kJCSocketParameterTypeKey:type,
                              kJCSocketParameterAccountKey:pbx.pbxId};
     
-    NSDictionary *requestParameters = [self subscriptionDictionaryForIdentifier:[NSString stringWithFormat:@"%@:%@", type, identifier] entity:entity type:subscriptionType];
+    NSString *subscriptionIdentifier = [NSString stringWithFormat:@"%@:%@", type, identifier];
+    NSDictionary *requestParameters = [self subscriptionDictionaryForIdentifier:subscriptionIdentifier entity:entity type:subscriptionType];
     if (!subscriptions) {
         subscriptions = [NSMutableArray new];
     }
     [subscriptions addObject:requestParameters];
+}
+
+-(void)removeSubscriptionForIdentifier:(NSString *)identifier type:(NSString *)type
+{
+    NSString *subscriptionIdentifier = [NSString stringWithFormat:@"%@:%@", type, identifier];
+    for (NSDictionary *requestParameter in subscriptions) {
+        NSString *identifier = [requestParameter stringValueForKey:kJCSocketParameterIdentifierKey];
+        if([subscriptionIdentifier isEqualToString:identifier]){
+            [subscriptions removeObject:requestParameter];
+        }
+    }
 }
 
 - (NSDictionary *)subscriptionDictionaryForIdentifier:(NSString *)identifier entity:(NSDictionary *)entity type:(NSString *)type

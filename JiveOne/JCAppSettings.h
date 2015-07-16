@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *const kJCAppSettingsPresenceAttribute;
+extern NSString *const kJCAppSettingsPresenceChangedNotification;
 
 @interface JCAppSettings : NSObject
 

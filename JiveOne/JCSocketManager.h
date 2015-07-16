@@ -19,7 +19,7 @@
 
 -(void)generateSubscriptionWithIdentifier:(NSString *)identifier type:(NSString *)type subscriptionType:(NSString *)subscriptionType pbx:(PBX *)pbx;
 
-//-(NSDictionary *)subscriptionDictionaryForIdentifier:(NSString *)identifier entity:(NSDictionary *)entity type:(NSString *)type;
+-(void)removeSubscriptionForIdentifier:(NSString *)identifier type:(NSString *)type;
 
 @end
 
