@@ -10,7 +10,9 @@
 
 #import <SocketRocket/SRWebSocket.h>
 
-#import "JCV5ApiClient.h"
+#import "JCV5ApiClient+Jasmine.h"
+#import "JCV5ApiClient+Jedi.h"
+
 #import "JCKeychain.h"
 #import "JCSocketLogger.h"
 

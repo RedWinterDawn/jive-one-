@@ -9,7 +9,7 @@
 #import "Voicemail+V5Client.h"
 
 // Client
-#import "JCV5ApiClient.h"
+#import "JCV5ApiClient+Voicemail.h"
 #import "JCSocket.h"
 
 // Models
@@ -18,24 +18,22 @@
 #import "Line.h"
 #import "VoicemailTranscription.h"
 
-NSString *const kVoicemailResponseIdentifierKey         = @"jrn";
-NSString *const kVoicemailResponseDurationKey           = @"duration";
-NSString *const kVoicemailResponseReadKey               = @"read";
-NSString *const kVoicemailResponseNameKey               = @"callerId";
-NSString *const kVoicemailResponseNumberKey             = @"callerIdNumber";
-NSString *const kVoicemailResponseTimestampKey          = @"timeStamp";
-NSString *const kVoicemailResponseSelfKey               = @"self";
-NSString *const kVoicemailResponseSelfDownloadKey       = @"self_download";
-NSString *const kVoicemailResponseSelfChangeStatusKey   = @"self_changeStatus";
-NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
+NSString *const kVoicemailResponseIdentifierKey                 = @"jrn";
+NSString *const kVoicemailResponseDurationKey                   = @"duration";
+NSString *const kVoicemailResponseReadKey                       = @"read";
+NSString *const kVoicemailResponseNameKey                       = @"callerId";
+NSString *const kVoicemailResponseNumberKey                     = @"callerIdNumber";
+NSString *const kVoicemailResponseTimestampKey                  = @"timeStamp";
+NSString *const kVoicemailResponseSelfKey                       = @"self";
+NSString *const kVoicemailResponseSelfDownloadKey               = @"self_download";
+NSString *const kVoicemailResponseSelfChangeStatusKey           = @"self_changeStatus";
+NSString *const kVoicemailResponseSelfMailboxKey                = @"self_mailbox";
 
-NSString *const kVoicemailResponseTranscriptionKey = @"transcription";
-NSString *const kVoicemailResponseTranscriptionTextKey = @"text";
-NSString *const kVoicemailResponseTranscriptionConfidenceKey = @"confidence";
-NSString *const kVoicemailResponseTranscriptionWordCountKey = @"wordCount";
-NSString *const kVoicemailResponseTranscriptionUrlKey = @"transcription";
-
-
+NSString *const kVoicemailResponseTranscriptionKey              = @"transcription";
+NSString *const kVoicemailResponseTranscriptionTextKey              = @"text";
+NSString *const kVoicemailResponseTranscriptionConfidenceKey        = @"confidence";
+NSString *const kVoicemailResponseTranscriptionWordCountKey         = @"wordCount";
+NSString *const kVoicemailResponseTranscriptionUrlKey               = @"transcription";
 
 @implementation Voicemail (V5Client)
 
@@ -103,8 +101,8 @@ NSString *const kVoicemailResponseTranscriptionUrlKey = @"transcription";
 
 #pragma mark - V5 Client Requests -
 
-+ (void)downloadVoicemailsForLine:(Line *)line completion:(CompletionHandler)completion {
-    
++ (void)downloadVoicemailsForLine:(Line *)line completion:(CompletionHandler)completion
+{
     [JCV5ApiClient downloadVoicemailsForLine:line completion:^(BOOL success, id response, NSError *error) {
         if (success) {
             [self processVoicemailResponseObject:response line:line completion:completion];
@@ -116,9 +114,8 @@ NSString *const kVoicemailResponseTranscriptionUrlKey = @"transcription";
     }];
 }
 
-+ (void)downloadAudioForVoicemail:(Voicemail *)voicemail completion:(void (^)(BOOL success, NSData *audioData, NSError *error))completion{
-    
-    
++ (void)downloadAudioForVoicemail:(Voicemail *)voicemail completion:(void (^)(BOOL success, NSData *audioData, NSError *error))completion
+{
     if (!voicemail || !voicemail.url_download || voicemail.url_download.isEmpty) {
         if (completion != NULL) {
             completion(false, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Line has no mailbox download url."]);
@@ -147,8 +144,8 @@ NSString *const kVoicemailResponseTranscriptionUrlKey = @"transcription";
     });
 }
 
-+ (void)deleteAllMarkedVoicemailsForLine:(Line *)line completion:(CompletionHandler)completion {
-    
++ (void)deleteAllMarkedVoicemailsForLine:(Line *)line completion:(CompletionHandler)completion
+{
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@ and markForDeletion == %@", line, @YES];
     NSArray *voicemails = [Voicemail MR_findAllWithPredicate:predicate inContext:line.managedObjectContext];
     if (voicemails && voicemails.count > 0) {
@@ -158,72 +155,35 @@ NSString *const kVoicemailResponseTranscriptionUrlKey = @"transcription";
     }
 }
 
-+ (void)markVoicemailAsRead:(Voicemail *)voicemail completion:(CompletionHandler)completion {
-    
-    NSString *urlString = voicemail.url_changeStatus;
-    if (!urlString || urlString.length < 1) {
-        return;
-    }
-    
-    NSURL *url = [NSURL URLWithString:urlString];
-    if (!url) {
-        return;
-    }
-    
-    JCV5ApiClient *client = [JCV5ApiClient new];
-    [client.manager PUT:url.absoluteString
-             parameters:@{@"read": @"true"}
-                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    if (completion) {
-                        completion (YES, nil);
-                    }
-                }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    
-                    if (completion) {
-                        completion (NO, error);
-                    }
-                    
-                    NSString *errorMessage = @"Failed Updating Voicemail Read Status On Server, Aborting";
-                    NSLog(@"%@: %@", errorMessage, [error description]);
-                }];
++ (void)markVoicemailAsRead:(Voicemail *)voicemail completion:(CompletionHandler)completion
+{
+    [JCV5ApiClient updateVoicemail:voicemail completion:^(BOOL success, id response, NSError *error) {
+        if (completion) {
+            completion(success, error);
+        }
+    }];
 }
 
 + (void)deleteVoicemail:(Voicemail *)voicemail completion:(CompletionHandler)completion
 {
-    if(!voicemail)
-        return;
-    
-    NSString *urlString = voicemail.url_self;
-    if (!urlString || urlString.length < 1) {
-        return;
-    }
-    
-    NSURL *url = [NSURL URLWithString:urlString];
-    if (!url) {
-        return;
-    }
-    
-    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    [client.manager DELETE:url.absoluteString
-                parameters:nil
-                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                       [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                           Voicemail *localVoicemail = (Voicemail *)[localContext objectWithID:voicemail.objectID];
-                           if (localVoicemail && !localVoicemail.isDeleted) {
-                               [localContext deleteObject:localVoicemail];
-                           }
-                       } completion:^(BOOL success, NSError *error) {
-                           if (completion) {
-                               completion (NO, error);
-                           }
-                       }];
-                   }
-                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                       if (completion) {
-                           completion (NO, error);
-                       }
-                   }];
+    [JCV5ApiClient deleteVoicemail:voicemail completion:^(BOOL success, id response, NSError *error) {
+        if (success) {
+            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                Voicemail *localVoicemail = (Voicemail *)[localContext objectWithID:voicemail.objectID];
+                if (localVoicemail && !localVoicemail.isDeleted) {
+                    [localContext deleteObject:localVoicemail];
+                }
+            } completion:^(BOOL success, NSError *error) {
+                if (completion) {
+                    completion (NO, error);
+                }
+            }];
+        } else {
+            if (completion) {
+                completion (NO, error);
+            }
+        }
+    }];
 }
 
 /**

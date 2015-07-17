@@ -9,7 +9,7 @@
 #import "PBX+V5Client.h"
 
 // V5 Client
-#import "JCV5ApiClient.h"
+#import "JCV5ApiClient+Jif.h"
 
 // Managed Objects
 #import "Line.h"
