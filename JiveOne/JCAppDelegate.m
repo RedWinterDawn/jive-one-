@@ -50,19 +50,19 @@
 #define SHARED_CACHE_CAPACITY 2 * 1024 * 1024
 #define DISK_CACHE_CAPACITY 100 * 1024 * 1024
 
+NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReceiveRemoteNotification";
+NSString *const kGCMSenderId = @"937754980938";
+
 @interface JCAppDelegate () <JCPickerViewControllerDelegate>
 {
     UINavigationController *_navigationController;
     UIViewController *_appSwitcherViewController;
+    BOOL _connectedToGCM;
 }
 
 @end
 
 @implementation JCAppDelegate
-
-NSString *const kPAPInstallationChannelsKey = @"channels";
-NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciveRemoteNotification";
-NSString *const kGCMSenderId = @"937754980938";
 
 #pragma mark Login Workflow
 
