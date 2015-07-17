@@ -13,7 +13,7 @@
 #import "ContactGroupAssociation.h"
 #import "User.h"
 
-#import "JCV5ApiClient.h"
+#import "JCV5ApiClient+Contacts.h"
 
 NSString *const kContactGroupIdKey     = @"id";
 NSString *const kContactNameKey        = @"name";

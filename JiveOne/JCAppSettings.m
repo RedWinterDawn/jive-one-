@@ -9,6 +9,8 @@
 #import "JCAppSettings.h"
 #import <objc/runtime.h>
 
+NSString *const kJCAppSettingsPresenceChangedNotification = @"presenceChanged";
+
 NSString *const kJCAppSettingsIntercomEnabledAttribute = @"intercomEnabled";
 NSString *const kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute = @"intercomMicrophoneMuteEnabled";
 NSString *const kJCAppSettingsWifiOnlyAttribute = @"wifiOnly";
@@ -62,6 +64,7 @@ NSString *const kJCRingToneSelectedAttribute = @"ringtone";
 -(void)setPresenceEnabled:(BOOL)presenceEnabled
 {
     [self setSettingBoolValue:presenceEnabled forKey:kJCAppSettingsPresenceAttribute];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCAppSettingsPresenceChangedNotification object:self];
 }
 
 -(void)setVibrateOnRing:(BOOL)vibrateOnRing

@@ -11,7 +11,7 @@
 #import "Contact.h"
 #import "ContactGroup.h"
 
-#import "JCV5ApiClient.h"
+#import "JCV5ApiClient+Contacts.h"
 
 @implementation ContactGroupAssociation (V5Client)
 

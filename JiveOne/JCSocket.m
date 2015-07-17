@@ -9,7 +9,10 @@
 #import "JCSocket.h"
 
 #import <SocketRocket/SRWebSocket.h>
-#import "JCV5ApiClient.h"
+
+#import "JCV5ApiClient+Jasmine.h"
+#import "JCV5ApiClient+Jedi.h"
+
 #import "JCKeychain.h"
 #import "JCSocketLogger.h"
 
@@ -23,7 +26,8 @@ NSString *const kJCSocketNotificationResultKey      = @"result";
 
 NSString *const kJCSocketSessionKeychainKey         = @"socket-session";
 
-NSString *const kJCV5ClientSocketSessionRequestURL                      = @"https://realtime.jive.com/session";
+NSString *const kJCV5ClientSocketSessionCheckVersionPath                = @"v2";
+
 NSString *const kJCV5ClientSocketSessionResponseWebSocketRequestKey     = @"ws";
 NSString *const kJCV5ClientSocketSessionResponseSubscriptionRequestKey  = @"subscriptions";
 NSString *const kJCV5ClientSocketSessionResponseSelfRequestKey          = @"self";
@@ -31,17 +35,22 @@ NSString *const kJCV5ClientSocketSessionResponseSessionKey              = @"sess
 NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"deviceToken";
 
 NSString *const kJCSocketSessionIdKey           = @"sessionId";
-NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
+NSString *const kJCSocketDeviceTokenKey         = @"deviceToken";
+NSString *const kJCSocketJediIdentifierKey      = @"jediID";
+
+NSString *const kJCSocketJediIdKey = @"id";
 
 #define SOCKET_MAX_RETRIES 3
 
-@interface JCSocket () <SRWebSocketDelegate>
+@interface JCSocketSessionInfo : NSObject
 {
-    SRWebSocket *_socket;
-    CompletionHandler _completion;
-    BOOL _closeSocketOnPurpose;
-    NSInteger _reconnectRetries;
+    NSMutableDictionary *_data;
 }
+
+-(instancetype)initWithDataDictionary:(NSDictionary *)data;
+-(instancetype)initWithDataDictionary:(NSDictionary *)data deviceToken:(NSString *)deviceToken;
+
+@property(nonatomic, readonly) NSDictionary *data;
 
 @property (nonatomic, readonly) NSString *sessionId;
 @property (nonatomic, readonly) NSString *sessionDeviceToken;
@@ -51,26 +60,117 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 @end
 
+@interface JCSocket () <SRWebSocketDelegate>
+{
+    SRWebSocket *_socket;
+    CompletionHandler _completion;
+    BOOL _closeSocketOnPurpose;
+    NSInteger _reconnectRetries;
+}
+
+@property (nonatomic, strong) NSString *jediIdentifier;
+@property (nonatomic, strong) NSString *deviceToken;
+@property (nonatomic, strong) JCSocketSessionInfo *sessionInfo;
+
+@end
+
 @implementation JCSocket
 
-- (void)openSession:(NSURL *)sessionUrl completion:(CompletionHandler)completion
+- (void)connectWithCompletion:(CompletionHandler)completion
 {
-    if (_socket && ![_socket.url isEqual:sessionUrl]) {
-        [self disconnect];
-    }
+    [self connectWithDeviceToken:self.deviceToken completion:completion];
+}
+
+- (void)connectWithDeviceToken:(NSString *)deviceToken completion:(CompletionHandler)completion
+{
+    // If the device token is different from the device token that we have stored for the session
+    // url, nuke it. We need to update Jedi, to tell it the new device token. This will delete the
+    // session data url and will create a new session.
     
-    if (self.isReady || self.isConnecting) {
+    JCSocketSessionInfo *sessionInfo = self.sessionInfo;
+    NSString *currentDeviceToken = sessionInfo.sessionDeviceToken;
+    if (currentDeviceToken && ![currentDeviceToken isEqualToString:deviceToken]) {
+        [self updateJediWithNewDeviceToken:deviceToken oldDeviceToken:deviceToken completion:completion];
         return;
     }
     
-    
-    _completion = completion;
-    _socket = [[SRWebSocket alloc] initWithURL:sessionUrl];
-    _socket.delegate = self;
-    if (_socket.readyState == SR_CONNECTING) {
-        [JCSocketLogger logSocketEvent:[NSString stringWithFormat:@"Opening Session: %@", sessionUrl.absoluteString]];
-        [_socket open];
+    // Check to see if the session url that is stored is the right API version. If it is not, Nuke it.
+    NSURL *sessionUrl = sessionInfo.sessionUrl;
+    if (sessionUrl && [sessionUrl.absoluteString rangeOfString:kJCV5ClientSocketSessionCheckVersionPath].location == NSNotFound) {
+        [self clearSessionInfo];
+        sessionInfo = nil;
     }
+    
+    // If we have a session url, open a session with the saved session info.
+    sessionUrl = sessionInfo.sessionUrl;
+    if (sessionUrl) {
+        [self openSession:sessionUrl completion:completion];
+        return;
+    }
+    
+    // If we do not have a session url,
+    [self requestPrioritySessionWithDeviceToken:deviceToken completion:^(BOOL success, JCSocketSessionInfo *newSessionInfo, NSError *error) {
+        if (success) {
+            self.sessionInfo = newSessionInfo;
+            [self openSession:newSessionInfo.sessionUrl completion:completion];
+        }
+        else {
+            if (completion) {
+                completion(success, error);
+            }
+        }
+    }];
+}
+
+- (void)subscribeToSocketEventsWithArray:(NSArray *) requestArray
+{
+    NSURL *url = self.sessionInfo.subscriptionUrl;
+    if (!url) {
+        return;
+    }
+    
+    JCV5ApiClient *apiClient = [JCV5ApiClient sharedClient];
+    apiClient.manager.requestSerializer = [JCBearerAuthenticationJSONRequestSerializer new];
+    [apiClient.manager POST:url.absoluteString
+                 parameters:requestArray
+                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        NSLog(@"Success");
+                    }
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        NSLog(@"Error Subscribing %@", error);
+                    }];
+}
+
+- (void)unsubscribeToSocketEvents:(CompletionHandler)completion {
+    
+    NSURL *url = self.sessionInfo.subscriptionUrl;
+    if (!url) {
+        return;
+    }
+    
+    if (!url) {
+        if (completion) {
+            completion(NO, [NSError errorWithDomain:@"Socket" code:0 userInfo:nil]);
+        }
+        return;
+    }
+    
+    JCV5ApiClient *apiClient = [JCV5ApiClient sharedClient];
+    apiClient.manager.requestSerializer = [JCBearerAuthenticationJSONRequestSerializer new];
+    [apiClient.manager DELETE:url.absoluteString
+                   parameters:nil
+                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                          NSLog(@"Unsubscribe All Events");
+                          if (completion) {
+                              completion(YES, nil);
+                          }
+                          
+                      }
+                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                          if (completion) {
+                              completion(NO, error);
+                          }
+                      }];
 }
 
 -(void)disconnect
@@ -99,8 +199,29 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
         [_socket open];
     }
     else {
-        [self openSession:self.sessionUrl completion:_completion];
+        [self openSession:self.sessionInfo.sessionUrl completion:_completion];
     }
+}
+
+#pragma mark - Setters -
+
+-(void)setJediIdentifier:(NSString *)jediIdentifier
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:jediIdentifier forKey:kJCSocketJediIdentifierKey];
+    [userDefaults synchronize];
+}
+
+-(void)setDeviceToken:(NSString *)deviceToken
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:deviceToken forKey:kJCSocketDeviceTokenKey];
+    [userDefaults synchronize];
+}
+
+-(void)setSessionInfo:(JCSocketSessionInfo *)sessionInfo
+{
+    [JCKeychain saveValue:sessionInfo.data forKey:kJCSocketSessionKeychainKey];      // set the keychain value to hold the new session info data.
 }
 
 #pragma mark - Getters -
@@ -115,52 +236,133 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
     return (_socket && _socket.readyState == SR_CONNECTING);
 }
 
--(NSString *)sessionDeviceToken
+-(NSString *)jediIdentifier
 {
-    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
-    if (socketSession) {
-        return [socketSession objectForKey:kJCV5ClientSocketSessionDeviceTokenKey];
-    }
-    return nil;
+    return [[NSUserDefaults standardUserDefaults] valueForKey:kJCSocketJediIdentifierKey];
 }
 
--(NSString *)sessionId
+-(NSString *)deviceToken
 {
-    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
-    if (socketSession) {
-        return [socketSession objectForKey:kJCSocketSessionIdKey];
-    }
-    return nil;
+    return [[NSUserDefaults standardUserDefaults] valueForKey:kJCSocketDeviceTokenKey];
 }
 
--(NSURL *)sessionUrl
+-(JCSocketSessionInfo *)sessionInfo
 {
-    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
-    if (socketSession) {
-        return [socketSession objectForKey:kJCV5ClientSocketSessionResponseWebSocketRequestKey];
-    }
-    return nil;
+    NSDictionary *data = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
+    return [[JCSocketSessionInfo alloc] initWithDataDictionary:data];
 }
 
--(NSURL *)subscriptionUrl
-{
-    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
-    if (socketSession) {
-        return [socketSession objectForKey:kJCV5ClientSocketSessionResponseSubscriptionRequestKey];
-    }
-    return nil;
-}
-
--(NSURL *)selfUrl
-{
-    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
-    if (socketSession) {
-        return [socketSession objectForKey:kJCV5ClientSocketSessionResponseSelfRequestKey];
-    }
-    return nil;
-}
 
 #pragma mark - Private -
+
+- (void)updateJediWithNewDeviceToken:(NSString *)deviceToken oldDeviceToken:(NSString *)oldDeviceToken completion:(CompletionHandler)completion
+{
+    // Nuke stored data. It is now invalid.
+    [self clearSessionInfo];
+    
+    // if for whatever reason we were connected, close the socket.
+    [self disconnect];
+    
+    // Notify Jedi of the changed token.
+    [JCV5ApiClient updateJediFromOldDeviceToken:oldDeviceToken
+                               toNewDeviceToken:deviceToken
+                                     completion:^(BOOL success, id response, NSError *error) {
+                                         if (success) {
+                                             [self connectWithDeviceToken:deviceToken completion:completion];
+                                         } else {
+                                             if (completion) {
+                                                 completion(NO, error);
+                                             }
+                                         }
+                                     }];
+}
+
+/**
+ * Requests a Priority session. Checks to see if we have a jedi id stored in the user defaults. If
+ * we do, we go ahead a requests a priority session. If we do not have the jedi id, we need to 
+ * request it. After processing and storeing the response, we request the priority session.
+ */
+- (void)requestPrioritySessionWithDeviceToken:(NSString *)deviceToken completion:(void(^)(BOOL success, JCSocketSessionInfo *sessionInfo, NSError *error))completion
+{
+    // Check to see if we have a stored Jedi ID. If we do, request a priority session from Jasmine.
+    NSString *jediId = self.jediIdentifier;
+    if (jediId) {
+        [self requestPrioritySessionWithJediId:jediId deviceToken:deviceToken completion:completion];
+        return;
+    }
+    
+    // If we do not have a jedi id, we request Jedi for an id, passing the device token.
+    [JCV5ApiClient requestJediIdForDeviceToken:deviceToken completion:^(BOOL success, id response, NSError *error) {
+        if (![response isKindOfClass:[NSDictionary class]]) {
+            if (completion) {
+                completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_ERROR]);
+            }
+            return;
+        }
+        
+        // Process response and store.
+        NSString *jediId = [((NSDictionary *)response) stringValueForKey:kJCSocketJediIdKey];
+        if (!jediId) {
+            if (completion) {
+                completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_ERROR]);
+            }
+            return;
+        }
+        
+        self.jediIdentifier = jediId;
+        [self requestPrioritySessionWithJediId:jediId deviceToken:deviceToken completion:completion];
+    }];
+}
+
+- (void)requestPrioritySessionWithJediId:(NSString *)jediId deviceToken:(NSString *)deviceToken completion:(void(^)(BOOL success, JCSocketSessionInfo *sessionInfo, NSError *error))completion
+{
+    [JCV5ApiClient requestPrioritySessionForJediId:jediId
+                                        completion:^(BOOL success, id response, NSError *error) {
+                                            if (success) {
+                                                JCSocketSessionInfo *sessionInfo = [self processPrioritySessionResponse:response deviceToken:deviceToken];
+                                                if(sessionInfo) {
+                                                    if (completion) {
+                                                        completion(YES, sessionInfo, nil);
+                                                    }
+                                                } else {
+                                                    if (completion) {
+                                                        completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_ERROR]);
+                                                    }
+                                                }
+                                            } else {
+                                                if (completion) {
+                                                    completion(success, nil, error);
+                                                }
+                                            }
+                                        }];
+}
+
+- (JCSocketSessionInfo *)processPrioritySessionResponse:(id)response deviceToken:(NSString *)deviceToken
+{
+    if (![response isKindOfClass:[NSDictionary class]]) {
+        return nil;
+    }
+    return [[JCSocketSessionInfo alloc] initWithDataDictionary:(NSDictionary *)response deviceToken:deviceToken];
+}
+
+- (void)openSession:(NSURL *)sessionUrl completion:(CompletionHandler)completion
+{
+    if (_socket && ![_socket.url isEqual:sessionUrl]) {
+        [self disconnect];
+    }
+    
+    if (self.isReady || self.isConnecting) {
+        return;
+    }
+    
+    _completion = completion;
+    _socket = [[SRWebSocket alloc] initWithURL:sessionUrl];
+    _socket.delegate = self;
+    if (_socket.readyState == SR_CONNECTING) {
+        [JCSocketLogger logSocketEvent:[NSString stringWithFormat:@"Opening Session: %@", sessionUrl.absoluteString]];
+        [_socket open];
+    }
+}
 
 - (void)closeSocketWithReason:(NSString *)reason
 {
@@ -186,6 +388,11 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 {
     _completion = nil;
     _socket = nil;
+}
+
+-(void)clearSessionInfo
+{
+    [JCKeychain deleteValueForKey:kJCSocketSessionKeychainKey];
 }
 
 #pragma mark - Delegate Handlers -
@@ -267,7 +474,15 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
      * If this was not closed on purpose, try to connect again
      */
     if (!_closeSocketOnPurpose) {
-        [self restartSocket];
+        if (code == 1001) {
+            NSString *deviceToken = self.deviceToken;
+            [self clearSessionInfo];
+            [self connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
+                [self restartSocket];
+            }];
+        } else {
+            [self restartSocket];
+        }
     }
 }
 
@@ -285,39 +500,21 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
     return socket;
 }
 
-+ (id)copyWithZone:(NSZone *)zone
++ (void)setDeviceToken:(NSString *)deviceToken
 {
+    [JCSocket sharedSocket].deviceToken = deviceToken;
+}
+
++ (id)copyWithZone:(NSZone *)zone {
     return self;
 }
 
-+ (void)connectWithDeviceToken:(NSString *)deviceToken completion:(CompletionHandler)completion
++ (void)restart
 {
-    // If we have a socket session url, try to reuse it.
-    JCSocket *socket = [JCSocket sharedSocket];
-    
-    // If the device token is different from the device token that we have stored for the session
-    // url, nuke it. This will delete the session url and will create a new session.
-    if (![socket.sessionDeviceToken isEqualToString:deviceToken]) {
-        [JCKeychain deleteValueForKey:kJCSocketSessionKeychainKey]; // delete stored keychain credentials.
-        [socket disconnect];
-    }
-    
-    // If this is the first time we are connecting, or we have reset the session keychain, request it.
-    if (!socket.sessionUrl) {
-        [JCSocket requestSocketSessionRequestUrlsWithDeviceIdentifier:deviceToken completion:completion];
-        return;
-    }
-    
-    // If we are still here, open session. We have all the data we need.
-    [socket openSession:socket.sessionUrl completion:completion];
-}
-
-+ (void)restart {
     JCSocket *socket = [JCSocket sharedSocket];
     if (socket.isReady) {
         return;
     }
-    
     [socket start];
 }
 
@@ -326,122 +523,73 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
     [[JCSocket sharedSocket] disconnect];
 }
 
-@end
-
-@implementation JCSocket (V5Client)
-
-+ (void)requestSocketSessionRequestUrlsWithDeviceIdentifier:(NSString *)deviceToken completion:(CompletionHandler)completion
++ (void)reset
 {
-    JCV5ApiClient *client = [JCV5ApiClient new];
-    [client.manager POST:kJCV5ClientSocketSessionRequestURL
-              parameters:((deviceToken && deviceToken.length > 0) ? @{kJCV5ClientSocketSessionDeviceTokenKey : deviceToken} : nil)
-                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                     if (![responseObject isKindOfClass:[NSDictionary class]]) {
-                         if (completion) {
-                             completion(NO, nil);
-                         }
-                         return;
-                     }
-                     
-                     NSDictionary *data = (NSDictionary *)responseObject;
-                     NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-                     if (deviceToken) {
-                         [userInfo setObject:deviceToken forKey:kJCSocketSessionDeviceTokenKey];
-                     }
-                     
-                     NSURL *selfUrl = [data urlValueForKey:kJCV5ClientSocketSessionResponseSelfRequestKey];
-                     if (selfUrl) {
-                         [userInfo setObject:selfUrl forKey:kJCV5ClientSocketSessionResponseSelfRequestKey];
-                         [userInfo setObject:selfUrl.lastPathComponent forKey:kJCSocketSessionIdKey];
-                     }
-                     
-                     NSURL *websocketUrl = [data urlValueForKey:kJCV5ClientSocketSessionResponseWebSocketRequestKey];
-                     if (websocketUrl) {
-                         [userInfo setObject:websocketUrl forKey:kJCV5ClientSocketSessionResponseWebSocketRequestKey];
-                     }
-                     
-                     NSURL *subscriptionUrl = [data urlValueForKey:kJCV5ClientSocketSessionResponseSubscriptionRequestKey];
-                     if (subscriptionUrl) {
-                         [userInfo setObject:subscriptionUrl forKey:kJCV5ClientSocketSessionResponseSubscriptionRequestKey];
-                     }
-                     
-                     // Save the session keychain into the keychain for secure access.
-                     [JCKeychain saveValue:userInfo forKey:kJCSocketSessionKeychainKey];
-                     
-                     // Open Session
-                     [[JCSocket sharedSocket] openSession:websocketUrl completion:completion];
-                 }
-                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                     if (completion) {
-                         completion(NO, error);
-                     }
-                 }];
+    JCSocket *socket = [JCSocket sharedSocket];
+    [socket disconnect];
+    
+    // Purge data.
+    socket.jediIdentifier = nil;
+    [socket clearSessionInfo];
 }
 
-NSString *const kJCSocketParameterIdentifierKey = @"id";
-NSString *const kJCSocketParameterEntityKey     = @"entity";
-NSString *const kJCSocketParameterTypeKey       = @"type";
-
-+ (void)subscribeToSocketEventsWithIdentifer:(NSString *)identifer entity:(NSString *)entity type:(NSString *)type
++ (void)subscribeToSocketEventsWithArray:(NSArray *) requestArray
 {
-    NSDictionary *requestParameters = [self subscriptionDictionaryForIdentifier:identifer entity:entity type:type];
-    NSURL *url = [JCSocket sharedSocket].subscriptionUrl;
-    JCV5ApiClient *apiClient = [JCV5ApiClient sharedClient];
-    [apiClient.manager POST:url.absoluteString
-                 parameters:requestParameters
-                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        NSLog(@"Success");
-                    }
-                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        NSLog(@"Error Subscribing %@", error);
-                    }];
+    [[JCSocket sharedSocket] subscribeToSocketEventsWithArray:requestArray];
 }
 
 + (void)unsubscribeToSocketEvents:(CompletionHandler)completion {
     
-    NSURL *url = [JCSocket sharedSocket].subscriptionUrl;
-    if (!url) {
-        if (completion) {
-            completion(NO, [NSError errorWithDomain:@"Socket" code:0 userInfo:nil]);
-        }
-        return;
-    }
-    
-    JCV5ApiClient *apiClient = [JCV5ApiClient sharedClient];
-    [apiClient.manager DELETE:url.absoluteString
-                   parameters:nil
-                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                          NSLog(@"Unsubscribe All Events");
-                          if (completion) {
-                              completion(YES, nil);
-                          }
-                          
-                      }
-                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                          if (completion) {
-                              completion(NO, error);
-                          }
-                      }];
+    [[JCSocket sharedSocket] unsubscribeToSocketEvents:completion];
 }
 
-+ (NSDictionary *)subscriptionDictionaryForIdentifier:(NSString *)identifier entity:(NSString *)entity type:(NSString *)type
+@end
+
+@implementation JCSocketSessionInfo
+
+-(instancetype)initWithDataDictionary:(NSDictionary *)data
 {
-    if (!identifier || identifier.length < 1) {
-        return nil;
+    self = [super init];
+    if (self) {
+        _data = [data mutableCopy];
     }
-    
-    if (!entity || entity.length < 1) {
-        return nil;
-    }
-    
-    NSMutableDictionary *parameters = [@{kJCSocketParameterIdentifierKey: identifier,
-                                         kJCSocketParameterEntityKey: entity} mutableCopy];
-    
-    if (type) {
-        [parameters setObject:type forKey:kJCSocketParameterTypeKey];
-    }
-    
-    return parameters;
+    return self;
 }
+
+-(instancetype)initWithDataDictionary:(NSDictionary *)data  deviceToken:(NSString *)deviceToken
+{
+    self = [super init];
+    if (self) {
+        _data = [data mutableCopy];
+        [_data setValue:deviceToken forKey:kJCV5ClientSocketSessionDeviceTokenKey];
+    }
+    return self;
+}
+
+-(NSString *)sessionDeviceToken
+{
+    return [_data stringValueForKey:kJCV5ClientSocketSessionDeviceTokenKey];
+}
+
+-(NSString *)sessionId
+{
+    return [_data objectForKey:kJCSocketSessionIdKey];
+}
+
+-(NSURL *)sessionUrl
+{
+    return [_data urlValueForKey:kJCV5ClientSocketSessionResponseWebSocketRequestKey];
+}
+
+-(NSURL *)subscriptionUrl
+{
+    return [_data urlValueForKey:kJCV5ClientSocketSessionResponseSubscriptionRequestKey];
+}
+
+-(NSURL *)selfUrl
+{
+    return [_data urlValueForKey:kJCV5ClientSocketSessionResponseSelfRequestKey];
+}
+
 
 @end

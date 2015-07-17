@@ -29,11 +29,12 @@
 #import "JCProgressHUD.h"
 
 // Notifications
-NSString *const kJCAuthenticationManagerUserLoggedOutNotification           = @"userLoggedOut";
-NSString *const kJCAuthenticationManagerUserAuthenticatedNotification       = @"userAuthenticated";
-NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification   = @"userLoadedMinimumData";
-NSString *const kJCAuthenticationManagerAuthenticationFailedNotification    = @"authenticationFailed";
-NSString *const kJCAuthenticationManagerLineChangedNotification             = @"lineChanged";
+NSString *const kJCAuthenticationManagerUserRequiresAuthenticationNotification  = @"userRequiresAuthentication";
+NSString *const kJCAuthenticationManagerUserLoggedOutNotification               = @"userLoggedOut";
+NSString *const kJCAuthenticationManagerUserAuthenticatedNotification           = @"userAuthenticated";
+NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification       = @"userLoadedMinimumData";
+NSString *const kJCAuthenticationManagerAuthenticationFailedNotification        = @"authenticationFailed";
+NSString *const kJCAuthenticationManagerLineChangedNotification                 = @"lineChanged";
 
 // KVO and NSUserDefaults Keys
 NSString *const kJCAuthenticationManagerRememberMeAttributeKey              = @"rememberMe";
@@ -165,7 +166,8 @@ static NSMutableArray *authenticationCompletionRequests;
 {
     // Check to see if we are autheticiated. If we are not, notify that we are logged out.
     if (!_authenticationKeychain.isAuthenticated) {
-        [self postNotificationNamed:kJCAuthenticationManagerUserLoggedOutNotification];
+        [_authenticationKeychain logout];
+        [self postNotificationNamed:kJCAuthenticationManagerUserRequiresAuthenticationNotification];
         return;
     }
 
@@ -222,7 +224,7 @@ static NSMutableArray *authenticationCompletionRequests;
 {
     // Destroy current authToken;
     [_authenticationKeychain logout];
-    
+
     // Clear local variables.
     _user = nil;
     _line = nil;
@@ -262,17 +264,6 @@ static NSMutableArray *authenticationCompletionRequests;
     [self postNotificationNamed:kJCAuthenticationManagerLineChangedNotification];
 }
 
-- (void)setDeviceToken:(NSString *)deviceToken
-{
-    NSString *newToken = [deviceToken description];
-    newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:newToken forKey:kJCAuthneticationManagerDeviceTokenKey];
-    [defaults synchronize];
-}
-
 #pragma mark - Getters -
 
 - (BOOL)userAuthenticated
@@ -293,11 +284,6 @@ static NSMutableArray *authenticationCompletionRequests;
 -(NSString *)jiveUserId
 {
     return _authenticationKeychain.jiveUserId;
-}
-
--(NSString *)deviceToken
-{
-    return [[NSUserDefaults standardUserDefaults] valueForKey:kJCAuthneticationManagerDeviceTokenKey];
 }
 
 - (BOOL)rememberMe

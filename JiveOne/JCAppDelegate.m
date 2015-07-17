@@ -45,21 +45,24 @@
 
 #import  "JCAppSettings.h"
 
+#import <Google/CloudMessaging.h>
+
 #define SHARED_CACHE_CAPACITY 2 * 1024 * 1024
 #define DISK_CACHE_CAPACITY 100 * 1024 * 1024
+
+NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReceiveRemoteNotification";
+NSString *const kGCMSenderId = @"937754980938";
 
 @interface JCAppDelegate () <JCPickerViewControllerDelegate>
 {
     UINavigationController *_navigationController;
     UIViewController *_appSwitcherViewController;
+    BOOL _connectedToGCM;
 }
 
 @end
 
 @implementation JCAppDelegate
-
-NSString *const kPAPInstallationChannelsKey = @"channels";
-NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciveRemoteNotification";
 
 #pragma mark Login Workflow
 
@@ -142,60 +145,10 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
     __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
-//    if ([JasmineSocket sharedInstance].socket.readyState != SR_OPEN)
-//    {
-//        @try {
-//            TRVSMonitor *monitor = [TRVSMonitor monitor];
-//            JCBadgeManager *badgeManger = [JCBadgeManager sharedManager];
-//            [badgeManger startBackgroundUpdates];
-//            
-//            Line *line = [JCAuthenticationManager sharedInstance].line;
-//            [Voicemail downloadVoicemailsForLine:line complete:^(BOOL suceeded, NSError *error) {
-//                [monitor signal];
-//            }];
-//            
-//            // No Socket for now.
-//            //            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
-//            //                if (success) {
-//            //                    NSLog(@"Success Done with Block");
-//            //                    LogMessage(@"socket", 4, @"Success pooling from socket");
-//            //                }
-//            //                else {
-//            //                    NSLog(@"Error Done With Block %@", error);
-//            //                    LogMessage(@"socket", 4, @"Error pooling from socket");
-//            //
-//            //                }
-//            //                [monitor signal];
-//            //            }];
-//            
-//            [monitor waitWithTimeout:25];
-//            NSUInteger badgeUpdateEvents = [badgeManger endBackgroundUpdates];
-//            if (badgeUpdateEvents != 0) {
-//                fetchResult = UIBackgroundFetchResultNewData;
-//            }
-//            else {
-//                fetchResult = UIBackgroundFetchResultNoData;
-//            }
-//        }
-//        @catch (NSException *exception) {
-//            NSLog(@"%@", exception);
-//        }
-//        @finally {
-//            if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
-//                if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
-//                    LogMessage(@"socket", 4, @"Will Call closeSocket");
-//                    
-//                    [JasmineSocket stopSocket];
-//                }
-//            }
-//            
-//        }
-//    }
-    
     return fetchResult;
 }
 
--(void)registerServicesToLine:(Line *)line deviceToken:(NSString *)deviceToken
+-(void)registerServicesToLine:(Line *)line
 {
     [JCBadgeManager setSelectedLine:line.jrn];
     [JCBadgeManager setSelectedPBX:line.pbx.pbxId];
@@ -210,10 +163,8 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
         // request voicemails.
         [Voicemail downloadVoicemailsForLine:line completion:NULL];
         
-        // If the socket is open already, clear and register for jasmine events for our current line
-        if ([JCSocket sharedSocket].isReady) {
-            [self resubscribeToLineEvents:line];
-        }
+        // Connect to Jasmine
+        [self subscribeToJasmineEventsForLine:line];
     }];
 
 	// Download all SMS Messages is sms is enabled for the pbx.
@@ -228,47 +179,45 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     [phoneManager connectToLine:line];
 }
 
--(void)resubscribeToLineEvents:(Line *)line
+-(void)subscribeToJasmineEventsForLine:(Line *)line
 {
-    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
-    NSString *deviceToken = authenticationManager.deviceToken;
-    if (!deviceToken) {
-        return;
+    JCSocket *jasmineSocket = [JCSocket sharedSocket];
+    
+    // Check to see if we have a jasmine socket. If we do, unsubscribe, and resubscribe to events
+    if(jasmineSocket.isReady) {
+        [JCSocketManager unsubscribe:^(BOOL success, NSError *error) {
+            if (!success) {
+                [jasmineSocket connectWithCompletion:^(BOOL success, NSError *error) {
+                    if (success) {
+                        [self subscribeToLineEvents:line];
+                    }
+                }];
+            } else {
+                [self subscribeToLineEvents:line];
+            }
+        }];
     }
     
-    [JCSocket unsubscribeToSocketEvents:^(BOOL success, NSError *error) {
-        if (!success) {
-            [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
-                if (success) {
-                    [self subscribeToLineEvents:line];
-                }
-            }];
-        } else {
-            [self subscribeToLineEvents:line];
-        }
-    }];
+    // If we do not have a socket, connect.
+    else {
+        [jasmineSocket connectWithCompletion:^(BOOL success, NSError *error) {
+            if (success) {
+                [self subscribeToLineEvents:line];
+            }
+        }];
+    }
 }
 
 -(void)subscribeToLineEvents:(Line *)line
 {
-    [JCPresenceManager subscribeToPbx:line.pbx];
-	[JCVoicemailManager subscribeToLine:line];
-    [JCSMSMessageManager subscribeToPbx:line.pbx];
+    [JCPresenceManager generateSubscriptionForPbx:line.pbx];
+    [JCVoicemailManager generateSubscriptionForLine:line];
+//    [JCSMSMessageManager generateSubscriptionForPbx:line.pbx];
+    
+    [JCSocketManager subscribe];
 }
 
 #pragma mark - Notification Handlers -
-
-#pragma mark JCSocket
-
--(void)socketConnectedSelector:(NSNotification *)notification
-{
-    [self resubscribeToLineEvents:[JCAuthenticationManager sharedInstance].line];
-}
-
--(void)socketFailedConnectionSelector:(NSNotification *)notification
-{
-    [self resubscribeToLineEvents:[JCAuthenticationManager sharedInstance].line];
-}
 
 #pragma mark AFNetworkReachability
 
@@ -329,10 +278,11 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     
     // Handle socket to reconnect. Since we reuse the socket, we do not need to subscribe, but just
     // activate the socket to reopen it. We only want to try to connect if we do not have a device token.
-    NSString *deviceToken = [JCAuthenticationManager sharedInstance].deviceToken;
-    if (deviceToken && networkManager.isReachable && ![JCSocket sharedSocket].isReady) {
-        [JCSocket connectWithDeviceToken:deviceToken completion:NULL];
-    }
+//    NSString *deviceToken = [JCAuthenticationManager sharedInstance].deviceToken;
+//    if (deviceToken && networkManager.isReachable && ![JCSocket sharedSocket].isReady) {            //@Rob what are we suppose to do if we dont have connection or the socket is not ready. Do we ever check again and try to connect.
+//        [JCSocket connectWithDeviceToken:deviceToken completion:NULL];
+//    }
+    
 }
 
 #pragma mark JCAuthenticationManager
@@ -352,9 +302,8 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
         return;
     }
     
-    NSString *deviceToken = authenticationManager.deviceToken;
     if (!_navigationController){
-        [self registerServicesToLine:line deviceToken:deviceToken];
+        [self registerServicesToLine:line];
         return;
     }
     
@@ -368,7 +317,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     }
         
     [self dismissLoginViewController:YES completed:^(BOOL finished) {
-        [self registerServicesToLine:line deviceToken:deviceToken];
+        [self registerServicesToLine:line];
     }];
 }
 
@@ -380,7 +329,13 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 -(void)lineChanged:(NSNotification *)notification
 {
     JCAuthenticationManager *authenticationManager = notification.object;
-    [self registerServicesToLine:authenticationManager.line deviceToken:authenticationManager.deviceToken];
+    [self registerServicesToLine:authenticationManager.line];
+}
+
+-(void)userRequiresAuthentication:(NSNotification *)notification
+{
+    [JCBadgeManager reset];                             // Resets the Badge Manager.
+    [self presentLoginViewController:YES];              // Present the login view.
 }
 
 /**
@@ -388,11 +343,24 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
  */
 -(void)userDidLogout:(NSNotification *)notification
 {
-    [JCSocket unsubscribeToSocketEvents:NULL];          // Disconnect the socket and purge socket session.
-    [[JCPhoneManager sharedManager] disconnect];                        // Disconnect the phone manager
-    [JCApiClient cancelAllOperations];                     // Kill any pending client network operations.
-    [JCBadgeManager reset];                             // Resets the Badge Manager.
-    [self presentLoginViewController:YES];              // Present the login view.
+    // Disconnect the socket and purge socket session.
+    [JCSocket unsubscribeToSocketEvents:^(BOOL success, NSError *error) {
+        [JCSocket reset];
+    }];
+    
+    JCPhoneManager *phoneManager = [JCPhoneManager sharedManager];
+    if(phoneManager.isRegistered) {
+        [phoneManager disconnect];
+    }
+    
+    [JCApiClient cancelAllOperations];
+    [self userRequiresAuthentication:notification];
+}
+
+-(void)presenceChanged:(NSNotification *)notification
+{
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    [self subscribeToJasmineEventsForLine:authenticationManager.line];
 }
 
 #pragma mark - Delegate Handlers -
@@ -408,8 +376,13 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 {
     [Appsee start:@"a57e92aea6e541529dc5227171341113"];
     
-    [Parse setApplicationId:@"bQTDjU0QtxWVpNQp2yJp7d9ycntVZdCXF5QrVH8q"
-                  clientKey:@"ec135dl8Xfu4VAUXz0ub6vt3QqYnQEur2VcMH1Yf"];
+//    [Parse setApplicationId:@"bQTDjU0QtxWVpNQp2yJp7d9ycntVZdCXF5QrVH8q"
+//                  clientKey:@"ec135dl8Xfu4VAUXz0ub6vt3QqYnQEur2VcMH1Yf"];
+    //GCM Push notifications
+//    UIUserNotificationType allNotificationTypes = (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+//    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+//    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//    [[UIApplication sharedApplication] registerForRemoteNotifications];
     
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
@@ -456,16 +429,13 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     
     // Badging
     [JCBadgeManager updateBadgesFromContext:[NSManagedObjectContext MR_defaultContext]];
+    
+    JCAppSettings *appSettings = [JCAppSettings sharedSettings];
+    [center addObserver:self selector:@selector(presenceChanged:) name:kJCAppSettingsPresenceChangedNotification object:appSettings];
 
-	// Jasmine
-    JCSocket *socket = [JCSocket sharedSocket];
-    [center addObserver:self selector:@selector(socketConnectedSelector:) name:kJCSocketConnectedNotification object:socket];
-    [center addObserver:self selector:@selector(socketFailedConnectionSelector:) name:kJCSocketConnectFailedNotification object:socket];
-    
-    
     // Authentication
-    
     JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    [center addObserver:self selector:@selector(userRequiresAuthentication:) name:kJCAuthenticationManagerUserRequiresAuthenticationNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
@@ -516,6 +486,16 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
  */
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+        // Connect to the GCM server to receive non-APNS notifications
+        [[GCMService sharedInstance] connectWithHandler:^(NSError *error) {
+            if (error) {
+                NSLog(@"Could not connect to GCM: %@", error.localizedDescription);
+            } else {
+                _connectedToGCM = true;
+                NSLog(@"Connected to GCM");
+                // ...
+            }
+        }];
     LOG_Info();
 }
 
@@ -534,90 +514,67 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     
 }
 
+/**
+ * Called when we receive a device APN token. 
+ *
+ * If we are running in the simulator, the Badge Manager who is registering for the notifications, 
+ * will call the didFailToRegisterForRemoteNotifications, which in turn will call this method 
+ * passing a nil value for the deviceTokenData
+ */
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceTokenData
 {
-    if (deviceTokenData)
-    {
-        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-        [currentInstallation setDeviceTokenFromData:deviceTokenData];
-        [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (!error) {
-                NSLog(@"Saved Current installation");
-            } else {
-                NSLog(@"error in currentInstilation %@", error);
-            }
-        }];
-        
-        [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                NSLog(@"Jive_One successfully subscribed to push notifications on the broadcast channel.");
-            } else {
-                NSLog(@"Jive_One failed to subscribe to push notifications on the broadcast channel.");
-            }
-        }];
-    } else {
+    if (!deviceTokenData) {
         deviceTokenData = [[UIDevice currentDevice].installationIdentifier dataUsingEncoding:NSUTF8StringEncoding];
     }
     
-    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
-    NSString *oldDeviceToken = authenticationManager.deviceToken;
-    NSString *deviceToken = [[deviceTokenData.description stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]] stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if (![oldDeviceToken isEqualToString:deviceToken]) {
-        authenticationManager.deviceToken = deviceToken;
-    }
+    // Register the Device Token to the GCM service.
+    GGLInstanceID *instance = [GGLInstanceID sharedInstance];
+    [instance startWithConfig:[GGLInstanceIDConfig defaultConfig]];
+    NSDictionary *options = @{kGGLInstanceIDRegisterAPNSOption: deviceTokenData,
+                              kGGLInstanceIDAPNSServerTypeSandboxOption: @"YES"};
     
-    [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
-        if (success) {
-            [self subscribeToLineEvents:authenticationManager.line];
-        }
-    }];
+    [instance tokenWithAuthorizedEntity:kGCMSenderId
+                                  scope:kGGLInstanceIDScopeGCM
+                                options:options
+                                handler:^(NSString *token, NSError *error) {
+                                    [JCSocket setDeviceToken:token];
+                                }];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-    if (error) {
-        NSLog(@"%@", error);
-    }
-    
     [self application:application didRegisterForRemoteNotificationsWithDeviceToken:nil];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    [[GCMService sharedInstance] appDidReceiveMessage:userInfo];
     
-//    [PFPush handlePush:userInfo];
-//    TODO:  This is where we need to get the whole message to show the user we have a new message for them.
-    
-    
-    NSLog(@"User info : %@", userInfo);
-    NSString *fromNumber = [userInfo objectForKey:@"fromNumber"];
-    NSString *didId = [userInfo objectForKey:@"didId"];
-    NSString *uid = [userInfo objectForKey:@"uid"];
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-    DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(didId)) withValue:didId inContext:context];
-    if (did) {
-        
-        JCSMSConversationGroup *conversationGroup = [[JCSMSConversationGroup alloc] initWithName:nil number:fromNumber];
-        [SMSMessage downloadMessagesForDID:did toConversationGroup:conversationGroup completion:^(BOOL success, NSError *error) {
-            if (success) {
-                if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
-                    SMSMessage *message = [SMSMessage MR_findFirstByAttribute:NSStringFromSelector(@selector(eventId)) withValue:uid inContext:context];
-                    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-                    if (localNotif){
-                        localNotif.alertBody =[NSString  stringWithFormat:NSLocalizedString(@"New Message from %@ \n%@", nil), fromNumber.numericStringValue, message.text ];
-                        localNotif.soundName = UILocalNotificationDefaultSoundName;
-                        localNotif.applicationIconBadgeNumber = 1;
-                        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-                    }
-                } else {
-                    // TODO: Sound an meesage received event.
-                }
-            }
-        }];
-    }
-    
-    
-    
+//    NSString *fromNumber = [userInfo objectForKey:@"fromNumber"];
+//    NSString *didId = [userInfo objectForKey:@"didId"];
+//    NSString *uid = [userInfo objectForKey:@"uid"];
+//    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+//    DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(didId)) withValue:didId inContext:context];
+//    if (did) {
+//        
+//        JCSMSConversationGroup *conversationGroup = [[JCSMSConversationGroup alloc] initWithName:nil number:fromNumber];
+//        [SMSMessage downloadMessagesForDID:did toConversationGroup:conversationGroup completion:^(BOOL success, NSError *error) {
+//            if (success) {
+//                if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
+//                    SMSMessage *message = [SMSMessage MR_findFirstByAttribute:NSStringFromSelector(@selector(eventId)) withValue:uid inContext:context];
+//                    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+//                    if (localNotif){
+//                        localNotif.alertBody =[NSString  stringWithFormat:NSLocalizedString(@"New Message from %@ \n%@", nil), fromNumber.numericStringValue, message.text ];
+//                        localNotif.soundName = UILocalNotificationDefaultSoundName;
+//                        localNotif.applicationIconBadgeNumber = 1;
+//                        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+//                    }
+//                } else {
+//                    // TODO: Sound an meesage received event.
+//                }
+//            }
+//        }];
+//    }
     
     completionHandler([self backgroundPerformFetchWithCompletionHandler]);
 }

@@ -63,6 +63,12 @@
 		5D1175841A9BEFB200D2B03A /* JCConversationGroupsResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1175831A9BEFB200D2B03A /* JCConversationGroupsResultsController.m */; };
 		5D11758A1A9E856300D2B03A /* JCRecentEventsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1175891A9E856300D2B03A /* JCRecentEventsTableViewController.m */; };
 		5D11758D1AA0321B00D2B03A /* JCPushNoAnimationSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D11758C1AA0321B00D2B03A /* JCPushNoAnimationSegue.m */; };
+		5D1598A11B5880510045F98F /* JCV5ApiClient+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598A01B5880510045F98F /* JCV5ApiClient+Jedi.m */; };
+		5D1598A41B5880920045F98F /* JCV5ApiClient+Jasmine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598A31B5880920045F98F /* JCV5ApiClient+Jasmine.m */; };
+		5D1598A71B5880C90045F98F /* JCV5ApiClient+Voicemail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598A61B5880C90045F98F /* JCV5ApiClient+Voicemail.m */; };
+		5D1598AA1B5881030045F98F /* JCV5ApiClient+Contacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598A91B5881030045F98F /* JCV5ApiClient+Contacts.m */; };
+		5D1598AD1B5881390045F98F /* JCV5ApiClient+SMSMessaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598AC1B5881390045F98F /* JCV5ApiClient+SMSMessaging.m */; };
+		5D1598B01B58853E0045F98F /* JCV5ApiClient+Jif.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598AF1B58853E0045F98F /* JCV5ApiClient+Jif.m */; };
 		5D15AF2B19DB271500E86116 /* NSString+DialString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2819DB271500E86116 /* NSString+DialString.m */; };
 		5D1BBE5B19EDC9EF006526B2 /* JCMergeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BBE5A19EDC9EF006526B2 /* JCMergeButton.m */; };
 		5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC5E19DDD68000899915 /* JCCallCardViewCell.m */; };
@@ -311,6 +317,7 @@
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
 		B77EFA2D1B03E51700D94AE9 /* VoicemailTranscription.m in Sources */ = {isa = PBXBuildFile; fileRef = B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */; };
 		B78DBAF01B3DE62300F312B3 /* JCDialToneTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B78DBAEF1B3DE62300F312B3 /* JCDialToneTableViewController.m */; };
+		B79BA1E01B4F0C5900D3E9C3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B79BA1DF1B4F0C5900D3E9C3 /* GoogleService-Info.plist */; };
 		B79F55551AEF1DF900E4768F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
 		B79F55561AEF1DF900E4768F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
 		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
@@ -486,6 +493,18 @@
 		5D11759E1AA0D84300D2B03A /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/PhoneManager.strings; sourceTree = "<group>"; };
 		5D1175A01AA0D84A00D2B03A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/PhoneManager.strings; sourceTree = "<group>"; };
 		5D1175A21AA0D84E00D2B03A /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/PhoneManager.strings; sourceTree = "<group>"; };
+		5D15989F1B5880510045F98F /* JCV5ApiClient+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JCV5ApiClient+Jedi.h"; sourceTree = "<group>"; };
+		5D1598A01B5880510045F98F /* JCV5ApiClient+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JCV5ApiClient+Jedi.m"; sourceTree = "<group>"; };
+		5D1598A21B5880920045F98F /* JCV5ApiClient+Jasmine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JCV5ApiClient+Jasmine.h"; sourceTree = "<group>"; };
+		5D1598A31B5880920045F98F /* JCV5ApiClient+Jasmine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JCV5ApiClient+Jasmine.m"; sourceTree = "<group>"; };
+		5D1598A51B5880C90045F98F /* JCV5ApiClient+Voicemail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JCV5ApiClient+Voicemail.h"; sourceTree = "<group>"; };
+		5D1598A61B5880C90045F98F /* JCV5ApiClient+Voicemail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JCV5ApiClient+Voicemail.m"; sourceTree = "<group>"; };
+		5D1598A81B5881030045F98F /* JCV5ApiClient+Contacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JCV5ApiClient+Contacts.h"; sourceTree = "<group>"; };
+		5D1598A91B5881030045F98F /* JCV5ApiClient+Contacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JCV5ApiClient+Contacts.m"; sourceTree = "<group>"; };
+		5D1598AB1B5881390045F98F /* JCV5ApiClient+SMSMessaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JCV5ApiClient+SMSMessaging.h"; sourceTree = "<group>"; };
+		5D1598AC1B5881390045F98F /* JCV5ApiClient+SMSMessaging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JCV5ApiClient+SMSMessaging.m"; sourceTree = "<group>"; };
+		5D1598AE1B58853E0045F98F /* JCV5ApiClient+Jif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JCV5ApiClient+Jif.h"; sourceTree = "<group>"; };
+		5D1598AF1B58853E0045F98F /* JCV5ApiClient+Jif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JCV5ApiClient+Jif.m"; sourceTree = "<group>"; };
 		5D15AF2719DB271500E86116 /* NSString+DialString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DialString.h"; sourceTree = "<group>"; };
 		5D15AF2819DB271500E86116 /* NSString+DialString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DialString.m"; sourceTree = "<group>"; };
 		5D1BBE5919EDC9EF006526B2 /* JCMergeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMergeButton.h; sourceTree = "<group>"; };
@@ -952,6 +971,8 @@
 		B794BCE21B31CACD00DE6401 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B794BCE31B31CAD300DE6401 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B794BCE41B31CAD400DE6401 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B79BA1DD1B4F0AE800D3E9C3 /* libPods-GoogleCloudMessaging.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-GoogleCloudMessaging.a"; path = "Pods/../build/Debug-iphoneos/libPods-GoogleCloudMessaging.a"; sourceTree = "<group>"; };
+		B79BA1DF1B4F0C5900D3E9C3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B7AD76D71B30C5A200E6BEE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Chat.strings; sourceTree = "<group>"; };
 		B7AEDD561ABA08670063033E /* JCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionSheet.h; sourceTree = "<group>"; };
 		B7AEDD571ABA08670063033E /* JCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionSheet.m; sourceTree = "<group>"; };
@@ -1270,6 +1291,7 @@
 		275F4A5018AD0FBC00D2F069 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B79BA1DD1B4F0AE800D3E9C3 /* libPods-GoogleCloudMessaging.a */,
 				5D5782D01B334DDB005F1B86 /* libPods-XMLDictionary.a */,
 				5D85A97D1ACF933200991A97 /* Bolts.framework */,
 				5D85A97F1ACF933200991A97 /* Parse.framework */,
@@ -1349,6 +1371,7 @@
 				9172AD5B19192A1500481B01 /* UserDefaults.plist */,
 				275F4A5D18AD0FBC00D2F069 /* main.m */,
 				275F4A5F18AD0FBC00D2F069 /* JiveOne-Prefix.pch */,
+				B79BA1DF1B4F0C5900D3E9C3 /* GoogleService-Info.plist */,
 				275F4A5A18AD0FBC00D2F069 /* InfoPlist.strings */,
 				5D0199EE1A1BF4BC00F4CF13 /* Localizable.strings */,
 			);
@@ -1365,6 +1388,7 @@
 				5D8FE4301B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib */,
 				5DBF6F401ADC4A34004B53F5 /* Protocols */,
 				5D8FE40F1B22638C004FD594 /* Models */,
+				5D1598B11B58864E0045F98F /* Clients */,
 				5D8FE4261B28F278004FD594 /* Views */,
 				5D5329941AD4EFA400C6AAC6 /* Controllers */,
 			);
@@ -1377,6 +1401,7 @@
 				5D5448D81B0E2EAC00F44D8F /* JCNonVisualVoicemailViewController.xib */,
 				5D70071A1B1CAE630036E72F /* JCVoicemailDetailViewController.xib */,
 				5DE570871B024A20003F095F /* Models */,
+				5D1598B31B5889A00045F98F /* Clients */,
 				5D5329921AD4EF3900C6AAC6 /* Controllers */,
 				5D5329931AD4EF7B00C6AAC6 /* Views */,
 			);
@@ -1508,6 +1533,47 @@
 				5D55236E1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		5D1598B11B58864E0045F98F /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				5D1598A81B5881030045F98F /* JCV5ApiClient+Contacts.h */,
+				5D1598A91B5881030045F98F /* JCV5ApiClient+Contacts.m */,
+				5D2EDB7C1A3ADFAF0031F7AD /* InternalExtension+V5Client.h */,
+				5D2EDB7D1A3ADFAF0031F7AD /* InternalExtension+V5Client.m */,
+				5D5CC27F1B2F739300FB69E4 /* Contact+V5Client.h */,
+				5D5CC2801B2F739300FB69E4 /* Contact+V5Client.m */,
+				5DB7AFAE1B3B10A600451A0B /* ContactGroup+V5Client.h */,
+				5DB7AFAF1B3B10A600451A0B /* ContactGroup+V5Client.m */,
+				5DB7AFB41B3B5F9B00451A0B /* ContactGroupAssociation+V5Client.h */,
+				5DB7AFB51B3B5F9B00451A0B /* ContactGroupAssociation+V5Client.m */,
+			);
+			name = Clients;
+			sourceTree = "<group>";
+		};
+		5D1598B21B5887D40045F98F /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				5D1598AB1B5881390045F98F /* JCV5ApiClient+SMSMessaging.h */,
+				5D1598AC1B5881390045F98F /* JCV5ApiClient+SMSMessaging.m */,
+				F81EA8AC1A925EE400081C81 /* SMSMessage+V5Client.h */,
+				F81EA8AD1A925EE400081C81 /* SMSMessage+V5Client.m */,
+				5DFFF3D81AF90BD60091F479 /* BlockedNumber+V5Client.h */,
+				5DFFF3D91AF90BD60091F479 /* BlockedNumber+V5Client.m */,
+			);
+			name = Clients;
+			sourceTree = "<group>";
+		};
+		5D1598B31B5889A00045F98F /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				5D1598A51B5880C90045F98F /* JCV5ApiClient+Voicemail.h */,
+				5D1598A61B5880C90045F98F /* JCV5ApiClient+Voicemail.m */,
+				DD3BD9F218DCB1740080318E /* Voicemail+V5Client.h */,
+				DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */,
+			);
+			name = Clients;
 			sourceTree = "<group>";
 		};
 		5D241FD51A38313F008B498A /* Debug */ = {
@@ -1781,6 +1847,8 @@
 				5D112DD91A4094340097223C /* JCAuthenticationKeychain.m */,
 				5D1FD5C21A48B05E007EF8B6 /* JCKeychain.h */,
 				5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */,
+				27997572195A12C5001425CC /* PBX+V5Client.h */,
+				27997573195A12C5001425CC /* PBX+V5Client.m */,
 				2751591518AD2FF700FD8D3F /* Core Data */,
 				5D3F1AE11AE7FEA400C59A63 /* iPad */,
 			);
@@ -1796,6 +1864,7 @@
 				B7AD76D61B30C5A200E6BEE6 /* Chat.strings */,
 				5DB81B5D1AEFFFB900D707DF /* Protocols */,
 				5D5329911AD4EE1000C6AAC6 /* Models */,
+				5D1598B21B5887D40045F98F /* Clients */,
 				5D53298F1AD4EDC200C6AAC6 /* Views */,
 				5D5329901AD4EDE000C6AAC6 /* Controllers */,
 			);
@@ -2123,22 +2192,12 @@
 			children = (
 				27EB18BD19DE045900C1503B /* JCV5ApiClient.h */,
 				27EB18BE19DE045900C1503B /* JCV5ApiClient.m */,
-				27997572195A12C5001425CC /* PBX+V5Client.h */,
-				27997573195A12C5001425CC /* PBX+V5Client.m */,
-				DD3BD9F218DCB1740080318E /* Voicemail+V5Client.h */,
-				DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */,
-				5D2EDB7C1A3ADFAF0031F7AD /* InternalExtension+V5Client.h */,
-				5D2EDB7D1A3ADFAF0031F7AD /* InternalExtension+V5Client.m */,
-				F81EA8AC1A925EE400081C81 /* SMSMessage+V5Client.h */,
-				F81EA8AD1A925EE400081C81 /* SMSMessage+V5Client.m */,
-				5DFFF3D81AF90BD60091F479 /* BlockedNumber+V5Client.h */,
-				5DFFF3D91AF90BD60091F479 /* BlockedNumber+V5Client.m */,
-				5D5CC27F1B2F739300FB69E4 /* Contact+V5Client.h */,
-				5D5CC2801B2F739300FB69E4 /* Contact+V5Client.m */,
-				5DB7AFAE1B3B10A600451A0B /* ContactGroup+V5Client.h */,
-				5DB7AFAF1B3B10A600451A0B /* ContactGroup+V5Client.m */,
-				5DB7AFB41B3B5F9B00451A0B /* ContactGroupAssociation+V5Client.h */,
-				5DB7AFB51B3B5F9B00451A0B /* ContactGroupAssociation+V5Client.m */,
+				5D1598AE1B58853E0045F98F /* JCV5ApiClient+Jif.h */,
+				5D1598AF1B58853E0045F98F /* JCV5ApiClient+Jif.m */,
+				5D15989F1B5880510045F98F /* JCV5ApiClient+Jedi.h */,
+				5D1598A01B5880510045F98F /* JCV5ApiClient+Jedi.m */,
+				5D1598A21B5880920045F98F /* JCV5ApiClient+Jasmine.h */,
+				5D1598A31B5880920045F98F /* JCV5ApiClient+Jasmine.m */,
 			);
 			name = V5Client;
 			sourceTree = "<group>";
@@ -2336,6 +2395,7 @@
 				B734D80E1B41CF56004403E2 /* Old Phone.mp3 in Resources */,
 				5D8198ED1AC1D7520057FDDA /* Debug.storyboard in Resources */,
 				5D87FCD31AB2822700AE1CA5 /* JCConversationViewController.xib in Resources */,
+				B79BA1E01B4F0C5900D3E9C3 /* GoogleService-Info.plist in Resources */,
 				5D9382C01B0F94F800C5CEA0 /* (null) in Resources */,
 				B734D8101B41CF56004403E2 /* Walkie - Talkie.mp3 in Resources */,
 				B7F561551B45A4CF0073D1C2 /* iReport.mp3 in Resources */,
@@ -2500,6 +2560,7 @@
 				5DBBDCC319DCB29100A4DB96 /* JCCallCardCollectionViewController.m in Sources */,
 				F8C9A7E519EC36340049A715 /* RecentEvent.m in Sources */,
 				5D895EAF1A0AB7270015368D /* JCPhoneMenuCell.m in Sources */,
+				5D1598A41B5880920045F98F /* JCV5ApiClient+Jasmine.m in Sources */,
 				5D6243721A65C58F001DF88E /* JCDebugPhoneManagerTableViewController.m in Sources */,
 				B7EE4A471B278620003F4278 /* JCTypeSelectorViewController.m in Sources */,
 				5DB81B5B1AEFFF5A00D707DF /* JCSMSConversationGroup.m in Sources */,
@@ -2518,6 +2579,7 @@
 				5D0275101A3F81FF0077A37B /* NSData+AESAddition.m in Sources */,
 				5D34446519F02F1C00315230 /* JCCurrentCallCardViewCell.m in Sources */,
 				5DB10EF81AEE9E9D001CC686 /* UIViewController+Additions.m in Sources */,
+				5D1598A11B5880510045F98F /* JCV5ApiClient+Jedi.m in Sources */,
 				5D112DDA1A4094340097223C /* JCAuthenticationKeychain.m in Sources */,
 				5D8FE4121B2263EB004FD594 /* JCContactsFetchedResultsController.m in Sources */,
 				5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */,
@@ -2544,6 +2606,7 @@
 				2747F1661A07E0F300E3FE73 /* JCContactsViewController.m in Sources */,
 				5D241FD41A382241008B498A /* User+Custom.m in Sources */,
 				5DB0BFCA1A00AB29006737D7 /* JCRecentLineEventsTableViewController.m in Sources */,
+				5D1598A71B5880C90045F98F /* JCV5ApiClient+Voicemail.m in Sources */,
 				5D112DDD1A4161220097223C /* JCDebugPbxsTableViewController.m in Sources */,
 				5DB0BFD01A013982006737D7 /* JCRecentEventCell.m in Sources */,
 				5DB7AFB31B3B18F800451A0B /* ContactGroupAssociation.m in Sources */,
@@ -2564,6 +2627,7 @@
 				5D7339A71A03F2E700339DC6 /* NSManagedObject+Additions.m in Sources */,
 				5DB7AF8D1B39AC9800451A0B /* JCAggregateFetchedResultsController.m in Sources */,
 				5DB7AF821B38BE7200451A0B /* Group.m in Sources */,
+				5D1598AD1B5881390045F98F /* JCV5ApiClient+SMSMessaging.m in Sources */,
 				27D2C1F7196F030C005285FF /* JCLineSelectorTableViewController.m in Sources */,
 				5D1FD5C41A48B05E007EF8B6 /* JCKeychain.m in Sources */,
 				5D241FCE1A36AF2C008B498A /* JCPickerViewController.m in Sources */,
@@ -2572,6 +2636,7 @@
 				5D6243781A678B6F001DF88E /* JCError.m in Sources */,
 				5D8FE4221B27A9EC004FD594 /* JCStaticTableData.m in Sources */,
 				27F64D5C19772CCF00F772AA /* Line.m in Sources */,
+				5D1598B01B58853E0045F98F /* JCV5ApiClient+Jif.m in Sources */,
 				5DB0BFC119FFF3FE006737D7 /* JCTableViewCell.m in Sources */,
 				5D490E5E1A8AF364004B62C0 /* JCAddressBookPerson.m in Sources */,
 				5D8198F01AC1F0FC0057FDDA /* JCDebugDIDsTableViewController.m in Sources */,
@@ -2633,6 +2698,7 @@
 				5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */,
 				5DA30DD81AD791D3008856DC /* JCPhoneNumber.m in Sources */,
 				5D1FAC6519DF376B00899915 /* JCKeypadViewController.m in Sources */,
+				5D1598AA1B5881030045F98F /* JCV5ApiClient+Contacts.m in Sources */,
 				5DB7AF8A1B39103D00451A0B /* JCGroupsFetchedResultsController.m in Sources */,
 				5D490E611A8D1FF1004B62C0 /* RecentLineEvent.m in Sources */,
 				5D11758D1AA0321B00D2B03A /* JCPushNoAnimationSegue.m in Sources */,
@@ -3130,7 +3196,10 @@
 				INFOPLIST_FILE = "$(SRCROOT)/JiveOne/JiveOne-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -3173,7 +3242,10 @@
 				INFOPLIST_FILE = "$(SRCROOT)/JiveOne/JiveOneEnterprise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -3476,7 +3548,10 @@
 				INFOPLIST_FILE = "$(SRCROOT)/JiveOne/JiveOne-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";

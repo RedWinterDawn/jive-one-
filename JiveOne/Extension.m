@@ -11,6 +11,9 @@
 #import "PBX.h"
 #import "NSManagedObject+Additions.h"
 
+#define LINE_INDEX_OF_LINE_IN_JRN 5
+// "jrn:line::jive:0144096e-bb05-ff06-702e-000100420002:0146db6f-52c9-9895-f67d-000100620002",
+
 static NSString *kExtensionHiddenAttribute = @"hidden";
 
 @implementation Extension
@@ -31,6 +34,11 @@ static NSString *kExtensionHiddenAttribute = @"hidden";
 -(NSString *)type
 {
     return @"ext";
+}
+
+-(NSString *)extensionId
+{
+    return [[self class] identifierFromJrn:self.jrn index:LINE_INDEX_OF_LINE_IN_JRN];
 }
 
 @end

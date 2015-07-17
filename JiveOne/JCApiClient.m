@@ -11,13 +11,6 @@
 #import "JCAuthenticationManager.h"
 #import <XMLDictionary/XMLDictionary.h>
 
-typedef enum : NSUInteger {
-    JCApiClientGet,
-    JCApiClientPut,
-    JCApiClientPost,
-    JCApiClientDelete
-} JCApiClientCrudOperationType;
-
 NSMutableArray *operationQueues;
 
 NSString *const kJCApiClientAuthorizationHeaderFieldKey = @"Authorization";
@@ -117,7 +110,8 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
          completion:(JCApiClientCompletionHandler)completion
 {
     [self requestWithType:JCApiClientPost
-                     path:path parameters:parameters
+                     path:path
+               parameters:parameters
         requestSerializer:requestSerializer
        responceSerializer:nil
                   retries:retries
@@ -158,7 +152,7 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 
 #pragma mark - Private -
 
-+(void)requestWithType:(JCApiClientCrudOperationType)type
+-(void)requestWithType:(JCApiClientCrudOperationType)type
                   path:(NSString *)path
             parameters:(NSDictionary *)parameters
      requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
@@ -173,9 +167,7 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
             failure(nil, error);
         }
     } else {
-        
-        JCApiClient *client = [self new];
-        AFHTTPRequestOperationManager *manager = client.manager;
+        AFHTTPRequestOperationManager *manager = self.manager;
         if (requestSerializer) {
             manager.requestSerializer = requestSerializer;
         }
@@ -189,25 +181,25 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
                 NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
                 [self requestWithType:type
                                  path:path
-                          parameters:parameters
-                   requestSerializer:requestSerializer
+                           parameters:parameters
+                    requestSerializer:requestSerializer
                    responceSerializer:responceSerializer
-                             retries:(retryCount - 1)
-                             success:success
-                             failure:failure];
+                              retries:(retryCount - 1)
+                              success:success
+                              failure:failure];
             }
             else if (operation.response.statusCode == JCHTTPStatusCodeUnauthorised)
             {
                 [JCAuthenticationManager requestAuthentication:^(BOOL authenticated, NSError *error) {
                     if (authenticated) {
                         [self requestWithType:type
-                                          path:path
-                                    parameters:parameters
-                             requestSerializer:requestSerializer
-                            responceSerializer:responceSerializer
-                                       retries:(retryCount - 1)
-                                       success:success
-                                       failure:failure];
+                                         path:path
+                                   parameters:parameters
+                            requestSerializer:requestSerializer
+                           responceSerializer:responceSerializer
+                                      retries:(retryCount - 1)
+                                      success:success
+                                      failure:failure];
                     } else {
                         failure(operation.responseObject, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
                     }
@@ -242,6 +234,28 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
     }
 }
 
+
++(void)requestWithType:(JCApiClientCrudOperationType)type
+                  path:(NSString *)path
+            parameters:(NSDictionary *)parameters
+     requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+    responceSerializer:(AFHTTPResponseSerializer *)responceSerializer
+               retries:(NSUInteger)retryCount
+               success:(void (^)(id responseObject))success
+               failure:(void (^)(id responseObject, NSError *error))failure
+{
+    
+    JCApiClient *client = [self new];
+    [client requestWithType:type
+                       path:path
+                 parameters:parameters
+          requestSerializer:requestSerializer
+         responceSerializer:responceSerializer
+                    retries:retryCount
+                    success:success
+                    failure:failure];
+}
+
 @end
 
 
@@ -261,7 +275,9 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 {
     NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:object error:error] mutableCopy];
     NSString *authToken = [JCAuthenticationManager sharedInstance].authToken;
-    [mutableRequest setValue:authToken forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
+    if (authToken) {
+        [mutableRequest setValue:authToken forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
+    }
     return mutableRequest;
 }
 
@@ -273,7 +289,9 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 {
     NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:object error:error] mutableCopy];
     NSString *authToken = [JCAuthenticationManager sharedInstance].authToken;
-    [mutableRequest setValue:[NSString stringWithFormat:@"Bearer %@", authToken] forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
+    if (authToken) {
+        [mutableRequest setValue:[NSString stringWithFormat:@"bearer %@", authToken] forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
+    }
     return mutableRequest;
 }
 

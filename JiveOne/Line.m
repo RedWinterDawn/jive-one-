@@ -13,9 +13,6 @@
 #import "LineConfiguration.h"
 #import "PBX.h"
 
-#define LINE_INDEX_OF_LINE_IN_JRN 5
-// "jrn:line::jive:0144096e-bb05-ff06-702e-000100420002:0146db6f-52c9-9895-f67d-000100620002",
-
 NSString *const kLineActiveAttribute = @"active";
 
 @implementation Line
@@ -31,6 +28,11 @@ NSString *const kLineActiveAttribute = @"active";
 -(BOOL)isActive
 {
     return [self boolValueFromPrimitiveValueForKey:kLineActiveAttribute];
+}
+
+-(NSString *)lineId
+{
+    return self.extensionId;
 }
 
 #pragma mark - Relationships -
@@ -56,9 +58,12 @@ NSString *const kLineActiveAttribute = @"active";
     return detailText;
 }
 
--(NSString *)lineId
+
+
+-(NSString *)mailboxId
 {
-    return [[self class] identifierFromJrn:self.jrn index:LINE_INDEX_OF_LINE_IN_JRN];
+    NSString *seperateString = [self.mailboxJrn componentsSeparatedByString:@":"].lastObject;
+    return [seperateString componentsSeparatedByString:@"/"].lastObject;
 }
 
 -(NSString *)pbxId
