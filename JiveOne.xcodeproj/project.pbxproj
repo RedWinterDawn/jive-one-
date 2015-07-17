@@ -1197,6 +1197,8 @@
 				5D25F8321AE5B91B00981DB6 /* iPhone */,
 				5D36B7A919F8674E0024A0E7 /* JCFetchedResultsTableViewController.h */,
 				5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */,
+				5D5B86EF1AE9A28400F265A3 /* JCAppMenuViewController.h */,
+				5D5B86F01AE9A28400F265A3 /* JCAppMenuViewController.m */,
 				5D25F8331AE5B92D00981DB6 /* iPad */,
 				5D25F8421AE6A81F00981DB6 /* JCStoryboardLoaderViewController.h */,
 				5D25F8431AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m */,
@@ -1661,8 +1663,6 @@
 				5D3F1AE31AE7FEE200C59A63 /* JCAppMenuSplitViewController.m */,
 				5D25F83F1AE6872E00981DB6 /* JCAppMenuTableViewController.h */,
 				5D25F8401AE6872E00981DB6 /* JCAppMenuTableViewController.m */,
-				5D5B86EF1AE9A28400F265A3 /* JCAppMenuViewController.h */,
-				5D5B86F01AE9A28400F265A3 /* JCAppMenuViewController.m */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
