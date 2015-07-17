@@ -108,7 +108,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 - (void)connectToLine:(Line *)line
 {
-    [self connectToLine:line completion:NULL];
+        [self connectToLine:line completion:NULL];
 }
 
 /**
@@ -124,7 +124,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         if (error){
             
             // If we get a registration timeout, we have ecountered a fatal error and need to
-            // restart the application. We exit the app by raising an exception, whic will be
+            // restart the application. We exit the app by raising an exception, which will be
             // by our analytics.
             if(error.code == JC_SIP_REGISTRATION_TIMEOUT) {
                 
@@ -159,11 +159,21 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         }
     };
     
+    
+    if(self.appSettings.sipDisabled){
+        [self disconnect];
+    }
     // Retrive the current network status. Check if the status is Cellular data, and do not connect
     // if we are configured to be wifi only.
     if (self.networkReachabilityManager.isReachableViaWWAN && self.appSettings.isWifiOnly) {
         _networkType = JCPhoneManagerNoNetwork;
         [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_WIFI_DISABLED]];
+        [self disconnect];
+        return;
+        
+    // Check our settings to see if we want sip to register.        
+    } else if (self.appSettings.sipDisabled){
+        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_SIP_DISABLED]];
         [self disconnect];
         return;
     }
@@ -287,17 +297,34 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         return;
     }
     
-    [self connectToLine:line
-             completion:^(BOOL success, NSError *error) {
-                 if (success){
-                     [self dial:number type:dialType completion:completion];
-                     return;
-                 }
-                 
-                 if (completion) {
-                     completion(false, error);
-                 }
-             }];
+    
+    //TODO: Stop calling based on settings of kill sip
+   JCAppSettings *appSettings = self.appSettings;
+    if (appSettings.isSipDisabled) {
+        [JCAlertView alertWithTitle:@"Calling Disabled"
+                            message:@"Sip is currently disabled from settings, would you like to enable it?"
+                          dismissed:^(NSInteger buttonIndex) {
+                              if (buttonIndex == 0){
+                                  NSLog(@"nah");
+                              } else{
+                                  appSettings.sipDisabled = NO;
+                                  [self connectToLine:line
+                                           completion:^(BOOL success, NSError *error) {
+                                               if (success){
+                                                   [self dial:number type:dialType completion:completion];
+                                                   return;
+                                               }
+                                               if (completion) {
+                                                   completion(false, error);
+                                               }
+                                           }];
+
+                              }
+                          } showImmediately:YES];
+    }
+    
+
+
 }
 
 -(BOOL)isEmergencyNumber:(NSString *)dialString
