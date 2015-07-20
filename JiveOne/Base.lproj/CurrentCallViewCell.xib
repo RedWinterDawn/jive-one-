@@ -103,7 +103,7 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFill" verticalCompressionResistancePriority="250" image="white-person" translatesAutoresizingMaskIntoConstraints="NO" id="uAN-u9-Z7P">
-                                <rect key="frame" x="76" y="40" width="148" height="180"/>
+                                <rect key="frame" x="80" y="40" width="140" height="170"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="300" id="9B7-fI-NKM"/>
                                     <constraint firstAttribute="width" secondItem="uAN-u9-Z7P" secondAttribute="height" multiplier="145:176" id="lGz-Hn-Tla"/>
@@ -118,7 +118,6 @@
                                             <accessibilityTraits key="traits" none="YES" button="YES" image="YES"/>
                                         </accessibility>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="150" id="gtd-cR-yRD"/>
                                             <constraint firstAttribute="height" constant="50" id="lKO-D0-Rmy"/>
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -173,7 +172,9 @@
                             <constraint firstItem="rkJ-cf-ec6" firstAttribute="leading" secondItem="QCr-7s-whc" secondAttribute="leading" id="UDR-eN-OWr"/>
                             <constraint firstAttribute="centerX" secondItem="yUi-Hn-q9R" secondAttribute="centerX" id="jKo-3H-M9x"/>
                             <constraint firstAttribute="centerX" secondItem="uAN-u9-Z7P" secondAttribute="centerX" id="nZn-mQ-KWR"/>
-                            <constraint firstAttribute="bottom" secondItem="uAN-u9-Z7P" secondAttribute="bottom" constant="50" id="xeb-A1-V0Q"/>
+                            <constraint firstItem="yUi-Hn-q9R" firstAttribute="leading" secondItem="QCr-7s-whc" secondAttribute="leading" id="rxT-rc-rQc"/>
+                            <constraint firstAttribute="trailing" secondItem="yUi-Hn-q9R" secondAttribute="trailing" id="wrU-sI-ThV"/>
+                            <constraint firstAttribute="bottom" secondItem="uAN-u9-Z7P" secondAttribute="bottom" constant="60" id="xeb-A1-V0Q"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -193,7 +194,6 @@
                 <outlet property="cardInfoViewTopConstraint" destination="dbk-zW-vD4" id="y1L-Kc-i1L"/>
                 <outlet property="elapsedTimeLabel" destination="zQp-R0-cci" id="76e-Ro-RyV"/>
                 <outlet property="endCallButton" destination="fMI-EZ-LsX" id="bJx-6G-LoH"/>
-                <outlet property="endCallButtonWidthConstraint" destination="gtd-cR-yRD" id="hAk-6a-mff"/>
                 <outlet property="holdCallButton" destination="dim-MR-5Mi" id="xzD-dr-SKc"/>
                 <outlet property="holdElapsedTimeLabel" destination="vAI-dZ-8vN" id="z4g-NE-GAe"/>
                 <outlet property="holdView" destination="rkJ-cf-ec6" id="wXT-c7-vN4"/>
