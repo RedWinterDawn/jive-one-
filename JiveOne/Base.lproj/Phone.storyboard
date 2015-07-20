@@ -50,7 +50,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dmc-I7-tQB" customClass="JCFormattedPhoneNumberLabel">
-                                <rect key="frame" x="190" y="0.0" width="220" height="40"/>
+                                <rect key="frame" x="50" y="0.0" width="500" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="7L0-BI-G3i"/>
                                     <constraint firstAttribute="height" constant="40" id="nqu-B0-t7R"/>
@@ -58,6 +58,11 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="7L0-BI-G3i"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="YtU-b8-5sz" id="NjK-YZ-kiq"/>
                                 </connections>
@@ -619,6 +624,7 @@
                             <constraint firstItem="1Jt-hN-97A" firstAttribute="leading" secondItem="eoP-Kh-xWa" secondAttribute="leading" id="NTH-Sp-Pb1"/>
                             <constraint firstAttribute="bottom" secondItem="um9-FC-ctb" secondAttribute="bottom" constant="120" id="Nup-Bu-hAy"/>
                             <constraint firstAttribute="trailing" secondItem="1Jt-hN-97A" secondAttribute="trailing" id="Sdo-4u-kp9"/>
+                            <constraint firstItem="ZaD-UF-7fN" firstAttribute="leading" secondItem="Dmc-I7-tQB" secondAttribute="trailing" id="cJ1-dK-2lw"/>
                             <constraint firstAttribute="centerX" secondItem="Qct-e6-B6O" secondAttribute="centerX" id="d3b-jT-CvL"/>
                             <constraint firstAttribute="trailing" secondItem="um9-FC-ctb" secondAttribute="trailing" priority="750" constant="30" id="dvN-Lb-Pro"/>
                             <constraint firstAttribute="bottom" secondItem="Qct-e6-B6O" secondAttribute="bottom" constant="60" id="hbp-rJ-LCO"/>
