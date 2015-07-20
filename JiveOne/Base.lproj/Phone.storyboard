@@ -631,27 +631,27 @@
                     <navigationItem key="navigationItem" id="Sbw-vq-2y5">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="RCN-k2-SM4" userLabel="Phone">
-                            <rect key="frame" x="236" y="5.5" width="128" height="33"/>
+                            <rect key="frame" x="236" y="6" width="128" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zzF-fD-tSS" userLabel="Status">
                                     <rect key="frame" x="0.0" y="21" width="128" height="14"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="9"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="9"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Phone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XXV-Pa-tfR">
                                     <rect key="frame" x="0.0" y="4" width="128" height="18"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="backspaceButton" destination="ZaD-UF-7fN" id="9JS-fc-Owx"/>
                         <outlet property="callButton" destination="Qct-e6-B6O" id="LkF-OZ-j6J"/>
@@ -682,11 +682,11 @@
                 <navigationController storyboardIdentifier="DialerNavigationController" title="Keypad" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="G3s-tk-XlH" userLabel="Dialer Navagation Controller" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="Keypad" image="nav-dial-black" id="bsn-3T-LYb"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="NcP-dz-Ahr">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="NcP-dz-Ahr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0" green="0.63921568630000003" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="0cf-0N-LQh">
                         <autoresizingMask key="autoresizingMask"/>
@@ -706,10 +706,10 @@
                 <navigationController storyboardIdentifier="VoicemailNavigationController" title="Voicemail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aJF-xB-iIc" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Voicemail" image="nav-voicemail-black" id="RN6-p8-PVT"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="PFy-zq-qdY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="PFy-zq-qdY">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0" green="0.63921568630000003" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="EQ3-5x-TEg" kind="relationship" relationship="rootViewController" id="91C-MB-UMe"/>
@@ -816,7 +816,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Voicemail" id="Z7Z-Gy-oE8">
                         <barButtonItem key="rightBarButtonItem" title="Clear" id="cHI-JS-mn5">
-                            <color key="tintColor" red="0.34901960780000002" green="0.64313725489999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="clear:" destination="EQ3-5x-TEg" id="53z-s3-LBT"/>
                             </connections>
@@ -860,11 +859,11 @@
                     <tabBarItem key="tabBarItem" title="History" image="nav-hist-black" id="WRq-PA-NpD"/>
                     <navigationItem key="navigationItem" id="Chz-gO-Rfz"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="kKt-Fl-JhG">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="kKt-Fl-JhG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0" green="0.63921568627450975" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="BJr-Wp-k04" kind="relationship" relationship="rootViewController" id="c0F-Sa-ul9"/>
@@ -947,13 +946,11 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="Call History" id="k2g-vl-Yo3">
                         <barButtonItem key="rightBarButtonItem" title="Clear" id="Kji-Db-lbK">
-                            <color key="tintColor" red="0.34901960780000002" green="0.64313725489999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="clear:" destination="BJr-Wp-k04" id="0Gs-wa-a0d"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zDx-kG-XzS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1091,4 +1088,5 @@
         <segue reference="p5G-HN-S2W"/>
         <segue reference="jSw-ry-IVW"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.0" green="0.63921568630000003" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

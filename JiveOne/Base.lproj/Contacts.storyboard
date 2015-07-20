@@ -32,7 +32,7 @@
                                     <segue destination="p2g-D4-iQF" kind="embed" id="VSk-i7-zoD"/>
                                 </connections>
                             </containerView>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="snm-W5-qqT">
+                            <tabBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="snm-W5-qqT">
                                 <rect key="frame" x="0.0" y="487" width="600" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -42,7 +42,7 @@
                                     <tabBarItem systemItem="contacts" id="DqX-dl-Ngq"/>
                                     <tabBarItem tag="1" title="Groups" image="local_contacts" id="z2I-cm-BpM" userLabel="LocalDirctory"/>
                                 </items>
-                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.0" green="0.63921568630000003" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="delegate" destination="IwC-pf-Sga" id="LVb-ya-yjH"/>
                                 </connections>
@@ -88,11 +88,11 @@
             <objects>
                 <navigationController storyboardIdentifier="ContactsNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Jhe-AU-Yz3" userLabel="Contacts Navigation Controller" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Tmi-I8-yNj">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="Tmi-I8-yNj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0" green="0.63921568630000003" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="IwC-pf-Sga" kind="relationship" relationship="rootViewController" id="jdA-au-jvU"/>
@@ -257,7 +257,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="ContactsDetailViewTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ab5-kr-ogH" customClass="JCContactDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Rn4-RK-QR8">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="443"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
@@ -725,9 +725,9 @@
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
-                                            <exclude reference="x2Q-QD-D7U"/>
-                                            <exclude reference="qoZ-Js-Kh3"/>
                                             <exclude reference="oux-QO-JYx"/>
+                                            <exclude reference="qoZ-Js-Kh3"/>
+                                            <exclude reference="x2Q-QD-D7U"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -767,6 +767,7 @@
         <image name="local_contacts" width="24" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Nve-Bm-ZKV"/>
+        <segue reference="ba0-6s-b7n"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.0" green="0.63921568630000003" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

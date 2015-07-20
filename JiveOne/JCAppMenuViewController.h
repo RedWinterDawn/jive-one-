@@ -13,8 +13,11 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *appMenuHeightConstraint;
 
+@property (weak, nonatomic) id<UITableViewDelegate> menuTableViewDelegate;
+@property (weak, nonatomic) id<UITableViewDataSource> menuTableViewDataSource;
+
 @property (weak, nonatomic, readonly) JCAppMenuTableViewController *appMenuTableViewController;
 @property (weak, nonatomic, readonly) JCRecentEventsTableViewController *recentEventsTableViewController;
-
+@property (weak, nonatomic, readonly) UITableViewController *menuTableViewController;
 
 @end
