@@ -21,6 +21,7 @@ NSString *const kJCAppSettingsVoicemailOnSpeakerAttribute = @"voicemailOnSpeaker
 NSString *const kJCAppSettingsSipDisabledAttribute = @"sipDisabled";
 NSString *const kJCAppSettingsVolumeLevelAttribute = @"volumeLevel";
 NSString *const kJCRingToneSelectedAttribute = @"ringtone";
+NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
 
 
 @interface JCAppSettings ()
@@ -83,6 +84,11 @@ NSString *const kJCRingToneSelectedAttribute = @"ringtone";
     [self setSettingBoolValue:sipDisabled forKey:kJCAppSettingsSipDisabledAttribute];
 }
 
+-(void)setDoNotDisturbEnabled:(BOOL)doNotDisturbEnabled
+{
+    [self setSettingBoolValue:doNotDisturbEnabled forKey:kJCDoNotDisturbAttribute];
+}
+
 -(void)setAppSwitcherLastSelectedViewControllerIdentifier:(NSString *)lastSelectedViewControllerIdentifier
 {
     [self setSettingStringValue:lastSelectedViewControllerIdentifier forKey:kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute];
@@ -132,6 +138,11 @@ NSString *const kJCRingToneSelectedAttribute = @"ringtone";
 -(BOOL)isSipDisabled
 {
     return [self.userDefaults boolForKey:kJCAppSettingsSipDisabledAttribute];
+}
+
+-(BOOL)isDoNotDisturbEnabled
+{
+    return [self.userDefaults boolForKey:kJCDoNotDisturbAttribute];
 }
 
 -(NSString *)appSwitcherLastSelectedViewControllerIdentifier

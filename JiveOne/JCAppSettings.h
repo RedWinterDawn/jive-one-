@@ -19,6 +19,7 @@ extern NSString *const kJCAppSettingsPresenceChangedNotification;
 @property (nonatomic, getter = isVibrateOnRing) BOOL vibrateOnRing;
 @property (nonatomic, getter = isVoicemailOnSpeaker) BOOL voicemailOnSpeaker;
 @property (nonatomic, getter = isSipDisabled) BOOL sipDisabled;
+@property (nonatomic, getter= isDoNotDisturbEnabled) BOOL doNotDisturbEnabled;
 @property (nonatomic) float volumeLevel;
 
 

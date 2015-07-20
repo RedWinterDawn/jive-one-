@@ -63,6 +63,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
     self.sipDisabled.on = settings.sipDisabled;
+    self.doNotDisturbSW.on = settings.doNotDisturbEnabled;
     _volumeslidder.value = settings.volumeLevel;
 
     
@@ -189,6 +190,15 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
         } else{
             [self.phoneManager connectToLine:self.authenticationManager.line];
         }
+    }
+}
+
+- (IBAction)toggleDoNotDisturb:(id)sender {
+    if ([sender isKindOfClass:[UISwitch class]]){
+        UISwitch *switchBtn = (UISwitch *)sender;
+        JCAppSettings *settings = self.appSettings;
+        settings.doNotDisturbEnabled = !settings.doNotDisturbEnabled;
+        switchBtn.on = settings.isDoNotDisturbEnabled;
     }
 }
 
