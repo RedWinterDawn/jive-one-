@@ -108,7 +108,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 - (void)connectToLine:(Line *)line
 {
-        [self connectToLine:line completion:NULL];
+    [self connectToLine:line completion:NULL];
 }
 
 /**
@@ -159,10 +159,6 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         }
     };
     
-    
-    if(self.appSettings.sipDisabled){
-        [self disconnect];
-    }
     // Retrive the current network status. Check if the status is Cellular data, and do not connect
     // if we are configured to be wifi only.
     if (self.networkReachabilityManager.isReachableViaWWAN && self.appSettings.isWifiOnly) {
@@ -188,12 +184,6 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
             return;
         }
     }
-    
-    // If we have a line configuration for the line, try to register it.
-    if (line.lineConfiguration){
-        [self registerWithLine:line];
-        return;
-    }
    
     // If we made it here, we do not have a line configuration, we need to request it. If the
     // request was successfull, we try to register.
@@ -202,6 +192,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         if (success) {
             [self registerWithLine:line];
         } else {
+            // If we have a line configuration for the line, try to register it.
+            if (line.lineConfiguration){
+                [self registerWithLine:line];
+                return;
+            }
+            
             [self reportError:[JCPhoneManagerError errorWithCode:JC_PHONE_LINE_CONFIGURATION_REQUEST_ERROR underlyingError:error]];
         }
     }];
@@ -209,9 +205,11 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 -(void)registerWithLine:(Line *)line
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegisteringNotification object:self];
-    [UIApplication showStatus:NSLocalizedStringFromTable(@"Registering...", PHONE_STRINGS_NAME, nil)];
-    [self.sipManager registerToProvisioning:line];
+    BOOL registered = [self.sipManager registerToProvisioning:line];
+    if (registered) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegisteringNotification object:self];
+        [UIApplication showStatus:NSLocalizedStringFromTable(@"Registering...", PHONE_STRINGS_NAME, nil)];
+    }
 }
 
 -(void)disconnect
@@ -298,33 +296,31 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }
     
     
-    //TODO: Stop calling based on settings of kill sip
-   JCAppSettings *appSettings = self.appSettings;
+    void (^connectCompletion)(BOOL success, NSError *error) = ^(BOOL success, NSError *error){
+        if (success){
+            [self dial:number type:dialType completion:completion];
+            return;
+        }
+        if (completion) {
+            completion(false, error);
+        }
+    };
+    
+    JCAppSettings *appSettings = self.appSettings;
     if (appSettings.isSipDisabled) {
-        [JCAlertView alertWithTitle:@"Calling Disabled"
-                            message:@"Sip is currently disabled from settings, would you like to enable it?"
+        [JCAlertView alertWithTitle:NSLocalizedString(@"Calling Disabled", @"")
+                            message:NSLocalizedString(@"Phone is currently disabled in settings, would you like to enable it?", @"")
                           dismissed:^(NSInteger buttonIndex) {
-                              if (buttonIndex == 0){
-                                  NSLog(@"nah");
-                              } else{
+                              if (buttonIndex == 1){
                                   appSettings.sipDisabled = NO;
-                                  [self connectToLine:line
-                                           completion:^(BOOL success, NSError *error) {
-                                               if (success){
-                                                   [self dial:number type:dialType completion:completion];
-                                                   return;
-                                               }
-                                               if (completion) {
-                                                   completion(false, error);
-                                               }
-                                           }];
-
+                                  [self connectToLine:line completion:connectCompletion];
+                              } else{
+                                  connectCompletion(NO, nil);
                               }
                           } showImmediately:YES];
+    } else {
+        [self connectToLine:line completion:connectCompletion];
     }
-    
-
-
 }
 
 -(BOOL)isEmergencyNumber:(NSString *)dialString
