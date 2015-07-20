@@ -69,6 +69,7 @@
     _drawerController = [[JCDrawerController alloc] initWithCenterViewController:_transitionViewController leftDrawerViewController:self.menuNavigationController];
     _drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
     _drawerController.closeDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
+    _drawerController.view.frame = view.bounds;
     
     [_drawerController setDrawerVisualStateBlock:^(MMDrawerController *drawerController, MMDrawerSide drawerSide, CGFloat percentVisible) {
         MMDrawerControllerDrawerVisualStateBlock block;

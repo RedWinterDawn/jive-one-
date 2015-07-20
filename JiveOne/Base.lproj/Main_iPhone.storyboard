@@ -37,7 +37,7 @@
             <objects>
                 <tableViewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="7eH-lQ-rpb" userLabel="Activity Table View Controller" customClass="JCRecentEventsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="61" sectionHeaderHeight="22" sectionFooterHeight="22" id="lun-GX-fGt">
-                        <rect key="frame" x="0.0" y="44" width="320" height="283"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="283"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -243,29 +243,12 @@
                             <outlet property="delegate" destination="7eH-lQ-rpb" id="mMz-wZ-ufy"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Recent Activity" id="JYv-VQ-bNP"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Bn-A0-AcW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-86" y="2782.5"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="8RD-KL-6hZ">
-            <objects>
-                <navigationController storyboardIdentifier="ActivityViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Vjw-Lz-Gh8" sceneMemberID="viewController">
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="loV-Pj-Ew3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="7eH-lQ-rpb" kind="relationship" relationship="rootViewController" id="UI1-w4-mWL"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ort-Lt-dog" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-519" y="2782.5"/>
+            <point key="canvasLocation" x="-525" y="2728.5"/>
         </scene>
         <!--Settings-->
         <scene sceneID="cyx-60-PJJ">
@@ -490,12 +473,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="net-e6-xWA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-525" y="2390.5"/>
+            <point key="canvasLocation" x="-525" y="2466.5"/>
         </scene>
         <!--Menu Navigation Controller-->
         <scene sceneID="xcs-m7-xXE">
             <objects>
-                <navigationController storyboardIdentifier="ApplicationSwitcherMenuViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AeB-zT-B3n" userLabel="Menu Navigation Controller" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ApplicationSwitcherMenuViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AeB-zT-B3n" userLabel="Menu Navigation Controller" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="5v3-NB-d4d">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -532,19 +515,35 @@
                                     <segue destination="1OB-xw-STX" kind="embed" id="RfV-r1-edE"/>
                                 </connections>
                             </containerView>
-                            <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QbZ-Ga-7ZW">
-                                <rect key="frame" x="0.0" y="177" width="320" height="327"/>
+                            <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QbZ-Ga-7ZW">
+                                <rect key="frame" x="0.0" y="221" width="320" height="283"/>
                                 <connections>
-                                    <segue destination="Vjw-Lz-Gh8" kind="embed" id="4pu-n7-wh8"/>
+                                    <segue destination="7eH-lQ-rpb" kind="embed" id="6cp-4F-Jog"/>
                                 </connections>
                             </containerView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KDU-Q4-s1A">
+                                <rect key="frame" x="0.0" y="177" width="320" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Tj4-m6-esF"/>
+                                </constraints>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <navigationItem title="Recent Activity" id="UAV-oK-eLV"/>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="QbZ-Ga-7ZW" secondAttribute="bottom" id="5Vt-26-ju3"/>
                             <constraint firstItem="QXr-DW-GqF" firstAttribute="leading" secondItem="BLQ-sH-FjD" secondAttribute="leading" id="7gc-7j-dxb"/>
+                            <constraint firstItem="KDU-Q4-s1A" firstAttribute="leading" secondItem="BLQ-sH-FjD" secondAttribute="leading" id="Fdv-Is-6X1"/>
                             <constraint firstItem="QXr-DW-GqF" firstAttribute="top" secondItem="xEK-i7-YYH" secondAttribute="bottom" id="OPa-8q-VH4"/>
-                            <constraint firstItem="QbZ-Ga-7ZW" firstAttribute="top" secondItem="QXr-DW-GqF" secondAttribute="bottom" id="YsO-EH-OX0"/>
+                            <constraint firstAttribute="trailing" secondItem="KDU-Q4-s1A" secondAttribute="trailing" id="RNs-dt-h8k"/>
+                            <constraint firstItem="KDU-Q4-s1A" firstAttribute="top" secondItem="QXr-DW-GqF" secondAttribute="bottom" id="Xdh-ko-SVL"/>
+                            <constraint firstItem="QbZ-Ga-7ZW" firstAttribute="top" secondItem="QXr-DW-GqF" secondAttribute="bottom" constant="44" id="YsO-EH-OX0"/>
+                            <constraint firstAttribute="trailing" secondItem="QbZ-Ga-7ZW" secondAttribute="trailing" id="de5-FD-NaE"/>
                             <constraint firstAttribute="trailing" secondItem="QXr-DW-GqF" secondAttribute="trailing" id="pfs-GR-GIR"/>
+                            <constraint firstItem="QbZ-Ga-7ZW" firstAttribute="leading" secondItem="BLQ-sH-FjD" secondAttribute="leading" id="roB-83-qx9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="EOt-es-oWi">
@@ -561,6 +560,7 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                     </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="appMenuHeightConstraint" destination="x6P-tS-Hvu" id="4AV-RG-a7u"/>
                     </connections>
