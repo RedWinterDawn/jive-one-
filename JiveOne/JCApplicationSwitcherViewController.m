@@ -152,6 +152,11 @@
     _appMenuViewController.appMenuHeightConstraint.constant = size.height;
 }
 
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 #pragma mark - IBAction -
 
 -(IBAction)showMenu:(id)sender

@@ -12,11 +12,11 @@
             <objects>
                 <navigationController storyboardIdentifier="SettingsNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kSg-Yj-VdW" userLabel="Settings Navigation Controller" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" image="black-gear" id="jhL-Fu-sxw"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="jRW-s7-dRP">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="jRW-s7-dRP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0" green="0.63921568630000003" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="MXa-UC-Owm" kind="relationship" relationship="rootViewController" id="9Yh-iW-NZ5"/>
