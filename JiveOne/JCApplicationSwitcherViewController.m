@@ -232,6 +232,8 @@
                 _appMenuViewController.menuTableViewDelegate = self;
                 _appMenuViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
                 [_appMenuViewController.view setTranslatesAutoresizingMaskIntoConstraints:YES];
+                
+                _appMenuViewController.recentEventsTableViewController.delegate = self;
             }
         }
     }
