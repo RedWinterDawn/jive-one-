@@ -69,6 +69,11 @@
 		5D1598AA1B5881030045F98F /* JCV5ApiClient+Contacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598A91B5881030045F98F /* JCV5ApiClient+Contacts.m */; };
 		5D1598AD1B5881390045F98F /* JCV5ApiClient+SMSMessaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598AC1B5881390045F98F /* JCV5ApiClient+SMSMessaging.m */; };
 		5D1598B01B58853E0045F98F /* JCV5ApiClient+Jif.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598AF1B58853E0045F98F /* JCV5ApiClient+Jif.m */; };
+		5D1598B81B58A6FC0045F98F /* JCDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598B51B58A6FC0045F98F /* JCDrawerController.m */; };
+		5D1598B91B58A6FC0045F98F /* JCDrawerVisualStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598B71B58A6FC0045F98F /* JCDrawerVisualStateManager.m */; };
+		5D1598C41B58A7610045F98F /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598BF1B58A7610045F98F /* MMDrawerController.m */; };
+		5D1598C51B58A7610045F98F /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598C11B58A7610045F98F /* MMDrawerVisualState.m */; };
+		5D1598C61B58A7610045F98F /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598C31B58A7610045F98F /* UIViewController+MMDrawerController.m */; };
 		5D15AF2B19DB271500E86116 /* NSString+DialString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2819DB271500E86116 /* NSString+DialString.m */; };
 		5D1BBE5B19EDC9EF006526B2 /* JCMergeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BBE5A19EDC9EF006526B2 /* JCMergeButton.m */; };
 		5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC5E19DDD68000899915 /* JCCallCardViewCell.m */; };
@@ -505,6 +510,17 @@
 		5D1598AC1B5881390045F98F /* JCV5ApiClient+SMSMessaging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JCV5ApiClient+SMSMessaging.m"; sourceTree = "<group>"; };
 		5D1598AE1B58853E0045F98F /* JCV5ApiClient+Jif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JCV5ApiClient+Jif.h"; sourceTree = "<group>"; };
 		5D1598AF1B58853E0045F98F /* JCV5ApiClient+Jif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JCV5ApiClient+Jif.m"; sourceTree = "<group>"; };
+		5D1598B41B58A6FC0045F98F /* JCDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDrawerController.h; sourceTree = "<group>"; };
+		5D1598B51B58A6FC0045F98F /* JCDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDrawerController.m; sourceTree = "<group>"; };
+		5D1598B61B58A6FC0045F98F /* JCDrawerVisualStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDrawerVisualStateManager.h; sourceTree = "<group>"; };
+		5D1598B71B58A6FC0045F98F /* JCDrawerVisualStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDrawerVisualStateManager.m; sourceTree = "<group>"; };
+		5D1598BD1B58A7610045F98F /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
+		5D1598BE1B58A7610045F98F /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
+		5D1598BF1B58A7610045F98F /* MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerController.m; sourceTree = "<group>"; };
+		5D1598C01B58A7610045F98F /* MMDrawerVisualState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerVisualState.h; sourceTree = "<group>"; };
+		5D1598C11B58A7610045F98F /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
+		5D1598C21B58A7610045F98F /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
+		5D1598C31B58A7610045F98F /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
 		5D15AF2719DB271500E86116 /* NSString+DialString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DialString.h"; sourceTree = "<group>"; };
 		5D15AF2819DB271500E86116 /* NSString+DialString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DialString.m"; sourceTree = "<group>"; };
 		5D1BBE5919EDC9EF006526B2 /* JCMergeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMergeButton.h; sourceTree = "<group>"; };
@@ -1171,11 +1187,18 @@
 		2751590318AD113C00FD8D3F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5D1598BC1B58A7610045F98F /* MMDrawerController */,
+				5D1598B41B58A6FC0045F98F /* JCDrawerController.h */,
+				5D1598B51B58A6FC0045F98F /* JCDrawerController.m */,
+				5D1598B61B58A6FC0045F98F /* JCDrawerVisualStateManager.h */,
+				5D1598B71B58A6FC0045F98F /* JCDrawerVisualStateManager.m */,
 				5D490E411A89751F004B62C0 /* JCNavigationController.h */,
 				5D490E421A89751F004B62C0 /* JCNavigationController.m */,
 				5D25F8321AE5B91B00981DB6 /* iPhone */,
 				5D36B7A919F8674E0024A0E7 /* JCFetchedResultsTableViewController.h */,
 				5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */,
+				5D5B86EF1AE9A28400F265A3 /* JCAppMenuViewController.h */,
+				5D5B86F01AE9A28400F265A3 /* JCAppMenuViewController.m */,
 				5D25F8331AE5B92D00981DB6 /* iPad */,
 				5D25F8421AE6A81F00981DB6 /* JCStoryboardLoaderViewController.h */,
 				5D25F8431AE6A81F00981DB6 /* JCStoryboardLoaderViewController.m */,
@@ -1576,6 +1599,20 @@
 			name = Clients;
 			sourceTree = "<group>";
 		};
+		5D1598BC1B58A7610045F98F /* MMDrawerController */ = {
+			isa = PBXGroup;
+			children = (
+				5D1598BD1B58A7610045F98F /* MMDrawerController+Subclass.h */,
+				5D1598BE1B58A7610045F98F /* MMDrawerController.h */,
+				5D1598BF1B58A7610045F98F /* MMDrawerController.m */,
+				5D1598C01B58A7610045F98F /* MMDrawerVisualState.h */,
+				5D1598C11B58A7610045F98F /* MMDrawerVisualState.m */,
+				5D1598C21B58A7610045F98F /* UIViewController+MMDrawerController.h */,
+				5D1598C31B58A7610045F98F /* UIViewController+MMDrawerController.m */,
+			);
+			path = MMDrawerController;
+			sourceTree = "<group>";
+		};
 		5D241FD51A38313F008B498A /* Debug */ = {
 			isa = PBXGroup;
 			children = (
@@ -1626,8 +1663,6 @@
 				5D3F1AE31AE7FEE200C59A63 /* JCAppMenuSplitViewController.m */,
 				5D25F83F1AE6872E00981DB6 /* JCAppMenuTableViewController.h */,
 				5D25F8401AE6872E00981DB6 /* JCAppMenuTableViewController.m */,
-				5D5B86EF1AE9A28400F265A3 /* JCAppMenuViewController.h */,
-				5D5B86F01AE9A28400F265A3 /* JCAppMenuViewController.m */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -2617,6 +2652,7 @@
 				5D6AE3671A094A9C002BDAAF /* NSDictionary+Validations.m in Sources */,
 				279A4E2C19DA91E100E8AB7B /* JCSipManager.m in Sources */,
 				5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */,
+				5D1598C41B58A7610045F98F /* MMDrawerController.m in Sources */,
 				5D3F1AEA1AE8154E00C59A63 /* JCContactDetailViewController.m in Sources */,
 				27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */,
 				5D490E731A93A85F004B62C0 /* JCAlertView.m in Sources */,
@@ -2636,6 +2672,7 @@
 				5D6243781A678B6F001DF88E /* JCError.m in Sources */,
 				5D8FE4221B27A9EC004FD594 /* JCStaticTableData.m in Sources */,
 				27F64D5C19772CCF00F772AA /* Line.m in Sources */,
+				5D1598B81B58A6FC0045F98F /* JCDrawerController.m in Sources */,
 				5D1598B01B58853E0045F98F /* JCV5ApiClient+Jif.m in Sources */,
 				5DB0BFC119FFF3FE006737D7 /* JCTableViewCell.m in Sources */,
 				5D490E5E1A8AF364004B62C0 /* JCAddressBookPerson.m in Sources */,
@@ -2657,6 +2694,7 @@
 				2788F14A190EB1260099348D /* NSNull+IntValue.m in Sources */,
 				B7F331E91AFC015900343DAC /* JCVoicemailDetailViewController.m in Sources */,
 				27EB18C519DF194E00C1503B /* LineConfiguration+V4Client.m in Sources */,
+				5D1598B91B58A6FC0045F98F /* JCDrawerVisualStateManager.m in Sources */,
 				5D15AF2B19DB271500E86116 /* NSString+DialString.m in Sources */,
 				5D8FE4311B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.m in Sources */,
 				F8C9A7E219EC31DF0049A715 /* Call.m in Sources */,
@@ -2682,6 +2720,7 @@
 				5DA5A1B219DAFEAD00968F7D /* JCFormattedPhoneNumberLabel.m in Sources */,
 				5D35479819FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m in Sources */,
 				5DC1D8841ABB0CDB00326AF3 /* JCSocketLogger.m in Sources */,
+				5D1598C51B58A7610045F98F /* MMDrawerVisualState.m in Sources */,
 				5D490E431A89751F004B62C0 /* JCNavigationController.m in Sources */,
 				2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */,
 				5D629BB019D9CE4500F5744E /* JCNonVisualVoicemailViewController.m in Sources */,
@@ -2712,6 +2751,7 @@
 				5DDDA5451A4A856800E31AA3 /* JCPresenceManager.m in Sources */,
 				5D490E571A8AD0A1004B62C0 /* JCUnknownNumber.m in Sources */,
 				DD3BD9F418DCB1740080318E /* Voicemail+V5Client.m in Sources */,
+				5D1598C61B58A7610045F98F /* UIViewController+MMDrawerController.m in Sources */,
 				5DC518151AD2E24B007CEA71 /* JCStyleKit.m in Sources */,
 				27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */,
 				5DA566491A20543500286BA5 /* JCAuthenticationManagerError.m in Sources */,
