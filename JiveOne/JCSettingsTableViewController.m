@@ -62,6 +62,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     JCAppSettings *settings = self.appSettings;
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
+    self.sipDisabled.on = settings.sipDisabled;
+    self.doNotDisturbSW.on = settings.doNotDisturbEnabled;
     _volumeslidder.value = settings.volumeLevel;
 
     
@@ -130,8 +132,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     [_audioManager playIncomingCallToneDemo];  //Plays a snippit of the ringer so the user know how load it is going ot be.
 }
 
-
-
 -(IBAction)leaveFeedback:(id)sender
 {
     if ([MFMailComposeViewController canSendMail]) {
@@ -177,6 +177,28 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
         settings.wifiOnly = !settings.isWifiOnly;
         switchBtn.on = settings.isWifiOnly;
         [self.phoneManager connectToLine:self.authenticationManager.line];
+    }
+}
+- (IBAction)toggleDisableSip:(id)sender {
+    if([sender isKindOfClass:[UISwitch class]]){
+        UISwitch *switchBtn = (UISwitch *)sender;
+        JCAppSettings *settings = self.appSettings;
+        settings.sipDisabled = !settings.sipDisabled;
+        switchBtn.on = settings.isSipDisabled;
+        if (settings.isSipDisabled){
+            [self.phoneManager disconnect];
+        } else{
+            [self.phoneManager connectToLine:self.authenticationManager.line];
+        }
+    }
+}
+
+- (IBAction)toggleDoNotDisturb:(id)sender {
+    if ([sender isKindOfClass:[UISwitch class]]){
+        UISwitch *switchBtn = (UISwitch *)sender;
+        JCAppSettings *settings = self.appSettings;
+        settings.doNotDisturbEnabled = !settings.doNotDisturbEnabled;
+        switchBtn.on = settings.isDoNotDisturbEnabled;
     }
 }
 

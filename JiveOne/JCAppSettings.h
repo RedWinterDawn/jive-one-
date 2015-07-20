@@ -18,7 +18,10 @@ extern NSString *const kJCAppSettingsPresenceChangedNotification;
 @property (nonatomic, getter = isPresenceEnabled) BOOL presenceEnabled;
 @property (nonatomic, getter = isVibrateOnRing) BOOL vibrateOnRing;
 @property (nonatomic, getter = isVoicemailOnSpeaker) BOOL voicemailOnSpeaker;
+@property (nonatomic, getter = isSipDisabled) BOOL sipDisabled;
+@property (nonatomic, getter= isDoNotDisturbEnabled) BOOL doNotDisturbEnabled;
 @property (nonatomic) float volumeLevel;
+
 
 // Remembers the last selected view controller for the app switcher.
 @property (nonatomic) NSString *appSwitcherLastSelectedViewControllerIdentifier;

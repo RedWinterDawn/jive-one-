@@ -88,6 +88,7 @@
 
 // Intercom line session for Auto Answer feature.
 -(void)sipHandler:(JCSipManager *)sipHandler receivedIntercomLineSession:(JCLineSession *)lineSession;
+-(BOOL)shouldReceiveIncomingLineSession:(JCSipManager *)sipHandler;
 
 // Call Creation Events
 -(void)sipHandler:(JCSipManager *)sipHandler didAddLineSession:(JCLineSession *)lineSession;

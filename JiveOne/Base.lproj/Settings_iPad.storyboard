@@ -301,6 +301,32 @@
                                             <segue destination="h99-C5-GCa" kind="showDetail" id="ayq-L2-wwD"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="2UT-2w-NiO">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2UT-2w-NiO" id="UHB-8E-kf5">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kill Sip" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKo-Nj-ChN">
+                                                    <rect key="frame" x="14" y="11" width="522" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hSN-FS-MtG">
+                                                    <rect key="frame" x="536" y="6" width="51" height="31"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="iKo-Nj-ChN" firstAttribute="leading" secondItem="UHB-8E-kf5" secondAttribute="leading" constant="14" id="EnU-jM-epk"/>
+                                                <constraint firstAttribute="centerY" secondItem="hSN-FS-MtG" secondAttribute="centerY" id="LPx-Sk-u2b"/>
+                                                <constraint firstAttribute="centerY" secondItem="iKo-Nj-ChN" secondAttribute="centerY" id="Lf4-HK-9oV"/>
+                                                <constraint firstAttribute="trailing" secondItem="hSN-FS-MtG" secondAttribute="trailing" constant="15" id="aR6-6C-Lgb"/>
+                                                <constraint firstItem="iKo-Nj-ChN" firstAttribute="centerY" secondItem="hSN-FS-MtG" secondAttribute="centerY" id="oww-sO-zyF"/>
+                                                <constraint firstItem="hSN-FS-MtG" firstAttribute="leading" secondItem="iKo-Nj-ChN" secondAttribute="trailing" id="rFd-Cm-VQn"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="LF8-Vv-Zwl" detailTextLabel="7tm-mE-fMU" style="IBUITableViewCellStyleValue1" id="pAa-DG-8OU">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pAa-DG-8OU" id="pl7-7P-qS3">
@@ -337,6 +363,7 @@
                         <outlet property="buildLabel" destination="7tm-mE-fMU" id="kaz-TO-CkZ"/>
                         <outlet property="extensionLabel" destination="Y7Z-2w-WvV" id="Oon-kd-LUc"/>
                         <outlet property="routeIconBackground" destination="8lu-eY-dPQ" id="E7B-bk-lhV"/>
+                        <outlet property="sipDisabled" destination="hSN-FS-MtG" id="A5Z-ZH-roN"/>
                         <outlet property="smsUserDefaultNumber" destination="mtR-S3-xtq" id="Lnv-Sa-4Ll"/>
                         <outlet property="userNameLabel" destination="ya1-cS-0UJ" id="0gl-ed-MTt"/>
                         <outlet property="volumeLabel" destination="7Gx-Cv-odT" id="8Fc-56-jY0"/>
