@@ -166,7 +166,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
                    sender:sender
                completion:^(BOOL success, NSError *error) {
                    if (success){
-                       [self clear:sender];
+                       [self performSelector:@selector(clear:) withObject:sender afterDelay:1];
                    }
                }];
 }
