@@ -24,9 +24,6 @@
     BOOL _showingMenu;                                  // Menu state flag
 }
 
-@property (nonatomic, strong) UIView *transitionView;
-@property (nonatomic, strong) UINavigationController *menuNavigationController;
-
 @end
 
 @implementation JCApplicationSwitcherViewController
@@ -62,11 +59,32 @@
     view.autoresizesSubviews = true;
     view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
-    // Transistion View.
+    // Transistion View Controller.
     _transitionViewController = [[UIViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
-    [_transitionViewController.view addSubview:self.transitionView];
+    _transitionViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    _transitionViewController.view.autoresizesSubviews = TRUE;
+    [_transitionViewController.view setTranslatesAutoresizingMaskIntoConstraints:YES];
     
-    _drawerController = [[JCDrawerController alloc] initWithCenterViewController:_transitionViewController leftDrawerViewController:self.menuNavigationController];
+    // Menu View Controller
+    UIViewController *menuViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.menuViewControllerStoryboardIdentifier];
+    if ([menuViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *navigationController = (UINavigationController *)menuViewController;
+        navigationController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+        [navigationController.view setTranslatesAutoresizingMaskIntoConstraints:YES];
+        UIViewController *viewController = navigationController.topViewController;
+        if ([viewController isKindOfClass:[JCAppMenuViewController class]]) {
+            _appMenuViewController = (JCAppMenuViewController *)viewController;
+            _appMenuViewController.menuTableViewDataSource = self;
+            _appMenuViewController.menuTableViewDelegate = self;
+            _appMenuViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            [_appMenuViewController.view setTranslatesAutoresizingMaskIntoConstraints:YES];
+            
+            _appMenuViewController.recentEventsTableViewController.delegate = self;
+        }
+    }
+    
+    // Drawer Controller
+    _drawerController = [[JCDrawerController alloc] initWithCenterViewController:_transitionViewController leftDrawerViewController:menuViewController];
     _drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
     _drawerController.closeDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
     _drawerController.view.frame = view.bounds;
@@ -80,8 +98,6 @@
 
     [super addChildViewController:_drawerController];
     [view addSubview:_drawerController.view];
-    
-    
     self.view = view;
 }
 
@@ -179,7 +195,6 @@
 -(void)setViewControllers:(NSArray *)viewControllers
 {
     _viewControllers = viewControllers;
-    
 }
 
 -(void)setViewControllers:(NSArray *)viewControllers animated:(BOOL)animated
@@ -204,40 +219,6 @@
 -(NSUInteger)selectedIndex
 {
     return [_viewControllers indexOfObject:_selectedViewController];
-}
-
--(UIView *)transitionView
-{
-    if (!_transitionView) {
-        _transitionView = [[UIView alloc] initWithFrame:CGRectZero];
-        _transitionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        _transitionView.autoresizesSubviews = TRUE;
-        [_transitionView setTranslatesAutoresizingMaskIntoConstraints:YES];
-    }
-    return _transitionView;
-}
-
--(UIViewController *)menuNavigationController
-{
-    if (!_menuNavigationController) {
-        UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:self.menuViewControllerStoryboardIdentifier];
-        if ([viewController isKindOfClass:[UINavigationController class]]) {
-            _menuNavigationController = (UINavigationController *)viewController;
-            _menuNavigationController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-            [_menuNavigationController.view setTranslatesAutoresizingMaskIntoConstraints:YES];
-            viewController = _menuNavigationController.topViewController;
-            if ([viewController isKindOfClass:[JCAppMenuViewController class]]) {
-                _appMenuViewController = (JCAppMenuViewController *)viewController;
-                _appMenuViewController.menuTableViewDataSource = self;
-                _appMenuViewController.menuTableViewDelegate = self;
-                _appMenuViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-                [_appMenuViewController.view setTranslatesAutoresizingMaskIntoConstraints:YES];
-                
-                _appMenuViewController.recentEventsTableViewController.delegate = self;
-            }
-        }
-    }
-    return _menuNavigationController;
 }
 
 #pragma mark - Private -
@@ -289,7 +270,6 @@
     if (!toViewController)
         return;
     
-    UIView *transitionView = self.transitionView;
     UIViewController *transitionViewController = _transitionViewController;
     [UIView animateWithDuration:duration
                           delay:0
@@ -297,9 +277,9 @@
                      animations:^{
                          [fromViewController removeFromParentViewController];
                          [fromViewController.view removeFromSuperview];
-                         toViewController.view.frame = transitionView.bounds;
+                         toViewController.view.frame = transitionViewController.view.bounds;
                          [transitionViewController addChildViewController:toViewController];
-                         [transitionView addSubview:toViewController.view];
+                         [transitionViewController.view addSubview:toViewController.view];
                          
                          if (animations) {
                              animations();
