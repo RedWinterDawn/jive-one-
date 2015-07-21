@@ -338,10 +338,7 @@ NSString *const kGCMSenderId = @"937754980938";
     [self presentLoginViewController:YES];              // Present the login view.
 }
 
-/**
- * Notification of user inititated logout.
- */
--(void)userDidLogout:(NSNotification *)notification
+-(void)userWillLogout:(NSNotification *)notification
 {
     // Disconnect the socket and purge socket session.
     [JCSocket unsubscribeToSocketEvents:^(BOOL success, NSError *error) {
@@ -354,6 +351,13 @@ NSString *const kGCMSenderId = @"937754980938";
     }
     
     [JCApiClient cancelAllOperations];
+}
+
+/**
+ * Notification of user inititated logout.
+ */
+-(void)userDidLogout:(NSNotification *)notification
+{
     [self userRequiresAuthentication:notification];
 }
 
@@ -436,6 +440,7 @@ NSString *const kGCMSenderId = @"937754980938";
     // Authentication
     JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
     [center addObserver:self selector:@selector(userRequiresAuthentication:) name:kJCAuthenticationManagerUserRequiresAuthenticationNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(userWillLogout:) name:kJCAuthenticationManagerUserWillLogOutNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
