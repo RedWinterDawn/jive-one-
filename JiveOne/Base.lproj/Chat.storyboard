@@ -48,38 +48,37 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MJi-5U-mGy" customClass="JCRoundedView">
-                                            <rect key="frame" x="10" y="24" width="12" height="12"/>
-                                            <color key="backgroundColor" red="0.34901960780000002" green="0.64313725489999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="msg-blu" translatesAutoresizingMaskIntoConstraints="NO" id="Qup-IE-f0A">
+                                            <rect key="frame" x="6" y="22" width="15" height="15"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="MJi-5U-mGy" secondAttribute="height" multiplier="1:1" id="JWY-xF-qR0"/>
-                                                <constraint firstAttribute="width" constant="12" id="iPp-wE-3CT"/>
+                                                <constraint firstAttribute="width" secondItem="Qup-IE-f0A" secondAttribute="height" multiplier="1:1" id="Fxx-b7-zf4"/>
                                             </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <integer key="value" value="6"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </view>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="centerY" secondItem="MJi-5U-mGy" secondAttribute="centerY" id="4G5-Ss-Hoy"/>
                                         <constraint firstAttribute="trailing" secondItem="JFI-U0-fQF" secondAttribute="trailing" constant="8" id="5M0-rn-qud"/>
                                         <constraint firstItem="Cht-DY-jlP" firstAttribute="leading" secondItem="CXK-rb-o0X" secondAttribute="leading" constant="40" id="FVR-Nu-VWJ"/>
-                                        <constraint firstItem="MJi-5U-mGy" firstAttribute="leading" secondItem="CXK-rb-o0X" secondAttribute="leading" constant="10" id="IJV-lK-OsZ"/>
                                         <constraint firstItem="vWD-lg-8BW" firstAttribute="top" secondItem="CXK-rb-o0X" secondAttribute="top" constant="8" id="Ics-TJ-jYc"/>
+                                        <constraint firstAttribute="centerY" secondItem="Qup-IE-f0A" secondAttribute="centerY" id="KoH-l8-5mw"/>
                                         <constraint firstItem="vWD-lg-8BW" firstAttribute="leading" secondItem="Cht-DY-jlP" secondAttribute="trailing" constant="8" id="LqN-xX-rdw"/>
                                         <constraint firstItem="JFI-U0-fQF" firstAttribute="top" secondItem="Cht-DY-jlP" secondAttribute="bottom" constant="3" id="SJb-ZT-Zbu"/>
                                         <constraint firstItem="vWD-lg-8BW" firstAttribute="trailing" secondItem="CXK-rb-o0X" secondAttribute="trailing" constant="-8" id="Yqs-mx-y3l"/>
                                         <constraint firstItem="JFI-U0-fQF" firstAttribute="leading" secondItem="CXK-rb-o0X" secondAttribute="leading" constant="40" id="fxA-HM-S4Y"/>
+                                        <constraint firstItem="Qup-IE-f0A" firstAttribute="leading" secondItem="CXK-rb-o0X" secondAttribute="leading" constant="6" id="r4k-vl-7x5"/>
                                         <constraint firstItem="Cht-DY-jlP" firstAttribute="top" secondItem="CXK-rb-o0X" secondAttribute="top" constant="8" id="uZg-Qn-d6A"/>
+                                        <constraint firstItem="Qup-IE-f0A" firstAttribute="centerY" secondItem="Cht-DY-jlP" secondAttribute="centerY" id="xDh-1a-BOB"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="xDh-1a-BOB"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="date" destination="vWD-lg-8BW" id="E5y-ne-Eej"/>
                                     <outlet property="detail" destination="JFI-U0-fQF" id="g4F-oc-vMK"/>
                                     <outlet property="name" destination="Cht-DY-jlP" id="9Sb-Wu-YqE"/>
-                                    <outlet property="unreadCircle" destination="MJi-5U-mGy" id="QAn-hJ-jof"/>
+                                    <outlet property="readImg" destination="Qup-IE-f0A" id="9ts-gA-oLw"/>
                                     <segue destination="AI2-cb-WiH" kind="push" identifier="LoadMessageGroup" id="tKv-ZX-H1O"/>
                                 </connections>
                             </tableViewCell>
@@ -358,6 +357,7 @@
     </scenes>
     <resources>
         <image name="black-bubble" width="25" height="23"/>
+        <image name="msg-blu" width="15" height="12"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tKv-ZX-H1O"/>

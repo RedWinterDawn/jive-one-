@@ -58,7 +58,7 @@
         self.detail.textColor    = _readColor;
         self.date.font              = _dateFont;
         self.date.textColor      = _dateColor;
-        self.unreadCircle.hidden = true;
+        self.readImg.hidden = true;
     } else {
         self.name.font              = _boldNameFont;
         self.name.textColor     = _unreadColor;
@@ -66,7 +66,7 @@
         self.detail.textColor   = _unreadColor;
         self.date.font              = _boldDateFont;
         self.date.textColor     =  _unreadColor;
-        self.unreadCircle.hidden = false;
+        self.readImg.hidden = false;
     }
 }
 

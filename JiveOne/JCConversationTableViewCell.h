@@ -17,8 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *detail;
 @property (weak, nonatomic) IBOutlet UILabel *date;
-@property (weak, nonatomic) IBOutlet UIView *unreadCircle;
-
+@property (weak, nonatomic) IBOutlet UIImageView *readImg;
 
 @property (nonatomic, getter=isRead) BOOL read;
 @end
