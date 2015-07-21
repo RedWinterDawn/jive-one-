@@ -30,6 +30,7 @@
 
 // Notifications
 NSString *const kJCAuthenticationManagerUserRequiresAuthenticationNotification  = @"userRequiresAuthentication";
+NSString *const kJCAuthenticationManagerUserWillLogOutNotification              = @"userWillLogOut";
 NSString *const kJCAuthenticationManagerUserLoggedOutNotification               = @"userLoggedOut";
 NSString *const kJCAuthenticationManagerUserAuthenticatedNotification           = @"userAuthenticated";
 NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification       = @"userLoadedMinimumData";
@@ -222,6 +223,9 @@ static NSMutableArray *authenticationCompletionRequests;
 
 - (void)logout
 {
+    // Notify the System that we are logging out.
+    [self postNotificationNamed:kJCAuthenticationManagerUserWillLogOutNotification];
+    
     // Destroy current authToken;
     [_authenticationKeychain logout];
 
