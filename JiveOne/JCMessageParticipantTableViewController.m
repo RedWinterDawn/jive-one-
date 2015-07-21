@@ -24,9 +24,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
     self.tableData = [NSMutableArray array];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(animateResizeWithNotification:) name:UIKeyboardWillShowNotification object:nil];
+    [center addObserver:self selector:@selector(animateResizeWithNotification:) name:UIKeyboardWillHideNotification object:nil];
     [self.searchBar becomeFirstResponder];
 }
 
@@ -70,40 +77,28 @@
 }
 
 #pragma mark - Delegate Handlers -
-- (void)keyboardWasShown:(NSNotification*)aNotification {
-    NSDictionary* info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    CGRect bkgndRect = _tableView.frame;
-    UIEdgeInsets inset = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
-    _tableView.contentInset = inset;
-    _tableView.scrollIndicatorInsets = inset ;
-    
-    bkgndRect.size.height -= kbSize.height;
-    [_tableView setFrame:bkgndRect];
-    [self.tableView setContentOffset:CGPointMake(0.0, self.tableView.frame.origin.y-kbSize.height) animated:YES];
-}
 
-//-(void)animateResizeWithNotification:(NSNotification *)notification
-//{
-//    NSDictionary *userInfo = notification.userInfo;
-//    CGRect kbframe = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-//    kbframe = [self.view convertRect:kbframe fromView:nil];
-//    
-//    CGRect frame = self.view.frame;
-//    frame.size.height = self.view.frame.size.height - kbframe.size.height - 44;
-//    
-//    NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-//    UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
-//    [UIView animateKeyframesWithDuration:duration
-//                                   delay:0
-//                                 options:(UIViewAnimationOptions)animationCurve << 16
-//                              animations:^{
-//                                  self.view.frame = frame;
-//                              }
-//                              completion:^(BOOL finished) {
-//                                  
-//                              }];
-//}
+-(void)animateResizeWithNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    CGRect kbframe = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    kbframe = [self.view convertRect:kbframe fromView:nil];
+    
+    CGRect frame = self.view.frame;
+    frame.size.height = self.view.frame.size.height - kbframe.size.height - 44;
+    
+    NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    [UIView animateKeyframesWithDuration:duration
+                                   delay:0
+                                 options:(UIViewAnimationOptions)animationCurve << 16
+                              animations:^{
+                                  self.view.frame = frame;
+                              }
+                              completion:^(BOOL finished) {
+                                  
+                              }];
+}
 
 #pragma mark UITableViewDataSource
 
@@ -150,7 +145,6 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     NSMutableArray *results = [NSMutableArray new];
-   
     if (searchText.isNumeric && searchText.length > 0) {
         [results addObject:[JCUnknownNumber unknownNumberWithNumber:searchText]];
     }
@@ -159,6 +153,5 @@
     [results addObjectsFromArray:phoneNumbers];
     self.tableData = results;
 }
-
 
 @end
