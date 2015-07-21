@@ -19,11 +19,6 @@
     
     UIFont *_dateFont;
     UIFont *_boldDateFont;
-    
-    UIColor *_readColor;
-    UIColor *_unreadColor;
-    
-    UIColor *_dateColor;
 }
 
 @end
@@ -33,9 +28,6 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    _readColor = [UIColor darkGrayColor];
-    _unreadColor = [UIColor blackColor];
-    _dateColor = [UIColor lightGrayColor];
     
     _nameFont = self.name.font;
     _boldNameFont = [UIFont fontWithDescriptor:[[_nameFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_nameFont.pointSize];
@@ -52,21 +44,13 @@
     [super layoutSubviews];
     
     if (self.isRead) {
-        self.name.font              = _nameFont;
-        self.name.textColor     = _readColor;
-        self.detail.font            = _detailFont;
-        self.detail.textColor    = _readColor;
-        self.date.font              = _dateFont;
-        self.date.textColor      = _dateColor;
-        self.readImg.hidden = true;
+        self.name.font      = _nameFont;
+        self.detail.font    = _detailFont;
+        self.date.font      = _dateFont;
     } else {
-        self.name.font              = _boldNameFont;
-        self.name.textColor     = _unreadColor;
-        self.detail.font            = _boldDetailFont;
-        self.detail.textColor   = _unreadColor;
-        self.date.font              = _boldDateFont;
-        self.date.textColor     =  _unreadColor;
-        self.readImg.hidden = false;
+        self.name.font      = _boldNameFont;
+        self.detail.font    = _boldDetailFont;
+        self.date.font      = _boldDateFont;
     }
 }
 
