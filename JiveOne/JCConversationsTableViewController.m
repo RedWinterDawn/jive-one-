@@ -40,6 +40,18 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(reloadTable:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(reloadTable:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
+}
+
+-(JCConversationGroupsResultsController *)conversationGroupsResultsController
+{
+    if (_conversationGroupsResultsController) {
+        return _conversationGroupsResultsController;
+    }
+    
     PBX *pbx = self.authenticationManager.pbx;
     if (pbx && [pbx smsEnabled]) {
         NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:pbx.managedObjectContext];
@@ -49,10 +61,14 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
         _conversationGroupsResultsController.delegate = self;
         
         __autoreleasing NSError *error = nil;
-        if (![_conversationGroupsResultsController performFetch:&error]) {
-            [self.tableView reloadData];
-        };
+        [_conversationGroupsResultsController performFetch:&error];
     }
+    return _conversationGroupsResultsController;
+}
+
+-(void)reloadTable:(NSNotification *)notification {
+    _conversationGroupsResultsController = nil;
+    [self.tableView reloadData];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<JCConversationGroupObject>)object atIndexPath:(NSIndexPath *)indexPath {
