@@ -65,8 +65,8 @@
         JCMessageParticipantTableViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:MESSAGES_PARTICIPANT_VIEW_CONTROLLER];
         viewController.view.frame = self.view.bounds;
         viewController.delegate = self;
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelMessageParticipantSelection:)];
-        [self presentDropdownViewController:viewController leftBarButtonItem:nil rightBarButtonItem:doneButton maxHeight:self.view.bounds.size.height animated:YES];
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelMessageParticipantSelection:)];
+        [self presentDropdownViewController:viewController leftBarButtonItem:doneButton rightBarButtonItem:nil maxHeight:self.view.bounds.size.height animated:YES];
         [viewController.searchBar becomeFirstResponder];
     }
 }

@@ -14,6 +14,7 @@
     
     UIViewController *_shutterTopViewController;
     UIViewController *_shutterBottomViewController;
+    CGFloat _maxHeight;
 }
 
 @end
@@ -32,13 +33,17 @@
         return;
     }
     
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(animateResizeWithNotification:) name:UIKeyboardDidShowNotification object:nil];
+    [center addObserver:self selector:@selector(animateResizeWithNotification:) name:UIKeyboardWillHideNotification object:nil];
+    
     // Calculate the frame of the view controller. Since it will be animated it, we calulate it to
     // be off screen, and then we animate it to be on screen lower.
     CGRect bounds = self.view.bounds;
     CGRect navBarBounds = self.navigationBar.frame;
     CGFloat y = -bounds.size.height + navBarBounds.size.height;
-    CGFloat height = MIN(maxHeight, bounds.size.height - navBarBounds.size.height - navBarBounds.origin.y);
-    CGRect frame = CGRectMake(0, y, bounds.size.width, height);
+    _maxHeight = MIN(maxHeight, bounds.size.height - navBarBounds.size.height - navBarBounds.origin.y);
+    CGRect frame = CGRectMake(0, y, bounds.size.width, _maxHeight);
     viewController.view.frame = frame;
     
     // Add the view controller
@@ -85,6 +90,7 @@
     
     // Get the frame of the dropdown controller and calculate the new frame to animate off screen.
     // Animate off screen and release all attachement to it. Notify caller of completion.
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     CGRect frame = _dropdownViewController.view.frame;
     frame.origin.y = -self.view.bounds.size.height;
     [UIView animateWithDuration:(animated ? JC_NAVIGATION_CONTROLLER_SLIDE_ANIMATION_DURATION : 0)
@@ -140,6 +146,35 @@
         return viewController.navigationItem.title;
     }
     return viewController.title;
+}
+
+-(void)animateResizeWithNotification:(NSNotification *)notification
+{
+    
+    NSDictionary *userInfo = notification.userInfo;
+    CGRect kbframe = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    kbframe = [self.view convertRect:kbframe fromView:nil];
+    
+    
+    UIView *view = _dropdownViewController.view;
+    CGRect frame = view.frame;
+    if ([notification.name isEqualToString:UIKeyboardWillHideNotification]) {
+        frame.size.height = _maxHeight;
+    } else {
+        frame.size.height = _maxHeight - kbframe.size.height;
+    }
+    
+    NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    [UIView animateKeyframesWithDuration:duration
+                                   delay:duration
+                                 options:(UIViewAnimationOptions)animationCurve << 16
+                              animations:^{
+                                  view.frame = frame;
+                              }
+                              completion:^(BOOL finished) {
+                                  
+                              }];
 }
 
 @end
@@ -204,5 +239,6 @@
     [self.jc_navigationController dismissDropdownViewControllerAnimated:animated
                                                              completion:completion];
 }
+
 
 @end
