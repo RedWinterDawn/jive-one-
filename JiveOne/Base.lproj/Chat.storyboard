@@ -206,11 +206,6 @@
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
                                 </prototypes>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="ZRg-d0-6gV"/>
-                                    </mask>
-                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="MED-l6-pDt" id="kbO-Lq-aLM"/>
                                     <outlet property="delegate" destination="MED-l6-pDt" id="sD1-uv-5CA"/>
@@ -219,22 +214,15 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="8Tc-XC-snM" firstAttribute="top" secondItem="IVf-PA-RYX" secondAttribute="bottom" id="0fA-r6-KFw"/>
                             <constraint firstAttribute="trailing" secondItem="Mv4-3V-Rlv" secondAttribute="trailing" id="8OY-oa-ID5"/>
                             <constraint firstItem="8Tc-XC-snM" firstAttribute="top" secondItem="IVf-PA-RYX" secondAttribute="bottom" id="9aE-0J-5pR"/>
-                            <constraint firstItem="s2O-SE-gdE" firstAttribute="top" secondItem="Mv4-3V-Rlv" secondAttribute="bottom" id="Jw5-be-AVk"/>
                             <constraint firstItem="8Tc-XC-snM" firstAttribute="leading" secondItem="ISK-Sr-9t8" secondAttribute="leading" id="cZm-cS-KJg"/>
                             <constraint firstAttribute="trailing" secondItem="8Tc-XC-snM" secondAttribute="trailing" id="om3-hc-bm9"/>
                             <constraint firstItem="Mv4-3V-Rlv" firstAttribute="top" secondItem="8Tc-XC-snM" secondAttribute="bottom" id="uy6-df-jU0"/>
                             <constraint firstItem="Mv4-3V-Rlv" firstAttribute="leading" secondItem="ISK-Sr-9t8" secondAttribute="leading" id="x6K-X2-NaC"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="9aE-0J-5pR"/>
-                            </mask>
-                        </variation>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="New Message" id="XfF-8X-6TV"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
