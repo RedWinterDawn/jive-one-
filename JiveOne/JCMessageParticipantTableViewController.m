@@ -25,12 +25,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.searchBar becomeFirstResponder];
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundView = nil;
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Private -
