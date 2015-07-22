@@ -46,6 +46,11 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     [center addObserver:self selector:@selector(reloadTable:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(JCConversationGroupsResultsController *)conversationGroupsResultsController
 {
     if (_conversationGroupsResultsController) {
