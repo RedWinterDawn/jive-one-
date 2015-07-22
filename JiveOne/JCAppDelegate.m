@@ -9,7 +9,6 @@
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 
-#import <Parse/Parse.h>
 #import "AFNetworkActivityIndicatorManager.h"
 #import "JCLoginViewController.h"
 #import "Common.h"
