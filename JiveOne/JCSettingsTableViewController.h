@@ -23,10 +23,23 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *debugCell;
 @property (weak, nonatomic) IBOutlet UISwitch *wifiOnly;
 @property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
+@property (weak, nonatomic) IBOutlet UILabel *volumeLabel;
+@property (weak, nonatomic) IBOutlet UIView *routeIconBackground;
+@property (weak, nonatomic) IBOutlet UISlider *volumeslidder;
+@property (weak, nonatomic) IBOutlet UILabel *killSipLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *sipDisabled;
+@property (weak, nonatomic) IBOutlet UILabel *doNotDisturbLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *doNotDisturbSW;
 
 -(IBAction)leaveFeedback:(id)sender;
 -(IBAction)logout:(id)sender;
 -(IBAction)toggleWifiOnly:(id)sender;
 -(IBAction)togglePresenceEnabled:(id)sender;
+-(IBAction)sliderValue:(id)sender;
+- (IBAction)toggleDisableSip:(id)sender;
+- (IBAction)toggleDoNotDisturb:(id)sender;
+
+
+
 
 @end

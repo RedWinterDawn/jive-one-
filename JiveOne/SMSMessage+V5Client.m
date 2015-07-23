@@ -7,7 +7,7 @@
 //
 
 #import "SMSMessage+V5Client.h"
-#import "JCV5ApiClient.h"
+#import "JCV5ApiClient+SMSMessaging.h"
 #import <Parse/Parse.h>
 
 NSString *const kSMSMessageSendRequestToKey                 = @"to";

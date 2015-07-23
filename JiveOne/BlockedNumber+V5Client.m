@@ -7,7 +7,7 @@
 //
 
 #import "BlockedNumber+V5Client.h"
-#import "JCV5ApiClient.h"
+#import "JCV5ApiClient+SMSMessaging.h"
 #import "DID.h"
 #import "JCSMSConversationGroup.h"
 

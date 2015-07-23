@@ -8,19 +8,32 @@
 
 #import "JCSocket.h"
 #import "JCManager.h"
+#import "JCAppSettings.h"
 
 @interface JCSocketManager : JCManager {
     JCSocket *_socket;
 }
 
 @property (nonatomic, readonly) JCSocket *socket;
+@property (nonatomic, readonly) JCAppSettings *appSettings;
+
+@property (nonatomic) NSUInteger batchSize;
 
 -(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data;
+
+-(void)generateSubscriptionWithIdentifier:(NSString *)identifier
+                                     type:(NSString *)type
+                               entityType:(NSString *)entityType
+                                 entityId:(NSString *)entityId
+                          entityAccountId:(NSString *)accountId;
 
 @end
 
 @interface JCSocketManager (Singleton)
 
 +(instancetype)sharedManager;
+
++(void)subscribe;
++(void)unsubscribe:(CompletionHandler)completion;
 
 @end

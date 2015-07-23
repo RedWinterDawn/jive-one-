@@ -111,7 +111,7 @@
                         </segmentedControl>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="fSL-eQ-mR7">
                             <connections>
-                                <segue destination="2Hc-En-5i1" kind="showDetail" id="bnN-21-nTO"/>
+                                <action selector="add:" destination="IwX-7Q-uAt" id="MYd-kx-a76"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -119,6 +119,7 @@
                     <connections>
                         <outlet property="searchBar" destination="gyL-0L-l47" id="DIZ-Ev-SkM"/>
                         <segue destination="qMv-8f-6T1" kind="show" identifier="ContactGroupViewController" id="2oc-Uz-pZE"/>
+                        <segue destination="2Hc-En-5i1" kind="show" id="c50-3e-qdz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vKG-6z-81Q" sceneMemberID="firstResponder"/>
@@ -133,7 +134,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="tintColor" red="0.32549019610000002" green="0.25098039220000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ContactGroupCell" textLabel="MDi-Ax-x1V" style="IBUITableViewCellStyleDefault" id="1WB-yI-nfU" customClass="JCTableViewCell">
@@ -583,7 +583,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="eMi-65-vdr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.32549019610000002" green="0.25098039220000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="jfg-Md-Hum" kind="relationship" relationship="rootViewController" id="HYG-j3-TuA"/>
@@ -617,9 +617,6 @@
         <image name="black-avatar" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fr3-YI-YP2"/>
-        <segue reference="bnN-21-nTO"/>
-        <segue reference="uPT-qT-mCT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
 </document>

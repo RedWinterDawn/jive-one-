@@ -8,6 +8,9 @@
 
 #import "InternalExtensionGroup.h"
 
+#import "InternalExtension.h"
+#import "PBX.h"
+
 
 @implementation InternalExtensionGroup
 
@@ -15,5 +18,16 @@
 @dynamic name;
 
 @dynamic internalExtensions;
+
+-(NSSet *)members
+{
+    return self.internalExtensions;
+}
+
+-(NSString *)sectionName
+{
+    InternalExtension *internalExtension = self.internalExtensions.allObjects.firstObject;
+    return internalExtension.pbx.name;
+}
 
 @end

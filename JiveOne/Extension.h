@@ -17,6 +17,9 @@
 
 @property (nonatomic) BOOL hidden;
 
+// Transient Properties
+@property (nonatomic, readonly) NSString * extensionId;
+
 @end
 
 @interface Extension (Search)

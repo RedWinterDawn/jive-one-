@@ -10,6 +10,6 @@
 
 @interface JCSMSMessageManager : JCSocketManager
 
-+(void)subscribeToPbx:(PBX *)pbx;
++(void)generateSubscriptionForPbx:(PBX *)pbx;
 
 @end

@@ -9,7 +9,7 @@
 #import "InternalExtension+V5Client.h"
 
 // Client
-#import "JCV5ApiClient.h"
+#import "JCV5ApiClient+Contacts.h"
 
 // Models
 #import "InternalExtensionGroup.h"

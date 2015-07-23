@@ -63,20 +63,21 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
            retries:(NSUInteger)retries
         completion:(JCApiClientCompletionHandler)completion
 {
-    [self getWithPath:path
-           parameters:parameters
-    requestSerializer:requestSerializer
-              retries:retries
-              success:^(id responseObject) {
-                  if (completion) {
-                      completion(YES, responseObject, nil);
-                  };
-              }
-              failure:^(NSError *error) {
-                  if (completion) {
-                      completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+    [self requestWithType:JCApiClientGet
+                     path:path parameters:parameters
+        requestSerializer:requestSerializer
+       responceSerializer:nil
+                  retries:retries
+                  success:^(id responseObject) {
+                      if (completion) {
+                          completion(YES, responseObject, nil);
+                      };
                   }
-              }];
+                  failure:^(id responseObject, NSError *error) {
+                      if (completion) {
+                          completion(NO, responseObject, error);
+                      }
+                  }];
 }
 
 +(void)putWithPath:(NSString *)path
@@ -85,20 +86,21 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
            retries:(NSUInteger)retries
         completion:(JCApiClientCompletionHandler)completion
 {
-    [self putWithPath:path
-           parameters:parameters
-    requestSerializer:requestSerializer
-              retries:retries
-              success:^(id responseObject) {
-                  if (completion) {
-                      completion(YES, responseObject, nil);
-                  };
-              }
-              failure:^(id responseObject, NSError *error) {
-                  if (completion) {
-                      completion(NO, responseObject, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+    [self requestWithType:JCApiClientPut
+                     path:path parameters:parameters
+        requestSerializer:requestSerializer
+       responceSerializer:nil
+                  retries:retries
+                  success:^(id responseObject) {
+                      if (completion) {
+                          completion(YES, responseObject, nil);
+                      };
                   }
-              }];
+                  failure:^(id responseObject, NSError *error) {
+                      if (completion) {
+                          completion(NO, responseObject, error);
+                      }
+                  }];
 }
 
 +(void)postWithPath:(NSString *)path
@@ -107,20 +109,22 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
             retries:(NSUInteger)retries
          completion:(JCApiClientCompletionHandler)completion
 {
-    [self postWithPath:path
-            parameters:parameters
-     requestSerializer:requestSerializer
-               retries:retries
-               success:^(id responseObject) {
-                   if (completion) {
-                       completion(YES, responseObject, nil);
-                   };
-               }
-               failure:^(id responseObject, NSError *error) {
-                   if (completion) {
-                       completion(NO, responseObject, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
-                   }
-               }];
+    [self requestWithType:JCApiClientPost
+                     path:path
+               parameters:parameters
+        requestSerializer:requestSerializer
+       responceSerializer:nil
+                  retries:retries
+                  success:^(id responseObject) {
+                      if (completion) {
+                          completion(YES, responseObject, nil);
+                      };
+                  }
+                  failure:^(id responseObject, NSError *error) {
+                      if (completion) {
+                          completion(NO, responseObject, error);
+                      }
+                  }];
 }
 
 +(void)deleteWithPath:(NSString *)path
@@ -129,70 +133,33 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
               retries:(NSUInteger)retries
            completion:(JCApiClientCompletionHandler)completion
 {
-    [self deleteWithPath:path
-              parameters:parameters
-       requestSerializer:requestSerializer
-                 retries:retries
-                 success:^(id responseObject) {
-                     if (completion) {
-                         completion(YES, responseObject, nil);
-                     };
-                 }
-                 failure:^(NSError *error) {
-                     if (completion) {
-                         completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
-                     }
-                 }];
+    [self requestWithType:JCApiClientDelete
+                     path:path parameters:parameters
+        requestSerializer:requestSerializer
+       responceSerializer:nil
+                  retries:retries
+                  success:^(id responseObject) {
+                      if (completion) {
+                          completion(YES, responseObject, nil);
+                      };
+                  }
+                  failure:^(id responseObject, NSError *error) {
+                      if (completion) {
+                          completion(NO, responseObject, error);
+                      }
+                  }];
 }
-
 
 #pragma mark - Private -
 
-+(void)getWithPath:(NSString *)path
-        parameters:(NSDictionary *)parameters
- requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
-           retries:(NSUInteger)retryCount
-           success:(void (^)(id responseObject))success
-           failure:(void (^)(NSError *error))failure
-{
-    if (retryCount <= 0) {
-        if (failure) {
-            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_TIMEOUT_ERROR reason:@"Request Timeout"];
-            failure(error);
-        }
-    } else {
-        JCApiClient *client = [self new];
-        if (requestSerializer) {
-            client.manager.requestSerializer = requestSerializer;
-        }
-        
-        [client.manager GET:path
-                 parameters:parameters
-                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        success(responseObject);
-                    }
-                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        if (error.code == NSURLErrorTimedOut) {
-                            NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
-                            [self getWithPath:path
-                                   parameters:parameters
-                            requestSerializer:requestSerializer
-                                      retries:(retryCount - 1)
-                                      success:success
-                                      failure:failure];
-                        } else{
-                            failure(error);
-                        }
-                    }];
-    }
-}
-
-+(void)putWithPath:(NSString *)path
-        parameters:(NSDictionary *)parameters
- requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
-           retries:(NSUInteger)retryCount
-           success:(void (^)(id responseObject))success
-           failure:(void (^)(id responseObject, NSError *error))failure
+-(void)requestWithType:(JCApiClientCrudOperationType)type
+                  path:(NSString *)path
+            parameters:(NSDictionary *)parameters
+     requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+    responceSerializer:(AFHTTPResponseSerializer *)responceSerializer
+               retries:(NSUInteger)retryCount
+               success:(void (^)(id responseObject))success
+               failure:(void (^)(id responseObject, NSError *error))failure
 {
     if (retryCount <= 0) {
         if (failure) {
@@ -200,108 +167,93 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
             failure(nil, error);
         }
     } else {
-        JCApiClient *client = [self new];
+        AFHTTPRequestOperationManager *manager = self.manager;
         if (requestSerializer) {
-            client.manager.requestSerializer = requestSerializer;
+            manager.requestSerializer = requestSerializer;
         }
         
-        [client.manager PUT:path
-                 parameters:parameters
-                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        success(responseObject);
-                    }
-                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        if (error.code == NSURLErrorTimedOut) {
-                            NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
-                            [self putWithPath:path
+        if (responceSerializer) {
+            manager.responseSerializer = responceSerializer;
+        }
+        
+        void (^failureBlock)(AFHTTPRequestOperation *operation, NSError *error) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+            if (error.code == NSURLErrorTimedOut) {
+                NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
+                [self requestWithType:type
+                                 path:path
+                           parameters:parameters
+                    requestSerializer:requestSerializer
+                   responceSerializer:responceSerializer
+                              retries:(retryCount - 1)
+                              success:success
+                              failure:failure];
+            }
+            else if (operation.response.statusCode == JCHTTPStatusCodeUnauthorised)
+            {
+                [JCAuthenticationManager requestAuthentication:^(BOOL authenticated, NSError *error) {
+                    if (authenticated) {
+                        [self requestWithType:type
+                                         path:path
                                    parameters:parameters
                             requestSerializer:requestSerializer
+                           responceSerializer:responceSerializer
                                       retries:(retryCount - 1)
                                       success:success
                                       failure:failure];
-                        } else {
-                            failure(operation.responseObject, error);
-                        }
-                    }];
+                    } else {
+                        failure(operation.responseObject, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+                    }
+                }];
+            }
+            else{
+                failure(operation.responseObject, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
+            }
+        };
+        
+        void (^sucessBlock)(AFHTTPRequestOperation *operation, id responseObject) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+            success(responseObject);
+        };
+        
+        switch (type) {
+            case JCApiClientPost:
+                [manager POST:path parameters:parameters success:sucessBlock failure:failureBlock];
+                break;
+                
+            case JCApiClientPut:
+                [manager PUT:path parameters:parameters success:sucessBlock failure:failureBlock];
+                break;
+                
+            case JCApiClientDelete:
+                [manager DELETE:path parameters:parameters success:sucessBlock failure:failureBlock];
+                break;
+                
+            default:
+                [manager GET:path parameters:parameters success:sucessBlock failure:failureBlock];
+                break;
+        }
     }
 }
 
-+(void)postWithPath:(NSString *)path
-         parameters:(NSDictionary *)parameters
-  requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
-            retries:(NSUInteger)retryCount
-            success:(void (^)(id responseObject))success
-            failure:(void (^)(id responseObject, NSError *error))failure
-{
-    if (retryCount <= 0) {
-        if (failure) {
-            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_TIMEOUT_ERROR reason:@"Request Timeout"];
-            failure(nil, error);
-        }
-    } else {
-        JCApiClient *client = [self new];
-        if (requestSerializer) {
-            client.manager.requestSerializer = requestSerializer;
-        }
-        
-        [client.manager POST:path
-                  parameters:parameters
-                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                         success(responseObject);
-                     }
-                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                         if (error.code == NSURLErrorTimedOut) {
-                             NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
-                             [self postWithPath:path
-                                     parameters:parameters
-                              requestSerializer:requestSerializer
-                                        retries:(retryCount - 1)
-                                        success:success
-                                        failure:failure];
-                         } else{
-                             failure(operation.responseObject, error);
-                         }
-                     }];
-    }
-}
 
-+(void)deleteWithPath:(NSString *)path
-           parameters:(NSDictionary *)parameters
-    requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
-              retries:(NSUInteger)retryCount
-              success:(void (^)(id responseObject))success
-              failure:(void (^)(NSError *error))failure
++(void)requestWithType:(JCApiClientCrudOperationType)type
+                  path:(NSString *)path
+            parameters:(NSDictionary *)parameters
+     requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+    responceSerializer:(AFHTTPResponseSerializer *)responceSerializer
+               retries:(NSUInteger)retryCount
+               success:(void (^)(id responseObject))success
+               failure:(void (^)(id responseObject, NSError *error))failure
 {
-    if (retryCount <= 0) {
-        if (failure) {
-            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_TIMEOUT_ERROR reason:@"Request Timeout"];
-            failure(error);
-        }
-    } else {
-        JCApiClient *client = [self new];
-        if (requestSerializer) {
-            client.manager.requestSerializer = requestSerializer;
-        }
-        
-        [client.manager DELETE:path
-                    parameters:parameters
-                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                           success(responseObject);
-                       }
-                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                           if (error.code == NSURLErrorTimedOut) {
-                               NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
-                               [self deleteWithPath:path
-                                         parameters:parameters
-                                  requestSerializer:requestSerializer
-                                            retries:(retryCount - 1)
-                                            success:success
-                                            failure:failure];
-                           } else{
-                               failure(error);
-                           }
-                       }];
-    }
+    
+    JCApiClient *client = [self new];
+    [client requestWithType:type
+                       path:path
+                 parameters:parameters
+          requestSerializer:requestSerializer
+         responceSerializer:responceSerializer
+                    retries:retryCount
+                    success:success
+                    failure:failure];
 }
 
 @end
@@ -323,7 +275,9 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 {
     NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:object error:error] mutableCopy];
     NSString *authToken = [JCAuthenticationManager sharedInstance].authToken;
-    [mutableRequest setValue:authToken forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
+    if (authToken) {
+        [mutableRequest setValue:authToken forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
+    }
     return mutableRequest;
 }
 
@@ -335,7 +289,9 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 {
     NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:object error:error] mutableCopy];
     NSString *authToken = [JCAuthenticationManager sharedInstance].authToken;
-    [mutableRequest setValue:[NSString stringWithFormat:@"Bearer %@", authToken] forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
+    if (authToken) {
+        [mutableRequest setValue:[NSString stringWithFormat:@"bearer %@", authToken] forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
+    }
     return mutableRequest;
 }
 

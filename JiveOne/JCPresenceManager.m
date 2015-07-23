@@ -8,10 +8,15 @@
 
 #import "JCPresenceManager.h"
 #import "JCSocket.h"
-#import "JCAppSettings.h"
-#import "Line.h"
+#import "Extension.h"
+#import "PBX.h"
 
 NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
+
+NSString *const kJCPresenceManagerEntityType        = @"line";
+NSString *const kJCPresenceManagerSubscriptionType  = @"registration";
+
+
 
 NSString *const kJCPresenceManagerTypeWithdraw      = @"withdraw";
 NSString *const kJCPresenceManagerStateConfirmed    = @"confirmed";
@@ -22,30 +27,15 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
 @interface JCPresenceManager ()
 {
     NSMutableArray *_extensions;
-    PBX *_pbx;
 }
 
 @end
 
 @implementation JCPresenceManager
 
-/**
- * Override class init to grab pointer to socket singleton, and to register for Notification Center 
- * events from the socket for recieved data.
- */
--(instancetype)init
+-(JCLinePresence *)linePresenceForExtension:(Extension *)extension
 {
-    self = [super init];
-    if (self) {
-        [ [JCAppSettings sharedSettings] addObserver:self forKeyPath:kJCAppSettingsPresenceAttribute options:0 context:NULL];
-    }
-    return self;
-}
-
-
--(JCLinePresence *)linePresenceForContact:(InternalExtension *)contact
-{
-    return [self linePresenceForIdentifier:contact.jrn];
+    return [self linePresenceForIdentifier:extension.extensionId];
 }
 
 -(JCLinePresence *)linePresenceForIdentifier:(NSString *)identifier
@@ -62,27 +52,20 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
     return nil;
 }
 
-+ (void)subscribeToPbx:(PBX *)pbx
++ (void)generateSubscriptionForPbx:(PBX *)pbx
 {
     if (!pbx.v5) {
         return;
     }
     
-    [[JCPresenceManager sharedManager] subscribeToPbx:pbx];
-}
-
-+(void)unsubscribeFromPbx:(PBX *)pbx
-{
-    if (!pbx.v5) {
-        return;
-    }
-    
-    [[JCPresenceManager sharedManager] unsubscribeFromPbx:pbx];
+    [[JCPresenceManager sharedManager] generateSubscriptionForPbx:pbx];
 }
 
 #pragma mark - Public Overides -
 
--(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data {
+-(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data
+{
+    NSLog(@"%@", [result description]);
     
     NSString *state = [data stringValueForKey:kJCPresenceManagerStateKey];
     if (![type isEqualToString:kJCPresenceManagerTypeWithdraw] && !(state && [state isEqualToString:kJCPresenceManagerStateConfirmed])) {
@@ -108,57 +91,34 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
     }
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:kJCAppSettingsPresenceAttribute]) {
-        JCAppSettings *settings = (JCAppSettings *)object;
-        if([JCSocket sharedSocket].isReady) {
-            if (settings.isPresenceEnabled) {
-                [self subscribeToPbx:_pbx];
-            } else {
-                [self unsubscribeFromPbx:_pbx];
-            }
-        }
-    }
-}
-
 #pragma mark - Private
+
 
 /**
  * Loops through the PBX's contacts and subscribe to presence events for each of them. Creates a 
  * line presence object to represent that contact.
  */
--(void)subscribeToPbx:(PBX *)pbx
+-(void)generateSubscriptionForPbx:(PBX *)pbx
 {
-    
-    _pbx = pbx;
-    
-    if (!_pbx) {
-        return;
+    if (self.appSettings.isPresenceEnabled)
+    {
+        _extensions = [NSMutableArray new];
+        NSSet *extensions = pbx.extensions;
+        for (Extension *extension in extensions){
+            [_extensions addObject:[[JCLinePresence alloc] initWithLineIdentifer:extension.extensionId]];
+            
+            [self generateSubscriptionWithIdentifier:extension.extensionId
+                                                type:kJCPresenceManagerSubscriptionType
+                                          entityType:kJCPresenceManagerEntityType
+                                            entityId:extension.extensionId
+                                     entityAccountId:pbx.pbxId];
+        }
     }
-    
-    if (![JCAppSettings sharedSettings].isPresenceEnabled) {
-        return;
-    }
-    
-    NSSet *extensions = pbx.extensions;
-    _extensions = [NSMutableArray arrayWithCapacity:extensions.count];
-    for (Extension *extension in extensions) {
-        [_extensions addObject:[[JCLinePresence alloc] initWithLineIdentifer:extension.jrn]];
-        [JCSocket subscribeToSocketEventsWithIdentifer:extension.jrn entity:extension.jrn type:@"dialog"];
+    else {
+        _extensions = nil;
     }
     
     [self postNotificationNamed:kJCPresenceManagerLinesChangedNotification];
-}
-
--(void)unsubscribeFromPbx:(PBX *)pbx
-{
-    [JCSocket unsubscribeToSocketEvents:^(BOOL success, NSError *error) {
-        if (success) {
-            _extensions = nil;
-            [self postNotificationNamed:kJCPresenceManagerLinesChangedNotification];
-        }
-    }];
 }
 
 @end

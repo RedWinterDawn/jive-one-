@@ -120,6 +120,7 @@ typedef enum : NSInteger {
 #define JC_PHONE_NO_CONFERENCE_CALL_TO_END          -1102
 #define JC_PHONE_FAILED_ENDING_CONFERENCE_CALL      -1103
 #define JC_PHONE_BLIND_TRANSFER_FAILED              -1104
+#define JC_PHONE_SIP_DISABLED                                   -1105
 
 @interface JCPhoneManagerError : JCError
 

@@ -15,6 +15,8 @@
 @class DID;
 @class PBX;
 
+extern NSString *const kJCAuthenticationManagerUserRequiresAuthenticationNotification;
+extern NSString *const kJCAuthenticationManagerUserWillLogOutNotification;
 extern NSString *const kJCAuthenticationManagerUserLoggedOutNotification;
 extern NSString *const kJCAuthenticationManagerUserAuthenticatedNotification;
 extern NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification;
@@ -35,6 +37,7 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 
 @property (nonatomic, readonly) NSString *authToken;
 @property (nonatomic, readonly) NSString *jiveUserId;
+@property (nonatomic, readonly) double exspirationDate;
 @property (nonatomic, readonly) BOOL userAuthenticated;
 @property (nonatomic, readonly) BOOL userLoadedMinimumData;
 
@@ -42,7 +45,10 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @property (nonatomic) BOOL rememberMe;
 @property (nonatomic, readonly) NSString *rememberMeUser;
 
-@property (nonatomic, strong) NSString *deviceToken;
+//@property (nonatomic, strong) NSString *deviceToken;
+
++ (void)requestAuthentication:(CompletionHandler)completion;
++ (void)requestAuthenticationForUser:(User *)user completion:(CompletionHandler)completion;
 
 @end
 

@@ -35,6 +35,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkingReachabilityManager;
 @property (nonatomic, strong) NSManagedObjectContext *context;
+@property (nonatomic, strong) NSString *placeHolderText;
 
 @end
 
@@ -74,7 +75,9 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self updateRegistrationStatus];    
+    [self updateRegistrationStatus];
+    _placeHolderText = NSLocalizedString(@"Enter Name or Number", @"Enter Name or Number");
+    self.formattedPhoneNumberLabel.text = _placeHolderText;
 }
 
 -(void)awakeFromNib
@@ -163,7 +166,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
                    sender:sender
                completion:^(BOOL success, NSError *error) {
                    if (success){
-                       [self clear:sender];
+                       [self performSelector:@selector(clear:) withObject:sender afterDelay:1];
                    }
                }];
 }
@@ -171,6 +174,9 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 -(IBAction)backspace:(id)sender
 {
     [self appendString:nil];
+    if ([self.formattedPhoneNumberLabel.text isEqualToString:@""]) {
+        self.formattedPhoneNumberLabel.text = _placeHolderText;
+    }
 }
 
 -(IBAction)clear:(id)sender
@@ -178,6 +184,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [self.formattedPhoneNumberLabel clear];
     _phoneNumbers = nil;
     [self.collectionView reloadData];
+    self.formattedPhoneNumberLabel.text = _placeHolderText;
 }
 
 #pragma mark - Getters -

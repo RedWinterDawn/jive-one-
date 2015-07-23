@@ -8,18 +8,18 @@
 
 #import "JCPersonManagedObject.h"
 
-@class PhoneNumber, Address, ContactInfo, User;
+@class PhoneNumber, Address, ContactInfo, User, ContactGroupAssociation;
 
 @interface Contact : JCPersonManagedObject
 
 // Attributes
 @property (nonatomic, strong) NSString *contactId;
-@property (nonatomic) NSInteger etag;
-
 @property (nonatomic, getter=isMarkedForDeletion) BOOL markForDeletion;
 @property (nonatomic, getter=isMarkedForUpdate) BOOL markForUpdate;
+@property (nonatomic) NSInteger etag;
 
 // Relationships
+@property (nonatomic, strong) NSSet *groups;
 @property (nonatomic, retain) NSSet *phoneNumbers;
 @property (nonatomic, retain) NSSet *addresses;
 @property (nonatomic, retain) NSSet *info;
@@ -43,5 +43,10 @@
 - (void)removeInfoObject:(ContactInfo *)value;
 - (void)addInfo:(NSSet *)values;
 - (void)removeInfo:(NSSet *)values;
+
+- (void)addGroupsObject:(ContactGroupAssociation *)value;
+- (void)removeGroupsObject:(ContactGroupAssociation *)value;
+- (void)addGroups:(NSSet *)values;
+- (void)removeGroups:(NSSet *)values;
 
 @end

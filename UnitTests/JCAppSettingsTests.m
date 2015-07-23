@@ -112,5 +112,27 @@
     assertThatBool(result, isTrue());
 }
 
+-(void)test_isVoicemailOnSpeaker_read {
+     NSString *key = @"voicemailOnSpeaker";
+    NSUserDefaults *mockUserDefaults = self.appSettings.userDefaults;
+    [given([mockUserDefaults boolForKey:key]) willReturnBool:NO];
+    BOOL result = self.appSettings.voicemailOnSpeaker;
+    assertThatBool(result, isFalse());
+    
+    [given([mockUserDefaults boolForKey:key]) willReturnBool:YES];
+    result = self.appSettings.voicemailOnSpeaker;
+    assertThatBool(result, isTrue());
+}
+
+-(void)test_volumeLevel_read {
+    NSString *key = @"volumeLevel";
+    NSUserDefaults *mockUserDefaults = self.appSettings.userDefaults;
+    [given([mockUserDefaults floatForKey:key]) willReturnFloat:0.123];
+
+    float result = self.appSettings.volumeLevel;
+    float value = 0.123;
+    assertThatFloat(result,equalToFloat(value));
+    
+}
 
 @end

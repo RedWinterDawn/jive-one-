@@ -11,6 +11,13 @@
 #import <AFNetworking/AFNetworking.h>
 #import "JCError.h"
 
+typedef enum : NSUInteger {
+    JCApiClientGet,
+    JCApiClientPut,
+    JCApiClientPost,
+    JCApiClientDelete
+} JCApiClientCrudOperationType;
+
 typedef void(^JCApiClientCompletionHandler)(BOOL success, id response, NSError *error);
 
 @interface JCApiClient : NSObject
@@ -21,6 +28,15 @@ typedef void(^JCApiClientCompletionHandler)(BOOL success, id response, NSError *
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 
 -(instancetype)initWithBaseURL:(NSURL *)url;
+
+-(void)requestWithType:(JCApiClientCrudOperationType)type
+                  path:(NSString *)path
+            parameters:(NSDictionary *)parameters
+     requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+    responceSerializer:(AFHTTPResponseSerializer *)responceSerializer
+               retries:(NSUInteger)retryCount
+               success:(void (^)(id responseObject))success
+               failure:(void (^)(id responseObject, NSError *error))failure;
 
 + (void)cancelAllOperations;
 
