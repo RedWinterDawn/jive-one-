@@ -44,20 +44,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 {
     [super viewDidLoad];
     
-    
-    
-    // Set this up once when your application launches
-    UVConfig *config = [UVConfig configWithSite:@"jivemobile.uservoice.com"];
-    
-    JCAuthenticationManager *authenticationManager = self.authenticationManager;
-    
-   [config identifyUserWithEmail: authenticationManager.line.pbx.user.jiveUserId name: _userNameLabel.text guid: @"guid"];
-    NSLog(@"Email: %@, Name: %@, guid: %@", authenticationManager.line.pbx.user.jiveUserId, authenticationManager.line.username, authenticationManager.pbx.name );
-    
-    [UserVoice initialize:config];
-    
-   
-   
     _audioManager = [JCPhoneAudioManager new];
     [_audioManager setSessionActive];
     MPVolumeView *volumeView = [MPVolumeView new];
@@ -79,7 +65,23 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     self.sipDisabled.on = settings.sipDisabled;
     self.doNotDisturbSW.on = settings.doNotDisturbEnabled;
     _volumeslidder.value = settings.volumeLevel;
-
+    
+    // Set this up once when your application launches
+    UVConfig *config = [UVConfig configWithSite:@"jivemobile.uservoice.com"];
+    
+    JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    
+    NSString* email = authenticationManager.line.pbx.user.jiveUserId;           // Uservoice craps its pants when the email field is not an email.
+    if (![email containsString:@"@"]) {                                                              //So since jive is the only one without email addresses as usernames we just add the @jive.com and problem solved
+        email =  [email stringByAppendingString:@"@jive.com"];
+    }
+    
+    [config identifyUserWithEmail: email name: authenticationManager.line.pbx.name guid: authenticationManager.line.pbx.name];
+    
+    config.showForum = NO;
+    config.showPostIdea = NO;
+  
+    [UserVoice initialize:config];
     
     #ifndef DEBUG
     if (self.debugCell) {
