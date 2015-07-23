@@ -8,7 +8,6 @@
 
 #import "SMSMessage+V5Client.h"
 #import "JCV5ApiClient+SMSMessaging.h"
-#import <Parse/Parse.h>
 
 NSString *const kSMSMessageSendRequestToKey                 = @"to";
 NSString *const kSMSMessageSendRequestFromKey               = @"from";
@@ -80,7 +79,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
                                  kSMSMessageSendRequestFromKey: did.number,
                                  kSMSMessageSendRequestBodyKey: message};
     
-    [UIApplication showStatus:@"Sending"];
+    [UIApplication showStatus:NSLocalizedString(@"Sending", @"SMS messaging")];
     [JCV5ApiClient sendSMSMessageWithParameters:parameters completion:^(BOOL success, id response, NSError *error) {
         if (success) {
             [self processSMSSendResponseObject:response did:did completion:completion];
@@ -91,11 +90,6 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
             }
         }
     }];
-    
-    
-    PFInstallation *currentInstilation = [PFInstallation currentInstallation];
-    [currentInstilation addUniqueObject:did.description forKey:@"channels"];
-    [currentInstilation saveInBackground];
 }
 
 #pragma mark - Receive -
