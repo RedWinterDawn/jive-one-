@@ -40,7 +40,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    JCAuthenticationManager *authenticationManager = self.authenticationManager;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(reloadTable:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
     [center addObserver:self selector:@selector(reloadTable:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
