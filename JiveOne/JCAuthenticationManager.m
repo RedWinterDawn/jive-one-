@@ -197,7 +197,7 @@ static NSMutableArray *authenticationCompletionRequests;
     }
 }
 
-- (void)loginWithUsername:(NSString *)username password:(NSString *)password completed:(CompletionBlock)completion
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password completed:(CompletionHandler)completion
 {
     // Destroy current authToken;
     [_authenticationKeychain logout];
@@ -353,7 +353,7 @@ static NSMutableArray *authenticationCompletionRequests;
 
 #pragma mark - Private -
 
--(void)receivedAccessTokenData:(NSDictionary *)tokenData username:(NSString *)username completion:(CompletionBlock)completion
+-(void)receivedAccessTokenData:(NSDictionary *)tokenData username:(NSString *)username completion:(CompletionHandler)completion
 {
     @try {
         if (!tokenData || tokenData.count < 1) {

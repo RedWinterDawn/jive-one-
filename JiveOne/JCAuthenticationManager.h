@@ -22,12 +22,10 @@ extern NSString *const kJCAuthenticationManagerUserAuthenticatedNotification;
 extern NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification;
 extern NSString *const kJCAuthenticationManagerLineChangedNotification;
 
-typedef void (^CompletionBlock) (BOOL success, NSError *error);
-
 @interface JCAuthenticationManager : JCManager
 
 - (void)checkAuthenticationStatus;
-- (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(CompletionBlock)completed;
+- (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(CompletionHandler)completed;
 - (void)logout;
 
 @property (nonatomic, strong) Line *line;
