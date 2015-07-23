@@ -9,6 +9,7 @@
 #import "JCIntercomTableViewController.h"
 #import "JCAppSettings.h"
 #import "JCAuthenticationManager.h"
+#import "JCPhoneManager.h"
 #import "Line.h"
 
 @implementation JCIntercomTableViewController
@@ -20,6 +21,11 @@
     self.intercomSwitch.on = settings.isIntercomEnabled;
     [self enableIntercomMicrophoneMuteSwitch:settings.isIntercomEnabled];
     self.intercomeMicrophoneMuteSwitch.on = settings.isIntercomMicrophoneMuteEnabled;
+    self.wifiOnly.on = settings.wifiOnly;
+    self.presenceEnabled.on = settings.presenceEnabled;
+    self.sipDisabled.on = settings.sipDisabled;
+    self.doNotDisturbSW.on = settings.doNotDisturbEnabled;
+    
 }
 
 -(IBAction)intercomChanged:(id)sender
@@ -44,6 +50,49 @@
         JCAppSettings *settings = [JCAppSettings sharedSettings];
         settings.intercomMicrophoneMuteEnabled = !settings.isIntercomMicrophoneMuteEnabled;
         switchBtn.on = settings.isIntercomMicrophoneMuteEnabled;
+    }
+}
+
+-(IBAction)toggleWifiOnly:(id)sender
+{
+    if ([sender isKindOfClass:[UISwitch class]]) {
+        UISwitch *switchBtn = (UISwitch *)sender;
+        JCAppSettings *settings = self.appSettings;
+        settings.wifiOnly = !settings.isWifiOnly;
+        switchBtn.on = settings.isWifiOnly;
+        [self.phoneManager connectToLine:self.authenticationManager.line];
+    }
+}
+
+- (IBAction)toggleDisableSip:(id)sender {
+    if([sender isKindOfClass:[UISwitch class]]){
+        UISwitch *switchBtn = (UISwitch *)sender;
+        JCAppSettings *settings = self.appSettings;
+        settings.sipDisabled = !settings.sipDisabled;
+        switchBtn.on = settings.isSipDisabled;
+        if (settings.isSipDisabled){
+            [self.phoneManager disconnect];
+        } else{
+            [self.phoneManager connectToLine:self.authenticationManager.line];
+        }
+    }
+}
+
+- (IBAction)toggleDoNotDisturb:(id)sender {
+    if ([sender isKindOfClass:[UISwitch class]]){
+        UISwitch *switchBtn = (UISwitch *)sender;
+        JCAppSettings *settings = self.appSettings;
+        settings.doNotDisturbEnabled = !settings.doNotDisturbEnabled;
+        switchBtn.on = settings.isDoNotDisturbEnabled;
+    }
+}
+
+-(IBAction)togglePresenceEnabled:(id)sender
+{
+    if ([sender isKindOfClass:[UISwitch class]]) {
+        UISwitch *switchBtn = (UISwitch *)sender;
+        self.appSettings.presenceEnabled = !self.appSettings.isPresenceEnabled;
+        switchBtn.on = self.appSettings.isPresenceEnabled;
     }
 }
 

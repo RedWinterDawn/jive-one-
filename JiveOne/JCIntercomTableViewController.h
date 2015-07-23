@@ -14,8 +14,18 @@
 @property (weak, nonatomic) IBOutlet UISwitch *intercomeMicrophoneMuteSwitch;
 @property (weak, nonatomic) IBOutlet UITableViewCell *intercomMicrophoneMuteCell;
 @property (weak, nonatomic) IBOutlet UILabel *intercomMicrophoneMuteLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *doNotDisturbSW;
+@property (weak, nonatomic) IBOutlet UISwitch *wifiOnly;
+@property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
+@property (weak, nonatomic) IBOutlet UISwitch *sipDisabled;
+
+
+
 
 -(IBAction)intercomChanged:(id)sender;
 -(IBAction)intercomMicrophoneMuteChanged:(id)sender;
+-(IBAction)toggleWifiOnly:(id)sender;
+-(IBAction)togglePresenceEnabled:(id)sender;
+- (IBAction)toggleDoNotDisturb:(id)sender;
 
 @end

@@ -7,14 +7,13 @@
 //
 
 @import MessageUI;
-@import AVFoundation;
-@import MediaPlayer;
+
 
 #import "JCSettingsTableViewController.h"
 
 // Managers
 #import "JCAuthenticationManager.h"
-#import "JCPhoneManager.h"
+
 #import "JCPhoneAudioManager.h"
 
 // Models
@@ -44,10 +43,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     [super viewDidLoad];
    
    
-    _audioManager = [JCPhoneAudioManager new];
-    [_audioManager setSessionActive];
-    MPVolumeView *volumeView = [MPVolumeView new];
-    self.routeIconBackground.hidden = !volumeView.showsRouteButton;
     // Device Info
     UIDevice *device = [UIDevice currentDevice];
     self.installationIdentifier.text = device.installationIdentifier;
@@ -58,13 +53,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     self.appLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     self.buildLabel.text = [NSString stringWithFormat:@"%@ (%@)", [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
     
-    // Settings Info
-    JCAppSettings *settings = self.appSettings;
-    self.wifiOnly.on = settings.wifiOnly;
-    self.presenceEnabled.on = settings.presenceEnabled;
-    self.sipDisabled.on = settings.sipDisabled;
-    self.doNotDisturbSW.on = settings.doNotDisturbEnabled;
-    _volumeslidder.value = settings.volumeLevel;
+ 
 
     
     #ifndef DEBUG
@@ -127,10 +116,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 
 #pragma mark - IBActions -
 
-- (IBAction)sliderValue:(id)sender {
-    self.appSettings.volumeLevel = _volumeslidder.value;
-    [_audioManager playIncomingCallToneDemo];  //Plays a snippit of the ringer so the user know how load it is going ot be.
-}
+
 
 -(IBAction)leaveFeedback:(id)sender
 {
@@ -167,48 +153,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 -(IBAction)logout:(id)sender
 {
     [self.authenticationManager logout];
-}
-
--(IBAction)toggleWifiOnly:(id)sender
-{
-    if ([sender isKindOfClass:[UISwitch class]]) {
-        UISwitch *switchBtn = (UISwitch *)sender;
-        JCAppSettings *settings = self.appSettings;
-        settings.wifiOnly = !settings.isWifiOnly;
-        switchBtn.on = settings.isWifiOnly;
-        [self.phoneManager connectToLine:self.authenticationManager.line];
-    }
-}
-- (IBAction)toggleDisableSip:(id)sender {
-    if([sender isKindOfClass:[UISwitch class]]){
-        UISwitch *switchBtn = (UISwitch *)sender;
-        JCAppSettings *settings = self.appSettings;
-        settings.sipDisabled = !settings.sipDisabled;
-        switchBtn.on = settings.isSipDisabled;
-        if (settings.isSipDisabled){
-            [self.phoneManager disconnect];
-        } else{
-            [self.phoneManager connectToLine:self.authenticationManager.line];
-        }
-    }
-}
-
-- (IBAction)toggleDoNotDisturb:(id)sender {
-    if ([sender isKindOfClass:[UISwitch class]]){
-        UISwitch *switchBtn = (UISwitch *)sender;
-        JCAppSettings *settings = self.appSettings;
-        settings.doNotDisturbEnabled = !settings.doNotDisturbEnabled;
-        switchBtn.on = settings.isDoNotDisturbEnabled;
-    }
-}
-
--(IBAction)togglePresenceEnabled:(id)sender
-{
-    if ([sender isKindOfClass:[UISwitch class]]) {
-        UISwitch *switchBtn = (UISwitch *)sender;
-        self.appSettings.presenceEnabled = !self.appSettings.isPresenceEnabled;
-        switchBtn.on = self.appSettings.isPresenceEnabled;
-    }
 }
 
 #pragma mark - Getters -
