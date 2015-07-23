@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
 #import "JCManager.h"
+#import "JCError.h"
 
 @class User;
 @class Line;
@@ -28,8 +28,8 @@ extern NSString *const kJCAuthenticationManagerLineChangedNotification;
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(CompletionHandler)completed;
 - (void)logout;
 
-@property (nonatomic, strong) Line *line;
-@property (nonatomic, strong) DID *did;
+@property (nonatomic, strong) Line *line;       // Selectable
+@property (nonatomic, strong) DID *did;         // Selectable
 @property (nonatomic, readonly) User *user;
 @property (nonatomic, readonly) PBX *pbx;
 
@@ -45,6 +45,14 @@ extern NSString *const kJCAuthenticationManagerLineChangedNotification;
 
 + (void)requestAuthentication:(CompletionHandler)completion;
 + (void)requestAuthenticationForUser:(User *)user completion:(CompletionHandler)completion;
+
+@end
+
+#define AUTH_MANAGER_CLIENT_ERROR       2000
+#define AUTH_MANAGER_PBX_INFO_ERROR     2002
+#define AUTH_MANAGER_AUTH_TOKEN_ERROR   2003
+
+@interface JCAuthenticationManagerError : JCError
 
 @end
 
