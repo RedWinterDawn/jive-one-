@@ -3,6 +3,7 @@ inhibit_all_warnings!
 source 'https://github.com/CocoaPods/Specs.git'
 pod 'AFNetworking', '~> 2.5.0'
 pod 'AFNetworkActivityLogger', '~> 2.0.3'
+pod 'uservoice-iphone-sdk', '~> 3.0'
 #pod 'MBProgressHUD', '~> 0.8'
 pod 'MagicalRecord', '~> 2.2'
 pod 'SocketRocket', :git => 'https://github.com/jive/SocketRocket.git', :commit => '1730fbc32ba0a0ed2c479901c36d3ffcc05f7374'
