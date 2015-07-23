@@ -199,8 +199,6 @@
 		5D8198ED1AC1D7520057FDDA /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8198EC1AC1D7520057FDDA /* Debug.storyboard */; };
 		5D8198F01AC1F0FC0057FDDA /* JCDebugDIDsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8198EF1AC1F0FC0057FDDA /* JCDebugDIDsTableViewController.m */; };
 		5D8198F31AC1F2160057FDDA /* JCDebugDIDTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8198F21AC1F2160057FDDA /* JCDebugDIDTableViewController.m */; };
-		5D85A9811ACF933300991A97 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D85A97D1ACF933200991A97 /* Bolts.framework */; };
-		5D85A9831ACF933300991A97 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D85A97F1ACF933200991A97 /* Parse.framework */; };
 		5D85A9841ACF933300991A97 /* PortSIPLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D85A9801ACF933200991A97 /* PortSIPLib.framework */; };
 		5D87FCCC1AA9656F00AE1CA5 /* JCBadges.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FCCB1AA9656F00AE1CA5 /* JCBadges.m */; };
 		5D87FCD31AB2822700AE1CA5 /* JCConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D87FCD21AB2822700AE1CA5 /* JCConversationViewController.xib */; };
@@ -756,8 +754,6 @@
 		5D8198F21AC1F2160057FDDA /* JCDebugDIDTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDebugDIDTableViewController.m; sourceTree = "<group>"; };
 		5D85A9701ACF847A00991A97 /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStyleKit.h; sourceTree = "<group>"; };
 		5D85A9711ACF847A00991A97 /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStyleKit.m; sourceTree = "<group>"; };
-		5D85A97D1ACF933200991A97 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Frameworks/Bolts.framework; sourceTree = "<group>"; };
-		5D85A97F1ACF933200991A97 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Frameworks/Parse.framework; sourceTree = "<group>"; };
 		5D85A9801ACF933200991A97 /* PortSIPLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PortSIPLib.framework; path = Frameworks/PortSIPLib.framework; sourceTree = "<group>"; };
 		5D87FCCA1AA9656F00AE1CA5 /* JCBadges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBadges.h; sourceTree = "<group>"; };
 		5D87FCCB1AA9656F00AE1CA5 /* JCBadges.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBadges.m; sourceTree = "<group>"; };
@@ -1082,7 +1078,6 @@
 				B79F55551AEF1DF900E4768F /* SystemConfiguration.framework in Frameworks */,
 				F8EFE1581A96B55600B429FD /* StoreKit.framework in Frameworks */,
 				DDCE1E9118F35647003A6615 /* QuartzCore.framework in Frameworks */,
-				5D85A9831ACF933300991A97 /* Parse.framework in Frameworks */,
 				279A4E0A19DA86FC00E8AB7B /* CoreVideo.framework in Frameworks */,
 				B7DFAA371AC0CDA50033ACFB /* CoreMedia.framework in Frameworks */,
 				B79F55561AEF1DF900E4768F /* CoreGraphics.framework in Frameworks */,
@@ -1101,7 +1096,6 @@
 				DDCE1E8D18F35637003A6615 /* libz.dylib in Frameworks */,
 				DDCE1E8718F3561D003A6615 /* AudioToolbox.framework in Frameworks */,
 				F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */,
-				5D85A9811ACF933300991A97 /* Bolts.framework in Frameworks */,
 				F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */,
 				275F4A5618AD0FBC00D2F069 /* UIKit.framework in Frameworks */,
 				42A1D3B90E844E0DA4AB6197 /* libPods.a in Frameworks */,
@@ -1316,8 +1310,6 @@
 			children = (
 				B79BA1DD1B4F0AE800D3E9C3 /* libPods-GoogleCloudMessaging.a */,
 				5D5782D01B334DDB005F1B86 /* libPods-XMLDictionary.a */,
-				5D85A97D1ACF933200991A97 /* Bolts.framework */,
-				5D85A97F1ACF933200991A97 /* Parse.framework */,
 				5D85A9801ACF933200991A97 /* PortSIPLib.framework */,
 				F8EFE1571A96B55600B429FD /* StoreKit.framework */,
 				F8EFE1551A96B54500B429FD /* Accounts.framework */,
