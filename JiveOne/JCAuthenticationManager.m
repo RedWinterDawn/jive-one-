@@ -10,23 +10,15 @@
 #import "JCAuthenticationKeychain.h"
 #import <objc/runtime.h>
 
-#import "Common.h"
-
-#import "User.h"
 #import "Line.h"
 #import "DID.h"
-#import "PBX.h"
-
-#import "JCV5ApiClient.h"
-#import "JCAuthenticationManagerError.h"
 #import "User+Custom.h"
 #import "PBX+V5Client.h"
 #import "JCAuthClient.h"
-
-#import "JCAlertView.h"
-
 #import "UIDevice+Additions.h"
+
 #import "JCProgressHUD.h"
+#import "JCAlertView.h"
 
 // Notifications
 NSString *const kJCAuthenticationManagerUserRequiresAuthenticationNotification  = @"userRequiresAuthentication";
@@ -83,7 +75,7 @@ static NSMutableArray *authenticationCompletionRequests;
 
 + (void)requestAuthentication:(CompletionHandler)completion
 {
-    User *user = [self sharedInstance].user;
+    User *user = [JCAuthenticationManager sharedManager].user;
     [self requestAuthenticationForUser:user completion:completion];
 }
 
@@ -99,7 +91,7 @@ static NSMutableArray *authenticationCompletionRequests;
         return;
     }
     
-    JCAuthenticationManager *manager = [[self class] sharedInstance];
+    JCAuthenticationManager *manager = [self sharedManager];
     CompletionHandler completionBlock = ^(BOOL success, NSError *error) {
         if (success) {
             [UIApplication hideStatus];
@@ -197,7 +189,7 @@ static NSMutableArray *authenticationCompletionRequests;
     }
 }
 
-- (void)loginWithUsername:(NSString *)username password:(NSString *)password completed:(CompletionBlock)completion
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password completed:(CompletionHandler)completion
 {
     // Destroy current authToken;
     [_authenticationKeychain logout];
@@ -353,7 +345,7 @@ static NSMutableArray *authenticationCompletionRequests;
 
 #pragma mark - Private -
 
--(void)receivedAccessTokenData:(NSDictionary *)tokenData username:(NSString *)username completion:(CompletionBlock)completion
+-(void)receivedAccessTokenData:(NSDictionary *)tokenData username:(NSString *)username completion:(CompletionHandler)completion
 {
     @try {
         if (!tokenData || tokenData.count < 1) {
@@ -429,18 +421,41 @@ static NSMutableArray *authenticationCompletionRequests;
 
 @end
 
-static JCAuthenticationManager *authenticationManager = nil;
+NSString *const kJCAuthManagerErrorDomain = @"AuthenticationManagerError";
 
-@implementation JCAuthenticationManager (Singleton)
+@implementation JCAuthenticationManagerError
 
-+ (instancetype)sharedInstance
++(instancetype)errorWithCode:(NSInteger)code userInfo:(NSDictionary *)userInfo
 {
-    static JCAuthenticationManager *singleton = nil;
-    static dispatch_once_t pred;
-    dispatch_once(&pred, ^{
-        singleton = [[JCAuthenticationManager alloc] init];
-    });
-    return singleton;
+    return [self errorWithDomain:kJCAuthManagerErrorDomain code:code userInfo:userInfo];
+}
+
++(instancetype)errorWithCode:(NSInteger)code reason:(NSString *)reason underlyingError:(NSError *)error
+{
+    return [self errorWithDomain:kJCAuthManagerErrorDomain code:code reason:reason underlyingError:error];
+}
+
++(instancetype)errorWithCode:(NSInteger)code reason:(NSString *)reason
+{
+    return [self errorWithDomain:kJCAuthManagerErrorDomain code:code reason:reason];
+}
+
++(NSString *)failureReasonFromCode:(NSInteger)code
+{
+    switch (code) {
+        case AUTH_MANAGER_CLIENT_ERROR:
+            return @"We are unable to login at this time, Please Check Your Connection and try again.";
+            
+        case AUTH_MANAGER_PBX_INFO_ERROR:
+            return @"We could not reach the server at this time to sync data. Please check your connection, and try again.";
+            
+        case AUTH_MANAGER_AUTH_TOKEN_ERROR:
+            return @"There was an error logging in. Please Contact Support.";
+            
+        default:
+            return @"Unknown Error Has Occured.";
+    }
+    return nil;
 }
 
 @end
@@ -456,11 +471,10 @@ static JCAuthenticationManager *authenticationManager = nil;
     JCAuthenticationManager *authenticationManager = objc_getAssociatedObject(self, @selector(authenticationManager));
     if (!authenticationManager)
     {
-        authenticationManager = [JCAuthenticationManager sharedInstance];
+        authenticationManager = [JCAuthenticationManager sharedManager];
         objc_setAssociatedObject(self, @selector(authenticationManager), authenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return authenticationManager;
 }
 
 @end
-

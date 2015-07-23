@@ -118,7 +118,6 @@
 		5D2D745C1ACFC0BA00B98BDF /* UIDevice+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6742A01A2D19AA00E1A60D /* UIDevice+Additions.m */; };
 		5D2D745D1ACFC2F600B98BDF /* JCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF4680F1A5B9BF600E5826A /* JCClient.m */; };
 		5D2D745E1ACFC30700B98BDF /* JCError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6243771A678B6F001DF88E /* JCError.m */; };
-		5D2D745F1ACFC31E00B98BDF /* JCAuthenticationManagerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */; };
 		5D2D74601ACFC33000B98BDF /* JCAuthenticationKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D112DD91A4094340097223C /* JCAuthenticationKeychain.m */; };
 		5D2D74611ACFC34100B98BDF /* PBX.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F64D5819772CCE00F772AA /* PBX.m */; };
 		5D2D74621ACFC35600B98BDF /* DID.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E661A8D4C01004B62C0 /* DID.m */; };
@@ -229,7 +228,6 @@
 		5DA30DD51AD78EA0008856DC /* JCVoicemailNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA30DD41AD78EA0008856DC /* JCVoicemailNumber.m */; };
 		5DA30DD81AD791D3008856DC /* JCPhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA30DD71AD791D3008856DC /* JCPhoneNumber.m */; };
 		5DA566441A1D454D00286BA5 /* JCSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */; };
-		5DA566491A20543500286BA5 /* JCAuthenticationManagerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */; };
 		5DA5A1AF19DAF91400968F7D /* JCCallerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */; };
 		5DA5A1B219DAFEAD00968F7D /* JCFormattedPhoneNumberLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1B119DAFEAD00968F7D /* JCFormattedPhoneNumberLabel.m */; };
 		5DB0BFC119FFF3FE006737D7 /* JCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFC019FFF3FE006737D7 /* JCTableViewCell.m */; };
@@ -842,8 +840,6 @@
 		5DA30DD91AD81F54008856DC /* JCPhoneNumberDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCPhoneNumberDataSource.h; sourceTree = "<group>"; };
 		5DA566421A1D454D00286BA5 /* JCSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSettingsTableViewController.h; sourceTree = "<group>"; };
 		5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSettingsTableViewController.m; sourceTree = "<group>"; };
-		5DA566471A20543500286BA5 /* JCAuthenticationManagerError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthenticationManagerError.h; sourceTree = "<group>"; };
-		5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationManagerError.m; sourceTree = "<group>"; };
 		5DA5A1AD19DAF91400968F7D /* JCCallerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallerViewController.h; sourceTree = "<group>"; };
 		5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallerViewController.m; sourceTree = "<group>"; };
 		5DA5A1B019DAFEAD00968F7D /* JCFormattedPhoneNumberLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCFormattedPhoneNumberLabel.h; sourceTree = "<group>"; };
@@ -1834,8 +1830,6 @@
 				5D62436E1A65B7DF001DF88E /* JCManager.m */,
 				2751590F18AD174F00FD8D3F /* JCAuthenticationManager.h */,
 				2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */,
-				5DA566471A20543500286BA5 /* JCAuthenticationManagerError.h */,
-				5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */,
 				5DF4C9991AB8B6CB00BA4F8C /* JCSocketManager.h */,
 				5DF4C99A1AB8B6CB00BA4F8C /* JCSocketManager.m */,
 				5DC1D8821ABB0CDB00326AF3 /* JCSocketLogger.h */,
@@ -2772,7 +2766,6 @@
 				5D1598C61B58A7610045F98F /* UIViewController+MMDrawerController.m in Sources */,
 				5DC518151AD2E24B007CEA71 /* JCStyleKit.m in Sources */,
 				27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */,
-				5DA566491A20543500286BA5 /* JCAuthenticationManagerError.m in Sources */,
 				5D3970DB1B1906C1009EADD6 /* JCPlayPauseButton.m in Sources */,
 				5D490E5A1A8AEF7E004B62C0 /* JCAddressBook.m in Sources */,
 				27BE503D19DCF6A800B725ED /* JCLineSession.m in Sources */,
@@ -2832,7 +2825,6 @@
 				5D2D74561ACFBE6100B98BDF /* (null) in Sources */,
 				5D2D74691ACFC4CB00B98BDF /* Common.m in Sources */,
 				5D2D74681ACFC49C00B98BDF /* JCKeychain.m in Sources */,
-				5D2D745F1ACFC31E00B98BDF /* JCAuthenticationManagerError.m in Sources */,
 				5D2D745B1ACFC06A00B98BDF /* JCAlertView.m in Sources */,
 				5D2D74541ACFBE4D00B98BDF /* JCAuthClient.m in Sources */,
 				5D2D746A1ACFC4D300B98BDF /* TRVSMonitor.m in Sources */,
