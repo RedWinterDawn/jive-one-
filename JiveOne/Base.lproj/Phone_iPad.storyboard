@@ -1008,7 +1008,6 @@
                                         <exclude reference="Rtc-ap-tXt"/>
                                         <exclude reference="z9j-K6-Nj7"/>
                                         <exclude reference="L0g-EQ-g2L"/>
-                                        <exclude reference="FoB-xY-cWj"/>
                                         <exclude reference="3UC-4B-9vf"/>
                                         <exclude reference="Ds3-D7-73U"/>
                                         <exclude reference="MWi-81-zxA"/>
@@ -1016,6 +1015,7 @@
                                         <exclude reference="Xdd-Ys-naz"/>
                                         <exclude reference="idL-XN-XYo"/>
                                         <exclude reference="zAi-ed-TGB"/>
+                                        <exclude reference="FoB-xY-cWj"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular">
@@ -1046,9 +1046,9 @@
                                         <include reference="Khl-p8-q3q"/>
                                         <include reference="Rtc-ap-tXt"/>
                                         <include reference="L0g-EQ-g2L"/>
-                                        <include reference="FoB-xY-cWj"/>
                                         <include reference="Ds3-D7-73U"/>
                                         <include reference="idL-XN-XYo"/>
+                                        <include reference="FoB-xY-cWj"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact">
