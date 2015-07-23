@@ -51,7 +51,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     
     JCAuthenticationManager *authenticationManager = self.authenticationManager;
     
-   [config identifyUserWithEmail: authenticationManager.line.pbx.user.jiveUserId name: authenticationManager.line.number guid: authenticationManager.line.pbx.domain];
+   [config identifyUserWithEmail: authenticationManager.line.pbx.user.jiveUserId name: _userNameLabel.text guid: @"guid"];
+    NSLog(@"Email: %@, Name: %@, guid: %@", authenticationManager.line.pbx.user.jiveUserId, authenticationManager.line.username, authenticationManager.pbx.name );
     
     [UserVoice initialize:config];
     
@@ -146,8 +147,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 
 -(IBAction)leaveFeedback:(id)sender
 {
-
-//    [UserVoice presentUserVoiceForumForParentViewController:self];
     [UserVoice presentUserVoiceInterfaceForParentViewController:self];
 }
 
