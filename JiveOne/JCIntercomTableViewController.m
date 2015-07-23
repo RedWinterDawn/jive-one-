@@ -11,6 +11,7 @@
 #import "JCAuthenticationManager.h"
 #import "JCPhoneManager.h"
 #import "Line.h"
+#import "PBX.h"
 
 @implementation JCIntercomTableViewController
 
@@ -25,6 +26,9 @@
     self.presenceEnabled.on = settings.presenceEnabled;
     self.sipDisabled.on = settings.sipDisabled;
     self.doNotDisturbSW.on = settings.doNotDisturbEnabled;
+     JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    PBX *pbx = authenticationManager.pbx;
+    [self cell:self.enablePreasenceCell setHidden:!pbx.isV5];
     
 }
 

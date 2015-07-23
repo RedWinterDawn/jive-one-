@@ -19,7 +19,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *smsUserDefaultNumber;
 @property (weak, nonatomic) IBOutlet UITableViewCell *defaultDIDCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *blockedNumbersCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *enablePreasenceCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *debugCell;
 
 

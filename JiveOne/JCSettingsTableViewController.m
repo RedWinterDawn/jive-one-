@@ -197,7 +197,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     self.smsUserDefaultNumber.text  = authenticationManager.did.formattedNumber;
     
     PBX *pbx = authenticationManager.pbx;
-    [self cell:self.enablePreasenceCell setHidden:!pbx.isV5];
     [self cell:self.defaultDIDCell setHidden:!pbx.sendSMSMessages];
     [self cell:self.blockedNumbersCell setHidden:!pbx.sendSMSMessages];
     

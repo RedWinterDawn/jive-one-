@@ -6,9 +6,10 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
+#import <StaticDataTableViewController/StaticDataTableViewController.h>
 @import UIKit;
 
-@interface JCIntercomTableViewController : UITableViewController
+@interface JCIntercomTableViewController : StaticDataTableViewController
 
 @property (weak, nonatomic) IBOutlet UISwitch *intercomSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *intercomeMicrophoneMuteSwitch;
@@ -18,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *wifiOnly;
 @property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
 @property (weak, nonatomic) IBOutlet UISwitch *sipDisabled;
-
+@property (weak, nonatomic) IBOutlet UITableViewCell *enablePreasenceCell;
 
 
 
