@@ -95,7 +95,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
 - (IBAction)refreshTable:(id)sender {
     if ([sender isKindOfClass:[UIRefreshControl class]]) {
-        PBX *pbx = [JCAuthenticationManager sharedInstance].pbx;
+        PBX *pbx = self.authenticationManager.pbx;
         [SMSMessage downloadMessagesDigestForDIDs:pbx.dids completion:^(BOOL success, NSError *error) {
             [((UIRefreshControl *)sender) endRefreshing];
             if (!success) {

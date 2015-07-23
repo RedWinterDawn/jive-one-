@@ -83,7 +83,7 @@ static NSMutableArray *authenticationCompletionRequests;
 
 + (void)requestAuthentication:(CompletionHandler)completion
 {
-    User *user = [self sharedInstance].user;
+    User *user = [JCAuthenticationManager sharedManager].user;
     [self requestAuthenticationForUser:user completion:completion];
 }
 
@@ -99,7 +99,7 @@ static NSMutableArray *authenticationCompletionRequests;
         return;
     }
     
-    JCAuthenticationManager *manager = [[self class] sharedInstance];
+    JCAuthenticationManager *manager = [self sharedManager];
     CompletionHandler completionBlock = ^(BOOL success, NSError *error) {
         if (success) {
             [UIApplication hideStatus];
@@ -429,22 +429,6 @@ static NSMutableArray *authenticationCompletionRequests;
 
 @end
 
-static JCAuthenticationManager *authenticationManager = nil;
-
-@implementation JCAuthenticationManager (Singleton)
-
-+ (instancetype)sharedInstance
-{
-    static JCAuthenticationManager *singleton = nil;
-    static dispatch_once_t pred;
-    dispatch_once(&pred, ^{
-        singleton = [[JCAuthenticationManager alloc] init];
-    });
-    return singleton;
-}
-
-@end
-
 @implementation UIViewController (AuthenticationManager)
 
 - (void)setAuthenticationManager:(JCAuthenticationManager *)authenticationManager {
@@ -456,7 +440,7 @@ static JCAuthenticationManager *authenticationManager = nil;
     JCAuthenticationManager *authenticationManager = objc_getAssociatedObject(self, @selector(authenticationManager));
     if (!authenticationManager)
     {
-        authenticationManager = [JCAuthenticationManager sharedInstance];
+        authenticationManager = [JCAuthenticationManager sharedManager];
         objc_setAssociatedObject(self, @selector(authenticationManager), authenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return authenticationManager;

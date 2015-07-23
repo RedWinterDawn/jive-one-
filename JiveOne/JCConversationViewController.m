@@ -225,7 +225,7 @@
 
 - (NSString *)senderId
 {
-    return [JCAuthenticationManager sharedInstance].jiveUserId;
+    return self.authenticationManager.jiveUserId;
 }
 
 - (NSString *)senderNumber
@@ -235,12 +235,12 @@
 
 - (NSString *)senderDisplayName
 {
-    return [JCAuthenticationManager sharedInstance].line.name;
+    return self.authenticationManager.line.name;
 }
 
 - (DID *)did
 {
-    return [JCAuthenticationManager sharedInstance].did;
+    return self.authenticationManager.did;
 }
 
 #pragma mark - Private -
