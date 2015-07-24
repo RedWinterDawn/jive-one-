@@ -13,9 +13,6 @@
 #import "JCAppSettings.h"
 #import "JCPhoneAudioManager.h"
 
-#import "JCSysVolCell.h"
-#import "JCRingToneCell.h"
-
 @interface JCDialToneTableViewController (){
     NSArray *_dialTones;
     
@@ -28,6 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     if (_audioManager) {
         [_audioManager stop];
     }
@@ -57,17 +55,24 @@
     [self endUpdates];
     
 }
-- (IBAction)sliderValue:(id)sender {
-    self.appSettings.volumeLevel = _volumeslidder.value;
-    [_audioManager playIncomingCallToneDemo];  //Plays a snippit of the ringer so the user know how load it is going ot be
+- (IBAction)sliderValue:(id)sender
+{
+    [self toggleSettingForSender:sender
+                          action:^BOOL(JCAppSettings *settings) {
+                              settings.volumeLevel = _volumeslidder.value;
+                              return settings.volumeLevel;
+                          }
+                      completion:^(BOOL value, JCAppSettings *settings) {
+                          [_audioManager playIncomingCallToneDemo];  //Plays a snippit of the ringer so the user know how load it is going ot be
+                      }];
 }
 
 - (CGFloat)heightForCell:(UITableViewCell *)cell
 {
-    if ([cell isKindOfClass:[JCSysVolCell class]]) {
+    if ([cell.reuseIdentifier isEqualToString:@"volume"]) {
         return 80;
     }
-    else if ([cell isKindOfClass:[JCRingToneCell class]]) {
+    else if ([cell.reuseIdentifier isEqualToString:@"ringtone"]) {
         return 44;
     }
     return self.tableView.rowHeight;

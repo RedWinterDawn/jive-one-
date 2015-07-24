@@ -30,7 +30,7 @@
 
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedback :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@ <br> Domain : %@  <br> Carrier : %@ <br> Connection Type : %@ <br> ";
 
-@interface JCSettingsTableViewController ()
+@interface JCSettingsTableViewController () <JCDIDSelectorViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *appLabel;
@@ -39,8 +39,13 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 @property (weak, nonatomic) IBOutlet UILabel *uuid;
 @property (weak, nonatomic) IBOutlet UILabel *pbx;
 
-@property (weak, nonatomic) IBOutlet UITableViewCell *contactsCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *messagingCell;
+@property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
+@property (weak, nonatomic) IBOutlet UITableViewCell *presenceCell;
+
+@property (weak, nonatomic) IBOutlet UILabel *smsUserDefaultNumber;
+@property (weak, nonatomic) IBOutlet UITableViewCell *defaultDIDCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *blockedNumbersCell;
+
 @property (weak, nonatomic) IBOutlet UITableViewCell *debugCell;
 
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
@@ -101,6 +106,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     
     if ([controller isKindOfClass:[JCTermsAndConditonsViewController class]]) {
         controller.navigationItem.leftBarButtonItem = nil;
+    } else if ([controller isKindOfClass:[JCDIDSelectorViewController class]]) {
+        ((JCDIDSelectorViewController *)controller).delegate = self;
     }
 }
 
@@ -110,6 +117,15 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 }
 
 #pragma mark - IBActions -
+
+-(IBAction)togglePresenceEnabled:(id)sender
+{
+    [self toggleSettingForSender:sender
+                          action:^BOOL(JCAppSettings *s) {
+                              s.presenceEnabled = !s.isPresenceEnabled;
+                              return s.isPresenceEnabled;
+                          } completion:NULL];
+}
 
 -(IBAction)leaveFeedback:(id)sender
 {
@@ -133,6 +149,11 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     [self.authenticationManager logout];
 }
 
+-(void)didUpdateDIDSelectorViewController:(JCDIDSelectorViewController *)viewController
+{
+    [self updateAccountInfo];
+}
+
 #pragma mark - Notification Handlers -
 
 -(void)updateAccountInfo
@@ -141,14 +162,19 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     UIDevice *device = [UIDevice currentDevice];
     
     self.uuid.text                  = [device userUniqueIdentiferForUser:authenticationManager.jiveUserId];
-    self.userNameLabel.text         = authenticationManager.line.pbx.user.jiveUserId;
+    self.userNameLabel.text         = authenticationManager.user.jiveUserId;
     self.pbx.text                   = authenticationManager.pbx.name;
     
     [self startUpdates];
     
+    // Presence
     PBX *pbx = authenticationManager.pbx;
-    [self setCell:self.contactsCell hidden:!pbx.isV5];
-    [self setCell:self.messagingCell hidden:!pbx.smsEnabled];
+    [self setCell:self.presenceCell hidden:!pbx.isV5];
+    self.presenceEnabled.on = self.appSettings.isPresenceEnabled;
+    
+    self.smsUserDefaultNumber.text = authenticationManager.did.formattedNumber;
+    [self setCell:self.defaultDIDCell hidden:!pbx.sendSMSMessages];
+    [self setCell:self.blockedNumbersCell hidden:!pbx.sendSMSMessages];
     
     [self endUpdates];
 }

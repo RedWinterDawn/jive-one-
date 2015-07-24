@@ -140,8 +140,6 @@
 		5D35479B19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */; };
 		5D36B7AB19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */; };
 		5D375D561B61BF680085A2B7 /* JCSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D375D551B61BF680085A2B7 /* JCSwitchTableViewCell.m */; };
-		5D375D591B61D0380085A2B7 /* JCContactsSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D375D581B61D0380085A2B7 /* JCContactsSettingsViewController.m */; };
-		5D375D5C1B61DE300085A2B7 /* JCMessagingSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D375D5B1B61DE300085A2B7 /* JCMessagingSettingsViewController.m */; };
 		5D375D5D1B61F1C20085A2B7 /* eula.html in Resources */ = {isa = PBXBuildFile; fileRef = 5D5782E41B33BF24005F1B86 /* eula.html */; };
 		5D3970D81B18FDA5009EADD6 /* JCMaskedRoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3970D71B18FDA5009EADD6 /* JCMaskedRoundedButton.m */; };
 		5D3970DB1B1906C1009EADD6 /* JCPlayPauseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3970DA1B1906C1009EADD6 /* JCPlayPauseButton.m */; };
@@ -327,8 +325,6 @@
 		B79F55561AEF1DF900E4768F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
 		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
 		B7D0040B1B600382005A14F6 /* JCCallingSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D0040A1B600382005A14F6 /* JCCallingSettingsTableViewController.m */; };
-		B7DF1C491B604CFF00A983BD /* JCSysVolCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DF1C481B604CFF00A983BD /* JCSysVolCell.m */; };
-		B7DF1C4C1B604D2800A983BD /* JCRingToneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DF1C4B1B604D2800A983BD /* JCRingToneCell.m */; };
 		B7DFAA371AC0CDA50033ACFB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */; };
 		B7EE4A471B278620003F4278 /* JCTypeSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE4A461B278620003F4278 /* JCTypeSelectorViewController.m */; };
 		B7F331E91AFC015900343DAC /* JCVoicemailDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F331E81AFC015900343DAC /* JCVoicemailDetailViewController.m */; };
@@ -615,10 +611,6 @@
 		5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCFetchedResultsTableViewController.m; sourceTree = "<group>"; };
 		5D375D541B61BF680085A2B7 /* JCSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSwitchTableViewCell.h; sourceTree = "<group>"; };
 		5D375D551B61BF680085A2B7 /* JCSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSwitchTableViewCell.m; sourceTree = "<group>"; };
-		5D375D571B61D0380085A2B7 /* JCContactsSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactsSettingsViewController.h; sourceTree = "<group>"; };
-		5D375D581B61D0380085A2B7 /* JCContactsSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsSettingsViewController.m; sourceTree = "<group>"; };
-		5D375D5A1B61DE300085A2B7 /* JCMessagingSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagingSettingsViewController.h; sourceTree = "<group>"; };
-		5D375D5B1B61DE300085A2B7 /* JCMessagingSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagingSettingsViewController.m; sourceTree = "<group>"; };
 		5D3970D61B18FDA5009EADD6 /* JCMaskedRoundedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMaskedRoundedButton.h; sourceTree = "<group>"; };
 		5D3970D71B18FDA5009EADD6 /* JCMaskedRoundedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMaskedRoundedButton.m; sourceTree = "<group>"; };
 		5D3970D91B1906C1009EADD6 /* JCPlayPauseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPlayPauseButton.h; sourceTree = "<group>"; };
@@ -999,10 +991,6 @@
 		B7AEDD571ABA08670063033E /* JCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionSheet.m; sourceTree = "<group>"; };
 		B7D004091B600382005A14F6 /* JCCallingSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallingSettingsTableViewController.h; sourceTree = "<group>"; };
 		B7D0040A1B600382005A14F6 /* JCCallingSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallingSettingsTableViewController.m; sourceTree = "<group>"; };
-		B7DF1C471B604CFF00A983BD /* JCSysVolCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSysVolCell.h; sourceTree = "<group>"; };
-		B7DF1C481B604CFF00A983BD /* JCSysVolCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSysVolCell.m; sourceTree = "<group>"; };
-		B7DF1C4A1B604D2800A983BD /* JCRingToneCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRingToneCell.h; sourceTree = "<group>"; };
-		B7DF1C4B1B604D2800A983BD /* JCRingToneCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRingToneCell.m; sourceTree = "<group>"; };
 		B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		B7EE4A451B278620003F4278 /* JCTypeSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTypeSelectorViewController.h; sourceTree = "<group>"; };
 		B7EE4A461B278620003F4278 /* JCTypeSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTypeSelectorViewController.m; sourceTree = "<group>"; };
@@ -1806,10 +1794,6 @@
 				27D2C1F6196F030C005285FF /* JCLineSelectorTableViewController.m */,
 				5D97A7FD1A828B4700A4434D /* JCPhoneSettingsTableViewController.h */,
 				5D97A7FE1A828B4700A4434D /* JCPhoneSettingsTableViewController.m */,
-				5D375D571B61D0380085A2B7 /* JCContactsSettingsViewController.h */,
-				5D375D581B61D0380085A2B7 /* JCContactsSettingsViewController.m */,
-				5D375D5A1B61DE300085A2B7 /* JCMessagingSettingsViewController.h */,
-				5D375D5B1B61DE300085A2B7 /* JCMessagingSettingsViewController.m */,
 				B7FCA5A81AD2E74E0034C5EC /* JCDIDSelectorViewController.h */,
 				B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */,
 				B744DE301AF920F500A72682 /* JCBlockedNumbersViewController.h */,
@@ -1823,10 +1807,6 @@
 		5D375D531B61A6A50085A2B7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B7DF1C4A1B604D2800A983BD /* JCRingToneCell.h */,
-				B7DF1C4B1B604D2800A983BD /* JCRingToneCell.m */,
-				B7DF1C471B604CFF00A983BD /* JCSysVolCell.h */,
-				B7DF1C481B604CFF00A983BD /* JCSysVolCell.m */,
 				5D375D541B61BF680085A2B7 /* JCSwitchTableViewCell.h */,
 				5D375D551B61BF680085A2B7 /* JCSwitchTableViewCell.m */,
 			);
@@ -2637,7 +2617,6 @@
 				5DB81B5B1AEFFF5A00D707DF /* JCSMSConversationGroup.m in Sources */,
 				5DA30DD51AD78EA0008856DC /* JCVoicemailNumber.m in Sources */,
 				5DFFF3DA1AF90BD60091F479 /* BlockedNumber+V5Client.m in Sources */,
-				5D375D591B61D0380085A2B7 /* JCContactsSettingsViewController.m in Sources */,
 				B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */,
 				F8C9A7DA19E884D30049A715 /* IncomingCall.m in Sources */,
 				5D11566F1A6DB486006217D6 /* JCConferenceCallCardViewCell.m in Sources */,
@@ -2683,7 +2662,6 @@
 				5DB0BFD01A013982006737D7 /* JCRecentEventCell.m in Sources */,
 				5DB7AFB31B3B18F800451A0B /* ContactGroupAssociation.m in Sources */,
 				5D55236F1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m in Sources */,
-				B7DF1C4C1B604D2800A983BD /* JCRingToneCell.m in Sources */,
 				5D97A7FF1A828B4700A4434D /* JCPhoneSettingsTableViewController.m in Sources */,
 				27EB18BF19DE045900C1503B /* JCV5ApiClient.m in Sources */,
 				5DFFF3E31AF98E970091F479 /* JCConversationDetailsViewController.m in Sources */,
@@ -2752,7 +2730,6 @@
 				5D9A5E221A24E30A00E8274C /* JCPhoneAudioManager.m in Sources */,
 				9145E31F191D842500840D66 /* JCVersion.m in Sources */,
 				27EB18C419DF194E00C1503B /* LineConfiguration.m in Sources */,
-				5D375D5C1B61DE300085A2B7 /* JCMessagingSettingsViewController.m in Sources */,
 				277A1F8018F88987009A41F7 /* JCLoginViewController.m in Sources */,
 				5DBCB93919FE9300001C7157 /* JCConferenceCallCard.m in Sources */,
 				5D490E6A1A8D4DB4004B62C0 /* PhoneNumber.m in Sources */,
@@ -2790,7 +2767,6 @@
 				5DDDA5451A4A856800E31AA3 /* JCPresenceManager.m in Sources */,
 				5D490E571A8AD0A1004B62C0 /* JCUnknownNumber.m in Sources */,
 				DD3BD9F418DCB1740080318E /* Voicemail+V5Client.m in Sources */,
-				B7DF1C491B604CFF00A983BD /* JCSysVolCell.m in Sources */,
 				5D1598C61B58A7610045F98F /* UIViewController+MMDrawerController.m in Sources */,
 				5DC518151AD2E24B007CEA71 /* JCStyleKit.m in Sources */,
 				27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */,
