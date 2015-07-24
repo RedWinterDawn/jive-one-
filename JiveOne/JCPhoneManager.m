@@ -168,7 +168,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         return;
         
     // Check our settings to see if we want sip to register.        
-    } else if (self.appSettings.sipDisabled){
+    } else if (!self.appSettings.isPhoneEnabled){
         [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_SIP_DISABLED]];
         [self disconnect];
         return;
@@ -307,12 +307,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     };
     
     JCAppSettings *appSettings = self.appSettings;
-    if (appSettings.isSipDisabled) {
+    if (!appSettings.isPhoneEnabled) {
         [JCAlertView alertWithTitle:NSLocalizedString(@"Calling Disabled", @"")
                             message:NSLocalizedString(@"Phone is currently disabled in settings, would you like to enable it?", @"")
                           dismissed:^(NSInteger buttonIndex) {
                               if (buttonIndex == 1){
-                                  appSettings.sipDisabled = NO;
+                                  appSettings.phoneEnabled = YES;
                                   [self connectToLine:line completion:connectCompletion];
                               } else{
                                   connectCompletion(NO, nil);

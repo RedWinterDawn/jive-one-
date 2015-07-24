@@ -11,5 +11,6 @@
 @interface JCContactsSettingsViewController : JCStaticTableViewController
 
 @property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
+@property (weak, nonatomic) IBOutlet UITableViewCell *presenceCell;
 
 @end

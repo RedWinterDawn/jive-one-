@@ -59,8 +59,8 @@
     [self.vc.view layoutIfNeeded];
     
     // Then
-    NSString *string = self.vc.smsUserDefaultNumber.text;
-    XCTAssertTrue([string isEqualToString:expectedResponse], @"DId not get expected phone number %@ %@",string, expectedResponse);
+    //NSString *string = self.vc.smsUserDefaultNumber.text;
+    //XCTAssertTrue([string isEqualToString:expectedResponse], @"DId not get expected phone number %@ %@",string, expectedResponse);
 }
 
 //- (void)test_smsDefaultLineDisplay_not_visible

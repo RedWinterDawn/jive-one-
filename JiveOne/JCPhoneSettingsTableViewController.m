@@ -13,12 +13,30 @@
 #import "Line.h"
 #import "PBX.h"
 
+@interface JCPhoneSettingsTableViewController ()
+
+@property (weak, nonatomic) IBOutlet UISwitch *intercomSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *microphoneMuteSwitch;
+
+@property (weak, nonatomic) IBOutlet UISwitch *doNotDisturbSW;
+@property (weak, nonatomic) IBOutlet UISwitch *wifiOnly;
+
+@property (weak, nonatomic) IBOutlet UISwitch *sipDisabled;
+
+@property (weak, nonatomic) IBOutlet UITableViewCell *microphoneMuteCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *extensionCell;
+
+@property (weak, nonatomic) IBOutlet UILabel *microphoneMuteLabel;
+
+@property (strong, nonatomic) IBOutletCollection(UITableViewCell) NSArray *enabledPhoneSettings;
+
+@end
+
 @implementation JCPhoneSettingsTableViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self updatePhoneInfo];
 }
 
@@ -36,19 +54,19 @@
 
 #pragma mark - IBActions -
 
-- (IBAction)toggleDisableSip:(id)sender
+- (IBAction)toggleEnablePhone:(id)sender
 {
     [self toggleSettingForSender:sender
                           action:^BOOL(JCAppSettings *s) {
-                              s.sipDisabled = !s.sipDisabled;
-                              return s.isSipDisabled;
+                              s.phoneEnabled = !s.isPhoneEnabled;
+                              return s.isPhoneEnabled;
                           }
                       completion:^(BOOL value, JCAppSettings *settings) {
                           [self updatePhoneInfo];
                           if (value){
-                              [self.phoneManager disconnect];
-                          } else{
                               [self.phoneManager connectToLine:self.authenticationManager.line];
+                          } else{
+                              [self.phoneManager disconnect];
                           }
                       }];
 }
@@ -113,15 +131,14 @@
     JCAppSettings *settings = self.appSettings;
     self.intercomSwitch.on  = settings.isIntercomEnabled;
     self.wifiOnly.on        = settings.wifiOnly;
-    self.sipDisabled.on     = settings.sipDisabled;
+    self.sipDisabled.on     = settings.phoneEnabled;
     self.doNotDisturbSW.on  = settings.doNotDisturbEnabled;
     self.microphoneMuteSwitch.on = settings.isIntercomMicrophoneMuteEnabled;
     
     [self startUpdates];
     
-    [self setCells:self.enabledPhoneSettings enabled:!settings.isSipDisabled];
+    [self setCells:self.enabledPhoneSettings enabled:settings.isPhoneEnabled];
     [self setCell:self.microphoneMuteCell enabled:settings.isIntercomEnabled];
-    [self setCell:self.enablePreasenceCell hidden:!line.pbx.isV5];
     
     [self endUpdates];
 }

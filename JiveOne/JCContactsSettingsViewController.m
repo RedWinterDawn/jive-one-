@@ -8,6 +8,7 @@
 
 #import "JCContactsSettingsViewController.h"
 #import "JCAppSettings.h"
+#import "PBX.h"
 
 @interface JCContactsSettingsViewController ()
 
@@ -19,6 +20,8 @@
 {
     [super viewDidLoad];
     
+    PBX *pbx = self.authenticationManager.pbx;
+    [self setCell:self.presenceCell hidden:!pbx.isV5];
     self.presenceEnabled.on = self.appSettings.presenceEnabled;
 }
 

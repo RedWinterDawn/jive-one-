@@ -18,7 +18,7 @@ NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
 NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
 NSString *const kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute = @"applicationSwitcherLastSelected";
 NSString *const kJCAppSettingsVoicemailOnSpeakerAttribute = @"voicemailOnSpeaker";
-NSString *const kJCAppSettingsSipDisabledAttribute = @"sipDisabled";
+NSString *const kJCAppSettingsPhoneEnabledAttribute = @"phoneEnabled";
 NSString *const kJCAppSettingsVolumeLevelAttribute = @"volumeLevel";
 NSString *const kJCRingToneSelectedAttribute = @"ringtone";
 NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
@@ -79,9 +79,9 @@ NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
     [self setSettingBoolValue:voicemailOnSpeaker forKey:kJCAppSettingsVoicemailOnSpeakerAttribute];
 }
 
--(void)setSipDisabled:(BOOL)sipDisabled
+-(void)setPhoneEnabled:(BOOL)sipDisabled
 {
-    [self setSettingBoolValue:sipDisabled forKey:kJCAppSettingsSipDisabledAttribute];
+    [self setSettingBoolValue:sipDisabled forKey:kJCAppSettingsPhoneEnabledAttribute];
 }
 
 -(void)setDoNotDisturbEnabled:(BOOL)doNotDisturbEnabled
@@ -135,9 +135,9 @@ NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
     return [self.userDefaults boolForKey:kJCAppSettingsVoicemailOnSpeakerAttribute];
 }
 
--(BOOL)isSipDisabled
+-(BOOL)isPhoneEnabled
 {
-    return [self.userDefaults boolForKey:kJCAppSettingsSipDisabledAttribute];
+    return [self.userDefaults boolForKey:kJCAppSettingsPhoneEnabledAttribute];
 }
 
 -(BOOL)isDoNotDisturbEnabled
