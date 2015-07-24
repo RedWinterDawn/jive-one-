@@ -988,7 +988,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 -(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteInputType:(JCPhoneAudioManagerInputType)inputType
 {
-    
+    NSLog(@"%lul",(unsigned long)inputType);
 }
 
 -(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteOutputType:(JCPhoneAudioManagerOutputType)outputType

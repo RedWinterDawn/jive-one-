@@ -324,6 +324,7 @@
 		B79F55551AEF1DF900E4768F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
 		B79F55561AEF1DF900E4768F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
 		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
+		B7B5D9C11B62F427008AD588 /* calling.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7B5D9C01B62F427008AD588 /* calling.mp3 */; };
 		B7D0040B1B600382005A14F6 /* JCCallingSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D0040A1B600382005A14F6 /* JCCallingSettingsTableViewController.m */; };
 		B7DFAA371AC0CDA50033ACFB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */; };
 		B7EE4A471B278620003F4278 /* JCTypeSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE4A461B278620003F4278 /* JCTypeSelectorViewController.m */; };
@@ -989,6 +990,7 @@
 		B7AD76D71B30C5A200E6BEE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Chat.strings; sourceTree = "<group>"; };
 		B7AEDD561ABA08670063033E /* JCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionSheet.h; sourceTree = "<group>"; };
 		B7AEDD571ABA08670063033E /* JCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionSheet.m; sourceTree = "<group>"; };
+		B7B5D9C01B62F427008AD588 /* calling.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = calling.mp3; sourceTree = "<group>"; };
 		B7D004091B600382005A14F6 /* JCCallingSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallingSettingsTableViewController.h; sourceTree = "<group>"; };
 		B7D0040A1B600382005A14F6 /* JCCallingSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallingSettingsTableViewController.m; sourceTree = "<group>"; };
 		B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -1373,6 +1375,7 @@
 				B7F561541B45A4CF0073D1C2 /* iReport.mp3 */,
 				B734D8111B41CFA3004403E2 /* Sifi.mp3 */,
 				B734D8151B41D0E0004403E2 /* Call For All.mp3 */,
+				B7B5D9C01B62F427008AD588 /* calling.mp3 */,
 				B734D8071B41CE2D004403E2 /* Nokia Tune.mp3 */,
 				B734D8051B41CE1A004403E2 /* Piano Riff.mp3 */,
 				B734D8131B41D07C004403E2 /* Ambiant.mp3 */,
@@ -2424,6 +2427,7 @@
 				5D375D5D1B61F1C20085A2B7 /* eula.html in Resources */,
 				5DB7AFB71B3CAD8F00451A0B /* JCNonVisualVoicemailViewController.xib in Resources */,
 				5DB7AFB81B3CAD8F00451A0B /* JCVoicemailDetailViewController.xib in Resources */,
+				B7B5D9C11B62F427008AD588 /* calling.mp3 in Resources */,
 				5DB7AF9C1B39D40600451A0B /* Login.storyboard in Resources */,
 				5DB7AF9D1B39D40600451A0B /* Settings_iPad.storyboard in Resources */,
 				5DB7AFA61B39E45E00451A0B /* JCContactPhoneNumberTableViewCell.xib in Resources */,

@@ -68,7 +68,7 @@
 - (void) configureAudioSession {
     __autoreleasing NSError *error;
     
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionDuckOthers error:&error];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions: AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionDuckOthers error:&error];
     if (error){
         NSLog(@"Error setting Category! %@", [error description]);
     }
@@ -77,9 +77,16 @@
 #pragma mark - Public Methods
 
 -(void)playRingback{
-    
+    __autoreleasing NSError *error;
+    if ([[AVAudioSession sharedInstance].currentRoute.description isEqualToString:AVAudioSessionPortBuiltInSpeaker.description]){
+        [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error: &error];
+        if (error){
+            NSLog(@"Error doing a overide of not overriding stuffs %@", error.description);
+        }
+        
+    }
     AVAudioPlayer *player = self.earlyMediaRingBackPlayer;
-    player.volume = 1;
+    player.volume = _ringerVolume;
     
     [player prepareToPlay];
     [player play];
@@ -87,8 +94,13 @@
 
 - (void)playIncomingCallTone
 {
+    __autoreleasing NSError *error;
+    [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+    if (error){
+        NSLog(@"Error doing a overide of not overriding stuffs %@", error.description);
+    }
     AVAudioPlayer *player = self.incomingCallAudioPlayer;
-    player.volume = 1;
+    player.volume = _ringerVolume;
     
     [player prepareToPlay];
     [player play];
@@ -103,7 +115,7 @@
    
     AVAudioPlayer *player = self.incomingCallAudioPlayer;
     player.numberOfLoops = 0;
-    player.volume = 1;
+    player.volume = _ringerVolume;
     
     if (_outputType != JCPhoneAudioManagerOutputSpeaker) {
          [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
@@ -163,7 +175,7 @@
         return _earlyMediaRingBackPlayer;
     }
     
-    NSString* ringTone = @"Ring";
+    NSString* ringTone = @"calling";
     NSString *path = [[NSBundle mainBundle] pathForResource:ringTone ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:path];
     

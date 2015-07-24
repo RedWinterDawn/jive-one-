@@ -41,7 +41,13 @@
     [self layoutDialTone:_dialTones animated:NO];
     
 }
-
+-(void)viewWillDisappear:(BOOL)animated{
+    if (_audioManager)
+    {
+        
+        [_audioManager stop];
+    }
+}
 -(void)layoutDialTone:(NSArray *)dialtone animated:(BOOL)animated
 {
     [self startUpdates];
