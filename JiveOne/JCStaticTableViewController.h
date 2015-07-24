@@ -35,4 +35,7 @@
 
 - (CGFloat)heightForCell:(UITableViewCell *)cell;
 
+- (void)setCell:(UITableViewCell *)cell enabled:(BOOL)enabled;
+- (void)setCells:(NSArray *)cells enabled:(BOOL)enabled;
+
 @end

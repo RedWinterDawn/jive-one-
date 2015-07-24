@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sO6-BN-7GY">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -416,7 +415,7 @@
         <!--Calling-->
         <scene sceneID="m7R-Qi-i2Q">
             <objects>
-                <tableViewController id="m2b-xl-KHM" customClass="JCIntercomTableViewController" sceneMemberID="viewController">
+                <tableViewController id="m2b-xl-KHM" customClass="JCPhoneSettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="u5T-xL-V1A">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -637,10 +636,10 @@
                     <connections>
                         <outlet property="doNotDisturbSW" destination="vwB-dQ-bup" id="ZN1-9d-JkK"/>
                         <outlet property="enablePreasenceCell" destination="nX9-a0-4zR" id="7ps-yd-otH"/>
-                        <outlet property="intercomMicrophoneMuteCell" destination="C8Y-wi-cYb" id="eJa-7a-IBd"/>
-                        <outlet property="intercomMicrophoneMuteLabel" destination="gfY-ky-BlC" id="y8t-KT-cQU"/>
                         <outlet property="intercomSwitch" destination="JAI-3U-DBS" id="cqJ-Zh-g2S"/>
-                        <outlet property="intercomeMicrophoneMuteSwitch" destination="1cj-zT-ra3" id="ebi-lw-tlM"/>
+                        <outlet property="microphoneMuteCell" destination="C8Y-wi-cYb" id="blS-j1-ZZs"/>
+                        <outlet property="microphoneMuteLabel" destination="gfY-ky-BlC" id="hXf-SQ-jsI"/>
+                        <outlet property="microphoneMuteSwitch" destination="1cj-zT-ra3" id="Vb2-XH-3Mm"/>
                         <outlet property="presenceEnabled" destination="An1-yL-qUc" id="2yc-X4-LD6"/>
                         <outlet property="sipDisabled" destination="3Ft-xb-dhn" id="mIy-OI-AQV"/>
                         <outlet property="wifiOnly" destination="UcG-Ub-Stm" id="52I-Z9-Eut"/>

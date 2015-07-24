@@ -21,13 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *blockedNumbersCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *debugCell;
 
-
 -(IBAction)leaveFeedback:(id)sender;
 -(IBAction)logout:(id)sender;
-
-
-
-
-
 
 @end

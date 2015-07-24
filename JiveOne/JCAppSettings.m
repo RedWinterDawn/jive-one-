@@ -161,7 +161,6 @@ NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
 }
 
 
-
 #pragma mark - Private -
 
 -(void)setSettingBoolValue:(BOOL)value forKey:(NSString *)key
@@ -191,7 +190,6 @@ NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
 }
 
 @end
-
 
 @implementation JCAppSettings (Singleton)
 
@@ -228,5 +226,24 @@ NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
     }
     return appSettings;
 }
+
+- (void)toggleSettingForSender:(id)sender action:(BOOL(^)(JCAppSettings *settings))action completion:(void(^)(BOOL value, JCAppSettings *settings))completion
+{
+    JCAppSettings *setting = self.appSettings;
+    if ([sender isKindOfClass:[UISwitch class]]){
+        UISwitch *switchBtn = (UISwitch *)sender;
+        BOOL result = action(setting);
+        switchBtn.on = result;
+        if (completion) {
+            completion(result, setting);
+        }
+    } else {
+        BOOL result = action(setting);
+        if (completion) {
+            completion(result, setting);
+        }
+    }
+}
+
 
 @end

@@ -139,6 +139,8 @@
 		5D35479819FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479719FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m */; };
 		5D35479B19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */; };
 		5D36B7AB19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */; };
+		5D375D561B61BF680085A2B7 /* JCSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D375D551B61BF680085A2B7 /* JCSwitchTableViewCell.m */; };
+		5D375D591B61D0380085A2B7 /* JCContactsSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D375D581B61D0380085A2B7 /* JCContactsSettingsViewController.m */; };
 		5D3970D81B18FDA5009EADD6 /* JCMaskedRoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3970D71B18FDA5009EADD6 /* JCMaskedRoundedButton.m */; };
 		5D3970DB1B1906C1009EADD6 /* JCPlayPauseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3970DA1B1906C1009EADD6 /* JCPlayPauseButton.m */; };
 		5D3F1ADD1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1ADC1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m */; };
@@ -220,7 +222,7 @@
 		5D8FE4321B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE4301B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib */; };
 		5D8FE4351B2B5B21004FD594 /* ContactInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4341B2B5B21004FD594 /* ContactInfo.m */; };
 		5D9382C01B0F94F800C5CEA0 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		5D97A7FF1A828B4700A4434D /* JCIntercomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */; };
+		5D97A7FF1A828B4700A4434D /* JCPhoneSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97A7FE1A828B4700A4434D /* JCPhoneSettingsTableViewController.m */; };
 		5D9A5E221A24E30A00E8274C /* JCPhoneAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */; };
 		5D9F72101AC34F8000B9D0F8 /* JCAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */; };
 		5D9F72A91AC5BDD700B9D0F8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F1F305191C18D700AEAFD7 /* CoreData.framework */; };
@@ -609,6 +611,10 @@
 		5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMenuBarButtonItem.m; sourceTree = "<group>"; };
 		5D36B7A919F8674E0024A0E7 /* JCFetchedResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCFetchedResultsTableViewController.h; sourceTree = "<group>"; };
 		5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCFetchedResultsTableViewController.m; sourceTree = "<group>"; };
+		5D375D541B61BF680085A2B7 /* JCSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSwitchTableViewCell.h; sourceTree = "<group>"; };
+		5D375D551B61BF680085A2B7 /* JCSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSwitchTableViewCell.m; sourceTree = "<group>"; };
+		5D375D571B61D0380085A2B7 /* JCContactsSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactsSettingsViewController.h; sourceTree = "<group>"; };
+		5D375D581B61D0380085A2B7 /* JCContactsSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsSettingsViewController.m; sourceTree = "<group>"; };
 		5D3970D61B18FDA5009EADD6 /* JCMaskedRoundedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMaskedRoundedButton.h; sourceTree = "<group>"; };
 		5D3970D71B18FDA5009EADD6 /* JCMaskedRoundedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMaskedRoundedButton.m; sourceTree = "<group>"; };
 		5D3970D91B1906C1009EADD6 /* JCPlayPauseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPlayPauseButton.h; sourceTree = "<group>"; };
@@ -825,8 +831,8 @@
 		5D8FE4301B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCContactOtherFieldTableViewCell.xib; sourceTree = "<group>"; };
 		5D8FE4331B2B5B21004FD594 /* ContactInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactInfo.h; sourceTree = "<group>"; };
 		5D8FE4341B2B5B21004FD594 /* ContactInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactInfo.m; sourceTree = "<group>"; };
-		5D97A7FD1A828B4700A4434D /* JCIntercomTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCIntercomTableViewController.h; sourceTree = "<group>"; };
-		5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCIntercomTableViewController.m; sourceTree = "<group>"; };
+		5D97A7FD1A828B4700A4434D /* JCPhoneSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneSettingsTableViewController.h; sourceTree = "<group>"; };
+		5D97A7FE1A828B4700A4434D /* JCPhoneSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneSettingsTableViewController.m; sourceTree = "<group>"; };
 		5D9A5E201A24E30A00E8274C /* JCPhoneAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneAudioManager.h; sourceTree = "<group>"; };
 		5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneAudioManager.m; sourceTree = "<group>"; };
 		5D9F720C1AC34F8000B9D0F8 /* JCAuthClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthClient.h; sourceTree = "<group>"; };
@@ -1431,26 +1437,11 @@
 		277F093E18FECEB800EEF0E3 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				B7D004081B600368005A14F6 /* Calling */,
 				5D5448B81B0CF02400F44D8F /* Settings.storyboard */,
 				5D8E340E1B0A84AA00FD8AE1 /* Settings_iPad.storyboard */,
+				5D375D531B61A6A50085A2B7 /* Views */,
+				5D375D521B61A6710085A2B7 /* Controllers */,
 				5D241FD51A38313F008B498A /* Debug */,
-				5DA566421A1D454D00286BA5 /* JCSettingsTableViewController.h */,
-				B7DF1C4A1B604D2800A983BD /* JCRingToneCell.h */,
-				B7DF1C4B1B604D2800A983BD /* JCRingToneCell.m */,
-				B7DF1C471B604CFF00A983BD /* JCSysVolCell.h */,
-				B7DF1C481B604CFF00A983BD /* JCSysVolCell.m */,
-				5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */,
-				27D2C1F5196F030C005285FF /* JCLineSelectorTableViewController.h */,
-				27D2C1F6196F030C005285FF /* JCLineSelectorTableViewController.m */,
-				5D97A7FD1A828B4700A4434D /* JCIntercomTableViewController.h */,
-				5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */,
-				B7FCA5A81AD2E74E0034C5EC /* JCDIDSelectorViewController.h */,
-				B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */,
-				B744DE301AF920F500A72682 /* JCBlockedNumbersViewController.h */,
-				B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */,
-				B78DBAEE1B3DE62300F312B3 /* JCDialToneTableViewController.h */,
-				B78DBAEF1B3DE62300F312B3 /* JCDialToneTableViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1798,6 +1789,42 @@
 				5D2D742C1ACFB48500B98BDF /* JCTransferViewControllerTests.m */,
 			);
 			name = PhoneManager;
+			sourceTree = "<group>";
+		};
+		5D375D521B61A6710085A2B7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5DA566421A1D454D00286BA5 /* JCSettingsTableViewController.h */,
+				5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */,
+				B7D004091B600382005A14F6 /* JCCallingSettingsTableViewController.h */,
+				B7D0040A1B600382005A14F6 /* JCCallingSettingsTableViewController.m */,
+				27D2C1F5196F030C005285FF /* JCLineSelectorTableViewController.h */,
+				27D2C1F6196F030C005285FF /* JCLineSelectorTableViewController.m */,
+				5D97A7FD1A828B4700A4434D /* JCPhoneSettingsTableViewController.h */,
+				5D97A7FE1A828B4700A4434D /* JCPhoneSettingsTableViewController.m */,
+				5D375D571B61D0380085A2B7 /* JCContactsSettingsViewController.h */,
+				5D375D581B61D0380085A2B7 /* JCContactsSettingsViewController.m */,
+				B7FCA5A81AD2E74E0034C5EC /* JCDIDSelectorViewController.h */,
+				B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */,
+				B744DE301AF920F500A72682 /* JCBlockedNumbersViewController.h */,
+				B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */,
+				B78DBAEE1B3DE62300F312B3 /* JCDialToneTableViewController.h */,
+				B78DBAEF1B3DE62300F312B3 /* JCDialToneTableViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		5D375D531B61A6A50085A2B7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B7DF1C4A1B604D2800A983BD /* JCRingToneCell.h */,
+				B7DF1C4B1B604D2800A983BD /* JCRingToneCell.m */,
+				B7DF1C471B604CFF00A983BD /* JCSysVolCell.h */,
+				B7DF1C481B604CFF00A983BD /* JCSysVolCell.m */,
+				5D375D541B61BF680085A2B7 /* JCSwitchTableViewCell.h */,
+				5D375D551B61BF680085A2B7 /* JCSwitchTableViewCell.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		5D3F1AE11AE7FEA400C59A63 /* iPad */ = {
@@ -2261,15 +2288,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		B7D004081B600368005A14F6 /* Calling */ = {
-			isa = PBXGroup;
-			children = (
-				B7D004091B600382005A14F6 /* JCCallingSettingsTableViewController.h */,
-				B7D0040A1B600382005A14F6 /* JCCallingSettingsTableViewController.m */,
-			);
-			name = Calling;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2577,6 +2595,7 @@
 				5D490E701A8E81AF004B62C0 /* JCConversationTableViewCell.m in Sources */,
 				5D8FE40E1B225A4C004FD594 /* Contact.m in Sources */,
 				5D5CC27B1B2BAFE400FB69E4 /* JCCustomEditTableViewCell.m in Sources */,
+				5D375D561B61BF680085A2B7 /* JCSwitchTableViewCell.m in Sources */,
 				5D62436F1A65B7DF001DF88E /* JCManager.m in Sources */,
 				F85DAD0919EF07D30075AAA2 /* JCCallHistoryViewController.m in Sources */,
 				F8C9A7D719E884D30049A715 /* MissedCall.m in Sources */,
@@ -2611,6 +2630,7 @@
 				5DB81B5B1AEFFF5A00D707DF /* JCSMSConversationGroup.m in Sources */,
 				5DA30DD51AD78EA0008856DC /* JCVoicemailNumber.m in Sources */,
 				5DFFF3DA1AF90BD60091F479 /* BlockedNumber+V5Client.m in Sources */,
+				5D375D591B61D0380085A2B7 /* JCContactsSettingsViewController.m in Sources */,
 				B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */,
 				F8C9A7DA19E884D30049A715 /* IncomingCall.m in Sources */,
 				5D11566F1A6DB486006217D6 /* JCConferenceCallCardViewCell.m in Sources */,
@@ -2657,7 +2677,7 @@
 				5DB7AFB31B3B18F800451A0B /* ContactGroupAssociation.m in Sources */,
 				5D55236F1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m in Sources */,
 				B7DF1C4C1B604D2800A983BD /* JCRingToneCell.m in Sources */,
-				5D97A7FF1A828B4700A4434D /* JCIntercomTableViewController.m in Sources */,
+				5D97A7FF1A828B4700A4434D /* JCPhoneSettingsTableViewController.m in Sources */,
 				27EB18BF19DE045900C1503B /* JCV5ApiClient.m in Sources */,
 				5DFFF3E31AF98E970091F479 /* JCConversationDetailsViewController.m in Sources */,
 				5D6AE3671A094A9C002BDAAF /* NSDictionary+Validations.m in Sources */,

@@ -40,4 +40,9 @@ extern NSString *const kJCAppSettingsPresenceChangedNotification;
 
 @property(nonatomic, strong) JCAppSettings *appSettings;
 
+// Utility function to abstract the process of toggling a setting from a control.
+- (void)toggleSettingForSender:(id)sender
+                        action:(BOOL(^)(JCAppSettings *settings))action
+                    completion:(void(^)(BOOL value, JCAppSettings *settings))completion;
+
 @end
