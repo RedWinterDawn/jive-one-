@@ -12,10 +12,5 @@
 @interface JCDialToneTableViewController : JCStaticTableViewController
 
 @property (weak, nonatomic) IBOutlet UIView *routeIconBackground;
-@property (weak, nonatomic) IBOutlet UISlider *volumeslidder;
-
-@property (weak, nonatomic) IBOutlet UITableViewCell *ringtoneCell;
--(IBAction)sliderValue:(id)sender;
-
 
 @end

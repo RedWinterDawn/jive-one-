@@ -22,6 +22,8 @@
 @property (strong, nonatomic) AVAudioPlayer *earlyMediaRingBackPlayer;
 
 @property (assign) SystemSoundID incomingRingerSound;
+@property int ringbackVolume;
+@property int ringerVolume;
 
 @end
 
@@ -38,6 +40,8 @@
     {
         _appSettings = settings;
         
+        _ringbackVolume = 1;  // Defined here in case we and to calibrate the ringback audio not to be as loud as ringer.
+        _ringerVolume = 1;
         [self configureAudioSession];
         
         // Register for Audio Session Notifications
@@ -75,7 +79,7 @@
 -(void)playRingback{
     
     AVAudioPlayer *player = self.earlyMediaRingBackPlayer;
-    player.volume = _appSettings.volumeLevel;
+    player.volume = 1;
     
     [player prepareToPlay];
     [player play];
@@ -84,7 +88,7 @@
 - (void)playIncomingCallTone
 {
     AVAudioPlayer *player = self.incomingCallAudioPlayer;
-    player.volume = _appSettings.volumeLevel;
+    player.volume = 1;
     
     [player prepareToPlay];
     [player play];
@@ -99,7 +103,7 @@
    
     AVAudioPlayer *player = self.incomingCallAudioPlayer;
     player.numberOfLoops = 0;
-    player.volume = _appSettings.volumeLevel;
+    player.volume = 1;
     
     if (_outputType != JCPhoneAudioManagerOutputSpeaker) {
          [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
@@ -149,7 +153,7 @@
     
     _incomingCallAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
     _incomingCallAudioPlayer.numberOfLoops = -1;
-    _incomingCallAudioPlayer.volume = _appSettings.volumeLevel;                                               // Set the audio volume to user defined amount
+    _incomingCallAudioPlayer.volume = _ringerVolume;
     return _incomingCallAudioPlayer;
 }
 
@@ -159,13 +163,13 @@
         return _earlyMediaRingBackPlayer;
     }
     
-    NSString* ringTone = _appSettings.ringtone;
+    NSString* ringTone = @"Ring";
     NSString *path = [[NSBundle mainBundle] pathForResource:ringTone ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:path];
     
     _earlyMediaRingBackPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];    // Setup audio players for Incoming call ringer
-    _earlyMediaRingBackPlayer.numberOfLoops = -1;
-    _earlyMediaRingBackPlayer.volume = _appSettings.volumeLevel;                                            // Set the audio volume of ringback sound to user defined amount
+    _earlyMediaRingBackPlayer.numberOfLoops = -1;                                                                   // Loop till answerd
+    _earlyMediaRingBackPlayer.volume = _ringbackVolume;
     return _earlyMediaRingBackPlayer;
 }
 

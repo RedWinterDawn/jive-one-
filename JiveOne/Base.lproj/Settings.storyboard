@@ -111,7 +111,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Volume" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BhH-wq-jz9">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -129,7 +129,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Phone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aAC-Fw-7Iw">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -176,9 +176,9 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="u7u-u1-3qD"/>
-                                                    <exclude reference="NMe-aK-WvO"/>
                                                     <exclude reference="930-eW-lG5"/>
+                                                    <exclude reference="NMe-aK-WvO"/>
+                                                    <exclude reference="u7u-u1-3qD"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -202,7 +202,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Default SMS number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fKo-7y-d7F">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FOD-XR-06K">
@@ -484,7 +484,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Extension" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="otU-uN-OOc">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OUp-Lg-1xw">
@@ -554,7 +554,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do Not Disturb" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yi-PZ-ySh">
                                                     <rect key="frame" x="14" y="13" width="514" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -759,7 +759,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="0Fc-rv-Sob">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection headerTitle="System Volume" footerTitle="This controlls the overall volume for your device. Can also be controlled with the volume buttons on the side of your device." id="Pfl-cP-euJ">
                                 <cells>
@@ -813,39 +813,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Ringer Volume" footerTitle="Controlls the volume of the ringer in respect to the system volume." id="vfY-Hj-oip">
-                                <cells>
-                                    <tableViewCell multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="volume" id="I34-ba-vfK">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I34-ba-vfK" id="MWc-zD-bTL">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="m7M-1h-uxq">
-                                                    <rect key="frame" x="21" y="1" width="558" height="41"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="phU-fH-k73"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="sliderValue:" destination="Me4-l7-Voh" eventType="valueChanged" id="gQx-BD-LVd"/>
-                                                    </connections>
-                                                </slider>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="m7M-1h-uxq" secondAttribute="trailing" constant="23" id="Oyd-gh-M1l"/>
-                                                <constraint firstAttribute="bottom" secondItem="m7M-1h-uxq" secondAttribute="bottom" constant="11" id="Z0T-WB-D0z"/>
-                                                <constraint firstAttribute="centerY" secondItem="m7M-1h-uxq" secondAttribute="centerY" id="fe4-Hz-fh5"/>
-                                                <constraint firstItem="m7M-1h-uxq" firstAttribute="leading" secondItem="MWc-zD-bTL" secondAttribute="leading" constant="23" id="rxO-yW-m04"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="Z0T-WB-D0z"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="Ringer" footerTitle="Select a ringtone to jam out too." id="OpQ-U0-AWU">
                                 <cells/>
                             </tableViewSection>
@@ -854,7 +821,6 @@
                     <navigationItem key="navigationItem" title="Volume" id="hwD-7y-48U"/>
                     <connections>
                         <outlet property="routeIconBackground" destination="Kgk-fR-WUM" id="iZ2-Ud-XVw"/>
-                        <outlet property="volumeslidder" destination="m7M-1h-uxq" id="MFV-Nx-LAt"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hym-b4-8jw" userLabel="First Responder" sceneMemberID="firstResponder"/>
