@@ -9,6 +9,7 @@
 #import "JCStaticTableViewController.h"
 
 #import "JCStaticTableData.h"
+#import "JCSwitchTableViewCell.h"
 
 @interface JCStaticTableViewController () <JCStaticTableDataDelegate>
 {
@@ -116,9 +117,14 @@
 
 -(void)setCell:(UITableViewCell *)cell enabled:(BOOL)enabled
 {
-    cell.userInteractionEnabled = enabled;
-    cell.textLabel.enabled = enabled;
-    cell.detailTextLabel.enabled = enabled;
+    if ([cell isKindOfClass:[JCSwitchTableViewCell class]]) {
+        ((JCSwitchTableViewCell *)cell).enabled = enabled;
+    }
+    else {
+        cell.userInteractionEnabled = enabled;
+        cell.textLabel.enabled = enabled;
+        cell.detailTextLabel.enabled = enabled;
+    }
 }
 
 #pragma mark - Delegate Handelers -

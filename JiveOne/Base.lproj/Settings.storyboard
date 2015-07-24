@@ -432,6 +432,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="switchBtn" destination="Ydy-vu-lMJ" id="TZn-AN-IsH"/>
+                                            <outlet property="textLabel" destination="8H1-k0-uQE" id="wl9-wZ-FIL"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -478,14 +479,14 @@
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do Not Disturb" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yi-PZ-ySh">
-                                                    <rect key="frame" x="14" y="13" width="586" height="18"/>
+                                                    <rect key="frame" x="14" y="13" width="514" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="8yi-PZ-ySh" secondAttribute="trailing" id="ACu-Qj-KmO"/>
+                                                <constraint firstAttribute="trailing" secondItem="8yi-PZ-ySh" secondAttribute="trailing" constant="72" id="ACu-Qj-KmO"/>
                                                 <constraint firstAttribute="trailing" secondItem="DfQ-OK-4Ho" secondAttribute="trailing" constant="15" id="AQg-to-6yV"/>
                                                 <constraint firstAttribute="centerY" secondItem="8yi-PZ-ySh" secondAttribute="centerY" id="ZsR-oF-hQZ"/>
                                                 <constraint firstItem="8yi-PZ-ySh" firstAttribute="leading" secondItem="Jgq-6X-s5W" secondAttribute="leading" constant="14" id="mV5-Gc-wKn"/>
@@ -494,6 +495,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="switchBtn" destination="DfQ-OK-4Ho" id="Xn4-w9-wXU"/>
+                                            <outlet property="textLabel" destination="8yi-PZ-ySh" id="8jy-3G-slr"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -529,12 +531,16 @@
                                                 <constraint firstItem="TuP-tT-lh1" firstAttribute="centerY" secondItem="i1Y-hl-gl6" secondAttribute="centerY" constant="0.5" id="vp7-wA-ho9"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="switchBtn" destination="i1Y-hl-gl6" id="UOA-Pb-OT0"/>
+                                            <outlet property="textLabel" destination="TuP-tT-lh1" id="J7D-1G-bo7"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection footerTitle="Mutes your phone when someone calls you through the intercom. Requires you to unmute to talk to them." id="FEf-a1-jnp">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="FqN-1q-mLt" userLabel="MicrophoneCellRow">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="FqN-1q-mLt" userLabel="MicrophoneCellRow" customClass="JCSwitchTableViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FqN-1q-mLt" id="Bue-3c-1gB" userLabel="AIView">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -563,6 +569,10 @@
                                                 <constraint firstItem="9Ua-Ez-QDH" firstAttribute="top" secondItem="Bue-3c-1gB" secondAttribute="topMargin" constant="-2" id="lMh-9D-o2N"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="switchBtn" destination="9Ua-Ez-QDH" id="ejp-d4-Dtq"/>
+                                            <outlet property="textLabel" destination="9mr-zh-J8Q" id="srP-zi-oYb"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -582,6 +592,11 @@
                         <outlet property="microphoneMuteSwitch" destination="9Ua-Ez-QDH" id="quy-4k-oPk"/>
                         <outlet property="sipDisabled" destination="35y-97-k8m" id="1kM-66-OgZ"/>
                         <outlet property="wifiOnly" destination="Ydy-vu-lMJ" id="bVm-Tg-bfn"/>
+                        <outletCollection property="enabledPhoneSettings" destination="Zje-2g-xzz" id="LkG-HW-IXi"/>
+                        <outletCollection property="enabledPhoneSettings" destination="ohj-yL-GaN" id="nHb-hA-cD3"/>
+                        <outletCollection property="enabledPhoneSettings" destination="sZx-QC-Ux6" id="BwB-lu-ivj"/>
+                        <outletCollection property="enabledPhoneSettings" destination="nQG-OV-OkG" id="nEU-WT-8Hj"/>
+                        <outletCollection property="enabledPhoneSettings" destination="FqN-1q-mLt" id="1Vd-sZ-ELM"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJx-8G-2sV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -979,6 +994,13 @@
                                                 <constraint firstItem="GjL-kF-0Yr" firstAttribute="leading" secondItem="9OZ-PY-Fwa" secondAttribute="leading" constant="14" id="s4Z-Ev-cat"/>
                                                 <constraint firstItem="GjL-kF-0Yr" firstAttribute="centerY" secondItem="gCE-BO-WUg" secondAttribute="centerY" id="w6y-Qc-75v"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="SKA-DW-YHd"/>
+                                                    <exclude reference="kHZ-ep-OAG"/>
+                                                    <exclude reference="T6B-Ya-QR4"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" none="YES" notEnabled="YES"/>

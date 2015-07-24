@@ -24,6 +24,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *microphoneMuteLabel;
 
+@property (strong, nonatomic) IBOutletCollection(UITableViewCell) NSArray *enabledPhoneSettings;
+
 -(IBAction)intercomChanged:(id)sender;
 -(IBAction)intercomMicrophoneMuteChanged:(id)sender;
 -(IBAction)toggleWifiOnly:(id)sender;

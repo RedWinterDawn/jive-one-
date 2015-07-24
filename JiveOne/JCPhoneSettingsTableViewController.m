@@ -34,9 +34,6 @@
     [self updatePhoneInfo];
 }
 
-
-
-
 #pragma mark - IBActions -
 
 - (IBAction)toggleDisableSip:(id)sender
@@ -47,6 +44,7 @@
                               return s.isSipDisabled;
                           }
                       completion:^(BOOL value, JCAppSettings *settings) {
+                          [self updatePhoneInfo];
                           if (value){
                               [self.phoneManager disconnect];
                           } else{
@@ -119,8 +117,13 @@
     self.doNotDisturbSW.on  = settings.doNotDisturbEnabled;
     self.microphoneMuteSwitch.on = settings.isIntercomMicrophoneMuteEnabled;
     
+    [self startUpdates];
+    
+    [self setCells:self.enabledPhoneSettings enabled:!settings.isSipDisabled];
     [self setCell:self.microphoneMuteCell enabled:settings.isIntercomEnabled];
     [self setCell:self.enablePreasenceCell hidden:!line.pbx.isV5];
+    
+    [self endUpdates];
 }
 
 -(void)setCell:(UITableViewCell *)cell enabled:(BOOL)enabled

@@ -10,6 +10,8 @@
 
 @implementation JCSwitchTableViewCell
 
+@dynamic textLabel;
+
 -(void)setEnabled:(BOOL)enabled
 {
     self.userInteractionEnabled = enabled;

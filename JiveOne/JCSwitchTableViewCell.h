@@ -11,6 +11,7 @@
 @interface JCSwitchTableViewCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UISwitch *switchBtn;
+@property (nonatomic, weak) IBOutlet UILabel *textLabel;
 
 @property (nonatomic) BOOL enabled;
 
