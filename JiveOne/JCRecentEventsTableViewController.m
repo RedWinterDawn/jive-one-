@@ -149,7 +149,8 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
         PBX *pbx = self.authenticationManager.pbx;
         if (pbx && [pbx smsEnabled])
         {
-            NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:pbx.managedObjectContext];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion = %@", @NO];
+            NSFetchRequest *fetchRequest = [Message MR_requestAllWithPredicate:predicate inContext:pbx.managedObjectContext];
             fetchRequest.includesSubentities = YES;
             fetchRequest.sortDescriptors = self.fetchedResultsController.fetchRequest.sortDescriptors;
             _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest pbx:pbx];

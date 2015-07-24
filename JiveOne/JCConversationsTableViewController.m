@@ -59,7 +59,8 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     
     PBX *pbx = self.authenticationManager.pbx;
     if (pbx && [pbx smsEnabled]) {
-        NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:pbx.managedObjectContext];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion = %@", @NO];
+        NSFetchRequest *fetchRequest = [Message MR_requestAllWithPredicate:predicate inContext:pbx.managedObjectContext];
         fetchRequest.includesSubentities = YES;
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(date)) ascending:NO]];
         _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest pbx:pbx];
@@ -167,7 +168,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id object = [self objectAtIndexPath:indexPath];
+    id<JCConversationGroupObject> object = [self objectAtIndexPath:indexPath];
     UITableViewCell *cell = [self tableView:tableView cellForObject:object atIndexPath:indexPath];
     if([cell isKindOfClass:[JCTableViewCell class]])
     {
@@ -179,13 +180,38 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     return cell;
 }
 
+-(BOOL)tableView:tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        id<JCConversationGroupObject> object = [self objectAtIndexPath:indexPath];
+        if ([object isKindOfClass:[JCSMSConversationGroup class]]) {
+            JCSMSConversationGroup *conversationGroup = (JCSMSConversationGroup *)object;
+            NSString *identifier = conversationGroup.conversationGroupId;
+            PBX *pbx = self.authenticationManager.pbx;
+            [SMSMessage markSMSMessagesWithGroupIdForDeletion:identifier pbx:pbx completion:NULL];
+            if(pbx.managedObjectContext.hasChanges) {
+                [pbx.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+                }];
+            }
+        }
+    }
+}
+
 #pragma mark NSFetchedResultsControllerDelegate
 
 -(void)conversationGroupResultsControllerWillChangeContent:(JCConversationGroupsResultsController *)controller
 {
     [self.tableView beginUpdates];
-    _selectedIndexPath = self.tableView.indexPathForSelectedRow;
-    _selectedConversationGroup = [self objectAtIndexPath:_selectedIndexPath];
+    
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+        _selectedIndexPath = self.tableView.indexPathForSelectedRow;
+        _selectedConversationGroup = [self objectAtIndexPath:_selectedIndexPath];
+    }
 }
 
 -(void)conversationGroupResultsController:(JCConversationGroupsResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(JCConversationGroupsResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
@@ -218,11 +244,13 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 {
     [self.tableView endUpdates];
     
-    NSIndexPath *indexPath = [self indexPathOfObject:_selectedConversationGroup];
-    UITableViewScrollPosition scrollPosition = ![_selectedIndexPath isEqual:indexPath] ? UITableViewScrollPositionTop : UITableViewScrollPositionNone;
-    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:scrollPosition];
-    _selectedIndexPath = nil;
-    _selectedConversationGroup = nil;
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+        NSIndexPath *indexPath = [self indexPathOfObject:_selectedConversationGroup];
+        UITableViewScrollPosition scrollPosition = ![_selectedIndexPath isEqual:indexPath] ? UITableViewScrollPositionTop : UITableViewScrollPositionNone;
+        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:scrollPosition];
+        _selectedIndexPath = nil;
+        _selectedConversationGroup = nil;
+    }
 }
 
 -(void)didBlockConverastionTableViewCell:(JCConversationTableViewCell *)cell
