@@ -29,4 +29,6 @@ extern NSString *const kSMSMessageInboundAttributeKey;
 // name if not nil. If it not yet attached to this message, it is attached.
 -(void)setNumber:(NSString *)number name:(NSString *)name;
 
++(void)markSMSMessagesWithGroupIdForDeletion:(NSString *)groupId pbx:(PBX *)pbx completion:(CompletionHandler)completion;
+
 @end

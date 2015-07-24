@@ -8,6 +8,7 @@
 
 #import "SMSMessage.h"
 
+#import "PBX.h"
 #import "DID.h"
 #import "PhoneNumber.h"
 
@@ -87,6 +88,24 @@ NSString *const kSMSMessageInboundAttributeKey = @"inbound";
     
     if (self.phoneNumber != phoneNumber) {
         self.phoneNumber = phoneNumber;
+    }
+}
+
++(void)markSMSMessagesWithGroupIdForDeletion:(NSString *)groupId pbx:(PBX *)pbx completion:(CompletionHandler)completion
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ && did.pbx = %@", groupId, pbx];
+    NSArray *messages = [SMSMessage MR_findAllWithPredicate:predicate inContext:pbx.managedObjectContext];
+    
+    NSMutableArray *remainingMessages = [NSMutableArray arrayWithArray:messages];
+    for (SMSMessage *message in messages) {
+        [message markForDeletion:^(BOOL success, NSError *error) {
+            [remainingMessages removeObject:message];
+            if (remainingMessages.count == 0) {
+                if (completion) {
+                    completion(YES, nil);
+                }
+            }
+        }];
     }
 }
 
