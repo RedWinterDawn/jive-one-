@@ -130,6 +130,7 @@
         NSArray *conversationGroups = [self conversationGroupsForConversationIds:conversationGroupIds pbx:_pbx];
         NSMutableArray *inserted = [NSMutableArray array];
         NSMutableArray *moved = [NSMutableArray array];
+        NSMutableArray *deleted = [NSMutableArray arrayWithArray:_fetchedObjects];
         
         // Loop through the results, and see if they are insertions or updates.
         for (int index = 0; index < conversationGroups.count; index++)
@@ -170,6 +171,7 @@
                     move.object = conversationGroup;
                     move.row = objectIndex;
                     [moved addObject:move];
+                    
                 }
                 else
                 {
@@ -178,6 +180,21 @@
                             forChangeType:JCConversationGroupsResultsChangeUpdate
                                  newIndex:objectIndex];
                 }
+            }
+            
+            if ([deleted containsObject:conversationGroup]) {
+                [deleted removeObject:conversationGroup];
+            }
+        }
+        
+        if (deleted.count > 0) {
+            for (id<JCConversationGroupObject> conversationGroup in deleted) {
+                NSUInteger objectIndex = [_fetchedObjects indexOfObject:conversationGroup];
+                [_fetchedObjects removeObject:conversationGroup];
+                [self didChangeObject:conversationGroup
+                              atIndex:objectIndex
+                        forChangeType:JCConversationGroupsResultsChangeDelete
+                             newIndex:0];
             }
         }
         
