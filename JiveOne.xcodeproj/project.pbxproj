@@ -142,6 +142,7 @@
 		5D375D561B61BF680085A2B7 /* JCSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D375D551B61BF680085A2B7 /* JCSwitchTableViewCell.m */; };
 		5D375D591B61D0380085A2B7 /* JCContactsSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D375D581B61D0380085A2B7 /* JCContactsSettingsViewController.m */; };
 		5D375D5C1B61DE300085A2B7 /* JCMessagingSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D375D5B1B61DE300085A2B7 /* JCMessagingSettingsViewController.m */; };
+		5D375D5D1B61F1C20085A2B7 /* eula.html in Resources */ = {isa = PBXBuildFile; fileRef = 5D5782E41B33BF24005F1B86 /* eula.html */; };
 		5D3970D81B18FDA5009EADD6 /* JCMaskedRoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3970D71B18FDA5009EADD6 /* JCMaskedRoundedButton.m */; };
 		5D3970DB1B1906C1009EADD6 /* JCPlayPauseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3970DA1B1906C1009EADD6 /* JCPlayPauseButton.m */; };
 		5D3F1ADD1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1ADC1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m */; };
@@ -2440,6 +2441,7 @@
 				5DB7AFB91B3CADB000451A0B /* IncomingCallViewCell.xib in Resources */,
 				5DB7AFBA1B3CADB000451A0B /* CurrentCallViewCell.xib in Resources */,
 				5DB7AFBB1B3CADB000451A0B /* ConferenceCallViewCell.xib in Resources */,
+				5D375D5D1B61F1C20085A2B7 /* eula.html in Resources */,
 				5DB7AFB71B3CAD8F00451A0B /* JCNonVisualVoicemailViewController.xib in Resources */,
 				5DB7AFB81B3CAD8F00451A0B /* JCVoicemailDetailViewController.xib in Resources */,
 				5DB7AF9C1B39D40600451A0B /* Login.storyboard in Resources */,

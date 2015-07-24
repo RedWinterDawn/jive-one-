@@ -10,7 +10,7 @@
         <!--Settings Navigation Controller-->
         <scene sceneID="WzX-xI-C3A">
             <objects>
-                <navigationController storyboardIdentifier="SettingsNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kSg-Yj-VdW" userLabel="Settings Navigation Controller" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SettingsNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kSg-Yj-VdW" userLabel="Settings Navigation Controller" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" image="black-gear" id="jhL-Fu-sxw"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="jRW-s7-dRP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -698,7 +698,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection footerTitle="This controlls the overall volume for your device. Can also be controlled with the volume buttons on the side of your device." id="Pfl-cP-euJ">
+                            <tableViewSection headerTitle="System Volume" footerTitle="This controlls the overall volume for your device. Can also be controlled with the volume buttons on the side of your device." id="Pfl-cP-euJ">
                                 <cells>
                                     <tableViewCell multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="80" id="LcA-8a-ayP" customClass="JCSysVolCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -706,12 +706,6 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LcA-8a-ayP" id="05s-gc-OVV">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="System Volume" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lDT-tO-bMy">
-                                                    <rect key="frame" x="15" y="8" width="572" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kgk-fR-WUM" userLabel="iconBackground" customClass="JCRoundedView">
                                                     <rect key="frame" x="549" y="26" width="34" height="34"/>
                                                     <color key="backgroundColor" red="0.84081044819999995" green="0.84081044819999995" blue="0.84081044819999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -741,14 +735,11 @@
                                             <constraints>
                                                 <constraint firstItem="D65-Av-uA6" firstAttribute="bottom" secondItem="Kgk-fR-WUM" secondAttribute="bottom" id="60K-sG-mLa"/>
                                                 <constraint firstAttribute="trailing" secondItem="D65-Av-uA6" secondAttribute="trailing" constant="23" id="66Y-qT-UI8"/>
-                                                <constraint firstItem="lDT-tO-bMy" firstAttribute="leading" secondItem="05s-gc-OVV" secondAttribute="leading" constant="15" id="8WG-yA-6gx"/>
                                                 <constraint firstItem="D65-Av-uA6" firstAttribute="trailing" secondItem="Kgk-fR-WUM" secondAttribute="trailing" constant="-6" id="97C-EA-jKi"/>
                                                 <constraint firstItem="D65-Av-uA6" firstAttribute="height" secondItem="Kgk-fR-WUM" secondAttribute="height" id="BGK-rE-5yj"/>
-                                                <constraint firstAttribute="trailing" secondItem="lDT-tO-bMy" secondAttribute="trailing" constant="13" id="CvN-ie-CkK"/>
                                                 <constraint firstItem="D65-Av-uA6" firstAttribute="top" secondItem="Kgk-fR-WUM" secondAttribute="top" constant="6" id="L0m-W4-NNs"/>
                                                 <constraint firstItem="D65-Av-uA6" firstAttribute="top" secondItem="05s-gc-OVV" secondAttribute="topMargin" constant="24" id="QhV-9v-1Nn"/>
                                                 <constraint firstItem="D65-Av-uA6" firstAttribute="leading" secondItem="05s-gc-OVV" secondAttribute="leading" constant="23" id="d1h-2L-18Y"/>
-                                                <constraint firstItem="lDT-tO-bMy" firstAttribute="top" secondItem="05s-gc-OVV" secondAttribute="top" constant="8" id="jGx-lu-XoP"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -759,36 +750,35 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection footerTitle="Controlls the volume of the ringer in respect to the system volume." id="vfY-Hj-oip">
+                            <tableViewSection headerTitle="Ringer Volume" footerTitle="Controlls the volume of the ringer in respect to the system volume." id="vfY-Hj-oip">
                                 <cells>
-                                    <tableViewCell multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="80" id="I34-ba-vfK" customClass="JCSysVolCell">
+                                    <tableViewCell multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="I34-ba-vfK" customClass="JCSysVolCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I34-ba-vfK" id="MWc-zD-bTL">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ringer Volume" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jw-Od-452">
-                                                    <rect key="frame" x="15" y="10" width="570" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="m7M-1h-uxq">
-                                                    <rect key="frame" x="21" y="29" width="558" height="41"/>
+                                                    <rect key="frame" x="21" y="1" width="558" height="41"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="phU-fH-k73"/>
+                                                    </constraints>
                                                     <connections>
                                                         <action selector="sliderValue:" destination="Me4-l7-Voh" eventType="valueChanged" id="gQx-BD-LVd"/>
                                                     </connections>
                                                 </slider>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="0jw-Od-452" firstAttribute="top" secondItem="MWc-zD-bTL" secondAttribute="top" constant="10" id="CVX-eB-Tcc"/>
-                                                <constraint firstAttribute="trailing" secondItem="0jw-Od-452" secondAttribute="trailing" constant="15" id="DKY-PQ-FUf"/>
-                                                <constraint firstItem="0jw-Od-452" firstAttribute="leading" secondItem="MWc-zD-bTL" secondAttribute="leading" constant="15" id="FRO-O8-Jlb"/>
-                                                <constraint firstItem="m7M-1h-uxq" firstAttribute="top" secondItem="0jw-Od-452" secondAttribute="bottom" constant="1" id="MU1-rC-1rs"/>
                                                 <constraint firstAttribute="trailing" secondItem="m7M-1h-uxq" secondAttribute="trailing" constant="23" id="Oyd-gh-M1l"/>
-                                                <constraint firstAttribute="bottom" secondItem="m7M-1h-uxq" secondAttribute="bottom" constant="10" id="Z0T-WB-D0z"/>
+                                                <constraint firstAttribute="bottom" secondItem="m7M-1h-uxq" secondAttribute="bottom" constant="11" id="Z0T-WB-D0z"/>
+                                                <constraint firstAttribute="centerY" secondItem="m7M-1h-uxq" secondAttribute="centerY" id="fe4-Hz-fh5"/>
                                                 <constraint firstItem="m7M-1h-uxq" firstAttribute="leading" secondItem="MWc-zD-bTL" secondAttribute="leading" constant="23" id="rxO-yW-m04"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Z0T-WB-D0z"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
