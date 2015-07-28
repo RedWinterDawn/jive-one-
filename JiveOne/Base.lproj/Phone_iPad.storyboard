@@ -272,7 +272,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ba4-Nk-2xl" customClass="JCFormattedPhoneNumberLabel">
-                                <rect key="frame" x="190" y="5" width="220" height="40"/>
+                                <rect key="frame" x="50" y="5" width="500" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="RgF-ID-6eN"/>
                                     <constraint firstAttribute="width" constant="220" id="Umy-FO-sol"/>
@@ -280,6 +280,11 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Umy-FO-sol"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="A5J-Bt-Bbh" id="bHz-Id-ZrB"/>
                                 </connections>
@@ -1091,6 +1096,7 @@
                             <constraint firstItem="a6G-O6-c7b" firstAttribute="top" secondItem="MFB-Mj-eoq" secondAttribute="bottom" constant="4" id="Iq7-rJ-r7n">
                                 <variation key="heightClass=regular" constant="4"/>
                             </constraint>
+                            <constraint firstItem="MFB-Mj-eoq" firstAttribute="leading" secondItem="ba4-Nk-2xl" secondAttribute="trailing" id="Jc6-uE-rQa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="e6A-Sf-BTx" secondAttribute="trailing" constant="44" id="Lmb-WM-91H">
                                 <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                             </constraint>
