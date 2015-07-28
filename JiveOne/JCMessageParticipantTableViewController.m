@@ -112,7 +112,6 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     NSMutableArray *results = [NSMutableArray new];
-   
     if (searchText.isNumeric && searchText.length > 0) {
         [results addObject:[JCUnknownNumber unknownNumberWithNumber:searchText]];
     }
@@ -121,6 +120,5 @@
     [results addObjectsFromArray:phoneNumbers];
     self.tableData = results;
 }
-
 
 @end
