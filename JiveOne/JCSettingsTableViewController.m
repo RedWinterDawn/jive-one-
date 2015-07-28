@@ -11,6 +11,7 @@
 @import MediaPlayer;
 
 #import "JCSettingsTableViewController.h"
+#import <UserVoice.h>
 
 // Managers
 #import "JCAuthenticationManager.h"
@@ -42,8 +43,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-   
-   
+    
     _audioManager = [JCPhoneAudioManager new];
     [_audioManager setSessionActive];
     MPVolumeView *volumeView = [MPVolumeView new];
@@ -65,7 +65,23 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     self.sipDisabled.on = settings.sipDisabled;
     self.doNotDisturbSW.on = settings.doNotDisturbEnabled;
     _volumeslidder.value = settings.volumeLevel;
-
+    
+    // Set this up once when your application launches
+    UVConfig *config = [UVConfig configWithSite:@"jivemobile.uservoice.com"];
+    
+    JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    
+    NSString* email = authenticationManager.line.pbx.user.jiveUserId;           // Uservoice craps its pants when the email field is not an email.
+    if (![email containsString:@"@"]) {                                                              //So since jive is the only one without email addresses as usernames we just add the @jive.com and problem solved
+        email =  [email stringByAppendingString:@"@jive.com"];
+    }
+    
+    [config identifyUserWithEmail: email name: authenticationManager.line.pbx.name guid: authenticationManager.line.pbx.name];
+    
+    config.showForum = NO;
+    config.showPostIdea = NO;
+  
+    [UserVoice initialize:config];
     
     #ifndef DEBUG
     if (self.debugCell) {
@@ -74,7 +90,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     #endif
     
     // Authentication Info
-    JCAuthenticationManager *authenticationManager = self.authenticationManager;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(updateAccountInfo) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
     [center addObserver:self selector:@selector(updateAccountInfo) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
@@ -134,35 +149,39 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 
 -(IBAction)leaveFeedback:(id)sender
 {
-    if ([MFMailComposeViewController canSendMail]) {
-        MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
-        mailViewController.mailComposeDelegate = self;
-        [mailViewController setToRecipients:[NSArray arrayWithObject:kFeedbackEmail]];
-        [mailViewController setSubject:@"Feedback"];
-        
-        //get device specs
-        JCAuthenticationManager *authenticationManager = self.authenticationManager;
-       
-        NSBundle *bundle            = [NSBundle mainBundle];
-        UIDevice *currentDevice     = [UIDevice currentDevice];
-        NSString *model             = [currentDevice platformType];
-        NSString *systemVersion     = [currentDevice systemVersion];
-        NSString *appVersion        = [NSString stringWithFormat:@"%@ (%@)", [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
-        NSString *country           = [[NSLocale currentLocale] localeIdentifier];
-        NSString *uuid              = [currentDevice userUniqueIdentiferForUser:authenticationManager.jiveUserId];
-        NSString * pbx              = authenticationManager.line.pbx.displayName;
-        NSString *user              = authenticationManager.line.pbx.user.jiveUserId;
-        NSString *line              = authenticationManager.line.number;
-        NSString *domain        = authenticationManager.line.pbx.domain;
-        NSString *carrier          = [currentDevice defaultCarrier];
-        
-        NSString *currentConection =  [self networkType];
-        
-        NSString *bodyTemplate = [NSString stringWithFormat:kJCSettingsTableViewControllerFeebackMessage, model, systemVersion, appVersion, country, uuid, pbx, user, line, domain, carrier, currentConection];
-        [mailViewController setMessageBody:bodyTemplate isHTML:YES]; 
-        [self presentViewController:mailViewController animated:YES completion:nil];
-    }
+    [UserVoice presentUserVoiceInterfaceForParentViewController:self];
 }
+
+
+//        if ([MFMailComposeViewController canSendMail]) {
+//            MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
+//            mailViewController.mailComposeDelegate = self;
+//            [mailViewController setToRecipients:[NSArray arrayWithObject:kFeedbackEmail]];
+//            [mailViewController setSubject:@"Feedback"];
+//    
+//            //get device specs
+//            JCAuthenticationManager *authenticationManager = self.authenticationManager;
+//    
+//            NSBundle *bundle            = [NSBundle mainBundle];
+//            UIDevice *currentDevice     = [UIDevice currentDevice];
+//            NSString *model             = [currentDevice platformType];
+//            NSString *systemVersion     = [currentDevice systemVersion];
+//            NSString *appVersion        = [NSString stringWithFormat:@"%@ (%@)", [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
+//            NSString *country           = [[NSLocale currentLocale] localeIdentifier];
+//            NSString *uuid              = [currentDevice userUniqueIdentiferForUser:authenticationManager.jiveUserId];
+//            NSString * pbx              = authenticationManager.line.pbx.displayName;
+//            NSString *user              = authenticationManager.line.pbx.user.jiveUserId;
+//            NSString *line              = authenticationManager.line.number;
+//            NSString *domain        = authenticationManager.line.pbx.domain;
+//            NSString *carrier          = [currentDevice defaultCarrier];
+//    
+//            NSString *currentConection =  [self networkType];
+//    
+//            NSString *bodyTemplate = [NSString stringWithFormat:kJCSettingsTableViewControllerFeebackMessage, model, systemVersion, appVersion, country, uuid, pbx, user, line, domain, carrier, currentConection];
+//            [mailViewController setMessageBody:bodyTemplate isHTML:YES];
+//            [self presentViewController:mailViewController animated:YES completion:nil];
+//        }
+//}
 
 -(IBAction)logout:(id)sender
 {
