@@ -668,6 +668,11 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }];
 }
 
+-(BOOL)shouldReceiveIncomingLineSession:(JCSipManager *)sipHandler
+{
+    return !self.appSettings.isDoNotDisturbEnabled;
+}
+
 -(void)sipHandler:(JCSipManager *)sipManager didAddLineSession:(JCLineSession *)lineSession
 {
     if (!lineSession.isIncoming) {
