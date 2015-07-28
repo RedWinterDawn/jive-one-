@@ -57,7 +57,7 @@
 -(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
     if (section == 0) {
-        return [NSString stringWithFormat:[super tableView:self.tableView titleForFooterInSection:0], [JCAuthenticationManager sharedInstance].line.number];
+        return [NSString stringWithFormat:[super tableView:self.tableView titleForFooterInSection:0], self.authenticationManager.line.number];
     } else {
         return [super tableView:tableView titleForFooterInSection:section];
     }

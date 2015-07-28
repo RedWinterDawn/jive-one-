@@ -270,7 +270,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
         return nil;
     }
     
-    NSString *token = [JCAuthenticationManager sharedInstance].authToken;
+    NSString *token = [JCAuthenticationManager sharedManager].authToken;
     
     NSBundle *bundle = [NSBundle mainBundle];
     NSLocale *local = [NSLocale currentLocale];

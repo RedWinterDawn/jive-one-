@@ -7,14 +7,12 @@
 //
 
 #import "JCAuthenticationKeychain.h"
-#import "JCAuthenticationManagerError.h"
 
 // Keychain
 NSString *const kJCAuthenticationManagerKeychainStoreIdentifier         = @"oauth-token";
 NSString *const kJCAuthenticationManagerKeychainTokenKey                = @"token";
 NSString *const kJCAuthenticationManagerKeychainExpirationDateKey       = @"expirationDate";
 NSString *const kJCAuthenticationManagerKeychainAuthenticationDateKey   = @"authenticationDate";
-
 
 @interface JCAuthenticationKeychain ()
 {

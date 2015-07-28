@@ -25,7 +25,7 @@
     self.backgroundVisualEffectsView.backgroundView = self.navigationController.view;
     self.pickerViewVisualEffectsView.backgroundView = self.view;
     
-    JCAuthenticationManager *authenticationManger = [JCAuthenticationManager sharedInstance];
+    JCAuthenticationManager *authenticationManger = self.authenticationManager;
     User *user = authenticationManger.user;
     Line *line = authenticationManger.line;
     
@@ -84,7 +84,7 @@
             NSLog(@"%@", [error description]);
     }
     
-    [JCAuthenticationManager sharedInstance].line = line;
+    self.authenticationManager.line = line;
     [super close:sender];
 }
 
