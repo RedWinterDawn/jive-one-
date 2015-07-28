@@ -382,6 +382,35 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="UWZ-yL-SeV">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UWZ-yL-SeV" id="W60-bP-Hz1">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kill Sip" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pkM-lw-OGa">
+                                                    <rect key="frame" x="14" y="11" width="522" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8rK-mX-EbG">
+                                                    <rect key="frame" x="536" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="toggleDisableSip:" destination="MXa-UC-Owm" eventType="valueChanged" id="nRI-bs-JJl"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="pkM-lw-OGa" secondAttribute="centerY" id="2wn-zV-xaM"/>
+                                                <constraint firstAttribute="centerY" secondItem="8rK-mX-EbG" secondAttribute="centerY" id="3ad-q8-YeL"/>
+                                                <constraint firstItem="pkM-lw-OGa" firstAttribute="leading" secondItem="W60-bP-Hz1" secondAttribute="leading" constant="14" id="PjQ-Te-Yj8"/>
+                                                <constraint firstItem="8rK-mX-EbG" firstAttribute="leading" secondItem="pkM-lw-OGa" secondAttribute="trailing" id="Zdi-cZ-cTV"/>
+                                                <constraint firstAttribute="trailing" secondItem="8rK-mX-EbG" secondAttribute="trailing" constant="15" id="bcC-Uy-tzT"/>
+                                                <constraint firstItem="pkM-lw-OGa" firstAttribute="centerY" secondItem="8rK-mX-EbG" secondAttribute="centerY" id="hYE-VQ-aAU"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="urK-HX-F87" style="IBUITableViewCellStyleDefault" id="maa-eM-dRA" userLabel="EULATVCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="maa-eM-dRA" id="exO-WT-Ynj" userLabel="EULAView">
@@ -422,8 +451,10 @@
                         <outlet property="defaultDIDCell" destination="AwX-qh-Z33" id="wqW-iF-JHD"/>
                         <outlet property="enablePreasenceCell" destination="qp0-he-2Hl" id="lBi-Km-TSH"/>
                         <outlet property="extensionLabel" destination="6aX-TI-xaL" id="jxG-zA-kiY"/>
+                        <outlet property="killSipLabel" destination="pkM-lw-OGa" id="A9X-6b-hlt"/>
                         <outlet property="presenceEnabled" destination="7XN-Y0-9vU" id="2c1-2W-Cqe"/>
                         <outlet property="routeIconBackground" destination="S4h-jm-rGg" id="waF-3H-oTi"/>
+                        <outlet property="sipDisabled" destination="8rK-mX-EbG" id="Ei2-cS-hf8"/>
                         <outlet property="smsUserDefaultNumber" destination="Y1n-xj-mUd" id="Ve7-Ia-Bdq"/>
                         <outlet property="userNameLabel" destination="WfK-Sk-ufj" id="a5I-Pi-UXt"/>
                         <outlet property="volumeLabel" destination="wM6-FH-Bnl" id="962-3n-aX1"/>
