@@ -31,7 +31,6 @@
 
 // Configurable Properties
 @property (nonatomic, strong) NSString *menuViewControllerStoryboardIdentifier;
-@property (nonatomic, strong) NSString *activityViewControllerStoryboardIdentifier;
 
 // Shows the menu
 -(IBAction)showMenu:(id)sender;
