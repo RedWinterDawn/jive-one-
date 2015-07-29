@@ -175,7 +175,18 @@
         if (!object || !evaluates) {
             continue;
         }
-        [inserted addObject:object];
+        
+        // Check to see if this is really an insert by checking to see if fetched objects has it.
+        if ([_fetchedObjects containsObject:object]) {
+            if (!updatedObjects) {
+                updatedObjects = [NSMutableArray new];
+            }
+            [updatedObjects addObject:object];
+        }
+        else {
+            [_fetchedObjects addObject:object];
+            [inserted addObject:object];
+        }
     }
     
     for (id updatedObject in updatedObjects)

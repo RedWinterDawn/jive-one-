@@ -121,7 +121,6 @@
 {
     JCMessageGroup *messageGroup = [[JCMessageGroup alloc] initWithMessageGroupId:messageGroupId];
     messageGroup.delegate = self;
-    [_fetchedObjects addObject:messageGroup]; // Premptively add to the _fetchedObjects if we are creating
     messageGroup.phoneNumber = [_phoneBook localPhoneNumberForPhoneNumber:messageGroup.phoneNumber context:self.managedObjectContext];
     [messageGroup markNeedUpdate];
     return messageGroup;
