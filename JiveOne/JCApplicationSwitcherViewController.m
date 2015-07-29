@@ -200,6 +200,10 @@
 -(void)setViewControllers:(NSArray *)viewControllers
 {
     _viewControllers = viewControllers;
+    [_appMenuViewController.menuTableViewController.tableView reloadData];
+    
+    CGSize size = _appMenuViewController.menuTableViewController.tableView.contentSize;
+    _appMenuViewController.appMenuHeightConstraint.constant = size.height;
 }
 
 -(void)setViewControllers:(NSArray *)viewControllers animated:(BOOL)animated
