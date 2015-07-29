@@ -9,7 +9,7 @@
         <!--Messages-->
         <scene sceneID="LQT-kt-5Gh">
             <objects>
-                <tableViewController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="HGW-N1-8vn" customClass="JCConversationsTableViewController" sceneMemberID="viewController">
+                <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="HGW-N1-8vn" customClass="JCConversationsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="uv4-u4-XyV">
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -89,7 +89,7 @@
                             <outlet property="delegate" destination="HGW-N1-8vn" id="BSK-ZQ-mlP"/>
                         </connections>
                     </tableView>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="Messages" id="Dd8-pv-4JB">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="1b0-Vp-hXe">
                             <connections>
@@ -110,7 +110,7 @@
                         </attributedString>
                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
-                            <action selector="refreshTable:" destination="HGW-N1-8vn" eventType="valueChanged" id="YUN-Vz-vUQ"/>
+                            <action selector="update:" destination="HGW-N1-8vn" eventType="valueChanged" id="fro-tM-5xm"/>
                         </connections>
                     </refreshControl>
                     <connections>
@@ -125,6 +125,7 @@
         <scene sceneID="3Vs-Vc-gdU">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" id="AI2-cb-WiH" customClass="JCConversationViewController" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="9b6-df-Xjz">
                         <nil key="title"/>
                         <barButtonItem key="rightBarButtonItem" title="Details" id="hea-0j-GeP" propertyAccessControl="localizable">
@@ -239,7 +240,7 @@
         <!--Messages-->
         <scene sceneID="coe-lx-3e6">
             <objects>
-                <navigationController storyboardIdentifier="MessagesNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="h5S-F5-TXc" customClass="JCNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MessagesNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="h5S-F5-TXc" customClass="JCNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Messages" image="black-bubble" id="QlF-7C-Iq3"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="zOA-FQ-0el">

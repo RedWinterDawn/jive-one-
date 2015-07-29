@@ -281,6 +281,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="black-gear" id="4sy-b5-AC6"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Settings"/>
                     </userDefinedRuntimeAttributes>
@@ -591,7 +592,7 @@
         <!--Messages-->
         <scene sceneID="v1e-ev-6i7">
             <objects>
-                <viewController storyboardIdentifier="MessagesNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rv9-dm-P5N" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MessagesNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rv9-dm-P5N" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4Zm-Rm-qV5"/>
                         <viewControllerLayoutGuide type="bottom" id="wSM-sN-suQ"/>
@@ -602,9 +603,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Messages" image="black-bubble" id="akK-mD-dtz"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="storyboardIdentifier" value="Chat"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="bottomOffset">
+                            <integer key="value" value="50"/>
+                        </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="riv-JZ-YYN" userLabel="First Responder" sceneMemberID="firstResponder"/>
