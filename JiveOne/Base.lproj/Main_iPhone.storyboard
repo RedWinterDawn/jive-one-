@@ -270,7 +270,7 @@
         <!--Settings-->
         <scene sceneID="cyx-60-PJJ">
             <objects>
-                <viewController storyboardIdentifier="SettingsNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KAR-UW-j67" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KAR-UW-j67" customClass="JCStoryboardLoaderViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="oIN-EH-99a"/>
                         <viewControllerLayoutGuide type="bottom" id="xQH-1j-APy"/>

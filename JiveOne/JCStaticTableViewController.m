@@ -9,6 +9,7 @@
 #import "JCStaticTableViewController.h"
 
 #import "JCStaticTableData.h"
+#import "JCSwitchTableViewCell.h"
 
 @interface JCStaticTableViewController () <JCStaticTableDataDelegate>
 {
@@ -60,6 +61,7 @@
     if (_tableData) {
         [_tableData removeAddedCells];
         [_tableData setCells:_tableData.cells hidden:NO];
+        [self setCells:_tableData.cells enabled:YES];
     }
 }
 
@@ -102,6 +104,27 @@
 - (CGFloat)heightForCell:(UITableViewCell *)cell
 {
     return self.tableView.rowHeight;
+}
+
+- (void)setCells:(NSArray *)cells enabled:(BOOL)enabled;
+{
+    for (id object in cells) {
+        if ([object isKindOfClass:[UITableViewCell class]]) {
+            [self setCell:(UITableViewCell *)object enabled:enabled];
+        }
+    }
+}
+
+-(void)setCell:(UITableViewCell *)cell enabled:(BOOL)enabled
+{
+    if ([cell isKindOfClass:[JCSwitchTableViewCell class]]) {
+        ((JCSwitchTableViewCell *)cell).enabled = enabled;
+    }
+    else {
+        cell.userInteractionEnabled = enabled;
+        cell.textLabel.enabled = enabled;
+        cell.detailTextLabel.enabled = enabled;
+    }
 }
 
 #pragma mark - Delegate Handelers -

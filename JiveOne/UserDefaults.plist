@@ -8,5 +8,7 @@
 	<true/>
 	<key>intercomMicrophoneMuteEnabled</key>
 	<true/>
+	<key>phoneEnabled</key>
+	<true/>
 </dict>
 </plist>
