@@ -1138,7 +1138,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         {
             if (!self.isActive) {
 //                [_audioManager engageAudioSession];
-                [_audioManager playIncomingCallTone];
+                [_audioManager playRingback];
 
             }
             

@@ -44,4 +44,9 @@ NSString *const kBlockedContactPendingUploadAttribute = @"pendingUpload";
 
 @dynamic did;
 
+-(NSString *)type
+{
+    return nil;
+}
+
 @end

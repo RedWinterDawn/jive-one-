@@ -18,7 +18,7 @@ NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
 NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
 NSString *const kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute = @"applicationSwitcherLastSelected";
 NSString *const kJCAppSettingsVoicemailOnSpeakerAttribute = @"voicemailOnSpeaker";
-NSString *const kJCAppSettingsSipDisabledAttribute = @"sipDisabled";
+NSString *const kJCAppSettingsPhoneEnabledAttribute = @"phoneEnabled";
 NSString *const kJCAppSettingsVolumeLevelAttribute = @"volumeLevel";
 NSString *const kJCRingToneSelectedAttribute = @"ringtone";
 NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
@@ -79,9 +79,9 @@ NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
     [self setSettingBoolValue:voicemailOnSpeaker forKey:kJCAppSettingsVoicemailOnSpeakerAttribute];
 }
 
--(void)setSipDisabled:(BOOL)sipDisabled
+-(void)setPhoneEnabled:(BOOL)sipDisabled
 {
-    [self setSettingBoolValue:sipDisabled forKey:kJCAppSettingsSipDisabledAttribute];
+    [self setSettingBoolValue:sipDisabled forKey:kJCAppSettingsPhoneEnabledAttribute];
 }
 
 -(void)setDoNotDisturbEnabled:(BOOL)doNotDisturbEnabled
@@ -135,9 +135,9 @@ NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
     return [self.userDefaults boolForKey:kJCAppSettingsVoicemailOnSpeakerAttribute];
 }
 
--(BOOL)isSipDisabled
+-(BOOL)isPhoneEnabled
 {
-    return [self.userDefaults boolForKey:kJCAppSettingsSipDisabledAttribute];
+    return [self.userDefaults boolForKey:kJCAppSettingsPhoneEnabledAttribute];
 }
 
 -(BOOL)isDoNotDisturbEnabled
@@ -159,7 +159,6 @@ NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
 {
     return [self.userDefaults floatForKey:kJCAppSettingsVolumeLevelAttribute];
 }
-
 
 
 #pragma mark - Private -
@@ -191,7 +190,6 @@ NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
 }
 
 @end
-
 
 @implementation JCAppSettings (Singleton)
 
@@ -228,5 +226,24 @@ NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
     }
     return appSettings;
 }
+
+- (void)toggleSettingForSender:(id)sender action:(BOOL(^)(JCAppSettings *settings))action completion:(void(^)(BOOL value, JCAppSettings *settings))completion
+{
+    JCAppSettings *setting = self.appSettings;
+    if ([sender isKindOfClass:[UISwitch class]]){
+        UISwitch *switchBtn = (UISwitch *)sender;
+        BOOL result = action(setting);
+        switchBtn.on = result;
+        if (completion) {
+            completion(result, setting);
+        }
+    } else {
+        BOOL result = action(setting);
+        if (completion) {
+            completion(result, setting);
+        }
+    }
+}
+
 
 @end

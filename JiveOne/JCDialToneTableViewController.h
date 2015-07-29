@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCStaticTableViewController.h"
 
-@interface JCDialToneTableViewController : UITableViewController
+@interface JCDialToneTableViewController : JCStaticTableViewController
+
+@property (weak, nonatomic) IBOutlet UIView *routeIconBackground;
 
 @end
