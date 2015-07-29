@@ -199,8 +199,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
             
         case NSFetchedResultsChangeUpdate:
         {
-            JCConversationTableViewCell *cell = (JCConversationTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-            [self configureCell:cell atIndexPath:indexPath];
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             break;
         }
         case NSFetchedResultsChangeMove:

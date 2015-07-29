@@ -219,9 +219,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
             if ([tableData containsObject:anObject]) {
                 NSUInteger row = [tableData indexOfObject:anObject];
                 indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
-                UITableViewCell *cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-                [self configureCell:cell atIndexPath:indexPath];
-                
+                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             }
             break;
         }
