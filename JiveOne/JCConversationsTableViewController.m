@@ -28,6 +28,11 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 {
     JCMessageGroup *_selectedConversationGroup;
     NSIndexPath *_selectedIndexPath;
+    
+    UIBarButtonItem *_defaultLeftNavigationItem;
+    UIBarButtonItem *_defaultRightNavigationItem;
+    UIBarButtonItem *_readBarButtonItem;
+    BOOL _batchEdit;
 }
 
 @property (nonatomic, strong) JCMessageGroupsResultsController *messageGroupsResultsController;
@@ -40,10 +45,56 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     
     [super viewDidLoad];
     
+    // Setup long press gesture recognizer on the table view to trigger edit mode.
+    self.tableView.allowsMultipleSelectionDuringEditing = TRUE;
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(enterEditMode:)];
+    longPressGestureRecognizer.minimumPressDuration = 1.0;
+    [self.tableView addGestureRecognizer:longPressGestureRecognizer];
+    
+    // Save pointers to the default navigation items.
+    _defaultLeftNavigationItem = self.navigationItem.leftBarButtonItem;
+    _defaultRightNavigationItem = self.navigationItem.rightBarButtonItem;
+    
+    // Register for authentication manager changes.
     JCAuthenticationManager *authenticationManager = self.authenticationManager;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(reloadTable:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
     [center addObserver:self selector:@selector(reloadTable:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
+}
+
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    if (_batchEdit) {
+        if (editing) {
+            
+            UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+            
+            _readBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Read All", nil)
+                                                                  style:UIBarButtonItemStyleBordered
+                                                                 target:self
+                                                                 action:@selector(markMessagesAsRead:)];
+            
+            UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Delete", nil)
+                                                                              style:UIBarButtonItemStyleBordered
+                                                                             target:self
+                                                                             action:@selector(deleteMessages:)];
+            
+            [self setToolbarItems:@[_readBarButtonItem, flexItem, barButtonItem]];
+            [self.navigationController setToolbarHidden:NO animated:animated];
+            
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                                  target:self
+                                                                                                  action:@selector(cancelEdit:)];
+            self.navigationItem.rightBarButtonItem = nil;
+            
+        } else {
+            [self.navigationController setToolbarHidden:YES animated:animated];
+            
+            self.navigationItem.leftBarButtonItem = _defaultLeftNavigationItem;
+            self.navigationItem.rightBarButtonItem = _defaultRightNavigationItem;
+        }
+    }
+    [super setEditing:editing animated:animated];
 }
 
 -(void)dealloc
@@ -98,8 +149,65 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     }];
 }
 
+- (IBAction)cancelEdit:(id)sender
+{
+    [self setEditing:NO animated:YES];
+    _batchEdit = NO;
+}
 
+- (IBAction)deleteMessages:(id)sender
+{
+    PBX *pbx = self.authenticationManager.pbx;
+    NSArray *messageIndexPaths = [self.tableView indexPathsForSelectedRows];
+    NSMutableArray *objects = [NSMutableArray new];
+    if (messageIndexPaths.count > 0) {
+        for (NSIndexPath *indexPath in messageIndexPaths) {
+            JCMessageGroup *messageGroup = [self objectAtIndexPath:indexPath];
+            [objects addObject:messageGroup.messageGroupId];
+        }
+    }
     
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        PBX *localPbx = (PBX *)[localContext objectWithID:pbx.objectID];
+        for (NSString *messageGroupId in objects) {
+            [SMSMessage markSMSMessagesWithGroupIdForDeletion:messageGroupId
+                                                          pbx:localPbx
+                                                   completion:NULL];
+        }
+    }];
+}
+
+- (IBAction)markMessagesAsRead:(id)sender
+{
+    PBX *pbx = self.authenticationManager.pbx;
+    NSArray *messageIndexPaths = [self.tableView indexPathsForSelectedRows];
+    NSMutableArray *objects = [NSMutableArray new];
+    if (messageIndexPaths.count > 0) {
+        for (NSIndexPath *indexPath in messageIndexPaths) {
+            JCMessageGroup *object = [self objectAtIndexPath:indexPath];
+            [objects addObject:object.messageGroupId];
+        }
+    }
+    
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        PBX *localPbx = (PBX *)[localContext objectWithID:pbx.objectID];
+        for (NSString *conversationGroupId in objects) {
+            [SMSMessage markSMSMessagesWithGroupIdAsRead:conversationGroupId
+                                                     pbx:localPbx
+                                              completion:NULL];
+        }
+    }];
+}
+
+#pragma mark - Navigation
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if (self.isEditing) {
+        return NO;
+    }
+    return YES;
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -154,17 +262,13 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     PBX *pbx = self.authenticationManager.pbx;
     JCMessageGroup *object = [self objectAtIndexPath:indexPath];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        if ([object isKindOfClass:[JCSMSConversationGroup class]]) {
-            JCSMSConversationGroup *conversationGroup = (JCSMSConversationGroup *)object;
-            NSString *identifier = conversationGroup.conversationGroupId;
-            PBX *pbx = self.authenticationManager.pbx;
-            [SMSMessage markSMSMessagesWithGroupIdForDeletion:identifier pbx:pbx completion:NULL];
-            if(pbx.managedObjectContext.hasChanges) {
-                [pbx.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
-                }];
-            }
-        }
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            [SMSMessage markSMSMessagesWithGroupIdForDeletion:object.messageGroupId
+                                                          pbx:(PBX *)[localContext objectWithID:pbx.objectID]
+                                                   completion:NULL];
+        } completion:^(BOOL contextDidSave, NSError *error) {
+            
+        }];
     }
 }
 
