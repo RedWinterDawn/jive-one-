@@ -72,11 +72,9 @@ NSString *const kSMSMessageInboundAttributeKey = @"inbound";
 -(void)setNumber:(NSString *)number name:(NSString *)name
 {
     self.messageGroupId = number;
-    
     PhoneNumber *phoneNumber = [PhoneNumber MR_findFirstByAttribute:NSStringFromSelector(@selector(number))
                                                              withValue:number
                                                              inContext:self.managedObjectContext];
-    
     
     if (!phoneNumber) {
         phoneNumber = [PhoneNumber MR_createEntityInContext:self.managedObjectContext];
@@ -99,6 +97,24 @@ NSString *const kSMSMessageInboundAttributeKey = @"inbound";
     NSMutableArray *remainingMessages = [NSMutableArray arrayWithArray:messages];
     for (SMSMessage *message in messages) {
         [message markForDeletion:^(BOOL success, NSError *error) {
+            [remainingMessages removeObject:message];
+            if (remainingMessages.count == 0) {
+                if (completion) {
+                    completion(YES, nil);
+                }
+            }
+        }];
+    }
+}
+
++(void)markSMSMessagesWithGroupIdAsRead:(NSString *)groupId pbx:(PBX *)pbx completion:(CompletionHandler)completion
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ && did.pbx = %@", groupId, pbx];
+    NSArray *messages = [SMSMessage MR_findAllWithPredicate:predicate inContext:pbx.managedObjectContext];
+    
+    NSMutableArray *remainingMessages = [NSMutableArray arrayWithArray:messages];
+    for (SMSMessage *message in messages) {
+        [message markAsRead:^(BOOL success, NSError *error) {
             [remainingMessages removeObject:message];
             if (remainingMessages.count == 0) {
                 if (completion) {
