@@ -14,6 +14,7 @@
 #import "PBX.h"
 #import "JCAuthenticationManager.h"
 #import "JCStoryboardLoaderViewController.h"
+#import "JCMessageGroup.h"
 
 NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationCell";
 
@@ -92,7 +93,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id <NSObject>)object atIndexPath:(NSIndexPath*)indexPath;
 {
-    if ([object conformsToProtocol:@protocol(JCConversationGroupObject)])
+    if ([object isKindOfClass:[JCMessageGroup class]])
     {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCRecentEventConversationCellResuseIdentifier];
         [self configureCell:cell withObject:object];
@@ -105,14 +106,14 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
-    if ([object conformsToProtocol:@protocol(JCConversationGroupObject)] && [cell isKindOfClass:[JCConversationTableViewCell class]])
+    if ([object isKindOfClass:[JCMessageGroup class]] && [cell isKindOfClass:[JCConversationTableViewCell class]])
     {
-        id<JCConversationGroupObject> group = (id<JCConversationGroupObject>)object;
+        JCMessageGroup *messageGroup = (JCMessageGroup *)object;
         JCConversationTableViewCell *conversationCell = (JCConversationTableViewCell *)cell;
-        conversationCell.name.text    = group.titleText;
-        conversationCell.detail.text  = group.detailText;
-        conversationCell.date.text    = group.formattedModifiedShortDate;
-        conversationCell.read         = group.isRead;
+        conversationCell.name.text    = messageGroup.titleText;
+        conversationCell.detail.text  = messageGroup.detailText;
+        conversationCell.date.text    = messageGroup.formattedModifiedShortDate;
+        conversationCell.read         = messageGroup.isRead;
     }
     else
     {
@@ -158,7 +159,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
             
             __autoreleasing NSError *error = nil;
             if (![_conversationGroupsResultsController performFetch:&error]) {
-                [self.tableView reloadData];
+                NSLog(@"%@", error);
             };
         }
     }

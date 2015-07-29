@@ -7,9 +7,10 @@
 //
 
 #import "JCConversationDetailsViewController.h"
-#import "JCSMSConversationGroup.h"
+#import "JCMessageGroup.h"
 #import "DID.h"
 #import "BlockedNumber+V5Client.h"
+#import "SMSMessage.h"
 
 @interface JCConversationDetailsViewController ()
 
@@ -20,15 +21,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    id<JCConversationGroupObject> conversationGroup = self.conversationGroup;
+    JCMessageGroup *messageGroup = self.conversationGroup;
     
-    NSString *name = conversationGroup.name;
+    NSString *name = messageGroup.phoneNumber.name;
     self.phoneNumberCell.textLabel.text = name ? name : NSLocalizedString(@"Unknown", nil);
-    self.phoneNumberCell.detailTextLabel.text = self.conversationGroup.formattedNumber;
+    self.phoneNumberCell.detailTextLabel.text = messageGroup.phoneNumber.formattedNumber;
     
-    [self cell:self.blockNumberCell setHidden:!conversationGroup.isSMS];
+    [self cell:self.blockNumberCell setHidden:!messageGroup.isSMS];
     
-    BlockedNumber *blockedNumber = [BlockedNumber blockedNumberForConversationGroup:conversationGroup context:[NSManagedObjectContext MR_defaultContext]];
+    BlockedNumber *blockedNumber = [BlockedNumber blockedNumberForMessageGroup:messageGroup context:[NSManagedObjectContext MR_defaultContext]];
     self.blockSwitch.on = (blockedNumber != nil);
     
     [self reloadDataAnimated:NO];
@@ -37,9 +38,15 @@
 - (void)toggleBlock:(id)sender
 {
     if ([sender isKindOfClass:[UISwitch class]]) {
-        id<JCConversationGroupObject> conversationGroup = self.conversationGroup;
+        JCMessageGroup *messageGroup = self.conversationGroup;
+        Message *message = messageGroup.latestMessage;
+        if (![message isKindOfClass:[SMSMessage class]]) {
+            return;
+        }
+        
+        SMSMessage *smsMessage = (SMSMessage *)message;
         UISwitch *blockSwitch = (UISwitch *)sender;
-        BlockedNumber *blockedNumber = [BlockedNumber blockedNumberForConversationGroup:conversationGroup context:[NSManagedObjectContext MR_defaultContext]];
+        BlockedNumber *blockedNumber = [BlockedNumber blockedNumberForMessageGroup:messageGroup context:[NSManagedObjectContext MR_defaultContext]];
         if (blockedNumber) {
             [BlockedNumber unblockNumber:blockedNumber completion:^(BOOL success, NSError *error) {
                 if (success) {
@@ -49,8 +56,7 @@
                 }
             }];
         } else {
-            DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:((JCSMSConversationGroup *)conversationGroup).didJrn];
-            [BlockedNumber blockNumber:conversationGroup did:did completion:^(BOOL success, NSError *error) {
+            [BlockedNumber blockNumber:messageGroup.phoneNumber did:smsMessage.did completion:^(BOOL success, NSError *error) {
                 if (success) {
                     blockSwitch.on = TRUE;
                 } else {

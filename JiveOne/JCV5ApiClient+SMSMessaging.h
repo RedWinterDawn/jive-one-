@@ -9,7 +9,7 @@
 #import "JCV5ApiClient.h"
 
 #import "JCPhoneNumberDataSource.h"
-#import "JCConversationGroupObject.h"
+#import "JCMessageGroup.h"
 
 @class DID;
 
@@ -27,7 +27,7 @@
                     completion:(JCApiClientCompletionHandler)completion;
 
 + (void)downloadMessagesForDID:(DID *)did
-           toConversationGroup:(id<JCConversationGroupObject>)conversationGroup
+           toMessageGroup:(JCMessageGroup *)conversationGroup
                     completion:(JCApiClientCompletionHandler)completion;
 
 #pragma mark - SMS Message Blocking -

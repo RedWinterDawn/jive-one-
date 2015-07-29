@@ -8,20 +8,19 @@
 
 #import "JCConversationsTableViewController.h"
 
-#import "JCConversationViewController.h"
-#import "JCMessageParticipantTableViewController.h"
-#import "Message.h"
-#import "JCNavigationController.h"
-#import "JCConversationTableViewCell.h"
-#import "SMSMessage+V5Client.h"
-#import "PhoneNumber.h"
-
-#import "Line.h"
+// Models
 #import "PBX.h"
 #import "BlockedNumber+V5Client.h"
-#import "JCSMSConversationGroup.h"
+#import "SMSMessage+V5Client.h"
 
 #import "JCConversationGroupsResultsController.h"
+// Views
+#import "JCConversationTableViewCell.h"
+
+// Controllers
+#import "JCConversationViewController.h"
+#import "JCMessageParticipantTableViewController.h"
+#import "JCNavigationController.h"
 
 NSString *const kJCConversationsTableViewController = @"ConversationCell";
 

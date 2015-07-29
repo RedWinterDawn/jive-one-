@@ -40,7 +40,7 @@
 #import "SMSMessage+V5Client.h"
 #import "BlockedNumber+V5Client.h"
 #import "JCUnknownNumber.h"
-#import "JCSMSConversationGroup.h"
+#import "JCMessageGroup.h"
 
 #import  "JCAppSettings.h"
 
