@@ -219,7 +219,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
         if ([viewController isKindOfClass:[JCConversationViewController class]]) {
             JCConversationViewController *messagesViewController = (JCConversationViewController *)viewController;
             JCMessageGroup *messageGroup = (JCMessageGroup *)[self objectAtIndexPath:[self.tableView indexPathForCell:sender]];
-            messagesViewController.conversationGroup = messageGroup;
+            messagesViewController.messageGroup = messageGroup;
         }
     }
 }

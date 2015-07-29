@@ -62,7 +62,7 @@
     [super viewDidAppear:animated];
     
     // Determine if we should be showing the participant selector.
-    if (!_conversationGroup) {
+    if (!_messageGroup) {
         JCMessageParticipantTableViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:MESSAGES_PARTICIPANT_VIEW_CONTROLLER];
         viewController.view.frame = self.view.bounds;
         viewController.delegate = self;
@@ -88,7 +88,7 @@
 {
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCConversationDetailsViewController class]]) {
-        ((JCConversationDetailsViewController *)viewController).conversationGroup = self.conversationGroup;
+        ((JCConversationDetailsViewController *)viewController).conversationGroup = self.messageGroup;
     }
 }
 
@@ -105,7 +105,7 @@
                      date:(NSDate *)date
 {
     JCAuthenticationManager *authenticationManager = self.authenticationManager;
-    JCMessageGroup *messageGroup = self.conversationGroup;
+    JCMessageGroup *messageGroup = self.messageGroup;
     if (self.count == 0) {
         NSMutableArray *dids = authenticationManager.pbx.dids.allObjects.mutableCopy;
         if (dids.count < 2){
@@ -176,14 +176,18 @@
 
 #pragma mark - Setters -
 
--(void)setConversationGroup:(JCMessageGroup *)conversationGroup
+-(void)setMessageGroup:(JCMessageGroup *)messageGroup
 {
-    _conversationGroup = conversationGroup;
-    self.title = conversationGroup.titleText;
-    if (conversationGroup.isSMS) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", conversationGroup.messageGroupId];
-        SMSMessage *message = [SMSMessage MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
-        [SMSMessage downloadMessagesForDID:message.did toMessageGroup:conversationGroup completion:NULL];
+    _messageGroup = messageGroup;
+    self.title = messageGroup.titleText;
+    if (messageGroup.isSMS) {
+        SMSMessage *smsMessage = (SMSMessage *)self.messageGroup.latestMessage;
+        if (!smsMessage) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", messageGroup.messageGroupId];
+            smsMessage = [SMSMessage MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
+        }
+        
+        [SMSMessage downloadMessagesForDID:smsMessage.did toMessageGroup:messageGroup completion:NULL];
     }
     
     self.fetchedResultsController = nil;
@@ -197,13 +201,14 @@
     if (!_fetchedResultsController) {
         
         // Only do a fetch request if we have a conversation id.
-        if (!_conversationGroup) {
+        if (!_messageGroup) {
             return nil;
         }
         
         NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-        NSString *conversationGroupId = self.conversationGroup.messageGroupId;
-        NSFetchRequest *fetchRequest = [Message MR_requestAllWhere:NSStringFromSelector(@selector(messageGroupId)) isEqualTo:conversationGroupId inContext:context];
+        NSString *messageGroupId = self.messageGroup.messageGroupId;
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND markForDeletion = %@", messageGroupId, @NO];
+        NSFetchRequest *fetchRequest = [Message MR_requestAllWithPredicate:predicate inContext:context ];
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
         fetchRequest.includesSubentities = YES;
         
@@ -391,7 +396,7 @@
 
 -(void)messageParticipantTableViewController:(JCMessageParticipantTableViewController *)controller didSelectConversationGroup:(JCMessageGroup *)conversationGroup
 {
-    self.conversationGroup = conversationGroup;
+    self.messageGroup = conversationGroup;
     [self dismissDropdownViewControllerAnimated:YES completion:NULL];
 }
 

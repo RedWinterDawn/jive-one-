@@ -172,9 +172,9 @@ NSString *const kSMSMessageResponseObjectArrivalTimeKey        = @"epochTime";
 
 #pragma mark Conversation
 
-+(void)downloadMessagesForDID:(DID *)did toMessageGroup:(JCMessageGroup *)conversationGroup completion:(CompletionHandler)completion
++(void)downloadMessagesForDID:(DID *)did toMessageGroup:(JCMessageGroup *)messageGroup completion:(CompletionHandler)completion
 {
-    [JCV5ApiClient downloadMessagesForDID:did toMessageGroup:conversationGroup completion:^(BOOL success, id response, NSError *error) {
+    [JCV5ApiClient downloadMessagesForDID:did toMessageGroup:messageGroup completion:^(BOOL success, id response, NSError *error) {
         if(success) {
             [self processSMSDownloadConversationResponseObject:response did:did completion:completion];
         }
