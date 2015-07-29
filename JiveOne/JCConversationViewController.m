@@ -81,8 +81,6 @@
         for (Message *message in messages) {
             message.read = YES;
         }
-    } completion:^(BOOL success, NSError *error) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
     }];
 }
 
