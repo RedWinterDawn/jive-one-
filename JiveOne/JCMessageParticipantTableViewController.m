@@ -12,6 +12,8 @@
 #import "JCConversationGroupObject.h"
 #import "JCSMSConversationGroup.h"
 #import "Extension.h"
+#import "PhoneNumber.h"
+#import "Contact.h"
 #import "PBX.h"
 
 @interface JCMessageParticipantTableViewController ()
@@ -92,7 +94,11 @@
     if ([phoneNumber isKindOfClass:[JCAddressBookNumber class]]) {
         cell.textLabel.text = phoneNumber.name;
         cell.detailTextLabel.text = phoneNumber.detailText;
-    } else {
+    } else if ([phoneNumber isKindOfClass:[PhoneNumber class]]) {
+        cell.textLabel.text = ((PhoneNumber *)phoneNumber).contact.name;
+        cell.detailTextLabel.text = phoneNumber.detailText;
+    }
+    else {
         cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Send SMS to %@", @"Send SMS to new participant's phone number."), phoneNumber.detailText];
     }
     return cell;
@@ -116,7 +122,8 @@
         [results addObject:[JCUnknownNumber unknownNumberWithNumber:searchText]];
     }
     
-    NSArray *phoneNumbers = [self.phoneBook phoneNumbersWithKeyword:searchText forLine:nil sortedByKey:@"name" ascending:YES];
+    User *user = self.authenticationManager.user;
+    NSArray *phoneNumbers = [self.phoneBook phoneNumbersWithKeyword:searchText forUser:user forLine:nil sortedByKey:@"name" ascending:YES];
     [results addObjectsFromArray:phoneNumbers];
     self.tableData = results;
 }

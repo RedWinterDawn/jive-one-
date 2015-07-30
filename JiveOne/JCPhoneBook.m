@@ -15,6 +15,7 @@
 #import "PhoneNumber.h"
 #import "Extension.h"
 #import "JCVoicemailNumber.h"
+#import "User.h"
 
 @interface JCPhoneBook () {
     JCAddressBook *_addressBook;
@@ -166,12 +167,17 @@
 
 #pragma mark - Keyword Search -
 
--(void)phoneNumbersWithKeyword:(NSString *)keyword forLine:(Line *)line sortedByKey:sortedByKey ascending:(BOOL)ascending completion:(void (^)(NSArray *phoneNumbers))completion
+-(void)phoneNumbersWithKeyword:(NSString *)keyword forUser:(User *)user forLine:(Line *)line sortedByKey:sortedByKey ascending:(BOOL)ascending completion:(void (^)(NSArray *phoneNumbers))completion
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
         Line *localLine = (Line *)[localContext objectWithID:line.objectID];
-        NSArray *localPhoneNumbers = [self phoneNumbersWithKeyword:keyword forLine:localLine sortedByKey:NSStringFromSelector(@selector(name)) ascending:YES];
+        User *localUser = (User *)[localContext objectWithID:user.objectID];
+        NSArray *localPhoneNumbers = [self phoneNumbersWithKeyword:keyword
+                                                           forUser:localUser
+                                                           forLine:localLine
+                                                       sortedByKey:NSStringFromSelector(@selector(name))
+                                                         ascending:YES];
         dispatch_async(dispatch_get_main_queue(), ^{
             NSMutableArray *phoneNumbers = [NSMutableArray arrayWithCapacity:localPhoneNumbers.count];
             for (id<JCPhoneNumberDataSource> localPhoneNumber in localPhoneNumbers) {
@@ -194,22 +200,36 @@
     });
 }
 
--(NSArray *)phoneNumbersWithKeyword:(NSString *)keyword forLine:(Line *)line sortedByKey:sortedByKey ascending:(BOOL)ascending
+-(NSArray *)phoneNumbersWithKeyword:(NSString *)keyword forUser:(User *)user forLine:(Line *)line sortedByKey:sortedByKey ascending:(BOOL)ascending
 {
-    NSMutableArray *phoneNumbers = [NSMutableArray array];
+    NSMutableArray *numbers = [NSMutableArray array];
+    
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+    if (line && line.managedObjectContext != context) {
+        context = line.managedObjectContext;
+    }
     
     @autoreleasepool {
         NSArray *localPhoneNumbers = [_addressBook fetchNumbersWithKeyword:keyword sortedByKey:sortedByKey ascending:ascending].mutableCopy;
-        [phoneNumbers addObjectsFromArray:localPhoneNumbers];
+        [numbers addObjectsFromArray:localPhoneNumbers];
         
-        static NSString *predicateString = @"pbxId = %@ AND jrn != %@ AND (number CONTAINS %@ OR t9 BEGINSWITH %@)";
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString, line.pbx.pbxId, line.jrn, keyword, keyword];
-        NSArray *contacts = [Extension MR_findAllWithPredicate:predicate];
-        [phoneNumbers addObjectsFromArray:contacts];
+        if (user && line) {
+            static NSString *extensionPredicateString = @"pbxId = %@ AND jrn != %@ AND (number CONTAINS %@ OR t9 BEGINSWITH %@)";
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:extensionPredicateString, line.pbx.pbxId, line.jrn, keyword, keyword];
+            NSArray *extensions = [Extension MR_findAllWithPredicate:predicate inContext:user.managedObjectContext];
+            [numbers addObjectsFromArray:extensions];
+        }
+        
+        if (user) {
+            static NSString *phoneNumberPredicateString = @"contact.user CONTAINS %@ AND (number CONTAINS %@ OR contact.name CONTAINS %@)";
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:phoneNumberPredicateString, user, keyword, keyword];
+            NSArray *phoneNumbers = [PhoneNumber MR_findAllWithPredicate:predicate inContext:user.managedObjectContext];
+            [numbers addObjectsFromArray:phoneNumbers];
+        }
     }
     
-    [phoneNumbers sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:sortedByKey ascending:ascending]]];
-    return phoneNumbers;
+    [numbers sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:sortedByKey ascending:ascending]]];
+    return numbers;
 }
 
 
