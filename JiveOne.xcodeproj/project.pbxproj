@@ -254,8 +254,6 @@
 		5DB7AFA31B39D40600451A0B /* PhoneManager.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D1175921AA0D82600D2B03A /* PhoneManager.storyboard */; };
 		5DB7AFA41B39D40600451A0B /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D0199BA1A1BBBAC00F4CF13 /* Main_iPhone.storyboard */; };
 		5DB7AFA51B39D40600451A0B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D25F8221AE5895E00981DB6 /* Main_iPad.storyboard */; };
-		5DB7AFA61B39E45E00451A0B /* JCContactPhoneNumberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE4271B28F65A004FD594 /* JCContactPhoneNumberTableViewCell.xib */; };
-		5DB7AFA71B39E45E00451A0B /* JCContactAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE42B1B2A4C78004FD594 /* JCContactAddressTableViewCell.xib */; };
 		5DB7AFAD1B3A163C00451A0B /* JCGroupTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB7AFAC1B3A163C00451A0B /* JCGroupTableViewController.m */; };
 		5DB7AFB01B3B10A600451A0B /* ContactGroup+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB7AFAF1B3B10A600451A0B /* ContactGroup+V5Client.m */; };
 		5DB7AFB31B3B18F800451A0B /* ContactGroupAssociation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB7AFB21B3B18F800451A0B /* ContactGroupAssociation.m */; };
@@ -2356,7 +2354,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = JC;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Jive Communications, Inc";
 				TargetAttributes = {
 					275F4A4D18AD0FBC00D2F069 = {
@@ -2425,7 +2423,6 @@
 				B7B5D9C11B62F427008AD588 /* calling.mp3 in Resources */,
 				5DB7AF9C1B39D40600451A0B /* Login.storyboard in Resources */,
 				5DB7AF9D1B39D40600451A0B /* Settings_iPad.storyboard in Resources */,
-				5DB7AFA61B39E45E00451A0B /* JCContactPhoneNumberTableViewCell.xib in Resources */,
 				B734D8081B41CE2D004403E2 /* Nokia Tune.mp3 in Resources */,
 				B734D8161B41D0E0004403E2 /* Call For All.mp3 in Resources */,
 				B734D80F1B41CF56004403E2 /* Ring.mp3 in Resources */,
@@ -2453,7 +2450,6 @@
 				B734D8121B41CFA3004403E2 /* Sifi.mp3 in Resources */,
 				5D8FE4321B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib in Resources */,
 				F202433D18B2CF4A006DB2EF /* README.md in Resources */,
-				5DB7AFA71B39E45E00451A0B /* JCContactAddressTableViewCell.xib in Resources */,
 				271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */,
 				9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */,
 				275F4A7018AD0FBC00D2F069 /* Images.xcassets in Resources */,
