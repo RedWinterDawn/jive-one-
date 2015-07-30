@@ -174,6 +174,18 @@
               otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
 }
 
+-(void)collectionView:(JCMessagesCollectionView *)collectionView didDeleteCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    id <JSQMessageData> object = [self objectAtIndexPath:indexPath];
+    if ([object isKindOfClass:[Message class]]) {
+        Message *message = (Message *)object;
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            Message *localMessage = (Message *)[localContext objectWithID:message.objectID];
+            [localMessage markForDeletion:NULL];
+        }];
+    }
+}
+
 #pragma mark - Setters -
 
 -(void)setMessageGroup:(JCMessageGroup *)messageGroup
