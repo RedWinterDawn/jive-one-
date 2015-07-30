@@ -8,21 +8,22 @@
 
 #import "JCRecentEventsTableViewController.h"
 
-#import "JCConversationGroupsResultsController.h"
+#import "JCMessageGroupsResultsController.h"
 #import "JCConversationTableViewCell.h"
 #import "Message.h"
 #import "PBX.h"
 #import "JCAuthenticationManager.h"
 #import "JCStoryboardLoaderViewController.h"
+#import "JCMessageGroup.h"
 
 NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationCell";
 
-@interface JCRecentEventsTableViewController () <JCConversationGroupsResultsControllerDelegate>
+@interface JCRecentEventsTableViewController () <JCFetchedResultsControllerDelegate>
 {
     NSMutableArray *_tableData;
 }
 
-@property (nonatomic, strong) JCConversationGroupsResultsController *conversationGroupsResultsController;
+@property (nonatomic, strong) JCMessageGroupsResultsController *messageGroupsResultsController;
 @property (nonatomic, strong) NSMutableArray *tableData;
 
 @end
@@ -52,7 +53,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 
 -(void)reloadTable
 {
-    _conversationGroupsResultsController = nil;
+    _messageGroupsResultsController = nil;
     _tableData = nil;
     [super reloadTable];
 }
@@ -61,7 +62,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
     [super didReceiveMemoryWarning];
     
     self.tableData = nil;
-    self.conversationGroupsResultsController = nil;
+    self.messageGroupsResultsController = nil;
 }
 
 -(NSUInteger)count
@@ -92,7 +93,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id <NSObject>)object atIndexPath:(NSIndexPath*)indexPath;
 {
-    if ([object conformsToProtocol:@protocol(JCConversationGroupObject)])
+    if ([object isKindOfClass:[JCMessageGroup class]])
     {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCRecentEventConversationCellResuseIdentifier];
         [self configureCell:cell withObject:object];
@@ -105,14 +106,14 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
-    if ([object conformsToProtocol:@protocol(JCConversationGroupObject)] && [cell isKindOfClass:[JCConversationTableViewCell class]])
+    if ([object isKindOfClass:[JCMessageGroup class]] && [cell isKindOfClass:[JCConversationTableViewCell class]])
     {
-        id<JCConversationGroupObject> group = (id<JCConversationGroupObject>)object;
+        JCMessageGroup *messageGroup = (JCMessageGroup *)object;
         JCConversationTableViewCell *conversationCell = (JCConversationTableViewCell *)cell;
-        conversationCell.name.text    = group.titleText;
-        conversationCell.detail.text  = group.detailText;
-        conversationCell.date.text    = group.formattedModifiedShortDate;
-        conversationCell.read         = group.isRead;
+        conversationCell.name.text    = messageGroup.titleText;
+        conversationCell.detail.text  = messageGroup.detailText;
+        conversationCell.date.text    = messageGroup.formattedModifiedShortDate;
+        conversationCell.read         = messageGroup.isRead;
     }
     else
     {
@@ -143,25 +144,26 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
     return _tableData;
 }
 
--(JCConversationGroupsResultsController *)conversationGroupResultsController
+-(JCMessageGroupsResultsController *)conversationGroupResultsController
 {
-    if (!_conversationGroupsResultsController){
+    if (!_messageGroupsResultsController){
         PBX *pbx = self.authenticationManager.pbx;
         if (pbx && [pbx smsEnabled])
         {
-            NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:pbx.managedObjectContext];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion = %@", @NO];
+            NSFetchRequest *fetchRequest = [Message MR_requestAllWithPredicate:predicate inContext:pbx.managedObjectContext];
             fetchRequest.includesSubentities = YES;
             fetchRequest.sortDescriptors = self.fetchedResultsController.fetchRequest.sortDescriptors;
-            _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest pbx:pbx];
-            _conversationGroupsResultsController.delegate = self;
+            _messageGroupsResultsController = [[JCMessageGroupsResultsController alloc] initWithFetchRequest:fetchRequest pbx:pbx];
+            _messageGroupsResultsController.delegate = self;
             
             __autoreleasing NSError *error = nil;
-            if (![_conversationGroupsResultsController performFetch:&error]) {
-                [self.tableView reloadData];
+            if (![_messageGroupsResultsController performFetch:&error]) {
+                NSLog(@"%@", error);
             };
         }
     }
-    return _conversationGroupsResultsController;
+    return _messageGroupsResultsController;
 }
 
 #pragma mark - Delegate Handlers -
@@ -188,10 +190,6 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
     UITableView *tableView = self.tableView;
     NSMutableArray *tableData = self.tableData;
     
-    // TODO: translate index path for controller into index path for table, looking up the objects
-    // index, and calculate the offset from the indexPath and newIndexPath, and convert into
-    // indexPaths relative to the table data.
-    
     switch(type)
     {
         case NSFetchedResultsChangeInsert:
@@ -200,70 +198,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
             // correct. Then resort the array it to find the actual index it will be, and update the
             // table view to show the inserted cell at the right index path.
             [tableData addObject:anObject];
-            [tableData sortUsingDescriptors:self.fetchedResultsController.fetchRequest.sortDescriptors];
-            NSUInteger row = [tableData indexOfObject:anObject];
-            newIndexPath = [NSIndexPath indexPathForRow:row inSection:newIndexPath.section];
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationTop];
-            
-            break;
-        }
-        case NSFetchedResultsChangeDelete:
-        {
-            if ([tableData containsObject:anObject]) {
-                NSUInteger row = [tableData indexOfObject:anObject];
-                [tableData removeObject:anObject];
-                indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
-                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                
-            }
-            break;
-        }
-        case NSFetchedResultsChangeUpdate:
-        {
-            if ([tableData containsObject:anObject]) {
-                NSUInteger row = [tableData indexOfObject:anObject];
-                indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
-                UITableViewCell *cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-                [self configureCell:cell atIndexPath:indexPath];
-                
-            }
-            break;
-        }
-        case NSFetchedResultsChangeMove:
-        {
-//            NSUInteger deleteRow = [_tableData indexOfObject:anObject];
-//            indexPath = [NSIndexPath indexPathForRow:deleteRow inSection:indexPath.section];
-//            [_tableData sortUsingDescriptors:self.fetchedResultsController.fetchRequest.sortDescriptors];
-//            NSUInteger newRow = [_tableData indexOfObject:anObject];
-//            newIndexPath = [NSIndexPath indexPathForRow:newRow inSection:newIndexPath.section];
-//            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        }
-    }
-}
-
--(void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    // Override to do nothing.
-}
-
-#pragma mark JCConversationGroupsResultsControllerDelegate
-
--(void)conversationGroupResultsControllerWillChangeContent:(JCConversationGroupsResultsController *)controller
-{
-    // Override to do nothing.
-}
-
--(void)conversationGroupResultsController:(JCConversationGroupsResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(JCConversationGroupsResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-    UITableView *tableView = self.tableView;
-    NSMutableArray *tableData = self.tableData;
-    switch(type)
-    {
-        case NSFetchedResultsChangeInsert:
-        {
-            [tableData addObject:anObject];
-            [tableData sortUsingDescriptors:self.fetchedResultsController.fetchRequest.sortDescriptors];
+            [tableData sortUsingDescriptors:controller.fetchRequest.sortDescriptors];
             NSUInteger row = [tableData indexOfObject:anObject];
             newIndexPath = [NSIndexPath indexPathForRow:row inSection:newIndexPath.section];
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationTop];
@@ -283,16 +218,13 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
         {
             if ([tableData containsObject:anObject]) {
                 NSUInteger row = [tableData indexOfObject:anObject];
-                [tableData replaceObjectAtIndex:row withObject:anObject];
                 indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
-                UITableViewCell *cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-                [self configureCell:cell atIndexPath:indexPath];
+                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             }
             break;
         }
         case NSFetchedResultsChangeMove:
         {
-            
             // In this case the anObject is a different object, but since the isEqual: compares
             // against the conversationGroupId, we are able to get the index of the object and
             // remove the old object because it is found in removeObject, which compares using the
@@ -305,7 +237,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
             }
             
             [tableData addObject:anObject];
-            [tableData sortUsingDescriptors:self.fetchedResultsController.fetchRequest.sortDescriptors];
+            [tableData sortUsingDescriptors:controller.fetchRequest.sortDescriptors];
             NSUInteger newRow = [tableData indexOfObject:anObject];
             newIndexPath = [NSIndexPath indexPathForRow:newRow inSection:newIndexPath.section];
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -314,7 +246,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
     }
 }
 
--(void)conversationGroupResultsControllerDidChangeContent:(JCConversationGroupsResultsController *)controller
+-(void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     // Override to do nothing.
 }
