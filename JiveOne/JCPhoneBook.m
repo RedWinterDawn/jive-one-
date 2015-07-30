@@ -49,8 +49,6 @@
 
 -(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number name:(NSString *)name forPbx:(PBX *)pbx excludingLine:(Line *)line;
 {
-    
-    
     // We must at least have a number. If we do not have a number, we return nil.
     if (!number) {
         return nil;
@@ -67,8 +65,11 @@
         return phoneNumber;
     }
     
+    phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
+    phoneNumber = [self phoneNumberForNumber:phoneNumber user:pbx.user];
+    
     // Check if the number is a local contact from the local contacts address book.
-    return [self localPhoneNumberForPhoneNumber:[JCPhoneNumber phoneNumberWithName:name number:number]context:pbx.managedObjectContext];
+    return [self localPhoneNumberForPhoneNumber:phoneNumber context:pbx.managedObjectContext];
     
     // If we did not get a phone number object, we have a unknown number. If we have the name, we
     // can return a named number, otherwise we return an unknown number.
@@ -96,6 +97,42 @@
     }
     
     return [Extension extensionForNumber:number onPbx:pbx];
+}
+
+-(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(id<JCPhoneNumberDataSource>)number user:(User *)user
+{
+    if (!number) {
+        return number;
+    }
+    
+    if (!user) {
+        return number;
+    }
+    
+    NSLog(@"%@", number);
+    
+    static NSString *numberFormat = @"contact.user CONTAINS %@ AND (number CONTAINS %@ OR number = %@)";
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:numberFormat, user, number.nationalNumber, number.dialableNumber];
+    NSArray *numbers = [PhoneNumber MR_findAllWithPredicate:predicate inContext:user.managedObjectContext];
+    if (!numbers || numbers.count == 0) {
+        return nil;
+    }
+    
+    NSMutableArray *phoneNumbers;
+    if (number.name.length > 0) {
+        phoneNumbers = [NSMutableArray arrayWithObject:number];
+        [phoneNumbers addObjectsFromArray:numbers];
+    } else {
+        phoneNumbers = numbers.mutableCopy;
+    }
+    
+    NSUInteger count = phoneNumbers.count;
+    if (count > 1) {
+        return [JCMultiPersonPhoneNumber multiPersonPhoneNumberWithPhoneNumbers:phoneNumbers];
+    } else if (count > 0) {
+        return phoneNumbers.firstObject;
+    }
+    return number;
 }
 
 -(id<JCPhoneNumberDataSource>)localPhoneNumberForPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber context:(NSManagedObjectContext *)context
