@@ -7,7 +7,7 @@
 //
 
 #import "StaticDataTableViewController.h"
-#import "JCConversationGroupObject.h"
+#import "JCMessageGroup.h"
 
 @interface JCConversationDetailsViewController : StaticDataTableViewController
 
@@ -15,7 +15,7 @@
 @property (nonatomic, weak) IBOutlet UITableViewCell *blockNumberCell;
 @property (nonatomic, weak) IBOutlet UISwitch *blockSwitch;
 
-@property (nonatomic, strong) id<JCConversationGroupObject> conversationGroup;
+@property (nonatomic, strong) JCMessageGroup *conversationGroup;
 
 -(IBAction)toggleBlock:(id)sender;
 

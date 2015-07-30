@@ -28,12 +28,12 @@ NSString *const kRecentEventMarkForDeletionAttributeKey = @"markForDeletion";
 @dynamic date;
 @dynamic eventId;
 
--(void)setRead:(bool)read
+-(void)setRead:(BOOL)read
 {
     [self setPrimitiveValueFromBoolValue:read forKey:kRecentEventReadAttributeKey];
 }
 
--(bool)isRead
+-(BOOL)isRead
 {
     return [self boolValueFromPrimitiveValueForKey:kRecentEventReadAttributeKey];
 }
@@ -92,6 +92,14 @@ NSString *const kRecentEventMarkForDeletionAttributeKey = @"markForDeletion";
 {
     self.read = true;
     self.markForDeletion = true;
+    if (completion) {
+        completion(YES, nil);
+    }
+}
+
+- (void)markAsRead:(CompletionHandler)completion
+{
+    self.read = true;
     if (completion) {
         completion(YES, nil);
     }
