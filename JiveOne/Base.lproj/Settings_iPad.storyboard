@@ -195,6 +195,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="QCN-jP-O4P" appends="YES" id="8EX-rd-Lhx"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -261,7 +264,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m47-zx-oks" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="QCN-jP-O4P" userLabel="Leave Feeback Tap Gesture Recognizer">
                     <connections>
-                        <action selector="leaveFeedback:" destination="CGS-rY-7pk" id="RBX-1l-16L"/>
+                        <action selector="leaveFeedback:" destination="CGS-rY-7pk" id="P66-IP-86H"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
