@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sO6-BN-7GY">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -54,29 +55,6 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="hYY-U9-bgs" detailTextLabel="Y7Z-2w-WvV" style="IBUITableViewCellStyleValue1" id="ji2-Ha-hdR" userLabel="Extension Cell">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ji2-Ha-hdR" id="j4V-1m-qHI">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Extension" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hYY-U9-bgs">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Y7Z-2w-WvV">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="s07-Fo-sp4" kind="showDetail" id="IVv-US-USq"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="NK9-Cj-vZW" style="IBUITableViewCellStyleDefault" id="sVr-fD-w7z">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -111,6 +89,54 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="QqT-eS-rQM" kind="showDetail" id="soN-Jk-6K7"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Contacts" footerTitle="Gives an indicator to show you other's presence from your work directory." id="Isv-n3-BmN">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="EnablePresenceCell" selectionStyle="none" indentationWidth="10" id="GWW-wh-d8r" userLabel="EnablePresenceCellRow" customClass="JCSwitchTableViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GWW-wh-d8r" id="W28-gt-9zY" userLabel="EPView">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="U8Z-ZN-QQz" userLabel="EPSwitch">
+                                                    <rect key="frame" x="536" y="6" width="51" height="31"/>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show other people's availability" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbw-ke-HMI" userLabel="Enable Presence label">
+                                                    <rect key="frame" x="14" y="12" width="498" height="19"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="19" id="aIt-EU-0KU"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="U8Z-ZN-QQz" secondAttribute="trailing" constant="15" id="2ra-a9-YVj"/>
+                                                <constraint firstItem="lbw-ke-HMI" firstAttribute="leading" secondItem="W28-gt-9zY" secondAttribute="leading" constant="14" id="8Qk-Cb-B5L"/>
+                                                <constraint firstAttribute="centerY" secondItem="U8Z-ZN-QQz" secondAttribute="centerY" id="NUh-FD-wXt"/>
+                                                <constraint firstItem="U8Z-ZN-QQz" firstAttribute="leading" secondItem="lbw-ke-HMI" secondAttribute="trailing" constant="24" id="QgL-Rc-vIB"/>
+                                                <constraint firstItem="lbw-ke-HMI" firstAttribute="top" secondItem="W28-gt-9zY" secondAttribute="top" constant="12" id="hTN-GV-eYH"/>
+                                                <constraint firstItem="lbw-ke-HMI" firstAttribute="centerY" secondItem="U8Z-ZN-QQz" secondAttribute="centerY" id="kyL-fr-KR5"/>
+                                                <constraint firstItem="lbw-ke-HMI" firstAttribute="leading" secondItem="W28-gt-9zY" secondAttribute="leading" constant="14" id="qfV-NY-9nD"/>
+                                                <constraint firstItem="lbw-ke-HMI" firstAttribute="top" secondItem="W28-gt-9zY" secondAttribute="topMargin" constant="4" id="qor-XQ-HOB"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="8Qk-Cb-B5L"/>
+                                                    <exclude reference="hTN-GV-eYH"/>
+                                                    <exclude reference="qor-XQ-HOB"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" none="YES" notEnabled="YES"/>
+                                        </accessibility>
+                                        <connections>
+                                            <outlet property="switchBtn" destination="U8Z-ZN-QQz" id="u2h-fr-9nb"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -227,7 +253,7 @@
                     <connections>
                         <outlet property="appLabel" destination="6vm-jA-uoA" id="ZXt-5T-asK"/>
                         <outlet property="buildLabel" destination="2bj-Fk-4fy" id="yqm-xz-cnT"/>
-                        <outlet property="extensionLabel" destination="Y7Z-2w-WvV" id="Oon-kd-LUc"/>
+                        <outlet property="presenceEnabled" destination="U8Z-ZN-QQz" id="pbB-7K-tuY"/>
                         <outlet property="smsUserDefaultNumber" destination="mtR-S3-xtq" id="Lnv-Sa-4Ll"/>
                         <outlet property="userNameLabel" destination="gbm-40-rdY" id="tqE-Bb-0De"/>
                     </connections>
@@ -421,6 +447,33 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
+                            <tableViewSection footerTitle="Extension you wish to make and receive phone calls on." id="y9f-Wd-9hG">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="yW1-0c-eHv" detailTextLabel="Jku-4e-lYJ" style="IBUITableViewCellStyleValue1" id="z84-p8-dSH" userLabel="Extension">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z84-p8-dSH" id="eiz-Xr-pel">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Extension" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yW1-0c-eHv">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jku-4e-lYJ">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="s07-Fo-sp4" kind="showDetail" id="2iX-rU-29B"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection footerTitle="Disable calling to improve your battery life." id="cKA-OY-gLP">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="vIP-Ag-5pv" userLabel="Disable Calling">
@@ -519,43 +572,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="EnablePresenceCell" selectionStyle="none" indentationWidth="10" id="nX9-a0-4zR" userLabel="EnablePresenceCellRow">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nX9-a0-4zR" id="XUL-Eh-Zwa" userLabel="EPView">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="An1-yL-qUc" userLabel="EPSwitch">
-                                                    <rect key="frame" x="536" y="6" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="togglePresenceEnabled:" destination="m2b-xl-KHM" eventType="valueChanged" id="7ig-mD-QK2"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show other people's availability" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ftT-5x-ilG" userLabel="Enable Presence label">
-                                                    <rect key="frame" x="14" y="12" width="498" height="19"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="19" id="wHT-n5-2DV"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="ftT-5x-ilG" firstAttribute="leading" secondItem="XUL-Eh-Zwa" secondAttribute="leading" constant="14" id="4iF-HY-QRB"/>
-                                                <constraint firstItem="ftT-5x-ilG" firstAttribute="top" secondItem="XUL-Eh-Zwa" secondAttribute="top" constant="12" id="90T-Lg-GLP"/>
-                                                <constraint firstItem="ftT-5x-ilG" firstAttribute="centerY" secondItem="An1-yL-qUc" secondAttribute="centerY" id="9f4-Uz-uwl"/>
-                                                <constraint firstItem="An1-yL-qUc" firstAttribute="leading" secondItem="ftT-5x-ilG" secondAttribute="trailing" constant="24" id="GDu-Fa-4Nb"/>
-                                                <constraint firstAttribute="trailing" secondItem="An1-yL-qUc" secondAttribute="trailing" constant="15" id="Job-Db-TH9"/>
-                                                <constraint firstItem="ftT-5x-ilG" firstAttribute="top" secondItem="XUL-Eh-Zwa" secondAttribute="topMargin" constant="4" id="MOw-mL-MD0"/>
-                                                <constraint firstAttribute="centerY" secondItem="An1-yL-qUc" secondAttribute="centerY" id="Raj-y1-c91"/>
-                                                <constraint firstItem="ftT-5x-ilG" firstAttribute="leading" secondItem="XUL-Eh-Zwa" secondAttribute="leading" constant="14" id="bgD-Uy-tRe"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <accessibility key="accessibilityConfiguration">
-                                            <accessibilityTraits key="traits" none="YES" notEnabled="YES"/>
-                                        </accessibility>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Intercom" footerTitle="When enabled, people can dial *%@ and start talking to you." id="emh-Cw-PNO">
@@ -635,12 +651,10 @@
                     <navigationItem key="navigationItem" title="Calling" id="7j1-4r-H7q"/>
                     <connections>
                         <outlet property="doNotDisturbSW" destination="vwB-dQ-bup" id="ZN1-9d-JkK"/>
-                        <outlet property="enablePreasenceCell" destination="nX9-a0-4zR" id="7ps-yd-otH"/>
                         <outlet property="intercomSwitch" destination="JAI-3U-DBS" id="cqJ-Zh-g2S"/>
                         <outlet property="microphoneMuteCell" destination="C8Y-wi-cYb" id="blS-j1-ZZs"/>
                         <outlet property="microphoneMuteLabel" destination="gfY-ky-BlC" id="hXf-SQ-jsI"/>
                         <outlet property="microphoneMuteSwitch" destination="1cj-zT-ra3" id="Vb2-XH-3Mm"/>
-                        <outlet property="presenceEnabled" destination="An1-yL-qUc" id="2yc-X4-LD6"/>
                         <outlet property="sipDisabled" destination="3Ft-xb-dhn" id="mIy-OI-AQV"/>
                         <outlet property="wifiOnly" destination="UcG-Ub-Stm" id="52I-Z9-Eut"/>
                     </connections>
@@ -682,125 +696,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m0M-Nc-mUC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3174" y="-374"/>
-        </scene>
-        <!--Volume-->
-        <scene sceneID="1EF-XW-bJi">
-            <objects>
-                <tableViewController id="ruq-sk-ywh" customClass="JCDialToneTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="MrV-G0-99x">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <sections>
-                            <tableViewSection footerTitle="This controlls the overall volume for your device. Can also be controlled with the volume buttons on the side of your device." id="LWk-hY-dYc">
-                                <cells>
-                                    <tableViewCell multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="80" id="3Gp-hy-xQu" customClass="JCSysVolCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Gp-hy-xQu" id="vJu-jX-SFQ">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="System Volume" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1j5-qj-Bhj">
-                                                    <rect key="frame" x="15" y="8" width="572" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JRd-s4-1UA" userLabel="iconBackground" customClass="JCRoundedView">
-                                                    <rect key="frame" x="549" y="26" width="34" height="34"/>
-                                                    <color key="backgroundColor" red="0.84081044819999995" green="0.84081044819999995" blue="0.84081044819999995" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="JRd-s4-1UA" secondAttribute="height" multiplier="1:1" id="xbd-ZD-RGx"/>
-                                                    </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <integer key="value" value="10"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HSh-Gn-jxl" customClass="MPVolumeView">
-                                                    <rect key="frame" x="23" y="32" width="554" height="34"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="26" id="AVK-rH-VFW"/>
-                                                        <constraint firstAttribute="height" constant="34" id="zAJ-3V-RMm"/>
-                                                    </constraints>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="AVK-rH-VFW"/>
-                                                        </mask>
-                                                    </variation>
-                                                </view>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="1j5-qj-Bhj" firstAttribute="top" secondItem="vJu-jX-SFQ" secondAttribute="top" constant="8" id="28l-5Q-F8l"/>
-                                                <constraint firstItem="HSh-Gn-jxl" firstAttribute="bottom" secondItem="JRd-s4-1UA" secondAttribute="bottom" id="4hG-r7-X0z"/>
-                                                <constraint firstItem="HSh-Gn-jxl" firstAttribute="leading" secondItem="vJu-jX-SFQ" secondAttribute="leading" constant="23" id="BDO-yG-yYf"/>
-                                                <constraint firstAttribute="trailing" secondItem="1j5-qj-Bhj" secondAttribute="trailing" constant="13" id="NHO-mn-k1S"/>
-                                                <constraint firstAttribute="trailing" secondItem="HSh-Gn-jxl" secondAttribute="trailing" constant="23" id="NI2-nn-uum"/>
-                                                <constraint firstItem="HSh-Gn-jxl" firstAttribute="top" secondItem="JRd-s4-1UA" secondAttribute="top" constant="6" id="Tkl-9T-2MP"/>
-                                                <constraint firstItem="HSh-Gn-jxl" firstAttribute="top" secondItem="vJu-jX-SFQ" secondAttribute="topMargin" constant="24" id="ULW-8j-Txa"/>
-                                                <constraint firstItem="HSh-Gn-jxl" firstAttribute="trailing" secondItem="JRd-s4-1UA" secondAttribute="trailing" constant="-6" id="cip-nB-Vbb"/>
-                                                <constraint firstItem="1j5-qj-Bhj" firstAttribute="leading" secondItem="vJu-jX-SFQ" secondAttribute="leading" constant="15" id="dVC-Vf-qgY"/>
-                                                <constraint firstItem="HSh-Gn-jxl" firstAttribute="height" secondItem="JRd-s4-1UA" secondAttribute="height" id="zov-VI-wuU"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="4hG-r7-X0z"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection footerTitle="Controlls the volume of the ringer in respect to the system volume." id="cc3-bX-px2">
-                                <cells>
-                                    <tableViewCell multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="80" id="oHi-K8-ApI" customClass="JCSysVolCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oHi-K8-ApI" id="jKb-b9-C8j">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ringer Volume" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2uI-5L-wK5">
-                                                    <rect key="frame" x="15" y="10" width="570" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="PtJ-WN-blA">
-                                                    <rect key="frame" x="21" y="29" width="558" height="41"/>
-                                                    <connections>
-                                                        <action selector="sliderValue:" destination="ruq-sk-ywh" eventType="valueChanged" id="C70-86-Nn2"/>
-                                                    </connections>
-                                                </slider>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="PtJ-WN-blA" secondAttribute="bottom" constant="10" id="CyL-1j-uEG"/>
-                                                <constraint firstAttribute="trailing" secondItem="PtJ-WN-blA" secondAttribute="trailing" constant="23" id="PRP-GM-XsL"/>
-                                                <constraint firstItem="2uI-5L-wK5" firstAttribute="leading" secondItem="jKb-b9-C8j" secondAttribute="leading" constant="15" id="Q0S-Ab-7X7"/>
-                                                <constraint firstItem="PtJ-WN-blA" firstAttribute="leading" secondItem="jKb-b9-C8j" secondAttribute="leading" constant="23" id="ZDZ-4q-3LB"/>
-                                                <constraint firstItem="2uI-5L-wK5" firstAttribute="top" secondItem="jKb-b9-C8j" secondAttribute="top" constant="10" id="Zkj-fu-K9A"/>
-                                                <constraint firstItem="PtJ-WN-blA" firstAttribute="top" secondItem="2uI-5L-wK5" secondAttribute="bottom" constant="1" id="rtY-0a-xDZ"/>
-                                                <constraint firstAttribute="trailing" secondItem="2uI-5L-wK5" secondAttribute="trailing" constant="15" id="uaD-6p-8x0"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection footerTitle="Select a ringtone to jam out too." id="Ot7-jM-xmJ">
-                                <cells/>
-                            </tableViewSection>
-                        </sections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Volume" id="ypg-Ji-8fx"/>
-                    <connections>
-                        <outlet property="routeIconBackground" destination="JRd-s4-1UA" id="t20-Qf-Adr"/>
-                        <outlet property="volumeslidder" destination="PtJ-WN-blA" id="z0e-fG-F6n"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9DW-C0-KYS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3942" y="356"/>
         </scene>
         <!--Select a Line-->
         <scene sceneID="3a5-fS-xGB">
@@ -1044,12 +939,87 @@
                         <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="ruq-sk-ywh" kind="relationship" relationship="rootViewController" id="d26-Fc-c6V"/>
+                        <segue destination="faM-Qn-oxK" kind="relationship" relationship="rootViewController" id="gKB-wl-SfH"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cdT-Z8-ekg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3174" y="373"/>
+        </scene>
+        <!--Volume-->
+        <scene sceneID="RPz-oh-OMx">
+            <objects>
+                <tableViewController id="faM-Qn-oxK" customClass="JCDialToneTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="rE3-Fp-ecv">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection headerTitle="System Volume" footerTitle="This controlls the overall volume for your device. Can also be controlled with the volume buttons on the side of your device." id="mE3-kR-PQ7">
+                                <cells>
+                                    <tableViewCell multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="volume" rowHeight="80" id="74x-be-IM8">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="74x-be-IM8" id="S19-FR-8eV">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8kB-ia-aYB" userLabel="iconBackground" customClass="JCRoundedView">
+                                                    <rect key="frame" x="549" y="26" width="34" height="34"/>
+                                                    <color key="backgroundColor" red="0.84081044819999995" green="0.84081044819999995" blue="0.84081044819999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="8kB-ia-aYB" secondAttribute="height" multiplier="1:1" id="WI1-5I-FdV"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <integer key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8m-4q-zB6" customClass="MPVolumeView">
+                                                    <rect key="frame" x="23" y="32" width="554" height="34"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="26" id="UD2-Tu-jig"/>
+                                                        <constraint firstAttribute="height" constant="34" id="wT5-s2-KYT"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="UD2-Tu-jig"/>
+                                                        </mask>
+                                                    </variation>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="W8m-4q-zB6" secondAttribute="trailing" constant="23" id="0v1-IU-8bj"/>
+                                                <constraint firstItem="W8m-4q-zB6" firstAttribute="height" secondItem="8kB-ia-aYB" secondAttribute="height" id="6ba-cY-8Dw"/>
+                                                <constraint firstItem="W8m-4q-zB6" firstAttribute="bottom" secondItem="8kB-ia-aYB" secondAttribute="bottom" id="6wc-Oi-CWY"/>
+                                                <constraint firstItem="W8m-4q-zB6" firstAttribute="trailing" secondItem="8kB-ia-aYB" secondAttribute="trailing" constant="-6" id="Nn3-7j-mf6"/>
+                                                <constraint firstItem="W8m-4q-zB6" firstAttribute="leading" secondItem="S19-FR-8eV" secondAttribute="leading" constant="23" id="aAH-02-Ox9"/>
+                                                <constraint firstItem="W8m-4q-zB6" firstAttribute="top" secondItem="8kB-ia-aYB" secondAttribute="top" constant="6" id="de1-1k-uBi"/>
+                                                <constraint firstItem="W8m-4q-zB6" firstAttribute="top" secondItem="S19-FR-8eV" secondAttribute="topMargin" constant="24" id="nMk-46-qkk"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="6wc-Oi-CWY"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Ringer" footerTitle="Select a ringtone to jam out too." id="QSJ-2u-1a8">
+                                <cells/>
+                            </tableViewSection>
+                        </sections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Volume" id="pbz-y1-3BY"/>
+                    <connections>
+                        <outlet property="routeIconBackground" destination="8kB-ia-aYB" id="bU8-cS-89d"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYu-Uz-VPw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3986" y="405"/>
         </scene>
     </scenes>
     <resources>
