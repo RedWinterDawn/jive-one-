@@ -139,7 +139,7 @@ NSString *const kGCMSenderId = @"937754980938";
 {
     LOG_Info();
     // If we are not a V5 PBX, we do not have a voicemail data to go fetch, and return with a no data callback.
-    if (![JCAuthenticationManager sharedManager].line.pbx.isV5)
+    if (![UIApplication sharedApplication].authenticationManager.line.pbx.isV5)
         return UIBackgroundFetchResultNoData;
     
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
@@ -229,7 +229,7 @@ NSString *const kGCMSenderId = @"937754980938";
     
     AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)((NSNumber *)[notification.userInfo valueForKey:AFNetworkingReachabilityNotificationStatusItem]).integerValue;
     AFNetworkReachabilityManager *networkManager = [AFNetworkReachabilityManager sharedManager];
-    Line *line = [JCAuthenticationManager sharedManager].line;
+    Line *line = [UIApplication sharedApplication].authenticationManager.line;
     if (!line) {
         return;
     }
@@ -362,8 +362,7 @@ NSString *const kGCMSenderId = @"937754980938";
 
 -(void)presenceChanged:(NSNotification *)notification
 {
-    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedManager];
-    [self subscribeToJasmineEventsForLine:authenticationManager.line];
+    [self subscribeToJasmineEventsForLine:[UIApplication sharedApplication].authenticationManager.line];
 }
 
 #pragma mark - Delegate Handlers -
@@ -437,7 +436,7 @@ NSString *const kGCMSenderId = @"937754980938";
     [center addObserver:self selector:@selector(presenceChanged:) name:kJCAppSettingsPresenceChangedNotification object:appSettings];
 
     // Authentication
-    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedManager];
+    JCAuthenticationManager *authenticationManager = application.authenticationManager;
     [center addObserver:self selector:@selector(userRequiresAuthentication:) name:kJCAuthenticationManagerUserRequiresAuthenticationNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userWillLogout:) name:kJCAuthenticationManagerUserWillLogOutNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];

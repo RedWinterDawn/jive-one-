@@ -75,7 +75,7 @@ static NSMutableArray *authenticationCompletionRequests;
 
 + (void)requestAuthentication:(CompletionHandler)completion
 {
-    User *user = [JCAuthenticationManager sharedManager].user;
+    User *user = [UIApplication sharedApplication].authenticationManager.user;
     [self requestAuthenticationForUser:user completion:completion];
 }
 
@@ -461,6 +461,25 @@ NSString *const kJCAuthManagerErrorDomain = @"AuthenticationManagerError";
 @end
 
 @implementation UIViewController (AuthenticationManager)
+
+- (void)setAuthenticationManager:(JCAuthenticationManager *)authenticationManager {
+    objc_setAssociatedObject(self, @selector(authenticationManager), authenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+-(JCAuthenticationManager *)authenticationManager
+{
+    JCAuthenticationManager *authenticationManager = objc_getAssociatedObject(self, @selector(authenticationManager));
+    if (!authenticationManager)
+    {
+        authenticationManager = [UIApplication sharedApplication].authenticationManager;
+        objc_setAssociatedObject(self, @selector(authenticationManager), authenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return authenticationManager;
+}
+
+@end
+
+@implementation UIApplication (AutenticationManager)
 
 - (void)setAuthenticationManager:(JCAuthenticationManager *)authenticationManager {
     objc_setAssociatedObject(self, @selector(authenticationManager), authenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
