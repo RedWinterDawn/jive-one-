@@ -61,3 +61,9 @@ extern NSString *const kJCAuthenticationManagerLineChangedNotification;
 @property (nonatomic, strong) JCAuthenticationManager *authenticationManager;
 
 @end
+
+@interface UIApplication (AuthenticationManager)
+
+@property (nonatomic, strong) JCAuthenticationManager *authenticationManager;
+
+@end
