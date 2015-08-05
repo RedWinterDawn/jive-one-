@@ -14,4 +14,6 @@
 @property (nonatomic, strong) NSString *viewControllerIdentifier;
 @property (nonatomic, readonly) UIViewController *embeddedViewController;
 
+@property (nonatomic) CGFloat bottomOffset;
+
 @end

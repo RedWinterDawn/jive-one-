@@ -33,40 +33,48 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    _readColor = [UIColor darkGrayColor];
-    _unreadColor = [UIColor blackColor];
-    _dateColor = [UIColor lightGrayColor];
+    _readColor      = [UIColor darkGrayColor];
+    _unreadColor    = [UIColor blackColor];
+    _dateColor      = [UIColor lightGrayColor];
     
-    _nameFont = self.name.font;
-    _boldNameFont = [UIFont fontWithDescriptor:[[_nameFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_nameFont.pointSize];
+    _nameFont       = self.name.font;
+    _boldNameFont   = [UIFont fontWithDescriptor:[[_nameFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold]
+                                            size:_nameFont.pointSize];
     
-    _detailFont = self.detail.font;
-    _boldDetailFont = [UIFont fontWithDescriptor:[[_detailFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_detailFont.pointSize];
+    _detailFont     = self.detail.font;
+    _boldDetailFont = [UIFont fontWithDescriptor:[[_detailFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold]
+                                            size:_detailFont.pointSize];
     
-    _dateFont = self.date.font;
-    _boldDateFont = [UIFont fontWithDescriptor:[[_dateFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_dateFont.pointSize];
+    _dateFont       = self.date.font;
+    _boldDateFont   = [UIFont fontWithDescriptor:[[_dateFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold]
+                                            size:_dateFont.pointSize];
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
     
+    UILabel *name   = self.name;
+    UILabel *detail = self.detail;
+    UILabel *date   = self.date;
+    UIView  *unread = self.unreadCircle;
+    
     if (self.isRead) {
-        self.name.font              = _nameFont;
-        self.name.textColor     = _readColor;
-        self.detail.font            = _detailFont;
-        self.detail.textColor    = _readColor;
-        self.date.font              = _dateFont;
-        self.date.textColor      = _dateColor;
-        self.unreadCircle.hidden = true;
+        name.font           = _nameFont;
+        name.textColor      = _readColor;
+        detail.font         = _detailFont;
+        detail.textColor    = _readColor;
+        date.font           = _dateFont;
+        date.textColor      = _dateColor;
+        unread.hidden       = true;
     } else {
-        self.name.font              = _boldNameFont;
-        self.name.textColor     = _unreadColor;
-        self.detail.font            = _boldDetailFont;
-        self.detail.textColor   = _unreadColor;
-        self.date.font              = _boldDateFont;
-        self.date.textColor     =  _unreadColor;
-        self.unreadCircle.hidden = false;
+        name.font           = _boldNameFont;
+        name.textColor      = _unreadColor;
+        detail.font         = _boldDetailFont;
+        detail.textColor    = _unreadColor;
+        date.font           = _boldDateFont;
+        date.textColor      = _unreadColor;
+        unread.hidden       = false;
     }
 }
 
@@ -78,9 +86,10 @@
     [self setNeedsLayout];
     [self layoutIfNeeded];
 }
--(UIButton *)blockBtn{
-    //make Call to block a number
-    return 0;
+
+-(void)setSelected:(BOOL)selected
+{
+    [super setSelected:selected];
 }
 
 -(IBAction)blockNumberBtn:(id)sender

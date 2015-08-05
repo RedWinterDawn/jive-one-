@@ -274,7 +274,7 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 - (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request withParameters:(id)object error:(NSError *__autoreleasing *)error
 {
     NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:object error:error] mutableCopy];
-    NSString *authToken = [JCAuthenticationManager sharedManager].authToken;
+    NSString *authToken = [UIApplication sharedApplication].authenticationManager.authToken;
     if (authToken) {
         [mutableRequest setValue:authToken forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
     }
@@ -288,7 +288,7 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 - (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request withParameters:(id)object error:(NSError *__autoreleasing *)error
 {
     NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:object error:error] mutableCopy];
-    NSString *authToken = [JCAuthenticationManager sharedManager].authToken;
+    NSString *authToken = [UIApplication sharedApplication].authenticationManager.authToken;
     if (authToken) {
         [mutableRequest setValue:[NSString stringWithFormat:@"bearer %@", authToken] forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
     }
@@ -331,7 +331,7 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 - (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request withParameters:(id)object error:(NSError *__autoreleasing *)error
 {
     NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:object error:error] mutableCopy];
-    NSString *authToken = [JCAuthenticationManager sharedManager].authToken;
+    NSString *authToken = [UIApplication sharedApplication].authenticationManager.authToken;
     [mutableRequest setValue:authToken forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
     return mutableRequest;
 }

@@ -270,9 +270,9 @@
     
     SEL sectionNameKeyPath = NSSelectorFromString(self.sectionNameKeyPath);
     if ([object respondsToSelector:sectionNameKeyPath]) {
-        id object = [object performSelector:sectionNameKeyPath];
-        if ([object isKindOfClass:[NSString class]]) {
-            return object;
+        id value = [object performSelector:sectionNameKeyPath];
+        if ([value isKindOfClass:[NSString class]]) {
+            return value;
         }
     }
     return nil;

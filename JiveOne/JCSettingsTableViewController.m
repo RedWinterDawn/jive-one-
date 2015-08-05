@@ -71,7 +71,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     
     #ifndef DEBUG
     if (self.debugCell) {
-        [self cell:self.debugCell setHidden:YES];
+//        [self cell:self.debugCell setHidden:YES];
     }
     #endif
     
@@ -136,7 +136,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     }
     
     UVConfig *config = [UVConfig configWithSite:@"jivemobile.uservoice.com"];
-    [config identifyUserWithEmail: email name: authenticationManager.pbx.name guid:authenticationManager.pbx.name];
+    [config identifyUserWithEmail: email name: email guid: email];
+    
     config.showForum = NO;
     config.showPostIdea = NO;
     [UserVoice initialize:config];
