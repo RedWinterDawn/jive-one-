@@ -61,7 +61,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 -(instancetype)init
 {
     return [self initWithAppsSettings:[JCAppSettings sharedSettings]
-                authenticationManager:[JCAuthenticationManager sharedManager]];
+                authenticationManager:[UIApplication sharedApplication].authenticationManager];
 }
 
 -(void)dealloc

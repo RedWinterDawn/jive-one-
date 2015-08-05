@@ -63,14 +63,7 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Contacts" id="pOW-HV-x3k">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Bpj-CT-cac">
-                            <connections>
-                                <action selector="add:" destination="IwC-pf-Sga" id="x2d-6h-4vV"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Contacts" id="pOW-HV-x3k"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="searchBar" destination="KBK-ek-azj" id="cgg-O9-f5S"/>
@@ -188,20 +181,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="M0A-5M-DwE"/>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="QM3-zX-dSg">
-                        <autoresizingMask key="autoresizingMask"/>
-                        <attributedString key="attributedTitle">
-                            <fragment content="Syncing...">
-                                <attributes>
-                                    <font key="NSFont" metaFont="smallSystem"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
-                        <connections>
-                            <action selector="sync:" destination="p2g-D4-iQF" eventType="valueChanged" id="99x-2l-BZm"/>
-                        </connections>
-                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3jy-JT-RpZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

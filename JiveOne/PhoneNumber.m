@@ -8,6 +8,7 @@
 
 #import "PhoneNumber.h"
 #import "NSManagedObject+Additions.h"
+#import "Contact.h"
 
 @implementation PhoneNumber
 
@@ -19,6 +20,11 @@
 -(NSInteger)order
 {
     return [self integerValueFromPrimitiveValueForKey:NSStringFromSelector(@selector(order))];
+}
+
+-(NSString *)name
+{
+    return self.contact.name;
 }
 
 @dynamic type;

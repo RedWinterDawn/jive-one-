@@ -1222,14 +1222,11 @@
 			children = (
 				5DDDA5461A4B08AD00E31AA3 /* JCSocket.h */,
 				5DDDA5471A4B08AD00E31AA3 /* JCSocket.m */,
-				5DC1D87F1AB8D7D000326AF3 /* JCApiClient.h */,
-				5DC1D8801AB8D7D000326AF3 /* JCApiClient.m */,
 				F8910FCF1A71EC590040B8C7 /* LoggerClient.h */,
 				F8910FD01A71EC590040B8C7 /* LoggerClient.m */,
 				F8910FD11A71EC590040B8C7 /* LoggerCommon.h */,
 				9145E31D191D842500840D66 /* JCVersion.h */,
 				9145E31E191D842500840D66 /* JCVersion.m */,
-				5D9F720B1AC34F6A00B9D0F8 /* Authentication */,
 				5DF4680D1A5B594100E5826A /* V4Client */,
 				5DF4680C1A5B4D2400E5826A /* V5Client */,
 			);
@@ -1353,6 +1350,7 @@
 		275F4A5718AD0FBC00D2F069 /* JiveOne */ = {
 			isa = PBXGroup;
 			children = (
+				5DF0C9FC1B7016CE008F9E9B /* Authentication */,
 				5D53298C1AD4BA0B00C6AAC6 /* Managers */,
 				2788F147190EB0F70099348D /* Categories */,
 				5D53298D1AD4BAA800C6AAC6 /* Models */,
@@ -1846,8 +1844,6 @@
 			children = (
 				5D62436D1A65B7DF001DF88E /* JCManager.h */,
 				5D62436E1A65B7DF001DF88E /* JCManager.m */,
-				2751590F18AD174F00FD8D3F /* JCAuthenticationManager.h */,
-				2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */,
 				5DF4C9991AB8B6CB00BA4F8C /* JCSocketManager.h */,
 				5DF4C99A1AB8B6CB00BA4F8C /* JCSocketManager.m */,
 				5DC1D8821ABB0CDB00326AF3 /* JCSocketLogger.h */,
@@ -2054,15 +2050,6 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		5D9F720B1AC34F6A00B9D0F8 /* Authentication */ = {
-			isa = PBXGroup;
-			children = (
-				5D9F720C1AC34F8000B9D0F8 /* JCAuthClient.h */,
-				5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */,
-			);
-			name = Authentication;
-			sourceTree = "<group>";
-		};
 		5DA30DC61AD6DA08008856DC /* Recent Events */ = {
 			isa = PBXGroup;
 			children = (
@@ -2229,6 +2216,19 @@
 				5DA30DD41AD78EA0008856DC /* JCVoicemailNumber.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		5DF0C9FC1B7016CE008F9E9B /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				5D9F720C1AC34F8000B9D0F8 /* JCAuthClient.h */,
+				5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */,
+				5DC1D87F1AB8D7D000326AF3 /* JCApiClient.h */,
+				5DC1D8801AB8D7D000326AF3 /* JCApiClient.m */,
+				2751590F18AD174F00FD8D3F /* JCAuthenticationManager.h */,
+				2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */,
+			);
+			name = Authentication;
 			sourceTree = "<group>";
 		};
 		5DF4680C1A5B4D2400E5826A /* V5Client */ = {
