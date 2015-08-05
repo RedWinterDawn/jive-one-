@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="h5S-F5-TXc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="h5S-F5-TXc">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Messages-->
         <scene sceneID="LQT-kt-5Gh">
             <objects>
-                <tableViewController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="HGW-N1-8vn" customClass="JCConversationsTableViewController" sceneMemberID="viewController">
+                <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="HGW-N1-8vn" customClass="JCConversationsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="uv4-u4-XyV">
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,7 +31,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cht-DY-jlP">
-                                            <rect key="frame" x="8" y="8" width="488" height="21"/>
+                                            <rect key="frame" x="40" y="8" width="456" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="E5N-qE-rcm"/>
                                             </constraints>
@@ -39,7 +40,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFI-U0-fQF">
-                                            <rect key="frame" x="8" y="32" width="551" height="21"/>
+                                            <rect key="frame" x="40" y="32" width="519" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="Vcm-61-AzR"/>
                                             </constraints>
@@ -47,15 +48,30 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MJi-5U-mGy" customClass="JCRoundedView">
+                                            <rect key="frame" x="10" y="24" width="12" height="12"/>
+                                            <color key="backgroundColor" red="0.34901960780000002" green="0.64313725489999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="MJi-5U-mGy" secondAttribute="height" multiplier="1:1" id="JWY-xF-qR0"/>
+                                                <constraint firstAttribute="width" constant="12" id="iPp-wE-3CT"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <integer key="value" value="6"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="MJi-5U-mGy" secondAttribute="centerY" id="4G5-Ss-Hoy"/>
                                         <constraint firstAttribute="trailing" secondItem="JFI-U0-fQF" secondAttribute="trailing" constant="8" id="5M0-rn-qud"/>
-                                        <constraint firstItem="Cht-DY-jlP" firstAttribute="leading" secondItem="CXK-rb-o0X" secondAttribute="leading" constant="8" id="FVR-Nu-VWJ"/>
+                                        <constraint firstItem="Cht-DY-jlP" firstAttribute="leading" secondItem="CXK-rb-o0X" secondAttribute="leading" constant="40" id="FVR-Nu-VWJ"/>
+                                        <constraint firstItem="MJi-5U-mGy" firstAttribute="leading" secondItem="CXK-rb-o0X" secondAttribute="leading" constant="10" id="IJV-lK-OsZ"/>
                                         <constraint firstItem="vWD-lg-8BW" firstAttribute="top" secondItem="CXK-rb-o0X" secondAttribute="top" constant="8" id="Ics-TJ-jYc"/>
                                         <constraint firstItem="vWD-lg-8BW" firstAttribute="leading" secondItem="Cht-DY-jlP" secondAttribute="trailing" constant="8" id="LqN-xX-rdw"/>
                                         <constraint firstItem="JFI-U0-fQF" firstAttribute="top" secondItem="Cht-DY-jlP" secondAttribute="bottom" constant="3" id="SJb-ZT-Zbu"/>
                                         <constraint firstItem="vWD-lg-8BW" firstAttribute="trailing" secondItem="CXK-rb-o0X" secondAttribute="trailing" constant="-8" id="Yqs-mx-y3l"/>
-                                        <constraint firstItem="JFI-U0-fQF" firstAttribute="leading" secondItem="CXK-rb-o0X" secondAttribute="leading" constant="8" id="fxA-HM-S4Y"/>
+                                        <constraint firstItem="JFI-U0-fQF" firstAttribute="leading" secondItem="CXK-rb-o0X" secondAttribute="leading" constant="40" id="fxA-HM-S4Y"/>
                                         <constraint firstItem="Cht-DY-jlP" firstAttribute="top" secondItem="CXK-rb-o0X" secondAttribute="top" constant="8" id="uZg-Qn-d6A"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -63,6 +79,7 @@
                                     <outlet property="date" destination="vWD-lg-8BW" id="E5y-ne-Eej"/>
                                     <outlet property="detail" destination="JFI-U0-fQF" id="g4F-oc-vMK"/>
                                     <outlet property="name" destination="Cht-DY-jlP" id="9Sb-Wu-YqE"/>
+                                    <outlet property="unreadCircle" destination="MJi-5U-mGy" id="QAn-hJ-jof"/>
                                     <segue destination="AI2-cb-WiH" kind="push" identifier="LoadMessageGroup" id="tKv-ZX-H1O"/>
                                 </connections>
                             </tableViewCell>
@@ -72,7 +89,7 @@
                             <outlet property="delegate" destination="HGW-N1-8vn" id="BSK-ZQ-mlP"/>
                         </connections>
                     </tableView>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="Messages" id="Dd8-pv-4JB">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="1b0-Vp-hXe">
                             <connections>
@@ -93,7 +110,7 @@
                         </attributedString>
                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
-                            <action selector="refreshTable:" destination="HGW-N1-8vn" eventType="valueChanged" id="YUN-Vz-vUQ"/>
+                            <action selector="update:" destination="HGW-N1-8vn" eventType="valueChanged" id="fro-tM-5xm"/>
                         </connections>
                     </refreshControl>
                     <connections>
@@ -108,6 +125,7 @@
         <scene sceneID="3Vs-Vc-gdU">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" id="AI2-cb-WiH" customClass="JCConversationViewController" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="9b6-df-Xjz">
                         <nil key="title"/>
                         <barButtonItem key="rightBarButtonItem" title="Details" id="hea-0j-GeP" propertyAccessControl="localizable">
@@ -116,7 +134,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LhB-sW-rlG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -223,15 +240,15 @@
         <!--Messages-->
         <scene sceneID="coe-lx-3e6">
             <objects>
-                <navigationController storyboardIdentifier="MessagesNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="h5S-F5-TXc" customClass="JCNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MessagesNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="h5S-F5-TXc" customClass="JCNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Messages" image="black-bubble" id="QlF-7C-Iq3"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="zOA-FQ-0el">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="zOA-FQ-0el">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0" green="0.63921568630000003" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="HGW-N1-8vn" kind="relationship" relationship="rootViewController" id="Av9-br-4TB"/>
@@ -246,7 +263,7 @@
             <objects>
                 <tableViewController id="d4e-oz-V7H" customClass="JCConversationDetailsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="eDg-va-xnd">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
@@ -274,7 +291,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection footerTitle="Blocks this number from sending or recieving an SMS message on your PBX for all users." id="Z3S-aR-6oR">
+                            <tableViewSection footerTitle="Blocks this number from sending or reiving an SMS message on your PBX for all users." id="Z3S-aR-6oR">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="7db-ra-noP">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -334,4 +351,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="tKv-ZX-H1O"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.0" green="0.63921568630000003" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

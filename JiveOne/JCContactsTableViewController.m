@@ -16,6 +16,7 @@
 #import "PBX.h"
 #import "User.h"
 
+#import "ContactGroup+V5Client.h"
 #import "Contact+V5Client.h"
 #import "InternalExtension+V5Client.h"
 
@@ -23,10 +24,12 @@
 
 // Views
 #import "JCPresenceCell.h"
+#import "JCPresenceManager.h"
 
 // Controllers
 #import "JCContactDetailViewController.h"
 #import "JCContactsFetchedResultsController.h"
+#import "JCGroupsFetchedResultsController.h"
 
 @interface JCContactsTableViewController()
 {
@@ -37,13 +40,28 @@
 
 @implementation JCContactsTableViewController
 
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        JCAuthenticationManager *authenticationManager = self.authenticationManager;
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
+        [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
+        [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
+        [center addObserver:self selector:@selector(reloadTable) name:kJCPresenceManagerLinesChangedNotification object:[JCPresenceManager sharedManager]];
+    }
+    return self;
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:self.authenticationManager];
-    
     self.clearsSelectionOnViewWillAppear = TRUE;
 }
 
@@ -84,29 +102,44 @@
         cell.detailTextLabel.text = phoneNumber.detailText;
         
         if ([phoneNumber isKindOfClass:[Extension class]] && [cell isKindOfClass:[JCPresenceCell class]]) {
-            ((JCPresenceCell *)cell).identifier = ((Extension *)phoneNumber).jrn;
+            ((JCPresenceCell *)cell).identifier = ((Extension *)phoneNumber).extensionId;
         }
     }
-    else if ([object isKindOfClass:[InternalExtensionGroup class]]) {
-        cell.textLabel.text = ((InternalExtensionGroup *)object).name;
+    else if ([object conformsToProtocol:@protocol(JCGroupDataSource)]) {
+        cell.textLabel.text = ((id<JCGroupDataSource>)object).name;
     }
 }
 
 -(IBAction)sync:(id)sender
 {
     if ([sender isKindOfClass:[UIRefreshControl class]]) {
-        Line *line = self.authenticationManager.line;
-//        [InternalExtension downloadInternalExtensionsForLine:line complete:^(BOOL success, NSError *error) {
-//            
-//        }];
         
-        User *user = line.pbx.user;
-        [Contact syncContactsForUser:user completion:^(BOOL success, NSError *error) {
-            [((UIRefreshControl *)sender) endRefreshing];
-            if (error) {
-                [self showError:error];
+        __block NSInteger count = 3;
+        __block NSError *blockError;
+        
+        CompletionHandler completion= ^(BOOL success, NSError *error) {
+            if (error && !blockError) {
+                blockError = error;
             }
-        }];
+            count--;
+            
+            if (count <= 0) {
+                [((UIRefreshControl *)sender) endRefreshing];
+                if (blockError) {
+                    [self showError:blockError];
+                }
+            }
+        };
+        
+        Line *line = self.authenticationManager.line;
+        [InternalExtension downloadInternalExtensionsForLine:line complete:completion];
+        
+        // Sync contacts.
+        User *user = line.pbx.user;
+        [Contact syncContactsForUser:user completion:completion];
+        
+        // Sync Groups.
+        [ContactGroup syncContactGroupsForUser:user completion:completion];
     }
 }
 
@@ -124,22 +157,26 @@
 {
     if (!_fetchedResultsController)
     {
+        NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+        PBX *pbx = self.authenticationManager.pbx;
         switch (_filterType) {
             case JCContactFilterGrouped:
             {
-                // TODO: Grouped Messages.
+                _fetchedResultsController = [[JCGroupsFetchedResultsController alloc] initWithSearchText:_searchText
+                                                                                         sortDescriptors:sortDescriptors
+                                                                                                     pbx:pbx
+                                                                                      sectionNameKeyPath:@"sectionName"];
                 
                 break;
             }
                 
             default:
             {
-                NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
-                PBX *pbx = self.authenticationManager.pbx;
                 _fetchedResultsController = [[JCContactsFetchedResultsController alloc] initWithSearchText:_searchText
                                                                                            sortDescriptors:sortDescriptors
+                                                                                        sectionNameKeyPath:@"firstInitial"
                                                                                                        pbx:pbx
-                                                                                        sectionNameKeyPath:@"firstInitial"];
+                                                                                                     group:self.group];
                 break;
             }
         }
@@ -160,13 +197,6 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - Notification Handlers -
-
--(void)lineChanged:(NSNotification *)notification
-{
-    [self reloadTable];
-}
-
 #pragma mark - Delegate Handlers -
 
 #pragma mark UITableViewDataSource
@@ -182,7 +212,8 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (_filterType == JCContactFilterGrouped) {
-        return nil;
+        id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+        return sectionInfo.name;
     }
     return [self.fetchedResultsController sectionIndexTitles][section];
 }
@@ -194,7 +225,7 @@
         [self configureCell:cell withObject:object];
         return cell;
     }
-    else if ([object isKindOfClass:[InternalExtensionGroup class]])
+    else if ([object conformsToProtocol:@protocol(JCGroupDataSource)])
     {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactGroupCell"];
         [self configureCell:cell withObject:object];
@@ -205,21 +236,26 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id<JCPhoneNumberDataSource> phoneNumber = (id<JCPhoneNumberDataSource>)[self objectAtIndexPath:indexPath];
-    if ([phoneNumber isKindOfClass:[Extension class]]) {
+    id object = [self objectAtIndexPath:indexPath];
+    if ([object conformsToProtocol:@protocol(JCPhoneNumberDataSource) ]) {
+        if ([object isKindOfClass:[Contact class]]) {
+            return TRUE;
+        }
         return FALSE;
-    } else if ([phoneNumber isKindOfClass:[JCAddressBookPerson class]]) {
+    } else {
+        if ([object isKindOfClass:[ContactGroup class]]) {
+            return TRUE;
+        }
         return FALSE;
     }
-    return TRUE;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id object = [self objectAtIndexPath:indexPath];
-    if ([object isKindOfClass:[InternalExtensionGroup class]]) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(contactsTableViewController:didSelectContactGroup:)]) {
-            [self.delegate contactsTableViewController:self didSelectContactGroup:(InternalExtensionGroup *)object];
+    if ([object conformsToProtocol:@protocol(JCGroupDataSource)]) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(contactsTableViewController:didSelectGroup:)]) {
+            [self.delegate contactsTableViewController:self didSelectGroup:object];
         }
     }
 }
@@ -232,7 +268,14 @@
         [contact markForDeletion:^(BOOL success, NSError *error) {
             [self hideStatus];
         }];
-    } else {
+    } else if ([object isKindOfClass:[ContactGroup class]]) {
+        ContactGroup *contactGroup = (ContactGroup *)object;
+        [self showStatus:NSLocalizedString(@"Deleting...", @"Deleting a group")];
+        [contactGroup markForDeletion:^(BOOL success, NSError *error) {
+            [self hideStatus];
+        }];
+    }
+    else {
         [super deleteObject:object];
     }
 }

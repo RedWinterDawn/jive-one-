@@ -14,11 +14,10 @@
 
 -(void)willSave
 {
-    [super willSave];
-    
     NSString *data = [NSString stringWithFormat:@"%@-%@-%@-%@", self.thoroughfare.lowercaseString, self.city.lowercaseString, self.region.lowercaseString, self.postalCode.lowercaseString];
     [self setPrimitiveValue:data.MD5Hash forKey:NSStringFromSelector(@selector(dataHash))];
     
+    [super willSave];
 }
 
 -(void)setOrder:(NSInteger)order

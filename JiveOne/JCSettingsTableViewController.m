@@ -7,14 +7,14 @@
 //
 
 @import MessageUI;
-@import AVFoundation;
-@import MediaPlayer;
+
 
 #import "JCSettingsTableViewController.h"
+#import <UserVoice.h>
 
 // Managers
 #import "JCAuthenticationManager.h"
-#import "JCPhoneManager.h"
+
 #import "JCPhoneAudioManager.h"
 
 // Models
@@ -30,7 +30,23 @@
 
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedback :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@ <br> Domain : %@  <br> Carrier : %@ <br> Connection Type : %@ <br> ";
 
-@interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate, JCDIDSelectorViewControllerDelegate>
+@interface JCSettingsTableViewController () <JCDIDSelectorViewControllerDelegate>
+
+@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *appLabel;
+@property (weak, nonatomic) IBOutlet UILabel *buildLabel;
+@property (weak, nonatomic) IBOutlet UILabel *installationIdentifier;
+@property (weak, nonatomic) IBOutlet UILabel *uuid;
+@property (weak, nonatomic) IBOutlet UILabel *pbx;
+
+@property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
+@property (weak, nonatomic) IBOutlet UITableViewCell *presenceCell;
+
+@property (weak, nonatomic) IBOutlet UILabel *smsUserDefaultNumber;
+@property (weak, nonatomic) IBOutlet UITableViewCell *defaultDIDCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *blockedNumbersCell;
+
+@property (weak, nonatomic) IBOutlet UITableViewCell *debugCell;
 
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
 @property (nonatomic) JCPhoneAudioManager* audioManager;
@@ -43,11 +59,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 {
     [super viewDidLoad];
    
-   
-    _audioManager = [JCPhoneAudioManager new];
-    [_audioManager setSessionActive];
-    MPVolumeView *volumeView = [MPVolumeView new];
-    self.routeIconBackground.hidden = !volumeView.showsRouteButton;
     // Device Info
     UIDevice *device = [UIDevice currentDevice];
     self.installationIdentifier.text = device.installationIdentifier;
@@ -58,16 +69,9 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     self.appLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     self.buildLabel.text = [NSString stringWithFormat:@"%@ (%@)", [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
     
-    // Settings Info
-    JCAppSettings *settings = self.appSettings;
-    self.wifiOnly.on = settings.wifiOnly;
-    self.presenceEnabled.on = settings.presenceEnabled;
-    _volumeslidder.value = settings.volumeLevel;
-
-    
     #ifndef DEBUG
     if (self.debugCell) {
-        [self cell:self.debugCell setHidden:YES];
+        [self setCell:self.debugCell hidden:YES];
     }
     #endif
     
@@ -81,29 +85,18 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     [self updateAccountInfo];
 }
 
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
-    
+    [super viewWillAppear:animated];
     [self updateAccountInfo];
 }
 
--(void)awakeFromNib
+-(void)viewDidAppear:(BOOL)animated
 {
-    [super awakeFromNib];
-    
-    #ifndef DEBUG
-    self.navigationItem.rightBarButtonItem = nil;
-    #endif
+    [super viewDidAppear:animated];
+    [self updateAccountInfo];
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    if (_audioManager)
-    {
-        [_audioManager stop];
-    }
-    
-}
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *controller = segue.destinationViewController;
@@ -125,43 +118,31 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 
 #pragma mark - IBActions -
 
-- (IBAction)sliderValue:(id)sender {
-    self.appSettings.volumeLevel = _volumeslidder.value;
-    [_audioManager playIncomingCallToneDemo];  //Plays a snippit of the ringer so the user know how load it is going ot be.
+-(IBAction)togglePresenceEnabled:(id)sender
+{
+    [self toggleSettingForSender:sender
+                          action:^BOOL(JCAppSettings *s) {
+                              s.presenceEnabled = !s.isPresenceEnabled;
+                              return s.isPresenceEnabled;
+                          } completion:NULL];
 }
-
-
 
 -(IBAction)leaveFeedback:(id)sender
 {
-    if ([MFMailComposeViewController canSendMail]) {
-        MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
-        mailViewController.mailComposeDelegate = self;
-        [mailViewController setToRecipients:[NSArray arrayWithObject:kFeedbackEmail]];
-        [mailViewController setSubject:@"Feedback"];
-        
-        //get device specs
-        JCAuthenticationManager *authenticationManager = self.authenticationManager;
-       
-        NSBundle *bundle            = [NSBundle mainBundle];
-        UIDevice *currentDevice     = [UIDevice currentDevice];
-        NSString *model             = [currentDevice platformType];
-        NSString *systemVersion     = [currentDevice systemVersion];
-        NSString *appVersion        = [NSString stringWithFormat:@"%@ (%@)", [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
-        NSString *country           = [[NSLocale currentLocale] localeIdentifier];
-        NSString *uuid              = [currentDevice userUniqueIdentiferForUser:authenticationManager.jiveUserId];
-        NSString * pbx              = authenticationManager.line.pbx.displayName;
-        NSString *user              = authenticationManager.line.pbx.user.jiveUserId;
-        NSString *line              = authenticationManager.line.number;
-        NSString *domain        = authenticationManager.line.pbx.domain;
-        NSString *carrier          = [currentDevice defaultCarrier];
-        
-        NSString *currentConection =  [self networkType];
-        
-        NSString *bodyTemplate = [NSString stringWithFormat:kJCSettingsTableViewControllerFeebackMessage, model, systemVersion, appVersion, country, uuid, pbx, user, line, domain, carrier, currentConection];
-        [mailViewController setMessageBody:bodyTemplate isHTML:YES]; 
-        [self presentViewController:mailViewController animated:YES completion:nil];
+    JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    NSString *email = authenticationManager.user.jiveUserId;
+    if ([email rangeOfString:@"@"].location == NSNotFound){
+        email =  [email stringByAppendingString:@"@jive.com"];
     }
+    
+    UVConfig *config = [UVConfig configWithSite:@"jivemobile.uservoice.com"];
+    [config identifyUserWithEmail: email name: email guid: email];
+    
+    config.showForum = NO;
+    config.showPostIdea = NO;
+    [UserVoice initialize:config];
+    
+    [UserVoice presentUserVoiceInterfaceForParentViewController:self];
 }
 
 -(IBAction)logout:(id)sender
@@ -169,53 +150,9 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     [self.authenticationManager logout];
 }
 
--(IBAction)toggleWifiOnly:(id)sender
+-(void)didUpdateDIDSelectorViewController:(JCDIDSelectorViewController *)viewController
 {
-    if ([sender isKindOfClass:[UISwitch class]]) {
-        UISwitch *switchBtn = (UISwitch *)sender;
-        JCAppSettings *settings = self.appSettings;
-        settings.wifiOnly = !settings.isWifiOnly;
-        switchBtn.on = settings.isWifiOnly;
-        [self.phoneManager connectToLine:self.authenticationManager.line];
-    }
-}
-
--(IBAction)togglePresenceEnabled:(id)sender
-{
-    if ([sender isKindOfClass:[UISwitch class]]) {
-        UISwitch *switchBtn = (UISwitch *)sender;
-        self.appSettings.presenceEnabled = !self.appSettings.isPresenceEnabled;
-        switchBtn.on = self.appSettings.isPresenceEnabled;
-    }
-}
-
-#pragma mark - Getters -
-
--(AFNetworkReachabilityManager *)networkReachabilityManager
-{
-    if (!_networkReachabilityManager) {
-        _networkReachabilityManager = [AFNetworkReachabilityManager sharedManager];
-    }
-    return _networkReachabilityManager;
-}
-
--(NSString *)networkType
-{
-    AFNetworkReachabilityStatus status = self.networkReachabilityManager.networkReachabilityStatus;
-    switch (status) {
-        case -1:
-            return (@"Unreachable");
-            break;
-        case 1:
-            return (@"WAN");
-            break;
-        case 2:
-            return (@"Wifi");
-            break;
-        default:
-            return (@"Network Unobtainable");
-            break;
-    }
+    [self updateAccountInfo];
 }
 
 #pragma mark - Notification Handlers -
@@ -226,29 +163,21 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     UIDevice *device = [UIDevice currentDevice];
     
     self.uuid.text                  = [device userUniqueIdentiferForUser:authenticationManager.jiveUserId];
-    self.userNameLabel.text         = authenticationManager.line.pbx.user.jiveUserId;
-    self.extensionLabel.text        = authenticationManager.line.number;
-    self.smsUserDefaultNumber.text  = authenticationManager.did.formattedNumber;
+    self.userNameLabel.text         = authenticationManager.user.jiveUserId;
+    self.pbx.text                   = authenticationManager.pbx.name;
     
+    [self startUpdates];
+    
+    // Presence
     PBX *pbx = authenticationManager.pbx;
-    [self cell:self.enablePreasenceCell setHidden:!pbx.isV5];
-    [self cell:self.defaultDIDCell setHidden:!pbx.sendSMSMessages];
-    [self cell:self.blockedNumbersCell setHidden:!pbx.sendSMSMessages];
+    [self setCell:self.presenceCell hidden:!pbx.isV5];
+    self.presenceEnabled.on = self.appSettings.isPresenceEnabled;
     
-    [self reloadDataAnimated:NO];
-}
-
-#pragma mark - Delegate Handlers -
-
-#pragma mark MFMailComposeViewControllerDelegate
-
--(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(void)didUpdateDIDSelectorViewController:(JCDIDSelectorViewController *)viewController
-{
-    [self updateAccountInfo];
+    self.smsUserDefaultNumber.text = authenticationManager.did.formattedNumber;
+    [self setCell:self.defaultDIDCell hidden:!pbx.sendSMSMessages];
+    [self setCell:self.blockedNumbersCell hidden:!pbx.sendSMSMessages];
+    
+    [self endUpdates];
 }
 
 @end

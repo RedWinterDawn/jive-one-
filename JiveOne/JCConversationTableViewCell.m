@@ -19,6 +19,11 @@
     
     UIFont *_dateFont;
     UIFont *_boldDateFont;
+    
+    UIColor *_readColor;
+    UIColor *_unreadColor;
+    
+    UIColor *_dateColor;
 }
 
 @end
@@ -28,15 +33,21 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
+    _readColor      = [UIColor darkGrayColor];
+    _unreadColor    = [UIColor blackColor];
+    _dateColor      = [UIColor lightGrayColor];
     
-    _nameFont = self.name.font;
-    _boldNameFont = [UIFont fontWithDescriptor:[[_nameFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_nameFont.pointSize];
+    _nameFont       = self.name.font;
+    _boldNameFont   = [UIFont fontWithDescriptor:[[_nameFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold]
+                                            size:_nameFont.pointSize];
     
-    _detailFont = self.detail.font;
-    _boldDetailFont = [UIFont fontWithDescriptor:[[_detailFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_detailFont.pointSize];
+    _detailFont     = self.detail.font;
+    _boldDetailFont = [UIFont fontWithDescriptor:[[_detailFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold]
+                                            size:_detailFont.pointSize];
     
-    _dateFont = self.date.font;
-    _boldDateFont = [UIFont fontWithDescriptor:[[_dateFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_dateFont.pointSize];
+    _dateFont       = self.date.font;
+    _boldDateFont   = [UIFont fontWithDescriptor:[[_dateFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold]
+                                            size:_dateFont.pointSize];
 }
 
 #pragma mark - Setters -
@@ -44,14 +55,27 @@
 -(void)setRead:(BOOL)read
 {
     _read = read;
-    if (read) {
-        _name.font      = _nameFont;
-        _detail.font    = _detailFont;
-        _date.font      = _dateFont;
+    UILabel *name   = self.name;
+    UILabel *detail = self.detail;
+    UILabel *date   = self.date;
+    UIView  *unread = self.unreadCircle;
+    
+    if (self.isRead) {
+        name.font           = _nameFont;
+        name.textColor      = _readColor;
+        detail.font         = _detailFont;
+        detail.textColor    = _readColor;
+        date.font           = _dateFont;
+        date.textColor      = _dateColor;
+        unread.hidden       = true;
     } else {
-        _name.font      = _boldNameFont;
-        _detail.font    = _boldDetailFont;
-        _date.font      = _boldDateFont;
+        name.font           = _boldNameFont;
+        name.textColor      = _unreadColor;
+        detail.font         = _boldDetailFont;
+        detail.textColor    = _unreadColor;
+        date.font           = _boldDateFont;
+        date.textColor      = _unreadColor;
+        unread.hidden       = false;
     }
 }
 

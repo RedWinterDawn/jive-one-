@@ -11,9 +11,7 @@
 #import "UITextField+ELFixSecureTextFieldFont.h"
 
 @interface JCLoginViewController () <NSFileManagerDelegate>
-{
-    JCAuthenticationManager *_authenticationManager;
-}
+
 @end
 
 @implementation JCLoginViewController
@@ -27,8 +25,9 @@
     
     [self.passwordTextField fixSecureTextFieldFont];
     
-    _authenticationManager = [JCAuthenticationManager sharedInstance];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticated:) name:kJCAuthenticationManagerUserAuthenticatedNotification object:_authenticationManager];
+    JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticated:) name:kJCAuthenticationManagerUserAuthenticatedNotification object:authenticationManager];
     
     self.usernameTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
     self.usernameTextField.layer.borderWidth = 1.0f;
@@ -48,14 +47,14 @@
     self.passwordTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     
     
-    self.rememberMeSwitch.on = _authenticationManager.rememberMe;
-    if (_authenticationManager.rememberMe) {
-        self.usernameTextField.text = _authenticationManager.rememberMeUser;
+    self.rememberMeSwitch.on = authenticationManager.rememberMe;
+    if (authenticationManager.rememberMe) {
+        self.usernameTextField.text = authenticationManager.rememberMeUser;
         [self.passwordTextField becomeFirstResponder];
     } else {
 #if DEBUG
-        self.usernameTextField.text = @"jivetesting@gmail.com";
-        self.passwordTextField.text = @"testing12";
+        self.usernameTextField.text = @"danielleonard";
+        self.passwordTextField.text = @"";
 #endif
         [self.usernameTextField becomeFirstResponder];
     }
@@ -74,7 +73,7 @@
 
 - (IBAction)rememberMe:(id)sender {
     if ([sender isKindOfClass:[UISwitch class]]) {
-        _authenticationManager.rememberMe = ((UISwitch *)sender).on;
+        self.authenticationManager.rememberMe = ((UISwitch *)sender).on;
     }
 }
 
@@ -83,7 +82,7 @@
 - (void)login
 {
     [self showStatus:@"Logging In"];
-    [_authenticationManager loginWithUsername:self.usernameTextField.text
+    [self.authenticationManager loginWithUsername:self.usernameTextField.text
                                      password:self.passwordTextField.text
                                     completed:^(BOOL success, NSError *error) {
                                         [self hideStatus];

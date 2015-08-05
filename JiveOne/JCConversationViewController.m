@@ -20,6 +20,7 @@
 #import "PBX.h"
 #import "Line.h"
 #import "JCPhoneBook.h"
+#import "JCMessageGroup.h"
 
 // Views
 #import "JCMessagesCollectionViewCell.h"
@@ -61,12 +62,12 @@
     [super viewDidAppear:animated];
     
     // Determine if we should be showing the participant selector.
-    if (!_conversationGroup) {
+    if (!_messageGroup) {
         JCMessageParticipantTableViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:MESSAGES_PARTICIPANT_VIEW_CONTROLLER];
         viewController.view.frame = self.view.bounds;
         viewController.delegate = self;
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelMessageParticipantSelection:)];
-        [self presentDropdownViewController:viewController leftBarButtonItem:nil rightBarButtonItem:doneButton maxHeight:self.view.bounds.size.height animated:YES];
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelMessageParticipantSelection:)];
+        [self presentDropdownViewController:viewController leftBarButtonItem:doneButton rightBarButtonItem:nil maxHeight:self.view.bounds.size.height animated:YES];
         [viewController.searchBar becomeFirstResponder];
     }
 }
@@ -80,8 +81,6 @@
         for (Message *message in messages) {
             message.read = YES;
         }
-    } completion:^(BOOL success, NSError *error) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
     }];
 }
 
@@ -89,7 +88,7 @@
 {
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCConversationDetailsViewController class]]) {
-        ((JCConversationDetailsViewController *)viewController).conversationGroup = self.conversationGroup;
+        ((JCConversationDetailsViewController *)viewController).conversationGroup = self.messageGroup;
     }
 }
 
@@ -106,11 +105,11 @@
                      date:(NSDate *)date
 {
     JCAuthenticationManager *authenticationManager = self.authenticationManager;
-    id<JCConversationGroupObject> conversationGroup = self.conversationGroup;
+    JCMessageGroup *messageGroup = self.messageGroup;
     if (self.count == 0) {
         NSMutableArray *dids = authenticationManager.pbx.dids.allObjects.mutableCopy;
         if (dids.count < 2){
-             [self sendMessageWithSelectedDID:text toConversationGroup:conversationGroup fromDid:authenticationManager.did];
+             [self sendMessageWithSelectedDID:text toConversationGroup:messageGroup fromDid:authenticationManager.did];
         }
         else
         {
@@ -127,7 +126,7 @@
                                                                        if (buttonIndex != actionSheet.cancelButtonIndex) {
                                                                            DID *did = [dids objectAtIndex:buttonIndex];
                                                                            [self sendMessageWithSelectedDID:text
-                                                                                        toConversationGroup:conversationGroup
+                                                                                        toConversationGroup:messageGroup
                                                                                                     fromDid:did];
                                                                        }
                                                                    }
@@ -136,13 +135,13 @@
             [didOptions show:self.view];
         }
     } else {
-        [self sendMessageWithSelectedDID:text toConversationGroup:conversationGroup fromDid:authenticationManager.did];
+        [self sendMessageWithSelectedDID:text toConversationGroup:messageGroup fromDid:authenticationManager.did];
     }
        
 }
 
--(void)sendMessageWithSelectedDID:(NSString *)text toConversationGroup:(id<JCConversationGroupObject>)conversationGroup fromDid:(DID *)did {
-    [SMSMessage sendMessage:text toConversationGroup:conversationGroup fromDid:did completion:^(BOOL success, NSError *error) {
+-(void)sendMessageWithSelectedDID:(NSString *)text toConversationGroup:(JCMessageGroup *)conversationGroup fromDid:(DID *)did {
+    [SMSMessage sendMessage:text toMessageGroup:conversationGroup fromDid:did completion:^(BOOL success, NSError *error) {
         if (success) {
             [self finishSendingMessageAnimated:YES];
         }else {
@@ -170,20 +169,37 @@
                               
                           }
                       }
+                showImmediately:YES
               cancelButtonTitle:NSLocalizedString(@"No", nil)
               otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
 }
 
+-(void)collectionView:(JCMessagesCollectionView *)collectionView didDeleteCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    id <JSQMessageData> object = [self objectAtIndexPath:indexPath];
+    if ([object isKindOfClass:[Message class]]) {
+        Message *message = (Message *)object;
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            Message *localMessage = (Message *)[localContext objectWithID:message.objectID];
+            [localMessage markForDeletion:NULL];
+        }];
+    }
+}
+
 #pragma mark - Setters -
 
--(void)setConversationGroup:(id<JCConversationGroupObject>)conversationGroup
+-(void)setMessageGroup:(JCMessageGroup *)messageGroup
 {
-    _conversationGroup = conversationGroup;
-    self.title = conversationGroup.titleText;
-    if (conversationGroup.isSMS) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", conversationGroup.conversationGroupId];
-        SMSMessage *message = [SMSMessage MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
-        [SMSMessage downloadMessagesForDID:message.did toConversationGroup:conversationGroup completion:NULL];
+    _messageGroup = messageGroup;
+    self.title = messageGroup.titleText;
+    if (messageGroup.isSMS) {
+        SMSMessage *smsMessage = (SMSMessage *)self.messageGroup.latestMessage;
+        if (!smsMessage) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", messageGroup.messageGroupId];
+            smsMessage = [SMSMessage MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
+        }
+        
+        [SMSMessage downloadMessagesForDID:smsMessage.did toMessageGroup:messageGroup completion:NULL];
     }
     
     self.fetchedResultsController = nil;
@@ -197,13 +213,14 @@
     if (!_fetchedResultsController) {
         
         // Only do a fetch request if we have a conversation id.
-        if (!_conversationGroup) {
+        if (!_messageGroup) {
             return nil;
         }
         
         NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-        NSString *conversationGroupId = self.conversationGroup.conversationGroupId;
-        NSFetchRequest *fetchRequest = [Message MR_requestAllWhere:NSStringFromSelector(@selector(messageGroupId)) isEqualTo:conversationGroupId inContext:context];
+        NSString *messageGroupId = self.messageGroup.messageGroupId;
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND markForDeletion = %@", messageGroupId, @NO];
+        NSFetchRequest *fetchRequest = [Message MR_requestAllWithPredicate:predicate inContext:context ];
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
         fetchRequest.includesSubentities = YES;
         
@@ -224,7 +241,7 @@
 
 - (NSString *)senderId
 {
-    return [JCAuthenticationManager sharedInstance].jiveUserId;
+    return self.authenticationManager.jiveUserId;
 }
 
 - (NSString *)senderNumber
@@ -234,12 +251,12 @@
 
 - (NSString *)senderDisplayName
 {
-    return [JCAuthenticationManager sharedInstance].line.name;
+    return self.authenticationManager.line.name;
 }
 
 - (DID *)did
 {
-    return [JCAuthenticationManager sharedInstance].did;
+    return self.authenticationManager.did;
 }
 
 #pragma mark - Private -
@@ -389,9 +406,9 @@
 
 #pragma mark JCMessageParticipantTableViewControllerDelegate
 
--(void)messageParticipantTableViewController:(JCMessageParticipantTableViewController *)controller didSelectConversationGroup:(id<JCConversationGroupObject>)conversationGroup
+-(void)messageParticipantTableViewController:(JCMessageParticipantTableViewController *)controller didSelectConversationGroup:(JCMessageGroup *)conversationGroup
 {
-    self.conversationGroup = conversationGroup;
+    self.messageGroup = conversationGroup;
     [self dismissDropdownViewControllerAnimated:YES completion:NULL];
 }
 

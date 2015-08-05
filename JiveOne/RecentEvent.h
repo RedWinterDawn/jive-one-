@@ -26,5 +26,6 @@
 
 // Marks the voicemail for deletion. Attempts to notify server of deletion.
 - (void)markForDeletion:(CompletionHandler)completion;
+- (void)markAsRead:(CompletionHandler)completion;
 
 @end

@@ -15,6 +15,7 @@
 // Dependancies
 #import "JCAddressBook.h"
 #import "Line.h"
+#import "User.h"
 
 @interface JCPhoneBook : NSObject
 
@@ -42,12 +43,14 @@
 
 
 -(void)phoneNumbersWithKeyword:(NSString *)keyword
+                       forUser:(User *)user
                        forLine:(Line *)line
                    sortedByKey:sortedByKey
                      ascending:(BOOL)ascending
                     completion:(void (^)(NSArray *phoneNumbers))completion;
 
 -(NSArray *)phoneNumbersWithKeyword:(NSString *)keyword
+                            forUser:(User *)user
                             forLine:(Line *)line
                         sortedByKey:sortedByKey
                           ascending:(BOOL)ascending;

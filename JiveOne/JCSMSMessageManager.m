@@ -9,28 +9,27 @@
 #import "JCSMSMessageManager.h"
 #import "SMSMessage+V5Client.h"
 #import "PBX.h"
-#import "JCSMSConversationGroup.h"
+#import "JCMessageGroup.h"
+#import "JCPhoneNumber.h"
 
-NSString *const kJCSMSMessageManagerTypeKey              = @"type";
-NSString *const kJCSMSMessageManagerUID                    = @"UID";
-NSString *const kJCSMSMessageManagerFormNumber        = @"fromNumber";
+NSString *const kJCSMSMessageManagerTypeKey                 = @"type";
+NSString *const kJCSMSMessageManagerUID                     = @"UID";
+NSString *const kJCSMSMessageManagerFormNumber              = @"fromNumber";
 
-NSString *const kJCSMSMessageManagerEntityTypeKey        = @"entityType";
+NSString *const kJCSMSMessageManagerEntityTypeKey           = @"entityType";
 NSString *const kJCSMSMessageManagerTypeSMSMessageKey       = @"smsmessage";
-//NSString *const kJCSMSMessageManagerActionKey            = @"action";
-//NSString *const kJCSMSMessageManagerActionValue          = @"NEW";
-//NSString *const kJCSMSMessageManagerSMSID          = @"ID";
-
+NSString *const kJCSMSMessageManagerEntityDialogKey         = @"dialog";
+NSString *const kJCSMSMessageManagerEntityConversationKey   = @"conversation";
 
 @implementation JCSMSMessageManager
 
-+(void)subscribeToPbx:(PBX *)pbx {
-    [[JCSMSMessageManager sharedManager] subscribeToPbx:pbx];
++(void)generateSubscriptionForPbx:(PBX *)pbx {
+    [[JCSMSMessageManager sharedManager] generateSubscriptionForPbx:pbx];
 }
 
 #pragma mark - Private -
 
--(void)subscribeToPbx:(PBX *)pbx
+-(void)generateSubscriptionForPbx:(PBX *)pbx
 {
     NSSet *dids = pbx.dids;
     for (DID *did in dids) {
@@ -40,9 +39,14 @@ NSString *const kJCSMSMessageManagerTypeSMSMessageKey       = @"smsmessage";
 
 -(void)subscribeToDid:(DID *)did
 {
-    if (did.canReceiveSMS) {
-        [JCSocket subscribeToSocketEventsWithIdentifer:did.jrn entity:did.jrn type:kJCSMSMessageManagerTypeSMSMessageKey];
+    if (!did.canReceiveSMS){
+        return;
     }
+    
+    [self generateSubscriptionWithIdentifier:did.didId
+                                        type:kJCSMSMessageManagerEntityConversationKey
+                                  entityType:kJCSMSMessageManagerEntityDialogKey
+                                    entityId:did.didId entityAccountId:did.pbx.pbxId];
 }
 
 -(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data {
@@ -68,8 +72,9 @@ NSString *const kJCSMSMessageManagerTypeSMSMessageKey       = @"smsmessage";
     DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(did)) withValue:didId];
     
     NSString *fromNumber = [data stringValueForKey:@"fromNumber"];
-    JCSMSConversationGroup *conversationGroup = [[JCSMSConversationGroup alloc] initWithName:nil number:fromNumber];
-    [SMSMessage downloadMessagesForDID:did toConversationGroup:conversationGroup completion:NULL];
+    JCPhoneNumber *phoneNumber = [[JCPhoneNumber alloc] initWithName:nil number:fromNumber];
+    JCMessageGroup *messageGroup = [[JCMessageGroup alloc] initWithPhoneNumber:phoneNumber];
+    [SMSMessage downloadMessagesForDID:did toMessageGroup:messageGroup completion:NULL];
 }
 
 @end

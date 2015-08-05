@@ -1138,7 +1138,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         {
             if (!self.isActive) {
 //                [_audioManager engageAudioSession];
-                [_audioManager playIncomingCallTone];
+                [_audioManager playRingback];
 
             }
             
@@ -1316,7 +1316,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			 existsVideo:(BOOL)existsVideo
 {
 	JCLineSession *lineSession = [self findIdleLine];
-	if (!lineSession){
+    BOOL incomingCallsEnabled = [self.delegate shouldReceiveIncomingLineSession:self];
+	if (!lineSession || !incomingCallsEnabled){
 		[_mPortSIPSDK rejectCall:sessionId code:486];
 		return;
 	}

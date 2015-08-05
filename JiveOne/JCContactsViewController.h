@@ -8,15 +8,10 @@
 
 @import UIKit;
 
-@class InternalExtensionGroup;
+#import "JCGroupDataSource.h"
 
 @interface JCContactsViewController : UIViewController <UITabBarDelegate>
 
-@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, weak) IBOutlet UITabBar *tabBar;
-
-@property (nonatomic, strong) InternalExtensionGroup *contactGroup;
-
--(IBAction)toggleFilterState:(id)sender;
+@property (nonatomic, strong) id<JCGroupDataSource> group;
 
 @end

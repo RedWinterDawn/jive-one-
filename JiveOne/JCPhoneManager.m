@@ -124,7 +124,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         if (error){
             
             // If we get a registration timeout, we have ecountered a fatal error and need to
-            // restart the application. We exit the app by raising an exception, whic will be
+            // restart the application. We exit the app by raising an exception, which will be
             // by our analytics.
             if(error.code == JC_SIP_REGISTRATION_TIMEOUT) {
                 
@@ -166,6 +166,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_WIFI_DISABLED]];
         [self disconnect];
         return;
+        
+    // Check our settings to see if we want sip to register.        
+    } else if (!self.appSettings.isPhoneEnabled){
+        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_SIP_DISABLED]];
+        [self disconnect];
+        return;
     }
     
     // Check to see if we are on an actual network when we try to connect, if we are getting no
@@ -178,12 +184,6 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
             return;
         }
     }
-    
-    // If we have a line configuration for the line, try to register it.
-    if (line.lineConfiguration){
-        [self registerWithLine:line];
-        return;
-    }
    
     // If we made it here, we do not have a line configuration, we need to request it. If the
     // request was successfull, we try to register.
@@ -192,6 +192,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         if (success) {
             [self registerWithLine:line];
         } else {
+            // If we have a line configuration for the line, try to register it.
+            if (line.lineConfiguration){
+                [self registerWithLine:line];
+                return;
+            }
+            
             [self reportError:[JCPhoneManagerError errorWithCode:JC_PHONE_LINE_CONFIGURATION_REQUEST_ERROR underlyingError:error]];
         }
     }];
@@ -199,9 +205,11 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 -(void)registerWithLine:(Line *)line
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegisteringNotification object:self];
-    [UIApplication showStatus:NSLocalizedStringFromTable(@"Registering...", PHONE_STRINGS_NAME, nil)];
-    [self.sipManager registerToProvisioning:line];
+    BOOL registered = [self.sipManager registerToProvisioning:line];
+    if (registered) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegisteringNotification object:self];
+        [UIApplication showStatus:NSLocalizedStringFromTable(@"Registering...", PHONE_STRINGS_NAME, nil)];
+    }
 }
 
 -(void)disconnect
@@ -287,17 +295,32 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         return;
     }
     
-    [self connectToLine:line
-             completion:^(BOOL success, NSError *error) {
-                 if (success){
-                     [self dial:number type:dialType completion:completion];
-                     return;
-                 }
-                 
-                 if (completion) {
-                     completion(false, error);
-                 }
-             }];
+    
+    void (^connectCompletion)(BOOL success, NSError *error) = ^(BOOL success, NSError *error){
+        if (success){
+            [self dial:number type:dialType completion:completion];
+            return;
+        }
+        if (completion) {
+            completion(false, error);
+        }
+    };
+    
+    JCAppSettings *appSettings = self.appSettings;
+    if (!appSettings.isPhoneEnabled) {
+        [JCAlertView alertWithTitle:NSLocalizedString(@"Calling Disabled", @"")
+                            message:NSLocalizedString(@"Phone is currently disabled in settings, would you like to enable it?", @"")
+                          dismissed:^(NSInteger buttonIndex) {
+                              if (buttonIndex == 1){
+                                  appSettings.phoneEnabled = YES;
+                                  [self connectToLine:line completion:connectCompletion];
+                              } else{
+                                  connectCompletion(NO, nil);
+                              }
+                          } showImmediately:YES];
+    } else {
+        [self connectToLine:line completion:connectCompletion];
+    }
 }
 
 -(BOOL)isEmergencyNumber:(NSString *)dialString
@@ -645,6 +668,11 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }];
 }
 
+-(BOOL)shouldReceiveIncomingLineSession:(JCSipManager *)sipHandler
+{
+    return !self.appSettings.isDoNotDisturbEnabled;
+}
+
 -(void)sipHandler:(JCSipManager *)sipManager didAddLineSession:(JCLineSession *)lineSession
 {
     if (!lineSession.isIncoming) {
@@ -960,7 +988,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 -(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteInputType:(JCPhoneAudioManagerInputType)inputType
 {
-    
+    NSLog(@"%lul",(unsigned long)inputType);
 }
 
 -(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteOutputType:(JCPhoneAudioManagerOutputType)outputType

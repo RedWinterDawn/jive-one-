@@ -7,8 +7,7 @@
 //
 
 #import "SMSMessage+V5Client.h"
-#import "JCV5ApiClient.h"
-#import <Parse/Parse.h>
+#import "JCV5ApiClient+SMSMessaging.h"
 
 NSString *const kSMSMessageSendRequestToKey                 = @"to";
 NSString *const kSMSMessageSendRequestFromKey               = @"from";
@@ -28,8 +27,6 @@ NSString *const kSMSMessageResponseObjectDirectionKey          = @"direction";
 NSString *const kSMSMessageResponseObjectDirectionInboundValue     = @"inbound";
 NSString *const kSMSMessageResponseObjectArrivalTimeKey        = @"epochTime";
 
-NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
-
 @implementation SMSMessage (V5Client)
 
 + (void)createSmsMessageWithMessageData:(NSDictionary *)data {
@@ -42,7 +39,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
         }
     } completion:^(BOOL success, NSError *error) {
         if (success) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+            
         }
     }];
 }
@@ -74,13 +71,13 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
 
 #pragma mark - Send -
 
-+(void)sendMessage:(NSString *)message toConversationGroup:(id<JCConversationGroupObject>)conversationGroup fromDid:(DID *)did completion:(CompletionHandler)completion
++(void)sendMessage:(NSString *)message toMessageGroup:(JCMessageGroup *)conversationGroup fromDid:(DID *)did completion:(CompletionHandler)completion
 {
-    NSDictionary *parameters = @{kSMSMessageSendRequestToKey: conversationGroup.dialableNumber,
+    NSDictionary *parameters = @{kSMSMessageSendRequestToKey: conversationGroup.phoneNumber.dialableNumber,
                                  kSMSMessageSendRequestFromKey: did.number,
                                  kSMSMessageSendRequestBodyKey: message};
     
-    [UIApplication showStatus:@"Sending"];
+    [UIApplication showStatus:NSLocalizedString(@"Sending", @"SMS messaging")];
     [JCV5ApiClient sendSMSMessageWithParameters:parameters completion:^(BOOL success, id response, NSError *error) {
         if (success) {
             [self processSMSSendResponseObject:response did:did completion:completion];
@@ -91,11 +88,6 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
             }
         }
     }];
-    
-    
-    PFInstallation *currentInstilation = [PFInstallation currentInstallation];
-    [currentInstilation addUniqueObject:did.description forKey:@"channels"];
-    [currentInstilation saveInBackground];
 }
 
 #pragma mark - Receive -
@@ -180,9 +172,9 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
 
 #pragma mark Conversation
 
-+(void)downloadMessagesForDID:(DID *)did toConversationGroup:(id<JCConversationGroupObject>)conversationGroup completion:(CompletionHandler)completion
++(void)downloadMessagesForDID:(DID *)did toMessageGroup:(JCMessageGroup *)messageGroup completion:(CompletionHandler)completion
 {
-    [JCV5ApiClient downloadMessagesForDID:did toConversationGroup:conversationGroup completion:^(BOOL success, id response, NSError *error) {
+    [JCV5ApiClient downloadMessagesForDID:did toMessageGroup:messageGroup completion:^(BOOL success, id response, NSError *error) {
         if(success) {
             [self processSMSDownloadConversationResponseObject:response did:did completion:completion];
         }
@@ -230,14 +222,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             DID *localDid = (DID *)[localContext objectWithID:did.objectID];
             [self createSmsMessageWithMessageData:(NSDictionary *)object did:localDid];
-        } completion:^(BOOL success, NSError *error) {
-            if (success) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
-            }
-            if (completion) {
-                completion(success, error);
-            }
-        }];
+        } completion:completion];
     }
     @catch (NSException *exception) {
         NSInteger code;
@@ -272,14 +257,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
                 }
             }
         }
-        completion:^(BOOL success, NSError *error) {
-            if (completion) {
-                completion(success, error);
-            }
-            if (success) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
-            }
-        }];
+        completion:completion];
     }
     @catch (NSException *exception) {
         NSInteger code;
@@ -310,14 +288,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
                 }
             }
         }
-        completion:^(BOOL success, NSError *error) {
-            if (success) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
-            }
-            if (completion) {
-                completion(success, error);
-            }
-        }];
+        completion:completion];
         
     }
     @catch (NSException *exception) {
@@ -349,14 +320,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
                 }
             }
         }
-        completion:^(BOOL success, NSError *error) {
-            if (success) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
-            }
-            if (completion) {
-                completion(success, error);
-            }
-        }];
+        completion:completion];
     }
     @catch (NSException *exception) {
         NSInteger code;
