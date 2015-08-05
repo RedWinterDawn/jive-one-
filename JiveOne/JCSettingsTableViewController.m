@@ -71,7 +71,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     
     #ifndef DEBUG
     if (self.debugCell) {
-//        [self cell:self.debugCell setHidden:YES];
+        [self setCell:self.debugCell hidden:YES];
     }
     #endif
     
