@@ -9,9 +9,10 @@
 #import "JCMessageParticipantTableViewController.h"
 #import "JCPhoneBook.h"
 #import "JCUnknownNumber.h"
-#import "JCConversationGroupObject.h"
-#import "JCSMSConversationGroup.h"
+#import "JCMessageGroup.h"
 #import "Extension.h"
+#import "PhoneNumber.h"
+#import "Contact.h"
 #import "PBX.h"
 
 @interface JCMessageParticipantTableViewController ()
@@ -40,13 +41,13 @@
     return [self.tableData objectAtIndex:indexPath.row];
 }
 
--(id<JCConversationGroupObject>)conversationGroupAtIndexPath:(NSIndexPath *)indexPath
+-(JCMessageGroup *)conversationGroupAtIndexPath:(NSIndexPath *)indexPath
 {
     id<JCPhoneNumberDataSource> phoneNumber = [self objectAtIndexPath:indexPath];
     if ([phoneNumber isKindOfClass:[Extension class]]) {
         return nil; // TODO for chat.
     }
-    return [[JCSMSConversationGroup alloc] initWithPhoneNumber:phoneNumber];
+    return [[JCMessageGroup alloc] initWithPhoneNumber:phoneNumber];
 }
 
 #pragma mark - Setters -
@@ -92,7 +93,11 @@
     if ([phoneNumber isKindOfClass:[JCAddressBookNumber class]]) {
         cell.textLabel.text = phoneNumber.name;
         cell.detailTextLabel.text = phoneNumber.detailText;
-    } else {
+    } else if ([phoneNumber isKindOfClass:[PhoneNumber class]]) {
+        cell.textLabel.text = ((PhoneNumber *)phoneNumber).contact.name;
+        cell.detailTextLabel.text = phoneNumber.detailText;
+    }
+    else {
         cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Send SMS to %@", @"Send SMS to new participant's phone number."), phoneNumber.detailText];
     }
     return cell;
@@ -102,8 +107,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id<JCConversationGroupObject> conversationGroup = [self conversationGroupAtIndexPath:indexPath];
-    [self.delegate messageParticipantTableViewController:self didSelectConversationGroup:conversationGroup];
+    JCMessageGroup *messageGroup = [self conversationGroupAtIndexPath:indexPath];
+    [self.delegate messageParticipantTableViewController:self didSelectConversationGroup:messageGroup];
     [self.view endEditing:YES];
 }
 
@@ -116,7 +121,8 @@
         [results addObject:[JCUnknownNumber unknownNumberWithNumber:searchText]];
     }
     
-    NSArray *phoneNumbers = [self.phoneBook phoneNumbersWithKeyword:searchText forLine:nil sortedByKey:@"name" ascending:YES];
+    User *user = self.authenticationManager.user;
+    NSArray *phoneNumbers = [self.phoneBook phoneNumbersWithKeyword:searchText forUser:user forLine:nil sortedByKey:@"name" ascending:YES];
     [results addObjectsFromArray:phoneNumbers];
     self.tableData = results;
 }

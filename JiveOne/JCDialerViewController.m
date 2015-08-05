@@ -21,6 +21,8 @@
 // Managed Objects
 #import "OutgoingCall.h"
 #import "PhoneNumber.h"
+#import "PBX.h"
+#import "User.h"
 
 // Controllers
 #import "JCCallerViewController.h"
@@ -227,6 +229,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     
     Line *line = self.authenticationManager.line;
     [self.phoneBook phoneNumbersWithKeyword:keyword
+                                    forUser:line.pbx.user
                                     forLine:line
                                 sortedByKey:NSStringFromSelector(@selector(name))
                                   ascending:YES

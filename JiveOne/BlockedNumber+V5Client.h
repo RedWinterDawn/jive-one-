@@ -7,7 +7,7 @@
 //
 
 #import "BlockedNumber.h"
-#import "JCConversationGroupObject.h"
+#import "JCMessageGroup.h"
 
 @interface BlockedNumber (V5Client)
 
@@ -32,6 +32,6 @@
 
 + (BlockedNumber *)blockedNumberForNumber:(NSString *)number forDID:(DID *)did;
 
-+ (BlockedNumber *)blockedNumberForConversationGroup:(id<JCConversationGroupObject>)conversationGroup context:(NSManagedObjectContext *)context;
++ (BlockedNumber *)blockedNumberForMessageGroup:(JCMessageGroup *)messageGroup context:(NSManagedObjectContext *)context;
 
 @end

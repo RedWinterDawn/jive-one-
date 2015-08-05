@@ -15,7 +15,7 @@
                         <viewControllerLayoutGuide type="bottom" id="80c-xf-ql3"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="2aR-yn-2ZB">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="KBK-ek-azj">
@@ -81,13 +81,17 @@
         <scene sceneID="6nF-fq-2SI">
             <objects>
                 <navigationController storyboardIdentifier="ContactsNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Jhe-AU-Yz3" userLabel="Contacts Navigation Controller" sceneMemberID="viewController">
-                    <nil key="simulatedBottomBarMetrics"/>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="Tmi-I8-yNj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" red="0.0" green="0.63921568630000003" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="1AJ-zq-AMu">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.0" green="0.63921568630000003" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                    </toolbar>
                     <connections>
                         <segue destination="IwC-pf-Sga" kind="relationship" relationship="rootViewController" id="jdA-au-jvU"/>
                     </connections>
@@ -237,7 +241,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="ContactsDetailViewTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ab5-kr-ogH" customClass="JCContactDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Rn4-RK-QR8">
-                        <rect key="frame" x="0.0" y="64" width="600" height="443"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
@@ -497,7 +501,7 @@
             <objects>
                 <tableViewController title="Phone Type Selector" id="wCP-M4-bk8" customClass="JCTypeSelectorViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="JpW-ib-JcC">
-                        <rect key="frame" x="0.0" y="64" width="600" height="443"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -747,7 +751,7 @@
         <image name="local_contacts" width="24" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ba0-6s-b7n"/>
+        <segue reference="MkJ-Nz-ljR"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.63921568630000003" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -26,6 +26,8 @@
         return;
     }
     
+    
+    
     // Grabs the UINavigationItem stuff.
     UINavigationItem * navItem = self.navigationItem;
     UINavigationItem * linkedNavItem = scene.navigationItem;
@@ -92,7 +94,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 -(void)viewWillLayoutSubviews
@@ -100,7 +102,15 @@
     UIViewController *scene = self.embeddedViewController;
     if (scene && scene.view.superview == nil) {
         scene.view.translatesAutoresizingMaskIntoConstraints = YES;
-        scene.view.frame = self.view.bounds;
+        
+        if ([scene isKindOfClass:[UINavigationController class]]) {
+            CGRect bounds = self.view.bounds;
+            bounds.size.height += self.bottomOffset;
+            scene.view.frame = bounds;
+        }
+        else {
+            scene.view.frame = self.view.bounds;
+        }
         [self addChildViewController:scene];
         [self.view addSubview:scene.view];
         [scene didMoveToParentViewController:self];

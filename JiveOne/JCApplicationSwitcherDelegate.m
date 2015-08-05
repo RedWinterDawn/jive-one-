@@ -17,7 +17,6 @@
 
 #import "JCPhoneTabBarControllerDelegate.h"
 
-#import "JCConversationGroupObject.h"
 #import "Voicemail.h"
 #import "Call.h"
 #import "Line.h"
@@ -62,7 +61,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 -(instancetype)init
 {
     return [self initWithAppsSettings:[JCAppSettings sharedSettings]
-                authenticationManager:[JCAuthenticationManager sharedManager]];
+                authenticationManager:[UIApplication sharedApplication].authenticationManager];
 }
 
 -(void)dealloc
@@ -110,7 +109,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
     if ([recentEvent isKindOfClass:[Voicemail class]] || [recentEvent isKindOfClass:[Call class]]) {
         return kApplicationSwitcherPhoneRestorationIdentifier;
     }
-    else if ([recentEvent conformsToProtocol:@protocol(JCConversationGroupObject)]) {
+    else if ([recentEvent isKindOfClass:[JCMessageGroup class]]) {
         return kApplicationSwitcherMessagesRestorationIdentifier;
     }
     
@@ -292,7 +291,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
                 if ([restorationIdentifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier] && [controller isKindOfClass:[UITabBarController class]]){
                     [self navigatePhoneViewController:(UITabBarController *)controller forRecentEvent:recentEvent];
                 }
-                else if ([restorationIdentifier isEqualToString:kApplicationSwitcherMessagesRestorationIdentifier] && [controller isKindOfClass:[UINavigationController class]] && [recentEvent conformsToProtocol:@protocol(JCConversationGroupObject)]) {
+                else if ([restorationIdentifier isEqualToString:kApplicationSwitcherMessagesRestorationIdentifier] && [controller isKindOfClass:[UINavigationController class]] && [recentEvent isKindOfClass:[JCMessageGroup class]]) {
                     UINavigationController *navigationController = (UINavigationController *)controller;
                     [navigationController popToRootViewControllerAnimated:NO];
                     JCConversationsTableViewController *conversationViewController = (JCConversationsTableViewController *)navigationController.topViewController;
