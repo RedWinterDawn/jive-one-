@@ -124,7 +124,7 @@
         <!--Conversation View Controller-->
         <scene sceneID="3Vs-Vc-gdU">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" id="AI2-cb-WiH" customClass="JCConversationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConversationsViewController" automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AI2-cb-WiH" customClass="JCConversationViewController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="9b6-df-Xjz">
                         <nil key="title"/>

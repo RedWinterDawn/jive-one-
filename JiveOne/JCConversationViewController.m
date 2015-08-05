@@ -44,6 +44,7 @@
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, readonly) DID *did;
+@property (nonatomic, strong) NSString *forwardedMessageString;
 
 @end
 
@@ -53,8 +54,15 @@
 {
     [super viewDidLoad];
     
+    if (_forwardedMessageString) {
+        self.inputToolbar.contentView.textView.text = _forwardedMessageString;
+    }
+    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Forward", @"Forward") action:@selector(forward:)];
+    [[UIMenuController sharedMenuController] setMenuItems:@[menuItem]];
+    
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send SMS", @"Chat", nil);
     self.inputToolbar.contentView.leftBarButtonItem = nil;
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -174,6 +182,17 @@
               otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
 }
 
+-(void)finishSendingMessageAnimated:(BOOL)animated
+{
+    if (_forwardedMessageString) {
+        [self cancelForward:self];
+        return;
+    }
+    
+    [super finishSendingMessageAnimated:animated];
+}
+
+
 -(void)collectionView:(JCMessagesCollectionView *)collectionView didDeleteCellAtIndexPath:(NSIndexPath *)indexPath
 {
     id <JSQMessageData> object = [self objectAtIndexPath:indexPath];
@@ -185,6 +204,35 @@
         }];
     }
 }
+
+-(void)collectionView:(JCMessagesCollectionView *)collectionView didForwardCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    id<JSQMessageData> object = [self objectAtIndexPath:indexPath];
+    if ([object isKindOfClass:[Message class]]) {
+        Message *message = (Message*) object;
+        NSString *identifier = self.restorationIdentifier;
+       
+        JCConversationViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:identifier];
+        JCNavigationController *navController = [[JCNavigationController alloc] initWithRootViewController:controller];
+        navController.navigationBar.tintColor = self.navigationController.navigationBar.tintColor;
+        navController.navigationBar.translucent = self.navigationController.navigationBar.translucent;
+        navController.navigationBar.barStyle = self.navigationController.navigationBar.barStyle;
+        navController.navigationBar.barTintColor = self.navigationController.navigationBar.barTintColor;
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelForward:)];
+        controller.navigationItem.leftBarButtonItem = cancelButton;
+        controller.forwardedMessageString = message.text;
+        //count for ipad transition
+        controller.modalPresentationStyle = UIModalPresentationFullScreen;
+        controller.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        [self presentViewController:navController animated:YES completion:NULL];
+    }
+}
+
+-(void) cancelForward:(id) sender{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+
 
 #pragma mark - Setters -
 
