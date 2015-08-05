@@ -9,6 +9,7 @@
 #import "JCV5ApiClient+SMSMessaging.h"
 
 #import "DID.h"
+#import "JCMessageGroup.h"
 
 #ifndef MESSAGES_SEND_NUMBER_OF_TRIES
 #define MESSAGES_SEND_NUMBER_OF_TRIES 1
@@ -93,7 +94,7 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
            completion:completion];
 }
 
-+ (void)downloadMessagesForDID:(DID *)did toConversationGroup:(id<JCConversationGroupObject>)conversationGroup completion:(JCApiClientCompletionHandler)completion
++ (void)downloadMessagesForDID:(DID *)did toMessageGroup:(JCMessageGroup *)messageGroup completion:(JCApiClientCompletionHandler)completion
 {
     if (!did) {
         if (completion) {
@@ -102,7 +103,7 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
         return;
     }
     
-    if (!conversationGroup) {
+    if (!messageGroup) {
         if (completion) {
             completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Person Is Null"]);
         }
@@ -110,7 +111,7 @@ NSString *const kJCV5ApiSMSMessageUnblockURLPath                       = @"sms/u
     }
     
     
-    NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageRequestConversationURLPath, did.number, conversationGroup.dialableNumber];
+    NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageRequestConversationURLPath, did.number, messageGroup.phoneNumber.dialableNumber];
     [self getWithPath:path
            parameters:nil
     requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]

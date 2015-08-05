@@ -9,7 +9,8 @@
 #import "BlockedNumber+V5Client.h"
 #import "JCV5ApiClient+SMSMessaging.h"
 #import "DID.h"
-#import "JCSMSConversationGroup.h"
+#import "JCMessageGroup.h"
+#import "SMSMessage.h"
 
 @implementation BlockedNumber (V5Client)
 
@@ -173,14 +174,16 @@
     return [BlockedNumber MR_findFirstWithPredicate:predicate inContext:did.managedObjectContext];
 }
 
-+ (BlockedNumber *)blockedNumberForConversationGroup:(id<JCConversationGroupObject>)conversationGroup context:(NSManagedObjectContext *)context
++ (BlockedNumber *)blockedNumberForMessageGroup:(JCMessageGroup *)messageGroup context:(NSManagedObjectContext *)context
 {
-    if (![conversationGroup isKindOfClass:[JCSMSConversationGroup class]]) {
+    Message *message = messageGroup.latestMessage;
+    if (![message isKindOfClass:[SMSMessage class]]) {
         return nil;
     }
     
-    DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:((JCSMSConversationGroup *)conversationGroup).didJrn inContext:context];
-    return [BlockedNumber blockedNumberForNumber:conversationGroup.conversationGroupId forDID:did];
+    SMSMessage *smsMessage = (SMSMessage *)message;
+    DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:smsMessage.did.jrn inContext:context];
+    return [BlockedNumber blockedNumberForNumber:messageGroup.messageGroupId forDID:did];
 }
 
 @end

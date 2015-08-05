@@ -8,9 +8,7 @@
 
 #import "SMSMessage.h"
 #import "DID.h"
-#import "JCConversationGroupObject.h"
-
-extern NSString *const kSMSMessagesDidUpdateNotification;
+#import "JCMessageGroup.h"
 
 @interface SMSMessage (V5Client)
 
@@ -36,7 +34,7 @@ extern NSString *const kSMSMessagesDidUpdateNotification;
 #pragma mark - Send -
 
 // Sends a sent request. If successfully sent, creates a message from the send success response.
-+(void)sendMessage:(NSString *)message toConversationGroup:(id<JCConversationGroupObject>)conversationGroup fromDid:(DID *)did completion:(CompletionHandler)completion;
++(void)sendMessage:(NSString *)message toMessageGroup:(JCMessageGroup *)messageGroup fromDid:(DID *)did completion:(CompletionHandler)completion;
 
 #pragma mark - Receive -
 
@@ -57,6 +55,6 @@ extern NSString *const kSMSMessagesDidUpdateNotification;
 #pragma mark Conversation
 
 // Downloads all messages for a conversation thread between a DID and a number.
-+(void)downloadMessagesForDID:(DID *)did toConversationGroup:(id<JCConversationGroupObject>)conversationGroup completion:(CompletionHandler)completion;
++(void)downloadMessagesForDID:(DID *)did toMessageGroup:(JCMessageGroup *)messageGroup completion:(CompletionHandler)completion;
 
 @end

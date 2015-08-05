@@ -8,13 +8,13 @@
 
 @import UIKit;
 
-#import "JCConversationGroupObject.h"
+#import "JCMessageGroup.h"
 
 @class JCMessageParticipantTableViewController;
 
 @protocol JCMessageParticipantTableViewControllerDelegate <NSObject>
 
--(void)messageParticipantTableViewController:(JCMessageParticipantTableViewController *)controller didSelectConversationGroup:(id<JCConversationGroupObject>)conversationGroup;
+-(void)messageParticipantTableViewController:(JCMessageParticipantTableViewController *)controller didSelectConversationGroup:(JCMessageGroup *)messageGroup;
 
 @end
 

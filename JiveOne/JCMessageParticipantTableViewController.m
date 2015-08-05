@@ -9,8 +9,7 @@
 #import "JCMessageParticipantTableViewController.h"
 #import "JCPhoneBook.h"
 #import "JCUnknownNumber.h"
-#import "JCConversationGroupObject.h"
-#import "JCSMSConversationGroup.h"
+#import "JCMessageGroup.h"
 #import "Extension.h"
 #import "PBX.h"
 
@@ -40,13 +39,13 @@
     return [self.tableData objectAtIndex:indexPath.row];
 }
 
--(id<JCConversationGroupObject>)conversationGroupAtIndexPath:(NSIndexPath *)indexPath
+-(JCMessageGroup *)conversationGroupAtIndexPath:(NSIndexPath *)indexPath
 {
     id<JCPhoneNumberDataSource> phoneNumber = [self objectAtIndexPath:indexPath];
     if ([phoneNumber isKindOfClass:[Extension class]]) {
         return nil; // TODO for chat.
     }
-    return [[JCSMSConversationGroup alloc] initWithPhoneNumber:phoneNumber];
+    return [[JCMessageGroup alloc] initWithPhoneNumber:phoneNumber];
 }
 
 #pragma mark - Setters -
@@ -102,8 +101,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id<JCConversationGroupObject> conversationGroup = [self conversationGroupAtIndexPath:indexPath];
-    [self.delegate messageParticipantTableViewController:self didSelectConversationGroup:conversationGroup];
+    JCMessageGroup *messageGroup = [self conversationGroupAtIndexPath:indexPath];
+    [self.delegate messageParticipantTableViewController:self didSelectConversationGroup:messageGroup];
     [self.view endEditing:YES];
 }
 

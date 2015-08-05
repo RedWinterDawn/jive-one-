@@ -7,16 +7,13 @@
 //
 
 #import "JCFetchedResultsTableViewController.h"
-#import "JCConversationGroupObject.h"
+#import "JCMessageGroup.h"
 
 @interface JCConversationsTableViewController : UITableViewController
 
-- (IBAction)refreshTable:(id)sender;
-- (IBAction)clear:(id)sender;
-
 @property (nonatomic) BOOL showTopCellSeperator;
 
-- (id<JCConversationGroupObject>)objectAtIndexPath:(NSIndexPath *)indexPath;
-- (NSIndexPath *)indexPathOfObject:(id<JCConversationGroupObject>)object;
+- (JCMessageGroup *)objectAtIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)indexPathOfObject:(JCMessageGroup *)object;
 
 @end
