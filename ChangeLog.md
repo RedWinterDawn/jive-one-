@@ -25,15 +25,22 @@ Removed would be for any features that were removed.
 
 ### Added
 - Added User Voice to provide improved user feedback.
-- Ability to add a new local contact that gets saved to the Jive Platform and synced between devices. (US10218)
+- Ability to add and edit a new local contact that gets saved to the Jive Platform and synced between devices. (US10218, US10225)
 - Improved and updated localizations. (US10270)
+- Volume Slider (US10048)
+- Ringtone Selector (US15049)
+- Ability to detect expired AuthToken and re-request token without forcing Logout. Prompts logged in user to enter password. (US10668)
+- Reorganized Settings
+- New App Drawer with new look and feel (iPhone).
 
 ### Changes
 - DE994 Local EULA. Made the EULA to be embedded in the app to improve load time, and provide offline access to EULA.
 
 ### Fixed
 - DE1095. Deleted calls are now being marked read, updating the badge count correctly.
-
+- DE1094. Fixed issues around Default DID selection.
+- DE999. Intercom Speaker Bug fixed. 
+- Various small bugs.
 
 ## [1.2.5] - 2015-06-02
 
