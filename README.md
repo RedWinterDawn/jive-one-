@@ -2,9 +2,7 @@
 
 ##Development
 
-This project uses a dependancy management tool called Cocoapods to manage 3rd party libraries and internal modules. These librairies are retrived through git, and compliled into lib.a files that are included and linked to in the build of JiveOne.
-
-More information on cocoapods can be found at: [cocoapods.org](http://cocoapods.org)
+This project uses a dependancy management tool called Cocoapods to manage 3rd party libraries and internal modules. These librairies are retrived through git, and compliled into lib.a files that are included and linked to in the build of JiveOne. More information on cocoapods can be found at: [cocoapods.org](http://cocoapods.org)
 
 The Branches are managed in a modified GitFlow pattern:
 * The Master branch is what is in the App Store. 
