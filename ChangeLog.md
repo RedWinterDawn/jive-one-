@@ -19,11 +19,11 @@ Removed would be for any features that were removed.
 
 ## [1.3.0] - 2015-07-29
 
-## [1.2.5] - 2014-06-02
+## [1.2.5] - 2015-06-02
 
-## [1.2.4] - 2014-04-27
+## [1.2.4] - 2015-04-27
 
-## [1.2.3] - 2014-04-20
+## [1.2.3] - 2015-04-20
 
 [unreleased]: https://github.com/jive/iOS-JiveOne/compare/v1.3.1(150731)...HEAD
 [1.3.1]: https://github.com/jive/iOS-JiveOne/compare/v1.3.0(150729)...v1.3.1(150731)
