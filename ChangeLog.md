@@ -29,7 +29,7 @@ Removed would be for any features that were removed.
 
 ## [1.2.2] - 2014-03-23
 
-[unreleased]: https://github.com/jive/iOS-JiveOne/compare/1.3.1...develop
+[unreleased]: https://github.com/jive/iOS-JiveOne/compare/1.3.1...HEAD
 [1.3.1]: https://github.com/jive/iOS-JiveOne/compare/1.3.1...1.3.0
 [1.3.0]: https://github.com/jive/iOS-JiveOne/compare/1.3.0...1.2.5
 [1.2.5]: https://github.com/jive/iOS-JiveOne/compare/1.2.5...1.2.4
