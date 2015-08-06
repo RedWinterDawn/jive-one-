@@ -23,6 +23,18 @@ Removed would be for any features that were removed.
 
 ## [1.3.0] - 2015-07-29
 
+### Added
+- Added User Voice to provide improved user feedback.
+- Ability to add a new local contact that gets saved to the Jive Platform and synced between devices. (US10218)
+- Improved and updated localizations. (US10270)
+
+### CHANGES
+- DE994 Local EULA. Made the EULA to be embedded in the app to improve load time, and provide offline access to EULA.
+
+### Fixed
+- DE1095. Deleted calls are now being marked read, updating the badge count correctly.
+
+
 ## [1.2.5] - 2015-06-02
 
 ## [1.2.4] - 2015-04-27
