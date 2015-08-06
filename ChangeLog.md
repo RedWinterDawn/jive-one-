@@ -17,6 +17,10 @@ Removed would be for any features that were removed.
 
 ## [1.3.1] - 2015-07-31
 
+### FIXED
+- When switching lines, the App Menu was not correctly Updating, causing the App Menu to incorrectly navigate.
+- iPad UI issues.
+
 ## [1.3.0] - 2015-07-29
 
 ## [1.2.5] - 2015-06-02
