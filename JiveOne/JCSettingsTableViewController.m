@@ -140,9 +140,73 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     
     config.showForum = NO;
     config.showPostIdea = NO;
+    
+    NSMutableDictionary *fields = [NSMutableDictionary new];
+    
+    // Device Info
+    UIDevice *currentDevice = [UIDevice currentDevice];
+    [fields setValue:[currentDevice platformType] forKey:@"Model"];
+    [fields setValue:[currentDevice systemVersion] forKey:@"System Version"];
+    [fields setValue:[currentDevice userUniqueIdentiferForUser:authenticationManager.jiveUserId] forKey:@"UUID"];
+    
+    // App Info
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *appVersion = [NSString stringWithFormat:@"%@ (%@)", [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
+    [fields setValue:appVersion forKey:@"App Version"];
+    
+    NSString *country = [[NSLocale currentLocale] localeIdentifier];
+    [fields setValue:country forKey:@"Locale"];
+    
+    NSString *user = authenticationManager.line.pbx.user.jiveUserId;
+    [fields setValue:user forKey:@"User"];
+    
+    NSString *pbx = authenticationManager.line.pbx.displayName;
+    [fields setValue:pbx forKey:@"PBX"];
+    
+    NSString *line = authenticationManager.line.number;
+    [fields setValue:line forKey:@"Line"];
+    
+    NSString *domain = authenticationManager.line.pbx.domain;
+    [fields setValue:domain forKey:@"Domain"];
+    
+    NSString *carrier = [currentDevice defaultCarrier];
+    [fields setValue:carrier forKey:@"Carrier"];
+    
+    NSString *currentConection =  [self networkType];
+    [fields setValue:currentConection forKey:@"Network"];
+    
+    config.customFields = fields;
+    
     [UserVoice initialize:config];
     
     [UserVoice presentUserVoiceInterfaceForParentViewController:self];
+}
+
+-(NSString *)networkType
+{
+    AFNetworkReachabilityStatus status = self.networkReachabilityManager.networkReachabilityStatus;
+    switch (status) {
+        case -1:
+            return (@"Unreachable");
+            break;
+        case 1:
+            return (@"WAN");
+            break;
+        case 2:
+            return (@"Wifi");
+            break;
+        default:
+            return (@"Network Unobtainable");
+            break;
+    }
+}
+
+-(AFNetworkReachabilityManager *)networkReachabilityManager
+{
+    if (!_networkReachabilityManager) {
+        _networkReachabilityManager = [AFNetworkReachabilityManager sharedManager];
+    }
+    return _networkReachabilityManager;
 }
 
 -(IBAction)logout:(id)sender
