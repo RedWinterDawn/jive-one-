@@ -14,8 +14,6 @@ Removed would be for any features that were removed.
 --->
 
 ## [Unreleased][unreleased]
-### Changed
-- Improve argument against commit logs.
 
 ## [1.3.1] - 2015-07-31
 
