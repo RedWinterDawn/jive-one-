@@ -17,7 +17,7 @@ Removed would be for any features that were removed.
 
 ## [1.3.1] - 2015-07-31
 
-### FIXED
+### Fixed
 - When switching lines, the App Menu was not correctly updating, causing the App Menu to incorrectly navigate.
 - iPad UI issues.
 
@@ -28,7 +28,7 @@ Removed would be for any features that were removed.
 - Ability to add a new local contact that gets saved to the Jive Platform and synced between devices. (US10218)
 - Improved and updated localizations. (US10270)
 
-### CHANGES
+### Changes
 - DE994 Local EULA. Made the EULA to be embedded in the app to improve load time, and provide offline access to EULA.
 
 ### Fixed
