@@ -27,10 +27,9 @@ Removed would be for any features that were removed.
 
 ## [1.2.3] - 2014-04-20
 
-## [1.2.2] - 2014-03-23
-
 [unreleased]: https://github.com/jive/iOS-JiveOne/compare/v1.3.1(150731)...HEAD
 [1.3.1]: https://github.com/jive/iOS-JiveOne/compare/v1.3.0(150729)...v1.3.1(150731)
 [1.3.0]: https://github.com/jive/iOS-JiveOne/compare/v1.2.5(150602)...v1.3.0(150729)
 [1.2.5]: https://github.com/jive/iOS-JiveOne/compare/v1.2.4(150427)...v1.2.5(150602)
 [1.2.4]: https://github.com/jive/iOS-JiveOne/compare/v1.2.3(150420)...v1.2.4(150427)
+[1.2.3]: https://github.com/jive/iOS-JiveOne/compare/v1.2.2(150323)...v1.2.4(150420)
