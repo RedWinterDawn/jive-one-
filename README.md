@@ -2,7 +2,7 @@
 
 JiveOne is a Universal (iPhone/iPad) app that is able to make and receive phone calls through the Jive Platform, list PBX, local and user contacts, allow for single touch dialing, and send and receive SMS messages from approved PBXs.
 
-For a complete list of features and changes, please see the [change log](/ChangeLog.md)
+For a complete list of features and changes, please see the [change log](/ChangeLog.md).
 
 ##Development
 
