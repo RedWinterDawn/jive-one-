@@ -1,16 +1,15 @@
 ###iOS-JiveOne
-===========
+====
 
 
 ##Development
-===============
+====
 ### Cocoapods
 This project uses a dependancy management tool called Cocoapods to manage 3rd party libraries and internal modules. These librairies are retrived through git, and compliled into lib.a files that are included and linked to in the build of JiveOne.
 
 More information on cocoapods can be found at: [cocoapods.org](http://cocoapods.org) 
 
 ####Using Cocopods
-
 
 Install ruby 2.0, then:
 ```
@@ -113,7 +112,9 @@ cd to a directory where msg0000.wav and msg0000.txt exists (such as /Assets).
 <br>
 then
 <br>
-curl -v -F file=@msg0000.WAV -F metadata=@msg0000.txt http://10.20.26.141:8880/voicemails/mailbox/0146de22-4cf6-65b5-3be8-006300620001/folders/INBOX
+```
+curl -v -F file=@msg0000.WAV -F metadata=@msg0000.txt http://10.20.26.141:8880/voicemails/mailbox/[mailbox-id]/folders/INBOX
+```
 
 ####Some useful links:
 
