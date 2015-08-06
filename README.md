@@ -1,9 +1,8 @@
-###iOS-JiveOne
-====
+#iOS-JiveOne
 
 
 ##Development
-====
+
 ### Cocoapods
 This project uses a dependancy management tool called Cocoapods to manage 3rd party libraries and internal modules. These librairies are retrived through git, and compliled into lib.a files that are included and linked to in the build of JiveOne.
 
