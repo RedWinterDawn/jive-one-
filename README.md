@@ -1,5 +1,9 @@
 #iOS-JiveOne
 
+JiveOne is a Universal (iPhone/iPad) app that is able to make and receive phone calls through the Jive Platform, list PBX, local and user contacts, allow for single touch dialing, and send and receive SMS messages from approved PBXs.
+
+For a complete list of features and changes, please see the [change log](/ChangeLog.md)
+
 ##Development
 
 This project uses a dependancy management tool called Cocoapods to manage 3rd party libraries and internal modules. These librairies are retrived through git, and compliled into lib.a files that are included and linked to in the build of JiveOne. More information on cocoapods can be found at: [cocoapods.org](http://cocoapods.org)
