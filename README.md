@@ -1,41 +1,38 @@
 #iOS-JiveOne
 
-
 ##Development
 
-### Cocoapods
 This project uses a dependancy management tool called Cocoapods to manage 3rd party libraries and internal modules. These librairies are retrived through git, and compliled into lib.a files that are included and linked to in the build of JiveOne.
 
-More information on cocoapods can be found at: [cocoapods.org](http://cocoapods.org) 
+More information on cocoapods can be found at: [cocoapods.org](http://cocoapods.org)
 
-####Using Cocopods
+The Branches are managed in a modified GitFlow pattern:
+* The Master branch is what is in the App Store. 
+* Release Branches are Beta builds in TestFlight.
+* Develop branch is currently accepted development branch.
+* Feature Branches are user story branches.
 
-Install ruby 2.0, then:
+### Running JiveOne Locally
+
+Pull latest version of the code from github: 
+
 ```
-gem install cocoapods
-```
 
-Navigate to the source folder and run:
-```
-pod install
-```
-
-ALWAYS use Jive.xcworkspace, not Jive.xcodeproj 
-
-### Test flight
-
-To install test flight app on your device you will need your Device added to the testflight group and to the develpoer povisioning profile
-Open XCode
-Pull latest version of the app from github
-```
 git clone https://github.com/jive/iOS-JiveOne.git
 ```
 
-Then plug in the device directly into your computer.
-Build the app using your device as the build target.
-Then go to testflightapp.com on your device through safari.
-Login and launch the app.
-Install provisioning profile.
+Navigate to the root folder and run:
+
+```
+gem install cocoapods
+pod install
+```
+
+Open `Jive.xcworkspace` in XCode. Do not load from the `Jive.xcodeproj`.
+
+In Xcode you can launch the project to run in the simulator or install to a device. In order to put the project on a device, you must have an ADC Account and have a provisioning profile with your device on it. Xcode need to be setup and configured to use your ADC Account.
+
+To login, use your Jive ID and Password.
 
 Testing login
 username: jivetesting12@gmail.com
