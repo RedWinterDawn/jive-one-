@@ -17,7 +17,6 @@ The Branches are managed in a modified GitFlow pattern:
 Pull latest version of the code from github: 
 
 ```
-
 git clone https://github.com/jive/iOS-JiveOne.git
 ```
 
@@ -34,17 +33,16 @@ In Xcode you can launch the project to run in the simulator or install to a devi
 
 To login, use your Jive ID and Password.
 
+###TESTING
+
 Testing login
 username: jivetesting12@gmail.com
 password: testing12
-
-###TESTING
 
 There are many different types of tests. Here at jive we would like to have tests so that we can verify our code is robust and verify services are up.
 Here are the different types of tests we can have:
 
 Unit Tests- These test a single pice of code. These are required for a story to be passed off and accepted.
-
 
 Integration tests - Tests anything that makes a call to an api or external service. These should be created when a portion of the app is complete in a general were we want it to be. 
 
