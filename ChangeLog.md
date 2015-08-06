@@ -25,8 +25,8 @@ Removed would be for any features that were removed.
 
 ## [1.2.3] - 2014-08-09
 
-[unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.8...HEAD
-[1.3.1]: /compare/1.3.1...1.2.5
+[unreleased]: https://github.com/jive/iOS-JiveOne/compare/1.3.1...HEAD
+[1.3.1]: https://github.com/jive/iOS-JiveOne/compare/1.3.1...1.2.5
 <!---
 [0.0.7]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.6...v0.0.7
 [0.0.6]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.5...v0.0.6
