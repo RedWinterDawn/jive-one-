@@ -10,7 +10,7 @@
 
 @import Foundation;
 
-#import "JCSipManagerProvisioningDataSource.h"
+#import "JCPhoneProvisioningDataSource.h"
 #import "JCPhoneNumberDataSource.h"
 #import "JCLineSession.h"
 #import "JCPhoneAudioManager.h"
@@ -21,7 +21,7 @@
 @interface JCSipManager : NSObject
 
 @property (nonatomic, weak) id <JCSipManagerDelegate> delegate;
-@property (nonatomic, readonly) id <JCSipManagerProvisioningDataSource> provisioning;
+@property (nonatomic, readonly) id <JCPhoneProvisioningDataSource> provisioning;
 @property (nonatomic, readonly) JCPhoneAudioManager *audioManager;
 
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;         // If PortSipSDK has been initialized.
@@ -36,7 +36,7 @@
                                error:(NSError *__autoreleasing *)error;
 
 // Methods to handle registration.
-- (BOOL)registerToProvisioning:(id <JCSipManagerProvisioningDataSource>)line;
+- (BOOL)registerToProvisioning:(id <JCPhoneProvisioningDataSource>)line;
 - (void)unregister;
 
 // Backgrounding

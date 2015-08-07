@@ -29,6 +29,7 @@
 #import "JCContactPhoneNumberTableViewCell.h"
 #import "JCContactAddressTableViewCell.h"
 #import "JCContactOtherFieldTableViewCell.h"
+#import "JCPhoneBook.h"
 
 @interface JCContactDetailViewController () <JCTypeSelectorTableControllerDelegate, JCContactPhoneNumberTableViewCellDelegate> {
     BOOL _addingContact;
@@ -338,7 +339,7 @@
 -(void)contactPhoneNumberCell:(JCContactPhoneNumberTableViewCell *)cell dialPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
     [self dialPhoneNumber:phoneNumber
-                usingLine:self.authenticationManager.line
+      provisioningProfile:self.authenticationManager.line
                    sender:cell];
 }
 

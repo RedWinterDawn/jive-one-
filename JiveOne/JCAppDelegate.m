@@ -34,6 +34,9 @@
 #import "PBX.h"
 #import "Line.h"
 #import "User.h"
+#import "OutgoingCall.h"
+#import "IncomingCall.h"
+#import "MissedCall.h"
 
 #import "InternalExtension+V5Client.h"
 #import "Voicemail+V5Client.h"
@@ -52,7 +55,7 @@
 NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReceiveRemoteNotification";
 NSString *const kGCMSenderId = @"937754980938";
 
-@interface JCAppDelegate () <JCPickerViewControllerDelegate>
+@interface JCAppDelegate () <JCPickerViewControllerDelegate, JCPhoneManagerDelegate>
 {
     UINavigationController *_navigationController;
     UIViewController *_appSwitcherViewController;
@@ -175,7 +178,7 @@ NSString *const kGCMSenderId = @"937754980938";
     
     // Register the Phone.
     JCPhoneManager *phoneManager = [JCPhoneManager sharedManager];
-    [phoneManager connectToLine:line];
+    [phoneManager connectWithProvisioningProfile:line];
 }
 
 -(void)subscribeToJasmineEventsForLine:(Line *)line
@@ -247,32 +250,32 @@ NSString *const kGCMSenderId = @"937754980938";
     // rather the recovery when we reconnect.
     if (status == AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"No Network Connection");
-        [[JCPhoneManager sharedManager] connectToLine:line];
+        [[JCPhoneManager sharedManager] connectWithProvisioningProfile:line];
     }
     
     // Transition from Cellular data to wifi.
     else if (currentNetworkType ==  JCPhoneManagerCellularNetwork && status == AFNetworkReachabilityStatusReachableViaWiFi) {
         NSLog(@"Transitioning to Wifi from Cellular Data Connection");
-        [[JCPhoneManager sharedManager] connectToLine:line];
+        [[JCPhoneManager sharedManager] connectWithProvisioningProfile:line];
     }
     
     // Transition from wifi to cellular data.
     else if (currentNetworkType == JCPhoneManagerWifiNetwork && status == AFNetworkReachabilityStatusReachableViaWWAN) {
         NSLog(@"Transitioning to Cellular Data from Wifi Connection");
-        [[JCPhoneManager sharedManager] connectToLine:line];
+        [[JCPhoneManager sharedManager] connectWithProvisioningProfile:line];
     }
     
     // Transition from no connection to having a connection.
     else if(currentNetworkType == JCPhoneManagerNoNetwork && status != AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"Transitioning from no network connectivity to connected.");
-        [[JCPhoneManager sharedManager] connectToLine:line];
+        [[JCPhoneManager sharedManager] connectWithProvisioningProfile:line];
     }
     
     // Transition from unknown network to other wifi or cellular data
     else if (currentNetworkType == JCPhoneManagerUnknownNetwork &&
              (status == AFNetworkReachabilityStatusReachableViaWiFi || status == AFNetworkReachabilityStatusReachableViaWWAN)) {
         NSLog(@"Transitioning from unknown network to wifi or wwan");
-        [[JCPhoneManager sharedManager] connectToLine:line];
+        [[JCPhoneManager sharedManager] connectWithProvisioningProfile:line];
     }
     
     // Handle socket to reconnect. Since we reuse the socket, we do not need to subscribe, but just
@@ -372,6 +375,28 @@ NSString *const kGCMSenderId = @"937754980938";
     [self dismissLoginViewController:YES completed:NULL];
 }
 
+-(void)phoneManager:(JCPhoneManager *)manager reportCallOfType:(JCPhoneManagerCallType)type lineSession:(JCLineSession *)lineSession provisioningProfile:(id<JCPhoneProvisioningDataSource>)provisioningProfile
+{
+    if (!lineSession || !provisioningProfile || ![provisioningProfile isKindOfClass:[Line class]]) {
+        return;
+    }
+    
+    switch (type) {
+        case JCPhoneManagerIncomingCall:
+            [IncomingCall addIncommingCallWithLineSession:lineSession line:(Line *)provisioningProfile];
+            break;
+            
+        case JCPhoneManagerMissedCall:
+            [MissedCall addMissedCallWithLineSession:lineSession line:(Line *)provisioningProfile];
+            break;
+            
+        case JCPhoneManagerOutgoingCall:
+            [OutgoingCall addOutgoingCallWithLineSession:lineSession line:(Line *)provisioningProfile];
+            break;
+    }
+}
+
+
 #pragma mark UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -434,6 +459,9 @@ NSString *const kGCMSenderId = @"937754980938";
     
     JCAppSettings *appSettings = [JCAppSettings sharedSettings];
     [center addObserver:self selector:@selector(presenceChanged:) name:kJCAppSettingsPresenceChangedNotification object:appSettings];
+    
+    JCPhoneManager *phoneManager = [JCPhoneManager sharedManager];
+    phoneManager.delegate = self;
 
     // Authentication
     JCAuthenticationManager *authenticationManager = application.authenticationManager;

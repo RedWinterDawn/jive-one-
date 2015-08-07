@@ -23,6 +23,7 @@
 #import "PhoneNumber.h"
 #import "PBX.h"
 #import "User.h"
+#import "JCPhoneBook.h"
 
 // Controllers
 #import "JCCallerViewController.h"
@@ -101,8 +102,8 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [super viewWillAppear:animated];
     
     JCPhoneManager *phoneManager = self.phoneManager;
-    if (phoneManager.line && !phoneManager.isRegistered && !phoneManager.isRegistering) {
-        [phoneManager connectToLine:phoneManager.line];
+    if (phoneManager.provisioningProfile && !phoneManager.isRegistered && !phoneManager.isRegistering) {
+        [phoneManager connectWithProvisioningProfile:phoneManager.provisioningProfile];
     }
 }
 
@@ -164,7 +165,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     // Fetch the phone number.
     id<JCPhoneNumberDataSource> phoneNumber = [self.phoneBook phoneNumberForNumber:string name:nil forPbx:line.pbx excludingLine:line];
     [self dialPhoneNumber:phoneNumber
-                usingLine:line
+      provisioningProfile:self.phoneManager.provisioningProfile
                    sender:sender
                completion:^(BOOL success, NSError *error) {
                    if (success){
@@ -248,13 +249,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     NSString *prompt = NSLocalizedStringFromTable(@"Unregistered", @"Phone", @"Registration Status Display");
     if (phoneManager.isRegistered) {
         self.callButton.selected = false;
-        if (self.registrationStatusLabel) {
-            prompt = phoneManager.line.number;
-        }
-        else {
-            Line *line = phoneManager.line;
-            prompt = line.displayName;
-        }
+        prompt = phoneManager.provisioningProfile.displayName;
     }
     else if (appSettings.wifiOnly && reachabilityManager.isReachableViaWWAN){
         prompt = NSLocalizedStringFromTable(@"Disabled", @"Phone", @"Registration Status Display");
@@ -379,13 +374,13 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     id <JCPhoneNumberDataSource> personNumber = [self objectAtIndexPath:indexPath];
     self.formattedPhoneNumberLabel.dialString = personNumber.dialableNumber;
     [self dialPhoneNumber:personNumber
-           usingLine:self.authenticationManager.line
-              sender:collectionView
-          completion:^(BOOL success, NSError *error) {
-              if (success){
-                  [self clear:nil];
-              }
-          }];
+      provisioningProfile:self.phoneManager.provisioningProfile
+                   sender:collectionView
+               completion:^(BOOL success, NSError *error) {
+                   if (success){
+                       [self clear:nil];
+                   }
+               }];
 }
 
 @end

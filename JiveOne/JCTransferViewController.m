@@ -7,6 +7,7 @@
 //
 
 #import "JCTransferViewController.h"
+#import "JCPhoneBook.h"
 
 @implementation JCTransferViewController
 

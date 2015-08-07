@@ -97,7 +97,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark - Registration -
 
--(BOOL)registerToProvisioning:(id<JCSipManagerProvisioningDataSource>)provisioning
+-(BOOL)registerToProvisioning:(id<JCPhoneProvisioningDataSource>)provisioning
 {
     __autoreleasing NSError *error;
     BOOL registered = [self registerToProvisioning:provisioning error:&error];
@@ -213,7 +213,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return TRUE;
 }
 
--(BOOL)registerToProvisioning:(id<JCSipManagerProvisioningDataSource>)provisioning error:(NSError *__autoreleasing *)error;
+-(BOOL)registerToProvisioning:(id<JCPhoneProvisioningDataSource>)provisioning error:(NSError *__autoreleasing *)error;
 {
     // Check if we are already registering.
     if (_registering) {

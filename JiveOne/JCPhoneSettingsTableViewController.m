@@ -64,7 +64,7 @@
                       completion:^(BOOL value, JCAppSettings *settings) {
                           [self updatePhoneInfo];
                           if (value){
-                              [self.phoneManager connectToLine:self.authenticationManager.line];
+                              [self.phoneManager connectWithProvisioningProfile:self.authenticationManager.line];
                           } else{
                               [self.phoneManager disconnect];
                           }
@@ -105,7 +105,7 @@
                               return s.isWifiOnly;
                           }
                       completion:^(BOOL value, JCAppSettings *s) {
-                          [self.phoneManager connectToLine:self.authenticationManager.line];
+                          [self.phoneManager connectWithProvisioningProfile:self.authenticationManager.line];
                       }];
 }
 

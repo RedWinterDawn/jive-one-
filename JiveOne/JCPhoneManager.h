@@ -13,15 +13,11 @@
 #import <AFNetworking/AFNetworkReachabilityManager.h>
 
 #import "JCManager.h"
-#import "JCSipManager.h"
-#import "JCAppSettings.h"
 #import "JCPhoneAudioManager.h"
 #import "JCPhoneNumberDataSource.h"
-#import "JCPhoneBook.h"
+#import "JCPhoneProvisioningDataSource.h"
 #import "JCCallerViewController.h"
-#import "JCError.h"
-
-@class Line;
+#import "JCLineSession.h"
 
 extern NSString *const kJCPhoneManagerRegisteringNotification;
 extern NSString *const kJCPhoneManagerRegisteredNotification;
@@ -43,12 +39,15 @@ typedef enum : NSInteger {
     JCPhoneManagerCellularNetwork   = AFNetworkReachabilityStatusReachableViaWWAN,
 } JCPhoneManagerNetworkType;
 
+@protocol JCPhoneManagerDelegate;
+
 @interface JCPhoneManager : JCManager
 
 @property (nonatomic, strong) NSMutableArray *calls;
 @property (nonatomic, strong) NSString *storyboardName;
+@property (nonatomic, weak) id<JCPhoneManagerDelegate> delegate;
 
-@property (nonatomic, readonly) Line *line;
+@property (nonatomic, readonly) id<JCPhoneProvisioningDataSource> provisioningProfile;
 @property (nonatomic, readonly) JCPhoneManagerNetworkType networkType;
 @property (nonatomic, readonly) JCCallerViewController *callViewController;
 
@@ -62,7 +61,7 @@ typedef enum : NSInteger {
 @property (nonatomic, readonly) JCPhoneAudioManagerInputType inputType;
 @property (nonatomic, readonly) JCPhoneAudioManagerOutputType outputType;
 
-- (void)connectToLine:(Line *)line;
+- (void)connectWithProvisioningProfile:(id<JCPhoneProvisioningDataSource>)provisioningProfile;
 - (void)disconnect;
 
 - (void)startKeepAlive;
@@ -74,9 +73,9 @@ typedef enum : NSInteger {
 // completed, we are notified. If the dial action resulted in the creation of a dial card, an
 // kJCCallCardManagerAddedCallNotification is broadcasted through the notification center.
 - (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number
-         usingLine:(Line *)line
-              type:(JCPhoneManagerDialType)dialType
-        completion:(CompletionHandler)completion;
+    provisioningProfile:(id<JCPhoneProvisioningDataSource>)provisioningProfile
+                   type:(JCPhoneManagerDialType)dialType
+             completion:(CompletionHandler)completion;
 
 // Call actions
 - (void)mergeCalls:(CompletionHandler)completion;
@@ -91,37 +90,42 @@ typedef enum : NSInteger {
 
 @end
 
+
+typedef enum : NSUInteger {
+    JCPhoneManagerIncomingCall,
+    JCPhoneManagerMissedCall,
+    JCPhoneManagerOutgoingCall,
+} JCPhoneManagerCallType;
+
+@protocol JCPhoneManagerDelegate <NSObject>
+
+-(void)phoneManager:(JCPhoneManager *)manager
+   reportCallOfType:(JCPhoneManagerCallType)type
+        lineSession:(JCLineSession *)lineSession
+provisioningProfile:(id<JCPhoneProvisioningDataSource>)provisioningProfile;
+
+@end
+
+
 @interface UIViewController (PhoneManager)
 
 @property(nonatomic, strong) JCPhoneManager *phoneManager;
 
 // Dials a number. The sender is enabled and disabled while call is being initiated.
 - (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number
-              usingLine:(Line *)line
+                 sender:(id)sender;
+
+// Dials a number. The sender is enabled and disabled while call is being initiated.
+- (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number
+    provisioningProfile:(id<JCPhoneProvisioningDataSource>)provisioningProfile
                  sender:(id)sender;
 
 // Dials a number with a completion block indicating a successfull dial or error, and the specific
 // error. Underlying error presents a hud or alert. The sender is enabled and disabled while call is
 // being initiated.
 - (void)dialPhoneNumber:(id<JCPhoneNumberDataSource>)number
-              usingLine:(Line *)line
+    provisioningProfile:(id<JCPhoneProvisioningDataSource>)provisioningProfile
                  sender:(id)sender
              completion:(CompletionHandler)completion;
-
-@end
-
-#define JC_PHONE_SIP_NOT_INITIALIZED                -1000
-#define JC_PHONE_WIFI_DISABLED                      -1001
-#define JC_PHONE_MANAGER_NO_NETWORK                 -1002
-#define JC_PHONE_LINE_CONFIGURATION_REQUEST_ERROR   -1003
-
-#define JC_PHONE_CONFERENCE_CALL_ALREADY_EXISTS     -1100
-#define JC_PHONE_FAILED_TO_CREATE_CONFERENCE_CALL   -1101
-#define JC_PHONE_NO_CONFERENCE_CALL_TO_END          -1102
-#define JC_PHONE_FAILED_ENDING_CONFERENCE_CALL      -1103
-#define JC_PHONE_BLIND_TRANSFER_FAILED              -1104
-#define JC_PHONE_SIP_DISABLED                                   -1105
-
-@interface JCPhoneManagerError : JCError
 
 @end
