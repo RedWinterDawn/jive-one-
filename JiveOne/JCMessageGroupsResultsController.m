@@ -100,7 +100,7 @@
 -(NSArray *)updateMessagesForMessageGroup:(JCMessageGroup *)messageGroup
 {
     NSManagedObjectContext *context = self.managedObjectContext;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", NSStringFromSelector(@selector(messageGroupId)), messageGroup.messageGroupId];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@ AND %K = %@", NSStringFromSelector(@selector(messageGroupId)), messageGroup.messageGroupId, NSStringFromSelector(@selector(pbxId)), _pbx.pbxId];
     return [Message MR_findAllSortedBy:NSStringFromSelector(@selector(date)) ascending:NO withPredicate:predicate inContext:context];
 }
 

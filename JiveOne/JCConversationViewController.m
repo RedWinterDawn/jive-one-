@@ -232,8 +232,6 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-
-
 #pragma mark - Setters -
 
 -(void)setMessageGroup:(JCMessageGroup *)messageGroup
@@ -243,7 +241,7 @@
     if (messageGroup.isSMS) {
         SMSMessage *smsMessage = (SMSMessage *)self.messageGroup.latestMessage;
         if (!smsMessage) {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", messageGroup.messageGroupId];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND pbxId = %@", messageGroup.messageGroupId, self.authenticationManager.pbx.pbxId];
             smsMessage = [SMSMessage MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
         }
         
@@ -267,7 +265,7 @@
         
         NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
         NSString *messageGroupId = self.messageGroup.messageGroupId;
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND markForDeletion = %@", messageGroupId, @NO];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND markForDeletion = %@ AND pbxId = %@", messageGroupId, @NO, self.authenticationManager.pbx.pbxId];
         NSFetchRequest *fetchRequest = [Message MR_requestAllWithPredicate:predicate inContext:context ];
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
         fetchRequest.includesSubentities = YES;
