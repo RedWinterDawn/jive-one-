@@ -30,11 +30,6 @@
                                             forPbx:(PBX *)pbx
                                      excludingLine:(Line *)line;
 
-// Search for a specific extension in our jive contacts. If none is found, a nil result is returned.
--(id<JCPhoneNumberDataSource>)extensionForNumber:(NSString *)number
-                                             pbx:(PBX *)pbx
-                                   excludingLine:(Line *)line;
-
 // Search for a specific name and number in our local contacts. If multiple contacts were
 // encountered, and JCMultiPersonPhoneNumber object is returned, representing the aggregate contact.
 // If no phone number is found, a nil result is returned.
