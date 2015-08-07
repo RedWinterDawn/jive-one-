@@ -20,6 +20,19 @@ NSString *const kSMSMessageInboundAttributeKey = @"inbound";
 
 #pragma mark - Attributes -
 
+-(void)willSave
+{
+    if (![self isDeleted])
+    {
+        // generates the t9 representation of the name of the number.
+        NSString *pbxId = self.did.pbx.pbxId;
+        if(pbxId) {
+            [self setPrimitiveValue:pbxId forKey:NSStringFromSelector(@selector(pbxId))];
+        }
+    }
+    [super willSave];
+}
+
 -(void)setInbound:(BOOL)inbound
 {
     [self setPrimitiveValueFromBoolValue:inbound forKey:kSMSMessageInboundAttributeKey];

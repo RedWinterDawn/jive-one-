@@ -8,8 +8,7 @@
 
 #import "Message.h"
 
-@class DID;
-@class PhoneNumber;
+@class DID, PhoneNumber;
 
 extern NSString *const kSMSMessageInboundAttributeKey;
 
