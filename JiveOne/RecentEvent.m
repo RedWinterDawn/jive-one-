@@ -27,6 +27,7 @@ NSString *const kRecentEventMarkForDeletionAttributeKey = @"markForDeletion";
 
 @dynamic date;
 @dynamic eventId;
+@dynamic pbxId;
 
 -(void)setRead:(BOOL)read
 {

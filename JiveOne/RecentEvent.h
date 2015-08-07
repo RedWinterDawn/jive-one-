@@ -16,6 +16,7 @@
 @property (nonatomic, getter=isRead) BOOL read;    // Indicates whether the event has been read.
 @property (nonatomic, getter=isMarkedForDeletion) BOOL markForDeletion;
 @property (nonatomic, strong) NSString *eventId;
+@property (nonatomic, strong) NSString *pbxId;
 
 // Transient Attributes.
 @property (nonatomic, weak) NSNumber *timestamp;

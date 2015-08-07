@@ -44,6 +44,7 @@
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, readonly) DID *did;
+@property (nonatomic, strong) NSString *forwardedMessageString;
 
 @end
 
@@ -52,6 +53,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Forward", @"Forward") action:@selector(forward:)];
+    [[UIMenuController sharedMenuController] setMenuItems:@[menuItem]];
     
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send SMS", @"Chat", nil);
     self.inputToolbar.contentView.leftBarButtonItem = nil;
@@ -69,6 +73,11 @@
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelMessageParticipantSelection:)];
         [self presentDropdownViewController:viewController leftBarButtonItem:doneButton rightBarButtonItem:nil maxHeight:self.view.bounds.size.height animated:YES];
         [viewController.searchBar becomeFirstResponder];
+    }
+    
+    if (_forwardedMessageString) {
+        self.inputToolbar.contentView.textView.text = _forwardedMessageString;
+        self.inputToolbar.contentView.rightBarButtonItem.enabled = TRUE;
     }
 }
 
@@ -149,30 +158,41 @@
         }
     }];
     
-    [JCAlertView alertWithTitle:NSLocalizedStringFromTable(@"Set as default", @"Chat", nil)
-                        message:NSLocalizedStringFromTable(@"Set this phone number as default phone number for all sms messages", @"Chat", nil)
-                      dismissed:^(NSInteger buttonIndex) {
-                          if (buttonIndex == 0) {
-                              self.authenticationManager.did = self.did;
-                              [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                                  DID *currentDID = (DID *)[localContext objectWithID:self.did.objectID];
-                                  NSArray *numbers = [DID MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];
-                                  for (DID *item in numbers) {
-                                      if (currentDID == item){
-                                          item.userDefault = TRUE;
-                                      }
-                                      else{
-                                          item.userDefault = FALSE;
-                                      }
-                                  }
-                              }];
-                              
-                          }
-                      }
-                showImmediately:YES
-              cancelButtonTitle:NSLocalizedString(@"No", nil)
-              otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
+//    [JCAlertView alertWithTitle:NSLocalizedStringFromTable(@"Set as default", @"Chat", nil)
+//                        message:NSLocalizedStringFromTable(@"Set this phone number as default phone number for all sms messages", @"Chat", nil)
+//                      dismissed:^(NSInteger buttonIndex) {
+//                          if (buttonIndex == 0) {
+//                              self.authenticationManager.did = self.did;
+//                              [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+//                                  DID *currentDID = (DID *)[localContext objectWithID:self.did.objectID];
+//                                  NSArray *numbers = [DID MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];
+//                                  for (DID *item in numbers) {
+//                                      if (currentDID == item){
+//                                          item.userDefault = TRUE;
+//                                      }
+//                                      else{
+//                                          item.userDefault = FALSE;
+//                                      }
+//                                  }
+//                              }];
+//                              
+//                          }
+//                      }
+//                showImmediately:YES
+//              cancelButtonTitle:NSLocalizedString(@"No", nil)
+//              otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
 }
+
+-(void)finishSendingMessageAnimated:(BOOL)animated
+{
+    if (_forwardedMessageString) {
+        [self cancelForward:self];
+        return;
+    }
+    
+    [super finishSendingMessageAnimated:animated];
+}
+
 
 -(void)collectionView:(JCMessagesCollectionView *)collectionView didDeleteCellAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -186,6 +206,38 @@
     }
 }
 
+-(void)collectionView:(JCMessagesCollectionView *)collectionView didForwardCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    id<JSQMessageData> object = [self objectAtIndexPath:indexPath];
+    if ([object isKindOfClass:[Message class]]) {
+        Message *message = (Message*) object;
+        NSString *identifier = self.restorationIdentifier;
+       
+        JCConversationViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:identifier];
+        JCNavigationController *navController = [[JCNavigationController alloc] initWithRootViewController:controller];
+        navController.navigationBar.tintColor = self.navigationController.navigationBar.tintColor;
+        navController.navigationBar.translucent = self.navigationController.navigationBar.translucent;
+        navController.navigationBar.barStyle = self.navigationController.navigationBar.barStyle;
+        navController.navigationBar.barTintColor = self.navigationController.navigationBar.barTintColor;
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem  alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelForward:)];
+        controller.navigationItem.leftBarButtonItem = cancelButton;
+        controller.forwardedMessageString = message.text;
+        //count for ipad transition
+        controller.modalPresentationStyle = UIModalPresentationFullScreen;
+        controller.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        [self presentViewController:navController animated:YES completion:NULL];
+    }
+}
+
+-(void) cancelForward:(id) sender{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+-(void)forward:(id)sender
+{
+    
+}
+
 #pragma mark - Setters -
 
 -(void)setMessageGroup:(JCMessageGroup *)messageGroup
@@ -195,7 +247,7 @@
     if (messageGroup.isSMS) {
         SMSMessage *smsMessage = (SMSMessage *)self.messageGroup.latestMessage;
         if (!smsMessage) {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", messageGroup.messageGroupId];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND pbxId = %@", messageGroup.messageGroupId, self.authenticationManager.pbx.pbxId];
             smsMessage = [SMSMessage MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
         }
         
@@ -219,7 +271,7 @@
         
         NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
         NSString *messageGroupId = self.messageGroup.messageGroupId;
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND markForDeletion = %@", messageGroupId, @NO];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND markForDeletion = %@ AND pbxId = %@", messageGroupId, @NO, self.authenticationManager.pbx.pbxId];
         NSFetchRequest *fetchRequest = [Message MR_requestAllWithPredicate:predicate inContext:context ];
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
         fetchRequest.includesSubentities = YES;
