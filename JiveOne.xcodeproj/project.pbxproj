@@ -139,9 +139,9 @@
 		5D35479819FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479719FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m */; };
 		5D35479B19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */; };
 		5D36B7AB19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */; };
-		5D375D601B66A0490085A2B7 /* JCFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D375D5F1B66A0490085A2B7 /* JCFetchedResultsController.m */; };
 		5D375D561B61BF680085A2B7 /* JCSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D375D551B61BF680085A2B7 /* JCSwitchTableViewCell.m */; };
 		5D375D5D1B61F1C20085A2B7 /* eula.html in Resources */ = {isa = PBXBuildFile; fileRef = 5D5782E41B33BF24005F1B86 /* eula.html */; };
+		5D375D601B66A0490085A2B7 /* JCFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D375D5F1B66A0490085A2B7 /* JCFetchedResultsController.m */; };
 		5D3970D81B18FDA5009EADD6 /* JCMaskedRoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3970D71B18FDA5009EADD6 /* JCMaskedRoundedButton.m */; };
 		5D3970DB1B1906C1009EADD6 /* JCPlayPauseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3970DA1B1906C1009EADD6 /* JCPlayPauseButton.m */; };
 		5D3F1ADD1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3F1ADC1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m */; };
@@ -497,6 +497,7 @@
 		5D11759E1AA0D84300D2B03A /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/PhoneManager.strings; sourceTree = "<group>"; };
 		5D1175A01AA0D84A00D2B03A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/PhoneManager.strings; sourceTree = "<group>"; };
 		5D1175A21AA0D84E00D2B03A /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/PhoneManager.strings; sourceTree = "<group>"; };
+		5D11CAC01B73DE56009BB9B4 /* ChangeLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ChangeLog.md; sourceTree = "<group>"; };
 		5D15989F1B5880510045F98F /* JCV5ApiClient+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JCV5ApiClient+Jedi.h"; sourceTree = "<group>"; };
 		5D1598A01B5880510045F98F /* JCV5ApiClient+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JCV5ApiClient+Jedi.m"; sourceTree = "<group>"; };
 		5D1598A21B5880920045F98F /* JCV5ApiClient+Jasmine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JCV5ApiClient+Jasmine.h"; sourceTree = "<group>"; };
@@ -609,10 +610,10 @@
 		5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMenuBarButtonItem.m; sourceTree = "<group>"; };
 		5D36B7A919F8674E0024A0E7 /* JCFetchedResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCFetchedResultsTableViewController.h; sourceTree = "<group>"; };
 		5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCFetchedResultsTableViewController.m; sourceTree = "<group>"; };
-		5D375D5E1B66A0490085A2B7 /* JCFetchedResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCFetchedResultsController.h; sourceTree = "<group>"; };
-		5D375D5F1B66A0490085A2B7 /* JCFetchedResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCFetchedResultsController.m; sourceTree = "<group>"; };
 		5D375D541B61BF680085A2B7 /* JCSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSwitchTableViewCell.h; sourceTree = "<group>"; };
 		5D375D551B61BF680085A2B7 /* JCSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSwitchTableViewCell.m; sourceTree = "<group>"; };
+		5D375D5E1B66A0490085A2B7 /* JCFetchedResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCFetchedResultsController.h; sourceTree = "<group>"; };
+		5D375D5F1B66A0490085A2B7 /* JCFetchedResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCFetchedResultsController.m; sourceTree = "<group>"; };
 		5D3970D61B18FDA5009EADD6 /* JCMaskedRoundedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMaskedRoundedButton.h; sourceTree = "<group>"; };
 		5D3970D71B18FDA5009EADD6 /* JCMaskedRoundedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMaskedRoundedButton.m; sourceTree = "<group>"; };
 		5D3970D91B1906C1009EADD6 /* JCPlayPauseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPlayPauseButton.h; sourceTree = "<group>"; };
@@ -1293,6 +1294,7 @@
 				275F4A5018AD0FBC00D2F069 /* Frameworks */,
 				275F4A4F18AD0FBC00D2F069 /* Products */,
 				F202433C18B2CF4A006DB2EF /* README.md */,
+				5D11CAC01B73DE56009BB9B4 /* ChangeLog.md */,
 				B2F9AA5070F27249A43D0F71 /* Pods */,
 			);
 			sourceTree = "<group>";
