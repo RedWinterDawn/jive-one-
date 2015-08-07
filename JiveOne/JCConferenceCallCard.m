@@ -54,7 +54,13 @@
         if (output.length > 0) {
             [output appendString:@","];
         }
-        [output appendString:callCard.callerId];
+        
+        NSString *callerId = callCard.callerId;
+        NSString *dialNumber = callCard.dialNumber;
+        NSString *string = (callerId != nil) ? callerId : (dialNumber != nil) ? dialNumber : nil;
+        if (string) {
+            [output appendString:string];
+        }
     }
     return output;
 }
