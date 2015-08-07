@@ -54,15 +54,11 @@
 {
     [super viewDidLoad];
     
-    if (_forwardedMessageString) {
-        self.inputToolbar.contentView.textView.text = _forwardedMessageString;
-    }
     UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Forward", @"Forward") action:@selector(forward:)];
     [[UIMenuController sharedMenuController] setMenuItems:@[menuItem]];
     
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send SMS", @"Chat", nil);
     self.inputToolbar.contentView.leftBarButtonItem = nil;
-    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -77,6 +73,11 @@
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelMessageParticipantSelection:)];
         [self presentDropdownViewController:viewController leftBarButtonItem:doneButton rightBarButtonItem:nil maxHeight:self.view.bounds.size.height animated:YES];
         [viewController.searchBar becomeFirstResponder];
+    }
+    
+    if (_forwardedMessageString) {
+        self.inputToolbar.contentView.textView.text = _forwardedMessageString;
+        self.inputToolbar.contentView.rightBarButtonItem.enabled = TRUE;
     }
 }
 
@@ -230,6 +231,11 @@
 
 -(void) cancelForward:(id) sender{
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+-(void)forward:(id)sender
+{
+    
 }
 
 #pragma mark - Setters -
