@@ -60,21 +60,22 @@
     }
     
     // Check if the number is a jive contact.
-    id<JCPhoneNumberDataSource> phoneNumber = [self extensionForNumber:number pbx:pbx excludingLine:line];
+    Extension *extension = [self extensionForNumber:number pbx:pbx excludingLine:line];
+    if (extension) {
+        return extension;
+    }
+    
+    id<JCPhoneNumberDataSource> numberObject = [JCPhoneNumber phoneNumberWithName:name number:number];
+    id<JCPhoneNumberDataSource> phoneNumber = [self phoneNumberForNumber:numberObject user:pbx.user];
+    phoneNumber = [self localPhoneNumberForPhoneNumber:phoneNumber context:pbx.managedObjectContext];
     if (phoneNumber) {
         return phoneNumber;
     }
     
-    phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
-    phoneNumber = [self phoneNumberForNumber:phoneNumber user:pbx.user];
-    
-    // Check if the number is a local contact from the local contacts address book.
-    return [self localPhoneNumberForPhoneNumber:phoneNumber context:pbx.managedObjectContext];
-    
     // If we did not get a phone number object, we have a unknown number. If we have the name, we
     // can return a named number, otherwise we return an unknown number.
     if (name) {
-        return [[JCPhoneNumber alloc] initWithName:name number:number];
+        return numberObject;
     }
     return [JCUnknownNumber unknownNumberWithNumber:number];
 }
@@ -85,18 +86,26 @@
  * caller id is unique to the number, we only search on the basis of the number. if we have found
  * it, we do not need to search the rest of the phone book.
  */
--(id<JCPhoneNumberDataSource>)extensionForNumber:(NSString *)number pbx:(PBX *)pbx excludingLine:(Line *)line
+-(Extension *)extensionForNumber:(NSString *)number pbx:(PBX *)pbx excludingLine:(Line *)line
 {
     // We must at least have a number. If we do not have a number, we return nil.
     if (!number) {
         return nil;
     }
     
+    NSString *strippedNumber = number.numericStringValue;
+    Extension *extension = nil;
     if (line) {
-        return [Extension extensionForNumber:number onPbx:pbx excludingLine:line];
+        extension = [Extension extensionForNumber:strippedNumber onPbx:pbx excludingLine:line];
+    }
+    else {
+        extension = [Extension extensionForNumber:strippedNumber onPbx:pbx];
     }
     
-    return [Extension extensionForNumber:number onPbx:pbx];
+    if (extension && ![extension.number isEqualToString:number]) {
+        extension.dialableNumber = number;
+    }
+    return extension;
 }
 
 -(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(id<JCPhoneNumberDataSource>)number user:(User *)user
@@ -153,25 +162,6 @@
     }
     return phoneNumber;
 }
-
-//-(void)mapLocalContactsForPhoneNumbers:(NSMutableArray *)phoneNumbers number:(NSString *)number name:(NSString *)name context:(NSManagedObjectContext *)context
-//{
-//    if (!context) {
-//        return;
-//    }
-//    
-//    NSArray *localContacts = [self localContactsForName:name number:number context:context];
-//    for (LocalContact *localContact in localContacts) {
-//        if ([phoneNumbers containsObject:localContact]) {
-//            NSInteger index = [phoneNumbers indexOfObject:localContact];
-//            JCAddressBookNumber *number = [phoneNumbers objectAtIndex:index];
-//            localContact.phoneNumber = number;
-//            [phoneNumbers replaceObjectAtIndex:index withObject:localContact];
-//        } else {
-//            [phoneNumbers addObject:localContact];
-//        }
-//    }
-//}
 
 #pragma mark Private
 
