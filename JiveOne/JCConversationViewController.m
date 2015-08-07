@@ -157,29 +157,29 @@
         }
     }];
     
-    [JCAlertView alertWithTitle:NSLocalizedStringFromTable(@"Set as default", @"Chat", nil)
-                        message:NSLocalizedStringFromTable(@"Set this phone number as default phone number for all sms messages", @"Chat", nil)
-                      dismissed:^(NSInteger buttonIndex) {
-                          if (buttonIndex == 0) {
-                              self.authenticationManager.did = self.did;
-                              [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                                  DID *currentDID = (DID *)[localContext objectWithID:self.did.objectID];
-                                  NSArray *numbers = [DID MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];
-                                  for (DID *item in numbers) {
-                                      if (currentDID == item){
-                                          item.userDefault = TRUE;
-                                      }
-                                      else{
-                                          item.userDefault = FALSE;
-                                      }
-                                  }
-                              }];
-                              
-                          }
-                      }
-                showImmediately:YES
-              cancelButtonTitle:NSLocalizedString(@"No", nil)
-              otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
+//    [JCAlertView alertWithTitle:NSLocalizedStringFromTable(@"Set as default", @"Chat", nil)
+//                        message:NSLocalizedStringFromTable(@"Set this phone number as default phone number for all sms messages", @"Chat", nil)
+//                      dismissed:^(NSInteger buttonIndex) {
+//                          if (buttonIndex == 0) {
+//                              self.authenticationManager.did = self.did;
+//                              [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+//                                  DID *currentDID = (DID *)[localContext objectWithID:self.did.objectID];
+//                                  NSArray *numbers = [DID MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];
+//                                  for (DID *item in numbers) {
+//                                      if (currentDID == item){
+//                                          item.userDefault = TRUE;
+//                                      }
+//                                      else{
+//                                          item.userDefault = FALSE;
+//                                      }
+//                                  }
+//                              }];
+//                              
+//                          }
+//                      }
+//                showImmediately:YES
+//              cancelButtonTitle:NSLocalizedString(@"No", nil)
+//              otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
 }
 
 -(void)finishSendingMessageAnimated:(BOOL)animated
