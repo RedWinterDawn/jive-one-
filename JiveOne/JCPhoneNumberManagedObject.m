@@ -34,6 +34,8 @@ NSString *const kPersonT9AttributeKey = @"t9";
 @dynamic number;
 @dynamic t9;
 
+@synthesize dialableNumber = _dialableNumber;
+
 #pragma mark - Transient Properties -
 
 -(NSString *)firstInitial
@@ -64,7 +66,10 @@ NSString *const kPersonT9AttributeKey = @"t9";
 
 -(NSString *)dialableNumber
 {
-    return [JCPhoneNumberDataSourceUtils dialableStringForPhoneNumber:self];
+    if (!_dialableNumber) {
+        return [JCPhoneNumberDataSourceUtils dialableStringForPhoneNumber:self];
+    }
+    return _dialableNumber;
 }
 
 -(NSString *)formattedNumber
