@@ -9,7 +9,7 @@
 #import "JCMainStoryboardBaseTestCase.h"
 
 // Controllers
-#import "JCDialerViewController.h"
+#import "JCPhoneDialerViewController.h"
 
 // Managers
 #import "JCPhoneManager.h"
@@ -18,6 +18,7 @@
 // Views
 #import "JCFormattedPhoneNumberLabel.h"
 #import "JCContactCollectionViewCell.h"
+#import "JCAppSettings.h"
 
 // Objects
 #import "Line.h"
@@ -25,7 +26,7 @@
 #import "JCPhoneBookTestDataFactory.h"
 #import "JCUnknownNumber.h"
 
-@interface JCDialerViewController (Private)
+@interface JCPhoneDialerViewController (Private)
 
 @property (nonatomic, strong) JCAuthenticationManager *authenticationManager;
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkingReachabilityManager;
@@ -37,7 +38,7 @@
 
 @interface JCDialerViewControllerTests : JCMainStoryboardBaseTestCase
 
-@property (nonatomic, strong) JCDialerViewController *vc;
+@property (nonatomic, strong) JCPhoneDialerViewController *vc;
 
 @end
 
@@ -46,7 +47,7 @@
 - (void)setUp {
     [super setUp];
     
-    JCDialerViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"JCDialerViewController"];
+    JCPhoneDialerViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"JCDialerViewController"];
     vc.context = self.context;
     
     id phoneManager = OCMClassMock([JCPhoneManager class]);
@@ -81,7 +82,7 @@
 -(void)test_storyboard_initialization
 {
     XCTAssertNotNil(self.vc, @"View not initiated properly");
-    XCTAssertTrue([self.vc isKindOfClass:[JCDialerViewController class]], @"View controller should be kind of class: %@", [JCDialerViewController class]);
+    XCTAssertTrue([self.vc isKindOfClass:[JCPhoneDialerViewController class]], @"View controller should be kind of class: %@", [JCPhoneDialerViewController class]);
     XCTAssertNotNil(self.vc.view, @"View should not be nil");
     XCTAssertNotNil(self.vc.collectionView, @"Collection view should not be nil");
     XCTAssertNotNil(self.vc.collectionView.dataSource, @"Collection view should have a dataSource");
@@ -131,8 +132,8 @@
     Line *line = [Line MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
     OCMStub([self.vc.authenticationManager line]).andReturn(line);
     
-    NSString *expectedName = @"Joe User";
-    NSString *expectedNumber = @"Mobile: (512) 111-1111";
+    //NSString *expectedName = @"Joe User";
+    //NSString *expectedNumber = @"Mobile: (512) 111-1111";
     
     // When
     [self.vc numPadPressed:button];
@@ -204,7 +205,7 @@
     // When
     [self.vc initiateCall:self.vc.callButton];
     
-    OCMVerify([self.vc.phoneManager dialPhoneNumber:OCMOCK_ANY usingLine:line type:JCPhoneManagerSingleDial completion:OCMOCK_ANY]);
+    OCMVerify([self.vc.phoneManager dialPhoneNumber:OCMOCK_ANY provisioningProfile:line type:JCPhoneManagerSingleDial completion:OCMOCK_ANY]);
 }
 
 -(void)test_dial_withoutPhoneNumber
@@ -225,7 +226,7 @@
     
     // We should not dial if there is no number.
     id phoneManagerMock = self.vc.phoneManager;
-    [[[phoneManagerMock stub] andDo:^(NSInvocation *invocation) { XCTFail(@"Should not have called this method!"); }] dialPhoneNumber:OCMOCK_ANY usingLine:OCMOCK_ANY type:JCPhoneManagerSingleDial completion:OCMOCK_ANY];
+    [[[phoneManagerMock stub] andDo:^(NSInvocation *invocation) { XCTFail(@"Should not have called this method!"); }] dialPhoneNumber:OCMOCK_ANY provisioningProfile:OCMOCK_ANY type:JCPhoneManagerSingleDial completion:OCMOCK_ANY];
     
     // When
     [self.vc initiateCall:self.vc.callButton];
@@ -250,55 +251,55 @@
 -(void)test_characterFromNumPadTag
 {
     NSInteger value = 0;
-    NSString *result = [JCDialerViewController characterFromNumPadTag:value];
+    NSString *result = [JCPhoneDialerViewController characterFromNumPadTag:value];
     XCTAssertTrue([result isEqualToString:@"0"], @"result does not match expected");
     
     value = 0;
-    result = [JCDialerViewController characterFromNumPadTag:value];
+    result = [JCPhoneDialerViewController characterFromNumPadTag:value];
     XCTAssertTrue([result isEqualToString:@"0"], @"result does not match expected");
     
     value = 1;
-    result = [JCDialerViewController characterFromNumPadTag:value];
+    result = [JCPhoneDialerViewController characterFromNumPadTag:value];
     XCTAssertTrue([result isEqualToString:@"1"], @"result does not match expected");
     
     value = 2;
-    result = [JCDialerViewController characterFromNumPadTag:value];
+    result = [JCPhoneDialerViewController characterFromNumPadTag:value];
     XCTAssertTrue([result isEqualToString:@"2"], @"result does not match expected");
     
     value = 3;
-    result = [JCDialerViewController characterFromNumPadTag:value];
+    result = [JCPhoneDialerViewController characterFromNumPadTag:value];
     XCTAssertTrue([result isEqualToString:@"3"], @"result does not match expected");
     
     value = 4;
-    result = [JCDialerViewController characterFromNumPadTag:value];
+    result = [JCPhoneDialerViewController characterFromNumPadTag:value];
     XCTAssertTrue([result isEqualToString:@"4"], @"result does not match expected");
     
     value = 5;
-    result = [JCDialerViewController characterFromNumPadTag:value];
+    result = [JCPhoneDialerViewController characterFromNumPadTag:value];
     XCTAssertTrue([result isEqualToString:@"5"], @"result does not match expected");
     
     value = 6;
-    result = [JCDialerViewController characterFromNumPadTag:value];
+    result = [JCPhoneDialerViewController characterFromNumPadTag:value];
     XCTAssertTrue([result isEqualToString:@"6"], @"result does not match expected");
     
     value = 7;
-    result = [JCDialerViewController characterFromNumPadTag:value];
+    result = [JCPhoneDialerViewController characterFromNumPadTag:value];
     XCTAssertTrue([result isEqualToString:@"7"], @"result does not match expected");
     
     value = 8;
-    result = [JCDialerViewController characterFromNumPadTag:value];
+    result = [JCPhoneDialerViewController characterFromNumPadTag:value];
     XCTAssertTrue([result isEqualToString:@"8"], @"result does not match expected");
     
     value = 9;
-    result = [JCDialerViewController characterFromNumPadTag:value];
+    result = [JCPhoneDialerViewController characterFromNumPadTag:value];
     XCTAssertTrue([result isEqualToString:@"9"], @"result does not match expected");
     
     value = 10;
-    result = [JCDialerViewController characterFromNumPadTag:value];
+    result = [JCPhoneDialerViewController characterFromNumPadTag:value];
     XCTAssertTrue([result isEqualToString:@"*"], @"result does not match expected");
     
     value = 11;
-    result = [JCDialerViewController characterFromNumPadTag:value];
+    result = [JCPhoneDialerViewController characterFromNumPadTag:value];
     XCTAssertTrue([result isEqualToString:@"#"], @"result does not match expected");
 }
 

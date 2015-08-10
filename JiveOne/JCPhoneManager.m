@@ -14,16 +14,16 @@
 #define MAX_LINES 2
 #define DEFAULT_PHONE_MANAGER_STORYBOARD_NAME @"PhoneManager"
 
-#import "JCPhoneManagerError.h"
 #import "JCPhoneManager.h"
-#import "JCPhoneAudioManager.h"
 
 // Managers
+#import "JCPhoneAudioManager.h"
 #import "JCSipManager.h"
 #import "JCAppSettings.h"
+#import "JCPhoneManagerError.h"
 
 // Objects
-#import "JCPhoneBook.h"
+//#import "JCPhoneBook.h"
 #import "JCCallCard.h"
 #import "JCLineSession.h"
 #import "JCConferenceCallCard.h"
@@ -59,7 +59,6 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 @property (nonatomic, strong) JCSipManager *sipManager;
 @property (nonatomic, strong) UIStoryboard *storyboard;
 @property (nonatomic, strong) JCAppSettings *appSettings;
-@property (nonatomic, strong) JCPhoneBook *phoneBook;
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
 
 @end
@@ -70,16 +69,13 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 {
     __autoreleasing NSError *error;
     JCSipManager *sipManager = [[JCSipManager alloc] initWithNumberOfLines:MAX_LINES delegate:self error:&error];
-    
     return [self initWithSipManager:sipManager
                         appSettings:[JCAppSettings sharedSettings]
-                          phoneBook:[JCPhoneBook sharedPhoneBook]
                 reachabilityManager:[AFNetworkReachabilityManager sharedManager]];
 }
 
 -(instancetype)initWithSipManager:(JCSipManager *)sipManager
                       appSettings:(JCAppSettings *)appSettings
-                        phoneBook:(JCPhoneBook *)phoneBook
               reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager
 {
     self = [super init];
@@ -87,7 +83,6 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         _storyboardName = DEFAULT_PHONE_MANAGER_STORYBOARD_NAME;
         _sipManager = sipManager;
         _appSettings = appSettings;
-        _phoneBook = phoneBook;
         _networkReachabilityManager = reachabilityManager;
     }
     return self;
@@ -873,14 +868,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     [_callViewController reload];
 }
 
--(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)number name:(NSString *)name
+-(id<JCPhoneNumberDataSource>)sipHandler:(JCSipManager *)sipHandler phoneNumberForNumber:(NSString *)number name:(NSString *)name
 {
-    Line *line = (Line *)self.sipManager.provisioning;
-    id<JCPhoneNumberDataSource> phoneNumber = [self.phoneBook phoneNumberForNumber:number name:name forPbx:line.pbx excludingLine:line];
-    if (!phoneNumber) {
-        phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
-    }
-    return phoneNumber;
+    return [self.delegate phoneManager:self
+                  phoneNumberForNumber:number
+                                  name:name
+                          provisioning:sipHandler.provisioning];
 }
 
 #pragma mark - Getters -
@@ -900,9 +893,9 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 	return _calls;
 }
 
--(Line *)line
+-(id<JCPhoneProvisioningDataSource>)provisioningProfile
 {
-    return (Line *)self.sipManager.provisioning;
+    return _sipManager.provisioning;
 }
 
 -(BOOL)isInitialized

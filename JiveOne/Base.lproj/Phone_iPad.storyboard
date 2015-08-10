@@ -262,7 +262,7 @@
         <!--Dialer-->
         <scene sceneID="Klv-fG-5td">
             <objects>
-                <viewController storyboardIdentifier="JCDialerViewController" autoresizesArchivedViewToFullSize="NO" title="DialerView" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A5J-Bt-Bbh" userLabel="Dialer" customClass="JCDialerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JCDialerViewController" autoresizesArchivedViewToFullSize="NO" title="DialerView" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A5J-Bt-Bbh" userLabel="Dialer" customClass="JCPhoneDialerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rYW-zn-9mT"/>
                         <viewControllerLayoutGuide type="bottom" id="F2H-kd-mr2"/>
@@ -390,7 +390,7 @@
                                     <outlet property="delegate" destination="A5J-Bt-Bbh" id="O8D-zX-gxT"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e6A-Sf-BTx" userLabel="Keypad">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e6A-Sf-BTx" userLabel="Keypad">
                                 <rect key="frame" x="110" y="93" width="280" height="373"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e9c-yb-zbj" customClass="JCRoundedButton">

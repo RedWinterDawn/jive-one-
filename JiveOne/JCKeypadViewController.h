@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCDialerViewController.h"
+#import "JCPhoneDialerViewController.h"
 
 @class JCKeypadViewController;
 
@@ -17,7 +17,7 @@
 
 @end
 
-@interface JCKeypadViewController : JCDialerViewController
+@interface JCKeypadViewController : JCPhoneDialerViewController
 
 @property (nonatomic, weak) id <JCKeypadViewControllerDelegate> delegate;
 @property (nonatomic, weak) IBOutlet UILabel *outputLabel;

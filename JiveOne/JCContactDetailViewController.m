@@ -20,7 +20,7 @@
 #import "JCVoicemailNumber.h"
 #import "JCPersonDataSource.h"
 
-#import "JCDialerViewController.h"
+#import "JCPhoneDialerViewController.h"
 #import "JCStoryboardLoaderViewController.h"
 #import "JCTypeSelectorViewController.h"
 

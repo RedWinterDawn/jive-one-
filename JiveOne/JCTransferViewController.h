@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCDialerViewController.h"
+#import "JCPhoneDialerViewController.h"
 #import "JCPhoneManager.h"
 
 @class JCTransferViewController;
@@ -18,7 +18,7 @@
 
 @end
 
-@interface JCTransferViewController : JCDialerViewController
+@interface JCTransferViewController : JCPhoneDialerViewController
 
 @property (nonatomic, weak) id <JCTransferViewControllerDelegate> delegate;
 @property (nonatomic) JCPhoneManagerDialType transferCallType;

@@ -40,7 +40,7 @@
         <!--Dialer-->
         <scene sceneID="4YS-cq-Epv">
             <objects>
-                <viewController storyboardIdentifier="JCDialerViewController" autoresizesArchivedViewToFullSize="NO" title="DialerView" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YtU-b8-5sz" userLabel="Dialer" customClass="JCDialerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JCDialerViewController" autoresizesArchivedViewToFullSize="NO" title="DialerView" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YtU-b8-5sz" userLabel="Dialer" customClass="JCPhoneDialerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OrJ-F4-P4x"/>
                         <viewControllerLayoutGuide type="bottom" id="SEF-0G-I0F"/>

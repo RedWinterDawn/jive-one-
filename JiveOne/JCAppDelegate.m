@@ -30,6 +30,7 @@
 #import "JCSocketLogger.h"
 #import "UIDevice+Additions.h"
 #import <Appsee/Appsee.h>
+#import "JCPhoneBook.h"
 
 #import "PBX.h"
 #import "Line.h"
@@ -394,6 +395,36 @@ NSString *const kGCMSenderId = @"937754980938";
             [OutgoingCall addOutgoingCallWithLineSession:lineSession line:(Line *)provisioningProfile];
             break;
     }
+}
+
+-(id<JCPhoneNumberDataSource>)phoneManager:(JCPhoneManager *)manager phoneNumberForNumber:(NSString *)number name:(NSString *)name provisioning:(id<JCPhoneProvisioningDataSource>)provisioning {
+    
+    Line *line = (Line *)provisioning;
+    JCPhoneBook *phoneBook = [JCPhoneBook sharedPhoneBook];
+    id<JCPhoneNumberDataSource> phoneNumber = [phoneBook phoneNumberForNumber:number name:name forPbx:line.pbx excludingLine:line];
+    if (!phoneNumber) {
+        phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
+    }
+    return phoneNumber;
+}
+
+-(void)phoneManager:(JCPhoneManager *)phoneManger phoneNumbersForKeyword:(NSString *)keyword provisioning:(id<JCPhoneNumberDataSource>)provisioning completion:(void (^)(NSArray *))completion {
+    
+    Line *line = (Line *)provisioning;
+    JCPhoneBook *phoneBook = [JCPhoneBook sharedPhoneBook];
+    [phoneBook phoneNumbersWithKeyword:keyword
+                               forUser:line.pbx.user
+                               forLine:line
+                           sortedByKey:NSStringFromSelector(@selector(name))
+                             ascending:YES
+                            completion:completion];
+    
+}
+
+-(id<JCPhoneNumberDataSource>)phoneManager:(JCPhoneManager *)phoneManager lastCalledNumberForProvisioning:(id<JCPhoneProvisioningDataSource>)provisioning {
+    Line *line = (Line *)provisioning;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@", line];
+    return [OutgoingCall MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:false inContext:line.managedObjectContext];
 }
 
 

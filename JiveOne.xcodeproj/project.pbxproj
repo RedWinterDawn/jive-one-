@@ -34,7 +34,7 @@
 		279A4E0E19DA873200E8AB7B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0D19DA873200E8AB7B /* OpenGLES.framework */; };
 		279A4E1219DA87DA00E8AB7B /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E1119DA87DA00E8AB7B /* libstdc++.dylib */; };
 		279A4E2C19DA91E100E8AB7B /* JCSipManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 279A4E2B19DA91E100E8AB7B /* JCSipManager.m */; };
-		27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */; };
+		27B6F23D19DDC676007E80DA /* JCPhoneDialerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E4319D9F1E400AF98D3 /* JCPhoneDialerViewController.m */; };
 		27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B8152518D93F1A00516BF6 /* NotificationView.m */; };
 		27BE503D19DCF6A800B725ED /* JCLineSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BE503C19DCF6A800B725ED /* JCLineSession.m */; };
 		27CE639C191C1D1700E85FD5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F1F303191C182A00AEAFD7 /* libsqlite3.dylib */; };
@@ -1051,8 +1051,8 @@
 		F8910FD11A71EC590040B8C7 /* LoggerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerCommon.h; sourceTree = "<group>"; };
 		F8A2BC0919DB5B3C00251310 /* JCCallOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallOptionsView.h; sourceTree = "<group>"; };
 		F8A2BC0A19DB5B3C00251310 /* JCCallOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallOptionsView.m; sourceTree = "<group>"; };
-		F8B62E4219D9F1E400AF98D3 /* JCDialerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDialerViewController.h; sourceTree = "<group>"; };
-		F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDialerViewController.m; sourceTree = "<group>"; };
+		F8B62E4219D9F1E400AF98D3 /* JCPhoneDialerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneDialerViewController.h; sourceTree = "<group>"; };
+		F8B62E4319D9F1E400AF98D3 /* JCPhoneDialerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneDialerViewController.m; sourceTree = "<group>"; };
 		F8B62E5919DB091500AF98D3 /* JCRoundedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRoundedButton.h; sourceTree = "<group>"; };
 		F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRoundedButton.m; sourceTree = "<group>"; };
 		F8BC82C119E44A2E00340BA1 /* JCKeypadOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCKeypadOverlayView.h; sourceTree = "<group>"; };
@@ -2183,8 +2183,8 @@
 		5DDE651119F0C2E100B90B55 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F8B62E4219D9F1E400AF98D3 /* JCDialerViewController.h */,
-				F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */,
+				F8B62E4219D9F1E400AF98D3 /* JCPhoneDialerViewController.h */,
+				F8B62E4319D9F1E400AF98D3 /* JCPhoneDialerViewController.m */,
 				5DA5A1AD19DAF91400968F7D /* JCCallerViewController.h */,
 				5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */,
 				5DBBDCC119DCB29100A4DB96 /* JCCallCardCollectionViewController.h */,
@@ -2680,7 +2680,7 @@
 				5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */,
 				5D1598C41B58A7610045F98F /* MMDrawerController.m in Sources */,
 				5D3F1AEA1AE8154E00C59A63 /* JCContactDetailViewController.m in Sources */,
-				27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */,
+				27B6F23D19DDC676007E80DA /* JCPhoneDialerViewController.m in Sources */,
 				5D490E731A93A85F004B62C0 /* JCAlertView.m in Sources */,
 				5D2EDB871A3CEBE80031F7AD /* JCDebugUsersTableViewController.m in Sources */,
 				5D11758A1A9E856300D2B03A /* JCRecentEventsTableViewController.m in Sources */,

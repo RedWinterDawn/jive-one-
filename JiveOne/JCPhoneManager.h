@@ -18,6 +18,8 @@
 #import "JCPhoneProvisioningDataSource.h"
 #import "JCCallerViewController.h"
 #import "JCLineSession.h"
+#import "JCSipManager.h"
+#import "JCAppSettings.h"
 
 extern NSString *const kJCPhoneManagerRegisteringNotification;
 extern NSString *const kJCPhoneManagerRegisteredNotification;
@@ -42,6 +44,10 @@ typedef enum : NSInteger {
 @protocol JCPhoneManagerDelegate;
 
 @interface JCPhoneManager : JCManager
+
+-(instancetype)initWithSipManager:(JCSipManager *)sipManager
+                      appSettings:(JCAppSettings *)appSettings
+              reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager;
 
 @property (nonatomic, strong) NSMutableArray *calls;
 @property (nonatomic, strong) NSString *storyboardName;
@@ -103,6 +109,18 @@ typedef enum : NSUInteger {
    reportCallOfType:(JCPhoneManagerCallType)type
         lineSession:(JCLineSession *)lineSession
 provisioningProfile:(id<JCPhoneProvisioningDataSource>)provisioningProfile;
+
+-(id<JCPhoneNumberDataSource>)phoneManager:(JCPhoneManager *)manager
+                      phoneNumberForNumber:(NSString *)number
+                                      name:(NSString *)name
+                              provisioning:(id<JCPhoneProvisioningDataSource>)provisioning;
+
+-(void)phoneManager:(JCPhoneManager *)phoneManger phoneNumbersForKeyword:(NSString *)keyword
+       provisioning:(id<JCPhoneProvisioningDataSource>)provisioning
+         completion:(void(^)(NSArray *phoneNumbers))completion;
+
+-(id<JCPhoneNumberDataSource>)phoneManager:(JCPhoneManager *)phoneManager
+           lastCalledNumberForProvisioning:(id<JCPhoneProvisioningDataSource>)provisioning;
 
 @end
 

@@ -107,7 +107,7 @@
 -(void)sipHandler:(JCSipManager *)sipHandler didFailTransferWithError:(NSError *)error;
 
 // Requests a phone number for a given string and name.
--(id<JCPhoneNumberDataSource>)phoneNumberForNumber:(NSString *)string name:(NSString *)name;
+-(id<JCPhoneNumberDataSource>)sipHandler:(JCSipManager *)sipHandler phoneNumberForNumber:(NSString *)string name:(NSString *)name;
 
 @end
 

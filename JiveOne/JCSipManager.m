@@ -1327,7 +1327,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     NSString *name = [NSString stringWithUTF8String:callerDisplayName];
     NSString *number = [self formatCallDetail:[NSString stringWithUTF8String:caller]];
-    lineSession.number = [self.delegate phoneNumberForNumber:number name:name];
+    lineSession.number = [self.delegate sipHandler:self phoneNumberForNumber:number name:name];
     [self setSessionState:JCCallIncoming forSession:lineSession event:@"onInviteIncoming" error:nil];  // Set the session state.
 };
 

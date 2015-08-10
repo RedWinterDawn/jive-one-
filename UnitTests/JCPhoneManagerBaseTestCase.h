@@ -17,8 +17,6 @@
 
 @property (nonatomic, strong) UIStoryboard *storyboard;
 
--(void)dialPhoneNumber:(NSString *)dialString usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion;
-
 @end
 
 @interface JCPhoneManagerBaseTestCase : JCBaseTestCase

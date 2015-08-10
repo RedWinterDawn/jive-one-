@@ -6,43 +6,35 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCDialerViewController.h"
+#import "JCPhoneDialerViewController.h"
 
 // Managers
-#import "JCPhoneManager.h"
 #import "JCAppSettings.h"
+
+// Managed Objects
+#import "JCPhoneNumberDataSource.h"
+#import "JCCallerViewController.h"
 
 // Views
 #import "JCContactCollectionViewCell.h"
 
-// Categories
-#import "NSString+Additions.h"
-
-// Managed Objects
-#import "OutgoingCall.h"
-#import "PhoneNumber.h"
-#import "PBX.h"
-#import "User.h"
-#import "JCPhoneBook.h"
-
-// Controllers
-#import "JCCallerViewController.h"
-
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
-@interface JCDialerViewController ()
+@interface JCPhoneDialerViewController ()
 {
     BOOL _initiatingCall;
+    
     NSArray *_phoneNumbers;
+    UIFont *_font;
+    UIColor *_color;
 }
 
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkingReachabilityManager;
-@property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSString *placeHolderText;
 
 @end
 
-@implementation JCDialerViewController
+@implementation JCPhoneDialerViewController
 
 /**
  * Override to get the Phone Manager and add observers to watch for connected status so we can display the registration 
@@ -68,11 +60,10 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     }
     
     [self updateRegistrationStatus];
-    
-    JCAddressBook *addressBook = self.phoneBook.addressBook;
-    [center addObserver:self selector:@selector(updateCollectionView) name:kJCAddressBookLoadedNotification object:addressBook];
-    
     self.backspaceButton.alpha = 0;
+    
+    _color = [UIColor darkTextColor];
+    _font  = [UIFont systemFontOfSize:16];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -148,30 +139,29 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     }
 }
 
-
 -(IBAction)initiateCall:(id)sender
 {
-    NSString *string = self.formattedPhoneNumberLabel.dialString;
-    Line *line = self.authenticationManager.line;
-    
     // If the string is empty, we populate the dial string with the most recent item in call history.
-    if (!string || [string isEqualToString:@""]) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@", line];
-        OutgoingCall *call = [OutgoingCall MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:false inContext:self.context];
-        self.formattedPhoneNumberLabel.dialString = call.number;
+    NSString *dialString = self.formattedPhoneNumberLabel.dialString;
+    JCPhoneManager *phoneManager = self.phoneManager;
+    id<JCPhoneProvisioningDataSource> provisioningProfile = phoneManager.provisioningProfile;
+    if (!dialString || [dialString isEqualToString:@""]) {
+        id<JCPhoneNumberDataSource> phoneNumber = [phoneManager.delegate phoneManager:phoneManager lastCalledNumberForProvisioning:provisioningProfile];
+        self.formattedPhoneNumberLabel.dialString = phoneNumber.number;
         return;
     }
     
-    // Fetch the phone number.
-    id<JCPhoneNumberDataSource> phoneNumber = [self.phoneBook phoneNumberForNumber:string name:nil forPbx:line.pbx excludingLine:line];
-    [self dialPhoneNumber:phoneNumber
-      provisioningProfile:self.phoneManager.provisioningProfile
-                   sender:sender
-               completion:^(BOOL success, NSError *error) {
-                   if (success){
-                       [self performSelector:@selector(clear:) withObject:sender afterDelay:1];
-                   }
-               }];
+    id<JCPhoneNumberDataSource> phoneNumber = [phoneManager.delegate phoneManager:phoneManager phoneNumberForNumber:dialString name:nil provisioning:provisioningProfile];
+    if (phoneNumber) {
+        [self dialPhoneNumber:phoneNumber
+          provisioningProfile:self.phoneManager.provisioningProfile
+                       sender:sender
+                   completion:^(BOOL success, NSError *error) {
+                       if (success){
+                           [self performSelector:@selector(clear:) withObject:sender afterDelay:1];
+                       }
+                   }];
+    }
 }
 
 -(IBAction)backspace:(id)sender
@@ -185,20 +175,13 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 -(IBAction)clear:(id)sender
 {
     [self.formattedPhoneNumberLabel clear];
+    self.formattedPhoneNumberLabel.text = _placeHolderText;
+    
     _phoneNumbers = nil;
     [self.collectionView reloadData];
-    self.formattedPhoneNumberLabel.text = _placeHolderText;
 }
 
 #pragma mark - Getters -
-
--(NSManagedObjectContext *)context
-{
-    if (!_context) {
-        _context = [NSManagedObjectContext MR_defaultContext];
-    }
-    return _context;
-}
 
 -(AFNetworkReachabilityManager *)networkingReacabilityManager
 {
@@ -210,6 +193,11 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 #pragma mark - Private -
 
+- (id<JCPhoneNumberDataSource>)objectAtIndexPath:(NSIndexPath *)indexPath{
+    return [_phoneNumbers objectAtIndex:indexPath.row];
+}
+
+
 -(void)appendString:(NSString *)string
 {
     if (string == nil) {
@@ -217,27 +205,21 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     } else {
         [self.formattedPhoneNumberLabel append:string];
     }
-    
     [self updateCollectionView];
 }
 
--(void)updateCollectionView
+- (void)updateCollectionView
 {
     NSString *keyword = self.formattedPhoneNumberLabel.dialString;
     if (!keyword) {
         return;
     }
     
-    Line *line = self.authenticationManager.line;
-    [self.phoneBook phoneNumbersWithKeyword:keyword
-                                    forUser:line.pbx.user
-                                    forLine:line
-                                sortedByKey:NSStringFromSelector(@selector(name))
-                                  ascending:YES
-                                 completion:^(NSArray *phoneNumbers) {
-                                     _phoneNumbers = phoneNumbers;
-                                     [self.collectionView reloadData];
-                                 }];
+    JCPhoneManager *phoneManager = self.phoneManager;
+    [phoneManager.delegate phoneManager:phoneManager phoneNumbersForKeyword:keyword provisioning:phoneManager.provisioningProfile completion:^(NSArray *phoneNumbers) {
+        _phoneNumbers = phoneNumbers;
+        [self.collectionView reloadData];
+    }];
 }
 
 -(void)updateRegistrationStatus
@@ -310,17 +292,13 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     }
 }
 
--(id <JCPersonDataSource>)objectAtIndexPath:(NSIndexPath *)indexPath{
-    return [_phoneNumbers objectAtIndex:indexPath.row];
-}
-
 #pragma mark - Delegate Handlers -
 
 #pragma mark JCFormattedPhoneNumberLabelDelegate
 
 -(void)didUpdateDialString:(NSString *)dialString
 {
-    __unsafe_unretained JCDialerViewController *weakSelf = self;
+    __unsafe_unretained JCPhoneDialerViewController *weakSelf = self;
     if (dialString.length == 0) {
         [UIView animateWithDuration:0.3
                          animations:^{
@@ -338,38 +316,31 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 #pragma mark UICollectionViewDataSource
 
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return 1;
 }
 
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return _phoneNumbers.count;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id <JCPhoneNumberDataSource> personNumber = [self objectAtIndexPath:indexPath];
-    JCContactCollectionViewCell *cell = (JCContactCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    
-    UIColor *color = [UIColor darkTextColor];
-    UIFont *font = [UIFont systemFontOfSize:16];
+    static NSString *cellIdentifier = @"Cell";
+    JCContactCollectionViewCell *cell = (JCContactCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     NSString *keyword = self.formattedPhoneNumberLabel.dialString;
-    cell.name.attributedText = [personNumber titleTextWithKeyword:keyword
-                                                             font:font
-                                                            color:color];
-    
-    cell.number.attributedText = [personNumber detailTextWithKeyword:keyword
-                                                                font:cell.number.font
-                                                               color:cell.number.textColor];
+    id <JCPhoneNumberDataSource> personNumber = [self objectAtIndexPath:indexPath];
+    cell.name.attributedText    = [personNumber titleTextWithKeyword:keyword font:_font color:_color];
+    cell.number.attributedText  = [personNumber detailTextWithKeyword:keyword font:cell.number.font color:cell.number.textColor];
     return cell;
 }
 
 #pragma mark UICollectionViewDelegate
-                                  
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     id <JCPhoneNumberDataSource> personNumber = [self objectAtIndexPath:indexPath];
     self.formattedPhoneNumberLabel.dialString = personNumber.dialableNumber;
