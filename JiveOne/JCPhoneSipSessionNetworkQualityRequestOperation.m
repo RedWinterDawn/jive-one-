@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCSipNetworkQualityRequestOperation.h"
+#import "JCPhoneSipSessionNetworkQualityRequestOperation.h"
 
 #define CURRENT_BUFFER_SIZE_THRESHOLD 200
 #define CURRENT_PACKET_LOSS_RATE_THRESHOLD 1000
 
-@implementation JCSipNetworkQualityRequestOperation
+@implementation JCPhoneSipSessionNetworkQualityRequestOperation
 
 -(instancetype)initWithSessionId:(NSInteger)sessionId portSipSdk:(PortSIPSDK *)portSipSdk
 {

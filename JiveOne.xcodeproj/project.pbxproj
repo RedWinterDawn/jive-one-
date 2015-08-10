@@ -165,7 +165,7 @@
 		5D490E791A958A5A004B62C0 /* JCAddressBookNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D490E781A958A5A004B62C0 /* JCAddressBookNumber.m */; };
 		5D5448B61B0CF02400F44D8F /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D5448B81B0CF02400F44D8F /* Settings.storyboard */; };
 		5D5449091B0E52A000F44D8F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D54490B1B0E52A000F44D8F /* Contacts.storyboard */; };
-		5D55236F1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D55236E1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m */; };
+		5D55236F1A7ACC5100CA8A6D /* JCPhoneSipSessionNetworkQualityRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D55236E1A7ACC5100CA8A6D /* JCPhoneSipSessionNetworkQualityRequestOperation.m */; };
 		5D5525BF1AC5DC730037F703 /* JCV4ApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5525BE1AC5DC730037F703 /* JCV4ApiClient.m */; };
 		5D5782871B32FF70005F1B86 /* JCFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5782861B32FF70005F1B86 /* JCFile.m */; };
 		5D57828F1B330194005F1B86 /* JCDataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D57828E1B330194005F1B86 /* JCDataLoader.m */; };
@@ -695,8 +695,8 @@
 		5D5449171B0E530000F44D8F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Contacts.strings; sourceTree = "<group>"; };
 		5D5523681A7811E500CA8A6D /* JCCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCustomCell.h; sourceTree = "<group>"; };
 		5D5523691A7811E500CA8A6D /* JCCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCustomCell.m; sourceTree = "<group>"; };
-		5D55236D1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSipNetworkQualityRequestOperation.h; sourceTree = "<group>"; };
-		5D55236E1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSipNetworkQualityRequestOperation.m; sourceTree = "<group>"; };
+		5D55236D1A7ACC5100CA8A6D /* JCPhoneSipSessionNetworkQualityRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneSipSessionNetworkQualityRequestOperation.h; sourceTree = "<group>"; };
+		5D55236E1A7ACC5100CA8A6D /* JCPhoneSipSessionNetworkQualityRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneSipSessionNetworkQualityRequestOperation.m; sourceTree = "<group>"; };
 		5D5525BD1AC5DC730037F703 /* JCV4ApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCV4ApiClient.h; sourceTree = "<group>"; };
 		5D5525BE1AC5DC730037F703 /* JCV4ApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV4ApiClient.m; sourceTree = "<group>"; };
 		5D57827D1B32FCE2005F1B86 /* GenerateStrings */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GenerateStrings; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1545,8 +1545,8 @@
 				5DBCB93819FE9300001C7157 /* JCPhoneConferenceCall.m */,
 				27BE503B19DCF6A800B725ED /* JCPhoneSipSession.h */,
 				27BE503C19DCF6A800B725ED /* JCPhoneSipSession.m */,
-				5D55236D1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.h */,
-				5D55236E1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m */,
+				5D55236D1A7ACC5100CA8A6D /* JCPhoneSipSessionNetworkQualityRequestOperation.h */,
+				5D55236E1A7ACC5100CA8A6D /* JCPhoneSipSessionNetworkQualityRequestOperation.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2665,7 +2665,7 @@
 				5D112DDD1A4161220097223C /* JCDebugPbxsTableViewController.m in Sources */,
 				5DB0BFD01A013982006737D7 /* JCRecentEventCell.m in Sources */,
 				5DB7AFB31B3B18F800451A0B /* ContactGroupAssociation.m in Sources */,
-				5D55236F1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m in Sources */,
+				5D55236F1A7ACC5100CA8A6D /* JCPhoneSipSessionNetworkQualityRequestOperation.m in Sources */,
 				5D97A7FF1A828B4700A4434D /* JCPhoneSettingsViewController.m in Sources */,
 				27EB18BF19DE045900C1503B /* JCV5ApiClient.m in Sources */,
 				5DFFF3E31AF98E970091F479 /* JCConversationDetailsViewController.m in Sources */,

@@ -9,7 +9,7 @@
 //
 
 #import "JCPhoneSipSessionManager.h"
-#import "JCSipNetworkQualityRequestOperation.h"
+#import "JCPhoneSipSessionNetworkQualityRequestOperation.h"
 
 // Libraries
 #import <PortSIPLib/PortSIPSDK.h>
@@ -1219,8 +1219,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 -(void)startNetworkQualityIndicatorForLineSession:(JCPhoneSipSession *)lineSession
 {
-    JCSipNetworkQualityRequestOperation *operation = [[JCSipNetworkQualityRequestOperation alloc] initWithSessionId:lineSession.sessionId portSipSdk:_mPortSIPSDK];
-    __weak JCSipNetworkQualityRequestOperation *weakOperation = operation;
+    JCPhoneSipSessionNetworkQualityRequestOperation *operation = [[JCPhoneSipSessionNetworkQualityRequestOperation alloc] initWithSessionId:lineSession.sessionId portSipSdk:_mPortSIPSDK];
+    __weak JCPhoneSipSessionNetworkQualityRequestOperation *weakOperation = operation;
     operation.completionBlock = ^{
         
         if (weakOperation.isBelowNetworkThreshold) {

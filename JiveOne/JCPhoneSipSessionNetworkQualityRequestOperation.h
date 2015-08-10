@@ -10,7 +10,7 @@
 
 #import <PortSIPLib/PortSIPSDK.h>
 
-@interface JCSipNetworkQualityRequestOperation : NSOperation
+@interface JCPhoneSipSessionNetworkQualityRequestOperation : NSOperation
 
 @property (nonatomic, readonly) PortSIPSDK *portSipSdk;
 @property (nonatomic, readonly) NSInteger sessionId;
