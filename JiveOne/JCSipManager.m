@@ -19,7 +19,7 @@
 #import "JCPhoneAudioManager.h"     // Sip directly interacts with the audio session.
 
 // View Controllers
-#import "VideoViewController.h"
+#import "JCPhoneVideoViewController.h"
 
 #define ALERT_TAG_REFER 100
 #define OUTBOUND_SIP_SERVER_PORT 5061
@@ -50,7 +50,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 @interface JCSipManager() <PortSIPEventDelegate, JCPhoneAudioManagerDelegate>
 {
     PortSIPSDK *_mPortSIPSDK;
-    VideoViewController *_videoController;
+    JCPhoneVideoViewController *_videoController;
     NSOperationQueue *_operationQueue;
 	BOOL _autoAnswer;
     
@@ -208,7 +208,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     //set RTC keep alives
     [_mPortSIPSDK setRtpKeepAlive:true keepAlivePayloadType:126 deltaTransmitTimeMS:30000];
     
-    _videoController = [VideoViewController new];
+    _videoController = [JCPhoneVideoViewController new];
     _initialized = TRUE;
     return TRUE;
 }

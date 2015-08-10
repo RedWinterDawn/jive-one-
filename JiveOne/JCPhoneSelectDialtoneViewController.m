@@ -9,72 +9,54 @@
 @import AVFoundation;
 @import MediaPlayer;
 
-#import "JCDialToneTableViewController.h"
-#import "JCPhoneAudioManager.h"
+#import "JCPhoneSelectDialtoneViewController.h"
 #import "JCPhoneManager.h"
 
-@interface JCDialToneTableViewController (){
+static NSString *RingtoneCellReuseIdentifier = @"ringtone";
+static NSString *VolumeCellReuseIdentifier = @"volume";
+
+@interface JCPhoneSelectDialtoneViewController (){
     NSArray *_dialTones;
-    
     JCPhoneAudioManager *_audioManager;
 }
 
 @end
 
-@implementation JCDialToneTableViewController
+@implementation JCPhoneSelectDialtoneViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
-    if (_audioManager) {
-        [_audioManager stop];
-    }
-    _audioManager = [JCPhoneAudioManager new];
-
+    _audioManager = [[JCPhoneAudioManager alloc] initWithPhoneSettings:self.phoneManager.settings];
     _dialTones = @[@"Old Phone", @"Sifi", @"iReport", @"Walkie - Talkie", @"Edm Trumpets", @"Nokia Tune", @"Piano Riff"];
+    
     MPVolumeView *volumeView = [MPVolumeView new];
     volumeView.showsRouteButton = true;
     self.routeIconBackground.hidden = !volumeView.showsRouteButton;
     
-    
     // Settings Info
-    [self layoutDialTone:_dialTones animated:NO];
-    
+    [self layoutDialtones:_dialTones animated:NO];
 }
+
 -(void)viewWillDisappear:(BOOL)animated{
-    if (_audioManager)
-    {
-        
+    [super viewWillDisappear:animated];
+    
+    if (_audioManager){
         [_audioManager stop];
     }
-}
--(void)layoutDialTone:(NSArray *)dialtone animated:(BOOL)animated
-{
-    [self startUpdates];
-    
-    for (int x = 0; x < [_dialTones count]; x++){
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ringtone"];
-        cell.textLabel.text = _dialTones[x];
-        [self addCell:cell atIndexPath:[NSIndexPath indexPathForRow:x inSection:1]];
-    }
-    
-    [self endUpdates];
-    
 }
 
 - (CGFloat)heightForCell:(UITableViewCell *)cell
 {
-    if ([cell.reuseIdentifier isEqualToString:@"volume"]) {
+    if ([cell.reuseIdentifier isEqualToString:VolumeCellReuseIdentifier]) {
         return 80;
     }
-    else if ([cell.reuseIdentifier isEqualToString:@"ringtone"]) {
+    else if ([cell.reuseIdentifier isEqualToString:RingtoneCellReuseIdentifier]) {
         return 44;
     }
     return self.tableView.rowHeight;
 }
-
-
-#pragma mark - Table view data source
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
@@ -94,6 +76,21 @@
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
     }
+}
+
+#pragma mark - Private -
+
+-(void)layoutDialtones:(NSArray *)dialtones animated:(BOOL)animated
+{
+    [self startUpdates];
+    for (int x = 0; x < [_dialTones count]; x++){
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RingtoneCellReuseIdentifier];
+        cell.textLabel.text = _dialTones[x];
+        [self addCell:cell atIndexPath:[NSIndexPath indexPathForRow:x inSection:1]];
+    }
+    
+    [self endUpdates];
+    
 }
 
 @end

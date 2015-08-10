@@ -8,6 +8,6 @@
 
 #import "JCStaticTableViewController.h"
 
-@interface JCPhoneSettingsTableViewController : JCStaticTableViewController
+@interface JCPhoneSettingsViewController : JCStaticTableViewController
 
 @end

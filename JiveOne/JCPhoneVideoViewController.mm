@@ -5,13 +5,20 @@
 //  Copyright (c) 2013 PortSIP Solutions, Inc. All rights reserved.
 //
 
-#import "VideoViewController.h"
+#import "JCPhoneVideoViewController.h"
 
-@interface VideoViewController ()
+@interface JCPhoneVideoViewController () {
+    BOOL    isStartVideo;
+    BOOL    isInitVideo;
+    UIView* viewLocalVideo;
+    UIView* viewRemoteVideo;
+    long    mSessionId;
+}
 - (void)checkDisplayVideo;
 @end
 
-@implementation VideoViewController
+@implementation JCPhoneVideoViewController
+
 @synthesize viewLocalVideo;
 @synthesize viewRemoteVideo;
 
@@ -31,7 +38,6 @@
             [mPortSIPSDK setLocalVideoWindow:nil];
             [mPortSIPSDK setRemoteVideoWindow:mSessionId remoteVideoWindow:NULL];
         }
-        
     }
 }
 

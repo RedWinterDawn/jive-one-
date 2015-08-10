@@ -6,10 +6,9 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "JCStaticTableViewController.h"
 
-@interface JCDialToneTableViewController : JCStaticTableViewController
+@interface JCPhoneSelectDialtoneViewController : JCStaticTableViewController
 
 @property (weak, nonatomic) IBOutlet UIView *routeIconBackground;
 

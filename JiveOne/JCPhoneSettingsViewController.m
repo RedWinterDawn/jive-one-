@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCPhoneSettingsTableViewController.h"
+#import "JCPhoneSettingsViewController.h"
 #import "JCPhoneManager.h"
 
-@interface JCPhoneSettingsTableViewController ()
+@interface JCPhoneSettingsViewController ()
 
 @property (weak, nonatomic) IBOutlet UISwitch *intercomSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *microphoneMuteSwitch;
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation JCPhoneSettingsTableViewController
+@implementation JCPhoneSettingsViewController
 
 - (void)viewDidLoad
 {
