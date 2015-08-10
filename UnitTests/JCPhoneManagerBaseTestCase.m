@@ -22,7 +22,7 @@
     [super setUp];
     
     // instance and verify that sip handler is the mock sip handler.
-    JCPhoneManager *phoneManager = [[JCPhoneManager alloc] initWithSipManager:nil appSettings:nil reachabilityManager:nil];
+    JCPhoneManager *phoneManager = [[JCPhoneManager alloc] initWithSipManager:nil settings:nil reachability:nil];
     
     // verify storyboarding of phone manger is in place and correct
     XCTAssertNotNil(phoneManager.storyboardName, @"Phone Manager Storyboard name should not be nil");

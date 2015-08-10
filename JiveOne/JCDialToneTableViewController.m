@@ -10,8 +10,8 @@
 @import MediaPlayer;
 
 #import "JCDialToneTableViewController.h"
-#import "JCAppSettings.h"
 #import "JCPhoneAudioManager.h"
+#import "JCPhoneManager.h"
 
 @interface JCDialToneTableViewController (){
     NSArray *_dialTones;
@@ -78,7 +78,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
-        self.appSettings.ringtone = _dialTones[indexPath.row];
+        self.phoneManager.settings.ringtone = _dialTones[indexPath.row];
         [_audioManager playIncomingCallToneDemo];
         [tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
     }
@@ -88,7 +88,7 @@
 {
     if (indexPath.section == 1){
         NSString *dialTone = _dialTones[indexPath.row];
-        if ([self.appSettings.ringtone isEqualToString:dialTone]){
+        if ([self.phoneManager.settings.ringtone isEqualToString:dialTone]){
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         } else {
             [cell setAccessoryType:UITableViewCellAccessoryNone];

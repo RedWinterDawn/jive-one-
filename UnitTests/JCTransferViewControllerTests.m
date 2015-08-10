@@ -49,9 +49,9 @@
     vc.phoneManager = phoneManager;
     XCTAssertEqual(phoneManager, vc.phoneManager, @"Phone Manager is not the mock phone manger");
     
-    id appSettings = OCMClassMock([JCAppSettings class]);
-    vc.appSettings = appSettings;
-    XCTAssertEqual(appSettings, vc.appSettings, @"App Settings is not the mock app settings");
+//    id appSettings = OCMClassMock([JCAppSettings class]);
+//    vc.appSettings = appSettings;
+//    XCTAssertEqual(appSettings, vc.appSettings, @"App Settings is not the mock app settings");
     
     JCPhoneBook *phoneBook = [JCPhoneBookTestDataFactory loadTestPhoneBook];
     vc.phoneBook = phoneBook;

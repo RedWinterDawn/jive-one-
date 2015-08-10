@@ -7,27 +7,18 @@
 //
 
 #import "JCPhoneSettingsTableViewController.h"
-#import "JCAppSettings.h"
-#import "JCAuthenticationManager.h"
 #import "JCPhoneManager.h"
-#import "Line.h"
-#import "PBX.h"
 
 @interface JCPhoneSettingsTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UISwitch *intercomSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *microphoneMuteSwitch;
-
 @property (weak, nonatomic) IBOutlet UISwitch *doNotDisturbSW;
 @property (weak, nonatomic) IBOutlet UISwitch *wifiOnly;
-
 @property (weak, nonatomic) IBOutlet UISwitch *sipDisabled;
-
 @property (weak, nonatomic) IBOutlet UITableViewCell *microphoneMuteCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *extensionCell;
-
 @property (weak, nonatomic) IBOutlet UILabel *microphoneMuteLabel;
-
 @property (strong, nonatomic) IBOutletCollection(UITableViewCell) NSArray *enabledPhoneSettings;
 
 @end
@@ -56,29 +47,29 @@
 
 - (IBAction)toggleEnablePhone:(id)sender
 {
-    [self toggleSettingForSender:sender
-                          action:^BOOL(JCAppSettings *s) {
-                              s.phoneEnabled = !s.isPhoneEnabled;
-                              return s.isPhoneEnabled;
+    [self togglePhoneSettingForSender:sender
+                          action:^BOOL(JCPhoneSettings *settings) {
+                              settings.phoneEnabled = !settings.isPhoneEnabled;
+                              return settings.isPhoneEnabled;
                           }
-                      completion:^(BOOL value, JCAppSettings *settings) {
+                      completion:^(BOOL value, JCPhoneSettings *settings, JCPhoneManager *phoneManager) {
                           [self updatePhoneInfo];
                           if (value){
-                              [self.phoneManager connectWithProvisioningProfile:self.authenticationManager.line];
+                              [phoneManager connectWithProvisioningProfile:phoneManager.provisioningProfile];
                           } else{
-                              [self.phoneManager disconnect];
+                              [phoneManager disconnect];
                           }
                       }];
 }
 
 -(IBAction)intercomChanged:(id)sender
 {
-    [self toggleSettingForSender:sender
-                          action:^BOOL(JCAppSettings *s) {
+    [self togglePhoneSettingForSender:sender
+                          action:^BOOL(JCPhoneSettings *s) {
                               s.intercomEnabled = !s.isIntercomEnabled;
                               return s.isIntercomEnabled;
                           }
-                      completion:^(BOOL value, JCAppSettings *s) {
+                      completion:^(BOOL value, JCPhoneSettings *s, JCPhoneManager *phoneManager) {
                           if (s.isIntercomEnabled == FALSE) {
                               s.intercomMicrophoneMuteEnabled = TRUE;
                           }
@@ -89,8 +80,8 @@
 
 -(IBAction)intercomMicrophoneMuteChanged:(id)sender
 {
-    [self toggleSettingForSender:sender
-                          action:^BOOL(JCAppSettings *s) {
+    [self togglePhoneSettingForSender:sender
+                          action:^BOOL(JCPhoneSettings *s) {
                               s.intercomMicrophoneMuteEnabled = !s.isIntercomMicrophoneMuteEnabled;
                               return s.isIntercomMicrophoneMuteEnabled;
                           }
@@ -99,22 +90,20 @@
 
 -(IBAction)toggleWifiOnly:(id)sender
 {
-    [self toggleSettingForSender:sender
-                          action:^BOOL(JCAppSettings *s) {
+    [self togglePhoneSettingForSender:sender
+                          action:^BOOL(JCPhoneSettings *s) {
                               s.wifiOnly = !s.isWifiOnly;
                               return s.isWifiOnly;
                           }
-                      completion:^(BOOL value, JCAppSettings *s) {
-                          [self.phoneManager connectWithProvisioningProfile:self.authenticationManager.line];
+                      completion:^(BOOL value, JCPhoneSettings *s, JCPhoneManager *phoneManager) {
+                          [phoneManager connectWithProvisioningProfile:phoneManager.provisioningProfile];
                       }];
 }
 
-
-
 - (IBAction)toggleDoNotDisturb:(id)sender {
     
-    [self toggleSettingForSender:sender
-                          action:^BOOL(JCAppSettings *s) {
+    [self togglePhoneSettingForSender:sender
+                          action:^BOOL(JCPhoneSettings *s) {
                               s.doNotDisturbEnabled = !s.isDoNotDisturbEnabled;
                               return s.isDoNotDisturbEnabled;
                           }
@@ -125,15 +114,16 @@
 
 -(void)updatePhoneInfo
 {
-    Line *line = self.authenticationManager.line;
-    self.extensionCell.detailTextLabel.text = line.number;
+    JCPhoneManager *phoneManager = self.phoneManager;
+    id<JCPhoneProvisioningDataSource> provisioningProfile = phoneManager.provisioningProfile;
+    self.extensionCell.detailTextLabel.text = provisioningProfile.number;
     
-    JCAppSettings *settings = self.appSettings;
-    self.intercomSwitch.on  = settings.isIntercomEnabled;
-    self.wifiOnly.on        = settings.wifiOnly;
-    self.sipDisabled.on     = settings.phoneEnabled;
-    self.doNotDisturbSW.on  = settings.doNotDisturbEnabled;
-    self.microphoneMuteSwitch.on = settings.isIntercomMicrophoneMuteEnabled;
+    JCPhoneSettings *settings       = phoneManager.settings;
+    self.intercomSwitch.on          = settings.isIntercomEnabled;
+    self.wifiOnly.on                = settings.wifiOnly;
+    self.sipDisabled.on             = settings.phoneEnabled;
+    self.doNotDisturbSW.on          = settings.doNotDisturbEnabled;
+    self.microphoneMuteSwitch.on    = settings.isIntercomMicrophoneMuteEnabled;
     
     [self startUpdates];
     
@@ -157,7 +147,7 @@
 -(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
     if (section == 0) {
-        return [NSString stringWithFormat:[super tableView:self.tableView titleForFooterInSection:0], self.authenticationManager.line.number];
+        return [NSString stringWithFormat:[super tableView:self.tableView titleForFooterInSection:0], self.phoneManager.provisioningProfile.number];
     } else {
         return [super tableView:tableView titleForFooterInSection:section];
     }

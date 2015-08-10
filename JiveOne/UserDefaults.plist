@@ -4,11 +4,11 @@
 <dict>
 	<key>seenAppTutorial</key>
 	<false/>
-	<key>vibrateOnRing</key>
+	<key>isVibrateOnRing</key>
 	<true/>
-	<key>intercomMicrophoneMuteEnabled</key>
+	<key>isIntercomMicrophoneMuteEnabled</key>
 	<true/>
-	<key>phoneEnabled</key>
+	<key>isPhoneEnabled</key>
 	<true/>
 </dict>
 </plist>

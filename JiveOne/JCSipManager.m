@@ -68,7 +68,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @implementation JCSipManager
 
--(instancetype)initWithNumberOfLines:(NSUInteger)lines delegate:(id<JCSipManagerDelegate>)delegate error:(NSError *__autoreleasing *)error;
+-(instancetype)initWithNumberOfLines:(NSUInteger)lines audioManager:(JCPhoneAudioManager *)audioManager delegate:(id<JCSipManagerDelegate>)delegate error:(NSError *__autoreleasing *)error
 {
     self = [super init];
     if (self) {
@@ -81,7 +81,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         _operationQueue = [[NSOperationQueue alloc] init];
         _operationQueue.name = @"SipHandler Operation Queue";
         
-        _audioManager = [JCPhoneAudioManager new];
+        _audioManager = audioManager;
         _audioManager.delegate = self;
         
         _registrationTimeoutInterval = DEFAULT_PHONE_REGISTRATION_TIMEOUT_INTERVAL;

@@ -17,13 +17,10 @@
 #import "JCPhoneManager.h"
 
 // Managers
-#import "JCPhoneAudioManager.h"
 #import "JCSipManager.h"
-#import "JCAppSettings.h"
 #import "JCPhoneManagerError.h"
 
 // Objects
-//#import "JCPhoneBook.h"
 #import "JCCallCard.h"
 #import "JCLineSession.h"
 #import "JCConferenceCallCard.h"
@@ -45,7 +42,6 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 @interface JCPhoneManager ()<JCSipManagerDelegate, JCCallCardDelegate, JCPhoneAudioManagerDelegate>
 {
-    JCPhoneAudioManager *_audioManager;
     JCPhoneCallViewController *_callViewController;
     JCTransferConfirmationViewController *_transferConfirmationViewController;
 	NSString *_warmTransferNumber;
@@ -58,7 +54,6 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 @property (nonatomic, strong) JCSipManager *sipManager;
 @property (nonatomic, strong) UIStoryboard *storyboard;
-@property (nonatomic, strong) JCAppSettings *appSettings;
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
 
 @end
@@ -68,22 +63,21 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 -(id)init
 {
     __autoreleasing NSError *error;
-    JCSipManager *sipManager = [[JCSipManager alloc] initWithNumberOfLines:MAX_LINES delegate:self error:&error];
-    return [self initWithSipManager:sipManager
-                        appSettings:[JCAppSettings sharedSettings]
-                reachabilityManager:[AFNetworkReachabilityManager sharedManager]];
+    JCPhoneSettings *settings = [JCPhoneSettings new];
+    JCPhoneAudioManager *audioManager = [[JCPhoneAudioManager alloc] initWithPhoneSettings:settings];
+    JCSipManager *sipManager = [[JCSipManager alloc] initWithNumberOfLines:MAX_LINES audioManager:audioManager delegate:self error:&error];
+    AFNetworkReachabilityManager *reachability = [AFNetworkReachabilityManager sharedManager];
+    return [self initWithSipManager:sipManager settings:settings reachability:reachability];
 }
 
--(instancetype)initWithSipManager:(JCSipManager *)sipManager
-                      appSettings:(JCAppSettings *)appSettings
-              reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager
+-(instancetype)initWithSipManager:(JCSipManager *)sipManager settings:(JCPhoneSettings *)settings reachability:(AFNetworkReachabilityManager *)reachability
 {
     self = [super init];
     if (self) {
         _storyboardName = DEFAULT_PHONE_MANAGER_STORYBOARD_NAME;
         _sipManager = sipManager;
-        _appSettings = appSettings;
-        _networkReachabilityManager = reachabilityManager;
+        _settings = settings;
+        _networkReachabilityManager = reachability;
     }
     return self;
 }
@@ -150,14 +144,14 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     
     // Retrive the current network status. Check if the status is Cellular data, and do not connect
     // if we are configured to be wifi only.
-    if (self.networkReachabilityManager.isReachableViaWWAN && self.appSettings.isWifiOnly) {
+    if (self.networkReachabilityManager.isReachableViaWWAN && _settings.isWifiOnly) {
         _networkType = JCPhoneManagerNoNetwork;
         [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_WIFI_DISABLED]];
         [self disconnect];
         return;
         
     // Check our settings to see if we want sip to register.        
-    } else if (!self.appSettings.isPhoneEnabled){
+    } else if (!_settings.isPhoneEnabled){
         [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_SIP_DISABLED]];
         [self disconnect];
         return;
@@ -296,13 +290,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         }
     };
     
-    JCAppSettings *appSettings = self.appSettings;
-    if (!appSettings.isPhoneEnabled) {
+    if (!_settings.isPhoneEnabled) {
         [JCAlertView alertWithTitle:NSLocalizedString(@"Calling Disabled", @"")
                             message:NSLocalizedString(@"Phone is currently disabled in settings, would you like to enable it?", @"")
                           dismissed:^(NSInteger buttonIndex) {
                               if (buttonIndex == 1){
-                                  appSettings.phoneEnabled = YES;
+                                  _settings.phoneEnabled = YES;
                                   [self connectWithProvisioningProfile:provisioningProfile completion:connectCompletion];
                               } else{
                                   connectCompletion(NO, nil);
@@ -628,8 +621,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 -(void)sipHandler:(JCSipManager *)sipHandler receivedIntercomLineSession:(JCLineSession *)session
 {
-    JCAppSettings *appSettings = self.appSettings;
-    if(!appSettings.isIntercomEnabled) {
+    if(!_settings.isIntercomEnabled) {
         return;
     }
     
@@ -649,7 +641,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
             }
             [sipHandler setLoudSpeakerEnabled:shouldTurnOnSpeaker];
             
-            BOOL mute = appSettings.isIntercomMicrophoneMuteEnabled;
+            BOOL mute = _settings.isIntercomMicrophoneMuteEnabled;
             [sipHandler muteCall:mute];
             if (_callViewController) {
                 _callViewController.muteBtn.selected = sipHandler.isMuted;
@@ -660,7 +652,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 -(BOOL)shouldReceiveIncomingLineSession:(JCSipManager *)sipHandler
 {
-    return !self.appSettings.isDoNotDisturbEnabled;
+    return !_settings.isDoNotDisturbEnabled;
 }
 
 -(void)sipHandler:(JCSipManager *)sipManager didAddLineSession:(JCLineSession *)lineSession

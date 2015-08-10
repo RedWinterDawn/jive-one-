@@ -6,7 +6,9 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-@protocol JCPhoneProvisioningDataSource <NSObject>
+#import "JCPhoneNumberDataSource.h"
+
+@protocol JCPhoneProvisioningDataSource <JCPhoneNumberDataSource>
 
 @property (nonatomic, readonly) BOOL isProvisioned;
 @property (nonatomic, readonly) BOOL isV5;

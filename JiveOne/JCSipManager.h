@@ -32,6 +32,7 @@
 @property (nonatomic, readonly, getter=isMuted) BOOL mute;                      // True if the audio session has been placed on mute.
 
 -(instancetype)initWithNumberOfLines:(NSUInteger)lines
+                        audioManager:(JCPhoneAudioManager *)audioManager
                             delegate:(id<JCSipManagerDelegate>)delegate
                                error:(NSError *__autoreleasing *)error;
 
@@ -143,8 +144,6 @@
 #define JC_SIP_CONFERENCE_CALL_UNHOLD_CALL_START_ERROR  -5204
 #define JC_SIP_CONFERENCE_CALL_ADD_CALL_ERROR           -5205
 #define JC_SIP_CONFERENCE_CALL_END_CALL_HOLD_ERROR      -5206
-
-
 
 @interface JCSipManagerError : JCError
 

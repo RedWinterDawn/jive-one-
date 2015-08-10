@@ -10,6 +10,8 @@
 @import CoreBluetooth;
 @import AudioToolbox;
 
+@class JCPhoneSettings;
+
 typedef enum : NSUInteger {
     JCPhoneAudioManagerOutputUnknown = 0,
     JCPhoneAudioManagerOutputLineOut,       /* Line level output on a dock connector */
@@ -52,6 +54,8 @@ typedef enum : NSUInteger {
 @end
 
 @interface JCPhoneAudioManager : NSObject
+
+- (instancetype)initWithPhoneSettings:(JCPhoneSettings *)settings;
 
 @property (nonatomic, weak) id<JCPhoneAudioManagerDelegate> delegate;
 

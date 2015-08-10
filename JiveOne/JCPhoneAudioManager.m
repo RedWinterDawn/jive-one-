@@ -9,13 +9,13 @@
 @import AVFoundation;
 
 #import "JCPhoneAudioManager.h"
-#import "JCAppSettings.h"
+#import "JCPhoneSettings.h"
 
 @interface JCPhoneAudioManager ()
 {
     JCPhoneAudioManagerOutputType _outputType;
     JCPhoneAudioManagerInputType _inputType;
-    JCAppSettings *_appSettings;
+    JCPhoneSettings *_settings;
 }
 
 @property (strong, nonatomic) AVAudioPlayer *incomingCallAudioPlayer;
@@ -29,16 +29,12 @@
 
 @implementation JCPhoneAudioManager
 
-- (instancetype)init {
-    return [self initWithAppSettings:[JCAppSettings sharedSettings]];
-}
-
-- (instancetype)initWithAppSettings:(JCAppSettings *)settings
+- (instancetype)initWithPhoneSettings:(JCPhoneSettings *)settings
 {
     self = [super init];
     if (self)
     {
-        _appSettings = settings;
+        _settings = settings;
         
         _ringbackVolume = 1;  // Defined here in case we and to calibrate the ringback audio not to be as loud as ringer.
         _ringerVolume = 1;
@@ -159,7 +155,7 @@
         return _incomingCallAudioPlayer;
     }
     
-    NSString* ringTone = _appSettings.ringtone;
+    NSString *ringTone = _settings.ringtone;
     NSString *path = [[NSBundle mainBundle] pathForResource:ringTone ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:path];
     

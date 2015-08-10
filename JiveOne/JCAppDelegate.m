@@ -492,6 +492,7 @@ NSString *const kGCMSenderId = @"937754980938";
     [center addObserver:self selector:@selector(presenceChanged:) name:kJCAppSettingsPresenceChangedNotification object:appSettings];
     
     JCPhoneManager *phoneManager = [JCPhoneManager sharedManager];
+    [phoneManager.settings loadDefaultsFromFile:@"UserDefaults.plist"];
     phoneManager.delegate = self;
 
     // Authentication

@@ -7,7 +7,6 @@
 //
 
 #import "JCPhoneDialerViewController.h"
-#import "JCAppSettings.h"
 #import "JCPhoneNumberDataSource.h"
 #import "JCContactCollectionViewCell.h"
 #import "JCPhoneCallViewController.h"
@@ -238,7 +237,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 -(void)updateRegistrationStatus
 {
     JCPhoneManager *phoneManager = self.phoneManager;
-    JCAppSettings *appSettings = self.appSettings;
+    JCPhoneSettings *settings = self.phoneManager.settings;
     AFNetworkReachabilityManager *reachabilityManager = self.networkingReachabilityManager;
     
     NSString *prompt = NSLocalizedStringFromTable(@"Unregistered", @"Phone", @"Registration Status Display");
@@ -246,7 +245,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         self.callButton.selected = false;
         prompt = phoneManager.provisioningProfile.displayName;
     }
-    else if (appSettings.wifiOnly && reachabilityManager.isReachableViaWWAN){
+    else if (settings.wifiOnly && reachabilityManager.isReachableViaWWAN){
         prompt = NSLocalizedStringFromTable(@"Disabled", @"Phone", @"Registration Status Display");
     }
     else if (phoneManager.isRegistering) {
