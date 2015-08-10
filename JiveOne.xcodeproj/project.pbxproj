@@ -65,6 +65,8 @@
 		5D11CC801B750C6C009BB9B4 /* JCPhoneManagerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D11CC7F1B750C6C009BB9B4 /* JCPhoneManagerError.m */; };
 		5D11CC861B79197A009BB9B4 /* JCPhoneSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D11CC851B79197A009BB9B4 /* JCPhoneSettings.m */; };
 		5D11CC891B7919DC009BB9B4 /* JCSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D11CC881B7919DC009BB9B4 /* JCSettings.m */; };
+		5D11CC8B1B794ED8009BB9B4 /* JCPhoneDialerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D11CC8A1B794ED8009BB9B4 /* JCPhoneDialerViewController.xib */; };
+		5D11CC8D1B7957A7009BB9B4 /* JCPhoneNumberCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D11CC8C1B7957A7009BB9B4 /* JCPhoneNumberCollectionViewCell.xib */; };
 		5D1598A11B5880510045F98F /* JCV5ApiClient+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598A01B5880510045F98F /* JCV5ApiClient+Jedi.m */; };
 		5D1598A41B5880920045F98F /* JCV5ApiClient+Jasmine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598A31B5880920045F98F /* JCV5ApiClient+Jasmine.m */; };
 		5D1598A71B5880C90045F98F /* JCV5ApiClient+Voicemail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598A61B5880C90045F98F /* JCV5ApiClient+Voicemail.m */; };
@@ -502,6 +504,8 @@
 		5D11CC851B79197A009BB9B4 /* JCPhoneSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneSettings.m; sourceTree = "<group>"; };
 		5D11CC871B7919DC009BB9B4 /* JCSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSettings.h; sourceTree = "<group>"; };
 		5D11CC881B7919DC009BB9B4 /* JCSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSettings.m; sourceTree = "<group>"; };
+		5D11CC8A1B794ED8009BB9B4 /* JCPhoneDialerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCPhoneDialerViewController.xib; sourceTree = "<group>"; };
+		5D11CC8C1B7957A7009BB9B4 /* JCPhoneNumberCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCPhoneNumberCollectionViewCell.xib; sourceTree = "<group>"; };
 		5D15989F1B5880510045F98F /* JCV5ApiClient+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JCV5ApiClient+Jedi.h"; sourceTree = "<group>"; };
 		5D1598A01B5880510045F98F /* JCV5ApiClient+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JCV5ApiClient+Jedi.m"; sourceTree = "<group>"; };
 		5D1598A21B5880920045F98F /* JCV5ApiClient+Jasmine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JCV5ApiClient+Jasmine.h"; sourceTree = "<group>"; };
@@ -2204,6 +2208,8 @@
 				5D5448C71B0D3BF500F44D8F /* Phone.storyboard */,
 				5D8E33DE1B0A4F3100FD8AE1 /* Phone_iPad.storyboard */,
 				5DEC49291B0EDF6000361499 /* Phone.strings */,
+				5D11CC8A1B794ED8009BB9B4 /* JCPhoneDialerViewController.xib */,
+				5D11CC8C1B7957A7009BB9B4 /* JCPhoneNumberCollectionViewCell.xib */,
 				5D1175921AA0D82600D2B03A /* PhoneManager.storyboard */,
 				5D0199C41A1BBC0500F4CF13 /* IncomingCallViewCell.xib */,
 				5D0199BF1A1BBBF400F4CF13 /* CurrentCallViewCell.xib */,
@@ -2428,6 +2434,7 @@
 				5DB7AFBA1B3CADB000451A0B /* CurrentCallViewCell.xib in Resources */,
 				5DB7AFBB1B3CADB000451A0B /* ConferenceCallViewCell.xib in Resources */,
 				5D375D5D1B61F1C20085A2B7 /* eula.html in Resources */,
+				5D11CC8B1B794ED8009BB9B4 /* JCPhoneDialerViewController.xib in Resources */,
 				5DB7AFB71B3CAD8F00451A0B /* JCNonVisualVoicemailViewController.xib in Resources */,
 				5DB7AFB81B3CAD8F00451A0B /* JCVoicemailDetailViewController.xib in Resources */,
 				B7B5D9C11B62F427008AD588 /* calling.mp3 in Resources */,
@@ -2438,6 +2445,7 @@
 				B734D80F1B41CF56004403E2 /* Ring.mp3 in Resources */,
 				B734D80A1B41CE36004403E2 /* Edm Trumpets.mp3 in Resources */,
 				5DB7AF9E1B39D40600451A0B /* Chat.storyboard in Resources */,
+				5D11CC8D1B7957A7009BB9B4 /* JCPhoneNumberCollectionViewCell.xib in Resources */,
 				5DB7AF9F1B39D40600451A0B /* Chat_iPad.storyboard in Resources */,
 				5DB7AFA01B39D40600451A0B /* Contacts_iPad.storyboard in Resources */,
 				B734D8141B41D07C004403E2 /* Ambiant.mp3 in Resources */,
