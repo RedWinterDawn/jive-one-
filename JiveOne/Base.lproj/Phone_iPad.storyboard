@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="f4Z-kz-Svg">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -342,54 +343,13 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="yYl-u7-4wF" customClass="JCPhoneNumberCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="185" height="35"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4mc-WZ-WEg">
-                                                    <rect key="frame" x="8" y="0.0" width="169" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="c9N-1M-gRk"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVm-Xb-Tnh">
-                                                    <rect key="frame" x="8" y="21" width="169" height="14"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="xVm-Xb-Tnh" secondAttribute="trailing" constant="8" id="4RQ-Bg-eNu"/>
-                                            <constraint firstAttribute="trailing" secondItem="4mc-WZ-WEg" secondAttribute="trailing" constant="8" id="5ek-5g-8eT"/>
-                                            <constraint firstItem="xVm-Xb-Tnh" firstAttribute="leading" secondItem="yYl-u7-4wF" secondAttribute="leading" constant="8" id="9vc-jM-Rja"/>
-                                            <constraint firstItem="4mc-WZ-WEg" firstAttribute="leading" secondItem="yYl-u7-4wF" secondAttribute="leading" constant="8" id="bdX-B4-dcT"/>
-                                            <constraint firstAttribute="bottom" secondItem="xVm-Xb-Tnh" secondAttribute="bottom" id="cCG-Zr-898"/>
-                                            <constraint firstItem="xVm-Xb-Tnh" firstAttribute="top" secondItem="4mc-WZ-WEg" secondAttribute="bottom" id="i1B-x9-nsn"/>
-                                            <constraint firstItem="4mc-WZ-WEg" firstAttribute="top" secondItem="yYl-u7-4wF" secondAttribute="top" id="xAK-tp-r8k"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="name" destination="4mc-WZ-WEg" id="mTF-eN-TlE"/>
-                                            <outlet property="number" destination="xVm-Xb-Tnh" id="TRb-67-xal"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
+                                <cells/>
                                 <connections>
                                     <outlet property="dataSource" destination="A5J-Bt-Bbh" id="jLW-0T-seO"/>
                                     <outlet property="delegate" destination="A5J-Bt-Bbh" id="O8D-zX-gxT"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e6A-Sf-BTx" userLabel="Keypad">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e6A-Sf-BTx" userLabel="Keypad">
                                 <rect key="frame" x="110" y="93" width="280" height="373"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e9c-yb-zbj" customClass="JCRoundedButton">

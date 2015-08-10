@@ -37,6 +37,8 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewDidLoad];
     
+    [self.collectionView registerNib:[JCPhoneNumberCollectionViewCell nib] forCellWithReuseIdentifier:[JCPhoneNumberCollectionViewCell cellReuseIdentifier]];
+    
     JCPhoneManager *phoneManager = self.phoneManager;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegisteredNotification object:phoneManager];
@@ -340,8 +342,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"Cell";
-    JCPhoneNumberCollectionViewCell *cell = (JCPhoneNumberCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    JCPhoneNumberCollectionViewCell *cell = (JCPhoneNumberCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:[JCPhoneNumberCollectionViewCell cellReuseIdentifier] forIndexPath:indexPath];
     
     NSString *keyword = self.formattedPhoneNumberLabel.dialString;
     id <JCPhoneNumberDataSource> personNumber = [self objectAtIndexPath:indexPath];

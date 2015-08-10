@@ -10,6 +10,21 @@
 
 @interface JCPhoneNumberCollectionViewCell : UICollectionViewCell
 
+/**
+ *  Returns the `UINib` object initialized for the cell.
+ *
+ *  @return The initialized `UINib` object or `nil` if there were errors during
+ *  initialization or the nib file could not be located.
+ */
++ (UINib *)nib;
+
+/**
+ *  Returns the default string used to identify a reusable cell for text message items.
+ *
+ *  @return The string used to identify a reusable cell.
+ */
++ (NSString *)cellReuseIdentifier;
+
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *number;
 
