@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCContactCollectionViewCell.h"
+#import "JCPhoneNumberCollectionViewCell.h"
 
-@implementation JCContactCollectionViewCell
+@implementation JCPhoneNumberCollectionViewCell
 
 @end

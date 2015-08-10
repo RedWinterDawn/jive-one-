@@ -8,6 +8,6 @@
 
 #import "JCRoundedButton.h"
 
-@interface JCMergeButton : JCRoundedButton
+@interface JCPhoneCallOptionsMergeButton : JCRoundedButton
 
 @end

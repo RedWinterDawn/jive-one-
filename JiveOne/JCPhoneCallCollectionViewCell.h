@@ -8,18 +8,18 @@
 
 @import UIKit;
 
-#import "JCCallCard.h"
+#import "JCPhoneCall.h"
 
 #define CALL_CARD_BORDER_WIDTH 0.5f
 #define CALL_CARD_BORDER_COLOR [UIColor colorWithWhite:1 alpha:0.6]
 #define CALL_CARD_CORNER_RADIUS 2
 
-@interface JCCallCardViewCell : UICollectionViewCell
+@interface JCPhoneCallCollectionViewCell : UICollectionViewCell
 {
-    JCCallCard *_callCard;
+    JCPhoneCall *_callCard;
 }
 
-@property (nonatomic, strong) JCCallCard *callCard;
+@property (nonatomic, strong) JCPhoneCall *callCard;
 
 // Subviews
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;

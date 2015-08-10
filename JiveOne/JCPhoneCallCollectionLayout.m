@@ -8,7 +8,7 @@
 
 #import "JCPhoneCallCollectionLayout.h"
 #import "JCPhoneManager.h"
-#import "JCCallCardViewCell.h"
+#import "JCPhoneCallCollectionViewCell.h"
 
 #define MINIMUM_CELL_HEIGHT 180.0f
 

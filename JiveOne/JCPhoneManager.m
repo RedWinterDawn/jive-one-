@@ -21,9 +21,9 @@
 #import "JCPhoneManagerError.h"
 
 // Objects
-#import "JCCallCard.h"
+#import "JCPhoneCall.h"
 #import "JCPhoneSipSession.h"
-#import "JCConferenceCallCard.h"
+#import "JCPhoneConferenceCall.h"
 
 // View Controllers
 #import "JCPhoneCallViewController.h"
@@ -412,7 +412,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 #pragma mark - Phone Actions -
 
--(void)answerCall:(JCCallCard *)callCard completion:(CompletionHandler)completion
+-(void)answerCall:(JCPhoneCall *)callCard completion:(CompletionHandler)completion
 {
     __autoreleasing NSError *error;
     BOOL success = [self.sipManager answerSession:callCard.lineSession error:&error];
@@ -421,12 +421,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }
 }
 
--(void)hangUpCall:(JCCallCard *)callCard completion:(CompletionHandler)completion;
+-(void)hangUpCall:(JCPhoneCall *)callCard completion:(CompletionHandler)completion;
 {
     __autoreleasing NSError *error;
     BOOL success;
     
-    if ([callCard isKindOfClass:[JCConferenceCallCard class]]) {
+    if ([callCard isKindOfClass:[JCPhoneConferenceCall class]]) {
         success = [self.sipManager endConference:&error];
         if(success){
             success = [self.sipManager hangUpAllSessions:&error];
@@ -441,13 +441,13 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }
 }
 
--(void)holdCall:(JCCallCard *)callCard completion:(CompletionHandler)completion
+-(void)holdCall:(JCPhoneCall *)callCard completion:(CompletionHandler)completion
 {
     __autoreleasing NSError *error;
     BOOL success;
     
     // If we are in a conference call, all the child cards show recieve the hold call state.
-    if ([callCard isKindOfClass:[JCConferenceCallCard class]]) {
+    if ([callCard isKindOfClass:[JCPhoneConferenceCall class]]) {
         success = [self.sipManager holdLines:&error];
     }
     else {
@@ -463,18 +463,18 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }
 }
 
--(void)unholdCall:(JCCallCard *)callCard completion:(CompletionHandler)completion
+-(void)unholdCall:(JCPhoneCall *)callCard completion:(CompletionHandler)completion
 {
     __autoreleasing NSError *error;
     BOOL success;
-    if ([callCard isKindOfClass:[JCConferenceCallCard class]]) {
+    if ([callCard isKindOfClass:[JCPhoneConferenceCall class]]) {
         success = [self.sipManager unholdLines:&error];
     } else {
         // If we are not in a conference call, all other call should be placed on hold while we are
         // not on hold on a line. When a line is placed on hold, then only it should be placed on
         // hold. If it is returning from hold, all other lines should be placed on hold that are not
         // already on hold.
-        for (JCCallCard *card in _calls){
+        for (JCPhoneCall *card in _calls){
             if (card != callCard){
                 [self.sipManager holdLineSession:card.lineSession error:&error];
             }
@@ -534,7 +534,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 -(void)swapCalls:(CompletionHandler)completion
 {
-    JCCallCard *inactiveCall = [self findInactiveCallCard];
+    JCPhoneCall *inactiveCall = [self findInactiveCallCard];
     [self unholdCall:inactiveCall completion:completion];
 }
 
@@ -625,7 +625,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         return;
     }
     
-    JCCallCard *callCard = [self callCardForLineSession:session];
+    JCPhoneCall *callCard = [self callCardForLineSession:session];
     if (!callCard) {
         return;
     }
@@ -673,7 +673,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }
     
     // Create and add the call card to the calls array
-    JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:lineSession];
+    JCPhoneCall *callCard = [[JCPhoneCall alloc] initWithSession:lineSession];
     callCard.delegate = self;
     NSMutableArray *calls = self.calls;
     [calls addObject:callCard];
@@ -703,7 +703,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 {
     [self.delegate phoneManager:self reportCallOfType:JCPhoneManagerIncomingCall lineSession:lineSession provisioningProfile:sipManager.provisioning];
     
-    JCCallCard *callCard = [self callCardForLineSession:lineSession];
+    JCPhoneCall *callCard = [self callCardForLineSession:lineSession];
     callCard.started = [NSDate date];
     
     if (_callViewController) {
@@ -734,7 +734,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
         return;
     }
     
-    JCCallCard *callCard = [self callCardForLineSession:session];
+    JCPhoneCall *callCard = [self callCardForLineSession:session];
     if (callCard) {
         [self.calls removeObject:callCard];
     }
@@ -771,7 +771,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 -(void)sipHandler:(JCPhoneSipSessionManager *)sipHandler didCreateConferenceCallWithSessions:(NSSet *)lineSessions
 {
     // Add the conference call Card
-    JCConferenceCallCard *conferenceCallCard = [[JCConferenceCallCard alloc] initWithLineSessions:lineSessions];
+    JCPhoneConferenceCall *conferenceCallCard = [[JCPhoneConferenceCall alloc] initWithLineSessions:lineSessions];
     conferenceCallCard.delegate = self;
     conferenceCallCard.started = [NSDate date];
     
@@ -794,7 +794,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     // recover.
     for (JCPhoneSipSession *lineSession in lineSessions) {
         if(lineSession.isActive) {
-            JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:lineSession];
+            JCPhoneCall *callCard = [[JCPhoneCall alloc] initWithSession:lineSession];
             callCard.delegate = self;
             [_calls addObject:callCard];
         }
@@ -927,9 +927,9 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 #pragma mark - General Private Methods -
 
--(JCCallCard *)findInactiveCallCard
+-(JCPhoneCall *)findInactiveCallCard
 {
-    for (JCCallCard *callCard in self.calls) {
+    for (JCPhoneCall *callCard in self.calls) {
         if (callCard.lineSession.isHolding == TRUE) {
             return callCard;
         }
@@ -937,9 +937,9 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     return nil;
 }
 
--(JCCallCard *)callCardForLineSession:(JCPhoneSipSession *)lineSession
+-(JCPhoneCall *)callCardForLineSession:(JCPhoneSipSession *)lineSession
 {
-    for (JCCallCard *callCard in self.calls) {
+    for (JCPhoneCall *callCard in self.calls) {
         if (callCard.lineSession.sessionId == lineSession.sessionId){
             return callCard;
         }

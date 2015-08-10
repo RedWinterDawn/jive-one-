@@ -17,7 +17,7 @@
 
 @end
 
-@interface JCFormattedPhoneNumberLabel : UILabel
+@interface JCPhoneFormattedNumberLabel : UILabel
 
 @property (nonatomic, weak) IBOutlet id <JCFormattedPhoneNumberLabelDelegate> delegate;
 @property (nonatomic) NSString *dialString;

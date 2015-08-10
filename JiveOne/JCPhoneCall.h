@@ -9,25 +9,25 @@
 #import <Foundation/Foundation.h>
 #import "JCPhoneSipSession.h"
 
-@class JCCallCard;
+@class JCPhoneCall;
 
 @protocol JCCallCardDelegate <NSObject>
 
 // Notify delegate to answer an Incoming call card.
--(void)answerCall:(JCCallCard *)callCard completion:(CompletionHandler)completion;
+-(void)answerCall:(JCPhoneCall *)callCard completion:(CompletionHandler)completion;
 
 // Notify delegate to hangs up a specific call card.
--(void)hangUpCall:(JCCallCard *)callCard completion:(CompletionHandler)completion;
+-(void)hangUpCall:(JCPhoneCall *)callCard completion:(CompletionHandler)completion;
 
 // Notify delegate to place a specific call on hold.
--(void)holdCall:(JCCallCard *)callCard completion:(CompletionHandler)completion;
+-(void)holdCall:(JCPhoneCall *)callCard completion:(CompletionHandler)completion;
 
 // Notify delegate to take a specific call off hold.
--(void)unholdCall:(JCCallCard *)callCard completion:(CompletionHandler)completion;
+-(void)unholdCall:(JCPhoneCall *)callCard completion:(CompletionHandler)completion;
 
 @end
 
-@interface JCCallCard : NSObject
+@interface JCPhoneCall : NSObject
 
 @property (nonatomic, weak) id <JCCallCardDelegate> delegate;
 @property (nonatomic, strong) NSDate *started;
@@ -37,7 +37,7 @@
 @property (nonatomic, readonly) NSString *callerId;
 @property (nonatomic, readonly) NSString *dialNumber;
 
--(instancetype)initWithLineSession:(JCPhoneSipSession *)lineSession;
+-(instancetype)initWithSession:(JCPhoneSipSession *)lineSession;
 
 -(void)answerCall:(CompletionHandler)completion;
 -(void)endCall:(CompletionHandler)completion;

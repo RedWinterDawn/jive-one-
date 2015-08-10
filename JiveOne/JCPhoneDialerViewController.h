@@ -8,7 +8,7 @@
 
 @import UIKit;
 
-#import "JCFormattedPhoneNumberLabel.h"
+#import "JCPhoneFormattedNumberLabel.h"
 #import "JCPhoneNumberDataSource.h"
 #import "JCPhoneManager.h"
 
@@ -17,7 +17,7 @@
 @interface JCPhoneDialerViewController : UIViewController <JCFormattedPhoneNumberLabelDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *outputLabel;
-@property (weak, nonatomic) IBOutlet JCFormattedPhoneNumberLabel *formattedPhoneNumberLabel;
+@property (weak, nonatomic) IBOutlet JCPhoneFormattedNumberLabel *formattedPhoneNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *registrationStatusLabel;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 @property (weak, nonatomic) IBOutlet UIButton *backspaceButton;

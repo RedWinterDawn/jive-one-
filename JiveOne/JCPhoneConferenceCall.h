@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCallCard.h"
+#import "JCPhoneCall.h"
 
-@interface JCConferenceCallCard : JCCallCard
+@interface JCPhoneConferenceCall : JCPhoneCall
 
 @property (nonatomic, readonly) NSArray *calls;
 @property (nonatomic, readonly) BOOL isHolding;

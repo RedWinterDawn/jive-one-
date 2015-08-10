@@ -16,8 +16,8 @@
 #import "JCAuthenticationManager.h"
 
 // Views
-#import "JCFormattedPhoneNumberLabel.h"
-#import "JCContactCollectionViewCell.h"
+#import "JCPhoneFormattedNumberLabel.h"
+#import "JCPhoneNumberCollectionViewCell.h"
 #import "JCAppSettings.h"
 
 // Objects

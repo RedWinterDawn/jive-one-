@@ -15,7 +15,7 @@ typedef enum : NSUInteger {
     JCCallOptionViewFinishTransferState
 } JCCallOptionViewState;
 
-@interface JCCallOptionsView : UIView
+@interface JCPhoneCallOptionsView : UIView
 
 @property (nonatomic) JCCallOptionViewState state;
 @property (nonatomic) CGFloat annimationDuration;

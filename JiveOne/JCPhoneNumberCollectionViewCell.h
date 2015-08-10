@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCContactCollectionViewCell : UICollectionViewCell
+@interface JCPhoneNumberCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *number;

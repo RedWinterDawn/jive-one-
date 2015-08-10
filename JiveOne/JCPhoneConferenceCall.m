@@ -6,16 +6,16 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCConferenceCallCard.h"
+#import "JCPhoneConferenceCall.h"
 
-@interface JCConferenceCallCard ()
+@interface JCPhoneConferenceCall ()
 {
     NSMutableArray *_calls;
 }
 
 @end
 
-@implementation JCConferenceCallCard
+@implementation JCPhoneConferenceCall
 
 -(instancetype)initWithLineSessions:(NSSet *)sessions
 {
@@ -24,7 +24,7 @@
         _calls = [NSMutableArray array];
         for (id session in sessions) {
             if ([session isKindOfClass:[JCPhoneSipSession class]]) {
-                JCCallCard *call = [[JCCallCard alloc] initWithLineSession:(JCPhoneSipSession *)session];
+                JCPhoneCall *call = [[JCPhoneCall alloc] initWithSession:(JCPhoneSipSession *)session];
                 [_calls addObject:call];
             }
         }
@@ -36,7 +36,7 @@
 
 -(BOOL)isHolding
 {
-    for (JCCallCard *call in _calls) {
+    for (JCPhoneCall *call in _calls) {
         if(!call.lineSession.isHolding) {
             return NO;
         }
@@ -50,7 +50,7 @@
 
 -(NSString *)dialNumber {
     NSMutableString *output = [NSMutableString string];
-    for(JCCallCard *callCard in _calls) {
+    for(JCPhoneCall *callCard in _calls) {
         if (output.length > 0) {
             [output appendString:@","];
         }

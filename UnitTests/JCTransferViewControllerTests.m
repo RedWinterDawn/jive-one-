@@ -16,7 +16,7 @@
 #import "JCAuthenticationManager.h"
 
 // Views
-#import "JCFormattedPhoneNumberLabel.h"
+#import "JCPhoneFormattedNumberLabel.h"
 
 // Objects
 #import "Line.h"

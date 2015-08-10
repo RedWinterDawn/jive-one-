@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCFormattedPhoneNumberLabel.h"
+#import "JCPhoneFormattedNumberLabel.h"
 
 #import <libPhoneNumber-iOS/NBPhoneNumberUtil.h>
 #import <libPhoneNumber-iOS/NBAsYouTypeFormatter.h>
@@ -14,7 +14,7 @@
 #import "NSString+DialString.h"
 
 
-@interface JCFormattedPhoneNumberLabel ()
+@interface JCPhoneFormattedNumberLabel ()
 {
     NSMutableString *_dialString;
 }
@@ -24,7 +24,7 @@
 
 @end
 
-@implementation JCFormattedPhoneNumberLabel
+@implementation JCPhoneFormattedNumberLabel
 
 - (id) initWithFrame: (CGRect) frame
 {

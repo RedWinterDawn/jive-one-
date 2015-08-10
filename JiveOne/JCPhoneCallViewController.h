@@ -8,11 +8,11 @@
 
 @import UIKit;
 
-#import "JCCallOptionsView.h"
+#import "JCPhoneCallOptionsView.h"
 
 @interface JCPhoneCallViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet JCCallOptionsView *callOptionsView;
+@property (weak, nonatomic) IBOutlet JCPhoneCallOptionsView *callOptionsView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *callOptionsViewOriginYConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *callCardCollectionViewOriginYConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *muteBtn;

@@ -24,7 +24,7 @@
 #import "JCPhoneCallCollectionViewController.h"
 
 #import "JCPhoneSipSession.h"
-#import "JCCallCard.h"
+#import "JCPhoneCall.h"
 
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3
@@ -272,7 +272,7 @@ CGFloat *_callOptionsWidth;
     NSArray *calls = self.phoneManager.calls;
     if (calls.count > 1) {
         BOOL isIncoming = TRUE;
-        for (JCCallCard *call in calls) {
+        for (JCPhoneCall *call in calls) {
             if (!call.lineSession.isIncoming) {
                 isIncoming = FALSE;
                 break;
@@ -280,7 +280,7 @@ CGFloat *_callOptionsWidth;
         }
         return !isIncoming;
     } else {
-        JCCallCard *call = calls.firstObject;
+        JCPhoneCall *call = calls.firstObject;
         if (call.lineSession.isIncoming) {
             return NO;
         }
@@ -299,7 +299,7 @@ CGFloat *_callOptionsWidth;
         state = JCCallOptionViewMultipleCallsState;
         NSArray *calls = phoneManager.calls;
        
-            for (JCCallCard *call in calls) {
+            for (JCPhoneCall *call in calls) {
                 if (call.lineSession.isTransfer) {
                     state = JCCallOptionViewFinishTransferState;
                     break;

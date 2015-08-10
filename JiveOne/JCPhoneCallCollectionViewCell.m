@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCallCardViewCell.h"
+#import "JCPhoneCallCollectionViewCell.h"
 #import "NSString+Additions.h"
 
-@implementation JCCallCardViewCell
+@implementation JCPhoneCallCollectionViewCell
 
 -(void)awakeFromNib
 {
@@ -29,7 +29,7 @@
 
 #pragma mark - Setters -
 
--(void)setCallCard:(JCCallCard *)callCard
+-(void)setCallCard:(JCPhoneCall *)callCard
 {
     _callCard = callCard;
     [self setNeedsLayout];

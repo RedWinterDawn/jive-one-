@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCallOptionsView.h"
+#import "JCPhoneCallOptionsView.h"
 
 #define DIAL_OPTIONS_ANIMATION_DURATION 0.3f
 
-@interface JCCallOptionsView ()
+@interface JCPhoneCallOptionsView ()
 {
     CGFloat _defaultTransferPosition;
     CGFloat _defaultWarmTransferPosition;
@@ -30,7 +30,7 @@
 
 @end
 
-@implementation JCCallOptionsView
+@implementation JCPhoneCallOptionsView
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {

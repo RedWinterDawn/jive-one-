@@ -8,7 +8,7 @@
 
 #import "JCPhoneDialerViewController.h"
 #import "JCPhoneNumberDataSource.h"
-#import "JCContactCollectionViewCell.h"
+#import "JCPhoneNumberCollectionViewCell.h"
 #import "JCPhoneCallViewController.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
@@ -341,7 +341,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"Cell";
-    JCContactCollectionViewCell *cell = (JCContactCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    JCPhoneNumberCollectionViewCell *cell = (JCPhoneNumberCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     NSString *keyword = self.formattedPhoneNumberLabel.dialString;
     id <JCPhoneNumberDataSource> personNumber = [self objectAtIndexPath:indexPath];

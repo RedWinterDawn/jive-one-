@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCurrentCallCardViewCell.h"
+#import "JCPhoneActiveCallCollectionViewCell.h"
 
 #import <QuartzCore/QuartzCore.h>
-#import "JCConferenceCallCard.h"
-#import "JCCallOptionsView.h"
+#import "JCPhoneConferenceCall.h"
+#import "JCPhoneCallOptionsView.h"
 #define HOLD_ANIMATION_DURATION 0.5f
 #define HOLD_ANIMATION_ALPHA 0.6f
 #define HOLD_PULSE_ANIMATION_DURATION 1.0f
@@ -19,7 +19,7 @@
 NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pulse";
 NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
-@interface JCCurrentCallCardViewCell ()
+@interface JCPhoneActiveCallCollectionViewCell ()
 {
     UIColor *_defaultCallActionsColor;
     CGFloat _currentCallCardInfoElevation;
@@ -33,7 +33,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
 @end
 
-@implementation JCCurrentCallCardViewCell
+@implementation JCPhoneActiveCallCollectionViewCell
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -115,7 +115,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
 #pragma mark - Setters -
 
--(void)setCallCard:(JCCallCard *)callCard
+-(void)setCallCard:(JCPhoneCall *)callCard
 {
     [super setCallCard:callCard];
     [self updateState:NO];
@@ -246,7 +246,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     if ([_holdCallButton.layer animationForKey:kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey])
         [_holdCallButton.layer removeAnimationForKey:kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey];
     
-    __unsafe_unretained JCCurrentCallCardViewCell *weakSelf = self;
+    __unsafe_unretained JCPhoneActiveCallCollectionViewCell *weakSelf = self;
     __block void (^holdAnimation)() = [^void(){
         weakSelf.layer.borderWidth = CALL_CARD_BORDER_WIDTH;
         _cardInfoView.alpha = 1;
@@ -299,7 +299,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
     [self holdTimerUpdate];
     
-    __unsafe_unretained JCCurrentCallCardViewCell *weakSelf = self;
+    __unsafe_unretained JCPhoneActiveCallCollectionViewCell *weakSelf = self;
     __block void (^holdAnimation)() = [^void(){
         weakSelf.layer.borderWidth = 0;
         _cardInfoView.alpha = _holdAnimationAlpha;

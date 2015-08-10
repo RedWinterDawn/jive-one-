@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCallCard.h"
+#import "JCPhoneCall.h"
 
-@implementation JCCallCard
+@implementation JCPhoneCall
 
--(instancetype)initWithLineSession:(JCPhoneSipSession *)lineSession
+-(instancetype)initWithSession:(JCPhoneSipSession *)lineSession
 {
     self = [super init];
     if (self)

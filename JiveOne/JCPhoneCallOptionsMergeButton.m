@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCMergeButton.h"
+#import "JCPhoneCallOptionsMergeButton.h"
 
-@interface JCMergeButton ()
+@interface JCPhoneCallOptionsMergeButton ()
 
 @property (nonatomic, strong) UIImage *mergeImageNormal;
 @property (nonatomic, strong) UIImage *mergeImageHighlighted;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation JCMergeButton
+@implementation JCPhoneCallOptionsMergeButton
 
 -(UIImage *)mergeImageNormal
 {

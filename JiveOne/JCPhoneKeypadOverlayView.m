@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCKeypadOverlayView.h"
+#import "JCPhoneKeypadOverlayView.h"
 
-@implementation JCKeypadOverlayView
+@implementation JCPhoneKeypadOverlayView
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {

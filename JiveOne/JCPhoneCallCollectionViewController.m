@@ -8,8 +8,8 @@
 
 #import "JCPhoneCallCollectionViewController.h"
 #import "JCPhoneManager.h"
-#import "JCCallCardViewCell.h"
-#import "JCConferenceCallCard.h"
+#import "JCPhoneCallCollectionViewCell.h"
+#import "JCPhoneConferenceCall.h"
 
 @implementation JCPhoneCallCollectionViewController
 
@@ -34,7 +34,7 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
     return [JCPhoneManager sharedManager].calls.count;
 }
 
--(JCCallCard *)callCardForIndexPath:(NSIndexPath *)indexPath
+-(JCPhoneCall *)callCardForIndexPath:(NSIndexPath *)indexPath
 {
     return [[JCPhoneManager sharedManager].calls objectAtIndex:indexPath.row];
 }
@@ -55,14 +55,14 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    JCCallCardViewCell *cell;
-    JCCallCard *callCard = [self callCardForIndexPath:indexPath];
+    JCPhoneCallCollectionViewCell *cell;
+    JCPhoneCall *callCard = [self callCardForIndexPath:indexPath];
     if (callCard.lineSession.isIncoming)
-        cell = (JCCallCardViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionIncomingCallCellReuseIdentifier forIndexPath:indexPath];
-    else if([callCard isKindOfClass:[JCConferenceCallCard class]])
-        cell = (JCCallCardViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionConferenceCallCellReuseIdentifier forIndexPath:indexPath];
+        cell = (JCPhoneCallCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionIncomingCallCellReuseIdentifier forIndexPath:indexPath];
+    else if([callCard isKindOfClass:[JCPhoneConferenceCall class]])
+        cell = (JCPhoneCallCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionConferenceCallCellReuseIdentifier forIndexPath:indexPath];
     else
-        cell = (JCCallCardViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionCurrentCallCellReuseIdentifier forIndexPath:indexPath];
+        cell = (JCPhoneCallCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionCurrentCallCellReuseIdentifier forIndexPath:indexPath];
     cell.callCard = callCard;
     return cell;
 }
