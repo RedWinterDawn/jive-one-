@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCallCardCollectionViewController.h"
+#import "JCPhoneCallCollectionViewController.h"
 #import "JCPhoneManager.h"
 #import "JCCallCardViewCell.h"
 #import "JCConferenceCallCard.h"
 
-@implementation JCCallCardCollectionViewController
+@implementation JCPhoneCallCollectionViewController
 
 NSString *const kJCCallCardCollectionCurrentCallCellReuseIdentifier = @"CurrentCallCardCell";
 NSString *const kJCCallCardCollectionIncomingCallCellReuseIdentifier = @"IncomingCallCardCell";

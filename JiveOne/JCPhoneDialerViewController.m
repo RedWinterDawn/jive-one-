@@ -7,17 +7,10 @@
 //
 
 #import "JCPhoneDialerViewController.h"
-
-// Managers
-
 #import "JCAppSettings.h"
-
-// Managed Objects
 #import "JCPhoneNumberDataSource.h"
-#import "JCCallerViewController.h"
-
-// Views
 #import "JCContactCollectionViewCell.h"
+#import "JCPhoneCallViewController.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -272,7 +265,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(void)onActiveCall
 {
-    JCCallerViewController *callViewController = self.phoneManager.callViewController;
+    JCPhoneCallViewController *callViewController = self.phoneManager.callViewController;
     if (!callViewController) {
         return;
     }
@@ -289,7 +282,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(void)onInactiveCall
 {
-    JCCallerViewController *callViewController = self.phoneManager.callViewController;
+    JCPhoneCallViewController *callViewController = self.phoneManager.callViewController;
     if (!callViewController) {
         return;
     }

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCallCardCollectionLayout.h"
+#import "JCPhoneCallCollectionLayout.h"
 #import "JCPhoneManager.h"
 #import "JCCallCardViewCell.h"
 
@@ -14,7 +14,7 @@
 
 static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
 
-@interface JCCallCardCollectionLayout ()
+@interface JCPhoneCallCollectionLayout ()
 
 @property (nonatomic, strong) NSMutableArray *deleteIndexPaths;
 @property (nonatomic, strong) NSMutableArray *insertIndexPaths;
@@ -22,7 +22,7 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
 
 @end
 
-@implementation JCCallCardCollectionLayout
+@implementation JCPhoneCallCollectionLayout
 
 - (id)init
 {

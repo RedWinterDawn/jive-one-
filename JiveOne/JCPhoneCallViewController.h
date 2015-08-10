@@ -10,7 +10,7 @@
 
 #import "JCCallOptionsView.h"
 
-@interface JCCallerViewController : UIViewController
+@interface JCPhoneCallViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet JCCallOptionsView *callOptionsView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *callOptionsViewOriginYConstraint;

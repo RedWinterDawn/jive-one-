@@ -16,7 +16,7 @@
 #import "JCPhoneAudioManager.h"
 #import "JCPhoneNumberDataSource.h"
 #import "JCPhoneProvisioningDataSource.h"
-#import "JCCallerViewController.h"
+#import "JCPhoneCallViewController.h"
 #import "JCLineSession.h"
 #import "JCSipManager.h"
 #import "JCAppSettings.h"
@@ -55,7 +55,7 @@ typedef enum : NSInteger {
 
 @property (nonatomic, readonly) id<JCPhoneProvisioningDataSource> provisioningProfile;
 @property (nonatomic, readonly) JCPhoneManagerNetworkType networkType;
-@property (nonatomic, readonly) JCCallerViewController *callViewController;
+@property (nonatomic, readonly) JCPhoneCallViewController *callViewController;
 
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
 @property (nonatomic, readonly, getter=isRegistering) BOOL registering;

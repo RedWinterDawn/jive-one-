@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Caller View Controller-->
+        <!--Phone Call View Controller-->
         <scene sceneID="apQ-eO-CWS">
             <objects>
-                <viewController storyboardIdentifier="CallerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="XUz-9T-jwv" customClass="JCCallerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CallerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="XUz-9T-jwv" customClass="JCPhoneCallViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FsG-rQ-DhL"/>
                         <viewControllerLayoutGuide type="bottom" id="9w6-PQ-3XC"/>
@@ -358,16 +357,16 @@
             </objects>
             <point key="canvasLocation" x="2874" y="-1685"/>
         </scene>
-        <!--Call Card Collection View Controller-->
+        <!--Phone Call Collection View Controller-->
         <scene sceneID="5vg-EY-tKA">
             <objects>
-                <collectionViewController id="0Ss-Rn-Kaa" customClass="JCCallCardCollectionViewController" sceneMemberID="viewController">
+                <collectionViewController id="0Ss-Rn-Kaa" customClass="JCPhoneCallCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" dataMode="prototypes" id="VcA-gL-lOt">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="340"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewLayout key="collectionViewLayout" id="CLz-vL-5Ch" customClass="JCCallCardCollectionLayout"/>
+                        <collectionViewLayout key="collectionViewLayout" id="CLz-vL-5Ch" customClass="JCPhoneCallCollectionLayout"/>
                         <cells/>
                         <connections>
                             <outlet property="dataSource" destination="0Ss-Rn-Kaa" id="K9S-nC-7Ub"/>

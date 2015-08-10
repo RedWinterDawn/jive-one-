@@ -29,7 +29,7 @@
 #import "JCConferenceCallCard.h"
 
 // View Controllers
-#import "JCCallerViewController.h"
+#import "JCPhoneCallViewController.h"
 #import "JCTransferConfirmationViewController.h"
 
 NSString *const kJCPhoneManager911String = @"911";
@@ -46,7 +46,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 @interface JCPhoneManager ()<JCSipManagerDelegate, JCCallCardDelegate, JCPhoneAudioManagerDelegate>
 {
     JCPhoneAudioManager *_audioManager;
-    JCCallerViewController *_callViewController;
+    JCPhoneCallViewController *_callViewController;
     JCTransferConfirmationViewController *_transferConfirmationViewController;
 	NSString *_warmTransferNumber;
     CTCallCenter *_externalCallCenter;
@@ -560,10 +560,10 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     [self.sipManager pressNumpadButton:numberPadNumber];
 }
 
--(JCCallerViewController *)createCallerViewController
+-(JCPhoneCallViewController *)createCallerViewController
 {
     static NSString *callerViewControllerIdentifier = @"CallerViewController";
-    JCCallerViewController *callerViewController = [self.storyboard instantiateViewControllerWithIdentifier:callerViewControllerIdentifier];
+    JCPhoneCallViewController *callerViewController = [self.storyboard instantiateViewControllerWithIdentifier:callerViewControllerIdentifier];
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
         callerViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;

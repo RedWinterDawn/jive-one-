@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCCallCardCollectionLayout : UICollectionViewLayout
+@interface JCPhoneCallCollectionLayout : UICollectionViewLayout
 
 @property (nonatomic) UIEdgeInsets itemInsets;
 @property (nonatomic) CGFloat interItemSpacingY;

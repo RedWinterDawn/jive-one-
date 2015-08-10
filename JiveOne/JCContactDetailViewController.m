@@ -215,7 +215,7 @@
 
 -(void)onActiveCall
 {
-    JCCallerViewController *callViewController = self.phoneManager.callViewController;
+    JCPhoneCallViewController *callViewController = self.phoneManager.callViewController;
     if (!callViewController) {
         return;
     }
@@ -229,7 +229,7 @@
 
 -(void)onInactiveCall
 {
-    JCCallerViewController *callViewController = self.phoneManager.callViewController;
+    JCPhoneCallViewController *callViewController = self.phoneManager.callViewController;
     if (!callViewController) {
         return;
     }

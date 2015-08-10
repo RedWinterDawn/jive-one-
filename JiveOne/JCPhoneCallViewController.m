@@ -13,7 +13,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCallerViewController.h"
+#import "JCPhoneCallViewController.h"
 
 // Managers
 #import "JCPhoneManager.h"   // Handles call cards, and managed calls
@@ -21,7 +21,7 @@
 // Presented View Controllers
 #import "JCPhoneDialerViewController.h"             // Shows dial pad to dial for blind, warm transfer and additional call.
 #import "JCTransferConfirmationViewController.h"    // Transfer confimation view controller
-#import "JCCallCardCollectionViewController.h"
+#import "JCPhoneCallCollectionViewController.h"
 
 #import "JCLineSession.h"
 #import "JCCallCard.h"
@@ -35,7 +35,7 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
 
 NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"blindTransferComplete";
 
-@interface JCCallerViewController () <JCPhoneDialerViewControllerDelegate>
+@interface JCPhoneCallViewController () <JCPhoneDialerViewControllerDelegate>
 {
     UIViewController *_presentedTransferViewController;
     UIViewController *_presentedKeyboardViewController;
@@ -44,12 +44,12 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     bool _showingCallOptions;
     BOOL _showingConferenceCall;
     
-    JCCallCardCollectionViewController *_callCardCollectionViewController;
+    JCPhoneCallCollectionViewController *_callCardCollectionViewController;
 }
 
 @end
 
-@implementation JCCallerViewController
+@implementation JCPhoneCallViewController
 
 CGFloat *_callOptionsWidth;
 
@@ -80,8 +80,8 @@ CGFloat *_callOptionsWidth;
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *viewController = segue.destinationViewController;
-    if ([viewController isKindOfClass:[JCCallCardCollectionViewController class]]) {
-        _callCardCollectionViewController = (JCCallCardCollectionViewController *)viewController;
+    if ([viewController isKindOfClass:[JCPhoneCallCollectionViewController class]]) {
+        _callCardCollectionViewController = (JCPhoneCallCollectionViewController *)viewController;
     }
 }
 
