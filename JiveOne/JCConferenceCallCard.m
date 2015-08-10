@@ -23,8 +23,8 @@
     if (self) {
         _calls = [NSMutableArray array];
         for (id session in sessions) {
-            if ([session isKindOfClass:[JCLineSession class]]) {
-                JCCallCard *call = [[JCCallCard alloc] initWithLineSession:(JCLineSession *)session];
+            if ([session isKindOfClass:[JCPhoneSipSession class]]) {
+                JCCallCard *call = [[JCCallCard alloc] initWithLineSession:(JCPhoneSipSession *)session];
                 [_calls addObject:call];
             }
         }

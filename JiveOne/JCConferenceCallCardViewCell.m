@@ -18,8 +18,8 @@
     NSArray *calls = callCard.calls;
     for (JCCallCard *call in calls) {
         if (call.lineSession) {
-            [call.lineSession addObserver:self forKeyPath:kJCLineSessionStateKey options:0 context:NULL];
-            [call.lineSession addObserver:self forKeyPath:kJCLineSessionHoldKey options:0 context:NULL];
+            [call.lineSession addObserver:self forKeyPath:kJCPhoneSipSessionStateKey options:0 context:NULL];
+            [call.lineSession addObserver:self forKeyPath:kJCPhoneSipSessionHoldKey options:0 context:NULL];
         }
     }
     
@@ -53,8 +53,8 @@
             NSArray *calls = conferenceCallCard.calls;
             for (JCCallCard *call in calls) {
                 if (call.lineSession) {
-                    [call.lineSession removeObserver:self forKeyPath:kJCLineSessionStateKey];
-                    [call.lineSession removeObserver:self forKeyPath:kJCLineSessionHoldKey];
+                    [call.lineSession removeObserver:self forKeyPath:kJCPhoneSipSessionStateKey];
+                    [call.lineSession removeObserver:self forKeyPath:kJCPhoneSipSessionHoldKey];
                 }
             }
         }

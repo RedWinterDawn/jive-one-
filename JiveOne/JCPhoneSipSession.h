@@ -12,10 +12,8 @@
 
 #define INVALID_SESSION_ID -1
 
-@class InternalExtension;
-
-extern NSString *const kJCLineSessionStateKey;
-extern NSString *const kJCLineSessionHoldKey;
+extern NSString *const kJCPhoneSipSessionStateKey;
+extern NSString *const kJCPhoneSipSessionHoldKey;
 
 typedef enum {
     JCNoCall,               // Idle line state.
@@ -37,14 +35,14 @@ typedef enum {
     JCTransferRinging,
     JCTransferSuccess,
     JCTransferFailed,
-} JCLineSessionState;
+} JCPhoneSipSessionState;
 
-@interface JCLineSession : NSObject <NSCopying>
+@interface JCPhoneSipSession : NSObject <NSCopying>
 
 @property (nonatomic, strong) id<JCPhoneNumberDataSource> number;
 
 // State
-@property (nonatomic) JCLineSessionState sessionState;
+@property (nonatomic) JCPhoneSipSessionState sessionState;
 
 // Identifiers
 @property (nonatomic) NSInteger sessionId;

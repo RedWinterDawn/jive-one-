@@ -33,10 +33,10 @@
 		279A4E0C19DA870600E8AB7B /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0B19DA870600E8AB7B /* libresolv.dylib */; };
 		279A4E0E19DA873200E8AB7B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0D19DA873200E8AB7B /* OpenGLES.framework */; };
 		279A4E1219DA87DA00E8AB7B /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E1119DA87DA00E8AB7B /* libstdc++.dylib */; };
-		279A4E2C19DA91E100E8AB7B /* JCSipManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 279A4E2B19DA91E100E8AB7B /* JCSipManager.m */; };
+		279A4E2C19DA91E100E8AB7B /* JCPhoneSipSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 279A4E2B19DA91E100E8AB7B /* JCPhoneSipSessionManager.m */; };
 		27B6F23D19DDC676007E80DA /* JCPhoneDialerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E4319D9F1E400AF98D3 /* JCPhoneDialerViewController.m */; };
 		27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B8152518D93F1A00516BF6 /* NotificationView.m */; };
-		27BE503D19DCF6A800B725ED /* JCLineSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BE503C19DCF6A800B725ED /* JCLineSession.m */; };
+		27BE503D19DCF6A800B725ED /* JCPhoneSipSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BE503C19DCF6A800B725ED /* JCPhoneSipSession.m */; };
 		27CE639C191C1D1700E85FD5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F1F303191C182A00AEAFD7 /* libsqlite3.dylib */; };
 		27D2C1F7196F030C005285FF /* JCLineSelectorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D2C1F6196F030C005285FF /* JCLineSelectorTableViewController.m */; };
 		27EB18BF19DE045900C1503B /* JCV5ApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EB18BE19DE045900C1503B /* JCV5ApiClient.m */; };
@@ -437,12 +437,12 @@
 		279A4E0B19DA870600E8AB7B /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		279A4E0D19DA873200E8AB7B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		279A4E1119DA87DA00E8AB7B /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
-		279A4E2A19DA91E100E8AB7B /* JCSipManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSipManager.h; sourceTree = "<group>"; };
-		279A4E2B19DA91E100E8AB7B /* JCSipManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSipManager.m; sourceTree = "<group>"; };
+		279A4E2A19DA91E100E8AB7B /* JCPhoneSipSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneSipSessionManager.h; sourceTree = "<group>"; };
+		279A4E2B19DA91E100E8AB7B /* JCPhoneSipSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneSipSessionManager.m; sourceTree = "<group>"; };
 		27B8152418D93F1A00516BF6 /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationView.h; sourceTree = "<group>"; };
 		27B8152518D93F1A00516BF6 /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationView.m; sourceTree = "<group>"; };
-		27BE503B19DCF6A800B725ED /* JCLineSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLineSession.h; sourceTree = "<group>"; };
-		27BE503C19DCF6A800B725ED /* JCLineSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLineSession.m; sourceTree = "<group>"; };
+		27BE503B19DCF6A800B725ED /* JCPhoneSipSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneSipSession.h; sourceTree = "<group>"; };
+		27BE503C19DCF6A800B725ED /* JCPhoneSipSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneSipSession.m; sourceTree = "<group>"; };
 		27D2C1F5196F030C005285FF /* JCLineSelectorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLineSelectorTableViewController.h; sourceTree = "<group>"; };
 		27D2C1F6196F030C005285FF /* JCLineSelectorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLineSelectorTableViewController.m; sourceTree = "<group>"; };
 		27EB18BD19DE045900C1503B /* JCV5ApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCV5ApiClient.h; sourceTree = "<group>"; };
@@ -1526,8 +1526,8 @@
 				5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */,
 				5D9A5E201A24E30A00E8274C /* JCPhoneAudioManager.h */,
 				5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */,
-				279A4E2A19DA91E100E8AB7B /* JCSipManager.h */,
-				279A4E2B19DA91E100E8AB7B /* JCSipManager.m */,
+				279A4E2A19DA91E100E8AB7B /* JCPhoneSipSessionManager.h */,
+				279A4E2B19DA91E100E8AB7B /* JCPhoneSipSessionManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -1543,8 +1543,8 @@
 				5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */,
 				5DBCB93719FE9300001C7157 /* JCConferenceCallCard.h */,
 				5DBCB93819FE9300001C7157 /* JCConferenceCallCard.m */,
-				27BE503B19DCF6A800B725ED /* JCLineSession.h */,
-				27BE503C19DCF6A800B725ED /* JCLineSession.m */,
+				27BE503B19DCF6A800B725ED /* JCPhoneSipSession.h */,
+				27BE503C19DCF6A800B725ED /* JCPhoneSipSession.m */,
 				5D55236D1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.h */,
 				5D55236E1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m */,
 			);
@@ -2670,7 +2670,7 @@
 				27EB18BF19DE045900C1503B /* JCV5ApiClient.m in Sources */,
 				5DFFF3E31AF98E970091F479 /* JCConversationDetailsViewController.m in Sources */,
 				5D6AE3671A094A9C002BDAAF /* NSDictionary+Validations.m in Sources */,
-				279A4E2C19DA91E100E8AB7B /* JCSipManager.m in Sources */,
+				279A4E2C19DA91E100E8AB7B /* JCPhoneSipSessionManager.m in Sources */,
 				5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */,
 				5D1598C41B58A7610045F98F /* MMDrawerController.m in Sources */,
 				5D3F1AEA1AE8154E00C59A63 /* JCContactDetailViewController.m in Sources */,
@@ -2778,7 +2778,7 @@
 				27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */,
 				5D3970DB1B1906C1009EADD6 /* JCPlayPauseButton.m in Sources */,
 				5D490E5A1A8AEF7E004B62C0 /* JCAddressBook.m in Sources */,
-				27BE503D19DCF6A800B725ED /* JCLineSession.m in Sources */,
+				27BE503D19DCF6A800B725ED /* JCPhoneSipSession.m in Sources */,
 				5D2EDB7E1A3ADFAF0031F7AD /* InternalExtension+V5Client.m in Sources */,
 				278E858619EC6B6E0087649D /* JCPhoneVideoViewController.mm in Sources */,
 			);

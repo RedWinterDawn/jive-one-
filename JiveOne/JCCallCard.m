@@ -10,7 +10,7 @@
 
 @implementation JCCallCard
 
--(instancetype)initWithLineSession:(JCLineSession *)lineSession
+-(instancetype)initWithLineSession:(JCPhoneSipSession *)lineSession
 {
     self = [super init];
     if (self)

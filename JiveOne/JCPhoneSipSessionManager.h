@@ -12,15 +12,15 @@
 
 #import "JCPhoneProvisioningDataSource.h"
 #import "JCPhoneNumberDataSource.h"
-#import "JCLineSession.h"
+#import "JCPhoneSipSession.h"
 #import "JCPhoneAudioManager.h"
 #import "JCError.h"
 
-@protocol JCSipManagerDelegate;
+@protocol JCPhoneSipSessionManagerDelegate;
 
-@interface JCSipManager : NSObject
+@interface JCPhoneSipSessionManager : NSObject
 
-@property (nonatomic, weak) id <JCSipManagerDelegate> delegate;
+@property (nonatomic, weak) id <JCPhoneSipSessionManagerDelegate> delegate;
 @property (nonatomic, readonly) id <JCPhoneProvisioningDataSource> provisioning;
 @property (nonatomic, readonly) JCPhoneAudioManager *audioManager;
 
@@ -33,7 +33,7 @@
 
 -(instancetype)initWithNumberOfLines:(NSUInteger)lines
                         audioManager:(JCPhoneAudioManager *)audioManager
-                            delegate:(id<JCSipManagerDelegate>)delegate
+                            delegate:(id<JCPhoneSipSessionManagerDelegate>)delegate
                                error:(NSError *__autoreleasing *)error;
 
 // Methods to handle registration.
@@ -48,15 +48,15 @@
 - (BOOL)makeCall:(id<JCPhoneNumberDataSource>)number videoCall:(BOOL)videoCall error:(NSError *__autoreleasing *)error;
 
 // Call Actions
-- (BOOL)answerSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;         // Answer line session
+- (BOOL)answerSession:(JCPhoneSipSession *)lineSession error:(NSError *__autoreleasing *)error;         // Answer line session
 - (BOOL)hangUpAllSessions:(NSError *__autoreleasing *)error;
-- (BOOL)hangUpSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;         // Hang up line session
+- (BOOL)hangUpSession:(JCPhoneSipSession *)lineSession error:(NSError *__autoreleasing *)error;         // Hang up line session
 - (BOOL)holdLines:(NSError *__autoreleasing *)error;                                                // Hold all line sessions
 - (BOOL)holdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error;             // Holds line sessions in set
-- (BOOL)holdLineSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;       // Holds line session
+- (BOOL)holdLineSession:(JCPhoneSipSession *)lineSession error:(NSError *__autoreleasing *)error;       // Holds line session
 - (BOOL)unholdLines:(NSError *__autoreleasing *)error;                                              // unhold all line sessions
 - (BOOL)unholdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error;           // unhold line sessions in set
-- (BOOL)unholdLineSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;     // unhold line session
+- (BOOL)unholdLineSession:(JCPhoneSipSession *)lineSession error:(NSError *__autoreleasing *)error;     // unhold line session
 
 // Conference Calls
 - (BOOL)createConference:(NSError *__autoreleasing *)error;
@@ -80,35 +80,35 @@
 
 @end
 
-@protocol JCSipManagerDelegate <JCPhoneAudioManagerDelegate>
+@protocol JCPhoneSipSessionManagerDelegate <JCPhoneAudioManagerDelegate>
 
 // Registration
--(void)sipHandlerDidRegister:(JCSipManager *)sipHandler;
--(void)sipHandlerDidUnregister:(JCSipManager *)sipHandler;
--(void)sipHandler:(JCSipManager *)sipHandler didFailToRegisterWithError:(NSError *)error;
+-(void)sipHandlerDidRegister:(JCPhoneSipSessionManager *)sessionManager;
+-(void)sipHandlerDidUnregister:(JCPhoneSipSessionManager *)sessionManager;
+-(void)sipHandler:(JCPhoneSipSessionManager *)sessionManager didFailToRegisterWithError:(NSError *)error;
 
 // Intercom line session for Auto Answer feature.
--(void)sipHandler:(JCSipManager *)sipHandler receivedIntercomLineSession:(JCLineSession *)lineSession;
--(BOOL)shouldReceiveIncomingLineSession:(JCSipManager *)sipHandler;
+-(void)sipHandler:(JCPhoneSipSessionManager *)sessionManager receivedIntercomSession:(JCPhoneSipSession *)session;
+-(BOOL)shouldReceiveIncomingLineSession:(JCPhoneSipSessionManager *)sessionManager;
 
 // Call Creation Events
--(void)sipHandler:(JCSipManager *)sipHandler didAddLineSession:(JCLineSession *)lineSession;
--(void)sipHandler:(JCSipManager *)sipHandler didAnswerLineSession:(JCLineSession *)lineSession;
--(void)sipHandler:(JCSipManager *)sipHandler willRemoveLineSession:(JCLineSession *)lineSession;
+-(void)sipHandler:(JCPhoneSipSessionManager *)sessionManager didAddSession:(JCPhoneSipSession *)session;
+-(void)sipHandler:(JCPhoneSipSessionManager *)sessionManager didAnswerSession:(JCPhoneSipSession *)session;
+-(void)sipHandler:(JCPhoneSipSessionManager *)sessionManager willRemoveSession:(JCPhoneSipSession *)session;
 
 // Conference Calls
--(void)sipHandler:(JCSipManager *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions;
--(void)sipHandler:(JCSipManager *)sipHandler didEndConferenceCallForLineSessions:(NSSet *)lineSessions;
+-(void)sipHandler:(JCPhoneSipSessionManager *)sessionManager didCreateConferenceCallWithSessions:(NSSet *)sessions;
+-(void)sipHandler:(JCPhoneSipSessionManager *)sessionManager didEndConferenceCallForSessions:(NSSet *)sessions;
 
 // Line Session Status
--(void)sipHandler:(JCSipManager *)sipHandler didUpdateStatusForLineSessions:(NSSet *)lineSessions;
+-(void)sipHandler:(JCPhoneSipSessionManager *)sessionManager didUpdateStatusForSessions:(NSSet *)sessions;
 
 // Transfer Call
--(void)sipHandler:(JCSipManager *)sipHandler didTransferCalls:(NSSet *)lineSessions;
--(void)sipHandler:(JCSipManager *)sipHandler didFailTransferWithError:(NSError *)error;
+-(void)sipHandler:(JCPhoneSipSessionManager *)sessionManager didTransferCalls:(NSSet *)sessions;
+-(void)sipHandler:(JCPhoneSipSessionManager *)sessionManager didFailTransferWithError:(NSError *)error;
 
 // Requests a phone number for a given string and name.
--(id<JCPhoneNumberDataSource>)sipHandler:(JCSipManager *)sipHandler phoneNumberForNumber:(NSString *)string name:(NSString *)name;
+-(id<JCPhoneNumberDataSource>)sipHandler:(JCPhoneSipSessionManager *)sipHandler phoneNumberForNumber:(NSString *)string name:(NSString *)name;
 
 @end
 

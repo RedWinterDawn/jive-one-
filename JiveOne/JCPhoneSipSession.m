@@ -6,16 +6,16 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCLineSession.h"
+#import "JCPhoneSipSession.h"
 #import "JCPhoneNumberDataSource.h"
 
 #define LINE_BASE 0
 #define MAX_LINES 2
 
-NSString *const kJCLineSessionStateKey = @"sessionState";
-NSString *const kJCLineSessionHoldKey = @"hold";
+NSString *const kJCPhoneSipSessionStateKey = @"sessionState";
+NSString *const kJCPhoneSipSessionHoldKey = @"hold";
 
-@implementation JCLineSession
+@implementation JCPhoneSipSession
 
 -(instancetype)init
 {
@@ -28,7 +28,7 @@ NSString *const kJCLineSessionHoldKey = @"hold";
 
 -(id)copyWithZone:(NSZone *)zone
 {
-    JCLineSession *copy = [[[self class] allocWithZone:zone] init];
+    JCPhoneSipSession *copy = [[[self class] allocWithZone:zone] init];
     if (copy) {
         copy.sessionId          = self.sessionId;
         copy.referedSessionId   = self.referedSessionId;
@@ -109,7 +109,7 @@ NSString *const kJCLineSessionTransfer      = @"Transfer %@: %lu, %@ (%@)";
 NSString *const kJCLineSessionCallFailed    = @"Call Failed: %lu";
 NSString *const kJCLineSessionCallCanceled  = @"Call Canceled: %lu";
 
--(NSString *)stringForState:(JCLineSessionState)state
+-(NSString *)stringForState:(JCPhoneSipSessionState)state
 {
     NSString *name = self.number.name;
     NSString *number = self.number.dialableNumber;

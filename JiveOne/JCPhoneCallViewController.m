@@ -23,7 +23,7 @@
 #import "JCPhoneCallTransferConfirmationViewController.h"    // Transfer confimation view controller
 #import "JCPhoneCallCollectionViewController.h"
 
-#import "JCLineSession.h"
+#import "JCPhoneSipSession.h"
 #import "JCCallCard.h"
 
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6

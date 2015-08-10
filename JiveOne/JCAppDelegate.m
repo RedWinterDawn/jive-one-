@@ -376,7 +376,7 @@ NSString *const kGCMSenderId = @"937754980938";
     [self dismissLoginViewController:YES completed:NULL];
 }
 
--(void)phoneManager:(JCPhoneManager *)manager reportCallOfType:(JCPhoneManagerCallType)type lineSession:(JCLineSession *)lineSession provisioningProfile:(id<JCPhoneProvisioningDataSource>)provisioningProfile
+-(void)phoneManager:(JCPhoneManager *)manager reportCallOfType:(JCPhoneManagerCallType)type lineSession:(JCPhoneSipSession *)lineSession provisioningProfile:(id<JCPhoneProvisioningDataSource>)provisioningProfile
 {
     if (!lineSession || !provisioningProfile || ![provisioningProfile isKindOfClass:[Line class]]) {
         return;

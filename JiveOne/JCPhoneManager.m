@@ -17,12 +17,12 @@
 #import "JCPhoneManager.h"
 
 // Managers
-#import "JCSipManager.h"
+#import "JCPhoneSipSessionManager.h"
 #import "JCPhoneManagerError.h"
 
 // Objects
 #import "JCCallCard.h"
-#import "JCLineSession.h"
+#import "JCPhoneSipSession.h"
 #import "JCConferenceCallCard.h"
 
 // View Controllers
@@ -40,7 +40,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 NSString *const kJCPhoneManagerShowCallsNotification                = @"phoneManagerShowCalls";
 NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneManagerHideCalls";
 
-@interface JCPhoneManager ()<JCSipManagerDelegate, JCCallCardDelegate, JCPhoneAudioManagerDelegate>
+@interface JCPhoneManager ()<JCPhoneSipSessionManagerDelegate, JCCallCardDelegate, JCPhoneAudioManagerDelegate>
 {
     JCPhoneCallViewController *_callViewController;
     JCPhoneCallTransferConfirmationViewController *_transferConfirmationViewController;
@@ -52,7 +52,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 @property (nonatomic) BOOL externalCallConnected;
 @property (nonatomic) BOOL externalCallDisconnected;
 
-@property (nonatomic, strong) JCSipManager *sipManager;
+@property (nonatomic, strong) JCPhoneSipSessionManager *sipManager;
 @property (nonatomic, strong) UIStoryboard *storyboard;
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
 
@@ -65,12 +65,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     __autoreleasing NSError *error;
     JCPhoneSettings *settings = [JCPhoneSettings new];
     JCPhoneAudioManager *audioManager = [[JCPhoneAudioManager alloc] initWithPhoneSettings:settings];
-    JCSipManager *sipManager = [[JCSipManager alloc] initWithNumberOfLines:MAX_LINES audioManager:audioManager delegate:self error:&error];
+    JCPhoneSipSessionManager *sipManager = [[JCPhoneSipSessionManager alloc] initWithNumberOfLines:MAX_LINES audioManager:audioManager delegate:self error:&error];
     AFNetworkReachabilityManager *reachability = [AFNetworkReachabilityManager sharedManager];
     return [self initWithSipManager:sipManager settings:settings reachability:reachability];
 }
 
--(instancetype)initWithSipManager:(JCSipManager *)sipManager settings:(JCPhoneSettings *)settings reachability:(AFNetworkReachabilityManager *)reachability
+-(instancetype)initWithSipManager:(JCPhoneSipSessionManager *)sipManager settings:(JCPhoneSettings *)settings reachability:(AFNetworkReachabilityManager *)reachability
 {
     self = [super init];
     if (self) {
@@ -219,7 +219,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 #pragma mark SipHandlerDelegate
 
--(void)sipHandlerDidRegister:(JCSipManager *)sipHandler
+-(void)sipHandlerDidRegister:(JCPhoneSipSessionManager *)sipHandler
 {
     NSLog(@"Phone Manager Registration Successfull");
     [UIApplication hideStatus];
@@ -227,14 +227,14 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     [self notifyCompletionBlock:YES error:nil];
 }
 
--(void)sipHandlerDidUnregister:(JCSipManager *)sipHandler
+-(void)sipHandlerDidUnregister:(JCPhoneSipSessionManager *)sipHandler
 {
     NSLog(@"Phone Manager Unregistered");
     [UIApplication hideStatus];
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerUnregisteredNotification object:self];
 }
 
--(void)sipHandler:(JCSipManager *)sipHandler didFailToRegisterWithError:(NSError *)error
+-(void)sipHandler:(JCPhoneSipSessionManager *)sipHandler didFailToRegisterWithError:(NSError *)error
 {
     NSLog(@"Phone Manager Registration failure: %@", error.description);
     if(error.code != JC_SIP_ALREADY_REGISTERING) {
@@ -594,7 +594,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }];
 }
 
--(void)presentTransferSuccessWithSession:(JCLineSession *)lineSession receivingSession:(JCLineSession *)receivingSession
+-(void)presentTransferSuccessWithSession:(JCPhoneSipSession *)lineSession receivingSession:(JCPhoneSipSession *)receivingSession
 {
     _transferConfirmationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferConfirmationViewController"];
     _transferConfirmationViewController.transferLineSession = lineSession;
@@ -619,7 +619,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 #pragma mark SipHandlerDelegate
 
--(void)sipHandler:(JCSipManager *)sipHandler receivedIntercomLineSession:(JCLineSession *)session
+-(void)sipHandler:(JCPhoneSipSessionManager *)sipHandler receivedIntercomSession:(JCPhoneSipSession *)session
 {
     if(!_settings.isIntercomEnabled) {
         return;
@@ -650,12 +650,12 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }];
 }
 
--(BOOL)shouldReceiveIncomingLineSession:(JCSipManager *)sipHandler
+-(BOOL)shouldReceiveIncomingLineSession:(JCPhoneSipSessionManager *)sipHandler
 {
     return !_settings.isDoNotDisturbEnabled;
 }
 
--(void)sipHandler:(JCSipManager *)sipManager didAddLineSession:(JCLineSession *)lineSession
+-(void)sipHandler:(JCPhoneSipSessionManager *)sipManager didAddSession:(JCPhoneSipSession *)lineSession
 {
     if (!lineSession.isIncoming) {
         [self.delegate phoneManager:self reportCallOfType:JCPhoneManagerOutgoingCall lineSession:lineSession provisioningProfile:sipManager.provisioning];
@@ -699,7 +699,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }
 }
 
--(void)sipHandler:(JCSipManager *)sipManager didAnswerLineSession:(JCLineSession *)lineSession
+-(void)sipHandler:(JCPhoneSipSessionManager *)sipManager didAnswerSession:(JCPhoneSipSession *)lineSession
 {
     [self.delegate phoneManager:self reportCallOfType:JCPhoneManagerIncomingCall lineSession:lineSession provisioningProfile:sipManager.provisioning];
     
@@ -718,7 +718,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }
 }
 
--(void)sipHandler:(JCSipManager *)sipHandler willRemoveLineSession:(JCLineSession *)session
+-(void)sipHandler:(JCPhoneSipSessionManager *)sipHandler willRemoveSession:(JCPhoneSipSession *)session
 {
     // if it was an incoming call, and we missed it, we record it.
     if (session.isIncoming) {
@@ -768,7 +768,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }
 }
 
--(void)sipHandler:(JCSipManager *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions
+-(void)sipHandler:(JCPhoneSipSessionManager *)sipHandler didCreateConferenceCallWithSessions:(NSSet *)lineSessions
 {
     // Add the conference call Card
     JCConferenceCallCard *conferenceCallCard = [[JCConferenceCallCard alloc] initWithLineSessions:lineSessions];
@@ -783,7 +783,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }
 }
 
--(void)sipHandler:(JCSipManager *)sipHandler didEndConferenceCallForLineSessions:(NSSet *)lineSessions
+-(void)sipHandler:(JCPhoneSipSessionManager *)sipHandler didEndConferenceCallForSessions:(NSSet *)lineSessions
 {
     // Blow away the call cards, we are going to make new ones
     _calls = [NSMutableArray arrayWithCapacity:lineSessions.count];
@@ -792,7 +792,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     // we would have called for the conference call to have ended, and the failed line would have
     // been marked as inactive when the state changed, so we would not add it here, so the UI can
     // recover.
-    for (JCLineSession *lineSession in lineSessions) {
+    for (JCPhoneSipSession *lineSession in lineSessions) {
         if(lineSession.isActive) {
             JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:lineSession];
             callCard.delegate = self;
@@ -808,11 +808,11 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }
 }
 
--(void)sipHandler:(JCSipManager *)sipHandler didUpdateStatusForLineSessions:(NSSet *)lineSessions
+-(void)sipHandler:(JCPhoneSipSessionManager *)sipHandler didUpdateStatusForSessions:(NSSet *)lineSessions
 {
     // Checks all active calls to see if they are updatable on status update.
     BOOL updatable = YES;
-    for (JCLineSession *lineSession in lineSessions) {
+    for (JCPhoneSipSession *lineSession in lineSessions) {
         if (lineSession.isActive) {
             if (!lineSession.isUpdatable) {
                 updatable = NO;
@@ -831,15 +831,15 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }
 }
 
--(void)sipHandler:(JCSipManager *)sipHandler didTransferCalls:(NSSet *)lineSessions
+-(void)sipHandler:(JCPhoneSipSessionManager *)sipHandler didTransferCalls:(NSSet *)lineSessions
 {
     [_callViewController hideStatus];
     
     // TODO: determine which line sessions are what.
-    JCLineSession *transferLine;
-    JCLineSession *receivingLine;
+    JCPhoneSipSession *transferLine;
+    JCPhoneSipSession *receivingLine;
     
-    for (JCLineSession *lineSession in lineSessions) {
+    for (JCPhoneSipSession *lineSession in lineSessions) {
         if (lineSession.isTransfer) {
             transferLine = lineSession;
         }
@@ -854,13 +854,13 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     }
 }
 
--(void)sipHandler:(JCSipManager *)sipHandler didFailTransferWithError:(NSError *)error
+-(void)sipHandler:(JCPhoneSipSessionManager *)sipHandler didFailTransferWithError:(NSError *)error
 {
     [_callViewController showError:error];
     [_callViewController reload];
 }
 
--(id<JCPhoneNumberDataSource>)sipHandler:(JCSipManager *)sipHandler phoneNumberForNumber:(NSString *)number name:(NSString *)name
+-(id<JCPhoneNumberDataSource>)sipHandler:(JCPhoneSipSessionManager *)sipHandler phoneNumberForNumber:(NSString *)number name:(NSString *)name
 {
     return [self.delegate phoneManager:self
                   phoneNumberForNumber:number
@@ -937,7 +937,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     return nil;
 }
 
--(JCCallCard *)callCardForLineSession:(JCLineSession *)lineSession
+-(JCCallCard *)callCardForLineSession:(JCPhoneSipSession *)lineSession
 {
     for (JCCallCard *callCard in self.calls) {
         if (callCard.lineSession.sessionId == lineSession.sessionId){

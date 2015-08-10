@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JCLineSession.h"
+#import "JCPhoneSipSession.h"
 
 @class JCCallCard;
 
@@ -33,11 +33,11 @@
 @property (nonatomic, strong) NSDate *started;
 @property (nonatomic, strong) NSDate *holdStarted;
 
-@property (nonatomic, readonly) JCLineSession *lineSession;
+@property (nonatomic, readonly) JCPhoneSipSession *lineSession;
 @property (nonatomic, readonly) NSString *callerId;
 @property (nonatomic, readonly) NSString *dialNumber;
 
--(instancetype)initWithLineSession:(JCLineSession *)lineSession;
+-(instancetype)initWithLineSession:(JCPhoneSipSession *)lineSession;
 
 -(void)answerCall:(CompletionHandler)completion;
 -(void)endCall:(CompletionHandler)completion;

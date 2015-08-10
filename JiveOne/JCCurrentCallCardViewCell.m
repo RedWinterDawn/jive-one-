@@ -82,7 +82,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:kJCLineSessionStateKey] || [keyPath isEqualToString:kJCLineSessionHoldKey]){
+    if ([keyPath isEqualToString:kJCPhoneSipSessionStateKey] || [keyPath isEqualToString:kJCPhoneSipSessionHoldKey]){
         [self updateState:YES];
     }
 }
@@ -120,8 +120,8 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     [super setCallCard:callCard];
     [self updateState:NO];
     if (_callCard.lineSession) {
-        [_callCard.lineSession addObserver:self forKeyPath:kJCLineSessionStateKey options:0 context:NULL];
-        [_callCard.lineSession addObserver:self forKeyPath:kJCLineSessionHoldKey options:0 context:NULL];
+        [_callCard.lineSession addObserver:self forKeyPath:kJCPhoneSipSessionStateKey options:0 context:NULL];
+        [_callCard.lineSession addObserver:self forKeyPath:kJCPhoneSipSessionHoldKey options:0 context:NULL];
     }
 }
 
@@ -147,8 +147,8 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     if (_callCard) {
         @try {
             if (_callCard.lineSession) {
-                [_callCard.lineSession removeObserver:self forKeyPath:kJCLineSessionStateKey];
-                [_callCard.lineSession removeObserver:self forKeyPath:kJCLineSessionHoldKey];
+                [_callCard.lineSession removeObserver:self forKeyPath:kJCPhoneSipSessionStateKey];
+                [_callCard.lineSession removeObserver:self forKeyPath:kJCPhoneSipSessionHoldKey];
             }
         }
         @catch (NSException *exception) {

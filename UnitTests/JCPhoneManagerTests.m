@@ -10,7 +10,7 @@
 #import <AFNetworking/AFNetworkReachabilityManager.h>
 
 #import "JCPhoneManager.h"
-#import "JCSipManager.h"
+#import "JCPhoneSipSessionManager.h"
 #import "JCAppSettings.h"
 #import "Line.h"
 #import "LineConfiguration.h"
@@ -19,11 +19,11 @@
 
 @interface JCPhoneManager (Private)
 
-@property (nonatomic, strong) JCSipManager *sipManager;
+@property (nonatomic, strong) JCPhoneSipSessionManager *sipManager;
 @property (nonatomic, strong) JCAppSettings *appSettings;
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
 
--(instancetype)initWithSipManager:(JCSipManager *)sipManager
+-(instancetype)initWithSipManager:(JCPhoneSipSessionManager *)sipManager
                       appSettings:(JCAppSettings *)appSettings
                         phoneBook:(JCPhoneBook *)phoneBook
               reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager;
@@ -51,7 +51,7 @@
     [super setUp];
     
     // Mock the sip handler
-    self.sipHandlerMock = OCMClassMock([JCSipManager class]);
+    self.sipHandlerMock = OCMClassMock([JCPhoneSipSessionManager class]);
     self.appSettingsMock = OCMClassMock([JCAppSettings class]);
     self.reachabilityManagerMock = OCMClassMock([AFNetworkReachabilityManager class]);
     
@@ -134,7 +134,7 @@
     NSString *number = @"5555555555";
     JCUnknownNumber *unknownNumber = [JCUnknownNumber unknownNumberWithNumber:number];
     JCPhoneManagerDialType type = JCPhoneManagerSingleDial;
-    JCSipManager *sipManagerMock = self.sipHandlerMock;
+    JCPhoneSipSessionManager *sipManagerMock = self.sipHandlerMock;
     
     OCMStub([sipManagerMock provisioning]).andReturn(line);
     OCMStub([sipManagerMock isRegistered]).andReturn(true);

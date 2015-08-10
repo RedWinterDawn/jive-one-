@@ -8,7 +8,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCSipManager.h"
+#import "JCPhoneSipSessionManager.h"
 #import "JCSipNetworkQualityRequestOperation.h"
 
 // Libraries
@@ -47,7 +47,7 @@ NSString *const kSipHandlerAutoAnswerAfterIntervalHeader = @"answer-after=0";
 NSString *const kSipHandlerServerAgentname = @"Jive iOS Client";
 NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
-@interface JCSipManager() <PortSIPEventDelegate, JCPhoneAudioManagerDelegate>
+@interface JCPhoneSipSessionManager() <PortSIPEventDelegate, JCPhoneAudioManagerDelegate>
 {
     PortSIPSDK *_mPortSIPSDK;
     JCPhoneVideoViewController *_videoController;
@@ -62,13 +62,13 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @property (nonatomic) NSMutableSet *lineSessions;
 
-- (JCLineSession *)findSession:(long)sessionId;
+- (JCPhoneSipSession *)findSession:(long)sessionId;
 
 @end
 
-@implementation JCSipManager
+@implementation JCPhoneSipSessionManager
 
--(instancetype)initWithNumberOfLines:(NSUInteger)lines audioManager:(JCPhoneAudioManager *)audioManager delegate:(id<JCSipManagerDelegate>)delegate error:(NSError *__autoreleasing *)error
+-(instancetype)initWithNumberOfLines:(NSUInteger)lines audioManager:(JCPhoneAudioManager *)audioManager delegate:(id<JCPhoneSipSessionManagerDelegate>)delegate error:(NSError *__autoreleasing *)error
 {
     self = [super init];
     if (self) {
@@ -76,7 +76,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         
         _lineSessions = [NSMutableSet new];
         for (int i = 0; i < lines; i++)
-            [_lineSessions addObject:[JCLineSession new]];
+            [_lineSessions addObject:[JCPhoneSipSession new]];
         
         _operationQueue = [[NSOperationQueue alloc] init];
         _operationQueue.name = @"SipHandler Operation Queue";
@@ -110,7 +110,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 -(void)unregister
 {
     __autoreleasing NSError *error;
-    for (JCLineSession *lineSession in _lineSessions) {
+    for (JCPhoneSipSession *lineSession in _lineSessions) {
         [self hangUpSession:lineSession error:&error];
     }
     
@@ -382,7 +382,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
 	// Check to see if we can make a call. We can make a call if we have an idle line session. If we
     // do not have one, exit with error.
-    JCLineSession *lineSession = [self findIdleLine];
+    JCPhoneSipSession *lineSession = [self findIdleLine];
     if (!lineSession) {
         if (error != NULL) {
             *error = [JCSipManagerError errorWithCode:JC_SIP_CALL_NO_IDLE_LINE];
@@ -419,7 +419,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return YES;
 }
 
-- (BOOL)answerSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
+- (BOOL)answerSession:(JCPhoneSipSession *)lineSession error:(NSError *__autoreleasing *)error
 {
     if (!lineSession) {
         if (error != NULL) {
@@ -460,7 +460,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSSet *lineSessions = [self findAllActiveLines];
     
     __autoreleasing NSError *hangupError;
-    for (JCLineSession *lineSession in lineSessions) {
+    for (JCPhoneSipSession *lineSession in lineSessions) {
         [self hangUpSession:lineSession error:&hangupError];
         if (hangupError) {
             break;
@@ -476,7 +476,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return YES;
 }
 
-- (BOOL)hangUpSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
+- (BOOL)hangUpSession:(JCPhoneSipSession *)lineSession error:(NSError *__autoreleasing *)error
 {
     if (lineSession.incoming)
     {
@@ -518,7 +518,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (BOOL)holdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
 {
     __autoreleasing NSError *holdError;
-    for (JCLineSession *lineSession in lineSessions) {
+    for (JCPhoneSipSession *lineSession in lineSessions) {
         if (![self holdLineSession:lineSession error:&holdError]) {
             break;
         }
@@ -534,7 +534,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return true;
 }
 
-- (BOOL)holdLineSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
+- (BOOL)holdLineSession:(JCPhoneSipSession *)lineSession error:(NSError *__autoreleasing *)error
 {
     if (lineSession.isHolding) {
         return YES;
@@ -562,7 +562,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (BOOL)unholdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
 {
     __autoreleasing NSError *holdError;
-    for (JCLineSession *lineSession in lineSessions) {
+    for (JCPhoneSipSession *lineSession in lineSessions) {
         if (![self unholdLineSession:lineSession error:&holdError]) {
             break;
         }
@@ -578,7 +578,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return TRUE;
 }
 
--(BOOL)unholdLineSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
+-(BOOL)unholdLineSession:(JCPhoneSipSession *)lineSession error:(NSError *__autoreleasing *)error
 {
     if (!lineSession.isHolding) {
         return YES;
@@ -622,7 +622,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
     
     _conferenceCall = true;
-    for (JCLineSession *lineSession in lineSessions) {
+    for (JCPhoneSipSession *lineSession in lineSessions) {
         
         if (lineSession.isHolding) {
             __autoreleasing NSError *holdError;
@@ -648,7 +648,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
     
     if (!errorCode) {
-        [_delegate sipHandler:self didCreateConferenceCallWithLineSessions:lineSessions];
+        [_delegate sipHandler:self didCreateConferenceCallWithSessions:lineSessions];
         return TRUE;
     }
     
@@ -674,7 +674,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     // Before stop the conference, MUST place all lines to hold state
     if (lineSessions.count > 1) {
-        for (JCLineSession *lineSession in lineSessions) {
+        for (JCPhoneSipSession *lineSession in lineSessions) {
             if (!lineSession.isHolding){
                 __autoreleasing NSError *holdError;
                 if(![self holdLineSession:lineSession error:&holdError]) {
@@ -689,14 +689,14 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             [self setSessionState:JCCallConnected forSession:lineSession event:nil error:nil];
         }
     } else {
-        JCLineSession *lineSession = lineSessions.allObjects.firstObject;
+        JCPhoneSipSession *lineSession = lineSessions.allObjects.firstObject;
         lineSession.conference = FALSE;
         [self setSessionState:JCCallConnected forSession:lineSession event:nil error:nil];
     }
     
     [_mPortSIPSDK destroyConference];
     _conferenceCall = FALSE;
-    [_delegate sipHandler:self didEndConferenceCallForLineSessions:lineSessions];
+    [_delegate sipHandler:self didEndConferenceCallForSessions:lineSessions];
     return true;
 }
 
@@ -713,7 +713,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (void) pressNumpadButton:(char )dtmf
 {
-    JCLineSession *session = [self findActiveLine];
+    JCPhoneSipSession *session = [self findActiveLine];
     if(session && session.isActive){
         [_mPortSIPSDK sendDtmf:session.sessionId dtmfMethod:DTMF_RFC2833 code:dtmf dtmfDration:160 playDtmfTone:TRUE];
     }
@@ -763,7 +763,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (BOOL)startBlindTransferToNumber:(id<JCPhoneNumberDataSource>)number error:(NSError *__autoreleasing *)error
 {
     // Find the active line. It is the one we will be refering to the number passed.
-	JCLineSession *b = [self findActiveLine];
+	JCPhoneSipSession *b = [self findActiveLine];
     if (!b) {
         if (error != NULL) {
             *error = [JCSipManagerError errorWithCode:JC_SIP_CALL_NO_ACTIVE_LINE];
@@ -824,14 +824,14 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
  */
 -(BOOL)startWarmTransferToNumber:(id<JCPhoneNumberDataSource>)number error:(NSError *__autoreleasing *)error
 {
-    JCLineSession *b = [self findActiveLine];
+    JCPhoneSipSession *b = [self findActiveLine];
     b.transfer = TRUE;
     return [self makeCall:number videoCall:NO error:error];
 }
 
 -(BOOL)finishWarmTransfer:(NSError *__autoreleasing *)error
 {
-    JCLineSession *c = [self findActiveLine];
+    JCPhoneSipSession *c = [self findActiveLine];
     if (!c) {
         if (error != NULL) {
             *error = [JCSipManagerError errorWithCode:JC_SIP_CALL_NO_ACTIVE_LINE];
@@ -839,7 +839,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return NO;
     }
     
-    JCLineSession *b = [self findTransferLine];
+    JCPhoneSipSession *b = [self findTransferLine];
     if (!b) {
         if (error != NULL) {
             *error = [JCSipManagerError errorWithCode:JC_SIP_CALL_NO_REFERRAL_LINE];
@@ -879,8 +879,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSString *sender   = [NSString stringWithUTF8String:from];
     NSLog(@"sender: %@ receiver: %@", sender, receiver);
     
-    JCLineSession *a = [self findSession:sessionId];
-    JCLineSession *c = [self findIdleLine];
+    JCPhoneSipSession *a = [self findSession:sessionId];
+    JCPhoneSipSession *c = [self findIdleLine];
     if (!a || !c) {
         [_mPortSIPSDK rejectRefer:referId];
         return;
@@ -950,7 +950,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [self setSessionState:JCTransferSuccess forSessionId:sessionId event:@"onACTVTransferSuccess" error:nil];
     
     __autoreleasing NSError *error;
-    JCLineSession *lineSession = [self findSession:sessionId];
+    JCPhoneSipSession *lineSession = [self findSession:sessionId];
     if (![self hangUpSession:lineSession error:&error]) {
         NSLog(@"%@", [error description]);
     }
@@ -983,9 +983,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark Find line methods
 
-- (JCLineSession *)findSession:(long)sessionId
+- (JCPhoneSipSession *)findSession:(long)sessionId
 {
-    for (JCLineSession *line in self.lineSessions) {
+    for (JCPhoneSipSession *line in self.lineSessions) {
         if (sessionId == line.sessionId) {
             return line;
         }
@@ -993,9 +993,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return nil;
 }
 
-- (JCLineSession *)findActiveLine
+- (JCPhoneSipSession *)findActiveLine
 {
-    for (JCLineSession *line in self.lineSessions) {
+    for (JCPhoneSipSession *line in self.lineSessions) {
         if (line.isActive &&
             !line.isHolding &&
             !line.isIncoming){
@@ -1005,9 +1005,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return nil;
 }
 
-- (JCLineSession *)findLineWithRecevingState
+- (JCPhoneSipSession *)findLineWithRecevingState
 {
-    for (JCLineSession *line in self.lineSessions) {
+    for (JCPhoneSipSession *line in self.lineSessions) {
         if (!line.isActive &&
             line.isIncoming){
             return line;
@@ -1016,9 +1016,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return nil;
 }
 
-- (JCLineSession *)findLineWithHoldState
+- (JCPhoneSipSession *)findLineWithHoldState
 {
-    for (JCLineSession *line in self.lineSessions) {
+    for (JCPhoneSipSession *line in self.lineSessions) {
         if (line.isActive &&
             line.isHolding &&
             !line.isIncoming) {
@@ -1028,9 +1028,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return nil;
 }
 
-- (JCLineSession *)findIdleLine
+- (JCPhoneSipSession *)findIdleLine
 {
-    for (JCLineSession *line in self.lineSessions){
+    for (JCPhoneSipSession *line in self.lineSessions){
         if (!line.isActive &&
             !line.isIncoming){
             return line;
@@ -1039,9 +1039,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return nil;
 }
 
-- (JCLineSession *)findTransferLine
+- (JCPhoneSipSession *)findTransferLine
 {
-    for (JCLineSession *line in self.lineSessions){
+    for (JCPhoneSipSession *line in self.lineSessions){
         if (line.isTransfer){
             return line;
         }
@@ -1052,7 +1052,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (NSSet *)findAllActiveLines
 {
     NSMutableSet *activeLines = [NSMutableSet setWithCapacity:self.lineSessions.count];
-    for (JCLineSession *line in self.lineSessions)
+    for (JCPhoneSipSession *line in self.lineSessions)
     {
         if (line.isActive) {
             [activeLines addObject:line];
@@ -1064,7 +1064,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (NSSet *)findAllActiveLinesOnHold
 {
     NSMutableSet *lineSessions = [NSMutableSet setWithCapacity:self.lineSessions.count];
-    for (JCLineSession *line in self.lineSessions) {
+    for (JCPhoneSipSession *line in self.lineSessions) {
         if (line.isActive && line.isHolding) {
             [lineSessions addObject:line];
         }
@@ -1075,7 +1075,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (NSSet *)findAllActiveLinesNotHolding
 {
     NSMutableSet *lineSessions = [NSMutableSet setWithCapacity:self.lineSessions.count];
-    for (JCLineSession *line in self.lineSessions) {
+    for (JCPhoneSipSession *line in self.lineSessions) {
         if (line.isActive && !line.isHolding) {
             [lineSessions addObject:line];
         }
@@ -1085,7 +1085,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark Session State
 
--(void)setSessionState:(JCLineSessionState)state forSession:(JCLineSession *)lineSession event:(NSString *)event error:(NSError *)error
+-(void)setSessionState:(JCPhoneSipSessionState)state forSession:(JCPhoneSipSession *)lineSession event:(NSString *)event error:(NSError *)error
 {
     if (!lineSession) {
         return;
@@ -1118,7 +1118,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             
             [_audioManager stop];
 
-            [_delegate sipHandler:self willRemoveLineSession:lineSession];
+            [_delegate sipHandler:self willRemoveSession:lineSession];
             
             NSLog(@"%@", [self.lineSessions description]);
             [lineSession reset];  // clear up this line session for reuse.
@@ -1146,7 +1146,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.sessionState = state;
             
             // Notify
-            [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
+            [_delegate sipHandler:self didAddSession:lineSession];     // Notify the delegate to add a line.
             break;
         }
             
@@ -1168,10 +1168,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 
             // Notify
-            [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
+            [_delegate sipHandler:self didAddSession:lineSession];     // Notify the delegate to add a line.
             if (_autoAnswer) {
                 _autoAnswer = false;
-                [_delegate sipHandler:self receivedIntercomLineSession:lineSession];
+                [_delegate sipHandler:self receivedIntercomSession:lineSession];
             }
             break;
         }
@@ -1186,7 +1186,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             [_audioManager stop];
             
             // Notify
-            [_delegate sipHandler:self didAnswerLineSession:lineSession];
+            [_delegate sipHandler:self didAnswerSession:lineSession];
             
             break;
         }
@@ -1212,12 +1212,12 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             break;
     }
     
-    [_delegate sipHandler:self didUpdateStatusForLineSessions:self.lineSessions];
+    [_delegate sipHandler:self didUpdateStatusForSessions:self.lineSessions];
     
     NSLog(@"%@", [self.lineSessions description]);
 }
 
--(void)startNetworkQualityIndicatorForLineSession:(JCLineSession *)lineSession
+-(void)startNetworkQualityIndicatorForLineSession:(JCPhoneSipSession *)lineSession
 {
     JCSipNetworkQualityRequestOperation *operation = [[JCSipNetworkQualityRequestOperation alloc] initWithSessionId:lineSession.sessionId portSipSdk:_mPortSIPSDK];
     __weak JCSipNetworkQualityRequestOperation *weakOperation = operation;
@@ -1239,9 +1239,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 }
 
 
--(void)setSessionState:(JCLineSessionState)state forSessionId:(long)sessionId event:(NSString *)event error:(NSError *)error
+-(void)setSessionState:(JCPhoneSipSessionState)state forSessionId:(long)sessionId event:(NSString *)event error:(NSError *)error
 {
-    JCLineSession *lineSession = [self findSession:sessionId];
+    JCPhoneSipSession *lineSession = [self findSession:sessionId];
     if (!lineSession)
     {
         NSLog(@"invalid session id: %ld for event: %@", sessionId, event);
@@ -1258,7 +1258,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 -(void)audioSessionInteruptionDidBegin:(JCPhoneAudioManager *)manager
 {
     // When we get a call that is being interuped, we place it on hold.
-    JCLineSession *lineSession = [self findActiveLine];
+    JCPhoneSipSession *lineSession = [self findActiveLine];
     __autoreleasing NSError *error;
     [self holdLineSession:lineSession error:&error];
     
@@ -1269,7 +1269,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 -(void)audioSessionInteruptionDidEnd:(JCPhoneAudioManager *)manager
 {
     NSSet *activeLineSessions = [self findAllActiveLines];
-    for (JCLineSession *lineSession in activeLineSessions) {
+    for (JCPhoneSipSession *lineSession in activeLineSessions) {
         [self startNetworkQualityIndicatorForLineSession:lineSession];
     }
     
@@ -1315,7 +1315,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			 existsAudio:(BOOL)existsAudio
 			 existsVideo:(BOOL)existsVideo
 {
-	JCLineSession *lineSession = [self findIdleLine];
+	JCPhoneSipSession *lineSession = [self findIdleLine];
     BOOL incomingCallsEnabled = [self.delegate shouldReceiveIncomingLineSession:self];
 	if (!lineSession || !incomingCallsEnabled){
 		[_mPortSIPSDK rejectCall:sessionId code:486];
@@ -1363,7 +1363,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 					existsAudio:(BOOL)existsAudio
 					existsVideo:(BOOL)existsVideo
 {
-	JCLineSession *selectedLine = [self findSession:sessionId];
+	JCPhoneSipSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine) {
 		return;
 	}
@@ -1394,7 +1394,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			 statusCode:(int)statusCode
 
 {
-    JCLineSession *selectedLine = [self findSession:sessionId];
+    JCPhoneSipSession *selectedLine = [self findSession:sessionId];
 	if (selectedLine && !selectedLine.mExistEarlyMedia) {
 //        [_audioManager startRingback];
         [_audioManager playRingback];
@@ -1415,7 +1415,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			 existsAudio:(BOOL)existsAudio
 			 existsVideo:(BOOL)existsVideo
 {
-	JCLineSession *selectedLine = [self findSession:sessionId];
+	JCPhoneSipSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine){
 		return;
 	}

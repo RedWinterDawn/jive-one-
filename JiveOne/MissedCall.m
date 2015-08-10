@@ -34,7 +34,7 @@ NSString *const kMissedCallEntityName = @"MissedCall";
 
 @implementation MissedCall (MagicalRecord)
 
-+(void)addMissedCallWithLineSession:(JCLineSession *)session line:(Line *)line
++(void)addMissedCallWithLineSession:(JCPhoneSipSession *)session line:(Line *)line
 {
     [MissedCall addCallEntity:kMissedCallEntityName line:line lineSession:session read:NO];
 }

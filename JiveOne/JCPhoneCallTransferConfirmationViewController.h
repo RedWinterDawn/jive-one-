@@ -8,12 +8,12 @@
 
 @import UIKit;
 
-#import "JCLineSession.h"
+#import "JCPhoneSipSession.h"
 
 @interface JCPhoneCallTransferConfirmationViewController : UIViewController
 
-@property (nonatomic, copy) JCLineSession *transferLineSession;
-@property (nonatomic, copy) JCLineSession *receivingLineSession;
+@property (nonatomic, copy) JCPhoneSipSession *transferLineSession;
+@property (nonatomic, copy) JCPhoneSipSession *receivingLineSession;
 
 @property (weak, nonatomic) IBOutlet UILabel *currentCallersName;
 @property (weak, nonatomic) IBOutlet UILabel *currentCallersNumber;

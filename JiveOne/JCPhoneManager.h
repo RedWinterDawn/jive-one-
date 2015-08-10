@@ -17,8 +17,8 @@
 #import "JCPhoneNumberDataSource.h"
 #import "JCPhoneProvisioningDataSource.h"
 #import "JCPhoneCallViewController.h"
-#import "JCLineSession.h"
-#import "JCSipManager.h"
+#import "JCPhoneSipSession.h"
+#import "JCPhoneSipSessionManager.h"
 #import "JCPhoneSettings.h"
 
 extern NSString *const kJCPhoneManagerRegisteringNotification;
@@ -45,7 +45,7 @@ typedef enum : NSInteger {
 
 @interface JCPhoneManager : JCManager
 
--(instancetype)initWithSipManager:(JCSipManager *)sipManager
+-(instancetype)initWithSipManager:(JCPhoneSipSessionManager *)sipManager
                          settings:(JCPhoneSettings *)settings
                      reachability:(AFNetworkReachabilityManager *)reachability;
 
@@ -108,7 +108,7 @@ typedef enum : NSUInteger {
 
 -(void)phoneManager:(JCPhoneManager *)manager
    reportCallOfType:(JCPhoneManagerCallType)type
-        lineSession:(JCLineSession *)lineSession
+        lineSession:(JCPhoneSipSession *)lineSession
 provisioningProfile:(id<JCPhoneProvisioningDataSource>)provisioningProfile;
 
 -(id<JCPhoneNumberDataSource>)phoneManager:(JCPhoneManager *)manager
