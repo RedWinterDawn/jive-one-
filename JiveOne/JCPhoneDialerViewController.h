@@ -12,8 +12,11 @@
 #import "JCPhoneNumberDataSource.h"
 #import "JCPhoneManager.h"
 
+@protocol JCPhoneDialerViewControllerDelegate;
+
 @interface JCPhoneDialerViewController : UIViewController <JCFormattedPhoneNumberLabelDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *outputLabel;
 @property (weak, nonatomic) IBOutlet JCFormattedPhoneNumberLabel *formattedPhoneNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *registrationStatusLabel;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
@@ -22,18 +25,29 @@
 @property (weak, nonatomic) IBOutlet UILongPressGestureRecognizer *clearLongPressGestureRecognizer;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-@property (nonatomic, readonly) id<JCPhoneNumberDataSource> phoneNumber;
+// Optional Delegate
+@property (nonatomic, weak) IBOutlet id <JCPhoneDialerViewControllerDelegate> delegate;
 
+// Configurable Properties
+@property (nonatomic) JCPhoneManagerDialType transferCallType;
+
+// IBActions
 - (IBAction)numPadPressed:(id)sender;
 - (IBAction)numPadLogPress:(id)sender;
 - (IBAction)initiateCall:(id)sender;
 - (IBAction)backspace:(id)sender;
 - (IBAction)clear:(id)sender;
+- (IBAction)cancel:(id)sender;
 
-- (void)appendString:(NSString *)string;
-
+// Public Methods
 + (NSString *)characterFromNumPadTag:(NSInteger)tag;
-
 - (id<JCPhoneNumberDataSource>)objectAtIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
+@protocol JCPhoneDialerViewControllerDelegate <NSObject>
+
+-(void)phoneDialerViewController:(JCPhoneDialerViewController *)controller shouldDialNumber:(id<JCPhoneNumberDataSource>)number;
+-(void)shouldCancelPhoneDialerViewController:(JCPhoneDialerViewController *)controller;
 
 @end

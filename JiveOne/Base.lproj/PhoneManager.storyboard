@@ -382,7 +382,7 @@
         <!--Transfer-->
         <scene sceneID="azW-ae-Vbt">
             <objects>
-                <viewController storyboardIdentifier="warmTransferModal" title="Transfer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0Yw-OW-isY" customClass="JCTransferViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="warmTransferModal" title="Transfer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0Yw-OW-isY" customClass="JCPhoneDialerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lrg-NA-9eV"/>
                         <viewControllerLayoutGuide type="bottom" id="Iux-6h-0nJ"/>
@@ -1077,7 +1077,7 @@
         <!--Key Pad-->
         <scene sceneID="Vu2-fJ-b3p">
             <objects>
-                <viewController storyboardIdentifier="keyboardModal" title="Transfer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="trw-eH-oa2" userLabel="Key Pad" customClass="JCKeypadViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="keyboardModal" title="Transfer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="trw-eH-oa2" userLabel="Key Pad" customClass="JCPhoneDialerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ALI-Qa-lmk"/>
                         <viewControllerLayoutGuide type="bottom" id="fId-Al-Fbs"/>

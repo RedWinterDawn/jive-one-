@@ -9,6 +9,7 @@
 #import "JCPhoneDialerViewController.h"
 
 // Managers
+
 #import "JCAppSettings.h"
 
 // Managed Objects
@@ -20,7 +21,7 @@
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
-@interface JCPhoneDialerViewController ()
+@interface JCPhoneDialerViewController () <JCFormattedPhoneNumberLabelDelegate>
 {
     BOOL _initiatingCall;
     
@@ -114,8 +115,9 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-        [self appendString:[[self class] characterFromNumPadTag:(int)button.tag]];
         [self.phoneManager numberPadPressedWithInteger:button.tag];
+        NSString *string = [[self class] characterFromNumPadTag:(int)button.tag];
+        [self appendString:string];
     }
 }
 
@@ -153,14 +155,19 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     
     id<JCPhoneNumberDataSource> phoneNumber = [phoneManager.delegate phoneManager:phoneManager phoneNumberForNumber:dialString name:nil provisioning:provisioningProfile];
     if (phoneNumber) {
-        [self dialPhoneNumber:phoneNumber
-          provisioningProfile:self.phoneManager.provisioningProfile
-                       sender:sender
-                   completion:^(BOOL success, NSError *error) {
-                       if (success){
-                           [self performSelector:@selector(clear:) withObject:sender afterDelay:1];
-                       }
-                   }];
+        if (_delegate && [_delegate respondsToSelector:@selector(phoneDialerViewController:shouldDialNumber:)]){
+            [_delegate phoneDialerViewController:self shouldDialNumber:phoneNumber];
+        }
+        else {
+            [self dialPhoneNumber:phoneNumber
+              provisioningProfile:self.phoneManager.provisioningProfile
+                           sender:sender
+                       completion:^(BOOL success, NSError *error) {
+                           if (success){
+                               [self performSelector:@selector(clear:) withObject:sender afterDelay:1];
+                           }
+                       }];
+        }
     }
 }
 
@@ -179,6 +186,12 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     
     _phoneNumbers = nil;
     [self.collectionView reloadData];
+}
+
+-(IBAction)cancel:(id)sender
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldCancelPhoneDialerViewController:)])
+        [_delegate shouldCancelPhoneDialerViewController:self];
 }
 
 #pragma mark - Getters -
@@ -200,12 +213,19 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(void)appendString:(NSString *)string
 {
-    if (string == nil) {
-        [self.formattedPhoneNumberLabel backspace];
+    if (self.outputLabel) {
+        self.outputLabel.text =  [NSString stringWithFormat:@"%@%@", self.outputLabel.text, string];
     } else {
-        [self.formattedPhoneNumberLabel append:string];
+        if (string == nil) {
+            [self.formattedPhoneNumberLabel backspace];
+        } else {
+            [self.formattedPhoneNumberLabel append:string];
+        }
     }
-    [self updateCollectionView];
+    
+    if (self.collectionView) {
+        [self updateCollectionView];
+    }
 }
 
 - (void)updateCollectionView
@@ -342,16 +362,23 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id <JCPhoneNumberDataSource> personNumber = [self objectAtIndexPath:indexPath];
-    self.formattedPhoneNumberLabel.dialString = personNumber.dialableNumber;
-    [self dialPhoneNumber:personNumber
-      provisioningProfile:self.phoneManager.provisioningProfile
-                   sender:collectionView
-               completion:^(BOOL success, NSError *error) {
-                   if (success){
-                       [self clear:nil];
-                   }
-               }];
+    id <JCPhoneNumberDataSource> phoneNumber = [self objectAtIndexPath:indexPath];
+    JCPhoneManager *phoneManager = self.phoneManager;
+    id <JCPhoneProvisioningDataSource> provisioningProfile = phoneManager.provisioningProfile;
+    self.formattedPhoneNumberLabel.dialString = phoneNumber.dialableNumber;
+    if (_delegate && [_delegate respondsToSelector:@selector(phoneDialerViewController:shouldDialNumber:)]) {
+        [_delegate phoneDialerViewController:self shouldDialNumber:phoneNumber];
+    }
+    else {
+        [self dialPhoneNumber:phoneNumber
+          provisioningProfile:provisioningProfile
+                       sender:collectionView
+                   completion:^(BOOL success, NSError *error) {
+                       if (success){
+                           [self clear:nil];
+                       }
+                   }];
+    }
 }
 
 @end

@@ -7,7 +7,7 @@
 //  the state of a subview which visually displays all the call options available for any given state. Its in closely
 //  coupled with the call card manager, for call actions and the SipHandler for the mute, speaker, and other behaviors.
 //
-//  When a dial string is set befor ethe view is loaded, it will be dialed.
+//  When a dial string is set before the view is loaded, it will be dialed.
 //
 //  Created by Robert Barclay on 9/30/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
@@ -19,8 +19,7 @@
 #import "JCPhoneManager.h"   // Handles call cards, and managed calls
 
 // Presented View Controllers
-#import "JCTransferViewController.h"                // Shows dial pad to dial for blind, warm transfer and additional call.
-#import "JCKeypadViewController.h"                  // Numberpad
+#import "JCPhoneDialerViewController.h"             // Shows dial pad to dial for blind, warm transfer and additional call.
 #import "JCTransferConfirmationViewController.h"    // Transfer confimation view controller
 #import "JCCallCardCollectionViewController.h"
 
@@ -36,7 +35,7 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
 
 NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"blindTransferComplete";
 
-@interface JCCallerViewController () <JCTransferViewControllerDelegate, JCKeypadViewControllerDelegate>
+@interface JCCallerViewController () <JCPhoneDialerViewControllerDelegate>
 {
     UIViewController *_presentedTransferViewController;
     UIViewController *_presentedKeyboardViewController;
@@ -159,7 +158,7 @@ CGFloat *_callOptionsWidth;
     if ([sender isKindOfClass:[UIButton class]]) {
         UIButton *button = (UIButton *)sender;
         if (!_presentedKeyboardViewController) {
-            JCKeypadViewController *keyboardViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerKeyboardStoryboardIdentifier];
+            JCPhoneDialerViewController *keyboardViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerKeyboardStoryboardIdentifier];
             keyboardViewController.delegate = self;
             [self presentKeyboardViewController:keyboardViewController];
             button.selected = TRUE;
@@ -408,7 +407,7 @@ CGFloat *_callOptionsWidth;
         [self dismissKeyboardViewController:YES];
     }
     
-    JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
+    JCPhoneDialerViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
     transferViewController.transferCallType = dialType;
     transferViewController.delegate = self;
     
@@ -447,16 +446,9 @@ CGFloat *_callOptionsWidth;
 
 #pragma mark - Delegate Handlers -
 
-#pragma mark JCKeyboardViewController
-
--(void)keypadViewController:(JCKeypadViewController *)controller didTypeNumber:(NSInteger)number
-{
-    [self.phoneManager numberPadPressedWithInteger:number];
-}
-
 #pragma mark JCTransferViewController
 
--(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(id<JCPhoneNumberDataSource>)number
+-(void)phoneDialerViewController:(JCPhoneDialerViewController *)controller shouldDialNumber:(id<JCPhoneNumberDataSource>)number
 {
     JCPhoneManager *phoneManager = self.phoneManager;
     [phoneManager dialPhoneNumber:number
@@ -481,7 +473,7 @@ CGFloat *_callOptionsWidth;
                        }];
 }
 
--(void)shouldCancelTransferViewController:(JCTransferViewController *)controller
+-(void)shouldCancelPhoneDialerViewController:(JCPhoneDialerViewController *)controller
 {
     [self dismissTransferViewControllerAnimated:YES];
 }
