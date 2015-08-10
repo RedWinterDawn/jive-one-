@@ -27,7 +27,7 @@
 
 // View Controllers
 #import "JCPhoneCallViewController.h"
-#import "JCTransferConfirmationViewController.h"
+#import "JCPhoneCallTransferConfirmationViewController.h"
 
 NSString *const kJCPhoneManager911String = @"911";
 NSString *const kJCPhoneManager611String = @"611";
@@ -43,7 +43,7 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 @interface JCPhoneManager ()<JCSipManagerDelegate, JCCallCardDelegate, JCPhoneAudioManagerDelegate>
 {
     JCPhoneCallViewController *_callViewController;
-    JCTransferConfirmationViewController *_transferConfirmationViewController;
+    JCPhoneCallTransferConfirmationViewController *_transferConfirmationViewController;
 	NSString *_warmTransferNumber;
     CTCallCenter *_externalCallCenter;
 }

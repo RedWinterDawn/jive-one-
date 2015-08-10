@@ -1582,10 +1582,10 @@
             </objects>
             <point key="canvasLocation" x="2874" y="-2337"/>
         </scene>
-        <!--Transfer Confirmation View Controller-->
+        <!--Phone Call Transfer Confirmation View Controller-->
         <scene sceneID="WUt-Dy-FGa">
             <objects>
-                <viewController storyboardIdentifier="TransferConfirmationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oAs-7Y-KL9" customClass="JCTransferConfirmationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TransferConfirmationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oAs-7Y-KL9" customClass="JCPhoneCallTransferConfirmationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="s3d-HS-XvI"/>
                         <viewControllerLayoutGuide type="bottom" id="qNu-03-lEc"/>

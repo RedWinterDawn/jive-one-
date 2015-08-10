@@ -10,7 +10,7 @@
 
 #import "JCLineSession.h"
 
-@interface JCTransferConfirmationViewController : UIViewController
+@interface JCPhoneCallTransferConfirmationViewController : UIViewController
 
 @property (nonatomic, copy) JCLineSession *transferLineSession;
 @property (nonatomic, copy) JCLineSession *receivingLineSession;

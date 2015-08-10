@@ -20,7 +20,7 @@
 
 // Presented View Controllers
 #import "JCPhoneDialerViewController.h"             // Shows dial pad to dial for blind, warm transfer and additional call.
-#import "JCTransferConfirmationViewController.h"    // Transfer confimation view controller
+#import "JCPhoneCallTransferConfirmationViewController.h"    // Transfer confimation view controller
 #import "JCPhoneCallCollectionViewController.h"
 
 #import "JCLineSession.h"

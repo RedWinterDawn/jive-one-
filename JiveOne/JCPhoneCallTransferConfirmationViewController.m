@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCTransferConfirmationViewController.h"
+#import "JCPhoneCallTransferConfirmationViewController.h"
 
-@implementation JCTransferConfirmationViewController
+@implementation JCPhoneCallTransferConfirmationViewController
 
 
 -(void)viewDidLoad
