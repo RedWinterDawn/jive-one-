@@ -724,7 +724,6 @@
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OEv-iP-fk5" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <customObject id="o93-y8-IzU" customClass="JCStyleKit"/>
             </objects>
             <point key="canvasLocation" x="346" y="-813"/>
         </scene>
