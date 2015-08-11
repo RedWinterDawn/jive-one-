@@ -31,6 +31,11 @@ NSString *kJCErrorGerneralDomain = @"JiveGeneralErrorDomain";
     return error;
 }
 
++(NSInteger)underlyingErrorCodeForError:(NSError *)error
+{
+    return [self underlyingErrorForError:error].code;
+}
+
 +(instancetype)errorWithCode:(NSInteger)code
 {
     return [self errorWithCode:code underlyingError:nil];

@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 
 #import "JCPhoneNumber.h"
-#import "JCPhoneNumberDataSourceUtils.h"
+#import "JCPhoneNumberUtils.h"
 #import "NSString+Additions.h"
 
 @interface JCPhoneNumberDataSourceUtilTests : XCTestCase
@@ -25,7 +25,7 @@
     JCPhoneNumber *phoneNumber = [JCPhoneNumber phoneNumberWithName:nil number:garbage];
 
     // When
-    NSString *result = [JCPhoneNumberDataSourceUtils dialableStringForPhoneNumber:phoneNumber];
+    NSString *result = [JCPhoneNumberUtils dialableStringForPhoneNumber:phoneNumber];
 
     // Then
     XCTAssertTrue([result isEqualToString:@"+15551234567*8910#"], @"Dialable String failed");
@@ -40,7 +40,7 @@
     NSString *expectedResult = @"7623782272529";
 
     // When
-    NSString *result = [JCPhoneNumberDataSourceUtils t9StringForPhoneNumber:phoneNumber];
+    NSString *result = [JCPhoneNumberUtils t9StringForPhoneNumber:phoneNumber];
 
     // Then
     XCTAssertTrue([result isEqualToString:expectedResult], @"t9 did not match expected result");
@@ -59,7 +59,7 @@
     NSString *keyword = @"Hi"; // non numeric string
     
     // When
-    NSAttributedString *result = [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
+    NSAttributedString *result = [JCPhoneNumberUtils titleTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
     
     // Then
     NSDictionary *attrs = @{NSFontAttributeName: font, NSForegroundColorAttributeName: color};
@@ -79,7 +79,7 @@
     NSString *keyword = @"762"; // T9 for rob
     
     // When
-    NSAttributedString *result = [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
+    NSAttributedString *result = [JCPhoneNumberUtils titleTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
     
     // Then
     NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName:color };
@@ -103,7 +103,7 @@
     NSString *keyword = @"762"; // T9 for rob
     
     // When
-    NSAttributedString *result = [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
+    NSAttributedString *result = [JCPhoneNumberUtils titleTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
     
     // Then
     NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName:color };
@@ -125,7 +125,7 @@
     UIColor *color = [UIColor blackColor];
 
     // When
-    NSAttributedString *result = [JCPhoneNumberDataSourceUtils detailTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
+    NSAttributedString *result = [JCPhoneNumberUtils detailTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
 
     // Then
     NSString *expectedString = @"(555) 525-5355";
@@ -145,7 +145,7 @@
     NSString *keyword = @"5555";
 
     // When
-    NSAttributedString *result = [JCPhoneNumberDataSourceUtils detailTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
+    NSAttributedString *result = [JCPhoneNumberUtils detailTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
 
     // Then
     NSString *expectedString = @"(555) 525-5355";

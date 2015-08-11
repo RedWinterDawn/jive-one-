@@ -21,22 +21,8 @@
 
 @end
 
-@interface NSString (IsNumeric)
-
-@property (nonatomic, readonly) BOOL isNumeric;
-@property (nonatomic, readonly) BOOL isAlphanumeric;
-@property (nonatomic, readonly) NSString *numericStringValue;
-
-@end
-
 @interface NSString (Localization)
 
 @property (nonatomic, readonly) NSLocale *locale;
-
-@end
-
-@interface UIFont (Bold)
-
-+(UIFont *)boldFontForFont:(UIFont *)font;
 
 @end

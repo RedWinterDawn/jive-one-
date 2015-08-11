@@ -28,47 +28,24 @@
 
 @interface JCPhoneDialerViewController (Private)
 
-@property (nonatomic, strong) JCAuthenticationManager *authenticationManager;
-@property (nonatomic, strong) AFNetworkReachabilityManager *networkingReachabilityManager;
-@property (nonatomic, strong) NSManagedObjectContext *context;
-
-+(NSString *)characterFromNumPadTag:(NSInteger)tag;
-
 @end
 
-@interface JCDialerViewControllerTests : JCMainStoryboardBaseTestCase
+@interface JCPhoneDialerViewControllerTests : JCMainStoryboardBaseTestCase
 
 @property (nonatomic, strong) JCPhoneDialerViewController *vc;
 
 @end
 
-@implementation JCDialerViewControllerTests
+@implementation JCPhoneDialerViewControllerTests
 
 - (void)setUp {
     [super setUp];
     
     JCPhoneDialerViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"JCDialerViewController"];
-    vc.context = self.context;
     
     id phoneManager = OCMClassMock([JCPhoneManager class]);
     vc.phoneManager = phoneManager;
     XCTAssertEqual(phoneManager, vc.phoneManager, @"Phone Manager is not the mock phone manger");
-    
-    id appSettings = OCMClassMock([JCAppSettings class]);
-    vc.appSettings = appSettings;
-    XCTAssertEqual(appSettings, vc.appSettings, @"App Settings is not the mock app settings");
-    
-    JCPhoneBook *phoneBook = [JCPhoneBookTestDataFactory loadTestPhoneBook];
-    vc.phoneBook = phoneBook;
-    XCTAssertEqual(phoneBook, vc.phoneBook, @"Phone Book is not the mock address book");
-    
-    id networkReachabilityManager = OCMClassMock([AFNetworkReachabilityManager class]);
-    vc.networkingReachabilityManager = networkReachabilityManager;
-    XCTAssertEqual(networkReachabilityManager, vc.networkingReachabilityManager, @"Reachability Manager is not the mock reachability Manager");
-    
-    id authenticationManager = OCMClassMock([JCAuthenticationManager class]);
-    vc.authenticationManager = authenticationManager;
-    XCTAssertEqual(authenticationManager, vc.authenticationManager, @"Authentication Manager is not the mock authentication manger");
     
     [vc performSelectorOnMainThread:@selector(loadView) withObject:nil waitUntilDone:YES];
     self.vc = vc;

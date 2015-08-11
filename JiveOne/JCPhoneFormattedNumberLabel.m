@@ -6,13 +6,14 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
+
 #import "JCPhoneFormattedNumberLabel.h"
 
 #import <libPhoneNumber-iOS/NBPhoneNumberUtil.h>
 #import <libPhoneNumber-iOS/NBAsYouTypeFormatter.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
-#import "NSString+DialString.h"
-
+#import "JCPhoneNumberUtils.h"
 
 @interface JCPhoneFormattedNumberLabel ()
 {

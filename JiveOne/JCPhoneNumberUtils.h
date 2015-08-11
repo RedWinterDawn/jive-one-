@@ -8,7 +8,7 @@
 
 #import "JCPhoneNumberDataSource.h"
 
-@interface JCPhoneNumberDataSourceUtils : NSObject
+@interface JCPhoneNumberUtils : NSObject
 
 +(BOOL)phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber containsT9Keyword:(NSString *)keyword;
 +(BOOL)phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber containsKeyword:(NSString *)keyword;
@@ -33,4 +33,19 @@
                                         font:(UIFont *)font
                                        color:(UIColor *)color
                                  phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber;
+@end
+
+@interface NSString (JCPhoneNumberUtils)
+
+@property (nonatomic, readonly) BOOL isNumeric;
+@property (nonatomic, readonly) BOOL isAlphanumeric;
+@property (nonatomic, readonly) NSString *numericStringValue;
+@property (nonatomic, readonly) NSString *dialString;
+
+@end
+
+@interface UIFont (JCPhoneNumberUtils)
+
++(UIFont *)boldFontForFont:(UIFont *)font;
+
 @end

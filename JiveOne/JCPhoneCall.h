@@ -11,25 +11,27 @@
 
 @class JCPhoneCall;
 
-@protocol JCCallCardDelegate <NSObject>
+typedef void(^PhoneCallCompletionHandler)(BOOL success, NSError *error);
+
+@protocol JCPhoneCallDelegate <NSObject>
 
 // Notify delegate to answer an Incoming call card.
--(void)answerCall:(JCPhoneCall *)callCard completion:(CompletionHandler)completion;
+-(void)answerCall:(JCPhoneCall *)phoneCall completion:(PhoneCallCompletionHandler)completion;
 
 // Notify delegate to hangs up a specific call card.
--(void)hangUpCall:(JCPhoneCall *)callCard completion:(CompletionHandler)completion;
+-(void)hangUpCall:(JCPhoneCall *)phoneCall completion:(PhoneCallCompletionHandler)completion;
 
 // Notify delegate to place a specific call on hold.
--(void)holdCall:(JCPhoneCall *)callCard completion:(CompletionHandler)completion;
+-(void)holdCall:(JCPhoneCall *)phoneCall completion:(PhoneCallCompletionHandler)completion;
 
 // Notify delegate to take a specific call off hold.
--(void)unholdCall:(JCPhoneCall *)callCard completion:(CompletionHandler)completion;
+-(void)unholdCall:(JCPhoneCall *)phoneCall completion:(PhoneCallCompletionHandler)completion;
 
 @end
 
 @interface JCPhoneCall : NSObject
 
-@property (nonatomic, weak) id <JCCallCardDelegate> delegate;
+@property (nonatomic, weak) id <JCPhoneCallDelegate> delegate;
 @property (nonatomic, strong) NSDate *started;
 @property (nonatomic, strong) NSDate *holdStarted;
 
@@ -39,9 +41,9 @@
 
 -(instancetype)initWithSession:(JCPhoneSipSession *)lineSession;
 
--(void)answerCall:(CompletionHandler)completion;
--(void)endCall:(CompletionHandler)completion;
--(void)holdCall:(CompletionHandler)completion;
--(void)unholdCall:(CompletionHandler)completion;
+-(void)answerCall:(PhoneCallCompletionHandler)completion;
+-(void)endCall:(PhoneCallCompletionHandler)completion;
+-(void)holdCall:(PhoneCallCompletionHandler)completion;
+-(void)unholdCall:(PhoneCallCompletionHandler)completion;
 
 @end

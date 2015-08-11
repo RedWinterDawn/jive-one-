@@ -12,7 +12,7 @@ pod 'ELFixSecureTextFieldFont', :git => 'https://github.com/elegion/ELFixSecureT
 pod 'libPhoneNumber-iOS', '~> 0.7'
 pod 'Appsee'
 pod 'XMLDictionary', '~> 1.4'
-pod 'SVProgressHUD'
+pod 'SVProgressHUD', '1.1.2'
 pod 'StaticDataTableViewController'
 pod 'Google/CloudMessaging'
 

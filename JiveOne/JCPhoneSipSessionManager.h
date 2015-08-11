@@ -110,6 +110,8 @@
 // Requests a phone number for a given string and name.
 -(id<JCPhoneNumberDataSource>)sipHandler:(JCPhoneSipSessionManager *)sipHandler phoneNumberForNumber:(NSString *)string name:(NSString *)name;
 
+-(void)sipSessionManager:(JCPhoneSipSessionManager *)sessionManager didReceiveUpdatedVoicemailCount:(NSInteger)count;
+
 @end
 
 #define JC_SIP_REGISTER_LINE_IS_EMPTY                   -5000

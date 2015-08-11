@@ -27,6 +27,7 @@
 // Controllers
 #import "JCTermsAndConditonsViewController.h"
 #import "JCDIDSelectorViewController.h"
+#import "UIDevice+JCPhone.h"
 
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedback :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@ <br> Domain : %@  <br> Carrier : %@ <br> Connection Type : %@ <br> ";
 

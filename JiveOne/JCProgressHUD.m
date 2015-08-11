@@ -8,7 +8,6 @@
 
 #import "JCProgressHUD.h"
 #import "JCError.h"
-#import "JCApiClient.h"
 
 static NSInteger JCProgressHUDDuration;
 
@@ -56,7 +55,8 @@ static NSInteger JCProgressHUDDuration;
     
     NSError *underlyingError = [JCError underlyingErrorForError:error];
     NSString *underlyingFailureReason = [underlyingError localizedFailureReason];
-    NSUInteger underlingErrorCode = [JCApiClientError underlyingErrorCodeForError:underlyingError];
+    NSUInteger underlingErrorCode = [JCError underlyingErrorCodeForError:underlyingError];
+    
     if(underlyingFailureReason && ![underlyingFailureReason isEqualToString:message]) {
         message = [NSString stringWithFormat:@"%@ (%li: %@)", message, (long)underlingErrorCode, underlyingFailureReason];
     }

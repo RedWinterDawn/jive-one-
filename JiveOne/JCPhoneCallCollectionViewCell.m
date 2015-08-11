@@ -54,7 +54,7 @@
 {
     [super setBounds:bounds];
     
-    if (![UIDevice currentDevice].iOS8)
+    if (!([[UIDevice currentDevice].systemVersion floatValue] < 8.0f))
         self.contentView.frame = bounds;
 }
 

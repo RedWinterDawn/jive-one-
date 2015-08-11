@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
+@import UIKit;
+
 #import "JCSettings.h"
 
 @class JCPhoneManager;

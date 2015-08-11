@@ -7,7 +7,7 @@
 //
 
 #import "JCPhoneNumber.h"
-#import "JCPhoneNumberDataSourceUtils.h"
+#import "JCPhoneNumberUtils.h"
 
 @implementation JCPhoneNumber
 
@@ -80,17 +80,17 @@
 
 -(NSString *)dialableNumber
 {
-    return [JCPhoneNumberDataSourceUtils dialableStringForPhoneNumber:self];
+    return [JCPhoneNumberUtils dialableStringForPhoneNumber:self];
 }
 
 -(NSString *)formattedNumber
 {
-    return [JCPhoneNumberDataSourceUtils formattedPhoneNumberForPhoneNumber:self];
+    return [JCPhoneNumberUtils formattedPhoneNumberForPhoneNumber:self];
 }
 
 -(NSString *)t9
 {
-    return [JCPhoneNumberDataSourceUtils t9StringForPhoneNumber:self];
+    return [JCPhoneNumberUtils t9StringForPhoneNumber:self];
 }
 
 -(NSString *)internationalNumber
@@ -100,7 +100,7 @@
 
 -(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
 {
-    return [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword
+    return [JCPhoneNumberUtils titleTextWithKeyword:keyword
                                                          font:font
                                                         color:color
                                                   phoneNumber:self];
@@ -108,7 +108,7 @@
 
 -(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
 {
-    return [JCPhoneNumberDataSourceUtils detailTextWithKeyword:keyword
+    return [JCPhoneNumberUtils detailTextWithKeyword:keyword
                                                           font:font
                                                          color:color
                                                    phoneNumber:self];
@@ -116,25 +116,25 @@
 
 -(BOOL)containsKeyword:(NSString *)keyword
 {
-    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+    return [JCPhoneNumberUtils phoneNumber:self
                                      containsKeyword:keyword];
 }
 
 -(BOOL)containsT9Keyword:(NSString *)keyword
 {
-    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+    return [JCPhoneNumberUtils phoneNumber:self
                                    containsT9Keyword:keyword];
 }
 
 -(BOOL)isEqualToPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
-    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+    return [JCPhoneNumberUtils phoneNumber:self
                                              isEqualToPhoneNumber:phoneNumber];
 }
 
 -(BOOL)isEqual:(id)object
 {
-    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+    return [JCPhoneNumberUtils phoneNumber:self
                                              isEqual:object];
 }
 

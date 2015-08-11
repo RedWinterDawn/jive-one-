@@ -7,6 +7,7 @@
 //
 
 @import Foundation;
+@import CoreData;
 
 #import "JCStaticRowData.h"
 #import "JCStaticSectionInfo.h"

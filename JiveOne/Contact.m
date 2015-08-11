@@ -8,7 +8,7 @@
 
 #import "Contact.h"
 #import "PhoneNumber.h"
-#import "JCPhoneNumberDataSourceUtils.h"
+#import "JCPhoneNumberUtils.h"
 #import "NSManagedObject+Additions.h"
 
 NSString *const kContactMarkForDeletionAttribute = @"markForDeletion";

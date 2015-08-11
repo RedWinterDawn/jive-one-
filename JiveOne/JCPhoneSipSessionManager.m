@@ -15,11 +15,12 @@
 #import <PortSIPLib/PortSIPSDK.h>
 
 // Managers
-#import "JCBadgeManager.h"          // Sip directly reports voicemail count for v4 clients to badge manager
+//#import "JCBadgeManager.h"          // Sip directly reports voicemail count for v4 clients to badge manager
 #import "JCPhoneAudioManager.h"     // Sip directly interacts with the audio session.
 
 // View Controllers
 #import "JCPhoneVideoViewController.h"
+#import "JCProgressHUD.h"
 
 #define ALERT_TAG_REFER 100
 #define OUTBOUND_SIP_SERVER_PORT 5061
@@ -39,6 +40,7 @@
 
 #define DEFAULT_PHONE_REGISTRATION_TIMEOUT_INTERVAL 15
 #define PHONE_STRINGS_NAME @"Phone"
+#define kPortSIPKey         @"1Rx1CNDEwOUM4MzA5RTNEMjM2Q0IwNTVBNEUxMjNBNzhEOEA5Njg2NEI1OTE3OTIxMkM4MTRCMzY5QjMxMzU5NEI2Q0BCNjk0NzZCNkE2MTk1NTY1RjE0Q0M4RDU3NDg3NTdCREBDNUZGRkVCQjNBMzgwMTI3MjI2QkNFMDgxNjg5MjJFRg"
 
 NSString *const kSipHandlerAutoAnswerModeAutoHeader = @"Answer-Mode: auto";
 NSString *const kSipHandlerAutoAnswerInfoIntercomHeader = @"Alert-Info: Intercom";
@@ -1545,7 +1547,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			  oldMessageCount:(int)oldMessageCount
 {
     if (!_provisioning.isV5) {
-        [JCBadgeManager setVoicemails:newMessageCount];
+        [self.delegate sipSessionManager:self didReceiveUpdatedVoicemailCount:newMessageCount];
     }   
 }
 

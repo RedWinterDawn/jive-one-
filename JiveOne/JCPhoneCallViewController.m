@@ -25,6 +25,7 @@
 
 #import "JCPhoneSipSession.h"
 #import "JCPhoneCall.h"
+#import "JCAlertView.h"
 
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3

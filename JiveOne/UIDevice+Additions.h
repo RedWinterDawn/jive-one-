@@ -18,16 +18,6 @@
 
 @end
 
-@interface UIDevice (CellularData)
-
-@property (nonatomic, readonly) BOOL canMakeCall;
-@property (nonatomic, readonly) BOOL carrierAllowsVOIP;
-@property (nonatomic, readonly) NSString *defaultCarrier;
-@property (nonatomic, readonly) NSString *carrierIsoCountryCode;
-
-
-@end
-
 @interface UIDevice (InstallationIdentifier)
 
 @property (nonatomic, readonly) NSString *installationIdentifier;

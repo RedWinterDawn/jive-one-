@@ -29,6 +29,11 @@
 #import "JCPhoneCallViewController.h"
 #import "JCPhoneCallTransferConfirmationViewController.h"
 
+#import "JCAlertView.h"
+#import "JCProgressHUD.h"
+
+#import "UIDevice+JCPhone.h"
+
 NSString *const kJCPhoneManager911String = @"911";
 NSString *const kJCPhoneManager611String = @"611";
 
@@ -40,7 +45,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 NSString *const kJCPhoneManagerShowCallsNotification                = @"phoneManagerShowCalls";
 NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneManagerHideCalls";
 
-@interface JCPhoneManager ()<JCPhoneSipSessionManagerDelegate, JCCallCardDelegate, JCPhoneAudioManagerDelegate>
+@interface JCPhoneManager ()<JCPhoneSipSessionManagerDelegate, JCPhoneCallDelegate, JCPhoneAudioManagerDelegate>
 {
     JCPhoneCallViewController *_callViewController;
     JCPhoneCallTransferConfirmationViewController *_transferConfirmationViewController;
@@ -866,6 +871,13 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
                   phoneNumberForNumber:number
                                   name:name
                           provisioning:sipHandler.provisioning];
+}
+
+-(void)sipSessionManager:(JCPhoneSipSessionManager *)sessionManager didReceiveUpdatedVoicemailCount:(NSInteger)count
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(phoneManager:provisioning:didReceiveUpdatedVoicemailCount:)]) {
+        [_delegate phoneManager:self provisioning:sessionManager.provisioning didReceiveUpdatedVoicemailCount:count];
+    }
 }
 
 #pragma mark - Getters -

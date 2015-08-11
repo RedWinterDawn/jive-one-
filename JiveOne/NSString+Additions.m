@@ -48,24 +48,6 @@
 
 @end
 
-@implementation NSString (IsNumeric)
-
--(BOOL)isNumeric {
-    NSCharacterSet *numericSet = [NSCharacterSet decimalDigitCharacterSet];
-    return [numericSet isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString:self]];
-}
-
--(BOOL)isAlphanumeric {
-    NSCharacterSet *alphaNumericSet = [NSCharacterSet alphanumericCharacterSet];
-    return [alphaNumericSet isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString:self]];
-}
-
--(NSString *)numericStringValue {
-    return [[self componentsSeparatedByCharactersInSet: [[NSCharacterSet decimalDigitCharacterSet] invertedSet]] componentsJoinedByString:@""];
-}
-
-@end
-
 @implementation NSString (Localization)
 
 -(NSLocale *)locale
@@ -78,34 +60,6 @@
         locale = [[NSLocale alloc] initWithLocaleIdentifier:localization];
     });
     return locale;
-}
-
-@end
-
-@implementation UIFont (Bold)
-
-+(UIFont *)boldFontForFont:(UIFont *)font
-{
-    NSString *fontName = [font.fontName stringByAppendingString:@"-Bold"];
-    UIFont *boldFont = [UIFont fontWithName:fontName size:font.pointSize];
-    if (boldFont) {
-        return boldFont;
-    }
-    
-    fontName = [font.fontName stringByAppendingString:@"-BoldMT"];
-    boldFont = [UIFont fontWithName:fontName size:font.pointSize];
-    if (boldFont) {
-        return boldFont;
-    }
-    
-    if ([fontName isEqualToString:@"Arial"]) {
-        fontName = @"Arial-BoldMT";
-        boldFont = [UIFont fontWithName:fontName size:font.pointSize];
-        if (boldFont) {
-            return boldFont;
-        }
-    }
-    return [UIFont boldSystemFontOfSize:font.pointSize];
 }
 
 @end

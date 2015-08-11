@@ -427,6 +427,10 @@ NSString *const kGCMSenderId = @"937754980938";
     return [OutgoingCall MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:false inContext:line.managedObjectContext];
 }
 
+-(void)phoneManager:(JCPhoneManager *)phoneManager provisioning:(id<JCPhoneProvisioningDataSource>)provisioning didReceiveUpdatedVoicemailCount:(NSUInteger)count
+{
+    [JCBadgeManager setVoicemails:count];
+}
 
 #pragma mark UIApplicationDelegate
 

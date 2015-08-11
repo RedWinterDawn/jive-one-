@@ -123,6 +123,10 @@ provisioningProfile:(id<JCPhoneProvisioningDataSource>)provisioningProfile;
 -(id<JCPhoneNumberDataSource>)phoneManager:(JCPhoneManager *)phoneManager
            lastCalledNumberForProvisioning:(id<JCPhoneProvisioningDataSource>)provisioning;
 
+-(void)phoneManager:(JCPhoneManager *)phoneManager
+       provisioning:(id<JCPhoneProvisioningDataSource>)provisioning
+didReceiveUpdatedVoicemailCount:(NSUInteger)count;
+
 @end
 
 

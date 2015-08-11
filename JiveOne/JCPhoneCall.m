@@ -23,17 +23,17 @@
 
 #pragma mark - Actions -
 
--(void)answerCall:(CompletionHandler)completion
+-(void)answerCall:(PhoneCallCompletionHandler)completion
 {
     [self.delegate answerCall:self completion:completion];
 }
 
--(void)endCall:(CompletionHandler)completion
+-(void)endCall:(PhoneCallCompletionHandler)completion
 {
     [self.delegate hangUpCall:self completion:completion];
 }
 
--(void)holdCall:(CompletionHandler)completion
+-(void)holdCall:(PhoneCallCompletionHandler)completion
 {
     [self.delegate holdCall:self completion:^(BOOL success, NSError *error) {
         self.holdStarted = [NSDate date];
@@ -43,7 +43,7 @@
     }];
 }
 
--(void)unholdCall:(CompletionHandler)completion
+-(void)unholdCall:(PhoneCallCompletionHandler)completion
 {
     [self.delegate unholdCall:self completion:^(BOOL success, NSError *error) {
         self.holdStarted = nil;

@@ -6,14 +6,14 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCPhoneNumberDataSourceUtils.h"
+#import "JCPhoneNumberUtils.h"
 
 #import <libPhoneNumber-iOS/NBPhoneNumber.h>
 #import <libPhoneNumber-iOS/NBPhoneNumberUtil.h>
 #import <libPhoneNumber-iOS/NBAsYouTypeFormatter.h>
 #import "JCPhoneNumber.h"
 
-@implementation JCPhoneNumberDataSourceUtils
+@implementation JCPhoneNumberUtils
 
 +(BOOL)phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber containsT9Keyword:(NSString *)keyword
 {
@@ -26,7 +26,7 @@
 
 +(BOOL)phoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber containsKeyword:(NSString *)keyword
 {
-    NSString *localizedKeyword = [keyword lowercaseStringWithLocale:keyword.locale];
+    NSString *localizedKeyword = [keyword lowercaseStringWithLocale:[self locale]];
     if (localizedKeyword.isNumeric) {
         NSString *string = phoneNumber.number.numericStringValue;
         if ([string rangeOfString:localizedKeyword].location != NSNotFound) {
@@ -38,7 +38,7 @@
     }
     
     NSString *name = phoneNumber.name;
-    NSString *fullName = [name lowercaseStringWithLocale:name.locale];
+    NSString *fullName = [name lowercaseStringWithLocale:[self locale]];
     if (fullName && [fullName rangeOfString:localizedKeyword].location != NSNotFound) {
         return YES;
     }
@@ -56,7 +56,7 @@
     NSCharacterSet *whitespace  = [NSCharacterSet whitespaceCharacterSet];
     NSString *name              = phoneNumber.name;
     NSString *otherName         = otherPhoneNumber.name;
-    NSLocale *locale             = name.locale;
+    NSLocale *locale            = [self locale];
     
     name = [[name lowercaseStringWithLocale:locale] stringByTrimmingCharactersInSet:whitespace];
     otherName = [[otherName lowercaseStringWithLocale:locale] stringByTrimmingCharactersInSet:whitespace];
@@ -298,6 +298,57 @@ NSString *const kT99 = @"9";
         locale = [[NSLocale alloc] initWithLocaleIdentifier:localization];
     });
     return locale;
+}
+
+@end
+
+@implementation NSString (JCPhoneNumberUtils)
+
+-(BOOL)isNumeric {
+    NSCharacterSet *numericSet = [NSCharacterSet decimalDigitCharacterSet];
+    return [numericSet isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString:self]];
+}
+
+-(BOOL)isAlphanumeric {
+    NSCharacterSet *alphaNumericSet = [NSCharacterSet alphanumericCharacterSet];
+    return [alphaNumericSet isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString:self]];
+}
+
+-(NSString *)numericStringValue {
+    return [[self componentsSeparatedByCharactersInSet: [[NSCharacterSet decimalDigitCharacterSet] invertedSet]] componentsJoinedByString:@""];
+}
+
+-(NSString *)dialString
+{
+    return [JCPhoneNumberUtils t9StringForString:self];
+}
+
+@end
+
+@implementation UIFont (JCPhoneNumberUtils)
+
++(UIFont *)boldFontForFont:(UIFont *)font
+{
+    NSString *fontName = [font.fontName stringByAppendingString:@"-Bold"];
+    UIFont *boldFont = [UIFont fontWithName:fontName size:font.pointSize];
+    if (boldFont) {
+        return boldFont;
+    }
+    
+    fontName = [font.fontName stringByAppendingString:@"-BoldMT"];
+    boldFont = [UIFont fontWithName:fontName size:font.pointSize];
+    if (boldFont) {
+        return boldFont;
+    }
+    
+    if ([fontName isEqualToString:@"Arial"]) {
+        fontName = @"Arial-BoldMT";
+        boldFont = [UIFont fontWithName:fontName size:font.pointSize];
+        if (boldFont) {
+            return boldFont;
+        }
+    }
+    return [UIFont boldSystemFontOfSize:font.pointSize];
 }
 
 @end

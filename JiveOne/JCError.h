@@ -28,5 +28,6 @@
 +(NSString *)descriptionFromCode:(NSInteger)integer;
 
 +(NSError *)underlyingErrorForError:(NSError *)error;
++(NSInteger)underlyingErrorCodeForError:(NSError *)error;
 
 @end
