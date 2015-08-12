@@ -115,11 +115,9 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
             // restart the application. We exit the app by raising an exception, which will be
             // by our analytics.
             if(error.code == JC_SIP_REGISTRATION_TIMEOUT) {
-                
+                [weakSelf disconnect];
                 [JCAlertView alertWithError:error
-                                  dismissed:^(NSInteger buttonIndex) {
-                                      [weakSelf disconnect];
-                                  }
+                                  dismissed:nil
                           cancelButtonTitle:NSLocalizedString(@"OK", nil)
                           otherButtonTitles:nil];
             }
@@ -245,7 +243,8 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
     if(error.code != JC_SIP_ALREADY_REGISTERING) {
         [UIApplication hideStatus];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRegistrationFailureNotification object:self];
+    [self postNotificationNamed:kJCPhoneManagerRegistrationFailureNotification];
+    
     [self reportError:error];
 }
 
@@ -904,12 +903,17 @@ NSString *const kJCPhoneManagerHideCallsNotification                = @"phoneMan
 
 -(BOOL)isInitialized
 {
-    return self.sipManager.isInitialized;
+    return _sipManager.isInitialized;
 }
 
 -(BOOL)isRegistered
 {
-    return self.sipManager.isRegistered;
+    return _sipManager.isRegistered;
+}
+
+-(BOOL)isRegistering
+{
+    return _sipManager.isRegistering;
 }
 
 -(BOOL)isActiveCall

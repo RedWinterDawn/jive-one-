@@ -171,7 +171,7 @@
         return _earlyMediaRingBackPlayer;
     }
     
-    NSString* ringTone = @"calling";
+    NSString *ringTone = @"calling";
     NSString *path = [[NSBundle mainBundle] pathForResource:ringTone ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:path];
     

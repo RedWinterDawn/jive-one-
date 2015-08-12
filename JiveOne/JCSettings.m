@@ -26,12 +26,15 @@
 
 -(void)loadDefaultsFromFile:(NSString *)file
 {
-    [self loadDefaultsFromFile:file bundle:[NSBundle mainBundle]];
+    [self loadDefaultsFromFile:file bundle:[NSBundle bundleForClass:[self class]]];
 }
 
 -(void)loadDefaultsFromFile:(NSString *)file bundle:(NSBundle *)bundle
 {
-    NSString *defaultsFilePath = [bundle pathForResource:[file stringByDeletingPathExtension] ofType:file.lastPathComponent];
+    NSString *extension = [file pathExtension];
+    NSString *fileName = [file stringByDeletingPathExtension];
+    
+    NSString *defaultsFilePath = [bundle pathForResource:fileName ofType:extension];
     if (!defaultsFilePath) {
         NSLog(@"Unable to load defaults from file: %@", file);
         return;

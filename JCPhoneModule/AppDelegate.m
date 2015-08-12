@@ -11,8 +11,9 @@
 #import "JCPhoneManager.h"
 
 #import "v4ProvisioningProfile.h"
+#import "v5ProvisioningProfile.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<JCPhoneManagerDelegate>
 
 @end
 
@@ -22,7 +23,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     JCPhoneManager *phoneManager = [JCPhoneManager sharedManager];
-    v4ProvisioningProfile *provisioningProfile = [v4ProvisioningProfile new];
+    [phoneManager.settings loadDefaultsFromFile:@"UserDefaults.plist"];  // Load the Defaults.
+    
+    v5ProvisioningProfile *provisioningProfile = [v5ProvisioningProfile phoneNumberWithName:@"test" number:@"1001"];
+    phoneManager.delegate = self;
     [phoneManager connectWithProvisioningProfile:provisioningProfile];
     
     return YES;
@@ -48,6 +52,35 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Phone Manager Delegate -
+
+-(void)phoneManager:(JCPhoneManager *)phoneManger phoneNumbersForKeyword:(NSString *)keyword provisioning:(id<JCPhoneProvisioningDataSource>)provisioning completion:(void (^)(NSArray *))completion
+{
+    if (completion) {
+        completion(nil);
+    }
+}
+
+-(void)phoneManager:(JCPhoneManager *)phoneManager provisioning:(id<JCPhoneProvisioningDataSource>)provisioning didReceiveUpdatedVoicemailCount:(NSUInteger)count
+{
+    
+}
+
+-(void)phoneManager:(JCPhoneManager *)manager reportCallOfType:(JCPhoneManagerCallType)type lineSession:(JCPhoneSipSession *)lineSession provisioningProfile:(id<JCPhoneProvisioningDataSource>)provisioningProfile
+{
+    
+}
+
+-(id<JCPhoneNumberDataSource>)phoneManager:(JCPhoneManager *)phoneManager lastCalledNumberForProvisioning:(id<JCPhoneProvisioningDataSource>)provisioning
+{
+    return nil;
+}
+
+-(id<JCPhoneNumberDataSource>)phoneManager:(JCPhoneManager *)manager phoneNumberForNumber:(NSString *)number name:(NSString *)name provisioning:(id<JCPhoneProvisioningDataSource>)provisioning
+{
+    return [JCPhoneNumber phoneNumberWithName:name number:number];
 }
 
 @end
