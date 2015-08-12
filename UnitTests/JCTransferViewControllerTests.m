@@ -112,7 +112,7 @@
     XCTAssertTrue([dialString isEqualToString:@"5"]);
 }
 
--(void)test_numPad_longKeyPress
+-(void)DISABLED_test_numPad_longKeyPress
 {
     // Given
     self.vc.formattedPhoneNumberLabel.dialString = nil;
