@@ -1762,6 +1762,7 @@
 		5D2D74471ACFBDA400B98BDF /* Integration Tests */ = {
 			isa = PBXGroup;
 			children = (
+				B78B71731B7BE78C00F80235 /* UITests */,
 				5D2D74501ACFBDEF00B98BDF /* JCAuthClientTests.m */,
 				5D2D74511ACFBDEF00B98BDF /* JCV5ClientTest.m */,
 				5D2D74481ACFBDA400B98BDF /* Supporting Files */,
@@ -2270,6 +2271,13 @@
 				9DF65736235F25242FAE4BE0 /* Pods-UnitTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		B78B71731B7BE78C00F80235 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = UITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
