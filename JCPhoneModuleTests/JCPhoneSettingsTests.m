@@ -9,17 +9,228 @@
 #import "JCPhoneModuleTesting.h"
 
 #import "JCPhoneSettings.h"
+#import "JCPhoneManager.h"
 
-SpecBegin(PhoneSettings)
+SpecBegin(JCPhoneSettings)
 
-describe(@"Setters", ^{
+describe(@"Phone Settings", ^{
     
-    __block id userDefaults = mock([NSUserDefaults class]);
-    __block JCPhoneSettings *settings = [[JCPhoneSettings alloc] initWithDefaults:userDefaults];
+    __block NSUserDefaults *userDefaults;
+    __block JCPhoneSettings *settings;
     
-    expect(settings).toNot.beNil;
-    expect(settings.userDefaults).toNot.beNil;
+    beforeEach(^{
+        userDefaults = OCMClassMock([NSUserDefaults class]);
+        settings = [[JCPhoneSettings alloc] initWithDefaults:userDefaults];
+        
+        expect(settings).toNot.beNil;
+        expect(settings.userDefaults).toNot.beNil;
+    });
     
+    context(@"phone enabled", ^{
+        
+        NSString *key = NSStringFromSelector(@selector(isPhoneEnabled));
+        
+        it(@"can read false value", ^{
+            OCMStub([userDefaults boolForKey:key]).andReturn(NO);
+            BOOL result = settings.isPhoneEnabled;
+            expect(result).to.beFalsy();
+        });
+        
+        it(@"can read true value", ^{
+            OCMStub([userDefaults boolForKey:key]).andReturn(YES);
+            BOOL result = settings.isPhoneEnabled;
+            expect(result).to.beTruthy();
+        });
+        
+        it(@"can write false value", ^{
+            settings.phoneEnabled = FALSE;
+            OCMVerify([userDefaults setBool:FALSE forKey:key]);
+        });
+        
+        it(@"can write true value", ^{
+            settings.phoneEnabled = TRUE;
+            OCMVerify([userDefaults setBool:TRUE forKey:key]);
+        });
+    });
+    
+    context(@"do not disturb enabled", ^{
+        
+        NSString *key = NSStringFromSelector(@selector(isDoNotDisturbEnabled));
+        
+        it(@"can read false value", ^{
+            OCMStub([userDefaults boolForKey:key]).andReturn(NO);
+            BOOL result = settings.isDoNotDisturbEnabled;
+            expect(result).to.beFalsy();
+        });
+        
+        it(@"can read true value", ^{
+            OCMStub([userDefaults boolForKey:key]).andReturn(YES);
+            BOOL result = settings.isDoNotDisturbEnabled;
+            expect(result).to.beTruthy();
+        });
+        
+        it(@"can write false value", ^{
+            settings.doNotDisturbEnabled = FALSE;
+            OCMVerify([userDefaults setBool:FALSE forKey:key]);
+        });
+        
+        it(@"can write true value", ^{
+            settings.doNotDisturbEnabled = TRUE;
+            OCMVerify([userDefaults setBool:TRUE forKey:key]);
+        });
+    });
+    
+    context(@"wifi only", ^{
+        
+        NSString *key = NSStringFromSelector(@selector(isWifiOnly));
+        
+        it(@"can read false value", ^{
+            OCMStub([userDefaults boolForKey:key]).andReturn(NO);
+            BOOL result = settings.isWifiOnly;
+            expect(result).to.beFalsy();
+        });
+        
+        it(@"can read true value", ^{
+            OCMStub([userDefaults boolForKey:key]).andReturn(YES);
+            BOOL result = settings.isWifiOnly;
+            expect(result).to.beTruthy();
+        });
+        
+        it(@"can write false value", ^{
+            settings.wifiOnly = FALSE;
+            OCMVerify([userDefaults setBool:FALSE forKey:key]);
+        });
+        
+        it(@"can write true value", ^{
+            settings.wifiOnly = TRUE;
+            OCMVerify([userDefaults setBool:TRUE forKey:key]);
+        });
+    });
+    
+    context(@"vibrate on ring", ^{
+        
+        NSString *key = NSStringFromSelector(@selector(isVibrateOnRing));
+        
+        it(@"can read false value", ^{
+            OCMStub([userDefaults boolForKey:key]).andReturn(NO);
+            BOOL result = settings.isVibrateOnRing;
+            expect(result).to.beFalsy();
+        });
+        
+        it(@"can read true value", ^{
+            OCMStub([userDefaults boolForKey:key]).andReturn(YES);
+            BOOL result = settings.isVibrateOnRing;
+            expect(result).to.beTruthy();
+        });
+        
+        it(@"can write false value", ^{
+            settings.vibrateOnRing = FALSE;
+            OCMVerify([userDefaults setBool:FALSE forKey:key]);
+        });
+        
+        it(@"can write true value", ^{
+            settings.vibrateOnRing = TRUE;
+            OCMVerify([userDefaults setBool:TRUE forKey:key]);
+        });
+    });
+    
+    context(@"intercom enabled", ^{
+        
+        NSString *key = NSStringFromSelector(@selector(isIntercomEnabled));
+        
+        it(@"can read false value", ^{
+            OCMStub([userDefaults boolForKey:key]).andReturn(NO);
+            BOOL result = settings.isIntercomEnabled;
+            expect(result).to.beFalsy();
+        });
+        
+        it(@"can read true value", ^{
+            OCMStub([userDefaults boolForKey:key]).andReturn(YES);
+            BOOL result = settings.isIntercomEnabled;
+            expect(result).to.beTruthy();
+        });
+        
+        it(@"can write false value", ^{
+            settings.intercomEnabled = FALSE;
+            OCMVerify([userDefaults setBool:FALSE forKey:key]);
+        });
+        
+        it(@"can write true value", ^{
+            settings.intercomEnabled = TRUE;
+            OCMVerify([userDefaults setBool:TRUE forKey:key]);
+        });
+    });
+    
+    context(@"intercom microphone mute enabled", ^{
+        
+        NSString *key = NSStringFromSelector(@selector(isIntercomMicrophoneMuteEnabled));
+        
+        it(@"can read false value", ^{
+            OCMStub([userDefaults boolForKey:key]).andReturn(NO);
+            BOOL result = settings.isIntercomMicrophoneMuteEnabled;
+            expect(result).to.beFalsy();
+        });
+        
+        it(@"can read true value", ^{
+            OCMStub([userDefaults boolForKey:key]).andReturn(YES);
+            BOOL result = settings.isIntercomMicrophoneMuteEnabled;
+            expect(result).to.beTruthy();
+        });
+        
+        it(@"can write false value", ^{
+            settings.intercomMicrophoneMuteEnabled = FALSE;
+            OCMVerify([userDefaults setBool:FALSE forKey:key]);
+        });
+        
+        it(@"can write true value", ^{
+            settings.intercomMicrophoneMuteEnabled = TRUE;
+            OCMVerify([userDefaults setBool:TRUE forKey:key]);
+        });
+    });
+    
+    context(@"volume level", ^{
+        
+        NSString *key = NSStringFromSelector(@selector(volumeLevel));
+        
+        it(@"can read float value", ^{
+            OCMStub([userDefaults floatForKey:key]).andReturn(0.6234);
+            float result = settings.volumeLevel;
+            expect(result).to.equal(0.6234);
+        });
+        
+        it(@"can write float value", ^{
+            settings.volumeLevel = 0.54321;
+            OCMVerify([userDefaults setFloat:0.54321 forKey:key]);
+        });
+    });
+    
+    context(@"ringtone", ^{
+        
+        NSString *key = NSStringFromSelector(@selector(ringtone));
+        
+        it(@"can read string value", ^{
+            OCMStub([userDefaults valueForKey:key]).andReturn(@"Fred");
+            NSString *result = settings.ringtone;
+            expect(result).to.equal(@"Fred");
+        });
+        
+        it(@"can write string value", ^{
+            settings.ringtone = @"Joe";
+            OCMVerify([userDefaults setValue:@"Joe" forKey:key]);
+        });
+    });
+});
+
+describe(@"JCPhoneSettings UIViewController helper method", ^{
+    
+    __block UIViewController *vc;
+    __block JCPhoneSettings *settings;
+    
+    beforeAll(^{
+        settings = OCMClassMock([JCSettings class]);
+        vc = [UIViewController new];
+        vc.phoneManager = [[JCPhoneManager alloc] initWithSipManager:nil settings:settings reachability:nil];
+    });
     
     
     
@@ -28,123 +239,3 @@ describe(@"Setters", ^{
 
 SpecEnd
 
-
-@interface JCPhoneSettings ()
-
--(instancetype)initWithDefaults:(NSUserDefaults *)userDefaults;
-
-@property (nonatomic, strong) NSUserDefaults *userDefaults;
-
-@end
-
-@interface JCPhoneSettingsTests : XCTestCase
-
-@property (nonatomic, strong) JCPhoneSettings *settings;
-
-@end
-
-@implementation JCPhoneSettingsTests
-
-- (void)setUp {
-    [super setUp];
-    
-    id userDefaults = mock([NSUserDefaults class]);
-    JCPhoneSettings *settings = [[JCPhoneSettings alloc] initWithDefaults:userDefaults];
-    XCTAssertEqual(userDefaults, settings.userDefaults);
-    self.settings = settings;
-}
-
-- (void)tearDown {
-    self.settings = nil;
-    [super tearDown];
-}
-
-//- (void)test_intercomEnabled_read {
-//
-//    NSString *key = @"intercomEnabled";
-//    NSUserDefaults *mockUserDefaults = self.appSettings.userDefaults;
-//    [given([mockUserDefaults boolForKey:key]) willReturnBool:NO];
-//    BOOL result = self.appSettings.isIntercomEnabled;
-//    assertThatBool(result, isFalse());
-//
-//    [given([mockUserDefaults boolForKey:key]) willReturnBool:YES];
-//    result = self.appSettings.isIntercomEnabled;
-//    assertThatBool(result, isTrue());
-//}
-//
-//- (void)test_intercomMicrophoneMuteEnabled_read {
-//
-//    NSString *key = @"intercomMicrophoneMuteEnabled";
-//    NSUserDefaults *mockUserDefaults = self.appSettings.userDefaults;
-//    [given([mockUserDefaults boolForKey:key]) willReturnBool:NO];
-//    BOOL result = self.appSettings.isIntercomMicrophoneMuteEnabled;
-//    assertThatBool(result, isFalse());
-//
-//    [given([mockUserDefaults boolForKey:key]) willReturnBool:YES];
-//    result = self.appSettings.isIntercomMicrophoneMuteEnabled;
-//    assertThatBool(result, isTrue());
-//}
-//
-//- (void)test_wifiOnly_read {
-//
-//    NSString *key = @"wifiOnly";
-//    NSUserDefaults *mockUserDefaults = self.appSettings.userDefaults;
-//    [given([mockUserDefaults boolForKey:key]) willReturnBool:NO];
-//    BOOL result = self.appSettings.isWifiOnly;
-//    assertThatBool(result, isFalse());
-//
-//    [given([mockUserDefaults boolForKey:key]) willReturnBool:YES];
-//    result = self.appSettings.isWifiOnly;
-//    assertThatBool(result, isTrue());
-//}
-//
-//- (void)test_presenceEnabled_read {
-//
-//    NSString *key = @"presenceEnabled";
-//    NSUserDefaults *mockUserDefaults = self.appSettings.userDefaults;
-//    [given([mockUserDefaults boolForKey:key]) willReturnBool:NO];
-//    BOOL result = self.appSettings.isPresenceEnabled;
-//    assertThatBool(result, isFalse());
-//
-//    [given([mockUserDefaults boolForKey:key]) willReturnBool:YES];
-//    result = self.appSettings.isPresenceEnabled;
-//    assertThatBool(result, isTrue());
-//}
-//
-//- (void)test_vibrateOnRing_read {
-//
-//    NSString *key = @"vibrateOnRing";
-//    NSUserDefaults *mockUserDefaults = self.appSettings.userDefaults;
-//    [given([mockUserDefaults boolForKey:key]) willReturnBool:NO];
-//    BOOL result = self.appSettings.isVibrateOnRing;
-//    assertThatBool(result, isFalse());
-//
-//    [given([mockUserDefaults boolForKey:key]) willReturnBool:YES];
-//    result = self.appSettings.isVibrateOnRing;
-//    assertThatBool(result, isTrue());
-//}
-//
-//-(void)test_isVoicemailOnSpeaker_read {
-//     NSString *key = @"voicemailOnSpeaker";
-//    NSUserDefaults *mockUserDefaults = self.appSettings.userDefaults;
-//    [given([mockUserDefaults boolForKey:key]) willReturnBool:NO];
-//    BOOL result = self.appSettings.voicemailOnSpeaker;
-//    assertThatBool(result, isFalse());
-//
-//    [given([mockUserDefaults boolForKey:key]) willReturnBool:YES];
-//    result = self.appSettings.voicemailOnSpeaker;
-//    assertThatBool(result, isTrue());
-//}
-//
-//-(void)test_volumeLevel_read {
-//    NSString *key = @"volumeLevel";
-//    NSUserDefaults *mockUserDefaults = self.appSettings.userDefaults;
-//    [given([mockUserDefaults floatForKey:key]) willReturnFloat:0.123];
-//
-//    float result = self.appSettings.volumeLevel;
-//    float value = 0.123;
-//    assertThatFloat(result,equalToFloat(value));
-//
-//}
-
-@end
