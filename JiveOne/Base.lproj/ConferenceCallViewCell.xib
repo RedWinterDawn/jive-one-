@@ -135,7 +135,7 @@
                                     <action selector="toggleHold:" destination="Qvt-6N-iCf" eventType="touchUpInside" id="NGq-1I-Wjd"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Bi-dC-Ajg" userLabel="HangUp" propertyAccessControl="localizable">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Bi-dC-Ajg" userLabel="HangUp" propertyAccessControl="none">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>

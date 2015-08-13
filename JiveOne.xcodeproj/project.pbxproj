@@ -388,6 +388,9 @@
 		B744DE321AF920F500A72682 /* JCBlockedNumbersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */; };
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
 		B77EFA2D1B03E51700D94AE9 /* VoicemailTranscription.m in Sources */ = {isa = PBXBuildFile; fileRef = B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */; };
+		B78B71751B7CFE4800F80235 /* libKIF.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B78B71741B7CFE4700F80235 /* libKIF.a */; };
+		B78B71771B7CFF4100F80235 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78B71761B7CFF4100F80235 /* IOKit.framework */; };
+		B78B717F1B7D044C00F80235 /* JCVoicemailDialUITest.m in Sources */ = {isa = PBXBuildFile; fileRef = B78B717C1B7D040700F80235 /* JCVoicemailDialUITest.m */; };
 		B78DBAF01B3DE62300F312B3 /* JCPhoneSelectDialtoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B78DBAEF1B3DE62300F312B3 /* JCPhoneSelectDialtoneViewController.m */; };
 		B79BA1E01B4F0C5900D3E9C3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B79BA1DF1B4F0C5900D3E9C3 /* GoogleService-Info.plist */; };
 		B79F55551AEF1DF900E4768F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
@@ -1085,6 +1088,10 @@
 		B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesMenuCell.m; sourceTree = "<group>"; };
 		B77EFA2B1B03E51700D94AE9 /* VoicemailTranscription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoicemailTranscription.h; sourceTree = "<group>"; };
 		B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoicemailTranscription.m; sourceTree = "<group>"; };
+		B78B71741B7CFE4700F80235 /* libKIF.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKIF.a; path = "Pods/../build/Debug-iphoneos/libKIF.a"; sourceTree = "<group>"; };
+		B78B71761B7CFF4100F80235 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
+		B78B717C1B7D040700F80235 /* JCVoicemailDialUITest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailDialUITest.m; sourceTree = "<group>"; };
+		B78B71801B7D050A00F80235 /* libKIF.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKIF.a; path = "Pods/../build/Debug-iphoneos/libKIF.a"; sourceTree = "<group>"; };
 		B78DBAEE1B3DE62300F312B3 /* JCPhoneSelectDialtoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneSelectDialtoneViewController.h; sourceTree = "<group>"; };
 		B78DBAEF1B3DE62300F312B3 /* JCPhoneSelectDialtoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneSelectDialtoneViewController.m; sourceTree = "<group>"; };
 		B794BCE11B31CACD00DE6401 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1231,7 +1238,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B78B71751B7CFE4800F80235 /* libKIF.a in Frameworks */,
 				F8FB1FCB7247E67D2E882110 /* libPods-JCPhoneModuleTests.a in Frameworks */,
+				B78B71771B7CFF4100F80235 /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1428,6 +1437,9 @@
 		275F4A5018AD0FBC00D2F069 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B78B71801B7D050A00F80235 /* libKIF.a */,
+				B78B71761B7CFF4100F80235 /* IOKit.framework */,
+				B78B71741B7CFE4700F80235 /* libKIF.a */,
 				B79BA1DD1B4F0AE800D3E9C3 /* libPods-GoogleCloudMessaging.a */,
 				5D5782D01B334DDB005F1B86 /* libPods-XMLDictionary.a */,
 				5D85A9801ACF933200991A97 /* PortSIPLib.framework */,
@@ -1861,6 +1873,7 @@
 		5D1A3B111B7CF8E700C561C2 /* UITests */ = {
 			isa = PBXGroup;
 			children = (
+				B78B717C1B7D040700F80235 /* JCVoicemailDialUITest.m */,
 			);
 			name = UITests;
 			sourceTree = "<group>";
@@ -2669,9 +2682,11 @@
 					};
 					5D11CC931B796696009BB9B4 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 5NE3JJD5L3;
 					};
 					5D11CCAB1B796696009BB9B4 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 5NE3JJD5L3;
 						TestTargetID = 5D11CC931B796696009BB9B4;
 					};
 					5D2D74111ACFA84700B98BDF = {
@@ -3195,6 +3210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B78B717F1B7D044C00F80235 /* JCVoicemailDialUITest.m in Sources */,
 				5D1A3B081B7C01DD00C561C2 /* JCPhoneDialerViewControllerTests.m in Sources */,
 				5D1A3B0A1B7CEE8600C561C2 /* JCPhoneNumberUtilsTests.m in Sources */,
 				5D1A3B0F1B7CF45B00C561C2 /* JCPhoneSettingsTests.m in Sources */,
@@ -3771,6 +3787,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3786,9 +3804,14 @@
 				INFOPLIST_FILE = JCPhoneModule/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -3799,6 +3822,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -3812,9 +3836,14 @@
 				INFOPLIST_FILE = JCPhoneModule/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Enterprise;
 		};
@@ -3825,6 +3854,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -3838,9 +3868,14 @@
 				INFOPLIST_FILE = JCPhoneModule/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -3851,12 +3886,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -3866,8 +3900,13 @@
 				INFOPLIST_FILE = JCPhoneModuleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JCPhoneModule.app/JCPhoneModule";
 			};
 			name = Debug;
@@ -3879,20 +3918,24 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = JCPhoneModuleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JCPhoneModule.app/JCPhoneModule";
 			};
 			name = Enterprise;
@@ -3904,20 +3947,24 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = JCPhoneModuleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JCPhoneModule.app/JCPhoneModule";
 			};
 			name = Release;
