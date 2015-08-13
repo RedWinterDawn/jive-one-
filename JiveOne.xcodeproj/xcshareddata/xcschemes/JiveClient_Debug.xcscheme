@@ -151,16 +151,34 @@
                   Identifier = "JCDialerViewControllerTests/test_numPad_longKeyPress">
                </Test>
                <Test
+                  Identifier = "JCDidTests">
+               </Test>
+               <Test
                   Identifier = "JCMainStoryboardBaseTestCase">
                </Test>
                <Test
                   Identifier = "JCPhoneManagerBaseTestCase">
                </Test>
                <Test
+                  Identifier = "JCPhoneNumberTests">
+               </Test>
+               <Test
+                  Identifier = "JCPresenceManagerTests">
+               </Test>
+               <Test
                   Identifier = "JCTransferViewControllerTests">
                </Test>
                <Test
                   Identifier = "JCTransferViewControllerTests/test_numPad_longKeyPress">
+               </Test>
+               <Test
+                  Identifier = "JCVoicemailManagerTests">
+               </Test>
+               <Test
+                  Identifier = "NSData_AdditionsTests">
+               </Test>
+               <Test
+                  Identifier = "NSDictionary_AdditionsTests">
                </Test>
             </SkippedTests>
          </TestableReference>

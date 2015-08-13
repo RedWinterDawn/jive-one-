@@ -52,9 +52,6 @@
 		5D03649119DC5A450090CC21 /* JCTransferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D03649019DC5A450090CC21 /* JCTransferViewController.m */; };
 		5D0BACA41AD438F800EFEF86 /* NSDictionary+AdditionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACA31AD438F800EFEF86 /* NSDictionary+AdditionsTests.m */; };
 		5D0BACA61AD4393F00EFEF86 /* NSData+AdditionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACA51AD4393F00EFEF86 /* NSData+AdditionsTests.m */; };
-		5D0BACA81AD439B100EFEF86 /* JCBadgeManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACA71AD439B100EFEF86 /* JCBadgeManagerTests.m */; };
-		5D0BACAA1AD43B0F00EFEF86 /* JCPresenceManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACA91AD43B0F00EFEF86 /* JCPresenceManagerTests.m */; };
-		5D0BACAC1AD43B6500EFEF86 /* JCVoicemailManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACAB1AD43B6500EFEF86 /* JCVoicemailManagerTests.m */; };
 		5D0BACAE1AD43E9B00EFEF86 /* JCSettingsTableViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACAD1AD43E9B00EFEF86 /* JCSettingsTableViewControllerTests.m */; };
 		5D0BACB01AD4406300EFEF86 /* JCAppSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACAF1AD4406300EFEF86 /* JCAppSettingsTests.m */; };
 		5D112DDA1A4094340097223C /* JCAuthenticationKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D112DD91A4094340097223C /* JCAuthenticationKeychain.m */; };
@@ -103,8 +100,6 @@
 		5D2D74351ACFB48500B98BDF /* JCDialerViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D74261ACFB48500B98BDF /* JCDialerViewControllerTests.m */; };
 		5D2D74361ACFB48500B98BDF /* JCMainStoryboardBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D74281ACFB48500B98BDF /* JCMainStoryboardBaseTestCase.m */; };
 		5D2D74371ACFB48500B98BDF /* JCPhoneManagerBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D742A1ACFB48500B98BDF /* JCPhoneManagerBaseTestCase.m */; };
-		5D2D74381ACFB48500B98BDF /* JCPhoneManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D742B1ACFB48500B98BDF /* JCPhoneManagerTests.m */; };
-		5D2D74391ACFB48500B98BDF /* JCTransferViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D742C1ACFB48500B98BDF /* JCTransferViewControllerTests.m */; };
 		5D2D743C1ACFB48500B98BDF /* TestExternalContactListContents.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D2D742F1ACFB48500B98BDF /* TestExternalContactListContents.plist */; };
 		5D2D74521ACFBDEF00B98BDF /* JCAuthClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D74501ACFBDEF00B98BDF /* JCAuthClientTests.m */; };
 		5D2D74541ACFBE4D00B98BDF /* JCAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */; };
@@ -474,9 +469,6 @@
 		5D03649019DC5A450090CC21 /* JCTransferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTransferViewController.m; sourceTree = "<group>"; };
 		5D0BACA31AD438F800EFEF86 /* NSDictionary+AdditionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+AdditionsTests.m"; sourceTree = "<group>"; };
 		5D0BACA51AD4393F00EFEF86 /* NSData+AdditionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AdditionsTests.m"; sourceTree = "<group>"; };
-		5D0BACA71AD439B100EFEF86 /* JCBadgeManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBadgeManagerTests.m; sourceTree = "<group>"; };
-		5D0BACA91AD43B0F00EFEF86 /* JCPresenceManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceManagerTests.m; sourceTree = "<group>"; };
-		5D0BACAB1AD43B6500EFEF86 /* JCVoicemailManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailManagerTests.m; sourceTree = "<group>"; };
 		5D0BACAD1AD43E9B00EFEF86 /* JCSettingsTableViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSettingsTableViewControllerTests.m; sourceTree = "<group>"; };
 		5D0BACAF1AD4406300EFEF86 /* JCAppSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppSettingsTests.m; sourceTree = "<group>"; };
 		5D112DD81A4094340097223C /* JCAuthenticationKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthenticationKeychain.h; sourceTree = "<group>"; };
@@ -583,8 +575,6 @@
 		5D2D74281ACFB48500B98BDF /* JCMainStoryboardBaseTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMainStoryboardBaseTestCase.m; sourceTree = "<group>"; };
 		5D2D74291ACFB48500B98BDF /* JCPhoneManagerBaseTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneManagerBaseTestCase.h; sourceTree = "<group>"; };
 		5D2D742A1ACFB48500B98BDF /* JCPhoneManagerBaseTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneManagerBaseTestCase.m; sourceTree = "<group>"; };
-		5D2D742B1ACFB48500B98BDF /* JCPhoneManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneManagerTests.m; sourceTree = "<group>"; };
-		5D2D742C1ACFB48500B98BDF /* JCTransferViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTransferViewControllerTests.m; sourceTree = "<group>"; };
 		5D2D742F1ACFB48500B98BDF /* TestExternalContactListContents.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TestExternalContactListContents.plist; sourceTree = "<group>"; };
 		5D2D74461ACFBDA400B98BDF /* IntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D2D74491ACFBDA400B98BDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1732,10 +1722,6 @@
 		5D2D74401ACFBCA700B98BDF /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				5D2D742B1ACFB48500B98BDF /* JCPhoneManagerTests.m */,
-				5D0BACA71AD439B100EFEF86 /* JCBadgeManagerTests.m */,
-				5D0BACA91AD43B0F00EFEF86 /* JCPresenceManagerTests.m */,
-				5D0BACAB1AD43B6500EFEF86 /* JCVoicemailManagerTests.m */,
 				B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */,
 			);
 			name = Managers;
@@ -1762,7 +1748,6 @@
 		5D2D74471ACFBDA400B98BDF /* Integration Tests */ = {
 			isa = PBXGroup;
 			children = (
-				B78B71731B7BE78C00F80235 /* UITests */,
 				5D2D74501ACFBDEF00B98BDF /* JCAuthClientTests.m */,
 				5D2D74511ACFBDEF00B98BDF /* JCV5ClientTest.m */,
 				5D2D74481ACFBDA400B98BDF /* Supporting Files */,
@@ -1784,7 +1769,6 @@
 			children = (
 				5D2D74291ACFB48500B98BDF /* JCPhoneManagerBaseTestCase.h */,
 				5D2D742A1ACFB48500B98BDF /* JCPhoneManagerBaseTestCase.m */,
-				5D2D742C1ACFB48500B98BDF /* JCTransferViewControllerTests.m */,
 			);
 			name = PhoneManager;
 			sourceTree = "<group>";
@@ -2271,13 +2255,6 @@
 				9DF65736235F25242FAE4BE0 /* Pods-UnitTests.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		B78B71731B7BE78C00F80235 /* UITests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = UITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2789,7 +2766,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DC5181C1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m in Sources */,
-				5D0BACAC1AD43B6500EFEF86 /* JCVoicemailManagerTests.m in Sources */,
 				5D2D74351ACFB48500B98BDF /* JCDialerViewControllerTests.m in Sources */,
 				5D0BACA41AD438F800EFEF86 /* NSDictionary+AdditionsTests.m in Sources */,
 				5DBF6F431ADC4FC9004B53F5 /* JCPhoneBookTests.m in Sources */,
@@ -2807,16 +2783,12 @@
 				5D25F81A1AE02E1600981DB6 /* JCPhoneNumberDataSourceUtilTests.m in Sources */,
 				5DC518201AD3096F007CEA71 /* JCLineTests.m in Sources */,
 				5DBF6F4B1ADFEFB0004B53F5 /* JCPersonTests.m in Sources */,
-				5D0BACA81AD439B100EFEF86 /* JCBadgeManagerTests.m in Sources */,
 				5D0BACAE1AD43E9B00EFEF86 /* JCSettingsTableViewControllerTests.m in Sources */,
-				5D0BACAA1AD43B0F00EFEF86 /* JCPresenceManagerTests.m in Sources */,
-				5D2D74381ACFB48500B98BDF /* JCPhoneManagerTests.m in Sources */,
 				5DA30DC51AD625D8008856DC /* NSString+AdditionsTests.m in Sources */,
 				5DC5181E1AD3094E007CEA71 /* JCPbxTests.m in Sources */,
 				5DBF6F491ADF225A004B53F5 /* JCPhoneNumberTests.m in Sources */,
 				5D2D74301ACFB48500B98BDF /* JCPhoneBookTestDataFactory.m in Sources */,
 				B70EAB3F1AD3302000305F43 /* JCAuthenticationManagerTests.m in Sources */,
-				5D2D74391ACFB48500B98BDF /* JCTransferViewControllerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
