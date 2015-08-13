@@ -144,6 +144,10 @@
 		5D1A3B011B7BF25D00C561C2 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D1A3AFF1B7BDE4800C561C2 /* UserDefaults.plist */; };
 		5D1A3B051B7BFD6700C561C2 /* v5ProvisioningProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A3B031B7BFBDC00C561C2 /* v5ProvisioningProfile.m */; };
 		5D1A3B061B7BFDE500C561C2 /* calling.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7B5D9C01B62F427008AD588 /* calling.mp3 */; };
+		5D1A3B081B7C01DD00C561C2 /* JCPhoneDialerViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A3B071B7C01DD00C561C2 /* JCPhoneDialerViewControllerTests.m */; };
+		5D1A3B0A1B7CEE8600C561C2 /* JCPhoneNumberUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A3B091B7CEE8600C561C2 /* JCPhoneNumberUtilsTests.m */; };
+		5D1A3B0C1B7CF30100C561C2 /* JCPhoneNumberTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A3B0B1B7CF30100C561C2 /* JCPhoneNumberTests.m */; };
+		5D1A3B0F1B7CF45B00C561C2 /* JCPhoneSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A3B0E1B7CF45B00C561C2 /* JCPhoneSettingsTests.m */; };
 		5D1BBE5B19EDC9EF006526B2 /* JCPhoneCallOptionsMergeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BBE5A19EDC9EF006526B2 /* JCPhoneCallOptionsMergeButton.m */; };
 		5D1FAC5F19DDD68000899915 /* JCPhoneCallCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC5E19DDD68000899915 /* JCPhoneCallCollectionViewCell.m */; };
 		5D1FAC6219DDFF5300899915 /* JCPhoneCallCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6119DDFF5300899915 /* JCPhoneCallCollectionLayout.m */; };
@@ -158,7 +162,6 @@
 		5D241FDE1A383837008B498A /* JCDebugLineTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FDD1A383837008B498A /* JCDebugLineTableViewController.m */; };
 		5D241FE41A38BAD5008B498A /* InternalExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FE31A38BAD5008B498A /* InternalExtension.m */; };
 		5D25F8181AE014D700981DB6 /* JCPhoneNumberUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8171AE014D700981DB6 /* JCPhoneNumberUtils.m */; };
-		5D25F81A1AE02E1600981DB6 /* JCPhoneNumberDataSourceUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8191AE02E1600981DB6 /* JCPhoneNumberDataSourceUtilTests.m */; };
 		5D25F81D1AE0381600981DB6 /* JCPhoneNumberManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F81C1AE0381600981DB6 /* JCPhoneNumberManagedObject.m */; };
 		5D25F82E1AE5A7DA00981DB6 /* JCSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F82D1AE5A7DA00981DB6 /* JCSplitViewController.m */; };
 		5D25F8411AE6872E00981DB6 /* JCAppMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25F8401AE6872E00981DB6 /* JCAppMenuTableViewController.m */; };
@@ -343,7 +346,6 @@
 		5DBF6F3E1ADC3ADB004B53F5 /* JCPhoneBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBF6F3D1ADC3ADB004B53F5 /* JCPhoneBook.m */; };
 		5DBF6F431ADC4FC9004B53F5 /* JCPhoneBookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBF6F421ADC4FC9004B53F5 /* JCPhoneBookTests.m */; };
 		5DBF6F461ADEF477004B53F5 /* JCAddressBookEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBF6F451ADEF477004B53F5 /* JCAddressBookEntity.m */; };
-		5DBF6F491ADF225A004B53F5 /* JCPhoneNumberTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBF6F481ADF225A004B53F5 /* JCPhoneNumberTests.m */; };
 		5DBF6F4B1ADFEFB0004B53F5 /* JCPersonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBF6F4A1ADFEFB0004B53F5 /* JCPersonTests.m */; };
 		5DC1D8811AB8D7D000326AF3 /* JCApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1D8801AB8D7D000326AF3 /* JCApiClient.m */; };
 		5DC1D8841ABB0CDB00326AF3 /* JCSocketLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1D8831ABB0CDB00326AF3 /* JCSocketLogger.m */; };
@@ -426,6 +428,7 @@
 		F8EFE1561A96B54500B429FD /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8EFE1551A96B54500B429FD /* Accounts.framework */; };
 		F8EFE1581A96B55600B429FD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8EFE1571A96B55600B429FD /* StoreKit.framework */; };
 		F8EFE15E1A96C29600B429FD /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9818F35749003A6615 /* Social.framework */; };
+		F8FB1FCB7247E67D2E882110 /* libPods-JCPhoneModuleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E000C377DA126111A12C74 /* libPods-JCPhoneModuleTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -464,6 +467,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		14DF4DE6120262A334ED4BCC /* Pods-JCPhoneModuleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JCPhoneModuleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-JCPhoneModuleTests/Pods-JCPhoneModuleTests.release.xcconfig"; sourceTree = "<group>"; };
+		15E000C377DA126111A12C74 /* libPods-JCPhoneModuleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JCPhoneModuleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B209FFD8576BB760529B3CA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		270559A3196DD11700A7AF35 /* InternalExtensionGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternalExtensionGroup.h; sourceTree = "<group>"; };
 		270559A4196DD11700A7AF35 /* InternalExtensionGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InternalExtensionGroup.m; sourceTree = "<group>"; };
@@ -534,6 +539,7 @@
 		27F64D6019772D6A00F772AA /* Voicemail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voicemail.h; sourceTree = "<group>"; };
 		27F64D6119772D6A00F772AA /* Voicemail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Voicemail.m; sourceTree = "<group>"; };
 		43C81F9C015A20BD2322B787 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		4FCA9694C9B52529455D6522 /* Pods-JCPhoneModuleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JCPhoneModuleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JCPhoneModuleTests/Pods-JCPhoneModuleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5D0199B91A1BBBAC00F4CF13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		5D0199BE1A1BBBF400F4CF13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CurrentCallViewCell.xib; sourceTree = "<group>"; };
 		5D0199C31A1BBC0500F4CF13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/IncomingCallViewCell.xib; sourceTree = "<group>"; };
@@ -621,6 +627,11 @@
 		5D1A3AFF1B7BDE4800C561C2 /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
 		5D1A3B021B7BFBDC00C561C2 /* v5ProvisioningProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = v5ProvisioningProfile.h; sourceTree = "<group>"; };
 		5D1A3B031B7BFBDC00C561C2 /* v5ProvisioningProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = v5ProvisioningProfile.m; sourceTree = "<group>"; };
+		5D1A3B071B7C01DD00C561C2 /* JCPhoneDialerViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneDialerViewControllerTests.m; sourceTree = "<group>"; };
+		5D1A3B091B7CEE8600C561C2 /* JCPhoneNumberUtilsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneNumberUtilsTests.m; sourceTree = "<group>"; };
+		5D1A3B0B1B7CF30100C561C2 /* JCPhoneNumberTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneNumberTests.m; sourceTree = "<group>"; };
+		5D1A3B0D1B7CF34900C561C2 /* JCPhoneModuleTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneModuleTesting.h; sourceTree = "<group>"; };
+		5D1A3B0E1B7CF45B00C561C2 /* JCPhoneSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneSettingsTests.m; sourceTree = "<group>"; };
 		5D1BBE5919EDC9EF006526B2 /* JCPhoneCallOptionsMergeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneCallOptionsMergeButton.h; sourceTree = "<group>"; };
 		5D1BBE5A19EDC9EF006526B2 /* JCPhoneCallOptionsMergeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneCallOptionsMergeButton.m; sourceTree = "<group>"; };
 		5D1FAC5D19DDD68000899915 /* JCPhoneCallCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneCallCollectionViewCell.h; sourceTree = "<group>"; };
@@ -649,7 +660,6 @@
 		5D241FE31A38BAD5008B498A /* InternalExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InternalExtension.m; sourceTree = "<group>"; };
 		5D25F8161AE014D700981DB6 /* JCPhoneNumberUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneNumberUtils.h; sourceTree = "<group>"; };
 		5D25F8171AE014D700981DB6 /* JCPhoneNumberUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneNumberUtils.m; sourceTree = "<group>"; };
-		5D25F8191AE02E1600981DB6 /* JCPhoneNumberDataSourceUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneNumberDataSourceUtilTests.m; sourceTree = "<group>"; };
 		5D25F81B1AE0381600981DB6 /* JCPhoneNumberManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneNumberManagedObject.h; sourceTree = "<group>"; };
 		5D25F81C1AE0381600981DB6 /* JCPhoneNumberManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneNumberManagedObject.m; sourceTree = "<group>"; };
 		5D25F8211AE5895E00981DB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
@@ -997,7 +1007,6 @@
 		5DBF6F441ADEF477004B53F5 /* JCAddressBookEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAddressBookEntity.h; sourceTree = "<group>"; };
 		5DBF6F451ADEF477004B53F5 /* JCAddressBookEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookEntity.m; sourceTree = "<group>"; };
 		5DBF6F471ADF0E1F004B53F5 /* JCPhoneProvisioningDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneProvisioningDataSource.h; sourceTree = "<group>"; };
-		5DBF6F481ADF225A004B53F5 /* JCPhoneNumberTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneNumberTests.m; sourceTree = "<group>"; };
 		5DBF6F4A1ADFEFB0004B53F5 /* JCPersonTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPersonTests.m; sourceTree = "<group>"; };
 		5DC1D87F1AB8D7D000326AF3 /* JCApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCApiClient.h; sourceTree = "<group>"; };
 		5DC1D8801AB8D7D000326AF3 /* JCApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCApiClient.m; sourceTree = "<group>"; };
@@ -1096,6 +1105,7 @@
 		B7F561541B45A4CF0073D1C2 /* iReport.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = iReport.mp3; sourceTree = "<group>"; };
 		B7FCA5A81AD2E74E0034C5EC /* JCDIDSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDIDSelectorViewController.h; sourceTree = "<group>"; };
 		B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDIDSelectorViewController.m; sourceTree = "<group>"; };
+		DB5DCEBD7762CD852B2FF068 /* Pods-JCPhoneModuleTests.enterprise.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JCPhoneModuleTests.enterprise.xcconfig"; path = "Pods/Target Support Files/Pods-JCPhoneModuleTests/Pods-JCPhoneModuleTests.enterprise.xcconfig"; sourceTree = "<group>"; };
 		DD3BD9F218DCB1740080318E /* Voicemail+V5Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Voicemail+V5Client.h"; sourceTree = "<group>"; };
 		DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Voicemail+V5Client.m"; sourceTree = "<group>"; };
 		DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1221,6 +1231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8FB1FCB7247E67D2E882110 /* libPods-JCPhoneModuleTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1448,6 +1459,7 @@
 				279A4E0B19DA870600E8AB7B /* libresolv.dylib */,
 				DDCE1E8C18F35637003A6615 /* libz.dylib */,
 				E4C6FA8CC15E9F91383398F8 /* libPods-UnitTests.a */,
+				15E000C377DA126111A12C74 /* libPods-JCPhoneModuleTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1716,18 +1728,13 @@
 		5D11CCAF1B796697009BB9B4 /* JCPhoneModuleTests */ = {
 			isa = PBXGroup;
 			children = (
-				5D11CCB21B796697009BB9B4 /* JCPhoneModuleTests.m */,
-				5D11CCB01B796697009BB9B4 /* Supporting Files */,
+				5D11CCB11B796697009BB9B4 /* Info.plist */,
+				5D1A3B0D1B7CF34900C561C2 /* JCPhoneModuleTesting.h */,
+				5D1A3B111B7CF8E700C561C2 /* UITests */,
+				5D1A3B101B7CF8CD00C561C2 /* Controllers */,
+				5D1A3B121B7CFA4B00C561C2 /* Models */,
 			);
 			path = JCPhoneModuleTests;
-			sourceTree = "<group>";
-		};
-		5D11CCB01B796697009BB9B4 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5D11CCB11B796697009BB9B4 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		5D11CCBC1B7966A7009BB9B4 /* Modules */ = {
@@ -1842,6 +1849,32 @@
 				5D1598C31B58A7610045F98F /* UIViewController+MMDrawerController.m */,
 			);
 			path = MMDrawerController;
+			sourceTree = "<group>";
+		};
+		5D1A3B101B7CF8CD00C561C2 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		5D1A3B111B7CF8E700C561C2 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = UITests;
+			sourceTree = "<group>";
+		};
+		5D1A3B121B7CFA4B00C561C2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5D11CCB21B796697009BB9B4 /* JCPhoneModuleTests.m */,
+				5D1A3B071B7C01DD00C561C2 /* JCPhoneDialerViewControllerTests.m */,
+				5D1A3B091B7CEE8600C561C2 /* JCPhoneNumberUtilsTests.m */,
+				5D1A3B0B1B7CF30100C561C2 /* JCPhoneNumberTests.m */,
+				5D1A3B0E1B7CF45B00C561C2 /* JCPhoneSettingsTests.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		5D241FD51A38313F008B498A /* Debug */ = {
@@ -1991,9 +2024,7 @@
 				5DC518231AD30E46007CEA71 /* JCJiveContactTests.m */,
 				B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */,
 				5D0BACAF1AD4406300EFEF86 /* JCAppSettingsTests.m */,
-				5DBF6F481ADF225A004B53F5 /* JCPhoneNumberTests.m */,
 				5DBF6F4A1ADFEFB0004B53F5 /* JCPersonTests.m */,
-				5D25F8191AE02E1600981DB6 /* JCPhoneNumberDataSourceUtilTests.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2494,6 +2525,9 @@
 				AD312703033AFDB89B1D2CBE /* Pods-UnitTests.debug.xcconfig */,
 				6818B7FC8A9DCEE51B290F02 /* Pods-UnitTests.enterprise.xcconfig */,
 				9DF65736235F25242FAE4BE0 /* Pods-UnitTests.release.xcconfig */,
+				4FCA9694C9B52529455D6522 /* Pods-JCPhoneModuleTests.debug.xcconfig */,
+				DB5DCEBD7762CD852B2FF068 /* Pods-JCPhoneModuleTests.enterprise.xcconfig */,
+				14DF4DE6120262A334ED4BCC /* Pods-JCPhoneModuleTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -2542,9 +2576,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5D11CCB81B796697009BB9B4 /* Build configuration list for PBXNativeTarget "JCPhoneModuleTests" */;
 			buildPhases = (
+				AAC3D5903BDD78DA65D138C1 /* Check Pods Manifest.lock */,
 				5D11CCA81B796696009BB9B4 /* Sources */,
 				5D11CCA91B796696009BB9B4 /* Frameworks */,
 				5D11CCAA1B796696009BB9B4 /* Resources */,
+				A51CD392EF0D401D3CD5E77E /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2802,6 +2838,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A51CD392EF0D401D3CD5E77E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JCPhoneModuleTests/Pods-JCPhoneModuleTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AAC3D5903BDD78DA65D138C1 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		CB3D37AA11C3484F8D034661 /* Copy Pods Resources */ = {
@@ -3129,6 +3195,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D1A3B081B7C01DD00C561C2 /* JCPhoneDialerViewControllerTests.m in Sources */,
+				5D1A3B0A1B7CEE8600C561C2 /* JCPhoneNumberUtilsTests.m in Sources */,
+				5D1A3B0F1B7CF45B00C561C2 /* JCPhoneSettingsTests.m in Sources */,
+				5D1A3B0C1B7CF30100C561C2 /* JCPhoneNumberTests.m in Sources */,
 				5D11CCB31B796697009BB9B4 /* JCPhoneModuleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3153,7 +3223,6 @@
 				5D2D74361ACFB48500B98BDF /* JCMainStoryboardBaseTestCase.m in Sources */,
 				5D0BACB01AD4406300EFEF86 /* JCAppSettingsTests.m in Sources */,
 				5D0BACA61AD4393F00EFEF86 /* NSData+AdditionsTests.m in Sources */,
-				5D25F81A1AE02E1600981DB6 /* JCPhoneNumberDataSourceUtilTests.m in Sources */,
 				5DC518201AD3096F007CEA71 /* JCLineTests.m in Sources */,
 				5DBF6F4B1ADFEFB0004B53F5 /* JCPersonTests.m in Sources */,
 				5D0BACA81AD439B100EFEF86 /* JCBadgeManagerTests.m in Sources */,
@@ -3162,7 +3231,6 @@
 				5D2D74381ACFB48500B98BDF /* JCPhoneManagerTests.m in Sources */,
 				5DA30DC51AD625D8008856DC /* NSString+AdditionsTests.m in Sources */,
 				5DC5181E1AD3094E007CEA71 /* JCPbxTests.m in Sources */,
-				5DBF6F491ADF225A004B53F5 /* JCPhoneNumberTests.m in Sources */,
 				5D2D74301ACFB48500B98BDF /* JCPhoneBookTestDataFactory.m in Sources */,
 				B70EAB3F1AD3302000305F43 /* JCAuthenticationManagerTests.m in Sources */,
 				5D2D74391ACFB48500B98BDF /* JCTransferViewControllerTests.m in Sources */,
@@ -3778,7 +3846,7 @@
 		};
 		5D11CCB91B796697009BB9B4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AD312703033AFDB89B1D2CBE /* Pods-UnitTests.debug.xcconfig */;
+			baseConfigurationReference = 4FCA9694C9B52529455D6522 /* Pods-JCPhoneModuleTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -3806,7 +3874,7 @@
 		};
 		5D11CCBA1B796697009BB9B4 /* Enterprise */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27364B6C977955C61C47BA59 /* Pods.enterprise.xcconfig */;
+			baseConfigurationReference = DB5DCEBD7762CD852B2FF068 /* Pods-JCPhoneModuleTests.enterprise.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -3831,7 +3899,7 @@
 		};
 		5D11CCBB1B796697009BB9B4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 43C81F9C015A20BD2322B787 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 14DF4DE6120262A334ED4BCC /* Pods-JCPhoneModuleTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LIBRARY = "libc++";

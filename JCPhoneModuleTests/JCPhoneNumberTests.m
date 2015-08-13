@@ -2,14 +2,16 @@
 //  JCPhoneNumberTests.m
 //  JiveOne
 //
-//  Created by Robert Barclay on 4/15/15.
+//  Created by Robert Barclay on 8/13/15.
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-
+#import "JCPhoneModuleTesting.h"
 #import "JCPhoneNumber.h"
-#import "NSString+Additions.h"
+
+SpecBegin(PhoneNumber)
+
+SpecEnd
 
 @interface JCPhoneNumberTests : XCTestCase
 
@@ -20,19 +22,19 @@
 - (void)test_conviencenceMethod {
     
     // Given
-    NSString *name = @"rob";
-    NSString *number = @"+1 (555) 123-4444";
+//    NSString *name = @"rob";
+//    NSString *number = @"+1 (555) 123-4444";
     
     // When
-    JCPhoneNumber *phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
+    // JCPhoneNumber *phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
     
     // Thus
-//    XCTAssertTrue([phoneNumber.name isEqualToString:name], @"Names is not equal");
-//    XCTAssertTrue([phoneNumber.number isEqualToString:number], @"Numbers are not equal");
-//    XCTAssertTrue([phoneNumber.dialableNumber isEqualToString:number.dialableString], @"Dialables do not match");
-//    XCTAssertTrue([phoneNumber.t9 isEqualToString:name.t9], @"t9 should equal name");
-//    XCTAssertTrue([phoneNumber.titleText isEqualToString:name], @"Title should equal name");
-//    XCTAssertTrue([phoneNumber.detailText isEqualToString:number.formattedPhoneNumber], @"detail text should equal formatted phone");
+    //    XCTAssertTrue([phoneNumber.name isEqualToString:name], @"Names is not equal");
+    //    XCTAssertTrue([phoneNumber.number isEqualToString:number], @"Numbers are not equal");
+    //    XCTAssertTrue([phoneNumber.dialableNumber isEqualToString:number.dialableString], @"Dialables do not match");
+    //    XCTAssertTrue([phoneNumber.t9 isEqualToString:name.t9], @"t9 should equal name");
+    //    XCTAssertTrue([phoneNumber.titleText isEqualToString:name], @"Title should equal name");
+    //    XCTAssertTrue([phoneNumber.detailText isEqualToString:number.formattedPhoneNumber], @"detail text should equal formatted phone");
 }
 
 - (void)test_noName {
@@ -43,7 +45,7 @@
     
     // When
     JCPhoneNumber *phoneNumber = [[JCPhoneNumber alloc] initWithName:name number:number];
-
+    
     // Thus
     XCTAssertNil(phoneNumber.name, @"Name should be nil is not equal");
     XCTAssertNil(phoneNumber.titleText, @"Title SHould be nil");
@@ -70,7 +72,7 @@
     NSString *number = @"+1 (555) 123-4444";
     JCPhoneNumber *phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
     NSString *keyword = @"723";
-
+    
     BOOL result = [phoneNumber containsKeyword:keyword];
     XCTAssertFalse(result, @"Result should be false");
 }
@@ -239,6 +241,5 @@
     // Thus
     XCTAssertFalse(result, @"Result should be false");
 }
-
 
 @end

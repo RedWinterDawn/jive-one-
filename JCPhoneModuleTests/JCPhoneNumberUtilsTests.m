@@ -1,16 +1,19 @@
 //
-//  JCPhoneNumberDataSourceUtilTests.m
+//  JCPhoneModuleModelSpecs.m
 //  JiveOne
 //
-//  Created by Robert Barclay on 4/16/15.
+//  Created by Robert Barclay on 8/13/15.
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
+#import "JCPhoneModuleTesting.h"
 
-#import "JCPhoneNumber.h"
 #import "JCPhoneNumberUtils.h"
-#import "NSString+Additions.h"
+#import "JCPhoneNumber.h"
+
+SpecBegin(PhoneNumberUtils)
+
+SpecEnd
 
 @interface JCPhoneNumberDataSourceUtilTests : XCTestCase
 
@@ -23,10 +26,10 @@
     // Given
     NSString *garbage = @"+1 (555) 123-4567 *8910abcedfghijklmnopqrstuv!@#$%^&=-_~`()";
     JCPhoneNumber *phoneNumber = [JCPhoneNumber phoneNumberWithName:nil number:garbage];
-
+    
     // When
     NSString *result = [JCPhoneNumberUtils dialableStringForPhoneNumber:phoneNumber];
-
+    
     // Then
     XCTAssertTrue([result isEqualToString:@"+15551234567*8910#"], @"Dialable String failed");
 }
@@ -38,10 +41,10 @@
     NSString *number = @"+1 (555) 123-4444";
     JCPhoneNumber *phoneNumber = [JCPhoneNumber phoneNumberWithName:name number:number];
     NSString *expectedResult = @"7623782272529";
-
+    
     // When
     NSString *result = [JCPhoneNumberUtils t9StringForPhoneNumber:phoneNumber];
-
+    
     // Then
     XCTAssertTrue([result isEqualToString:expectedResult], @"t9 did not match expected result");
 }
@@ -123,15 +126,15 @@
     NSString *keyword = @"Hi";
     UIFont *font = [UIFont systemFontOfSize:12];
     UIColor *color = [UIColor blackColor];
-
+    
     // When
     NSAttributedString *result = [JCPhoneNumberUtils detailTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
-
+    
     // Then
     NSString *expectedString = @"(555) 525-5355";
     NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName: color };
     NSMutableAttributedString *expectedAttributedString = [[NSMutableAttributedString alloc] initWithString:expectedString attributes:attrs];
-
+    
     XCTAssertTrue([expectedAttributedString isEqualToAttributedString:result], @"Strings should be equal");
 }
 
@@ -143,10 +146,10 @@
     UIFont *font = [UIFont systemFontOfSize:12];
     UIColor *color = [UIColor blackColor];
     NSString *keyword = @"5555";
-
+    
     // When
     NSAttributedString *result = [JCPhoneNumberUtils detailTextWithKeyword:keyword font:font color:color phoneNumber:phoneNumber];
-
+    
     // Then
     NSString *expectedString = @"(555) 525-5355";
     NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName: color };
@@ -156,7 +159,7 @@
     [expectedAttributedString setAttributes:boldAttrs range:NSMakeRange(1, 3)];
     [expectedAttributedString setAttributes:boldAttrs range:NSMakeRange(6, 1)];
     [expectedAttributedString endEditing];
-
+    
     XCTAssertTrue([expectedAttributedString isEqualToAttributedString:result], @"Strings should be equal");
 }
 

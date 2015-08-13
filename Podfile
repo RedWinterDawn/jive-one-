@@ -19,5 +19,24 @@ pod 'Google/CloudMessaging'
 target 'UnitTests', :exclusive => true do
     pod 'OCMock'
     pod 'OCMockito'
-    #pod 'Kiwi', '~> 2.3'
+    pod 'Kiwi'
+    pod 'OCHamcrest'
+    pod 'Specta'
+    pod 'Expecta'
+end
+
+
+target 'JCPhoneModuleTests', :exclusive => true do
+    
+    # TDD/BDD Testing Frame work
+    pod 'Specta'
+    pod 'Expecta'
+    
+    # Mocking
+    pod 'OCMock'
+    pod 'OCMockito'
+    
+    # UITesting
+    pod 'KIF'
+    
 end
