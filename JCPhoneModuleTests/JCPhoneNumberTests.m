@@ -37,20 +37,20 @@ SpecEnd
     //    XCTAssertTrue([phoneNumber.detailText isEqualToString:number.formattedPhoneNumber], @"detail text should equal formatted phone");
 }
 
-- (void)test_noName {
-    
-    // Given
-    NSString *name = nil;
-    NSString *number = @"+1 (555) 123-4444";
-    
-    // When
-    JCPhoneNumber *phoneNumber = [[JCPhoneNumber alloc] initWithName:name number:number];
-    
-    // Thus
-    XCTAssertNil(phoneNumber.name, @"Name should be nil is not equal");
-    XCTAssertNil(phoneNumber.titleText, @"Title SHould be nil");
-    XCTAssertNil(phoneNumber.t9, @"T9 SHould be nil");
-}
+//- (void)test_noName {
+
+//    // Given
+//    NSString *name = nil;
+//    NSString *number = @"+1 (555) 123-4444";
+//    
+//    // When
+//    JCPhoneNumber *phoneNumber = [[JCPhoneNumber alloc] initWithName:name number:number];
+//
+//    // Thus
+//    XCTAssertNil(phoneNumber.name, @"Name should be nil is not equal");
+//    XCTAssertNil(phoneNumber.titleText, @"Title SHould be nil");
+//    XCTAssertNil(phoneNumber.t9, @"T9 SHould be nil");
+//}
 
 - (void)test_noNumber {
     
