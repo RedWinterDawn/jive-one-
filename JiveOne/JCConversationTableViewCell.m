@@ -50,10 +50,11 @@
                                             size:_dateFont.pointSize];
 }
 
--(void)layoutSubviews
+#pragma mark - Setters -
+
+-(void)setRead:(BOOL)read
 {
-    [super layoutSubviews];
-    
+    _read = read;
     UILabel *name   = self.name;
     UILabel *detail = self.detail;
     UILabel *date   = self.date;
@@ -76,20 +77,6 @@
         date.textColor      = _unreadColor;
         unread.hidden       = false;
     }
-}
-
-#pragma mark - Setters -
-
--(void)setRead:(BOOL)read
-{
-    _read = read;
-    [self setNeedsLayout];
-    [self layoutIfNeeded];
-}
-
--(void)setSelected:(BOOL)selected
-{
-    [super setSelected:selected];
 }
 
 -(IBAction)blockNumberBtn:(id)sender

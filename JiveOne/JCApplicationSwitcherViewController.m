@@ -148,7 +148,13 @@
     [super viewWillLayoutSubviews];
     _drawerController.maximumLeftDrawerWidth = self.view.bounds.size.width - 50;
     
-    CGSize size = _appMenuViewController.menuTableViewController.tableView.contentSize;
+    UITableView *tableView = _appMenuViewController.menuTableViewController.tableView;
+    [tableView reloadData];
+    
+    CGSize size = tableView.contentSize;
+    if (![UIDevice iOS8]){
+        size = [tableView sizeThatFits:CGSizeMake(tableView.frame.size.width, FLT_MAX)];
+    }
     _appMenuViewController.appMenuHeightConstraint.constant = size.height;
 }
 
@@ -200,9 +206,13 @@
 -(void)setViewControllers:(NSArray *)viewControllers
 {
     _viewControllers = viewControllers;
-    [_appMenuViewController.menuTableViewController.tableView reloadData];
+    UITableView *tableView = _appMenuViewController.menuTableViewController.tableView;
+    [tableView reloadData];
     
-    CGSize size = _appMenuViewController.menuTableViewController.tableView.contentSize;
+    CGSize size = tableView.contentSize;
+    if (![UIDevice iOS8]){
+        size = [tableView sizeThatFits:CGSizeMake(tableView.frame.size.width, FLT_MAX)];
+    }
     _appMenuViewController.appMenuHeightConstraint.constant = size.height;
 }
 
