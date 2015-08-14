@@ -9,6 +9,8 @@
 #import "SMSMessage+V5Client.h"
 #import "JCV5ApiClient+SMSMessaging.h"
 
+#import <JCPhoneModule/JCProgressHUD.h>
+
 NSString *const kSMSMessageSendRequestToKey                 = @"to";
 NSString *const kSMSMessageSendRequestFromKey               = @"from";
 NSString *const kSMSMessageSendRequestBodyKey               = @"body";

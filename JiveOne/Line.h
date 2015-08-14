@@ -7,7 +7,7 @@
 //
 
 #import "Extension.h"
-#import "JCPhoneProvisioningDataSource.h"
+#import <JCPhoneModule/JCPhoneModule.h>
 
 @class RecentEvent;
 @class LineConfiguration;

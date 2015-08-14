@@ -7,6 +7,9 @@
 //
 
 #import "JCConversationDetailsViewController.h"
+
+#import <JCPhoneModule/JCProgressHUD.h>
+
 #import "JCMessageGroup.h"
 #import "DID.h"
 #import "BlockedNumber+V5Client.h"

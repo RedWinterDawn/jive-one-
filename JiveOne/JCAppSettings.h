@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCSettings.h"
+#import <JCPhoneModule/JCSettings.h>
 
 extern NSString *const kJCAppSettingsPresenceChangedNotification;
 

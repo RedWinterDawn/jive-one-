@@ -12,7 +12,7 @@
 #import "JCStoryboardLoaderViewController.h"
 
 // Managers
-#import "JCPhoneManager.h"
+#import <JCPhoneModule/JCPhoneManager.h>
 
 // Managed objects
 #import "PBX.h"

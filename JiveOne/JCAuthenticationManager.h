@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JCManager.h"
-#import "JCError.h"
+#import <JCPhoneModule/JCManager.h>
+#import <JCPhoneModule/JCError.h>
 
 @class User;
 @class Line;

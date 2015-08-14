@@ -7,6 +7,9 @@
 //
 
 #import "JCBlockedNumbersViewController.h"
+
+#import <JCPhoneModule/JCProgressHUD.h>
+
 #import "JCAuthenticationManager.h"
 #import "BlockedNumber+V5Client.h"
 #import "PBX.h"

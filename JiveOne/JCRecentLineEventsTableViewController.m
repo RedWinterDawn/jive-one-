@@ -8,6 +8,8 @@
 
 #import "JCRecentLineEventsTableViewController.h"
 
+#import <JCPhoneModule/JCProgressHUD.h>
+
 // Data Models
 #import "Call.h"
 #import "Voicemail+V5Client.h"

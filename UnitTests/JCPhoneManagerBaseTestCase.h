@@ -9,18 +9,18 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
-#import "JCPhoneManager.h"
+//#import "JCPhoneManager.h"
 
 #import "JCBaseTestCase.h"
 
-@interface JCPhoneManager (Private)
-
-@property (nonatomic, strong) UIStoryboard *storyboard;
-
-@end
+//@interface JCPhoneManager (Private)
+//
+//@property (nonatomic, strong) UIStoryboard *storyboard;
+//
+//@end
 
 @interface JCPhoneManagerBaseTestCase : JCBaseTestCase
 
-@property (nonatomic, strong) JCPhoneManager *phoneManager;
+//@property (nonatomic, strong) JCPhoneManager *phoneManager;
 
 @end

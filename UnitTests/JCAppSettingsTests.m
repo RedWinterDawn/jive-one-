@@ -36,10 +36,10 @@
 - (void)setUp {
     [super setUp];
     
-    id userDefaults = mock([NSUserDefaults class]);
-    JCAppSettings *appSettings = [[JCAppSettings alloc] initWithDefaults:userDefaults];
-    XCTAssertEqual(userDefaults, appSettings.userDefaults);
-    self.appSettings = appSettings;
+//    id userDefaults = mock([NSUserDefaults class]);
+//    JCAppSettings *appSettings = [[JCAppSettings alloc] initWithDefaults:userDefaults];
+//    XCTAssertEqual(userDefaults, appSettings.userDefaults);
+//    self.appSettings = appSettings;
 }
 
 - (void)tearDown {

@@ -8,6 +8,7 @@
 
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
+#import <JCPhoneModule/JCPhoneModule.h>
 
 #import "AFNetworkActivityIndicatorManager.h"
 #import "JCLoginViewController.h"
@@ -17,7 +18,6 @@
 #import "LoggerClient.h"
 #import "JCLinePickerViewController.h"
 
-#import "JCPhoneManager.h"
 #import "JCPresenceManager.h"
 #import "JCVoicemailManager.h"
 #import "JCSMSMessageManager.h"

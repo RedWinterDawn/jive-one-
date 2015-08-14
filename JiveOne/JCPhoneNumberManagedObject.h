@@ -7,7 +7,7 @@
 //
 
 #import <CoreData/CoreData.h>
-#import "JCPhoneNumberDataSource.h"
+#import <JCPhoneModule/JCPhoneModule.h>
 
 @interface JCPhoneNumberManagedObject : NSManagedObject <JCPhoneNumberDataSource>
 

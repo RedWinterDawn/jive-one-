@@ -8,7 +8,8 @@
 
 #import "JCContactDetailViewController.h"
 
-#import "JCPhoneManager.h"
+#import <JCPhoneModule/JCPhoneModule.h>
+
 #import "JCAuthenticationManager.h"
 
 #import "Extension.h"
@@ -20,7 +21,6 @@
 #import "JCVoicemailNumber.h"
 #import "JCPersonDataSource.h"
 
-#import "JCPhoneDialerViewController.h"
 #import "JCStoryboardLoaderViewController.h"
 #import "JCTypeSelectorViewController.h"
 

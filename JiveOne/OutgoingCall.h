@@ -7,7 +7,6 @@
 //
 
 #import "Call.h"
-#import "JCPhoneSipSession.h"
 
 extern NSString *const kOutgoingCallEntityName;
 

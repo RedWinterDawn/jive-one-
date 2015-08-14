@@ -10,7 +10,7 @@
 //
 
 // Protocols
-#import "JCPhoneNumberDataSource.h"
+#import <JCPhoneModule/JCPhoneNumberDataSource.h>
 
 // Dependancies
 #import "JCAddressBook.h"

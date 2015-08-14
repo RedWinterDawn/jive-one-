@@ -24,6 +24,7 @@
     #import <MagicalRecord/MagicalRecord.h>
     #import <MobileCoreServices/MobileCoreServices.h>
     #import <AFNetworking/AFNetworking.h>
+    //#import <JCPhoneModule/JCPhoneModule.h>
 
     // Singletons
     #import "Constants.h"
@@ -34,8 +35,8 @@
     #import "UIDevice+Additions.h"
     #import "NSDictionary+Validations.h"
     #import "UIViewController+Additions.h"
-    #import "JCAlertView.h"
-    #import "JCProgressHUD.h"
+    //#import "JCAlertView.h"
+    //#import "JCProgressHUD.h"
 
 #endif
 

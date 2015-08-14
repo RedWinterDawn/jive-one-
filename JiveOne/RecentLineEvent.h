@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "RecentEvent.h"
+#import <JCPhoneModule/JCPhoneModule.h>
 
-#import "JCPhoneNumberDataSource.h"
+#import "RecentEvent.h"
 
 @class InternalExtension, Line, PhoneNumber;
 

@@ -7,7 +7,7 @@
 //
 
 #import "RecentLineEvent.h"
-#import "JCPhoneSipSession.h"
+#import <JCPhoneModule/JCPhoneModule.h>
 
 extern NSString *const kCallEntityName;
 

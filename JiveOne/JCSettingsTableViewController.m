@@ -8,14 +8,12 @@
 
 @import MessageUI;
 
-
 #import "JCSettingsTableViewController.h"
-#import <UserVoice.h>
+#import <uservoice_iphone_sdk/UserVoice.h>
+#import <JCPhoneModule/JCPhoneModule.h>
 
 // Managers
 #import "JCAuthenticationManager.h"
-
-#import "JCPhoneAudioManager.h"
 
 // Models
 #import "JCAppSettings.h"
