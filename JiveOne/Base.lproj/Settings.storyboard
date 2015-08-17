@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="kSg-Yj-VdW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="kSg-Yj-VdW">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -703,6 +703,7 @@
                         <outlet property="microphoneMuteLabel" destination="9mr-zh-J8Q" id="VgV-B3-ays"/>
                         <outlet property="microphoneMuteSwitch" destination="9Ua-Ez-QDH" id="quy-4k-oPk"/>
                         <outlet property="sipDisabled" destination="35y-97-k8m" id="1kM-66-OgZ"/>
+                        <outlet property="wifiOnly" destination="r8v-8w-SnM" id="y17-Df-K8a"/>
                         <outletCollection property="enabledPhoneSettings" destination="sZx-QC-Ux6" id="BwB-lu-ivj"/>
                         <outletCollection property="enabledPhoneSettings" destination="nQG-OV-OkG" id="nEU-WT-8Hj"/>
                         <outletCollection property="enabledPhoneSettings" destination="FqN-1q-mLt" id="1Vd-sZ-ELM"/>
