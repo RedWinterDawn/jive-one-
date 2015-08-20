@@ -53,15 +53,6 @@
 		5D1175841A9BEFB200D2B03A /* JCMessageGroupsResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1175831A9BEFB200D2B03A /* JCMessageGroupsResultsController.m */; };
 		5D11758A1A9E856300D2B03A /* JCRecentEventsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1175891A9E856300D2B03A /* JCRecentEventsTableViewController.m */; };
 		5D11758D1AA0321B00D2B03A /* JCPushNoAnimationSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D11758C1AA0321B00D2B03A /* JCPushNoAnimationSegue.m */; };
-		5D11CCB31B796697009BB9B4 /* JCPhoneModuleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D11CCB21B796697009BB9B4 /* JCPhoneModuleTests.m */; };
-		5D11CCE51B7A4FF3009BB9B4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5518AD0FBC00D2F069 /* UIKit.framework */; };
-		5D11CCE61B7A5123009BB9B4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8E18F35640003A6615 /* MobileCoreServices.framework */; };
-		5D11CCF51B7A6210009BB9B4 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E1119DA87DA00E8AB7B /* libstdc++.dylib */; };
-		5D11CCF61B7A621E009BB9B4 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8C18F35637003A6615 /* libz.dylib */; };
-		5D11CCF71B7A6226009BB9B4 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0B19DA870600E8AB7B /* libresolv.dylib */; };
-		5D11CCF91B7A661B009BB9B4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5118AD0FBC00D2F069 /* Foundation.framework */; };
-		5D11CCFA1B7A6954009BB9B4 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		5D11CCFB1B7A6C06009BB9B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 275F4A6F18AD0FBC00D2F069 /* Images.xcassets */; };
 		5D1598A11B5880510045F98F /* JCV5ApiClient+Jedi.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598A01B5880510045F98F /* JCV5ApiClient+Jedi.m */; };
 		5D1598A41B5880920045F98F /* JCV5ApiClient+Jasmine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598A31B5880920045F98F /* JCV5ApiClient+Jasmine.m */; };
 		5D1598A71B5880C90045F98F /* JCV5ApiClient+Voicemail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598A61B5880C90045F98F /* JCV5ApiClient+Voicemail.m */; };
@@ -73,11 +64,6 @@
 		5D1598C41B58A7610045F98F /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598BF1B58A7610045F98F /* MMDrawerController.m */; };
 		5D1598C51B58A7610045F98F /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598C11B58A7610045F98F /* MMDrawerVisualState.m */; };
 		5D1598C61B58A7610045F98F /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1598C31B58A7610045F98F /* UIViewController+MMDrawerController.m */; };
-		5D1A3B061B7BFDE500C561C2 /* calling.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7B5D9C01B62F427008AD588 /* calling.mp3 */; };
-		5D1A3B081B7C01DD00C561C2 /* JCPhoneDialerViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A3B071B7C01DD00C561C2 /* JCPhoneDialerViewControllerTests.m */; };
-		5D1A3B0A1B7CEE8600C561C2 /* JCPhoneNumberUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A3B091B7CEE8600C561C2 /* JCPhoneNumberUtilsTests.m */; };
-		5D1A3B0C1B7CF30100C561C2 /* JCPhoneNumberTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A3B0B1B7CF30100C561C2 /* JCPhoneNumberTests.m */; };
-		5D1A3B0F1B7CF45B00C561C2 /* JCPhoneSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A3B0E1B7CF45B00C561C2 /* JCPhoneSettingsTests.m */; };
 		5D1FD5C41A48B05E007EF8B6 /* JCKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */; };
 		5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FC71A36339D008B498A /* JCAppSettings.m */; };
 		5D241FCB1A36AE12008B498A /* JCLinePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FCA1A36AE12008B498A /* JCLinePickerViewController.m */; };
@@ -258,7 +244,6 @@
 		5DFFF3E01AF9178A0091F479 /* JCDebugBlockedContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFFF3DF1AF9178A0091F479 /* JCDebugBlockedContactsTableViewController.m */; };
 		5DFFF3E31AF98E970091F479 /* JCConversationDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DFFF3E21AF98E970091F479 /* JCConversationDetailsViewController.m */; };
 		7CC221C11BA36F3590C79080 /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C18F852D63BA0D32BF58B4B3 /* Pods_UnitTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		7DA996F7BBCA2C0B1EA68C69 /* Pods_JCPhoneModuleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C086428E9A7FABC33B6226F3 /* Pods_JCPhoneModuleTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8B7F6ED980B9518969526CD8 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787B8D84FE7A871797E254DD /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9135DE0318BC01550052E998 /* AVFoundation.framework */; };
 		9145E31F191D842500840D66 /* JCVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31E191D842500840D66 /* JCVersion.m */; };
@@ -281,9 +266,6 @@
 		B744DE321AF920F500A72682 /* JCBlockedNumbersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */; };
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
 		B77EFA2D1B03E51700D94AE9 /* VoicemailTranscription.m in Sources */ = {isa = PBXBuildFile; fileRef = B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */; };
-		B78B71751B7CFE4800F80235 /* libKIF.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B78B71741B7CFE4700F80235 /* libKIF.a */; };
-		B78B71771B7CFF4100F80235 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78B71761B7CFF4100F80235 /* IOKit.framework */; };
-		B78B717F1B7D044C00F80235 /* JCVoicemailDialUITest.m in Sources */ = {isa = PBXBuildFile; fileRef = B78B717C1B7D040700F80235 /* JCVoicemailDialUITest.m */; };
 		B79BA1E01B4F0C5900D3E9C3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B79BA1DF1B4F0C5900D3E9C3 /* GoogleService-Info.plist */; };
 		B79F55551AEF1DF900E4768F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
 		B79F55561AEF1DF900E4768F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
@@ -321,13 +303,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		5D11CCAD1B796697009BB9B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 275F4A4618AD0FBC00D2F069 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5D11CC931B796696009BB9B4;
-			remoteInfo = JCPhoneModule;
-		};
 		5D2D74181ACFA84700B98BDF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 275F4A4618AD0FBC00D2F069 /* Project object */;
@@ -444,10 +419,6 @@
 		5D11758B1AA0321B00D2B03A /* JCPushNoAnimationSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPushNoAnimationSegue.h; sourceTree = "<group>"; };
 		5D11758C1AA0321B00D2B03A /* JCPushNoAnimationSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPushNoAnimationSegue.m; sourceTree = "<group>"; };
 		5D11CAC01B73DE56009BB9B4 /* ChangeLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ChangeLog.md; sourceTree = "<group>"; };
-		5D11CC941B796696009BB9B4 /* JCPhoneModule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JCPhoneModule.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D11CCAC1B796697009BB9B4 /* JCPhoneModuleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JCPhoneModuleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D11CCB11B796697009BB9B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5D11CCB21B796697009BB9B4 /* JCPhoneModuleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCPhoneModuleTests.m; sourceTree = "<group>"; };
 		5D15989F1B5880510045F98F /* JCV5ApiClient+Jedi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JCV5ApiClient+Jedi.h"; sourceTree = "<group>"; };
 		5D1598A01B5880510045F98F /* JCV5ApiClient+Jedi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JCV5ApiClient+Jedi.m"; sourceTree = "<group>"; };
 		5D1598A21B5880920045F98F /* JCV5ApiClient+Jasmine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JCV5ApiClient+Jasmine.h"; sourceTree = "<group>"; };
@@ -471,11 +442,6 @@
 		5D1598C11B58A7610045F98F /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
 		5D1598C21B58A7610045F98F /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
 		5D1598C31B58A7610045F98F /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
-		5D1A3B071B7C01DD00C561C2 /* JCPhoneDialerViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneDialerViewControllerTests.m; sourceTree = "<group>"; };
-		5D1A3B091B7CEE8600C561C2 /* JCPhoneNumberUtilsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneNumberUtilsTests.m; sourceTree = "<group>"; };
-		5D1A3B0B1B7CF30100C561C2 /* JCPhoneNumberTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneNumberTests.m; sourceTree = "<group>"; };
-		5D1A3B0D1B7CF34900C561C2 /* JCPhoneModuleTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneModuleTesting.h; sourceTree = "<group>"; };
-		5D1A3B0E1B7CF45B00C561C2 /* JCPhoneSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneSettingsTests.m; sourceTree = "<group>"; };
 		5D1FD5C21A48B05E007EF8B6 /* JCKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCKeychain.h; sourceTree = "<group>"; };
 		5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCKeychain.m; sourceTree = "<group>"; };
 		5D241FC61A36339D008B498A /* JCAppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppSettings.h; sourceTree = "<group>"; };
@@ -813,7 +779,6 @@
 		5DDDA54A1A4B238300E31AA3 /* JCLinePresence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLinePresence.m; sourceTree = "<group>"; };
 		5DE68EF71B0EC2EF00914C7F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Settings.strings; sourceTree = "<group>"; };
 		5DE68EF81B0EC51800914C7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5DEC49291B0EDF6000361499 /* Phone.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Phone.strings; sourceTree = "<group>"; };
 		5DF4680F1A5B9BF600E5826A /* JCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCClient.m; sourceTree = "<group>"; };
 		5DF4C9991AB8B6CB00BA4F8C /* JCSocketManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocketManager.h; sourceTree = "<group>"; };
 		5DF4C99A1AB8B6CB00BA4F8C /* JCSocketManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSocketManager.m; sourceTree = "<group>"; };
@@ -868,7 +833,6 @@
 		B77EFA2C1B03E51700D94AE9 /* VoicemailTranscription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoicemailTranscription.m; sourceTree = "<group>"; };
 		B78B71741B7CFE4700F80235 /* libKIF.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKIF.a; path = "Pods/../build/Debug-iphoneos/libKIF.a"; sourceTree = "<group>"; };
 		B78B71761B7CFF4100F80235 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
-		B78B717C1B7D040700F80235 /* JCVoicemailDialUITest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailDialUITest.m; sourceTree = "<group>"; };
 		B78B71801B7D050A00F80235 /* libKIF.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKIF.a; path = "Pods/../build/Debug-iphoneos/libKIF.a"; sourceTree = "<group>"; };
 		B794BCE11B31CACD00DE6401 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B794BCE21B31CACD00DE6401 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -967,30 +931,6 @@
 				F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */,
 				275F4A5618AD0FBC00D2F069 /* UIKit.framework in Frameworks */,
 				8B7F6ED980B9518969526CD8 /* Pods.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5D11CC911B796696009BB9B4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5D11CCF51B7A6210009BB9B4 /* libstdc++.dylib in Frameworks */,
-				5D11CCF71B7A6226009BB9B4 /* libresolv.dylib in Frameworks */,
-				5D11CCF61B7A621E009BB9B4 /* libz.dylib in Frameworks */,
-				5D11CCE61B7A5123009BB9B4 /* MobileCoreServices.framework in Frameworks */,
-				5D11CCFA1B7A6954009BB9B4 /* (null) in Frameworks */,
-				5D11CCF91B7A661B009BB9B4 /* Foundation.framework in Frameworks */,
-				5D11CCE51B7A4FF3009BB9B4 /* UIKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5D11CCA91B796696009BB9B4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B78B71751B7CFE4800F80235 /* libKIF.a in Frameworks */,
-				B78B71771B7CFF4100F80235 /* IOKit.framework in Frameworks */,
-				7DA996F7BBCA2C0B1EA68C69 /* Pods_JCPhoneModuleTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1161,7 +1101,6 @@
 				5D2D73C31ACF97AE00B98BDF /* Translations */,
 				5D2D74131ACFA84700B98BDF /* Unit Tests */,
 				5D2D74471ACFBDA400B98BDF /* Integration Tests */,
-				5D11CCBC1B7966A7009BB9B4 /* Modules */,
 				275F4A5018AD0FBC00D2F069 /* Frameworks */,
 				275F4A4F18AD0FBC00D2F069 /* Products */,
 				F202433C18B2CF4A006DB2EF /* README.md */,
@@ -1178,8 +1117,6 @@
 				5D2D74121ACFA84700B98BDF /* UnitTests.xctest */,
 				5D2D74461ACFBDA400B98BDF /* IntegrationTests.xctest */,
 				5D57827D1B32FCE2005F1B86 /* GenerateStrings */,
-				5D11CC941B796696009BB9B4 /* JCPhoneModule.app */,
-				5D11CCAC1B796697009BB9B4 /* JCPhoneModuleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1387,35 +1324,6 @@
 			name = Phone;
 			sourceTree = "<group>";
 		};
-		5D11CCAF1B796697009BB9B4 /* JCPhoneModuleTests */ = {
-			isa = PBXGroup;
-			children = (
-				5D11CCB11B796697009BB9B4 /* Info.plist */,
-				5D1A3B0D1B7CF34900C561C2 /* JCPhoneModuleTesting.h */,
-				5D1A3B111B7CF8E700C561C2 /* UITests */,
-				5D1A3B101B7CF8CD00C561C2 /* Controllers */,
-				5D1A3B121B7CFA4B00C561C2 /* Models */,
-			);
-			path = JCPhoneModuleTests;
-			sourceTree = "<group>";
-		};
-		5D11CCBC1B7966A7009BB9B4 /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				5D11CCBD1B7966B3009BB9B4 /* Phone */,
-			);
-			name = Modules;
-			sourceTree = "<group>";
-		};
-		5D11CCBD1B7966B3009BB9B4 /* Phone */ = {
-			isa = PBXGroup;
-			children = (
-				5DDE651219F0C49A00B90B55 /* JCPhoneModule */,
-				5D11CCAF1B796697009BB9B4 /* JCPhoneModuleTests */,
-			);
-			name = Phone;
-			sourceTree = "<group>";
-		};
 		5D1598B11B58864E0045F98F /* Clients */ = {
 			isa = PBXGroup;
 			children = (
@@ -1469,33 +1377,6 @@
 				5D1598C31B58A7610045F98F /* UIViewController+MMDrawerController.m */,
 			);
 			path = MMDrawerController;
-			sourceTree = "<group>";
-		};
-		5D1A3B101B7CF8CD00C561C2 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Controllers;
-			sourceTree = "<group>";
-		};
-		5D1A3B111B7CF8E700C561C2 /* UITests */ = {
-			isa = PBXGroup;
-			children = (
-				B78B717C1B7D040700F80235 /* JCVoicemailDialUITest.m */,
-			);
-			name = UITests;
-			sourceTree = "<group>";
-		};
-		5D1A3B121B7CFA4B00C561C2 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				5D11CCB21B796697009BB9B4 /* JCPhoneModuleTests.m */,
-				5D1A3B071B7C01DD00C561C2 /* JCPhoneDialerViewControllerTests.m */,
-				5D1A3B091B7CEE8600C561C2 /* JCPhoneNumberUtilsTests.m */,
-				5D1A3B0B1B7CF30100C561C2 /* JCPhoneNumberTests.m */,
-				5D1A3B0E1B7CF45B00C561C2 /* JCPhoneSettingsTests.m */,
-			);
-			name = Models;
 			sourceTree = "<group>";
 		};
 		5D241FD51A38313F008B498A /* Debug */ = {
@@ -1711,6 +1592,7 @@
 		5D53298B1AD4B95C00C6AAC6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				5DDE651219F0C49A00B90B55 /* Phone */,
 				277F093F18FECECA00EEF0E3 /* Login */,
 				277F093E18FECEB800EEF0E3 /* Settings */,
 				5DA30DC61AD6DA08008856DC /* Recent Events */,
@@ -2033,15 +1915,13 @@
 			name = Protocols;
 			sourceTree = "<group>";
 		};
-		5DDE651219F0C49A00B90B55 /* JCPhoneModule */ = {
+		5DDE651219F0C49A00B90B55 /* Phone */ = {
 			isa = PBXGroup;
 			children = (
 				5D5448C71B0D3BF500F44D8F /* Phone.storyboard */,
 				5D8E33DE1B0A4F3100FD8AE1 /* Phone_iPad.storyboard */,
-				5DEC49291B0EDF6000361499 /* Phone.strings */,
 			);
-			name = JCPhoneModule;
-			path = JiveOne;
+			name = Phone;
 			sourceTree = "<group>";
 		};
 		5DE570871B024A20003F095F /* Models */ = {
@@ -2134,44 +2014,6 @@
 			productReference = 275F4A4E18AD0FBC00D2F069 /* JiveOne.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5D11CC931B796696009BB9B4 /* JCPhoneModule */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5D11CCB41B796697009BB9B4 /* Build configuration list for PBXNativeTarget "JCPhoneModule" */;
-			buildPhases = (
-				5D11CC901B796696009BB9B4 /* Sources */,
-				5D11CC911B796696009BB9B4 /* Frameworks */,
-				5D11CC921B796696009BB9B4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = JCPhoneModule;
-			productName = JCPhoneModule;
-			productReference = 5D11CC941B796696009BB9B4 /* JCPhoneModule.app */;
-			productType = "com.apple.product-type.application";
-		};
-		5D11CCAB1B796696009BB9B4 /* JCPhoneModuleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5D11CCB81B796697009BB9B4 /* Build configuration list for PBXNativeTarget "JCPhoneModuleTests" */;
-			buildPhases = (
-				AAC3D5903BDD78DA65D138C1 /* Check Pods Manifest.lock */,
-				5D11CCA81B796696009BB9B4 /* Sources */,
-				5D11CCA91B796696009BB9B4 /* Frameworks */,
-				5D11CCAA1B796696009BB9B4 /* Resources */,
-				A51CD392EF0D401D3CD5E77E /* Copy Pods Resources */,
-				273B109985B4F253DBE63EDE /* Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5D11CCAE1B796697009BB9B4 /* PBXTargetDependency */,
-			);
-			name = JCPhoneModuleTests;
-			productName = JCPhoneModuleTests;
-			productReference = 5D11CCAC1B796697009BB9B4 /* JCPhoneModuleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		5D2D74111ACFA84700B98BDF /* UnitTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5D2D741A1ACFA84700B98BDF /* Build configuration list for PBXNativeTarget "UnitTests" */;
@@ -2248,15 +2090,6 @@
 							};
 						};
 					};
-					5D11CC931B796696009BB9B4 = {
-						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 5NE3JJD5L3;
-					};
-					5D11CCAB1B796696009BB9B4 = {
-						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 5NE3JJD5L3;
-						TestTargetID = 5D11CC931B796696009BB9B4;
-					};
 					5D2D74111ACFA84700B98BDF = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = 5NE3JJD5L3;
@@ -2292,8 +2125,6 @@
 				5D2D74111ACFA84700B98BDF /* UnitTests */,
 				5D2D74451ACFBDA400B98BDF /* IntegrationTests */,
 				5D57827C1B32FCE2005F1B86 /* GenerateStrings */,
-				5D11CC931B796696009BB9B4 /* JCPhoneModule */,
-				5D11CCAB1B796696009BB9B4 /* JCPhoneModuleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2341,22 +2172,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5D11CC921B796696009BB9B4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5D1A3B061B7BFDE500C561C2 /* calling.mp3 in Resources */,
-				5D11CCFB1B7A6C06009BB9B4 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5D11CCAA1B796696009BB9B4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5D2D74101ACFA84700B98BDF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2376,21 +2191,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		273B109985B4F253DBE63EDE /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JCPhoneModuleTests/Pods-JCPhoneModuleTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2D6CC6088E10467383A549A4 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2434,36 +2234,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A51CD392EF0D401D3CD5E77E /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JCPhoneModuleTests/Pods-JCPhoneModuleTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AAC3D5903BDD78DA65D138C1 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		CB3D37AA11C3484F8D034661 /* Copy Pods Resources */ = {
@@ -2708,26 +2478,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5D11CC901B796696009BB9B4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5D11CCA81B796696009BB9B4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B78B717F1B7D044C00F80235 /* JCVoicemailDialUITest.m in Sources */,
-				5D1A3B081B7C01DD00C561C2 /* JCPhoneDialerViewControllerTests.m in Sources */,
-				5D1A3B0A1B7CEE8600C561C2 /* JCPhoneNumberUtilsTests.m in Sources */,
-				5D1A3B0F1B7CF45B00C561C2 /* JCPhoneSettingsTests.m in Sources */,
-				5D1A3B0C1B7CF30100C561C2 /* JCPhoneNumberTests.m in Sources */,
-				5D11CCB31B796697009BB9B4 /* JCPhoneModuleTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5D2D740E1ACFA84700B98BDF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2800,11 +2550,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		5D11CCAE1B796697009BB9B4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5D11CC931B796696009BB9B4 /* JCPhoneModule */;
-			targetProxy = 5D11CCAD1B796697009BB9B4 /* PBXContainerItemProxy */;
-		};
 		5D2D74191ACFA84700B98BDF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 275F4A4D18AD0FBC00D2F069 /* JiveOne */;
@@ -3214,195 +2959,6 @@
 			};
 			name = Enterprise;
 		};
-		5D11CCB51B796697009BB9B4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1B209FFD8576BB760529B3CA /* Pods.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LIBRARY = "libstdc++";
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = JCPhoneModule/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-			};
-			name = Debug;
-		};
-		5D11CCB61B796697009BB9B4 /* Enterprise */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27364B6C977955C61C47BA59 /* Pods.enterprise.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LIBRARY = "libstdc++";
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = JCPhoneModule/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-			};
-			name = Enterprise;
-		};
-		5D11CCB71B796697009BB9B4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 43C81F9C015A20BD2322B787 /* Pods.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LIBRARY = "libstdc++";
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = JCPhoneModule/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-			};
-			name = Release;
-		};
-		5D11CCB91B796697009BB9B4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4FCA9694C9B52529455D6522 /* Pods-JCPhoneModuleTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = JCPhoneModuleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JCPhoneModule.app/JCPhoneModule";
-			};
-			name = Debug;
-		};
-		5D11CCBA1B796697009BB9B4 /* Enterprise */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB5DCEBD7762CD852B2FF068 /* Pods-JCPhoneModuleTests.enterprise.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = JCPhoneModuleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JCPhoneModule.app/JCPhoneModule";
-			};
-			name = Enterprise;
-		};
-		5D11CCBB1B796697009BB9B4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 14DF4DE6120262A334ED4BCC /* Pods-JCPhoneModuleTests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = JCPhoneModuleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JCPhoneModule.app/JCPhoneModule";
-			};
-			name = Release;
-		};
 		5D2D741B1ACFA84700B98BDF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AD312703033AFDB89B1D2CBE /* Pods-UnitTests.debug.xcconfig */;
@@ -3739,26 +3295,6 @@
 				275F4A8718AD0FBC00D2F069 /* Debug */,
 				275F4A8818AD0FBC00D2F069 /* Enterprise */,
 				91F6DFB8192A7B35001C54FB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5D11CCB41B796697009BB9B4 /* Build configuration list for PBXNativeTarget "JCPhoneModule" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5D11CCB51B796697009BB9B4 /* Debug */,
-				5D11CCB61B796697009BB9B4 /* Enterprise */,
-				5D11CCB71B796697009BB9B4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5D11CCB81B796697009BB9B4 /* Build configuration list for PBXNativeTarget "JCPhoneModuleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5D11CCB91B796697009BB9B4 /* Debug */,
-				5D11CCBA1B796697009BB9B4 /* Enterprise */,
-				5D11CCBB1B796697009BB9B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
