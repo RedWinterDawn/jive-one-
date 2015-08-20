@@ -201,7 +201,6 @@
 		5D8FE4311B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE42F1B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.m */; };
 		5D8FE4321B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE4301B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib */; };
 		5D8FE4351B2B5B21004FD594 /* ContactInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4341B2B5B21004FD594 /* ContactInfo.m */; };
-		5D9382C01B0F94F800C5CEA0 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		5D9F72101AC34F8000B9D0F8 /* JCAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */; };
 		5D9F72A91AC5BDD700B9D0F8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F1F305191C18D700AEAFD7 /* CoreData.framework */; };
 		5D9FE2AF1B7E342F004A43BB /* Phone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D5448C71B0D3BF500F44D8F /* Phone.storyboard */; };
@@ -1382,7 +1381,6 @@
 		5D11CC8F1B79609D009BB9B4 /* Phone */ = {
 			isa = PBXGroup;
 			children = (
-				5D2D742B1ACFB48500B98BDF /* JCPhoneManagerTests.m */,
 				5D2D74261ACFB48500B98BDF /* JCPhoneDialerViewControllerTests.m */,
 				5D2D746B1AD02F5800B98BDF /* PhoneManager */,
 			);
@@ -2329,7 +2327,6 @@
 				5D8198ED1AC1D7520057FDDA /* Debug.storyboard in Resources */,
 				5D87FCD31AB2822700AE1CA5 /* JCConversationViewController.xib in Resources */,
 				B79BA1E01B4F0C5900D3E9C3 /* GoogleService-Info.plist in Resources */,
-				5D9382C01B0F94F800C5CEA0 /* (null) in Resources */,
 				B734D8101B41CF56004403E2 /* Walkie - Talkie.mp3 in Resources */,
 				B7F561551B45A4CF0073D1C2 /* iReport.mp3 in Resources */,
 				5D5448B61B0CF02400F44D8F /* Settings.storyboard in Resources */,
@@ -2736,7 +2733,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DC5181C1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m in Sources */,
-				5D2D74351ACFB48500B98BDF /* JCDialerViewControllerTests.m in Sources */,
+				5D2D74351ACFB48500B98BDF /* JCPhoneDialerViewControllerTests.m in Sources */,
 				5D0BACA41AD438F800EFEF86 /* NSDictionary+AdditionsTests.m in Sources */,
 				5DBF6F431ADC4FC9004B53F5 /* JCPhoneBookTests.m in Sources */,
 				5D2D75511AD08DBA00B98BDF /* OsgiData.xcdatamodel in Sources */,

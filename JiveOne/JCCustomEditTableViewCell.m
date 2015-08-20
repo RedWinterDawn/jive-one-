@@ -10,7 +10,7 @@
 //
 
 #import "JCCustomEditTableViewCell.h"
-#import "JCDrawing.h"
+#import <JCPhoneModule/JCDrawing.h>
 
 @implementation JCCustomEditTableViewCell
 
