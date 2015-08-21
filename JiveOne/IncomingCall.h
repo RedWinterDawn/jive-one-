@@ -7,7 +7,7 @@
 //
 
 #import "Call.h"
-#import "JCLineSession.h"
+#import "JCPhoneSipSession.h"
 
 extern NSString *const kIncomingCallEntityName;
 
@@ -17,6 +17,6 @@ extern NSString *const kIncomingCallEntityName;
 
 @interface IncomingCall (MagicalRecord)
 
-+(void)addIncommingCallWithLineSession:(JCLineSession *)session line:(Line *)line;
++(void)addIncommingCallWithLineSession:(JCPhoneSipSession *)session line:(Line *)line;
 
 @end

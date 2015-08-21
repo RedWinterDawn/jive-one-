@@ -8,6 +8,8 @@
 
 #import "JCContactsTableViewController.h"
 
+#import <JCPhoneModule/JCProgressHUD.h>
+
 // Models
 #import "InternalExtensionGroup.h"
 #import "Extension.h"

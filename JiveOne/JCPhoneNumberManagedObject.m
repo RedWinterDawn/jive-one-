@@ -7,7 +7,7 @@
 //
 
 #import "JCPhoneNumberManagedObject.h"
-#import "JCPhoneNumberDataSourceUtils.h"
+#import "JCPhoneNumberUtils.h"
 
 NSString *const kPersonT9AttributeKey = @"t9";
 
@@ -20,7 +20,7 @@ NSString *const kPersonT9AttributeKey = @"t9";
         // generates the t9 representation of the name of the number.
         NSString *name = self.name;
         if(name) {
-            NSString *t9 = [JCPhoneNumberDataSourceUtils t9StringForString:name];
+            NSString *t9 = [JCPhoneNumberUtils t9StringForString:name];
             [self setPrimitiveValue:t9 forKey:kPersonT9AttributeKey];
         }
     }
@@ -67,19 +67,19 @@ NSString *const kPersonT9AttributeKey = @"t9";
 -(NSString *)dialableNumber
 {
     if (!_dialableNumber) {
-        return [JCPhoneNumberDataSourceUtils dialableStringForPhoneNumber:self];
+        return [JCPhoneNumberUtils dialableStringForPhoneNumber:self];
     }
     return _dialableNumber;
 }
 
 -(NSString *)formattedNumber
 {
-    return [JCPhoneNumberDataSourceUtils formattedPhoneNumberForPhoneNumber:self];
+    return [JCPhoneNumberUtils formattedPhoneNumberForPhoneNumber:self];
 }
 
 -(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
 {
-    return [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword
+    return [JCPhoneNumberUtils titleTextWithKeyword:keyword
                                                          font:font
                                                         color:color
                                                   phoneNumber:self];
@@ -87,7 +87,7 @@ NSString *const kPersonT9AttributeKey = @"t9";
 
 -(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
 {
-    return [JCPhoneNumberDataSourceUtils detailTextWithKeyword:keyword
+    return [JCPhoneNumberUtils detailTextWithKeyword:keyword
                                                           font:font
                                                          color:color
                                                    phoneNumber:self];
@@ -95,19 +95,19 @@ NSString *const kPersonT9AttributeKey = @"t9";
 
 -(BOOL)containsKeyword:(NSString *)keyword
 {
-    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+    return [JCPhoneNumberUtils phoneNumber:self
                                      containsKeyword:keyword];
 }
 
 -(BOOL)containsT9Keyword:(NSString *)keyword
 {
-    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+    return [JCPhoneNumberUtils phoneNumber:self
                                    containsT9Keyword:keyword];
 }
 
 -(BOOL)isEqualToPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
-    return [JCPhoneNumberDataSourceUtils phoneNumber:self isEqualToPhoneNumber:phoneNumber];
+    return [JCPhoneNumberUtils phoneNumber:self isEqualToPhoneNumber:phoneNumber];
 }
 
 @end

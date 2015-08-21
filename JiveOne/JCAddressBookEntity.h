@@ -8,7 +8,7 @@
 
 @import AddressBook;
 
-#import "JCPhoneNumber.h"
+#import <JCPhoneModule/JCPhoneNumber.h>
 #import "JCPersonDataSource.h"
 
 @interface JCAddressBookEntity : JCPhoneNumber <JCPersonDataSource>

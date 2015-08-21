@@ -8,7 +8,7 @@
 
 #import "DID.h"
 #import "NSManagedObject+Additions.h"
-#import "JCPhoneNumberDataSourceUtils.h"
+#import <JCPhoneModule/JCPhoneNumberUtils.h>
 
 #define DID_INDEX_OF_DID_ID_IN_JRN 6
 //"jrn:pbx::jive:0127d974-f9f3-0704-2dee-000100420001:did:014885d6-1526-8b77-a111-000100420002",
@@ -93,27 +93,27 @@ NSString *const kDIDReceiveSMSAttribute     = @"receiveSMS";
 
 -(NSString *)titleText
 {
-    return [JCPhoneNumberDataSourceUtils formattedPhoneNumberForPhoneNumber:self];
+    return [JCPhoneNumberUtils formattedPhoneNumberForPhoneNumber:self];
 }
 
 -(NSString *)detailText
 {
-    return [JCPhoneNumberDataSourceUtils formattedPhoneNumberForPhoneNumber:self];
+    return [JCPhoneNumberUtils formattedPhoneNumberForPhoneNumber:self];
 }
 
 -(NSString *)dialableNumber
 {
-    return [JCPhoneNumberDataSourceUtils dialableStringForPhoneNumber:self];
+    return [JCPhoneNumberUtils dialableStringForPhoneNumber:self];
 }
 
 -(NSString *)t9
 {
-    return [JCPhoneNumberDataSourceUtils t9StringForPhoneNumber:self];
+    return [JCPhoneNumberUtils t9StringForPhoneNumber:self];
 }
 
 -(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
 {
-    return [JCPhoneNumberDataSourceUtils titleTextWithKeyword:keyword
+    return [JCPhoneNumberUtils titleTextWithKeyword:keyword
                                                          font:font
                                                         color:color
                                                   phoneNumber:self];
@@ -121,7 +121,7 @@ NSString *const kDIDReceiveSMSAttribute     = @"receiveSMS";
 
 -(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
 {
-    return [JCPhoneNumberDataSourceUtils detailTextWithKeyword:keyword
+    return [JCPhoneNumberUtils detailTextWithKeyword:keyword
                                                           font:font
                                                          color:color
                                                    phoneNumber:self];
@@ -129,13 +129,13 @@ NSString *const kDIDReceiveSMSAttribute     = @"receiveSMS";
 
 -(BOOL)containsKeyword:(NSString *)keyword
 {
-    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+    return [JCPhoneNumberUtils phoneNumber:self
                                      containsKeyword:keyword];
 }
 
 -(BOOL)containsT9Keyword:(NSString *)keyword
 {
-    return [JCPhoneNumberDataSourceUtils phoneNumber:self
+    return [JCPhoneNumberUtils phoneNumber:self
                                    containsT9Keyword:keyword];
 }
 

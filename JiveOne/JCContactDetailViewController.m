@@ -8,7 +8,8 @@
 
 #import "JCContactDetailViewController.h"
 
-#import "JCPhoneManager.h"
+#import <JCPhoneModule/JCPhoneModule.h>
+
 #import "JCAuthenticationManager.h"
 
 #import "Extension.h"
@@ -20,7 +21,6 @@
 #import "JCVoicemailNumber.h"
 #import "JCPersonDataSource.h"
 
-#import "JCDialerViewController.h"
 #import "JCStoryboardLoaderViewController.h"
 #import "JCTypeSelectorViewController.h"
 
@@ -29,6 +29,7 @@
 #import "JCContactPhoneNumberTableViewCell.h"
 #import "JCContactAddressTableViewCell.h"
 #import "JCContactOtherFieldTableViewCell.h"
+#import "JCPhoneBook.h"
 
 @interface JCContactDetailViewController () <JCTypeSelectorTableControllerDelegate, JCContactPhoneNumberTableViewCellDelegate> {
     BOOL _addingContact;
@@ -214,7 +215,7 @@
 
 -(void)onActiveCall
 {
-    JCCallerViewController *callViewController = self.phoneManager.callViewController;
+    JCPhoneCallViewController *callViewController = self.phoneManager.callViewController;
     if (!callViewController) {
         return;
     }
@@ -228,7 +229,7 @@
 
 -(void)onInactiveCall
 {
-    JCCallerViewController *callViewController = self.phoneManager.callViewController;
+    JCPhoneCallViewController *callViewController = self.phoneManager.callViewController;
     if (!callViewController) {
         return;
     }
@@ -338,7 +339,7 @@
 -(void)contactPhoneNumberCell:(JCContactPhoneNumberTableViewCell *)cell dialPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
     [self dialPhoneNumber:phoneNumber
-                usingLine:self.authenticationManager.line
+      provisioningProfile:self.authenticationManager.line
                    sender:cell];
 }
 

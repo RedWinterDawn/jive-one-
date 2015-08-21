@@ -7,7 +7,9 @@
 //
 
 #import "JCVoicemailDetailViewController.h"
-#import "JCDrawing.h"
+
+#import <JCPhoneModule/JCProgressHUD.h>
+#import <JCPhoneModule/JCDrawing.h>
 
 // Models
 #import "JCVoicemailAudioPlayer.h"

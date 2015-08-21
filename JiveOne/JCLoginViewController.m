@@ -10,6 +10,9 @@
 #import "JCAuthenticationManager.h"
 #import "UITextField+ELFixSecureTextFieldFont.h"
 
+#import <JCPhoneModule/JCProgressHUD.h>
+#import <JCPhoneModule/JCAlertView.h>
+
 @interface JCLoginViewController () <NSFileManagerDelegate>
 
 @end

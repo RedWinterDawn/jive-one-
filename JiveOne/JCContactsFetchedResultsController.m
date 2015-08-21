@@ -16,6 +16,7 @@
 #import "ContactGroup.h"
 #import "InternalExtensionGroup.h"
 #import "InternalExtension.h"
+#import "JCPhoneNumberUtils.h"
 
 @interface JCContactsFetchedResultsController () {
     PBX *_pbx;

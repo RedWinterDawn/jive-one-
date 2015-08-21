@@ -8,6 +8,8 @@
 
 #import "JCConversationViewController.h"
 
+#import <JCPhoneModule/JCProgressHUD.h>
+
 // Models
 #import "JCPersonDataSource.h"
 #import "Message.h"

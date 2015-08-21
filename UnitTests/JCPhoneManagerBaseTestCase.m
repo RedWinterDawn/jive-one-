@@ -7,15 +7,13 @@
 //
 
 #import "JCPhoneManagerBaseTestCase.h"
+//#import "JCPhoneManager.h"
 
-@interface JCPhoneManager ()
-
--(instancetype)initWithSipManager:(JCSipManager *)sipManager
-                      appSettings:(JCAppSettings *)appSettings
-                        phoneBook:(JCPhoneBook *)phoneBook
-              reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager;
-
-@end
+//@interface JCPhoneManager ()
+//
+//@property (nonatomic, strong) UIStoryboard *storyboard;
+//
+//@end
 
 
 @implementation JCPhoneManagerBaseTestCase
@@ -23,17 +21,17 @@
 - (void)setUp {
     [super setUp];
     
-    // instance and verify that sip handler is the mock sip handler.
-    JCPhoneManager *phoneManager = [[JCPhoneManager alloc] initWithSipManager:nil appSettings:nil phoneBook:nil reachabilityManager:nil];
-    
-    // verify storyboarding of phone manger is in place and correct
-    XCTAssertNotNil(phoneManager.storyboardName, @"Phone Manager Storyboard name should not be nil");
-    XCTAssertNotNil(phoneManager.storyboard, @"Storyboard should not be nil");
-    self.phoneManager = phoneManager;
+//    // instance and verify that sip handler is the mock sip handler.
+//    JCPhoneManager *phoneManager = [[JCPhoneManager alloc] initWithSipManager:nil settings:nil reachability:nil];
+//    
+//    // verify storyboarding of phone manger is in place and correct
+//    XCTAssertNotNil(phoneManager.storyboardName, @"Phone Manager Storyboard name should not be nil");
+//    XCTAssertNotNil(phoneManager.storyboard, @"Storyboard should not be nil");
+//    self.phoneManager = phoneManager;
 }
 
 - (void)tearDown {
-    self.phoneManager = nil;
+    //self.phoneManager = nil;
     [super tearDown];
 }
 

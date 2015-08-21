@@ -10,7 +10,7 @@
 #import "NSManagedObject+Additions.h"
 #import "PBX.h"
 #import "NSString+Additions.h"
-#import "LineConfiguration.h"
+#import "LineConfiguration+V4Client.h"
 #import "PBX.h"
 
 NSString *const kLineActiveAttribute = @"active";
@@ -57,8 +57,6 @@ NSString *const kLineActiveAttribute = @"active";
     }
     return detailText;
 }
-
-
 
 -(NSString *)mailboxId
 {
@@ -112,6 +110,11 @@ NSString *const kLineActiveAttribute = @"active";
 -(NSString *)server
 {
     return self.pbx.isV5 ? self.outboundProxy : self.registrationHost;
+}
+
+-(void)refreshProvisioningProfileWithCompletion:(void (^)(BOOL, NSError *))completion
+{
+    [LineConfiguration downloadLineConfigurationForLine:self completion:completion];
 }
 
 @end

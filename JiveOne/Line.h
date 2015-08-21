@@ -7,13 +7,13 @@
 //
 
 #import "Extension.h"
-#import "JCSipManagerProvisioningDataSource.h"
+#import <JCPhoneModule/JCPhoneModule.h>
 
 @class RecentEvent;
 @class LineConfiguration;
 @class PBX;
 
-@interface Line : Extension <JCSipManagerProvisioningDataSource>
+@interface Line : Extension <JCPhoneProvisioningDataSource>
 
 // Attributes
 @property (nonatomic, retain) NSString * mailboxJrn;

@@ -25,7 +25,7 @@
     [super viewDidLoad];
     
     _manager = [AFNetworkReachabilityManager sharedManager];
-    _phoneManager = [JCPhoneManager sharedManager];
+    _phoneManager = self.phoneManager;
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(updateStatus) name:AFNetworkingReachabilityDidChangeNotification object:nil];
@@ -51,7 +51,7 @@
 {
     self.reachability.text = [self stringForReachabilityStatus:_manager.networkReachabilityStatus];
     self.previousReachability.text = [self stringForReachabilityStatus:(AFNetworkReachabilityStatus)_phoneManager.networkType];
-    self.wifiOnly.text = _appSettings.isWifiOnly ? @"Yes" : @"No";
+    self.wifiOnly.text = _phoneManager.settings.isWifiOnly ? @"Yes" : @"No";
     self.connecting.text = _phoneManager.isRegistering ? @"Yes" : @"No";
     self.connected.text = _phoneManager.isRegistered ? @"Yes" : @"No";
 }

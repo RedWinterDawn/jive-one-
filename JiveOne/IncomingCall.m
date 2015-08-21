@@ -30,7 +30,7 @@ NSString *const kIncomingCallEntityName = @"IncomingCall";
 
 @implementation IncomingCall (MagicalRecord)
 
-+(void)addIncommingCallWithLineSession:(JCLineSession *)session line:(Line *)line
++(void)addIncommingCallWithLineSession:(JCPhoneSipSession *)session line:(Line *)line
 {
     [IncomingCall addCallEntity:kIncomingCallEntityName line:line lineSession:session read:YES];
 }

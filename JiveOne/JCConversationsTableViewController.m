@@ -8,6 +8,8 @@
 
 #import "JCConversationsTableViewController.h"
 
+#import <JCPhoneModule/JCProgressHUD.h>
+
 // Models
 #import "PBX.h"
 #import "BlockedNumber+V5Client.h"

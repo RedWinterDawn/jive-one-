@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCPhoneNumberDataSource.h"
 #import "Message.h"
+#import <JCPhoneModule/JCPhoneModule.h>
 
 @protocol JCMessageGroupDelegate;
 

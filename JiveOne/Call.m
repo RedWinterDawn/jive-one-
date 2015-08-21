@@ -21,7 +21,7 @@ NSString *const kCallEntityName = @"Call";
 
 @implementation Call (MagicalRecord)
 
-+(void)addCallEntity:(NSString *)entityName line:(Line *)line lineSession:(JCLineSession *)session read:(BOOL)read
++(void)addCallEntity:(NSString *)entityName line:(Line *)line lineSession:(JCPhoneSipSession *)session read:(BOOL)read
 {
     id <JCPhoneNumberDataSource> number = session.number;
     

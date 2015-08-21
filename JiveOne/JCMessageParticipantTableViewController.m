@@ -14,6 +14,7 @@
 #import "PhoneNumber.h"
 #import "Contact.h"
 #import "PBX.h"
+#import "JCPhoneNumberUtils.h"
 
 @interface JCMessageParticipantTableViewController ()
 

@@ -11,113 +11,20 @@
 
 NSString *const kJCAppSettingsPresenceChangedNotification = @"presenceChanged";
 
-NSString *const kJCAppSettingsIntercomEnabledAttribute = @"intercomEnabled";
-NSString *const kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute = @"intercomMicrophoneMuteEnabled";
-NSString *const kJCAppSettingsWifiOnlyAttribute = @"wifiOnly";
+
+
 NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
-NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
+
 NSString *const kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute = @"applicationSwitcherLastSelected";
 NSString *const kJCAppSettingsVoicemailOnSpeakerAttribute = @"voicemailOnSpeaker";
-NSString *const kJCAppSettingsPhoneEnabledAttribute = @"phoneEnabled";
-NSString *const kJCAppSettingsVolumeLevelAttribute = @"volumeLevel";
-NSString *const kJCRingToneSelectedAttribute = @"ringtone";
-NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
 
-
-@interface JCAppSettings ()
-
-@property (nonatomic, strong) NSUserDefaults *userDefaults;
-
-@end
 
 @implementation JCAppSettings
 
--(instancetype)initWithDefaults:(NSUserDefaults *)userDefaults
-{
-    self = [super init];
-    if (self) {
-        _userDefaults = userDefaults;
-    }
-    return self;
-}
-
--(instancetype)init
-{
-    return [self initWithDefaults:[NSUserDefaults standardUserDefaults]];
-}
-
-#pragma mark - Setters -
-
--(void)setIntercomEnabled:(BOOL)intercomEnabled
-{
-    [self setSettingBoolValue:intercomEnabled forKey:kJCAppSettingsIntercomEnabledAttribute];
-}
-
--(void)setIntercomMicrophoneMuteEnabled:(BOOL)intercomMicrophoneMuteEnabled
-{
-    [self setSettingBoolValue:intercomMicrophoneMuteEnabled forKey:kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute];
-}
-
--(void)setWifiOnly:(BOOL)callsOverCellEnabled
-{
-    [self setSettingBoolValue:callsOverCellEnabled forKey:kJCAppSettingsWifiOnlyAttribute];
-}
-
 -(void)setPresenceEnabled:(BOOL)presenceEnabled
 {
-    [self setSettingBoolValue:presenceEnabled forKey:kJCAppSettingsPresenceAttribute];
+    [self setBoolValue:presenceEnabled forKey:kJCAppSettingsPresenceAttribute];
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCAppSettingsPresenceChangedNotification object:self];
-}
-
--(void)setVibrateOnRing:(BOOL)vibrateOnRing
-{
-    [self setSettingBoolValue:vibrateOnRing forKey:kJCAppSettingsVibrateOnRingAttribute];
-}
-
--(void)setVoicemailOnSpeaker:(BOOL)voicemailOnSpeaker
-{
-    [self setSettingBoolValue:voicemailOnSpeaker forKey:kJCAppSettingsVoicemailOnSpeakerAttribute];
-}
-
--(void)setPhoneEnabled:(BOOL)sipDisabled
-{
-    [self setSettingBoolValue:sipDisabled forKey:kJCAppSettingsPhoneEnabledAttribute];
-}
-
--(void)setDoNotDisturbEnabled:(BOOL)doNotDisturbEnabled
-{
-    [self setSettingBoolValue:doNotDisturbEnabled forKey:kJCDoNotDisturbAttribute];
-}
-
--(void)setAppSwitcherLastSelectedViewControllerIdentifier:(NSString *)lastSelectedViewControllerIdentifier
-{
-    [self setSettingStringValue:lastSelectedViewControllerIdentifier forKey:kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute];
-}
-
--(void)setRingtone:(NSString *)ringTone
-{
-    [self setSettingStringValue:ringTone forKey:kJCRingToneSelectedAttribute];
-}
-
--(void)setVolumeLevel:(float )volumeLevel
-{
-    [self setFloatValue:volumeLevel forKey:kJCAppSettingsVolumeLevelAttribute];
-}
-
-
-#pragma mark - Getters -
-
--(BOOL)isIntercomEnabled
-{
-    return [self.userDefaults boolForKey:kJCAppSettingsIntercomEnabledAttribute];
-}
--(BOOL)isIntercomMicrophoneMuteEnabled
-{
-    return [self.userDefaults boolForKey:kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute];
-}
--(BOOL)isWifiOnly
-{
-    return [self.userDefaults boolForKey:kJCAppSettingsWifiOnlyAttribute];
 }
 
 -(BOOL)isPresenceEnabled
@@ -125,9 +32,9 @@ NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
     return [self.userDefaults boolForKey:kJCAppSettingsPresenceAttribute];
 }
 
--(BOOL)isVibrateOnRing
+-(void)setVoicemailOnSpeaker:(BOOL)voicemailOnSpeaker
 {
-    return [self.userDefaults boolForKey:kJCAppSettingsVibrateOnRingAttribute];
+    [self setBoolValue:voicemailOnSpeaker forKey:kJCAppSettingsVoicemailOnSpeakerAttribute];
 }
 
 -(BOOL)isVoicemailOnSpeaker
@@ -135,58 +42,14 @@ NSString *const kJCDoNotDisturbAttribute = @"DoNotDisturb";
     return [self.userDefaults boolForKey:kJCAppSettingsVoicemailOnSpeakerAttribute];
 }
 
--(BOOL)isPhoneEnabled
+-(void)setAppSwitcherLastSelectedViewControllerIdentifier:(NSString *)lastSelectedViewControllerIdentifier
 {
-    return [self.userDefaults boolForKey:kJCAppSettingsPhoneEnabledAttribute];
-}
-
--(BOOL)isDoNotDisturbEnabled
-{
-    return [self.userDefaults boolForKey:kJCDoNotDisturbAttribute];
+    [self setValue:lastSelectedViewControllerIdentifier forKey:kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute];
 }
 
 -(NSString *)appSwitcherLastSelectedViewControllerIdentifier
 {
     return [self.userDefaults valueForKey:kJCAppSettingsAppSwitcherdLastSelectedIdentiferAttribute];
-}
-
--(NSString *)ringtone
-{
-    return [self.userDefaults valueForKey:kJCRingToneSelectedAttribute];
-}
-
--(float)volumeLevel
-{
-    return [self.userDefaults floatForKey:kJCAppSettingsVolumeLevelAttribute];
-}
-
-
-#pragma mark - Private -
-
--(void)setSettingBoolValue:(BOOL)value forKey:(NSString *)key
-{
-    [self willChangeValueForKey:key];
-    NSUserDefaults *defaults = self.userDefaults;
-    [defaults setBool:value forKey:key];
-    [defaults synchronize];
-    [self didChangeValueForKey:key];
-}
-
--(void)setSettingStringValue:(NSString *)value forKey:(NSString *)key
-{
-    [self willChangeValueForKey:key];
-    NSUserDefaults *defaults = self.userDefaults;
-    [defaults setValue:value forKey:key];
-    [defaults synchronize];
-    [self didChangeValueForKey:key];
-}
-
--(void)setFloatValue:(float)value forKey:(NSString *)key
-{
-    [self willChangeValueForKey:key];
-    NSUserDefaults *defaults = self.userDefaults;
-    [defaults setFloat:value forKey:key];
-    [defaults synchronize];
 }
 
 @end

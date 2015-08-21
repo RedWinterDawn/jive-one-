@@ -6,27 +6,17 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <JCPhoneModule/JCSettings.h>
 
 extern NSString *const kJCAppSettingsPresenceChangedNotification;
 
-@interface JCAppSettings : NSObject
+@interface JCAppSettings : JCSettings
 
-@property (nonatomic, getter = isIntercomEnabled) BOOL intercomEnabled;
-@property (nonatomic, getter = isIntercomMicrophoneMuteEnabled) BOOL intercomMicrophoneMuteEnabled;
-@property (nonatomic, getter = isWifiOnly) BOOL wifiOnly;
 @property (nonatomic, getter = isPresenceEnabled) BOOL presenceEnabled;
-@property (nonatomic, getter = isVibrateOnRing) BOOL vibrateOnRing;
 @property (nonatomic, getter = isVoicemailOnSpeaker) BOOL voicemailOnSpeaker;
-@property (nonatomic, getter = isPhoneEnabled) BOOL phoneEnabled;
-@property (nonatomic, getter= isDoNotDisturbEnabled) BOOL doNotDisturbEnabled;
-@property (nonatomic) float volumeLevel;
-
 
 // Remembers the last selected view controller for the app switcher.
 @property (nonatomic) NSString *appSwitcherLastSelectedViewControllerIdentifier;
-
-@property (nonatomic) NSString *ringtone;
 
 @end
 

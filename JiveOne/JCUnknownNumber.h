@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCPhoneNumber.h"
+#import <JCPhoneModule/JCPhoneModule.h>
 
 @interface JCUnknownNumber : JCPhoneNumber
 

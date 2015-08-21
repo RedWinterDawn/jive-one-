@@ -8,7 +8,7 @@
 
 #import "JCConversationTableViewCell.h"
 #import "BlockedNumber+V5Client.h"
-#import "JCPhoneNumber.h"
+#import <JCPhoneModule/JCPhoneModule.h>
 
 @interface JCConversationTableViewCell () {
     UIFont *_nameFont;

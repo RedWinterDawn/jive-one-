@@ -12,7 +12,7 @@
 @import Foundation;
 @import UIKit;
 
-#import "JCPhoneNumberDataSource.h"
+#import <JCPhoneModule/JCPhoneNumberDataSource.h>
 
 @protocol JCPersonDataSource <JCPhoneNumberDataSource>
 

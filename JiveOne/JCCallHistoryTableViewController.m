@@ -7,7 +7,7 @@
 //
 
 #import "JCCallHistoryTableViewController.h"
-#import "JCPhoneManager.h"
+#import <JCPhoneModule/JCPhoneManager.h>
 #import "MissedCall.h"
 
 @implementation JCCallHistoryTableViewController
