@@ -171,6 +171,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return FALSE;
     }
     
+    // Set audio QOS
+    [_mPortSIPSDK setAudioQos:TRUE DSCPValue:46 priority:-1];
+    
     // Configure codecs. These return error codes, but are not critical if they fail.
     
     // Used Audio Codecs
