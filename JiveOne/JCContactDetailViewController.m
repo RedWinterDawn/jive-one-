@@ -10,7 +10,7 @@
 
 #import <JCPhoneModule/JCPhoneModule.h>
 
-#import "JCAuthenticationManager.h"
+#import "JCAuthManager.h"
 
 #import "Extension.h"
 #import "InternalExtension.h"

@@ -7,7 +7,9 @@
 //
 
 #import "JCAuthClient.h"
-#import <UIKit/UIKit.h>
+#import "JCAuthClientError.h"
+
+@import UIKit;
 
 // Javascript
 NSString *const kJCAuthClientJavascriptString    = @"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()";
@@ -62,7 +64,7 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
     username = [username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     password = [password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if(username.length == 0 || password.length == 0){
-        [self reportError:[JCAuthClientError errorWithCode:API_CLIENT_INVALID_REQUEST_PARAMETERS]];
+        [self reportError:[JCAuthClientError errorWithCode:AUTH_CLIENT_INVALID_REQUEST_PARAMETERS]];
         return;
     }
     
@@ -87,7 +89,7 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
     [self notifyCompletionBlock:NO authToken:nil error:error];
 }
 
--(void)notifyCompletionBlock:(BOOL)success authToken:(NSDictionary *)authToken error:(NSError *)error
+-(void)notifyCompletionBlock:(BOOL)success authToken:(JCAuthInfo *)authInfo error:(NSError *)error
 {
     _loginAttempts = 0;
     _webview    = nil;
@@ -95,27 +97,9 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
     _password   = nil;
     
     if (_completionBlock) {
-        _completionBlock(success, authToken, error);
+        _completionBlock(success, authInfo, error);
         _completionBlock = nil;
     }
-}
-
-+(NSDictionary *)tokenDataFromURL:(NSURL *)url
-{
-    NSString *stringURL = [url description];
-    NSArray *topLevel =  [stringURL componentsSeparatedByString:@"#"];
-    NSArray *urlParams = [topLevel[1] componentsSeparatedByString:@"&"];
-    
-    NSMutableDictionary *data = [NSMutableDictionary dictionary];
-    for (NSString *param in urlParams)
-    {
-        NSArray *keyValue = [param componentsSeparatedByString:@"="];
-        NSString *key = [keyValue objectAtIndex:0];
-        NSString *value = [keyValue objectAtIndex:1];
-        [data setObject:value forKey:key];
-    }
-    
-    return data;
 }
 
 #pragma mark - Delegate Handlers -
@@ -131,14 +115,15 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
     }
     else {
         [webView stopLoading];
-        [self reportError:[JCAuthClientError errorWithCode:API_CLIENT_AUTHENTICATION_ERROR]];
+        [self reportError:[JCAuthClientError errorWithCode:AUTH_CLIENT_AUTHENTICATION_ERROR]];
     }
 }
 
 - (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     if ([request.URL.scheme isEqualToString:@"jiveclient"]) {
-        [self notifyCompletionBlock:YES authToken:[[self class] tokenDataFromURL:request.URL] error:nil];
+        JCAuthInfo *authInfo = [[JCAuthInfo alloc] initWithUrl:request.URL];
+        [self notifyCompletionBlock:YES authToken:authInfo error:nil];
         return NO;
     }
     return YES;
@@ -149,15 +134,8 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
     if (!_completionBlock) {
         return;
     }
-    [self reportError:[JCAuthClientError errorWithCode:API_CLIENT_NETWORK_ERROR underlyingError:error]];
+    [self reportError:[JCAuthClientError errorWithCode:AUTH_CLIENT_NETWORK_ERROR underlyingError:error]];
 }
-
-@end
-
-
-@implementation JCAuthClientError
-
-
 
 @end
 

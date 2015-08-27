@@ -10,7 +10,7 @@
 
 #import <JCPhoneModule/JCProgressHUD.h>
 
-#import "JCAuthenticationManager.h"
+#import "JCAuthManager.h"
 #import "BlockedNumber+V5Client.h"
 #import "PBX.h"
 

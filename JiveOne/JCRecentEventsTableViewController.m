@@ -12,7 +12,7 @@
 #import "JCConversationTableViewCell.h"
 #import "Message.h"
 #import "PBX.h"
-#import "JCAuthenticationManager.h"
+#import "JCAuthManager.h"
 #import "JCStoryboardLoaderViewController.h"
 #import "JCMessageGroup.h"
 

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <JCPhoneModule/JCManager.h>
-#import <JCPhoneModule/JCError.h>
+#import <JCPhoneModule/JCPhoneModule.h>
+#import "JCAuthSettings.h"
+#import "JCAuthKeychain.h"
 
 @class User;
 @class Line;
@@ -22,7 +23,9 @@ extern NSString *const kJCAuthenticationManagerUserAuthenticatedNotification;
 extern NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification;
 extern NSString *const kJCAuthenticationManagerLineChangedNotification;
 
-@interface JCAuthenticationManager : JCManager
+@interface JCAuthManager : JCManager
+
+- (instancetype)initWithKeychain:(JCAuthKeychain *)keychain setting:(JCAuthSettings *)settings;
 
 - (void)checkAuthenticationStatus;
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(CompletionHandler)completed;
@@ -32,16 +35,11 @@ extern NSString *const kJCAuthenticationManagerLineChangedNotification;
 @property (nonatomic, strong) DID *did;         // Selectable
 @property (nonatomic, readonly) User *user;
 @property (nonatomic, readonly) PBX *pbx;
+@property (nonatomic, readonly) JCAuthSettings *settings;
+@property (nonatomic, readonly) JCAuthInfo *authInfo;
 
-@property (nonatomic, readonly) NSString *authToken;
-@property (nonatomic, readonly) NSString *jiveUserId;
-@property (nonatomic, readonly) double exspirationDate;
 @property (nonatomic, readonly) BOOL userAuthenticated;
 @property (nonatomic, readonly) BOOL userLoadedMinimumData;
-
-// Remember Me
-@property (nonatomic) BOOL rememberMe;
-@property (nonatomic, readonly) NSString *rememberMeUser;
 
 + (void)requestAuthentication:(CompletionHandler)completion;
 + (void)requestAuthenticationForUser:(User *)user completion:(CompletionHandler)completion;
@@ -58,12 +56,12 @@ extern NSString *const kJCAuthenticationManagerLineChangedNotification;
 
 @interface UIViewController (AuthenticationManager)
 
-@property (nonatomic, strong) JCAuthenticationManager *authenticationManager;
+@property (nonatomic, strong) JCAuthManager *authenticationManager;
 
 @end
 
 @interface UIApplication (AuthenticationManager)
 
-@property (nonatomic, strong) JCAuthenticationManager *authenticationManager;
+@property (nonatomic, strong) JCAuthManager *authenticationManager;
 
 @end

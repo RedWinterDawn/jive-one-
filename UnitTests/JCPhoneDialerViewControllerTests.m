@@ -13,7 +13,7 @@
 
 // Managers
 //#import "JCPhoneManager.h"
-#import "JCAuthenticationManager.h"
+#import "JCAuthManager.h"
 
 // Views
 //#import "JCPhoneFormattedNumberLabel.h"

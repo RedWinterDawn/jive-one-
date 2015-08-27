@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCAuthenticationManager.h"
-#import "JCAuthenticationKeychain.h"
+#import "JCAuthManager.h"
+#import "JCAuthKeychain.h"
 #import <objc/runtime.h>
 
 #import "Line.h"
@@ -34,39 +34,33 @@ NSString *const kJCAuthenticationManagerRememberMeAttributeKey              = @"
 NSString *const kJCAuthenticationManagerJiveUserIdKey                       = @"username";
 NSString *const kJCAuthneticationManagerDeviceTokenKey                      = @"deviceToken";
 
-NSString *const kJCAuthenticationManagerResponseAccessTokenKey              = @"access_token";
-NSString *const kJCAuthenticationManagerResponseRefreshTokenKey             = @"refresh_token";
-NSString *const kJCAuthenticationManagerResponseUsernameKey                 = @"username";
-NSString *const kJCAuthenticationManagerResponseExpirationTimeIntervalKey   = @"expires_in";
-
 static BOOL requestingAuthentication;
 static NSMutableArray *authenticationCompletionRequests;
 
-@interface JCAuthenticationManager () <UIWebViewDelegate>
+@interface JCAuthManager () <UIWebViewDelegate>
 {
-    JCAuthenticationKeychain *_authenticationKeychain;
-    JCAuthClient *_authClient;
+    JCAuthKeychain *_keychain;
+    JCAuthClient *_client;
     Line *_line;
 }
 
-@property (nonatomic, readwrite) NSString *rememberMeUser;
-
 @end
 
-@implementation JCAuthenticationManager
+@implementation JCAuthManager
 
 -(instancetype)init
 {
-    JCAuthenticationKeychain *keyChain = [JCAuthenticationKeychain new];
-    
-    return [self initWithKeychain:keyChain];
+    JCAuthKeychain *keyChain = [JCAuthKeychain new];
+    JCAuthSettings *settings = [JCAuthSettings new];
+    return [self initWithKeychain:keyChain setting:settings];
 }
 
--(instancetype)initWithKeychain:(JCAuthenticationKeychain *)keychain
+-(instancetype)initWithKeychain:(JCAuthKeychain *)keychain setting:(JCAuthSettings *)settings
 {
     self = [super init];
     if(self) {
-        _authenticationKeychain = keychain;
+        _keychain = keychain;
+        _settings = settings;
     }
     return self;
 }
@@ -91,7 +85,7 @@ static NSMutableArray *authenticationCompletionRequests;
         return;
     }
     
-    JCAuthenticationManager *manager = [self sharedManager];
+    JCAuthManager *manager = [self sharedManager];
     CompletionHandler completionBlock = ^(BOOL success, NSError *error) {
         if (success) {
             [UIApplication hideStatus];
@@ -158,20 +152,21 @@ static NSMutableArray *authenticationCompletionRequests;
 -(void)checkAuthenticationStatus
 {
     // Check to see if we are autheticiated. If we are not, notify that we are logged out.
-    if (!_authenticationKeychain.isAuthenticated) {
-        [_authenticationKeychain logout];
+    if (!_keychain.isAuthenticated) {
+        [_keychain logout];
         [self postNotificationNamed:kJCAuthenticationManagerUserRequiresAuthenticationNotification];
         return;
     }
 
     // Check to see if we have data using the authentication store to retrive the user id.
-    NSString *jiveUserId = _authenticationKeychain.jiveUserId;
+    JCAuthInfo *authInfo = _keychain.authInfo;
+    NSString *jiveUserId = authInfo.username;
     _user = [User MR_findFirstByAttribute:NSStringFromSelector(@selector(jiveUserId)) withValue:jiveUserId];
     if (_user && _user.pbxs.count > 0) {
         Line *line = self.line;
         if (line) {
             // Check our expiration date.
-            if ([[NSDate date] timeIntervalSinceDate:_authenticationKeychain.expirationDate] > 0) {
+            if ([[NSDate date] timeIntervalSinceDate:authInfo.expirationDate] > 0) {
                 [[self class] requestAuthenticationForUser:_user completion:^(BOOL success, NSError *error) {
                     [self postNotificationNamed:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
                 }];
@@ -191,25 +186,66 @@ static NSMutableArray *authenticationCompletionRequests;
 
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password completed:(CompletionHandler)completion
 {
+    CompletionHandler authCompletion = ^(BOOL success, NSError *error) {
+        
+        // Load minimum user data
+        NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+        _user = [User userForJiveUserId:_keychain.authInfo.username context:context];
+        [PBX downloadPbxInfoForUser:_user
+                          completed:^(BOOL success, NSError *error) {
+                              if (success) {
+                                  [self postNotificationNamed:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
+                                  if (completion) {
+                                      completion(YES, nil);
+                                  }
+                              } else {
+                                  [_keychain logout];
+                                  [self postNotificationNamed:kJCAuthenticationManagerAuthenticationFailedNotification];
+                                  if (completion) {
+                                      completion(NO, [JCAuthenticationManagerError errorWithCode:AUTH_MANAGER_PBX_INFO_ERROR underlyingError:error]);
+                                  }
+                              }
+                          }];
+        
+    };
+    
     // Destroy current authToken;
-    [_authenticationKeychain logout];
+    [_keychain logout];
     
     // Clear local variables.
     _user = nil;
     _line = nil;
     
     // Login using the auth client.
-    _authClient = [[JCAuthClient alloc] init];
-    [_authClient loginWithUsername:username password:password completion:^(BOOL success, NSDictionary *authToken, NSError *error) {
-        if (success) {
-            [self receivedAccessTokenData:authToken username:username completion:completion];
-        }
-        else {
-            if (completion) {
-                completion(NO, [JCAuthenticationManagerError errorWithCode:AUTH_MANAGER_CLIENT_ERROR underlyingError:error]);
+    _client = [[JCAuthClient alloc] init];
+    [_client loginWithUsername:username password:password completion:^(BOOL success, JCAuthInfo *authInfo, NSError *error) {
+        if (success)
+        {
+            __autoreleasing NSError *error;
+            BOOL result = [_keychain setAuthInfo:authInfo error:&error];
+            if (!result) {
+                if (authCompletion) {
+                    authCompletion(NO, [JCAuthenticationManagerError errorWithCode:AUTH_MANAGER_CLIENT_ERROR underlyingError:error]);
+                }
+                return;
+            } else {
+                if(_settings.rememberMe)
+                    _settings.rememberMeUser = authInfo.username;
+                
+                if (authCompletion) {
+                    authCompletion(YES, nil);
+                }
+                
+                // Broadcast that we have succesfully authenticated the user.
+                [self postNotificationNamed:kJCAuthenticationManagerUserAuthenticatedNotification];
             }
         }
-        _authClient = nil;
+        else {
+            if (authCompletion) {
+                authCompletion(NO, [JCAuthenticationManagerError errorWithCode:AUTH_MANAGER_CLIENT_ERROR underlyingError:error]);
+            }
+        }
+        _client = nil;
     }];
 }
 
@@ -219,13 +255,13 @@ static NSMutableArray *authenticationCompletionRequests;
     [self postNotificationNamed:kJCAuthenticationManagerUserWillLogOutNotification];
     
     // Destroy current authToken;
-    [_authenticationKeychain logout];
+    [_keychain logout];
 
     // Clear local variables.
     _user = nil;
     _line = nil;
-    if (!self.rememberMe) {
-        self.rememberMeUser = nil;
+    if (!self.settings.rememberMe) {
+        self.settings.rememberMeUser = nil;
     }
     
     // Notify the System that we are logging out.
@@ -233,24 +269,6 @@ static NSMutableArray *authenticationCompletionRequests;
 }
 
 #pragma mark - Setters -
-
--(void)setRememberMe:(BOOL)remember
-{
-    [self willChangeValueForKey:kJCAuthenticationManagerRememberMeAttributeKey];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:remember forKey:kJCAuthenticationManagerRememberMeAttributeKey];
-    [defaults synchronize];
-    [self didChangeValueForKey:kJCAuthenticationManagerRememberMeAttributeKey];
-}
-
--(void)setRememberMeUser:(NSString *)rememberMeUser
-{
-    [self willChangeValueForKey:kJCAuthenticationManagerJiveUserIdKey];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:rememberMeUser forKey:kJCAuthenticationManagerJiveUserIdKey];
-    [defaults synchronize];
-    [self didChangeValueForKey:kJCAuthenticationManagerJiveUserIdKey];
-}
 
 -(void)setLine:(Line *)line
 {
@@ -262,34 +280,19 @@ static NSMutableArray *authenticationCompletionRequests;
 
 #pragma mark - Getters -
 
+-(JCAuthInfo *)authInfo
+{
+    return _keychain.authInfo;
+}
+
 - (BOOL)userAuthenticated
 {
-    return _authenticationKeychain.isAuthenticated;
+    return _keychain.isAuthenticated;
 }
 
 - (BOOL)userLoadedMinimumData
 {
     return (_user && _user.pbxs);
-}
-
--(NSString *)authToken
-{
-    return _authenticationKeychain.accessToken;
-}
-
--(NSString *)jiveUserId
-{
-    return _authenticationKeychain.jiveUserId;
-}
-
-- (BOOL)rememberMe
-{
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAuthenticationManagerRememberMeAttributeKey];
-}
-
--(NSString *)rememberMeUser
-{
-    return [[NSUserDefaults standardUserDefaults] valueForKey:kJCAuthenticationManagerJiveUserIdKey];
 }
 
 -(Line *)line
@@ -343,82 +346,6 @@ static NSMutableArray *authenticationCompletionRequests;
     return _did;
 }
 
-#pragma mark - Private -
-
--(void)receivedAccessTokenData:(NSDictionary *)tokenData username:(NSString *)username completion:(CompletionHandler)completion
-{
-    @try {
-        if (!tokenData || tokenData.count < 1) {
-            [NSException raise:NSInvalidArgumentException format:@"Token Data is NULL"];
-        }
-        
-        if (tokenData[@"error"]) {
-            [NSException raise:NSInvalidArgumentException format:@"%@", tokenData[@"error"]];
-        }
-        
-        // Validate Jive User ID. Get the responce user ID, which should match the username we requested.
-        NSString *jiveUserId = [tokenData valueForKey:kJCAuthenticationManagerResponseUsernameKey];
-        if (!jiveUserId || jiveUserId.length == 0) {
-            [NSException raise:NSInvalidArgumentException format:@"Username null or empty"];
-        }
-        
-        if (![jiveUserId isEqualToString:username]) {
-            [NSException raise:NSInvalidArgumentException format:@"Auth token user name does not match login user name"];
-        }
-        
-        // Retrive the access token
-        NSString *accessToken = [tokenData valueForKey:kJCAuthenticationManagerResponseAccessTokenKey];
-        if (!accessToken || accessToken.length == 0) {
-            [NSException raise:NSInvalidArgumentException format:@"Access Token null or empty"];
-        }
-        
-        // Retrive the Expiration date.
-        NSTimeInterval expirationTimeInterval = ([tokenData doubleValueForKey:kJCAuthenticationManagerResponseExpirationTimeIntervalKey]);
-        if (expirationTimeInterval <= 0) {
-            [NSException raise:NSInvalidArgumentException format:@"Expiration of token not found"];
-        }
-        
-        // convert response from miliseconds to give us a date for expriation date that works with a
-        // NSDate object, which functions in seconds.
-        NSDate *expirationDate = [NSDate dateWithTimeIntervalSinceNow:expirationTimeInterval/1000];
-        
-        // Store values into keychain
-        if (![_authenticationKeychain setAccessToken:accessToken username:jiveUserId expirationDate:expirationDate]) {
-            [NSException raise:NSInvalidArgumentException format:@"Unable to save access token to keychain store."];
-        }
-        
-        if(self.rememberMe)
-            self.rememberMeUser = jiveUserId;
-        
-        // Broadcast that we have succesfully authenticated the user.
-        [self postNotificationNamed:kJCAuthenticationManagerUserAuthenticatedNotification];
-        
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-        _user = [User userForJiveUserId:_authenticationKeychain.jiveUserId context:context];
-        [PBX downloadPbxInfoForUser:_user
-                          completed:^(BOOL success, NSError *error) {
-                              if (success) {
-                                  [self postNotificationNamed:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
-                                  if (completion) {
-                                      completion(YES, nil);
-                                  }
-                              } else {
-                                  [_authenticationKeychain logout];
-                                  [self postNotificationNamed:kJCAuthenticationManagerAuthenticationFailedNotification];
-                                  if (completion) {
-                                      completion(NO, [JCAuthenticationManagerError errorWithCode:AUTH_MANAGER_PBX_INFO_ERROR underlyingError:error]);
-                                  }
-                              }
-                              
-                          }];
-    }
-    @catch (NSException *exception) {
-        if (completion) {
-            completion(false, [JCAuthenticationManagerError errorWithCode:AUTH_MANAGER_AUTH_TOKEN_ERROR reason:exception.reason]);
-        }
-    }
-}
-
 @end
 
 NSString *const kJCAuthManagerErrorDomain = @"AuthenticationManagerError";
@@ -462,13 +389,13 @@ NSString *const kJCAuthManagerErrorDomain = @"AuthenticationManagerError";
 
 @implementation UIViewController (AuthenticationManager)
 
-- (void)setAuthenticationManager:(JCAuthenticationManager *)authenticationManager {
+- (void)setAuthenticationManager:(JCAuthManager *)authenticationManager {
     objc_setAssociatedObject(self, @selector(authenticationManager), authenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
--(JCAuthenticationManager *)authenticationManager
+-(JCAuthManager *)authenticationManager
 {
-    JCAuthenticationManager *authenticationManager = objc_getAssociatedObject(self, @selector(authenticationManager));
+    JCAuthManager *authenticationManager = objc_getAssociatedObject(self, @selector(authenticationManager));
     if (!authenticationManager)
     {
         authenticationManager = [UIApplication sharedApplication].authenticationManager;
@@ -481,16 +408,16 @@ NSString *const kJCAuthManagerErrorDomain = @"AuthenticationManagerError";
 
 @implementation UIApplication (AutenticationManager)
 
-- (void)setAuthenticationManager:(JCAuthenticationManager *)authenticationManager {
+- (void)setAuthenticationManager:(JCAuthManager *)authenticationManager {
     objc_setAssociatedObject(self, @selector(authenticationManager), authenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
--(JCAuthenticationManager *)authenticationManager
+-(JCAuthManager *)authenticationManager
 {
-    JCAuthenticationManager *authenticationManager = objc_getAssociatedObject(self, @selector(authenticationManager));
+    JCAuthManager *authenticationManager = objc_getAssociatedObject(self, @selector(authenticationManager));
     if (!authenticationManager)
     {
-        authenticationManager = [JCAuthenticationManager sharedManager];
+        authenticationManager = [JCAuthManager sharedManager];
         objc_setAssociatedObject(self, @selector(authenticationManager), authenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return authenticationManager;

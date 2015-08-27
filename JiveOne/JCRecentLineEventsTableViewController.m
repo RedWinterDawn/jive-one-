@@ -49,7 +49,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        JCAuthenticationManager *authenticationManager = self.authenticationManager;
+        JCAuthManager *authenticationManager = self.authenticationManager;
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
         [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];

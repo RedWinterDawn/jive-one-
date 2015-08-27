@@ -297,7 +297,7 @@ NSString *const kGCMSenderId = @"937754980938";
 {
     // If navigation controller is not null, the login page is still present, and needs to either be
     // dismissed or should transition to requesting that they select a line.
-    JCAuthenticationManager *authenticationManager = notification.object;
+    JCAuthManager *authenticationManager = notification.object;
     Line *line = authenticationManager.line;
     if (!line) {
         [JCAlertView alertWithTitle:NSLocalizedString(@"Warning", nil)
@@ -331,7 +331,7 @@ NSString *const kGCMSenderId = @"937754980938";
  */
 -(void)lineChanged:(NSNotification *)notification
 {
-    JCAuthenticationManager *authenticationManager = notification.object;
+    JCAuthManager *authenticationManager = notification.object;
     [self registerServicesToLine:authenticationManager.line];
 }
 
@@ -347,13 +347,6 @@ NSString *const kGCMSenderId = @"937754980938";
     [JCSocket unsubscribeToSocketEvents:^(BOOL success, NSError *error) {
         [JCSocket reset];
     }];
-    
-    JCPhoneManager *phoneManager = [JCPhoneManager sharedManager];
-    if(phoneManager.isRegistered) {
-        [phoneManager disconnect];
-    }
-    
-    [JCApiClient cancelAllOperations];
 }
 
 /**
@@ -361,6 +354,8 @@ NSString *const kGCMSenderId = @"937754980938";
  */
 -(void)userDidLogout:(NSNotification *)notification
 {
+    [[JCPhoneManager sharedManager] disconnect];
+    [JCApiClient cancelAllOperations];
     [self userRequiresAuthentication:notification];
 }
 
@@ -500,7 +495,7 @@ NSString *const kGCMSenderId = @"937754980938";
     phoneManager.delegate = self;
 
     // Authentication
-    JCAuthenticationManager *authenticationManager = application.authenticationManager;
+    JCAuthManager *authenticationManager = application.authenticationManager;
     [center addObserver:self selector:@selector(userRequiresAuthentication:) name:kJCAuthenticationManagerUserRequiresAuthenticationNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userWillLogout:) name:kJCAuthenticationManagerUserWillLogOutNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];

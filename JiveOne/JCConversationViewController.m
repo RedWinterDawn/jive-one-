@@ -115,7 +115,7 @@
         senderDisplayName:(NSString *)senderDisplayName
                      date:(NSDate *)date
 {
-    JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    JCAuthManager *authenticationManager = self.authenticationManager;
     JCMessageGroup *messageGroup = self.messageGroup;
     if (self.count == 0) {
         NSMutableArray *dids = authenticationManager.pbx.dids.allObjects.mutableCopy;
@@ -295,7 +295,7 @@
 
 - (NSString *)senderId
 {
-    return self.authenticationManager.jiveUserId;
+    return self.authenticationManager.user.jiveUserId;
 }
 
 - (NSString *)senderNumber

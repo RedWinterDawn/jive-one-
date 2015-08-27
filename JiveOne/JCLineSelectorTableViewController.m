@@ -11,7 +11,7 @@
 #import "User.h"
 #import "Line.h"
 #import "PBX.h"
-#import "JCAuthenticationManager.h"
+#import "JCAuthManager.h"
 
 @implementation JCLineSelectorTableViewController
 

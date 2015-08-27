@@ -7,7 +7,7 @@
 //
 
 #import "JCLinePickerViewController.h"
-#import "JCAuthenticationManager.h"
+#import "JCAuthManager.h"
 #import "PBX.h"
 #import "Line.h"
 
@@ -25,7 +25,7 @@
     self.backgroundVisualEffectsView.backgroundView = self.navigationController.view;
     self.pickerViewVisualEffectsView.backgroundView = self.view;
     
-    JCAuthenticationManager *authenticationManger = self.authenticationManager;
+    JCAuthManager *authenticationManger = self.authenticationManager;
     User *user = authenticationManger.user;
     Line *line = authenticationManger.line;
     

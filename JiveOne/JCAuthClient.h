@@ -6,21 +6,15 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "JCApiClient.h"
+#import "JCAuthInfo.h"
 
-typedef void (^JCAuthClientLoginCompletionBlock) (BOOL success, NSDictionary *authToken, NSError *error);
+typedef void (^JCAuthClientLoginCompletionBlock) (BOOL success, JCAuthInfo *authToken, NSError *error);
 
 @interface JCAuthClient : NSObject
 
 @property NSUInteger maxloginAttempts;
 
-- (void)loginWithUsername:(NSString *)username password:(NSString*)password completion:(JCAuthClientLoginCompletionBlock)completion;
-
-+ (NSDictionary *)tokenDataFromURL:(NSURL *)url;
-
-@end
-
-@interface JCAuthClientError : JCApiClientError
-
+- (void)loginWithUsername:(NSString *)username
+                 password:(NSString *)password
+               completion:(JCAuthClientLoginCompletionBlock)completion;
 @end

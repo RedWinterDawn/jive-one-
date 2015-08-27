@@ -8,7 +8,7 @@
 
 #import "JCDIDSelectorViewController.h"
 
-#import "JCAuthenticationManager.h"
+#import "JCAuthManager.h"
 #import "DID.h"
 #import "User.h"
 #import "PBX.h"

@@ -7,7 +7,7 @@
 //
 
 #import "JCLoginViewController.h"
-#import "JCAuthenticationManager.h"
+#import "JCAuthManager.h"
 #import "UITextField+ELFixSecureTextFieldFont.h"
 
 #import <JCPhoneModule/JCProgressHUD.h>
@@ -28,7 +28,7 @@
     
     [self.passwordTextField fixSecureTextFieldFont];
     
-    JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    JCAuthManager *authenticationManager = self.authenticationManager;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticated:) name:kJCAuthenticationManagerUserAuthenticatedNotification object:authenticationManager];
     
@@ -49,14 +49,14 @@
     self.passwordTextField.leftViewMode = UITextFieldViewModeAlways;
     self.passwordTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     
-    
-    self.rememberMeSwitch.on = authenticationManager.rememberMe;
-    if (authenticationManager.rememberMe) {
-        self.usernameTextField.text = authenticationManager.rememberMeUser;
+    JCAuthSettings *settings = authenticationManager.settings;
+    self.rememberMeSwitch.on = settings.rememberMe;
+    if (settings.rememberMe) {
+        self.usernameTextField.text = settings.rememberMeUser;
         [self.passwordTextField becomeFirstResponder];
     } else {
 #if DEBUG
-        self.usernameTextField.text = @"danielleonard";
+        self.usernameTextField.text = @"rbarclay";
         self.passwordTextField.text = @"";
 #endif
         [self.usernameTextField becomeFirstResponder];
@@ -76,7 +76,7 @@
 
 - (IBAction)rememberMe:(id)sender {
     if ([sender isKindOfClass:[UISwitch class]]) {
-        self.authenticationManager.rememberMe = ((UISwitch *)sender).on;
+        self.authenticationManager.settings.rememberMe = ((UISwitch *)sender).on;
     }
 }
 

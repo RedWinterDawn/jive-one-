@@ -13,7 +13,7 @@
 #import <JCPhoneModule/JCPhoneModule.h>
 
 // Managers
-#import "JCAuthenticationManager.h"
+#import "JCAuthManager.h"
 
 // Models
 #import "JCAppSettings.h"
@@ -75,7 +75,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     #endif
     
     // Authentication Info
-    JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    JCAuthManager *authenticationManager = self.authenticationManager;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(updateAccountInfo) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
     [center addObserver:self selector:@selector(updateAccountInfo) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
@@ -128,7 +128,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 
 -(IBAction)leaveFeedback:(id)sender
 {
-    JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    JCAuthManager *authenticationManager = self.authenticationManager;
     NSString *email = authenticationManager.user.jiveUserId;
     if ([email rangeOfString:@"@"].location == NSNotFound){
         email =  [email stringByAppendingString:@"@jive.com"];
@@ -146,7 +146,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     UIDevice *currentDevice = [UIDevice currentDevice];
     [fields setValue:[currentDevice platformType] forKey:@"Model"];
     [fields setValue:[currentDevice systemVersion] forKey:@"System Version"];
-    [fields setValue:[currentDevice userUniqueIdentiferForUser:authenticationManager.jiveUserId] forKey:@"UUID"];
+    [fields setValue:[currentDevice userUniqueIdentiferForUser:authenticationManager.user.jiveUserId] forKey:@"UUID"];
     
     // App Info
     NSBundle *bundle = [NSBundle mainBundle];
@@ -222,10 +222,10 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 
 -(void)updateAccountInfo
 {
-    JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    JCAuthManager *authenticationManager = self.authenticationManager;
     UIDevice *device = [UIDevice currentDevice];
     
-    self.uuid.text                  = [device userUniqueIdentiferForUser:authenticationManager.jiveUserId];
+    self.uuid.text                  = [device userUniqueIdentiferForUser:authenticationManager.user.jiveUserId];
     self.userNameLabel.text         = authenticationManager.user.jiveUserId;
     self.pbx.text                   = authenticationManager.pbx.name;
     
