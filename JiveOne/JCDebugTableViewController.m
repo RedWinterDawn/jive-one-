@@ -30,7 +30,7 @@
     
     JCAuthManager *authenticationManager = self.authenticationManager;
     self.jiveUserId.text = authenticationManager.user.jiveUserId;
-    self.accessToken.text = authenticationManager.authInfo.accessToken;
+    self.accessToken.text = authenticationManager.authToken.accessToken;
     
     UIDevice *device = [UIDevice currentDevice];
     self.installationIdentifer.text = device.installationIdentifier;

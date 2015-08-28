@@ -280,7 +280,7 @@ static NSMutableArray *authenticationCompletionRequests;
 
 #pragma mark - Getters -
 
--(JCAuthToken *)authInfo
+-(JCAuthToken *)authToken
 {
     return _keychain.authToken;
 }

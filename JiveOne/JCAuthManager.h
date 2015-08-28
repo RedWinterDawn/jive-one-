@@ -36,7 +36,7 @@ extern NSString *const kJCAuthenticationManagerLineChangedNotification;
 @property (nonatomic, readonly) User *user;
 @property (nonatomic, readonly) PBX *pbx;
 @property (nonatomic, readonly) JCAuthSettings *settings;
-@property (nonatomic, readonly) JCAuthToken *authInfo;
+@property (nonatomic, readonly) JCAuthToken *authToken;
 
 @property (nonatomic, readonly) BOOL userAuthenticated;
 @property (nonatomic, readonly) BOOL userLoadedMinimumData;
