@@ -9,23 +9,24 @@
 #import "JCAuthKeychain.h"
 
 @interface JCAuthKeychain () {
-    JCAuthInfo *_authInfo;
+    JCAuthToken *_authToken;
 }
 
 @end
 
 @implementation JCAuthKeychain
 
-- (BOOL)setAuthInfo:(JCAuthInfo *)authInfo error:(NSError *__autoreleasing *)error
+- (BOOL)setAuthToken:(JCAuthToken *)authToken error:(NSError *__autoreleasing *)error
 {
-    if (!authInfo) {
+    if (!authToken) {
         *error = [NSError errorWithDomain:@"JCAuthKeychainDomain" code:1 userInfo:nil];
         return NO;
     }
     
-    NSMutableDictionary *keychainQuery = [self getKeychainQueryForUsername:authInfo.username];
+    NSMutableDictionary *keychainQuery = [self getKeychainQueryForUsername:authToken.username];
     OSStatus result = SecItemDelete((__bridge CFDictionaryRef)keychainQuery);  // Easier to delete than to update.
-    [keychainQuery setObject:authInfo.data forKey:(__bridge id)kSecValueData];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:authToken];
+    [keychainQuery setObject:data forKey:(__bridge id)kSecValueData];
     result = SecItemAdd((__bridge CFDictionaryRef)keychainQuery, NULL);
     if (result == noErr) {
         return YES;
@@ -35,17 +36,17 @@
 
 -(void)logout
 {
-    _authInfo = nil;
+    _authToken = nil;
     NSMutableDictionary *keychainQuery = [self getBaseKeychainQuery];
     SecItemDelete((__bridge CFDictionaryRef)keychainQuery);
 }
 
 #pragma mark - Getters -
 
--(JCAuthInfo *)authInfo
+-(JCAuthToken *)authToken
 {
-    if (_authInfo) {
-        return _authInfo;
+    if (_authToken) {
+        return _authToken;
     }
     
     NSString *username = [self authenticatedUsername];
@@ -55,14 +56,22 @@
     
     NSData *data = [self loadAccessTokenDataForUsername:username];
     if (data && data.length > 0) {
-        _authInfo = [[JCAuthInfo alloc] initWithData:data];
+        @try {
+            id object = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            if([object isKindOfClass:[JCAuthToken class]]) {
+                _authToken = (JCAuthToken *)object;
+            }
+        }
+        @catch (NSException *exception) {
+            NSLog(@"AuthToken unarchive invalidated: %@", exception.reason);
+        }
     }
-    return _authInfo;
+    return _authToken;
 }
 
 -(BOOL)isAuthenticated
 {
-    return self.authInfo != nil;
+    return self.authToken != nil;
 }
 
 #pragma mark - Private -

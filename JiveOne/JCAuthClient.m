@@ -89,7 +89,7 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
     [self notifyCompletionBlock:NO authToken:nil error:error];
 }
 
--(void)notifyCompletionBlock:(BOOL)success authToken:(JCAuthInfo *)authInfo error:(NSError *)error
+-(void)notifyCompletionBlock:(BOOL)success authToken:(JCAuthToken *)authToken error:(NSError *)error
 {
     _loginAttempts = 0;
     _webview    = nil;
@@ -97,7 +97,7 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
     _password   = nil;
     
     if (_completionBlock) {
-        _completionBlock(success, authInfo, error);
+        _completionBlock(success, authToken, error);
         _completionBlock = nil;
     }
 }
@@ -122,8 +122,8 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
 - (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     if ([request.URL.scheme isEqualToString:@"jiveclient"]) {
-        JCAuthInfo *authInfo = [[JCAuthInfo alloc] initWithUrl:request.URL];
-        [self notifyCompletionBlock:YES authToken:authInfo error:nil];
+        JCAuthToken *authToken = [[JCAuthToken alloc] initWithUrl:request.URL];
+        [self notifyCompletionBlock:YES authToken:authToken error:nil];
         return NO;
     }
     return YES;

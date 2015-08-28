@@ -6,16 +6,15 @@
 //
 //
 
-#import "JCAuthInfo.h"
+#import "JCAuthToken.h"
 
-NSString *const kJCAuthInfoAccessTokenKey                   = @"access_token";
-NSString *const kJCAuthInfoUsernameKey                      = @"username";
-NSString *const kJCAuthInfoExpirationTimeIntervalKey        = @"expires_in";
+NSString *const kJCAuthTokenAccessTokenKey                   = @"access_token";
+NSString *const kJCAuthTokenUsernameKey                      = @"username";
+NSString *const kJCAuthTokenExpirationTimeIntervalKey        = @"expires_in";
+NSString *const kJCAuthTokenAuthenticationDateKey            = @"authentication";
+NSString *const kJCAuthTokenExpirationDateKey                = @"expiration";
 
-NSString *const kJCAuthInfoAuthenticationDateKey            = @"authentication";
-NSString *const kJCAuthInfoExpirationDateKey                = @"expiration";
-
-@implementation JCAuthInfo
+@implementation JCAuthToken
 
 -(instancetype)initWithUrl:(NSURL *)url
 {
@@ -32,54 +31,51 @@ NSString *const kJCAuthInfoExpirationDateKey                = @"expiration";
         }
         
         // Validate Jive User ID. Get the responce user ID, which should match the username we requested.
-        _username = [tokenData valueForKey:kJCAuthInfoUsernameKey];
+        _username = [tokenData valueForKey:kJCAuthTokenUsernameKey];
         if (!_username || _username.length == 0) {
             [NSException raise:NSInvalidArgumentException format:@"Username null or empty"];
         }
         
         // Retrive the access token
-        _accessToken = [tokenData valueForKey:kJCAuthInfoAccessTokenKey];
+        _accessToken = [tokenData valueForKey:kJCAuthTokenAccessTokenKey];
         if (!_accessToken || _accessToken.length == 0) {
             [NSException raise:NSInvalidArgumentException format:@"Access Token null or empty"];
         }
         
         // Retrive the Expiration date.
-        NSTimeInterval expirationTimeInterval = [self doubleValueFromDictionary:tokenData forKey:kJCAuthInfoExpirationTimeIntervalKey];
-        if (expirationTimeInterval <= 0) {
+        NSTimeInterval interval = [self doubleValueFromDictionary:tokenData forKey:kJCAuthTokenExpirationTimeIntervalKey];
+        if (interval <= 0) {
             [NSException raise:NSInvalidArgumentException format:@"Expiration of token not found"];
         }
         
         // convert response from miliseconds to give us a date for expriation date that works with a
         // NSDate object, which functions in seconds.
-        _expirationDate = [NSDate dateWithTimeIntervalSinceNow:expirationTimeInterval/1000];
-        
         _authenticationDate = [NSDate new];
+        _expirationDate = [NSDate dateWithTimeInterval:interval/1000 sinceDate:_authenticationDate];
     }
     return self;
 }
 
--(instancetype)initWithData:(NSData *)data
+-(instancetype)initWithCoder:(NSCoder *)decoder
 {
-    id object = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    if (![object isKindOfClass:[NSDictionary class]]) {
-        return nil;
-    }
-    return [self initWithDictionary:(NSDictionary *)object];
-}
-
--(instancetype)initWithDictionary:(NSDictionary *)dictionary
-{
-    self = [super init];
-    if (self) {
-        _username           = [dictionary valueForKey:kJCAuthInfoUsernameKey];
-        _accessToken        = [dictionary valueForKey:kJCAuthInfoAccessTokenKey];
+    if (self = [super init])
+    {
+        _username = [decoder decodeObjectForKey:kJCAuthTokenUsernameKey];
+        if (!_username || _username.length == 0) {
+            [NSException raise:NSInvalidArgumentException format:@"Username null or empty"];
+        }
         
-        id expiration = [dictionary objectForKey:kJCAuthInfoExpirationDateKey];
+        _accessToken = [decoder decodeObjectForKey:kJCAuthTokenAccessTokenKey];
+        if (!_accessToken || _accessToken.length == 0) {
+            [NSException raise:NSInvalidArgumentException format:@"Access Token null or empty"];
+        }
+        
+        id expiration = [decoder decodeObjectForKey:kJCAuthTokenExpirationDateKey];
         if ([expiration isKindOfClass:[NSNumber class]]) {
             _expirationDate = [NSDate dateWithTimeIntervalSince1970:((NSNumber *)expiration).doubleValue];
         }
         
-        id authentication = [dictionary objectForKey:kJCAuthInfoAuthenticationDateKey];
+        id authentication = [decoder decodeObjectForKey:kJCAuthTokenAuthenticationDateKey];
         if ([authentication isKindOfClass:[NSNumber class]]) {
             _authenticationDate = [NSDate dateWithTimeIntervalSince1970:((NSNumber *)authentication).doubleValue];
         }
@@ -87,24 +83,16 @@ NSString *const kJCAuthInfoExpirationDateKey                = @"expiration";
     return self;
 }
 
--(NSDictionary *)authToken
+-(void)encodeWithCoder:(NSCoder *)encoder
 {
-    NSMutableDictionary *dictionary = [NSMutableDictionary new];
-    [dictionary setValue:_username forKey:kJCAuthInfoUsernameKey];
-    [dictionary setValue:_accessToken forKey:kJCAuthInfoAccessTokenKey];
-    
+    [encoder encodeObject:_username forKey:kJCAuthTokenUsernameKey];
+    [encoder encodeObject:_accessToken forKey:kJCAuthTokenAccessTokenKey];
     if (_expirationDate) {
-        [dictionary setValue:[NSNumber numberWithDouble:[_expirationDate timeIntervalSince1970]] forKey:kJCAuthInfoExpirationDateKey];
+        [encoder encodeObject:[NSNumber numberWithDouble:[_expirationDate timeIntervalSince1970]] forKey:kJCAuthTokenExpirationDateKey];
     }
     if (_authenticationDate) {
-        [dictionary setValue:[NSNumber numberWithDouble:[_authenticationDate timeIntervalSince1970]] forKey:kJCAuthInfoAuthenticationDateKey];
+        [encoder encodeObject:[NSNumber numberWithDouble:[_authenticationDate timeIntervalSince1970]] forKey:kJCAuthTokenAuthenticationDateKey];
     }
-    return [NSDictionary dictionaryWithDictionary:dictionary];
-}
-
--(NSData *)data
-{
-    return [NSKeyedArchiver archivedDataWithRootObject:self.authToken];
 }
 
 #pragma mark - Private -
@@ -123,7 +111,6 @@ NSString *const kJCAuthInfoExpirationDateKey                = @"expiration";
         NSString *value = [keyValue objectAtIndex:1];
         [data setObject:value forKey:key];
     }
-    
     return data;
 }
 

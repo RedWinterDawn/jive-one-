@@ -19,7 +19,7 @@ pod 'Google/CloudMessaging'
 target 'UnitTests', :exclusive => true do
     pod 'OCMock'
     pod 'OCMockito'
-    pod 'Kiwi'
+    #pod 'Kiwi'
     pod 'OCHamcrest'
     pod 'Specta'
     pod 'Expecta'

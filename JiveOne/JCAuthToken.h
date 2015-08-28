@@ -8,19 +8,19 @@
 
 @import Foundation;
 
-@interface JCAuthInfo : NSObject
+extern NSString *const kJCAuthTokenAccessTokenKey;
+extern NSString *const kJCAuthTokenUsernameKey;
+extern NSString *const kJCAuthTokenExpirationTimeIntervalKey;
+extern NSString *const kJCAuthTokenAuthenticationDateKey;
+extern NSString *const kJCAuthTokenExpirationDateKey;
+
+@interface JCAuthToken : NSObject <NSCoding>
 
 -(instancetype)initWithUrl:(NSURL *)url;
--(instancetype)initWithData:(NSData *)data;
--(instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @property (nonatomic, readonly) NSString *username;
 @property (nonatomic, readonly) NSString *accessToken;
-@property (nonatomic, readonly) NSString *refreshToken;
 @property (nonatomic, readonly) NSDate *expirationDate;
 @property (nonatomic, readonly) NSDate *authenticationDate;
-
-@property (nonatomic, readonly) NSDictionary *authToken;
-@property (nonatomic, readonly) NSData *data;
 
 @end

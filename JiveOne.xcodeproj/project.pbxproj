@@ -188,9 +188,11 @@
 		5D8FE4321B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D8FE4301B2A4E4D004FD594 /* JCContactOtherFieldTableViewCell.xib */; };
 		5D8FE4351B2B5B21004FD594 /* ContactInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8FE4341B2B5B21004FD594 /* ContactInfo.m */; };
 		5D9801DF1B8F7DBA00CB490C /* JCAuthSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9801DE1B8F7DBA00CB490C /* JCAuthSettings.m */; };
-		5D9801E21B8F82D300CB490C /* JCAuthInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9801E11B8F82D300CB490C /* JCAuthInfo.m */; };
+		5D9801E21B8F82D300CB490C /* JCAuthToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9801E11B8F82D300CB490C /* JCAuthToken.m */; };
 		5D9801E51B8F842400CB490C /* JCAuthClientError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9801E41B8F842400CB490C /* JCAuthClientError.m */; };
 		5D9801E81B8F844200CB490C /* JCAuthError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9801E71B8F844200CB490C /* JCAuthError.m */; };
+		5D9801EA1B8FBE5100CB490C /* JCAuthTokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9801E91B8FBE5100CB490C /* JCAuthTokenTests.m */; };
+		5D9801ED1B8FBEC600CB490C /* JCAuthSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9801EC1B8FBEC600CB490C /* JCAuthSettingsTests.m */; };
 		5D9F72101AC34F8000B9D0F8 /* JCAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */; };
 		5D9F72A91AC5BDD700B9D0F8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F1F305191C18D700AEAFD7 /* CoreData.framework */; };
 		5D9FE2AF1B7E342F004A43BB /* Phone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D5448C71B0D3BF500F44D8F /* Phone.storyboard */; };
@@ -715,12 +717,15 @@
 		5D8FE4341B2B5B21004FD594 /* ContactInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactInfo.m; sourceTree = "<group>"; };
 		5D9801DD1B8F7DBA00CB490C /* JCAuthSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthSettings.h; sourceTree = "<group>"; };
 		5D9801DE1B8F7DBA00CB490C /* JCAuthSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthSettings.m; sourceTree = "<group>"; };
-		5D9801E01B8F82D300CB490C /* JCAuthInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthInfo.h; sourceTree = "<group>"; };
-		5D9801E11B8F82D300CB490C /* JCAuthInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthInfo.m; sourceTree = "<group>"; };
+		5D9801E01B8F82D300CB490C /* JCAuthToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthToken.h; sourceTree = "<group>"; };
+		5D9801E11B8F82D300CB490C /* JCAuthToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthToken.m; sourceTree = "<group>"; };
 		5D9801E31B8F842300CB490C /* JCAuthClientError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthClientError.h; sourceTree = "<group>"; };
 		5D9801E41B8F842400CB490C /* JCAuthClientError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthClientError.m; sourceTree = "<group>"; };
 		5D9801E61B8F844200CB490C /* JCAuthError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthError.h; sourceTree = "<group>"; };
 		5D9801E71B8F844200CB490C /* JCAuthError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthError.m; sourceTree = "<group>"; };
+		5D9801E91B8FBE5100CB490C /* JCAuthTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCAuthTokenTests.m; path = UnitTests/JCAuthTokenTests.m; sourceTree = "<group>"; };
+		5D9801EC1B8FBEC600CB490C /* JCAuthSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthSettingsTests.m; sourceTree = "<group>"; };
+		5D9801EE1B8FBF6700CB490C /* JiveOneTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JiveOneTesting.h; sourceTree = "<group>"; };
 		5D9F720C1AC34F8000B9D0F8 /* JCAuthClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthClient.h; sourceTree = "<group>"; };
 		5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthClient.m; sourceTree = "<group>"; };
 		5D9F720F1AC34F8000B9D0F8 /* JCAuthClientError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthClientError.m; sourceTree = "<group>"; };
@@ -1473,6 +1478,8 @@
 		5D2D74131ACFA84700B98BDF /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
+				5D9801EE1B8FBF6700CB490C /* JiveOneTesting.h */,
+				5D9801EB1B8FBE8C00CB490C /* Authentication */,
 				5D11CC8E1B79606E009BB9B4 /* Modules */,
 				5D2D74241ACFB48500B98BDF /* JCBaseTestCase.h */,
 				5D2D74251ACFB48500B98BDF /* JCBaseTestCase.m */,
@@ -1812,6 +1819,16 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		5D9801EB1B8FBE8C00CB490C /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				5D9801E91B8FBE5100CB490C /* JCAuthTokenTests.m */,
+				5D9801EC1B8FBEC600CB490C /* JCAuthSettingsTests.m */,
+			);
+			name = Authentication;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		5DA30DC61AD6DA08008856DC /* Recent Events */ = {
 			isa = PBXGroup;
 			children = (
@@ -1958,8 +1975,8 @@
 				5D9801DE1B8F7DBA00CB490C /* JCAuthSettings.m */,
 				5D112DD81A4094340097223C /* JCAuthKeychain.h */,
 				5D112DD91A4094340097223C /* JCAuthKeychain.m */,
-				5D9801E01B8F82D300CB490C /* JCAuthInfo.h */,
-				5D9801E11B8F82D300CB490C /* JCAuthInfo.m */,
+				5D9801E01B8F82D300CB490C /* JCAuthToken.h */,
+				5D9801E11B8F82D300CB490C /* JCAuthToken.m */,
 				5D9801E31B8F842300CB490C /* JCAuthClientError.h */,
 				5D9801E41B8F842400CB490C /* JCAuthClientError.m */,
 				5D9801E61B8F844200CB490C /* JCAuthError.h */,
@@ -2388,7 +2405,7 @@
 				5D9F72101AC34F8000B9D0F8 /* JCAuthClient.m in Sources */,
 				5D241FDE1A383837008B498A /* JCDebugLineTableViewController.m in Sources */,
 				27F64D6219772D6A00F772AA /* Voicemail.m in Sources */,
-				5D9801E21B8F82D300CB490C /* JCAuthInfo.m in Sources */,
+				5D9801E21B8F82D300CB490C /* JCAuthToken.m in Sources */,
 				274493CE18D13538002744CB /* Common.m in Sources */,
 				5D3F1ADD1AE7F4E200C59A63 /* JCAppMenuSplitViewControllerDelegate.m in Sources */,
 				5D0275131A3F836A0077A37B /* JCStringEncryptionTransformer.m in Sources */,
@@ -2509,6 +2526,7 @@
 				5DC5181C1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m in Sources */,
 				5D2D74351ACFB48500B98BDF /* JCPhoneDialerViewControllerTests.m in Sources */,
 				5D0BACA41AD438F800EFEF86 /* NSDictionary+AdditionsTests.m in Sources */,
+				5D9801ED1B8FBEC600CB490C /* JCAuthSettingsTests.m in Sources */,
 				5DBF6F431ADC4FC9004B53F5 /* JCPhoneBookTests.m in Sources */,
 				5D2D75511AD08DBA00B98BDF /* OsgiData.xcdatamodel in Sources */,
 				5D2D74341ACFB48500B98BDF /* JCBaseTestCase.m in Sources */,
@@ -2520,6 +2538,7 @@
 				5DC518241AD30E46007CEA71 /* JCJiveContactTests.m in Sources */,
 				5D2D74361ACFB48500B98BDF /* JCMainStoryboardBaseTestCase.m in Sources */,
 				5D0BACB01AD4406300EFEF86 /* JCAppSettingsTests.m in Sources */,
+				5D9801EA1B8FBE5100CB490C /* JCAuthTokenTests.m in Sources */,
 				5D0BACA61AD4393F00EFEF86 /* NSData+AdditionsTests.m in Sources */,
 				5DC518201AD3096F007CEA71 /* JCLineTests.m in Sources */,
 				5DBF6F4B1ADFEFB0004B53F5 /* JCPersonTests.m in Sources */,

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCAuthInfo.h"
+#import "JCAuthToken.h"
 
-typedef void (^JCAuthClientLoginCompletionBlock) (BOOL success, JCAuthInfo *authToken, NSError *error);
+typedef void (^JCAuthClientLoginCompletionBlock) (BOOL success, JCAuthToken *authToken, NSError *error);
 
 @interface JCAuthClient : NSObject
 

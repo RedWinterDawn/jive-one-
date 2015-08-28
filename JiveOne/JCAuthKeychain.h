@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCAuthInfo.h"
+#import "JCAuthToken.h"
 
 @interface JCAuthKeychain : NSObject
 
-@property (nonatomic, readonly) JCAuthInfo *authInfo;
+@property (nonatomic, readonly) JCAuthToken *authToken;
 @property (nonatomic, readonly) BOOL isAuthenticated;
 
-- (BOOL)setAuthInfo:(JCAuthInfo *)authInfo error:(NSError *__autoreleasing *)error;
+- (BOOL)setAuthToken:(JCAuthToken *)authToken error:(NSError *__autoreleasing *)error;
 - (void)logout;
 
 @end

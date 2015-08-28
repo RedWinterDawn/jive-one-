@@ -159,7 +159,7 @@ static NSMutableArray *authenticationCompletionRequests;
     }
 
     // Check to see if we have data using the authentication store to retrive the user id.
-    JCAuthInfo *authInfo = _keychain.authInfo;
+    JCAuthToken *authInfo = _keychain.authToken;
     NSString *jiveUserId = authInfo.username;
     _user = [User MR_findFirstByAttribute:NSStringFromSelector(@selector(jiveUserId)) withValue:jiveUserId];
     if (_user && _user.pbxs.count > 0) {
@@ -190,7 +190,7 @@ static NSMutableArray *authenticationCompletionRequests;
         
         // Load minimum user data
         NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-        _user = [User userForJiveUserId:_keychain.authInfo.username context:context];
+        _user = [User userForJiveUserId:_keychain.authToken.username context:context];
         [PBX downloadPbxInfoForUser:_user
                           completed:^(BOOL success, NSError *error) {
                               if (success) {
@@ -218,11 +218,11 @@ static NSMutableArray *authenticationCompletionRequests;
     
     // Login using the auth client.
     _client = [[JCAuthClient alloc] init];
-    [_client loginWithUsername:username password:password completion:^(BOOL success, JCAuthInfo *authInfo, NSError *error) {
+    [_client loginWithUsername:username password:password completion:^(BOOL success, JCAuthToken *authInfo, NSError *error) {
         if (success)
         {
             __autoreleasing NSError *error;
-            BOOL result = [_keychain setAuthInfo:authInfo error:&error];
+            BOOL result = [_keychain setAuthToken:authInfo error:&error];
             if (!result) {
                 if (authCompletion) {
                     authCompletion(NO, [JCAuthenticationManagerError errorWithCode:AUTH_MANAGER_CLIENT_ERROR underlyingError:error]);
@@ -280,9 +280,9 @@ static NSMutableArray *authenticationCompletionRequests;
 
 #pragma mark - Getters -
 
--(JCAuthInfo *)authInfo
+-(JCAuthToken *)authInfo
 {
-    return _keychain.authInfo;
+    return _keychain.authToken;
 }
 
 - (BOOL)userAuthenticated
