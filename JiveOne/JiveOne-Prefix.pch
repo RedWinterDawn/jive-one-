@@ -28,7 +28,7 @@
 
     // Singletons
     #import "Constants.h"
-    #import "JCAuthenticationManager.h"
+    #import "JCUserManager.h"
 
     // Categories
     #import "NSString+Additions.h"

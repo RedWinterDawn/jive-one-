@@ -130,7 +130,7 @@ NSString *const kVoicemailResponseTranscriptionUrlKey               = @"transcri
             NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
             request.URL = url;
             request.HTTPMethod = @"GET";
-            [request setValue:[UIApplication sharedApplication].authenticationManager.authToken forHTTPHeaderField:@"Authorization"];
+            [request setValue:[UIApplication sharedApplication].userManager.authToken.accessToken forHTTPHeaderField:@"Authorization"];
             
             __autoreleasing NSURLResponse *response;
             __autoreleasing NSError *error;

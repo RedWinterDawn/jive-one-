@@ -115,7 +115,7 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
     if (_contactsTableViewController == JCContactFilterAll) {
         [self performSegueWithIdentifier:@"AddContact" sender:@"Edit"];
     } else {
-        User *user = self.authenticationManager.pbx.user;
+        User *user = self.userManager.pbx.user;
         
         ContactGroup *contactGroup = [ContactGroup MR_createEntityInContext:user.managedObjectContext];
         contactGroup.name = @"Test Group";

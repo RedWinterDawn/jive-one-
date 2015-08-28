@@ -28,13 +28,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    JCAuthenticationManager *authenticationManager = self.authenticationManager;
-    self.jiveUserId.text = authenticationManager.jiveUserId;
-    self.accessToken.text = authenticationManager.authToken;
+    JCUserManager *authenticationManager = self.userManager;
+    self.jiveUserId.text = authenticationManager.user.jiveUserId;
+    self.accessToken.text = authenticationManager.authToken.accessToken;
     
     UIDevice *device = [UIDevice currentDevice];
     self.installationIdentifer.text = device.installationIdentifier;
-    self.uuid.text = [device userUniqueIdentiferForUser:authenticationManager.jiveUserId];
+    self.uuid.text = [device userUniqueIdentiferForUser:authenticationManager.user.jiveUserId];
     
     self.users.text                 = [NSString stringWithFormat:@"%lu", (unsigned long)[User MR_countOfEntities]];
     self.pbxs.text                  = [NSString stringWithFormat:@"%lu", (unsigned long)[PBX MR_countOfEntities]];

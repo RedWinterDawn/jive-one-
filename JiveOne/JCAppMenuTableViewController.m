@@ -34,11 +34,11 @@ NSString *const kApplicationSwitcherSettingsIdentifier   = @"Settings";
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     
-    JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    JCUserManager *userManager = self.userManager;
     
-    [center addObserver:self selector:@selector(reset:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
-    [center addObserver:self selector:@selector(reload:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
-    [center addObserver:self selector:@selector(reload:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(reset:) name:kJCAuthenticationManagerUserLoggedOutNotification object:userManager];
+    [center addObserver:self selector:@selector(reload:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:userManager];
+    [center addObserver:self selector:@selector(reload:) name:kJCAuthenticationManagerLineChangedNotification object:userManager];
     [center addObserver:self selector:@selector(showCall:) name:kJCPhoneManagerShowCallsNotification object:self.phoneManager];
     
     [self performSelectorOnMainThread:@selector(loadLastSelected) withObject:nil waitUntilDone:NO];
@@ -101,7 +101,7 @@ NSString *const kApplicationSwitcherSettingsIdentifier   = @"Settings";
 
 -(void)reload:(NSNotification *)notification
 {
-    [self cell:self.messageCell setHidden:!self.authenticationManager.pbx.smsEnabled];
+    [self cell:self.messageCell setHidden:!self.userManager.pbx.smsEnabled];
     [self reloadDataAnimated:NO];
     
     CGSize size = self.tableView.contentSize;

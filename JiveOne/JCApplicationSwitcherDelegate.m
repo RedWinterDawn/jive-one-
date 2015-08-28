@@ -22,7 +22,7 @@
 #import "Line.h"
 #import "PBX.h"
 
-#import "JCAuthenticationManager.h"
+#import "JCUserManager.h"
 #import "JCAppSettings.h"
 #import "JCStoryboardLoaderViewController.h"
 
@@ -36,14 +36,14 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
     JCApplicationSwitcherViewController *_applicationSwitcher;
     NSArray *_viewControllers;
     JCAppSettings *_appSettings;
-    JCAuthenticationManager *_authenticationManager;
+    JCUserManager *_authenticationManager;
 }
 
 @end
 
 @implementation JCApplicationSwitcherDelegate
 
--(instancetype)initWithAppsSettings:(JCAppSettings *)appSettings authenticationManager:(JCAuthenticationManager *)authenticationManager
+-(instancetype)initWithAppsSettings:(JCAppSettings *)appSettings authenticationManager:(JCUserManager *)authenticationManager
 {
     self = [super init];
     if (self) {
@@ -61,7 +61,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 -(instancetype)init
 {
     return [self initWithAppsSettings:[JCAppSettings sharedSettings]
-                authenticationManager:[UIApplication sharedApplication].authenticationManager];
+                authenticationManager:[UIApplication sharedApplication].userManager];
 }
 
 -(void)dealloc

@@ -10,7 +10,7 @@
 
 #import <JCPhoneModule/JCProgressHUD.h>
 
-#import "JCAuthenticationManager.h"
+#import "JCUserManager.h"
 #import "BlockedNumber+V5Client.h"
 #import "PBX.h"
 
@@ -24,7 +24,7 @@
 {
     [super viewDidLoad];
     
-    PBX *pbx = self.authenticationManager.pbx;
+    PBX *pbx = self.userManager.pbx;
     [BlockedNumber downloadBlockedForDIDs:pbx.dids completion:NULL];
 }
 
@@ -32,7 +32,7 @@
 {
     if (!_fetchedResultsController) {
         
-        PBX *pbx = self.authenticationManager.pbx;
+        PBX *pbx = self.userManager.pbx;
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"did.pbx = %@", pbx];
         NSFetchRequest *fetchRequest = [BlockedNumber MR_requestAllWithPredicate:predicate];
@@ -70,7 +70,7 @@
 -(IBAction)refeshTable:(id)sender
 {
     if ([sender isKindOfClass:[UIRefreshControl class]]) {
-        PBX *pbx = self.authenticationManager.pbx;
+        PBX *pbx = self.userManager.pbx;
         [BlockedNumber downloadBlockedForDIDs:pbx.dids
                                    completion:^(BOOL success, NSError *error) {
                                        [((UIRefreshControl *)sender) endRefreshing];
