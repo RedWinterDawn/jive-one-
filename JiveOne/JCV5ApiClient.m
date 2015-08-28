@@ -15,7 +15,7 @@
 #import "PBX.h"
 #import "Line.h"
 #import "ContactGroup+V5Client.h"
-#import "JCAuthManager.h"
+#import "JCUserManager.h"
 
 NSString *const kJCV5ApiClientBaseUrl = @"https://api.jive.com/";
 

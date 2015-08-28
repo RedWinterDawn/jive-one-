@@ -12,7 +12,7 @@
 #import "JCConversationTableViewCell.h"
 #import "Message.h"
 #import "PBX.h"
-#import "JCAuthManager.h"
+#import "JCUserManager.h"
 #import "JCStoryboardLoaderViewController.h"
 #import "JCMessageGroup.h"
 
@@ -147,7 +147,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 -(JCMessageGroupsResultsController *)conversationGroupResultsController
 {
     if (!_messageGroupsResultsController){
-        PBX *pbx = self.authenticationManager.pbx;
+        PBX *pbx = self.userManager.pbx;
         if (pbx && [pbx smsEnabled])
         {
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion = %@ AND pbxId = %@", @NO, pbx.pbxId];

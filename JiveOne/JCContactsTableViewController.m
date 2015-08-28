@@ -46,7 +46,7 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        JCAuthManager *authenticationManager = self.authenticationManager;
+        JCUserManager *authenticationManager = self.userManager;
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
         [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
@@ -133,7 +133,7 @@
             }
         };
         
-        Line *line = self.authenticationManager.line;
+        Line *line = self.userManager.line;
         [InternalExtension downloadInternalExtensionsForLine:line complete:completion];
         
         // Sync contacts.
@@ -160,7 +160,7 @@
     if (!_fetchedResultsController)
     {
         NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
-        PBX *pbx = self.authenticationManager.pbx;
+        PBX *pbx = self.userManager.pbx;
         switch (_filterType) {
             case JCContactFilterGrouped:
             {

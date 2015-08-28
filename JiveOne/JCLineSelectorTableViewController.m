@@ -11,7 +11,7 @@
 #import "User.h"
 #import "Line.h"
 #import "PBX.h"
-#import "JCAuthManager.h"
+#import "JCUserManager.h"
 
 @implementation JCLineSelectorTableViewController
 
@@ -19,7 +19,7 @@
 {
     if (!_fetchedResultsController)
     {
-        User *user = self.authenticationManager.user;
+        User *user = self.userManager.user;
         if (user)
         {
             NSManagedObjectContext *context = self.managedObjectContext;
@@ -40,7 +40,7 @@
     {
         Line *line = (Line *)object;
         cell.textLabel.text = [NSString stringWithFormat:@"%@ on %@", line.number, line.pbx.name];
-        if ([line isEqual:self.authenticationManager.line]) {
+        if ([line isEqual:self.userManager.line]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
             cell.accessoryView.tintColor = [UIColor grayColor];
         }
@@ -55,7 +55,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Line *line = (Line *)[self objectAtIndexPath:indexPath];
-    self.authenticationManager.line = line;
+    self.userManager.line = line;
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         Line *localLine = (Line *)[localContext objectWithID:line.objectID];
         NSArray *lines = [Line MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];

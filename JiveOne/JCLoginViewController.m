@@ -7,7 +7,7 @@
 //
 
 #import "JCLoginViewController.h"
-#import "JCAuthManager.h"
+#import "JCUserManager.h"
 #import "UITextField+ELFixSecureTextFieldFont.h"
 
 #import <JCPhoneModule/JCProgressHUD.h>
@@ -28,7 +28,7 @@
     
     [self.passwordTextField fixSecureTextFieldFont];
     
-    JCAuthManager *authenticationManager = self.authenticationManager;
+    JCUserManager *authenticationManager = self.userManager;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticated:) name:kJCAuthenticationManagerUserAuthenticatedNotification object:authenticationManager];
     
@@ -76,7 +76,7 @@
 
 - (IBAction)rememberMe:(id)sender {
     if ([sender isKindOfClass:[UISwitch class]]) {
-        self.authenticationManager.settings.rememberMe = ((UISwitch *)sender).on;
+        self.userManager.settings.rememberMe = ((UISwitch *)sender).on;
     }
 }
 
@@ -85,9 +85,9 @@
 - (void)login
 {
     [self showStatus:@"Logging In"];
-    [self.authenticationManager loginWithUsername:self.usernameTextField.text
+    [self.userManager loginWithUsername:self.usernameTextField.text
                                      password:self.passwordTextField.text
-                                    completed:^(BOOL success, NSError *error) {
+                                    completed:^(BOOL success, NSString *userName, NSError *error) {
                                         [self hideStatus];
                                         if (error) {
                                             [JCAlertView alertWithError:error];

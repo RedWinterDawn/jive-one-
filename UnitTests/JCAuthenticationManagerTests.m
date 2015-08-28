@@ -7,13 +7,13 @@
 //
 
 #import "JCBaseTestCase.h"
-#import "JCAuthManager.h"
+#import "JCUserManager.h"
 #import "JCAuthKeychain.h"
 
 #import "PBX.h"
 #import "DID.h"
 
-@interface JCAuthManager ()
+@interface JCUserManager ()
 
 -(instancetype)initWithKeychain:(JCAuthKeychain *)keychain;
 
@@ -21,7 +21,7 @@
 
 @interface JCAuthenticationManagerTests : JCBaseTestCase
 
-@property (nonatomic, strong) JCAuthManager *authenticationManager;
+@property (nonatomic, strong) JCUserManager *authenticationManager;
 
 @end
 
@@ -30,7 +30,7 @@
 -(void)setUp {
     [super setUp];
     id authenticationKeychain = OCMClassMock([JCAuthKeychain class]);
-    JCAuthManager *authenticationManager = [[JCAuthManager alloc] initWithKeychain:authenticationKeychain];
+    JCUserManager *authenticationManager = [[JCUserManager alloc] initWithKeychain:authenticationKeychain];
     self.authenticationManager = authenticationManager;
 }
 
@@ -47,7 +47,7 @@
     OCMStub([authenticationManagerMock pbx]).andReturn(nil);
 
     // When
-    DID *did = ((JCAuthManager *)authenticationManagerMock).did;
+    DID *did = ((JCUserManager *)authenticationManagerMock).did;
     
      // Then
     OCMVerify([authenticationManagerMock pbx]);
@@ -63,7 +63,7 @@
     OCMStub([authenticationManagerMock pbx]).andReturn(pbx);
     
     // When
-    DID *did = ((JCAuthManager *)authenticationManagerMock).did;
+    DID *did = ((JCUserManager *)authenticationManagerMock).did;
     
     // Then
     OCMVerify([authenticationManagerMock pbx]);
@@ -81,7 +81,7 @@
     NSString *expectedDIDjrn = @"jrn:pbx::jive:01471162-f384-24f5-9351-000100420003:did:014885d6-1526-8b77-a111-000100420031";
     
     // When
-    DID *did = ((JCAuthManager *)authenticationManagerMock).did;
+    DID *did = ((JCUserManager *)authenticationManagerMock).did;
     
     // Then
     XCTAssertNotNil(pbx, @"The PBX should not be nil");
@@ -102,7 +102,7 @@
     // TODO: figure out which should be the first object did.
     
     // When
-    DID *did = ((JCAuthManager *)authenticationManagerMock).did;
+    DID *did = ((JCUserManager *)authenticationManagerMock).did;
     
     // Then
     OCMVerify([authenticationManagerMock pbx]);

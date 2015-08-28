@@ -143,7 +143,7 @@ NSString *const kGCMSenderId = @"937754980938";
 {
     LOG_Info();
     // If we are not a V5 PBX, we do not have a voicemail data to go fetch, and return with a no data callback.
-    if (![UIApplication sharedApplication].authenticationManager.line.pbx.isV5)
+    if (![UIApplication sharedApplication].userManager.line.pbx.isV5)
         return UIBackgroundFetchResultNoData;
     
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
@@ -233,7 +233,7 @@ NSString *const kGCMSenderId = @"937754980938";
     
     AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)((NSNumber *)[notification.userInfo valueForKey:AFNetworkingReachabilityNotificationStatusItem]).integerValue;
     AFNetworkReachabilityManager *networkManager = [AFNetworkReachabilityManager sharedManager];
-    Line *line = [UIApplication sharedApplication].authenticationManager.line;
+    Line *line = [UIApplication sharedApplication].userManager.line;
     if (!line) {
         return;
     }
@@ -297,7 +297,7 @@ NSString *const kGCMSenderId = @"937754980938";
 {
     // If navigation controller is not null, the login page is still present, and needs to either be
     // dismissed or should transition to requesting that they select a line.
-    JCAuthManager *authenticationManager = notification.object;
+    JCUserManager *authenticationManager = notification.object;
     Line *line = authenticationManager.line;
     if (!line) {
         [JCAlertView alertWithTitle:NSLocalizedString(@"Warning", nil)
@@ -331,7 +331,7 @@ NSString *const kGCMSenderId = @"937754980938";
  */
 -(void)lineChanged:(NSNotification *)notification
 {
-    JCAuthManager *authenticationManager = notification.object;
+    JCUserManager *authenticationManager = notification.object;
     [self registerServicesToLine:authenticationManager.line];
 }
 
@@ -361,7 +361,7 @@ NSString *const kGCMSenderId = @"937754980938";
 
 -(void)presenceChanged:(NSNotification *)notification
 {
-    [self subscribeToJasmineEventsForLine:[UIApplication sharedApplication].authenticationManager.line];
+    [self subscribeToJasmineEventsForLine:[UIApplication sharedApplication].userManager.line];
 }
 
 #pragma mark - Delegate Handlers -
@@ -495,13 +495,13 @@ NSString *const kGCMSenderId = @"937754980938";
     phoneManager.delegate = self;
 
     // Authentication
-    JCAuthManager *authenticationManager = application.authenticationManager;
+    JCUserManager *authenticationManager = application.userManager;
     [center addObserver:self selector:@selector(userRequiresAuthentication:) name:kJCAuthenticationManagerUserRequiresAuthenticationNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userWillLogout:) name:kJCAuthenticationManagerUserWillLogOutNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
     [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
-    [authenticationManager checkAuthenticationStatus];
+    [authenticationManager checkAuthenticationStatus:NULL];
     
     [self handlePush:launchOptions];
     

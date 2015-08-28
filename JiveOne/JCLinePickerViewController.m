@@ -7,7 +7,7 @@
 //
 
 #import "JCLinePickerViewController.h"
-#import "JCAuthManager.h"
+#import "JCUserManager.h"
 #import "PBX.h"
 #import "Line.h"
 
@@ -25,7 +25,7 @@
     self.backgroundVisualEffectsView.backgroundView = self.navigationController.view;
     self.pickerViewVisualEffectsView.backgroundView = self.view;
     
-    JCAuthManager *authenticationManger = self.authenticationManager;
+    JCUserManager *authenticationManger = self.userManager;
     User *user = authenticationManger.user;
     Line *line = authenticationManger.line;
     
@@ -84,7 +84,7 @@
             NSLog(@"%@", [error description]);
     }
     
-    self.authenticationManager.line = line;
+    self.userManager.line = line;
     [super close:sender];
 }
 

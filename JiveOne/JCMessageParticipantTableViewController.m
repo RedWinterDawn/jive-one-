@@ -122,7 +122,7 @@
         [results addObject:[JCUnknownNumber unknownNumberWithNumber:searchText]];
     }
     
-    User *user = self.authenticationManager.user;
+    User *user = self.userManager.user;
     NSArray *phoneNumbers = [self.phoneBook phoneNumbersWithKeyword:searchText forUser:user forLine:nil sortedByKey:@"name" ascending:YES];
     [results addObjectsFromArray:phoneNumbers];
     self.tableData = results;

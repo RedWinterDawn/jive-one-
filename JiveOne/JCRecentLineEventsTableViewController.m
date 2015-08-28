@@ -49,7 +49,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        JCAuthManager *authenticationManager = self.authenticationManager;
+        JCUserManager *authenticationManager = self.userManager;
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
         [center addObserver:self selector:@selector(reloadTable) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
@@ -182,7 +182,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 -(IBAction)refreshData:(id)sender
 {
     if ([sender isKindOfClass:[UIRefreshControl class]]) {
-        Line *line = self.authenticationManager.line;
+        Line *line = self.userManager.line;
         [Voicemail downloadVoicemailsForLine:line completion:^(BOOL success, NSError *error) {
             [((UIRefreshControl *)sender) endRefreshing];
             if (error) {
@@ -206,7 +206,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 {
     [super viewDidLayoutSubviews];
     
-    PBX *pbx = self.authenticationManager.pbx;
+    PBX *pbx = self.userManager.pbx;
     if (self.viewFilter == JCRecentLineEventsViewVoicemails && !pbx.isV5) {
         [self showVoicemail];
     }
@@ -275,7 +275,7 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     NSFetchRequest *fetchRequest = nil;
     NSManagedObjectContext *context = self.managedObjectContext;
     
-    Line *line = self.authenticationManager.line;
+    Line *line = self.userManager.line;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@ && markForDeletion = %@", line, @NO];
     
     switch (viewFilter) {

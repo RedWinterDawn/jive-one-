@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    JCAuthManager *authenticationManager = self.authenticationManager;
+    JCUserManager *authenticationManager = self.userManager;
     self.jiveUserId.text = authenticationManager.user.jiveUserId;
     self.accessToken.text = authenticationManager.authToken.accessToken;
     

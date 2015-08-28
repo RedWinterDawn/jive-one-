@@ -13,7 +13,7 @@
 #import <JCPhoneModule/JCPhoneModule.h>
 
 // Managers
-#import "JCAuthManager.h"
+#import "JCUserManager.h"
 
 // Models
 #import "JCAppSettings.h"
@@ -75,11 +75,11 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     #endif
     
     // Authentication Info
-    JCAuthManager *authenticationManager = self.authenticationManager;
+    JCUserManager *userManager = self.userManager;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(updateAccountInfo) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
-    [center addObserver:self selector:@selector(updateAccountInfo) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
-    [center addObserver:self selector:@selector(updateAccountInfo) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(updateAccountInfo) name:kJCAuthenticationManagerLineChangedNotification object:userManager];
+    [center addObserver:self selector:@selector(updateAccountInfo) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:userManager];
+    [center addObserver:self selector:@selector(updateAccountInfo) name:kJCAuthenticationManagerUserLoggedOutNotification object:userManager];
     
     [self updateAccountInfo];
 }
@@ -128,8 +128,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 
 -(IBAction)leaveFeedback:(id)sender
 {
-    JCAuthManager *authenticationManager = self.authenticationManager;
-    NSString *email = authenticationManager.user.jiveUserId;
+    JCUserManager *userManager = self.userManager;
+    NSString *email = userManager.user.jiveUserId;
     if ([email rangeOfString:@"@"].location == NSNotFound){
         email =  [email stringByAppendingString:@"@jive.com"];
     }
@@ -146,7 +146,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     UIDevice *currentDevice = [UIDevice currentDevice];
     [fields setValue:[currentDevice platformType] forKey:@"Model"];
     [fields setValue:[currentDevice systemVersion] forKey:@"System Version"];
-    [fields setValue:[currentDevice userUniqueIdentiferForUser:authenticationManager.user.jiveUserId] forKey:@"UUID"];
+    [fields setValue:[currentDevice userUniqueIdentiferForUser:userManager.user.jiveUserId] forKey:@"UUID"];
     
     // App Info
     NSBundle *bundle = [NSBundle mainBundle];
@@ -156,16 +156,16 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     NSString *country = [[NSLocale currentLocale] localeIdentifier];
     [fields setValue:country forKey:@"Locale"];
     
-    NSString *user = authenticationManager.line.pbx.user.jiveUserId;
+    NSString *user = userManager.line.pbx.user.jiveUserId;
     [fields setValue:user forKey:@"User"];
     
-    NSString *pbx = authenticationManager.line.pbx.displayName;
+    NSString *pbx = userManager.line.pbx.displayName;
     [fields setValue:pbx forKey:@"PBX"];
     
-    NSString *line = authenticationManager.line.number;
+    NSString *line = userManager.line.number;
     [fields setValue:line forKey:@"Line"];
     
-    NSString *domain = authenticationManager.line.pbx.domain;
+    NSString *domain = userManager.line.pbx.domain;
     [fields setValue:domain forKey:@"Domain"];
     
     NSString *carrier = [currentDevice defaultCarrier];
@@ -210,7 +210,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 
 -(IBAction)logout:(id)sender
 {
-    [self.authenticationManager logout];
+    [self.userManager logout];
 }
 
 -(void)didUpdateDIDSelectorViewController:(JCDIDSelectorViewController *)viewController
@@ -222,21 +222,21 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 
 -(void)updateAccountInfo
 {
-    JCAuthManager *authenticationManager = self.authenticationManager;
+    JCUserManager *userManager = self.userManager;
     UIDevice *device = [UIDevice currentDevice];
     
-    self.uuid.text                  = [device userUniqueIdentiferForUser:authenticationManager.user.jiveUserId];
-    self.userNameLabel.text         = authenticationManager.user.jiveUserId;
-    self.pbx.text                   = authenticationManager.pbx.name;
+    self.uuid.text                  = [device userUniqueIdentiferForUser:userManager.user.jiveUserId];
+    self.userNameLabel.text         = userManager.user.jiveUserId;
+    self.pbx.text                   = userManager.pbx.name;
     
     [self startUpdates];
     
     // Presence
-    PBX *pbx = authenticationManager.pbx;
+    PBX *pbx = userManager.pbx;
     [self setCell:self.presenceCell hidden:!pbx.isV5];
     self.presenceEnabled.on = self.appSettings.isPresenceEnabled;
     
-    self.smsUserDefaultNumber.text = authenticationManager.did.formattedNumber;
+    self.smsUserDefaultNumber.text = userManager.did.formattedNumber;
     [self setCell:self.defaultDIDCell hidden:!pbx.sendSMSMessages];
     [self setCell:self.blockedNumbersCell hidden:!pbx.sendSMSMessages];
     

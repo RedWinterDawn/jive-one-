@@ -8,7 +8,7 @@
 
 #import "JCDIDSelectorViewController.h"
 
-#import "JCAuthManager.h"
+#import "JCUserManager.h"
 #import "DID.h"
 #import "User.h"
 #import "PBX.h"
@@ -21,7 +21,7 @@
 {
     if (!_fetchedResultsController)
     {
-        PBX *pbx = self.authenticationManager.pbx;
+        PBX *pbx = self.userManager.pbx;
         if (pbx)
         {
             NSManagedObjectContext *context = self.managedObjectContext;
@@ -42,7 +42,7 @@
     {
         DID *did = (DID *)object;
         cell.textLabel.text = did.formattedNumber;
-        if ([did isEqual:self.authenticationManager.did]) {
+        if ([did isEqual:self.userManager.did]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
         else {
@@ -57,7 +57,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DID *did = (DID *)[self objectAtIndexPath:indexPath];
-    self.authenticationManager.did = did;
+    self.userManager.did = did;
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         DID *currentDID = (DID *)[localContext objectWithID:did.objectID];
         NSArray *numbers = [DID MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];

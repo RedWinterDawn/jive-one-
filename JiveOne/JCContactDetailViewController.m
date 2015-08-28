@@ -10,7 +10,7 @@
 
 #import <JCPhoneModule/JCPhoneModule.h>
 
-#import "JCAuthManager.h"
+#import "JCUserManager.h"
 
 #import "Extension.h"
 #import "InternalExtension.h"
@@ -63,7 +63,7 @@
             
             NSManagedObjectContext *context = self.managedObjectContext;
             Contact *contact = [Contact MR_createEntityInContext:context];
-            User *user = self.authenticationManager.user;
+            User *user = self.userManager.user;
             contact.user = (User *)[context existingObjectWithID:user.objectID error:nil];
             self.phoneNumber = contact;
             _addingContact = TRUE;
@@ -339,7 +339,7 @@
 -(void)contactPhoneNumberCell:(JCContactPhoneNumberTableViewCell *)cell dialPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
 {
     [self dialPhoneNumber:phoneNumber
-      provisioningProfile:self.authenticationManager.line
+      provisioningProfile:self.userManager.line
                    sender:cell];
 }
 

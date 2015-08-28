@@ -58,7 +58,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     _defaultRightNavigationItem = self.navigationItem.rightBarButtonItem;
     
     // Register for authentication manager changes.
-    JCAuthManager *authenticationManager = self.authenticationManager;
+    JCUserManager *authenticationManager = self.userManager;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(reloadTable:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
     [center addObserver:self selector:@selector(reloadTable:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
@@ -112,7 +112,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
         return _messageGroupsResultsController;
     }
     
-    PBX *pbx = self.authenticationManager.pbx;
+    PBX *pbx = self.userManager.pbx;
     if (pbx && [pbx smsEnabled]) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion = %@ AND pbxId = %@", @NO, pbx.pbxId];
         NSFetchRequest *fetchRequest = [Message MR_requestAllWithPredicate:predicate inContext:pbx.managedObjectContext];
@@ -132,7 +132,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 - (IBAction)update:(id)sender
 {
     if ([sender isKindOfClass:[UIRefreshControl class]]) {
-        PBX *pbx = self.authenticationManager.pbx;
+        PBX *pbx = self.userManager.pbx;
         [SMSMessage downloadMessagesDigestForDIDs:pbx.dids completion:^(BOOL success, NSError *error) {
             [((UIRefreshControl *)sender) endRefreshing];
             if (!success) {
@@ -159,7 +159,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
 - (IBAction)deleteMessages:(id)sender
 {
-    PBX *pbx = self.authenticationManager.pbx;
+    PBX *pbx = self.userManager.pbx;
     NSArray *messageIndexPaths = [self.tableView indexPathsForSelectedRows];
     NSMutableArray *objects = [NSMutableArray new];
     if (messageIndexPaths.count > 0) {
@@ -181,7 +181,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
 - (IBAction)markMessagesAsRead:(id)sender
 {
-    PBX *pbx = self.authenticationManager.pbx;
+    PBX *pbx = self.userManager.pbx;
     NSArray *messageIndexPaths = [self.tableView indexPathsForSelectedRows];
     NSMutableArray *objects = [NSMutableArray new];
     if (messageIndexPaths.count > 0) {
@@ -261,7 +261,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PBX *pbx = self.authenticationManager.pbx;
+    PBX *pbx = self.userManager.pbx;
     JCMessageGroup *object = [self objectAtIndexPath:indexPath];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {

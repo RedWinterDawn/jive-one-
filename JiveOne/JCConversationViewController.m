@@ -115,12 +115,12 @@
         senderDisplayName:(NSString *)senderDisplayName
                      date:(NSDate *)date
 {
-    JCAuthManager *authenticationManager = self.authenticationManager;
+    JCUserManager *userManager = self.userManager;
     JCMessageGroup *messageGroup = self.messageGroup;
     if (self.count == 0) {
-        NSMutableArray *dids = authenticationManager.pbx.dids.allObjects.mutableCopy;
+        NSMutableArray *dids = userManager.pbx.dids.allObjects.mutableCopy;
         if (dids.count < 2){
-             [self sendMessageWithSelectedDID:text toConversationGroup:messageGroup fromDid:authenticationManager.did];
+             [self sendMessageWithSelectedDID:text toConversationGroup:messageGroup fromDid:userManager.did];
         }
         else
         {
@@ -146,7 +146,7 @@
             [didOptions show:self.view];
         }
     } else {
-        [self sendMessageWithSelectedDID:text toConversationGroup:messageGroup fromDid:authenticationManager.did];
+        [self sendMessageWithSelectedDID:text toConversationGroup:messageGroup fromDid:userManager.did];
     }
        
 }
@@ -249,7 +249,7 @@
     if (messageGroup.isSMS) {
         SMSMessage *smsMessage = (SMSMessage *)self.messageGroup.latestMessage;
         if (!smsMessage) {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND pbxId = %@", messageGroup.messageGroupId, self.authenticationManager.pbx.pbxId];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND pbxId = %@", messageGroup.messageGroupId, self.userManager.pbx.pbxId];
             smsMessage = [SMSMessage MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
         }
         
@@ -273,7 +273,7 @@
         
         NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
         NSString *messageGroupId = self.messageGroup.messageGroupId;
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND markForDeletion = %@ AND pbxId = %@", messageGroupId, @NO, self.authenticationManager.pbx.pbxId];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND markForDeletion = %@ AND pbxId = %@", messageGroupId, @NO, self.userManager.pbx.pbxId];
         NSFetchRequest *fetchRequest = [Message MR_requestAllWithPredicate:predicate inContext:context ];
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
         fetchRequest.includesSubentities = YES;
@@ -295,7 +295,7 @@
 
 - (NSString *)senderId
 {
-    return self.authenticationManager.user.jiveUserId;
+    return self.userManager.user.jiveUserId;
 }
 
 - (NSString *)senderNumber
@@ -305,12 +305,12 @@
 
 - (NSString *)senderDisplayName
 {
-    return self.authenticationManager.line.name;
+    return self.userManager.line.name;
 }
 
 - (DID *)did
 {
-    return self.authenticationManager.did;
+    return self.userManager.did;
 }
 
 #pragma mark - Private -
