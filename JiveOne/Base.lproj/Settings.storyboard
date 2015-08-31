@@ -23,7 +23,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7xj-KO-ftJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2214" y="3321"/>
+            <point key="canvasLocation" x="-2158" y="2545"/>
         </scene>
         <!--Settings-->
         <scene sceneID="IQG-fW-PoO">
@@ -192,30 +192,6 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Messaging" id="P6V-tT-mpy" userLabel="SMS">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="SMSDefaultNumberCell" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="fKo-7y-d7F" detailTextLabel="FOD-XR-06K" style="IBUITableViewCellStyleValue1" id="end-8G-CMW" userLabel="SMSDefaultNumberCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="Default DID Cell" tableViewCell="end-8G-CMW" id="EI9-uM-95V">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Default SMS number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fKo-7y-d7F">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FOD-XR-06K">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="pqD-aX-f7v" kind="show" id="z61-eP-7ZT"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" restorationIdentifier="SMSBlockedNumberCell" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="oV5-Qp-Ki5" style="IBUITableViewCellStyleDefault" id="JJj-4g-3tC" userLabel="Blocked Numbers">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -315,11 +291,9 @@
                         <outlet property="blockedNumbersCell" destination="JJj-4g-3tC" id="FOu-M6-5ot"/>
                         <outlet property="buildLabel" destination="kEZ-fz-XUn" id="JNN-ka-tZ0"/>
                         <outlet property="debugCell" destination="tEW-tz-nPr" id="Njh-zg-1F4"/>
-                        <outlet property="defaultDIDCell" destination="end-8G-CMW" id="n8C-YV-qY1"/>
                         <outlet property="pbx" destination="VDl-fa-QEb" id="v87-lj-GAB"/>
                         <outlet property="presenceCell" destination="Ze4-X5-ykj" id="Gw4-yw-Wcr"/>
                         <outlet property="presenceEnabled" destination="Mz9-r2-S9V" id="llq-1i-wd5"/>
-                        <outlet property="smsUserDefaultNumber" destination="FOD-XR-06K" id="0Of-uA-z3D"/>
                         <outlet property="userNameLabel" destination="WfK-Sk-ufj" id="a5I-Pi-UXt"/>
                     </connections>
                 </tableViewController>
@@ -334,7 +308,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1423" y="3321"/>
+            <point key="canvasLocation" x="-1367" y="2545"/>
         </scene>
         <!--Select Extension-->
         <scene sceneID="dtL-iP-Eux">
@@ -376,43 +350,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F5T-0e-d4g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1059" y="913"/>
-        </scene>
-        <!--Select Number-->
-        <scene sceneID="e1S-Gq-3zB">
-            <objects>
-                <tableViewController id="pqD-aX-f7v" customClass="JCDIDSelectorViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hjD-dm-D5r">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="coE-gy-rmt" style="IBUITableViewCellStyleDefault" id="iVT-S8-hdE">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iVT-S8-hdE" id="TZO-gL-CcF">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="coE-gy-rmt">
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="pqD-aX-f7v" id="2JB-WW-Nnl"/>
-                            <outlet property="delegate" destination="pqD-aX-f7v" id="Xrb-X2-Hug"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Select Number" id="FiV-Hw-tUc">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="f1Z-xV-kuN"/>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5nZ-Ci-Itg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="186" y="1654"/>
         </scene>
         <!--Blocked SMS Numbers-->
         <scene sceneID="9M5-2T-LuL">
@@ -462,7 +399,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x4e-Zf-Ocp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="191" y="2361"/>
+            <point key="canvasLocation" x="181" y="1625"/>
         </scene>
         <!--Phone-->
         <scene sceneID="8Z9-Sh-CnR">
@@ -750,7 +687,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uxg-u7-hen" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="191" y="3098"/>
+            <point key="canvasLocation" x="181" y="2362"/>
         </scene>
         <!--Volume-->
         <scene sceneID="kkx-2d-T9Y">
@@ -846,33 +783,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="thn-tI-ebH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="191" y="3836"/>
-        </scene>
-        <!--Phone Select Dialtone View Controller-->
-        <scene sceneID="oNS-7h-mpf">
-            <objects>
-                <tableViewController id="Fis-9D-wRR" customClass="JCPhoneSelectDialtoneViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="EVj-Gc-sjI">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="xfT-rs-bgb">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xfT-rs-bgb" id="OdW-RZ-YYn">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Fis-9D-wRR" id="Dmh-e0-i8x"/>
-                            <outlet property="delegate" destination="Fis-9D-wRR" id="IWz-Ab-rxL"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eu9-k5-PyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2972" y="3292"/>
+            <point key="canvasLocation" x="181" y="3100"/>
         </scene>
         <!--Debug Storyboard Loader View Controller-->
         <scene sceneID="8Vh-eh-Xww">

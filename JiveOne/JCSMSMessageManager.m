@@ -70,10 +70,8 @@ NSString *const kJCSMSMessageManagerEntityConversationKey   = @"conversation";
     
     NSString *didId = [data stringValueForKey:kJCSMSMessageManagerUID];
     DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(did)) withValue:didId];
-    
     NSString *fromNumber = [data stringValueForKey:@"fromNumber"];
-    JCPhoneNumber *phoneNumber = [[JCPhoneNumber alloc] initWithName:nil number:fromNumber];
-    JCMessageGroup *messageGroup = [[JCMessageGroup alloc] initWithPhoneNumber:phoneNumber];
+    JCMessageGroup *messageGroup = [[JCMessageGroup alloc] initWithGroupId:fromNumber resourceId:did.jrn];
     [SMSMessage downloadMessagesForDID:did toMessageGroup:messageGroup completion:NULL];
 }
 

@@ -13,7 +13,12 @@
 
 @interface Message : RecentEvent <JSQMessageData>
 
-@property (nonatomic, retain) NSString *text;
-@property (nonatomic, retain) NSString *messageGroupId;
+@property (nonatomic, strong) NSString *text;
+@property (nonatomic, strong) NSString *messageGroupId;
+@property (nonatomic, strong) NSString *resourceId;
+
++(NSPredicate *)predicateForMessagesWithGroupId:(NSString *)messageGroupId
+                                     resourceId:(NSString *)resourceId
+                                          pbxId:(NSString *)pbxId;
 
 @end

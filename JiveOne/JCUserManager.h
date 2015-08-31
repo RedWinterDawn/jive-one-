@@ -21,7 +21,6 @@ extern NSString *const kJCAuthenticationManagerLineChangedNotification;
 @interface JCUserManager : JCAuthManager
 
 @property (nonatomic, strong) Line *line;       // Selectable
-@property (nonatomic, strong) DID *did;         // Selectable
 @property (nonatomic, readonly) User *user;
 @property (nonatomic, readonly) PBX *pbx;
 

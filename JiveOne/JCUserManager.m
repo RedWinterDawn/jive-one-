@@ -185,29 +185,6 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey                      = @"
     return self.line.pbx;
 }
 
--(DID *)did
-{
-    if (_did) {
-        return _did;
-    }
-    
-    PBX *pbx = self.pbx;
-    if (!pbx) {
-        return nil;
-    }
-    
-    // If we do not yet have a line, look for a line for our user that is marked as active.
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and userDefault = %@", pbx, @YES];
-    _did = [DID MR_findFirstWithPredicate:predicate];
-    if (_did) {
-        return _did;
-    }
-    
-    predicate = [NSPredicate predicateWithFormat:@"pbx = %@", pbx];
-    _did = [DID MR_findFirstWithPredicate:predicate sortedBy:@"number" ascending:YES];
-    return _did;
-}
-
 @end
 
 @implementation UIViewController (JCUserManager)

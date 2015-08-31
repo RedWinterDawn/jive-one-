@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14F27" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Address" representedClassName="Address" syncable="YES">
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
@@ -71,7 +71,6 @@
         <attribute name="receiveSMS" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="sendSMS" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="userDefault" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <relationship name="blockedContacts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BlockedNumber" inverseName="did" inverseEntity="BlockedNumber" syncable="YES"/>
         <relationship name="pbx" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBX" inverseName="dids" inverseEntity="PBX" syncable="YES"/>
         <relationship name="smsMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SMSMessage" inverseName="did" inverseEntity="SMSMessage" syncable="YES"/>
@@ -117,6 +116,7 @@
     </entity>
     <entity name="Message" representedClassName="Message" isAbstract="YES" parentEntity="RecentEvent" syncable="YES">
         <attribute name="messageGroupId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="resourceId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="MissedCall" representedClassName="MissedCall" parentEntity="Call" syncable="YES"/>
@@ -194,7 +194,7 @@
         <element name="ContactGroupAssociation" positionX="-315" positionY="329" width="144" height="103"/>
         <element name="ContactInfo" positionX="72" positionY="441" width="128" height="135"/>
         <element name="Conversation" positionX="342" positionY="171" width="128" height="73"/>
-        <element name="DID" positionX="-398" positionY="698" width="128" height="238"/>
+        <element name="DID" positionX="-398" positionY="698" width="128" height="223"/>
         <element name="Extension" positionX="-549" positionY="-189" width="128" height="148"/>
         <element name="Group" positionX="-252" positionY="80" width="128" height="73"/>
         <element name="IncomingCall" positionX="700" positionY="-288" width="128" height="45"/>
@@ -202,7 +202,7 @@
         <element name="InternalExtensionGroup" positionX="-90" positionY="-36" width="128" height="58"/>
         <element name="Line" positionX="-333" positionY="-378" width="128" height="135"/>
         <element name="LineConfiguration" positionX="-45" positionY="-252" width="128" height="135"/>
-        <element name="Message" positionX="529" positionY="162" width="128" height="73"/>
+        <element name="Message" positionX="529" positionY="162" width="128" height="88"/>
         <element name="MissedCall" positionX="709" positionY="-360" width="128" height="45"/>
         <element name="OutgoingCall" positionX="711" positionY="-432" width="128" height="45"/>
         <element name="PBX" positionX="-927" positionY="396" width="128" height="163"/>

@@ -283,7 +283,6 @@
 		B7EE4A471B278620003F4278 /* JCTypeSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE4A461B278620003F4278 /* JCTypeSelectorViewController.m */; };
 		B7F331E91AFC015900343DAC /* JCVoicemailDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F331E81AFC015900343DAC /* JCVoicemailDetailViewController.m */; };
 		B7F561551B45A4CF0073D1C2 /* iReport.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7F561541B45A4CF0073D1C2 /* iReport.mp3 */; };
-		B7FCA5AA1AD2E74E0034C5EC /* JCDIDSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */; };
 		DD3BD9F418DCB1740080318E /* Voicemail+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */; };
 		DDCE1E8718F3561D003A6615 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */; };
 		DDCE1E8918F35623003A6615 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8818F35623003A6615 /* CFNetwork.framework */; };
@@ -873,8 +872,6 @@
 		B7F331E71AFC015900343DAC /* JCVoicemailDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoicemailDetailViewController.h; sourceTree = "<group>"; };
 		B7F331E81AFC015900343DAC /* JCVoicemailDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailDetailViewController.m; sourceTree = "<group>"; };
 		B7F561541B45A4CF0073D1C2 /* iReport.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = iReport.mp3; sourceTree = "<group>"; };
-		B7FCA5A81AD2E74E0034C5EC /* JCDIDSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDIDSelectorViewController.h; sourceTree = "<group>"; };
-		B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDIDSelectorViewController.m; sourceTree = "<group>"; };
 		C086428E9A7FABC33B6226F3 /* Pods_JCPhoneModuleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JCPhoneModuleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C18F852D63BA0D32BF58B4B3 /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB5DCEBD7762CD852B2FF068 /* Pods-JCPhoneModuleTests.enterprise.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JCPhoneModuleTests.enterprise.xcconfig"; path = "Pods/Target Support Files/Pods-JCPhoneModuleTests/Pods-JCPhoneModuleTests.enterprise.xcconfig"; sourceTree = "<group>"; };
@@ -1590,8 +1587,6 @@
 				5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */,
 				27D2C1F5196F030C005285FF /* JCLineSelectorTableViewController.h */,
 				27D2C1F6196F030C005285FF /* JCLineSelectorTableViewController.m */,
-				B7FCA5A81AD2E74E0034C5EC /* JCDIDSelectorViewController.h */,
-				B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */,
 				B744DE301AF920F500A72682 /* JCBlockedNumbersViewController.h */,
 				B744DE311AF920F500A72682 /* JCBlockedNumbersViewController.m */,
 			);
@@ -2422,7 +2417,6 @@
 				5D0275131A3F836A0077A37B /* JCStringEncryptionTransformer.m in Sources */,
 				5D3970D81B18FDA5009EADD6 /* JCMaskedRoundedButton.m in Sources */,
 				5D5CC2811B2F739300FB69E4 /* Contact+V5Client.m in Sources */,
-				B7FCA5AA1AD2E74E0034C5EC /* JCDIDSelectorViewController.m in Sources */,
 				919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */,
 				B71506DF1B0122EC00C0E72C /* JCVoicemailAudioPlayer.m in Sources */,
 				272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
