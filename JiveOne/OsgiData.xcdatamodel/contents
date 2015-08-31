@@ -71,7 +71,6 @@
         <attribute name="receiveSMS" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="sendSMS" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="t9" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="userDefault" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <relationship name="blockedContacts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BlockedNumber" inverseName="did" inverseEntity="BlockedNumber" syncable="YES"/>
         <relationship name="pbx" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBX" inverseName="dids" inverseEntity="PBX" syncable="YES"/>
         <relationship name="smsMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SMSMessage" inverseName="did" inverseEntity="SMSMessage" syncable="YES"/>
@@ -195,7 +194,7 @@
         <element name="ContactGroupAssociation" positionX="-315" positionY="329" width="144" height="103"/>
         <element name="ContactInfo" positionX="72" positionY="441" width="128" height="135"/>
         <element name="Conversation" positionX="342" positionY="171" width="128" height="73"/>
-        <element name="DID" positionX="-398" positionY="698" width="128" height="238"/>
+        <element name="DID" positionX="-398" positionY="698" width="128" height="223"/>
         <element name="Extension" positionX="-549" positionY="-189" width="128" height="148"/>
         <element name="Group" positionX="-252" positionY="80" width="128" height="73"/>
         <element name="IncomingCall" positionX="700" positionY="-288" width="128" height="45"/>

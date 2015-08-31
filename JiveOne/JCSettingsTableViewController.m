@@ -24,12 +24,11 @@
 
 // Controllers
 #import "JCTermsAndConditonsViewController.h"
-#import "JCDIDSelectorViewController.h"
 #import "UIDevice+JCPhone.h"
 
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedback :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@ <br> Domain : %@  <br> Carrier : %@ <br> Connection Type : %@ <br> ";
 
-@interface JCSettingsTableViewController () <JCDIDSelectorViewControllerDelegate>
+@interface JCSettingsTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *appLabel;
@@ -40,11 +39,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
 
 @property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
 @property (weak, nonatomic) IBOutlet UITableViewCell *presenceCell;
-
-@property (weak, nonatomic) IBOutlet UILabel *smsUserDefaultNumber;
-@property (weak, nonatomic) IBOutlet UITableViewCell *defaultDIDCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *blockedNumbersCell;
-
 @property (weak, nonatomic) IBOutlet UITableViewCell *debugCell;
 
 @property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
@@ -105,8 +100,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     
     if ([controller isKindOfClass:[JCTermsAndConditonsViewController class]]) {
         controller.navigationItem.leftBarButtonItem = nil;
-    } else if ([controller isKindOfClass:[JCDIDSelectorViewController class]]) {
-        ((JCDIDSelectorViewController *)controller).delegate = self;
     }
 }
 
@@ -213,11 +206,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     [self.userManager logout];
 }
 
--(void)didUpdateDIDSelectorViewController:(JCDIDSelectorViewController *)viewController
-{
-    [self updateAccountInfo];
-}
-
 #pragma mark - Notification Handlers -
 
 -(void)updateAccountInfo
@@ -235,9 +223,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Feedbac
     PBX *pbx = userManager.pbx;
     [self setCell:self.presenceCell hidden:!pbx.isV5];
     self.presenceEnabled.on = self.appSettings.isPresenceEnabled;
-    
-    self.smsUserDefaultNumber.text = userManager.did.formattedNumber;
-    [self setCell:self.defaultDIDCell hidden:!pbx.sendSMSMessages];
     [self setCell:self.blockedNumbersCell hidden:!pbx.sendSMSMessages];
     
     [self endUpdates];
