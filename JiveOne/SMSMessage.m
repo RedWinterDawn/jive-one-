@@ -29,6 +29,11 @@ NSString *const kSMSMessageInboundAttributeKey = @"inbound";
         if(pbxId) {
             [self setPrimitiveValue:pbxId forKey:NSStringFromSelector(@selector(pbxId))];
         }
+        
+        NSString *resourceId = self.did.jrn;
+        if (resourceId) {
+            [self setPrimitiveValue:resourceId forKey:NSStringFromSelector(@selector(resourceId))];
+        }
     }
     [super willSave];
 }

@@ -12,6 +12,7 @@
 
 @dynamic text;
 @dynamic messageGroupId;
+@dynamic resourceId;
 
 -(NSString *)senderId
 {
@@ -30,6 +31,17 @@
 
 -(NSString *)detailText {
     return self.formattedLongDate;
+}
+
++(NSPredicate *)predicateForMessagesWithGroupId:(NSString *)messageGroupId resourceId:(NSString *)resourceId pbxId:(NSString *)pbxId
+{
+    static NSString *predicateString = @"%K = %@ AND %K = %@ AND %K = %@ AND %K = %@";
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString,
+                              NSStringFromSelector(@selector(messageGroupId)), messageGroupId,
+                              NSStringFromSelector(@selector(resourceId)), resourceId,
+                              NSStringFromSelector(@selector(pbxId)), pbxId,
+                              @"markForDeletion", @NO];
+    return predicate;
 }
 
 @end

@@ -10,6 +10,8 @@
 #import "DID.h"
 #import "JCMessageGroup.h"
 
+typedef void(^SMSMessageSendCompletionHandler)(BOOL success, SMSMessage *smsMessage, NSError *error);
+
 @interface SMSMessage (V5Client)
 
 // Creates a SMS message from dictionary data. This is meant to be used for processing from a
@@ -28,13 +30,12 @@
 + (void)createSmsMessageWithMessageData:(NSDictionary *)dataDictionary;
 
 // Internal method if we know the did already and do not need to extract it from the response.
-+ (void)createSmsMessageWithMessageData:(NSDictionary *)dataDictionary did:(DID *)did;
-
++ (SMSMessage *)createSmsMessageWithMessageData:(NSDictionary *)dataDictionary did:(DID *)did;
 
 #pragma mark - Send -
 
 // Sends a sent request. If successfully sent, creates a message from the send success response.
-+(void)sendMessage:(NSString *)message toMessageGroup:(JCMessageGroup *)messageGroup fromDid:(DID *)did completion:(CompletionHandler)completion;
++(void)sendMessage:(NSString *)message toMessageGroup:(JCMessageGroup *)messageGroup fromDid:(DID *)did completion:(SMSMessageSendCompletionHandler)completion;
 
 #pragma mark - Receive -
 

@@ -72,12 +72,12 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
             UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             
             _readBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Read All", nil)
-                                                                  style:UIBarButtonItemStyleBordered
+                                                                  style:UIBarButtonItemStylePlain
                                                                  target:self
                                                                  action:@selector(markMessagesAsRead:)];
             
             UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Delete", nil)
-                                                                              style:UIBarButtonItemStyleBordered
+                                                                              style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(deleteMessages:)];
             
@@ -165,7 +165,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     if (messageIndexPaths.count > 0) {
         for (NSIndexPath *indexPath in messageIndexPaths) {
             JCMessageGroup *messageGroup = [self objectAtIndexPath:indexPath];
-            [objects addObject:messageGroup.messageGroupId];
+            [objects addObject:messageGroup.groupId];
         }
     }
     
@@ -187,7 +187,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     if (messageIndexPaths.count > 0) {
         for (NSIndexPath *indexPath in messageIndexPaths) {
             JCMessageGroup *object = [self objectAtIndexPath:indexPath];
-            [objects addObject:object.messageGroupId];
+            [objects addObject:object.groupId];
         }
     }
     
@@ -265,7 +265,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     JCMessageGroup *object = [self objectAtIndexPath:indexPath];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            [SMSMessage markSMSMessagesWithGroupIdForDeletion:object.messageGroupId
+            [SMSMessage markSMSMessagesWithGroupIdForDeletion:object.groupId
                                                           pbx:(PBX *)[localContext objectWithID:pbx.objectID]
                                                    completion:NULL];
         } completion:^(BOOL contextDidSave, NSError *error) {

@@ -39,8 +39,8 @@
         
         // Ensure we are expecting a dictionary result type for the core data fetch request.
         fetchRequest.resultType             = NSDictionaryResultType;
-        fetchRequest.propertiesToGroupBy    = @[NSStringFromSelector(@selector(messageGroupId))];
-        fetchRequest.propertiesToFetch      = @[NSStringFromSelector(@selector(messageGroupId))];
+        fetchRequest.propertiesToGroupBy    = @[NSStringFromSelector(@selector(messageGroupId)), NSStringFromSelector(@selector(resourceId))];
+        fetchRequest.propertiesToFetch      = @[NSStringFromSelector(@selector(messageGroupId)), NSStringFromSelector(@selector(resourceId))];
     }
     return self;
 }
@@ -52,14 +52,16 @@
     }
     else if([object isKindOfClass:[Message class]])
     {
-        JCMessageGroup *messageGroup = [self getMessageGroupForMessageGroupId:((Message *)object).messageGroupId];
+        Message *message = (Message *)object;
+        JCMessageGroup *messageGroup = [self getMessageGroupForMessageGroupId:message.messageGroupId resourceId:message.resourceId];
         [messageGroup markNeedUpdate];
         return messageGroup;
     }
     else if ([object isKindOfClass:[NSDictionary class]])
     {
         NSString *messageGroupId = [(NSDictionary *)object stringValueForKey:NSStringFromSelector(@selector(messageGroupId))];
-        return [self getMessageGroupForMessageGroupId:messageGroupId];
+        NSString *resourceId     = [(NSDictionary *)object stringValueForKey:NSStringFromSelector(@selector(resourceId))];
+        return [self getMessageGroupForMessageGroupId:messageGroupId resourceId:resourceId];
     }
     return [super objectForObject:object];
 }
@@ -100,26 +102,26 @@
 -(NSArray *)updateMessagesForMessageGroup:(JCMessageGroup *)messageGroup
 {
     NSManagedObjectContext *context = self.managedObjectContext;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@ AND %K = %@", NSStringFromSelector(@selector(messageGroupId)), messageGroup.messageGroupId, NSStringFromSelector(@selector(pbxId)), _pbx.pbxId];
+    NSPredicate *predicate = [Message predicateForMessagesWithGroupId:messageGroup.groupId resourceId:messageGroup.resourceId pbxId:_pbx.pbxId];
     return [Message MR_findAllSortedBy:NSStringFromSelector(@selector(date)) ascending:NO withPredicate:predicate inContext:context];
 }
 
 #pragma mark - Private -
 
--(JCMessageGroup *)getMessageGroupForMessageGroupId:(NSString *)messageGroupId
+-(JCMessageGroup *)getMessageGroupForMessageGroupId:(NSString *)messageGroupId resourceId:(NSString *)resourceId
 {
     NSArray *messageGroups = self.fetchedObjects;
     for(JCMessageGroup *messageGroup in messageGroups ) {
-        if([messageGroup.messageGroupId isEqualToString:messageGroupId]) {
+        if([messageGroup.groupId isEqualToString:messageGroupId] && [messageGroup.resourceId isEqualToString:resourceId]) {
             return messageGroup;
         }
     }
-    return [self createMessageGroupWithGroupId:messageGroupId];
+    return [self createMessageGroupWithGroupId:messageGroupId resourceId:resourceId];
 }
 
--(JCMessageGroup *)createMessageGroupWithGroupId:(NSString *)messageGroupId;
+-(JCMessageGroup *)createMessageGroupWithGroupId:(NSString *)groupId resourceId:(NSString *)resourceId;
 {
-    JCMessageGroup *messageGroup = [[JCMessageGroup alloc] initWithMessageGroupId:messageGroupId];
+    JCMessageGroup *messageGroup = [[JCMessageGroup alloc] initWithGroupId:groupId resourceId:resourceId];
     messageGroup.delegate = self;
     messageGroup.phoneNumber = [_phoneBook localPhoneNumberForPhoneNumber:messageGroup.phoneNumber context:self.managedObjectContext];
     [messageGroup markNeedUpdate];

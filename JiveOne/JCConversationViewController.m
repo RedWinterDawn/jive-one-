@@ -45,7 +45,6 @@
 }
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, readonly) DID *did;
 @property (nonatomic, strong) NSString *forwardedMessageString;
 
 @end
@@ -63,7 +62,19 @@
     self.inputToolbar.contentView.leftBarButtonItem = nil;
 }
 
--(void)viewDidAppear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    NSPredicate *predicate = self.fetchedResultsController.fetchRequest.predicate;
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        NSArray *messages = [Message MR_findAllWithPredicate:predicate inContext:localContext];
+        for (Message *message in messages) {
+            message.read = YES;
+        }
+    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
@@ -81,18 +92,6 @@
         self.inputToolbar.contentView.textView.text = _forwardedMessageString;
         self.inputToolbar.contentView.rightBarButtonItem.enabled = TRUE;
     }
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    NSPredicate *predicate = self.fetchedResultsController.fetchRequest.predicate;
-    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-        NSArray *messages = [Message MR_findAllWithPredicate:predicate inContext:localContext];
-        for (Message *message in messages) {
-            message.read = YES;
-        }
-    }];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -115,17 +114,23 @@
         senderDisplayName:(NSString *)senderDisplayName
                      date:(NSDate *)date
 {
-    JCUserManager *userManager = self.userManager;
-    JCMessageGroup *messageGroup = self.messageGroup;
-    if (self.count == 0) {
-        NSMutableArray *dids = userManager.pbx.dids.allObjects.mutableCopy;
-        if (dids.count < 2){
-             [self sendMessageWithSelectedDID:text toConversationGroup:messageGroup fromDid:userManager.did];
+    JCMessageGroup *group = self.messageGroup;
+    
+    // The group may not have a resource group if there are multiple DIDs for the selected PBX, and
+    // this is the first time a message is being sent to this recipient.
+    if (!group.resourceId)
+    {
+        PBX *pbx = self.userManager.pbx;
+        NSMutableArray *dids = pbx.dids.allObjects.mutableCopy;
+        if (!dids || dids.count == 0 || !pbx.sendSMSMessages) {
+            return; // We do not have a did to send to, or permission to send.
+        }
+        else if (dids.count == 1){
+            [self sendSMSMessage:text group:group did:dids.firstObject];
         }
         else
         {
-            NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES];
-            [dids sortUsingDescriptors:@[sortDescriptor]];
+            [dids sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES]]];
             NSMutableArray *titles = [NSMutableArray array];
             for (DID *did in dids) {
                 [titles addObject:did.titleText];
@@ -136,53 +141,43 @@
                                                                    dismissed:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
                                                                        if (buttonIndex != actionSheet.cancelButtonIndex) {
                                                                            DID *did = [dids objectAtIndex:buttonIndex];
-                                                                           [self sendMessageWithSelectedDID:text
-                                                                                        toConversationGroup:messageGroup
-                                                                                                    fromDid:did];
+                                                                           [self sendSMSMessage:text
+                                                                                          group:group
+                                                                                            did:did];
                                                                        }
                                                                    }
                                                            cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                                 otherButtons:titles];
             [didOptions show:self.view];
         }
-    } else {
-        [self sendMessageWithSelectedDID:text toConversationGroup:messageGroup fromDid:userManager.did];
     }
-       
+    else
+    {
+        DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:group.resourceId];
+        if (did) {
+            [self sendSMSMessage:text group:group did:did];
+        } else {
+            PBX *pbx = [PBX MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:group.resourceId];
+            if (pbx) {
+                // TODO: Send Chat Message.
+            }
+        }
+    }
 }
 
--(void)sendMessageWithSelectedDID:(NSString *)text toConversationGroup:(JCMessageGroup *)conversationGroup fromDid:(DID *)did {
-    [SMSMessage sendMessage:text toMessageGroup:conversationGroup fromDid:did completion:^(BOOL success, NSError *error) {
+-(void)sendSMSMessage:(NSString *)message group:(JCMessageGroup *)group did:(DID *)did {
+    [SMSMessage sendMessage:message toMessageGroup:group fromDid:did completion:^(BOOL success, SMSMessage *smsMessage, NSError *error) {
         if (success) {
+            group.resourceId = smsMessage.did.jrn;
+            group.groupId = smsMessage.messageGroupId;
+            self.title = group.titleText;
+            self.fetchedResultsController = nil;
+            [self.collectionView reloadData];
             [self finishSendingMessageAnimated:YES];
         }else {
             [self showError:error];
         }
     }];
-    
-//    [JCAlertView alertWithTitle:NSLocalizedStringFromTable(@"Set as default", @"Chat", nil)
-//                        message:NSLocalizedStringFromTable(@"Set this phone number as default phone number for all sms messages", @"Chat", nil)
-//                      dismissed:^(NSInteger buttonIndex) {
-//                          if (buttonIndex == 0) {
-//                              self.authenticationManager.did = self.did;
-//                              [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-//                                  DID *currentDID = (DID *)[localContext objectWithID:self.did.objectID];
-//                                  NSArray *numbers = [DID MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];
-//                                  for (DID *item in numbers) {
-//                                      if (currentDID == item){
-//                                          item.userDefault = TRUE;
-//                                      }
-//                                      else{
-//                                          item.userDefault = FALSE;
-//                                      }
-//                                  }
-//                              }];
-//                              
-//                          }
-//                      }
-//                showImmediately:YES
-//              cancelButtonTitle:NSLocalizedString(@"No", nil)
-//              otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
 }
 
 -(void)finishSendingMessageAnimated:(BOOL)animated
@@ -235,27 +230,28 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
--(void)forward:(id)sender
-{
-    
-}
+-(void)forward:(id)sender { }
 
 #pragma mark - Setters -
 
 -(void)setMessageGroup:(JCMessageGroup *)messageGroup
 {
     _messageGroup = messageGroup;
-    self.title = messageGroup.titleText;
-    if (messageGroup.isSMS) {
-        SMSMessage *smsMessage = (SMSMessage *)self.messageGroup.latestMessage;
-        if (!smsMessage) {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND pbxId = %@", messageGroup.messageGroupId, self.userManager.pbx.pbxId];
-            smsMessage = [SMSMessage MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
+    NSString *resourceId = messageGroup.resourceId;
+    if (resourceId) {
+        DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:resourceId];
+        if (did) {
+            [SMSMessage downloadMessagesForDID:did toMessageGroup:messageGroup completion:NULL];
         }
-        
-        [SMSMessage downloadMessagesForDID:smsMessage.did toMessageGroup:messageGroup completion:NULL];
+        else {
+            PBX *pbx = [PBX MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:resourceId];
+            if (pbx) {
+                //TODO: Download Chat messages for the given conversation.
+            }
+        }
     }
     
+    self.title = messageGroup.titleText;
     self.fetchedResultsController = nil;
     [self.collectionView reloadData];
 }
@@ -272,10 +268,13 @@
         }
         
         NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-        NSString *messageGroupId = self.messageGroup.messageGroupId;
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@ AND markForDeletion = %@ AND pbxId = %@", messageGroupId, @NO, self.userManager.pbx.pbxId];
-        NSFetchRequest *fetchRequest = [Message MR_requestAllWithPredicate:predicate inContext:context ];
-        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
+        JCMessageGroup *messageGroup = self.messageGroup;
+        NSPredicate *predicate = [Message predicateForMessagesWithGroupId:messageGroup.groupId
+                                                               resourceId:messageGroup.resourceId
+                                                                    pbxId:self.userManager.pbx.pbxId];
+        
+        NSFetchRequest *fetchRequest = [Message MR_requestAllWithPredicate:predicate inContext:context];
+        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(date)) ascending:YES]];
         fetchRequest.includesSubentities = YES;
         
         _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
@@ -287,30 +286,21 @@
         // Make sure the _fetched result controller has fetched data and reload
         // the table if sucessfull.
         __autoreleasing NSError *error = nil;
-        if ([_fetchedResultsController performFetch:&error])
-            [self.collectionView reloadData];
+        if (![_fetchedResultsController performFetch:&error]) {
+            NSLog(@"%@", [error description]);
+        }
     }
     return _fetchedResultsController;
 }
 
 - (NSString *)senderId
 {
-    return self.userManager.user.jiveUserId;
-}
-
-- (NSString *)senderNumber
-{
-    return self.did.number;
+    return self.messageGroup.resourceId;
 }
 
 - (NSString *)senderDisplayName
 {
-    return self.userManager.line.name;
-}
-
-- (DID *)did
-{
-    return self.userManager.did;
+    return self.messageGroup.titleText;
 }
 
 #pragma mark - Private -

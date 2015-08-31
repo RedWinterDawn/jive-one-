@@ -19,23 +19,20 @@
 
 @end
 
-
 @implementation JCMessageGroup
 
--(instancetype)initWithMessageGroupId:(NSString *)messageGroupId
+-(instancetype)initWithGroupId:(NSString *)groupId resourceId:(NSString *)resourceId
 {
-    self = [self initWithPhoneNumber:[[JCPhoneNumber alloc] initWithName:nil number:messageGroupId]];
-    if(self) {
-        _messageGroupId = messageGroupId;
-    }
-    return self;
+    return [self initWithPhoneNumber:[[JCPhoneNumber alloc] initWithName:nil number:groupId] resourceId:resourceId];
 }
 
--(instancetype)initWithPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber
+-(instancetype)initWithPhoneNumber:(id<JCPhoneNumberDataSource>)phoneNumber resourceId:(NSString *)resourceId;
 {
     self = [super init];
     if (self) {
         _phoneNumber = phoneNumber;
+        _groupId = phoneNumber.dialableNumber;
+        _resourceId = resourceId;
     }
     return self;
 }
@@ -91,16 +88,12 @@
 -(NSString *)titleText
 {
     NSString *name = self.phoneNumber.name;
-    if (name) {
-        return name;
-    }
-    return self.formattedNumber;
+    return name ? name : self.formattedNumber;
 }
 
 -(NSString *)detailText
 {
-    Message *message = self.latestMessage;
-    return message.text;
+    return self.latestMessage.text;
 }
 
 -(NSString *)formattedModifiedShortDate
@@ -132,15 +125,6 @@
         }
     }
     return TRUE;
-}
-
--(BOOL)isSMS
-{
-    Message *message = self.latestMessage;
-    if ([message isKindOfClass:[SMSMessage class]]) {
-        return TRUE;
-    }
-    return FALSE;
 }
 
 -(NSString *)description

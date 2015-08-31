@@ -15,6 +15,7 @@
 #import "Contact.h"
 #import "PBX.h"
 #import "JCPhoneNumberUtils.h"
+#import "DID.h"
 
 @interface JCMessageParticipantTableViewController ()
 
@@ -46,9 +47,16 @@
 {
     id<JCPhoneNumberDataSource> phoneNumber = [self objectAtIndexPath:indexPath];
     if ([phoneNumber isKindOfClass:[Extension class]]) {
-        return nil; // TODO for chat.
+        return [[JCMessageGroup alloc] initWithPhoneNumber:phoneNumber resourceId:((Extension *)phoneNumber).pbxId];
     }
-    return [[JCMessageGroup alloc] initWithPhoneNumber:phoneNumber];
+
+    NSString *resourceId;
+    NSSet *dids = self.userManager.pbx.dids;
+    if (dids.count == 1) {
+        resourceId = ((DID *)dids.allObjects.firstObject).jrn;
+    }
+    JCMessageGroup *messageGroup = [[JCMessageGroup alloc] initWithPhoneNumber:phoneNumber resourceId:resourceId];
+    return messageGroup;
 }
 
 #pragma mark - Setters -
@@ -83,11 +91,13 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id<JCPhoneNumberDataSource> phoneNumber = [self objectAtIndexPath:indexPath];
-    NSString *identifier;
+    
+    static NSString *unknownNumberCell = @"UnknownNumberCell";
+    static NSString *searchResultsCell = @"SearchResultCell";
+    
+    NSString *identifier = searchResultsCell;
     if ([phoneNumber isKindOfClass:[JCUnknownNumber class]]) {
-        identifier = @"UnknownNumberCell";
-    } else {
-        identifier = @"SearchResultCell";
+        identifier = unknownNumberCell;
     }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];

@@ -39,14 +39,10 @@ NSString *const kSMSMessageResponseObjectArrivalTimeKey        = @"epochTime";
         if (did) {
             [self createSmsMessageWithMessageData:data did:did];
         }
-    } completion:^(BOOL success, NSError *error) {
-        if (success) {
-            
-        }
-    }];
+    } completion:nil];
 }
 
-+ (void)createSmsMessageWithMessageData:(NSDictionary *)data did:(DID *)did
++ (SMSMessage *)createSmsMessageWithMessageData:(NSDictionary *)data did:(DID *)did
 {
     // Fetch values from data object.
     NSString *number    = [data stringValueForKey:kSMSMessageResponseObjectNumberKey];
@@ -69,13 +65,14 @@ NSString *const kSMSMessageResponseObjectArrivalTimeKey        = @"epochTime";
     } else {
         message.unixTimestamp = [data integerValueForKey:kSMSMessageResponseObjectArrivalTimeKey];
     }
+    return message;
 }
 
 #pragma mark - Send -
 
-+(void)sendMessage:(NSString *)message toMessageGroup:(JCMessageGroup *)conversationGroup fromDid:(DID *)did completion:(CompletionHandler)completion
++(void)sendMessage:(NSString *)message toMessageGroup:(JCMessageGroup *)messageGroup fromDid:(DID *)did completion:(SMSMessageSendCompletionHandler)completion
 {
-    NSDictionary *parameters = @{kSMSMessageSendRequestToKey: conversationGroup.phoneNumber.dialableNumber,
+    NSDictionary *parameters = @{kSMSMessageSendRequestToKey: messageGroup.phoneNumber.dialableNumber,
                                  kSMSMessageSendRequestFromKey: did.number,
                                  kSMSMessageSendRequestBodyKey: message};
     
@@ -86,7 +83,7 @@ NSString *const kSMSMessageResponseObjectArrivalTimeKey        = @"epochTime";
             [UIApplication hideStatus];
         } else {
             if (completion) {
-                completion(NO, error);
+                completion(NO, nil, error);
             }
         }
     }];
@@ -197,7 +194,7 @@ NSString *const kSMSMessageResponseObjectArrivalTimeKey        = @"epochTime";
 // The send sms logic does not actually create the core data object until we have gotten a positive
 // confimation from the server that the message was sent. When we process the result, we build the
 // message from the result and store it locally
-+ (void)processSMSSendResponseObject:(id)responseObject did:(DID *)did completion:(CompletionHandler)completion
++ (void)processSMSSendResponseObject:(id)responseObject did:(DID *)did completion:(SMSMessageSendCompletionHandler)completion
 {
     @try {
         // Is dictionary?
@@ -210,7 +207,7 @@ NSString *const kSMSMessageResponseObjectArrivalTimeKey        = @"epochTime";
         NSInteger errorCode = [response integerValueForKey:kSMSMessageResponseErrorCodeKey];
         if (errorCode != 0) {
             if (completion) {
-                completion(false, [JCApiClientError errorWithCode:errorCode]);
+                completion(false, nil, [JCApiClientError errorWithCode:errorCode]);
             }
             return;
         }
@@ -221,10 +218,18 @@ NSString *const kSMSMessageResponseObjectArrivalTimeKey        = @"epochTime";
             [NSException raise:NSInvalidArgumentException format:@"Response object is null or invalid"];
         }
         
+        __block NSManagedObjectID *objectID;
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             DID *localDid = (DID *)[localContext objectWithID:did.objectID];
-            [self createSmsMessageWithMessageData:(NSDictionary *)object did:localDid];
-        } completion:completion];
+            SMSMessage *message = [self createSmsMessageWithMessageData:(NSDictionary *)object did:localDid];
+            [localContext obtainPermanentIDsForObjects:@[message] error:nil];
+            objectID = message.objectID;
+        } completion:^(BOOL contextDidSave, NSError *error) {
+            SMSMessage *smsMessage = (SMSMessage *)[did.managedObjectContext objectWithID:objectID];
+            if (completion) {
+                completion(contextDidSave, smsMessage, error);
+            }
+        }];
     }
     @catch (NSException *exception) {
         NSInteger code;
@@ -232,7 +237,7 @@ NSString *const kSMSMessageResponseObjectArrivalTimeKey        = @"epochTime";
             if ([exception.name isEqualToString:NSInvalidArgumentException]) {
                 code = API_CLIENT_SMS_RESPONSE_INVALID;
             }
-            completion(NO, [JCApiClientError errorWithCode:code]);
+            completion(NO, nil, [JCApiClientError errorWithCode:code]);
         }
     }
 }

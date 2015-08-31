@@ -183,7 +183,7 @@
     
     SMSMessage *smsMessage = (SMSMessage *)message;
     DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:smsMessage.did.jrn inContext:context];
-    return [BlockedNumber blockedNumberForNumber:messageGroup.messageGroupId forDID:did];
+    return [BlockedNumber blockedNumberForNumber:messageGroup.groupId forDID:did];
 }
 
 @end
