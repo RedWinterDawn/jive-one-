@@ -15,6 +15,7 @@
 #import "NSDictionary+Validations.h"
 
 #define LINE_CONFIGURATION_REQUEST_TIMEOUT 60
+#define LINE_CONFIGURATION_REQUEST_TRIES 1
 
 NSString *const kLineConfigurationRequestPath = @"/p/mobility/mobileusersettings";
 
@@ -56,7 +57,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
                                  kJCLineConfigurationRequestExtensionKey: line.number};
     
     [self downloadLineConfigurationForLine:line
-                                   retries:3
+                                   retries:LINE_CONFIGURATION_REQUEST_TRIES
                                 parameters:parameters
                                    success:^(id responseObject) {
                                        [self processLineConfigurationResponseObject:responseObject line:line completion:completion];
