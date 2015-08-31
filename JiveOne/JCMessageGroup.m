@@ -127,6 +127,15 @@
     return TRUE;
 }
 
+-(BOOL)isSMS
+{
+    Message *message = self.latestMessage;
+    if ([message isKindOfClass:[SMSMessage class]]) {
+        return TRUE;
+    }
+    return FALSE;
+}
+
 -(NSString *)description
 {
     return [NSString stringWithFormat:@"%@ %@\n", self.titleText, self.detailText];

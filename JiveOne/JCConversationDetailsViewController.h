@@ -11,12 +11,6 @@
 
 @interface JCConversationDetailsViewController : StaticDataTableViewController
 
-@property (nonatomic, weak) IBOutlet UITableViewCell *phoneNumberCell;
-@property (nonatomic, weak) IBOutlet UITableViewCell *blockNumberCell;
-@property (nonatomic, weak) IBOutlet UISwitch *blockSwitch;
-
 @property (nonatomic, strong) JCMessageGroup *conversationGroup;
-
--(IBAction)toggleBlock:(id)sender;
 
 @end

@@ -17,6 +17,10 @@
 
 @interface JCConversationDetailsViewController ()
 
+@property (nonatomic, weak) IBOutlet UITableViewCell *phoneNumberCell;
+@property (nonatomic, weak) IBOutlet UITableViewCell *blockNumberCell;
+@property (nonatomic, weak) IBOutlet UISwitch *blockSwitch;
+
 @end
 
 @implementation JCConversationDetailsViewController

@@ -31,7 +31,6 @@
 @property (nonatomic, readonly) NSString *detailText;
 
 @property (nonatomic, readonly) Message *latestMessage;
-//@property (nonatomic, readonly) DID *did;
 @property (nonatomic, readonly) User *user;
 @property (nonatomic, readonly) BOOL isSMS;
 @property (nonatomic, readonly) BOOL isRead;
