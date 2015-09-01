@@ -7,13 +7,21 @@ Format inspired by [ChangeLog](http://keepachangelog.com).
 Each section should include a header with one of these titles: Added, Changed, Fixed, Removed. 
 All items pertaining to that header will be listed out in a list using hyphens.
 
-Added would be to define new features.
-Changed would be to define features that have changed or be updated.
-Fixed would be for any defects that were fixed.
-Removed would be for any features that were removed.
+Added - would be to define new features.
+Changed - would be to define features that have changed or be updated.
+Fixed - would be for any defects that were fixed.
+Removed - would be for any features that were removed.
 --->
 
 ## [Unreleased][unreleased]
+
+## [1.3.3] - 2015-08-31
+
+### Added
+- Added QOS settings for improved audio quality and QOS for sip calls.
+
+### Changed
+- Adjusted the number a retries on failure for phone provisioning.
 
 ## [1.3.2] - 2015-08-14
 
@@ -39,7 +47,7 @@ Removed would be for any features that were removed.
 - Reorganized Settings
 - New App Drawer with new look and feel (iPhone).
 
-### Changes
+### Changed
 - DE994 Local EULA. Made the EULA to be embedded in the app to improve load time, and provide offline access to EULA.
 
 ### Fixed
@@ -54,7 +62,9 @@ Removed would be for any features that were removed.
 
 ## [1.2.3] - 2015-04-20
 
-[unreleased]: https://github.com/jive/iOS-JiveOne/compare/v1.3.2(150814)...HEAD
+[unreleased]: https://github.com/jive/iOS-JiveOne/compare/v1.3.3(150831)...HEAD
+[1.3.3]: https://github.com/jive/iOS-JiveOne/compare/v1.3.3(150831)...v1.3.2(150814)
+[1.3.2]: https://github.com/jive/iOS-JiveOne/compare/v1.3.2(150814)...v1.3.1(150731)
 [1.3.1]: https://github.com/jive/iOS-JiveOne/compare/v1.3.1(150731)...v1.3.2(150814)
 [1.3.1]: https://github.com/jive/iOS-JiveOne/compare/v1.3.0(150729)...v1.3.1(150731)
 [1.3.0]: https://github.com/jive/iOS-JiveOne/compare/v1.2.5(150602)...v1.3.0(150729)
