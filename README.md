@@ -1,4 +1,4 @@
-![ORCID](https://img.shields.io/badge/ORCID-0009--0005--5880--1614-brighten Deletion Might Make Sense**
+
 
 #JiveOne
 
